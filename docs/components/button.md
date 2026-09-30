@@ -28,7 +28,7 @@ related: [menu-buttons, link, modal, common-actions]
 ## Shape & padding
 
 - **Squircle corners.** Buttons (and button groups) use continuous-curvature squircle corners, not simple rounded corners.
-- **Room to rest.** The right padding is about twice the left, so a cursor or thumb can rest on the button without covering the label.
+- **Room to rest.** Without an icon, the right padding is about twice the left, so a cursor or thumb can rest on the button without covering the label. With an icon, padding is symmetric and that extra room becomes the gap between label and icon.
 
 ## Sizes
 

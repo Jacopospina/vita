@@ -67,11 +67,13 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     useShortcut(shortcut, () => inner.current?.click(), { enabled: !!shortcut && !disabled && !loading })
     const tilt = useTilt<HTMLButtonElement>({ max: 12, lift: 1.05 }, { onPointerMove: props.onPointerMove, onPointerLeave: props.onPointerLeave })
     const iconEl = icon ? <Icon as={icon} size="sm" /> : null
+    // With an icon, padding is symmetric and the resting room moves into the label→icon gap.
+    const withIcon = { sm: "pr-2 gap-4", md: "pr-3 gap-5", lg: "pr-4 gap-6" }[size ?? "md"]
     return (
       <Comp
         ref={inner}
         aria-keyshortcuts={shortcut}
-        className={cn(buttonVariants({ variant, size, fullWidth }), icon && "justify-between gap-3", className)}
+        className={cn(buttonVariants({ variant, size, fullWidth }), icon && cn("justify-between", withIcon), className)}
         disabled={asChild ? undefined : disabled || loading}
         aria-busy={loading || undefined}
         {...props}
