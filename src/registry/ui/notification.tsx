@@ -271,20 +271,23 @@ function Story({ story }: { story: CapsuleStory }) {
 
 /**
  * Capsule — the quick-feedback capsule. ALWAYS: icon left · title/subtitle centre · semantic story right.
- * Choreography: an icon-only pill falls in (and fades) from above the viewport, bounces a hair with gravity, and
- * widens while it bounces back to reveal
+ * Choreography: an icon-only pill falls in (and fades) from above the viewport with gravity; at its lowest point it
+ * bounces back to rest and widens during that bounce to reveal
  * title and story. Exit is the same film rewound: it narrows back to the icon, then slides up and out.
  */
-const ISLAND_LAND = 0.55
+/** Share of the island-in keyframes at which the pill hits its lowest point and starts bouncing back. */
+const ISLAND_LOW = 0.5
 
 export function Capsule({ o, leaving }: { o: CapsuleOptions; leaving?: boolean }) {
   const [landed, setLanded] = React.useState(false)
   const ref = React.useRef<HTMLDivElement>(null)
   React.useEffect(() => {
-    const reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
-    // Expand the moment the drop bounces back: 55% into the island-in keyframes.
-    const dur = (parseFloat(ref.current ? getComputedStyle(ref.current).animationDuration : "") || 0.48) * 1000
-    const t = window.setTimeout(() => setLanded(true), reduced ? 0 : dur * ISLAND_LAND)
+    const el = ref.current
+    const drop = el?.getAnimations().find((a) => (a as CSSAnimation).animationName === "corpus-island-in")
+    const total = Number(drop?.effect?.getComputedTiming().duration) || 0
+    // Widen at the exact moment the fall bottoms out — measured on the running animation's own clock.
+    const wait = total ? Math.max(0, total * ISLAND_LOW - Number(drop?.currentTime ?? 0)) : 0
+    const t = window.setTimeout(() => setLanded(true), wait)
     return () => window.clearTimeout(t)
   }, [])
   const open = landed && !leaving
@@ -298,7 +301,7 @@ export function Capsule({ o, leaving }: { o: CapsuleOptions; leaving?: boolean }
       )}
     >
       <span className="flex size-8 shrink-0 items-center justify-center">{renderIcon(o.icon)}</span>
-      <div className={cn("reveal-x motion-expressive", open && "reveal-x-open")}>
+      <div className={cn("reveal-x duration-moderate-02 ease-expressive", open && "reveal-x-open")}>
         <div className={cn("flex items-center gap-3 duration-moderate-02", open ? "opacity-100" : "opacity-0")}>
           <div className="flex w-56 max-w-[calc(100vw-8rem)] flex-col items-center pl-3 text-center">
             <p className="w-full truncate text-body font-semibold">{o.title}</p>

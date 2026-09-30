@@ -33,7 +33,7 @@ The story is required, and it is what makes a capsule a capsule:
 
 ## Choreography
 
-1. **Enter:** an icon-only pill falls from outside the viewport with gravity, fading in, and overshoots a hair.
-2. **Expand while bouncing back:** the moment it springs back up, it widens to reveal the title and the story.
+1. **Fall:** the icon-only pill drops from outside the viewport with gravity and fades in, reaching its lowest point just below rest. Only the icon is visible.
+2. **Bounce back and expand:** from that lowest point it springs back to rest, and during exactly that bounce it widens to reveal the title and the story.
 3. **Exit:** the same film rewound. It narrows back to the icon, then slides up out of the viewport and fades.
 5. **Mount `<Toaster />` once.** It hosts both banners and capsules.
