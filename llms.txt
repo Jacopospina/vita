@@ -142,7 +142,7 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/foun
   - use: Key/value details of one object (condensed + flush); Comparing a few options across attributes (plans, models); Choosing one of a few rows with multiple attributes (selectable)
   - avoid: Many rows, sorting, pagination, bulk actions → DataTable; Items with individual actions → ContainedList
 - [Tabs](docs/components/tabs.md): Switch between peer views of the same context — Overview · Activity · Settings.
-  - use: line — page-level views of one object, under the PageHeader; contained — tabs attached to a panel/tile (secondary level)
+  - use: pill (default) — page-level views of one object; a raised pill slides between tabs; line — dense toolbars or where a track would be too heavy; contained — tabs attached to a panel/tile (secondary level)
   - avoid: Same data in different presentations → ContentSwitcher; Steps the user must complete in order → ProgressIndicator; Navigation between different objects/areas → Side nav; Content users need to compare side by side → show both; A single tab → no tabs
 - [Tag](docs/components/tag.md): Short labels that categorise, show status in dense rows, or represent applied filters.
   - use: Read-only — categories/metadata on items (region, type); Status in dense table rows (with icon); Dismissible — applied filters / chosen values the user can remove; Selectable — quick filter chips (toggle on/off); Operational — "+3" that reveals more in a popover

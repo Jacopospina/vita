@@ -5,7 +5,8 @@ import { useIndicator } from "@/registry/hooks/use-morph"
 
 /**
  * Tabs — switch between related VIEWS of the same object/page at the same level (Overview · Activity · Settings).
- *   line      → page-level navigation within a context (default)
+ *   pill      → DEFAULT. Segmented track; a raised pill slides between tabs (lava-lamp) on a spring.
+ *   line      → underline that glides; for dense toolbars or when a track would be too heavy
  *   contained → tabs attached to a panel/card (secondary level)
  * Switching filters or modes of ONE dataset → ContentSwitcher. Sequential steps → ProgressIndicator.
  */
@@ -13,7 +14,7 @@ export function Tabs({ className, ...props }: React.ComponentProps<typeof TabsPr
   return <TabsPrimitive.Root className={cn("flex flex-col", className)} {...props} />
 }
 
-export function TabsList({ className, variant = "line", fullWidth, children, ...props }: React.ComponentProps<typeof TabsPrimitive.List> & { variant?: "line" | "contained"; fullWidth?: boolean }) {
+export function TabsList({ className, variant = "pill", fullWidth, children, ...props }: React.ComponentProps<typeof TabsPrimitive.List> & { variant?: "pill" | "line" | "contained"; fullWidth?: boolean }) {
   const [ref, rect] = useIndicator<HTMLDivElement>('[role="tab"][data-state="active"]')
   return (
     <TabsPrimitive.List
@@ -21,13 +22,22 @@ export function TabsList({ className, variant = "line", fullWidth, children, ...
       data-variant={variant}
       className={cn(
         "group/tabs relative flex overflow-x-auto",
-        variant === "line" ? "gap-1 border-b border-border-subtle" : "gap-px",
+        variant === "pill" && "w-fit max-w-full gap-0.5 scope-md bg-layer-2 p-0.5",
+        variant === "line" && "gap-1 border-b border-border-subtle",
+        variant === "contained" && "gap-px",
         fullWidth && "*:flex-1",
         className,
       )}
       {...props}
     >
       {children}
+      {variant === "pill" && rect && (
+        <span
+          aria-hidden
+          className="pointer-events-none absolute top-0 left-0 rounded-inner-0.5 bg-raised shadow-raised duration-expressive ease-spring"
+          style={{ width: rect.w, height: rect.h, transform: `translate(${rect.x}px, ${rect.y}px)` }}
+        />
+      )}
       {variant === "line" && rect && (
         <span
           aria-hidden
@@ -44,6 +54,8 @@ export function TabsTrigger({ className, ...props }: React.ComponentProps<typeof
     <TabsPrimitive.Trigger
       className={cn(
         "relative inline-flex h-control-md shrink-0 items-center justify-center gap-2 px-inset-lg text-body whitespace-nowrap text-muted-foreground",
+        // pill (default): transparent triggers above the sliding pill
+        "group-data-[variant=pill]/tabs:z-10 group-data-[variant=pill]/tabs:h-control-sm group-data-[variant=pill]/tabs:rounded-inner-0.5 group-data-[variant=pill]/tabs:px-inset group-data-[variant=pill]/tabs:data-[state=active]:font-medium group-data-[variant=pill]/tabs:data-[state=active]:text-foreground",
         " duration-fast-02 ease-productive focus-ring-inset hover:text-foreground disabled:text-disabled-foreground",
         // line
         "group-data-[variant=line]/tabs:after:absolute group-data-[variant=line]/tabs:after:inset-x-0 group-data-[variant=line]/tabs:after:-bottom-px group-data-[variant=line]/tabs:after:h-0.5",
@@ -62,5 +74,5 @@ export function TabsTrigger({ className, ...props }: React.ComponentProps<typeof
 }
 
 export function TabsContent({ className, ...props }: React.ComponentProps<typeof TabsPrimitive.Content>) {
-  return <TabsPrimitive.Content className={cn("pt-6 outline-none data-[state=active]:animate-enter-fade", className)} {...props} />
+  return <TabsPrimitive.Content className={cn("pt-4 outline-none data-[state=active]:animate-enter-fade", className)} {...props} />
 }

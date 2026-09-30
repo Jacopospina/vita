@@ -32,7 +32,7 @@
   --corpus-font-display: var(--corpus-font-sans);
   --corpus-font-mono: "Google Sans Code Variable", "Google Sans Code", ui-monospace, monospace; /* code */
   --corpus-font-numeric: var(--corpus-font-mono);  /* numbers & numeric values (tables, metrics, counters) */
-  --corpus-type-base: 0.875rem;   /* body size. 0.875rem (14px) product UI · 1rem (16px) content/marketing */
+  --corpus-type-base: 0.8125rem;  /* body size. 0.8125rem (13px) desktop product UI · 1rem (16px) content/marketing */
   --corpus-type-ratio: 1.2;       /* modular scale. 1.125 tight · 1.2 default (balanced) · 1.25 expressive */
 
   /* 5. MOTION ----------------------------------------------------- */

@@ -17,7 +17,7 @@ const knobs = [
   { key: "--corpus-neutral-chroma", label: "Neutral tint", min: 0, max: 0.03, step: 0.001, def: 0.007, unit: "" },
   { key: "--corpus-radius", label: "Corner radius", min: 0, max: 1.25, step: 0.125, def: 0.5, unit: "rem" },
   { key: "--corpus-density", label: "Density", min: 0.8, max: 1.25, step: 0.05, def: 1, unit: "" },
-  { key: "--corpus-type-base", label: "Body size", min: 0.75, max: 1.125, step: 0.0625, def: 0.875, unit: "rem" },
+  { key: "--corpus-type-base", label: "Body size", min: 0.75, max: 1.125, step: 0.0625, def: 0.8125, unit: "rem" },
   { key: "--corpus-type-ratio", label: "Type scale ratio", min: 1.1, max: 1.333, step: 0.01, def: 1.2, unit: "" },
   { key: "--corpus-motion-scale", label: "Motion speed", min: 0, max: 2, step: 0.25, def: 1, unit: "" },
 ] as const

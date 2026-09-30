@@ -20,7 +20,7 @@ export function EmptyState({ pictogram, title, description, action, secondaryAct
   className?: string
 }) {
   return (
-    <div className={cn("flex w-full flex-col items-center text-center", size === "sm" ? "gap-2 px-4 py-8" : size === "lg" ? "gap-4 px-6 py-24" : "gap-3 px-6 py-16", className)}>
+    <div className={cn("flex w-full flex-col items-center text-center", size === "sm" ? "gap-1.5 px-4 py-6" : size === "lg" ? "gap-3 px-5 py-16" : "gap-2 px-5 py-10", className)}>
       {pictogram && <Pictogram as={pictogram} size={size === "lg" ? "xl" : size === "sm" ? "md" : "lg"} tone="neutral" className="mb-2" />}
       <h3 className={size === "lg" ? "text-title-2" : size === "sm" ? "text-headline" : "text-title-3"}>{title}</h3>
       {description && <p className="max-w-md text-body text-muted-foreground">{description}</p>}

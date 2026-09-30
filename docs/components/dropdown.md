@@ -29,5 +29,5 @@ related: [select, radio-button, checkbox, menu, filtering]
 1. **Values, not actions.** If selecting an item triggers something immediately, it's a Menu.
 2. **Descriptions** earn their space only when options are hard to tell apart ("High — Handle today").
 3. **Combobox shows "No results"** rather than an empty list, and never auto-selects on blur.
-4. **MultiSelect** closes only on outside click or Escape. Each toggle applies immediately inside the popover. Show the selection as removable tags below the field when it matters to see it (filters).
+4. **MultiSelect** hides its own label once something is selected (the chips say what it is; the label is still announced). It closes only on outside click or Escape. Each toggle applies immediately inside the popover. Show the selection as removable tags below the field when it matters to see it (filters).
 5. **Selected item** is marked with a checkmark on the right, not by color only.

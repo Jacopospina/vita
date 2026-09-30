@@ -1,7 +1,7 @@
 import * as React from "react"
 import { CheckmarkFilled, ErrorFilled, WarningAltFilled, InformationFilled, CircleDash, InProgress, WarningFilled, Pending } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
-import { SwapIcon } from "@/registry/ui/icon"
+import { SwapIcon, ProgressGlyph } from "@/registry/ui/icon"
 import { AnimatedText } from "@/registry/ui/animated"
 
 /**
@@ -38,7 +38,7 @@ export function StatusIndicator({ kind, children, size = "md", variant = "icon",
   return (
     <span className={cn("inline-flex items-center gap-1.5 text-foreground", size === "sm" ? "text-footnote" : "text-body", className)}>
       {variant === "icon" ? (
-        <SwapIcon as={k.icon} size="sm" className={cn(k.color, kind === "in-progress" && "motion-safe:animate-spin")} />
+        kind === "in-progress" ? <ProgressGlyph className={k.color} /> : <SwapIcon as={k.icon} size="sm" className={k.color} />
       ) : (
         <span aria-hidden className={cn("size-2 rounded-full bg-current", k.color)} />
       )}

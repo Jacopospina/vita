@@ -24,7 +24,7 @@ const REPO = "github:jacopoenergy/corpus-design-system"
 
 function Stage({ demo, hero }: { demo: Demo; hero?: boolean }) {
   return (
-    <div className={cn("stagger", hero ? "rounded-xl bg-layer-1 p-6 md:p-12" : "rounded-lg border border-border-subtle bg-background p-6 md:p-8")}>
+    <div className={cn("stagger", hero ? "rounded-xl bg-layer-1 p-5 md:p-8" : "rounded-lg border border-border-subtle bg-background p-5")}>
       <DemoBoundary>{demo.render()}</DemoBoundary>
     </div>
   )
@@ -50,7 +50,7 @@ export function DocPage({ section, slug }: { section: Section; slug: string }) {
   }).filter(Boolean) as { href: string; title: string }[]
 
   return (
-    <Container className="py-8 md:py-12">
+    <Container className="py-5 md:py-8">
       <Stack gap="xl" className="stagger">
         {/* Header */}
         <Stack gap="sm">

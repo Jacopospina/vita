@@ -43,7 +43,7 @@ export function ContainedListItem({ icon, action, onClick, disabled, className, 
     </>
   )
   const row = cn(
-    "flex w-full items-center gap-3 px-4 text-left text-body",
+    "flex w-full items-center gap-2 px-3 text-left text-body",
     "min-h-control-md group-data-[size=sm]/list:min-h-control-sm group-data-[size=lg]/list:min-h-control-lg",
   )
   return (

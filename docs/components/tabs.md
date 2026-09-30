@@ -4,7 +4,8 @@ summary: Switch between peer views of the same context — Overview · Activity 
 status: stable
 import: "import { Tabs, TabsList, TabsTrigger, TabsContent } from \"@/components/corpus/tabs\""
 use_when:
-  - line — page-level views of one object, under the PageHeader
+  - pill (default) — page-level views of one object; a raised pill slides between tabs
+  - line — dense toolbars or where a track would be too heavy
   - contained — tabs attached to a panel/tile (secondary level)
 avoid_when:
   - Same data in different presentations → ContentSwitcher
@@ -14,6 +15,14 @@ avoid_when:
   - A single tab → no tabs
 related: [content-switcher, progress-indicator, page-header]
 ---
+
+## Variants
+
+- **Pill (default).** A segmented track with a raised pill that slides between tabs on a spring. Use it almost everywhere.
+- **Line.** An underline that glides; for dense toolbars or when a track would compete with content.
+- **Contained.** Tabs attached to the top of a panel or tile.
+
+> [!NOTE] Tabs and Content switcher now look alike on purpose. The difference is meaning: tabs switch *different content*, the switcher changes *how the same content is shown*.
 
 ## Rules
 

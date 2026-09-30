@@ -25,6 +25,11 @@ related: [menu-buttons, link, modal, common-actions]
 | `danger` | Confirming a destructive action, usually inside a `ConfirmModal` | 1 |
 | `danger-tertiary` / `danger-ghost` | A destructive action on a settings page that opens a confirmation | 1 |
 
+## Shape & padding
+
+- **Squircle corners.** Buttons (and button groups) use continuous-curvature squircle corners, not simple rounded corners.
+- **Room to rest.** The right padding is about twice the left, so a cursor or thumb can rest on the button without covering the label.
+
 ## Sizes
 
 - `sm` (32): dense toolbars and tables.

@@ -83,12 +83,12 @@ export function DataTable<T extends { id: string }>({
     morph(() => setSort((s) => (s?.key !== key ? { key, dir: "asc" } : s.dir === "asc" ? { key, dir: "desc" } : null)))
 
   const colCount = columns.length + (selectable ? 1 : 0) + (renderExpanded ? 1 : 0) + (rowActions ? 1 : 0)
-  const cellPad = "px-4"
+  const cellPad = "px-3"
 
   return (
     <section className={cn("flex w-full flex-col overflow-hidden rounded-lg bg-layer-1", className)} aria-label={typeof title === "string" ? title : label}>
       {(title || description) && (
-        <header className="flex flex-col gap-1 px-4 pt-4 pb-6">
+        <header className="flex flex-col gap-1 px-3 pt-3 pb-3">
           {title && <h3 className="text-title-3">{title}</h3>}
           {description && <p className="text-body text-muted-foreground">{description}</p>}
         </header>
@@ -104,7 +104,7 @@ export function DataTable<T extends { id: string }>({
                 selected.length > 0 ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-2 opacity-0",
               )}
             >
-              <span className="inline-flex items-baseline gap-1 px-4 text-body" aria-live="polite"><AnimatedNumber value={selected.length} /> <AnimatedText>{selected.length === 1 ? "item selected" : "items selected"}</AnimatedText></span>
+              <span className="inline-flex items-baseline gap-1 px-3 text-body" aria-live="polite"><AnimatedNumber value={selected.length} /> <AnimatedText>{selected.length === 1 ? "item selected" : "items selected"}</AnimatedText></span>
               <div className="ml-auto flex h-full items-center [&_button]:h-full [&_button]:rounded-none [&_button]:bg-transparent [&_button]:text-primary-foreground [&_button:hover]:bg-primary-hover">
                 {batchActions(selected)}
                 <IconButton icon={Close} label="Clear selection" shortcut="escape" variant="primary" size="lg" onClick={() => setSelected([])} />
@@ -119,7 +119,7 @@ export function DataTable<T extends { id: string }>({
             <tr className={rowH[size === "xl" ? "lg" : size]}>
               {renderExpanded && <th className="w-control-md"><span className="sr-only">Expand</span></th>}
               {selectable && (
-                <th className="w-control-md pl-4">
+                <th className="w-control-md pl-3">
                   <Checkbox aria-label="Select all rows" checked={allSel ? true : someSel ? "indeterminate" : false} onCheckedChange={() => setSelected(allSel ? [] : rows.map((r) => r.id))} />
                 </th>
               )}
@@ -129,7 +129,7 @@ export function DataTable<T extends { id: string }>({
                 return (
                   <th key={c.key} scope="col" aria-sort={aria} className={cn("text-footnote font-semibold text-foreground", c.align === "end" ? "text-right" : "text-left", !c.sortable && cellPad)}>
                     {c.sortable ? (
-                      <button type="button" onClick={() => cycleSort(c.key)} className={cn("group flex h-full w-full items-center gap-2 px-4 py-2 hover:bg-layer-2 focus-ring-inset", c.align === "end" && "flex-row-reverse")}>
+                      <button type="button" onClick={() => cycleSort(c.key)} className={cn("group flex h-full w-full items-center gap-2 px-3 py-1.5 hover:bg-layer-2 focus-ring-inset", c.align === "end" && "flex-row-reverse")}>
                         {c.header}
                         <SwapIcon as={active ? (sort!.dir === "asc" ? ArrowUp : ArrowDown) : ArrowsVertical} className={cn(!active && "opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100")} />
                       </button>
@@ -178,7 +178,7 @@ export function DataTable<T extends { id: string }>({
                         </td>
                       )}
                       {selectable && (
-                        <td className="pl-4">
+                        <td className="pl-3">
                           <Checkbox aria-label={`Select row ${idx + 1}`} checked={isSel} onCheckedChange={() => setSelected(isSel ? selected.filter((s) => s !== row.id) : [...selected, row.id])} />
                         </td>
                       )}
@@ -191,7 +191,7 @@ export function DataTable<T extends { id: string }>({
                     </tr>
                     {renderExpanded && isOpen && (
                       <tr className="border-b border-border-subtle bg-layer-2">
-                        <td colSpan={colCount} className="animate-enter-fade px-4 py-4 pl-14">{renderExpanded(row)}</td>
+                        <td colSpan={colCount} className="animate-enter-fade px-3 py-3 pl-12">{renderExpanded(row)}</td>
                       </tr>
                     )}
                   </React.Fragment>

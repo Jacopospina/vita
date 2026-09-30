@@ -21,7 +21,7 @@ export function AccordionTrigger({ className, children, ...props }: React.Compon
     <AccordionPrimitive.Header className="flex">
       <AccordionPrimitive.Trigger
         className={cn(
-          "group flex flex-1 items-center gap-3 px-4 text-left text-body text-foreground duration-fast-02 ease-productive",
+          "group flex flex-1 items-center gap-2 px-3 text-left text-body text-foreground duration-fast-02 ease-productive",
           "h-control-md group-data-[size=sm]/accordion:h-control-sm group-data-[size=lg]/accordion:h-control-lg",
           "hover:bg-hover focus-ring-inset disabled:text-disabled-foreground",
           "group-data-[align=start]/accordion:flex-row-reverse group-data-[align=start]/accordion:justify-end",
@@ -39,7 +39,7 @@ export function AccordionTrigger({ className, children, ...props }: React.Compon
 export function AccordionContent({ className, children, ...props }: React.ComponentProps<typeof AccordionPrimitive.Content>) {
   return (
     <AccordionPrimitive.Content className="overflow-hidden data-[state=closed]:animate-collapse data-[state=open]:animate-expand" {...props}>
-      <div className={cn("max-w-prose px-4 pt-1 pb-6 text-body text-muted-foreground", className)}>{children}</div>
+      <div className={cn("max-w-prose px-3 pt-0.5 pb-4 text-body text-muted-foreground", className)}>{children}</div>
     </AccordionPrimitive.Content>
   )
 }

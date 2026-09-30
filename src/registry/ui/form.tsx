@@ -23,9 +23,9 @@ export const fieldClasses = cn(
 
 /* Fields are tall enough to hold their floating label inside. Values sit below the floated label. */
 export const fieldSize = {
-  sm: "h-control-md px-inset pt-3.5",
-  md: "h-control-lg px-inset pt-4",
-  lg: "h-14 px-inset-lg pt-5",
+  sm: "h-field-sm px-inset pt-3",
+  md: "h-field-md px-inset pt-3.5",
+  lg: "h-field-lg px-inset-lg pt-4",
 } as const
 export type FieldSize = keyof typeof fieldSize
 
@@ -114,15 +114,17 @@ export interface FieldShellProps extends FieldBaseProps {
   filled?: boolean
   /** Multi-line control: the label rests at the top instead of the vertical centre. */
   multiline?: boolean
+  /** Exception: the value speaks for itself (e.g. MultiSelect chips) — the label fades out, still announced. */
+  fadeLabel?: boolean
   children: (a11y: { id: string; "aria-describedby"?: string; "aria-invalid"?: true; "aria-required"?: true }) => React.ReactNode
 }
 
 /* The label floats (moves up, shrinks) when the field is focused or holds a value. */
 /* Straight up + smaller type — no scaling, so it never looks like it tilts. */
 const floated = [
-  "group-focus-within/field:-translate-y-[calc(50%+0.6rem)] group-focus-within/field:text-caption",
-  "group-has-[:is(input,textarea):not(:placeholder-shown)]/field:-translate-y-[calc(50%+0.6rem)] group-has-[:is(input,textarea):not(:placeholder-shown)]/field:text-caption",
-  "group-data-[filled]/field:-translate-y-[calc(50%+0.6rem)] group-data-[filled]/field:text-caption",
+  "group-focus-within/field:-translate-y-[calc(50%+0.55rem)] group-focus-within/field:text-caption",
+  "group-has-[:is(input,textarea):not(:placeholder-shown)]/field:-translate-y-[calc(50%+0.55rem)] group-has-[:is(input,textarea):not(:placeholder-shown)]/field:text-caption",
+  "group-data-[filled]/field:-translate-y-[calc(50%+0.55rem)] group-data-[filled]/field:text-caption",
 ].join(" ")
 const floatedMultiline = [
   "group-focus-within/field:-translate-y-2 group-focus-within/field:text-caption",
@@ -134,7 +136,7 @@ const floatedMultiline = [
  * The label rests inside the field like a placeholder; on focus or once filled it glides up and shrinks,
  * still inside the field. Labels are never placed above fields. Fields are required unless marked optional.
  */
-export function FieldShell({ id: idProp, label, hideLabel, helperText, invalid, invalidText, warn, warnText, optional, labelAddon, filled, multiline, className, children }: FieldShellProps) {
+export function FieldShell({ id: idProp, label, hideLabel, helperText, invalid, invalidText, warn, warnText, optional, labelAddon, filled, multiline, fadeLabel, className, children }: FieldShellProps) {
   const auto = React.useId()
   const id = idProp ?? auto
   const msgId = `${id}-msg`
@@ -152,6 +154,7 @@ export function FieldShell({ id: idProp, label, hideLabel, helperText, invalid, 
             "group-focus-within/field:text-muted-foreground group-data-[invalid]/field:text-error-foreground",
             multiline ? cn("top-3", floatedMultiline) : cn("top-1/2 -translate-y-1/2", floated),
             hideLabel && "sr-only",
+            fadeLabel && "opacity-0 blur-xs",
           )}
         >
           {label}
@@ -181,7 +184,7 @@ export function Form({ className, ...props }: React.FormHTMLAttributes<HTMLFormE
 /** FormGroup — a fieldset with a legend for related fields (address, radio group, checkbox group). */
 export function FormGroup({ legend, helperText, className, children, ...props }: React.FieldsetHTMLAttributes<HTMLFieldSetElement> & { legend: React.ReactNode; helperText?: React.ReactNode }) {
   return (
-    <fieldset className={cn("flex min-w-0 flex-col gap-4", className)} {...props}>
+    <fieldset className={cn("flex min-w-0 flex-col gap-3", className)} {...props}>
       <legend className="mb-1 text-headline text-foreground">{legend}</legend>
       {helperText && <p className="-mt-3 text-footnote text-helper">{helperText}</p>}
       {children}

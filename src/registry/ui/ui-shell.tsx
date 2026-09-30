@@ -53,7 +53,7 @@ export function Header({ productName, prefix, href = "/", children, actions, cla
         Skip to main content
       </a>
       <IconButton icon={navOpen ? Close : MenuIcon} label={navOpen ? "Close menu" : "Open menu"} onClick={() => setNavOpen(!navOpen)} className="size-12 rounded-none lg:hidden" />
-      <a href={href} className="flex h-full items-center gap-1 px-4 text-body whitespace-nowrap focus-ring-inset">
+      <a href={href} className="flex h-full items-center gap-1 px-3 text-body whitespace-nowrap focus-ring-inset">
         {prefix && <span className="font-normal text-muted-foreground">{prefix}</span>}
         <span className="font-semibold">{productName}</span>
       </a>
@@ -70,7 +70,7 @@ export function HeaderNavItem({ href, active, children, onClick }: { href?: stri
       onClick={onClick}
       aria-current={active ? "page" : undefined}
       className={cn(
-        "relative flex h-full items-center px-4 text-body text-muted-foreground duration-fast-02 hover:bg-hover hover:text-foreground focus-ring-inset",
+        "relative flex h-full items-center px-3 text-body text-muted-foreground duration-fast-02 hover:bg-hover hover:text-foreground focus-ring-inset",
         "after:absolute after:inset-x-8 after:bottom-0 after:h-0.5 after:rounded-full after:bg-transparent after:motion-expressive",
         active && "text-foreground after:inset-x-4 after:bg-primary",
       )}
@@ -122,7 +122,7 @@ export function SideNavItem({ href, icon, active, children, onClick }: { href?: 
       onClick={onClick}
       aria-current={active ? "page" : undefined}
       className={cn(
-        "relative mx-2 flex h-control-sm items-center gap-3 rounded-md px-2 text-body whitespace-nowrap text-muted-foreground duration-fast-02",
+        "relative mx-2 flex h-control-md items-center gap-3 rounded-md px-2 text-body whitespace-nowrap text-muted-foreground duration-fast-02",
         "hover:bg-hover hover:text-foreground focus-ring-inset",
         active && "bg-selected font-medium text-selected-foreground",
       )}
@@ -136,7 +136,7 @@ export function SideNavItem({ href, icon, active, children, onClick }: { href?: 
 export function SideNavMenu({ icon, title, defaultOpen, children }: { icon?: IconType; title: string; defaultOpen?: boolean; children: React.ReactNode }) {
   return (
     <Collapsible.Root defaultOpen={defaultOpen}>
-      <Collapsible.Trigger className="group mx-2 flex h-control-sm w-[calc(100%-1rem)] items-center gap-3 rounded-md px-2 text-body text-muted-foreground hover:bg-hover hover:text-foreground focus-ring-inset">
+      <Collapsible.Trigger className="group mx-2 flex h-control-md w-[calc(100%-1rem)] items-center gap-3 rounded-md px-2 text-body text-muted-foreground hover:bg-hover hover:text-foreground focus-ring-inset">
         {icon && <Icon as={icon} />}
         <span className="flex-1 truncate text-left">{title}</span>
         <Icon as={ChevronDown} className=" duration-moderate-01 group-data-[state=open]:rotate-180" />
@@ -198,7 +198,7 @@ export function RightPanel({ open, onOpenChange, title, children, footer, size =
         <h2 className="text-headline">{title}</h2>
         <IconButton icon={Close} label="Close panel" onClick={() => onOpenChange(false)} className="size-12 rounded-none" />
       </div>
-      <div className="min-h-0 flex-1 overflow-y-auto p-4">{children}</div>
+      <div className="min-h-0 flex-1 overflow-y-auto p-3">{children}</div>
       {footer && <ActionBar>{footer}</ActionBar>}
     </aside>
   )

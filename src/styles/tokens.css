@@ -191,17 +191,21 @@
   --corpus-radius-lg: calc(var(--corpus-radius) * 1.5);
   --corpus-radius-xl: calc(var(--corpus-radius) * 2);
 
-  /* density-driven control sizes (xs 24 · sm 32 · md 40 · lg 48 · xl 64) */
-  --corpus-control-xs: calc(1.5rem * var(--corpus-density));
-  --corpus-control-sm: calc(2rem * var(--corpus-density));
-  --corpus-control-md: calc(2.5rem * var(--corpus-density));
-  --corpus-control-lg: calc(3rem * var(--corpus-density));
-  --corpus-control-xl: calc(4rem * var(--corpus-density));
-  --corpus-inset-sm: calc(0.5rem * var(--corpus-density));
-  --corpus-inset: calc(0.75rem * var(--corpus-density));
-  --corpus-inset-lg: calc(1rem * var(--corpus-density));
+  /* density-driven control sizes — desktop-native density (xs 20 · sm 24 · md 28 · lg 32 · xl 36) */
+  --corpus-control-xs: calc(1.25rem * var(--corpus-density));
+  --corpus-control-sm: calc(1.5rem * var(--corpus-density));
+  --corpus-control-md: calc(1.75rem * var(--corpus-density));
+  --corpus-control-lg: calc(2rem * var(--corpus-density));
+  --corpus-control-xl: calc(2.25rem * var(--corpus-density));
+  --corpus-inset-sm: calc(0.375rem * var(--corpus-density));
+  --corpus-inset: calc(0.5rem * var(--corpus-density));
+  --corpus-inset-lg: calc(0.75rem * var(--corpus-density));
+  /* fields hold a floating label, so they are a step taller (sm 36 · md 40 · lg 44) */
+  --corpus-field-sm: calc(2.25rem * var(--corpus-density));
+  --corpus-field-md: calc(2.5rem * var(--corpus-density));
+  --corpus-field-lg: calc(2.75rem * var(--corpus-density));
 
-  /* type ramp: base × ratio^n — ratio 1.2 on 14px gives 12 · 14 · 17 · 20 · 24 · 29 · 35 */
+  /* type ramp: base × ratio^n — ratio 1.2 on 13px gives 11 · 13 · 16 · 19 · 22 · 27 · 32 */
   --_t: var(--corpus-type-base);
   --_r: var(--corpus-type-ratio);
   --corpus-text-caption: calc(var(--_t) * pow(var(--_r), -1));

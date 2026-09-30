@@ -6,19 +6,19 @@ import { useFlip } from "@/registry/hooks/use-flip"
 
 /**
  * Layout primitives. Spacing scale (2·4·8·12·16·24·32·40·48·64·80·96·160 px).
- * Gap names: none 0 · 3xs 2 · 2xs 4 · xs 8 · sm 12 · md 16 · lg 24 · xl 32 · 2xl 48 · 3xl 64
+ * Desktop-native rhythm. Gap names: none 0 · 3xs 2 · 2xs 4 · xs 6 · sm 8 · md 12 · lg 16 · xl 20 · 2xl 32 · 3xl 48
  */
 const gap = {
   none: "gap-0",
   "3xs": "gap-0.5",
   "2xs": "gap-1",
-  xs: "gap-2",
-  sm: "gap-3",
-  md: "gap-4",
-  lg: "gap-6",
-  xl: "gap-8",
-  "2xl": "gap-12",
-  "3xl": "gap-16",
+  xs: "gap-1.5",
+  sm: "gap-2",
+  md: "gap-3",
+  lg: "gap-4",
+  xl: "gap-5",
+  "2xl": "gap-8",
+  "3xl": "gap-12",
 } as const
 
 const stackVariants = cva("flex", {
@@ -44,7 +44,7 @@ export function Stack({ className, direction, gap, align, justify, wrap, asChild
   return <Comp ref={ref} className={cn(stackVariants({ direction, gap, align, justify, wrap }), className)} {...props} />
 }
 
-/** Inline — horizontal row . Defaults to centred items and a 8px gap. */
+/** Inline — horizontal row. Defaults to centred items and a 6px gap. */
 export function Inline({ gap = "xs", align = "center", ...props }: Omit<StackProps, "direction">) {
   return <Stack direction="row" gap={gap} align={align} {...props} />
 }
@@ -59,9 +59,9 @@ export function Group({ orientation = "horizontal", fill, className, ...props }:
       role="group"
       className={cn(
         // The GROUP owns the shape: radius, clipping and the single outer outline.
-        "flex w-fit gap-0 overflow-hidden rounded-md",
+        "flex w-fit gap-0 overflow-hidden squircle",
         // Children lose their own corners, borders and individual tilt; focus draws inside.
-        "*:rounded-none *:border-0 *:transform-none *:focus-visible:-outline-offset-2",
+        "*:rounded-none *:[--corpus-squircle-r:0px] *:border-0 *:transform-none *:focus-visible:-outline-offset-2",
         // Outline-style members (tertiary, danger-tertiary) → one outline around the whole group.
         "has-[>.border-primary]:border has-[>.border-primary]:border-primary has-[>.border-error]:border has-[>.border-error]:border-error",
         orientation === "horizontal" ? "flex-row" : "flex-col",
@@ -82,8 +82,8 @@ export function Spacer() {
 
 const gridVariants = cva("grid grid-cols-4 md:grid-cols-8 lg:grid-cols-16", {
   variants: {
-    gutter: { wide: "gap-x-8", narrow: "gap-x-4", condensed: "gap-x-px" },
-    rowGap: { none: "gap-y-0", md: "gap-y-4", lg: "gap-y-8" },
+    gutter: { wide: "gap-x-5", narrow: "gap-x-3", condensed: "gap-x-px" },
+    rowGap: { none: "gap-y-0", md: "gap-y-3", lg: "gap-y-5" },
   },
   defaultVariants: { gutter: "wide", rowGap: "md" },
 })
@@ -118,7 +118,7 @@ export function Container({ width = "wide", className, ...props }: React.HTMLAtt
   return (
     <div
       className={cn(
-        "mx-auto w-full px-4 md:px-8",
+        "mx-auto w-full px-4 md:px-5",
         width === "wide" && "max-w-7xl",
         width === "readable" && "max-w-prose",
         className,

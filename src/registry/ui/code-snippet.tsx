@@ -48,7 +48,7 @@ export function CodeSnippet({ type = "single", children, maxCollapsedLines = 12,
   const collapsible = type === "multi" && lines > maxCollapsedLines
   return (
     <div className={cn("relative flex w-full items-start scope-md bg-layer-1 font-mono text-footnote text-foreground", className)}>
-      <pre className={cn("min-w-0 flex-1 overflow-x-auto px-4", type === "single" ? "py-2.5 whitespace-pre" : "py-3", collapsible && !expanded && "max-h-72 overflow-y-hidden")}>
+      <pre className={cn("min-w-0 flex-1 overflow-x-auto px-3", type === "single" ? "py-1.5 whitespace-pre" : "py-2.5", collapsible && !expanded && "max-h-72 overflow-y-hidden")}>
         <code>{children}</code>
       </pre>
       {!hideCopy && <CopyButton text={children} className="m-1 rounded-inner-1" />}

@@ -18,7 +18,7 @@ export function StructuredList({ columns, rows, selectable, value, onValueChange
   label: string
   className?: string
 }) {
-  const cell = cn(condensed ? "py-2" : "py-4", flush ? "pr-4 first:pl-0" : "px-4", "text-left align-top")
+  const cell = cn(condensed ? "py-1.5" : "py-2.5", flush ? "pr-3 first:pl-0" : "px-3", "text-left align-top")
   return (
     <table aria-label={label} role={selectable ? "radiogroup" : undefined} className={cn("w-full border-collapse text-body", className)}>
       <thead>

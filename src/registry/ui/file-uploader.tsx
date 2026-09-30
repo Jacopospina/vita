@@ -38,7 +38,7 @@ export function FileUploader({ label, description, accept, multiple = true, maxS
   const hint = description ?? [accept && `Accepted: ${accept.replaceAll(",", ", ")}`, maxSizeMb && `Max ${maxSizeMb} MB per file`].filter(Boolean).join(" · ")
   const pick = () => inputRef.current?.click()
   return (
-    <div className={cn("flex w-full max-w-xl flex-col gap-3", className)}>
+    <div className={cn("flex w-full max-w-xl flex-col gap-2", className)}>
       <div className="flex flex-col gap-1">
         <Label htmlFor={id} className="text-headline">{label}</Label>
         {hint && <p className="text-footnote text-helper">{hint}</p>}
@@ -57,7 +57,7 @@ export function FileUploader({ label, description, accept, multiple = true, maxS
           onDragLeave={() => setOver(false)}
           onDrop={(e) => { e.preventDefault(); setOver(false); onFilesAdded(Array.from(e.dataTransfer.files)) }}
           className={cn(
-            "flex min-h-24 w-full flex-col items-center justify-center gap-1 rounded-lg border border-dashed border-border-strong p-6 text-body text-muted-foreground",
+            "flex min-h-20 w-full flex-col items-center justify-center gap-1 rounded-lg border border-dashed border-border-strong p-5 text-body text-muted-foreground",
             " duration-fast-02 ease-productive hover:bg-hover focus-ring disabled:pointer-events-none disabled:text-disabled-foreground",
             over && "border-primary bg-selected",
           )}
@@ -81,7 +81,7 @@ function FileRow({ file: f, onRemove }: { file: UploadFile; onRemove: (id: strin
   const [leaving, exit] = useExit()
   return (
             <li className={cn("flex flex-col rounded-md bg-layer-1", leaving ? "animate-exit-scale" : "animate-enter-slide-up", f.status === "error" && "outline outline-error")}>
-              <div className="flex h-control-md items-center gap-2 pr-1 pl-4">
+              <div className="flex h-control-md items-center gap-2 pr-1 pl-3">
                 <span className="min-w-0 flex-1 truncate text-body">{f.name}</span>
                 {f.status === "uploading" && <span role="status" aria-label="Uploading" className="size-4 animate-spin rounded-full border-2 border-primary border-r-transparent" />}
                 {f.status === "complete" && <Icon as={CheckmarkFilled} className="text-success" label="Uploaded" />}

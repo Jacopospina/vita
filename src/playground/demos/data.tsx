@@ -227,11 +227,18 @@ export const dataDemos: DemoMap = {
   ],
   "components/tabs": [
     {
-      title: "Line & contained",
+      title: "Pill (default), line & contained",
+      description: "The default is a segmented track whose raised pill slides between tabs on a spring.",
       render: () => (
         <Stack gap="2xl">
           <Tabs defaultValue="overview">
             <TabsList><TabsTrigger value="overview">Overview</TabsTrigger><TabsTrigger value="activity">Activity</TabsTrigger><TabsTrigger value="settings">Settings</TabsTrigger><TabsTrigger value="x" disabled>Billing</TabsTrigger></TabsList>
+            <TabsContent value="overview"><Text tone="muted">Overview content</Text></TabsContent>
+            <TabsContent value="activity"><Text tone="muted">Activity content</Text></TabsContent>
+            <TabsContent value="settings"><Text tone="muted">Settings content</Text></TabsContent>
+          </Tabs>
+          <Tabs defaultValue="overview">
+            <TabsList variant="line"><TabsTrigger value="overview">Overview</TabsTrigger><TabsTrigger value="activity">Activity</TabsTrigger><TabsTrigger value="settings">Settings</TabsTrigger><TabsTrigger value="x" disabled>Billing</TabsTrigger></TabsList>
             <TabsContent value="overview"><Text tone="muted">Overview content</Text></TabsContent>
             <TabsContent value="activity"><Text tone="muted">Activity content</Text></TabsContent>
             <TabsContent value="settings"><Text tone="muted">Settings content</Text></TabsContent>

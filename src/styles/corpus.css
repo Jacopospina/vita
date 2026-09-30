@@ -142,6 +142,9 @@
   --spacing-control-md: var(--corpus-control-md);
   --spacing-control-lg: var(--corpus-control-lg);
   --spacing-control-xl: var(--corpus-control-xl);
+  --spacing-field-sm: var(--corpus-field-sm);
+  --spacing-field-md: var(--corpus-field-md);
+  --spacing-field-lg: var(--corpus-field-lg);
   --spacing-inset-sm: var(--corpus-inset-sm);
   --spacing-inset: var(--corpus-inset);
   --spacing-inset-lg: var(--corpus-inset-lg);
@@ -267,6 +270,16 @@
 /* Numbers & numeric values: tabular figures in the numeric face. `tabular-nums` alone is enough. */
 @layer utilities {
   .tabular-nums { font-family: var(--corpus-font-numeric); }
+}
+
+/* SQUIRCLE — continuous-curvature corners (not a circular arc). Needs a larger radius to read the same size.
+   Browsers without corner-shape keep ordinary rounded corners. */
+@utility squircle {
+  border-radius: var(--corpus-squircle-r, var(--corpus-radius-md));
+  @supports (corner-shape: squircle) {
+    corner-shape: squircle;
+    border-radius: calc(var(--corpus-squircle-r, var(--corpus-radius-md)) * 1.9);
+  }
 }
 
 /* LIFT HOVER — perspective tilt toward the pointer + a following glare (driven by useTilt). */

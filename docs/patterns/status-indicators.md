@@ -35,4 +35,4 @@ related: [tag, notification, data-table]
 1. **Icon + color + text,** always.
 2. **The object's statuses are a closed set** defined in `taxonomy.json → statuses.{object}`, each mapped to a kind. Agents never invent new status words.
 3. **One kind per meaning** across objects: "Degraded" is `warning` for agents *and* integrations.
-4. **Spinning `in-progress`** only when it's really live; `motion-safe` handles reduced motion.
+4. **`in-progress` is alive, not spinning:** the ring holds still while its pie sweeps (`ProgressGlyph`). Use it only when the work is really running.

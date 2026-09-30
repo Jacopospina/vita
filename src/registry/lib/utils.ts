@@ -11,7 +11,7 @@ const twMerge = extendTailwindMerge({
       text: ["caption", "footnote", "body", "body-lg", "headline", "title-3", "title-2", "title-1", "large-title", "display"],
       radius: ["sm", "md", "lg", "xl"],
       shadow: ["raised", "floating", "overlay"],
-      spacing: ["control-xs", "control-sm", "control-md", "control-lg", "control-xl", "inset-sm", "inset", "inset-lg"],
+      spacing: ["control-xs", "control-sm", "control-md", "control-lg", "control-xl", "field-sm", "field-md", "field-lg", "inset-sm", "inset", "inset-lg"],
       ease: ["productive", "productive-enter", "productive-exit", "expressive", "expressive-enter", "expressive-exit", "spring"],
     },
     classGroups: {

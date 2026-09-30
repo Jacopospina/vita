@@ -17,7 +17,7 @@ type Kind = "info" | "success" | "warning" | "error"
 
 const icons = { info: InformationFilled, success: CheckmarkFilled, warning: WarningAltFilled, error: ErrorFilled } as const
 
-const shell = cva("relative flex w-full gap-3 rounded-md border-l-4 text-body text-foreground", {
+const shell = cva("relative flex w-full gap-2 rounded-md border-l-4 text-body text-foreground", {
   variants: {
     kind: {
       info: "border-l-info bg-info-subtle",
@@ -71,7 +71,7 @@ export function InlineNotification({ kind = "info", title, subtitle, action, onC
 /** Callout — permanent, non-dismissible guidance inside page content. */
 export function Callout({ kind = "info", title, children, className }: { kind?: Kind; title?: React.ReactNode; children: React.ReactNode; className?: string }) {
   return (
-    <aside className={cn(shell({ kind }), "items-start p-4", className)}>
+    <aside className={cn(shell({ kind }), "items-start p-3", className)}>
       <Icon as={icons[kind]} size="md" className={cn("mt-px", iconTone[kind])} />
       <div className="flex flex-col gap-1">
         {title && <p className="font-semibold">{title}</p>}

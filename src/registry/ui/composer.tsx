@@ -59,7 +59,7 @@ export function Composer({ placeholder = "Describe what you need", onSubmit, sug
   }
 
   return (
-    <div className={cn("flex w-full flex-col gap-3", className)}>
+    <div className={cn("flex w-full flex-col gap-2", className)}>
       <div
         className={cn(
           "flex flex-col scope-xl border border-border-field bg-field shadow-raised duration-fast-02 ease-productive",
@@ -68,7 +68,7 @@ export function Composer({ placeholder = "Describe what you need", onSubmit, sug
         )}
       >
         {files.length > 0 && (
-          <ul className="flex flex-wrap gap-2 px-4 pt-3">
+          <ul className="flex flex-wrap gap-1.5 px-3 pt-2.5">
             {files.map((f, i) => (
               <li key={i} className="inline-flex h-6 items-center gap-1 rounded-full bg-layer-2 pr-0.5 pl-2 text-caption">
                 <Icon as={Attachment} size="sm" />
@@ -94,11 +94,11 @@ export function Composer({ placeholder = "Describe what you need", onSubmit, sug
             }
           }}
           className={cn(
-            "field-sizing-content max-h-60 min-h-12 w-full resize-none bg-transparent px-4 pt-3 text-foreground outline-none placeholder:text-placeholder",
+            "field-sizing-content max-h-60 min-h-10 w-full resize-none bg-transparent px-3 pt-2.5 text-foreground outline-none placeholder:text-placeholder",
             size === "lg" ? "text-body-lg" : "text-body",
           )}
         />
-        <div className="flex items-center gap-1 px-2 pb-2">
+        <div className="flex items-center gap-1 px-1.5 pb-1.5">
           {attachments && (
             <>
               <input ref={fileRef} type="file" multiple className="sr-only" tabIndex={-1} onChange={(e) => { setFiles((x) => [...x, ...Array.from(e.target.files ?? [])]); e.target.value = "" }} />
@@ -109,7 +109,7 @@ export function Composer({ placeholder = "Describe what you need", onSubmit, sug
             <IconButton icon={listening ? MicrophoneFilled : Microphone} label={listening ? "Stop dictation" : "Dictate"} size="sm" pressed={listening} onClick={toggleVoice} className={cn("rounded-inner-2", listening && "animate-pulse text-primary")} />
           )}
           <span className="flex-1" />
-          <IconButton icon={ArrowUp} label="Send" variant="primary" size="sm" loading={loading} disabled={!value.trim() && !files.length} onClick={submit} className="rounded-full" />
+          <IconButton icon={ArrowUp} label="Send" variant="primary" size="sm" loading={loading} disabled={!value.trim() && !files.length} onClick={submit} className="rounded-full [corner-shape:round]" />
         </div>
       </div>
       {suggestions.length > 0 && (

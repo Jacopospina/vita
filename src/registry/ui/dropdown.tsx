@@ -188,10 +188,10 @@ export function MultiSelect({ items, value, defaultValue = [], onValueChange, si
   const [val, setVal] = useControllable(value, defaultValue, onValueChange)
   const toggle = (v: string) => setVal(val.includes(v) ? val.filter((x) => x !== v) : [...val, v])
   return (
-    <FieldShell {...field} filled={val.length > 0} className={className}>
+    <FieldShell {...field} filled={val.length > 0} fadeLabel={val.length > 0} className={className}>
       {(a11y) => (
         <PopoverPrimitive.Root>
-          <PopoverPrimitive.Trigger {...a11y} disabled={disabled} className={cn(fieldClasses, fieldSize[size], "flex items-center gap-2 text-left")}>
+          <PopoverPrimitive.Trigger {...a11y} disabled={disabled} className={cn(fieldClasses, fieldSize[size], "relative flex items-center gap-2 pr-10 text-left", val.length > 0 && "pt-0")}>
             <span
               aria-hidden={val.length === 0 || undefined}
               className={cn(

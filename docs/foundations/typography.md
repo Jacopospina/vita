@@ -25,16 +25,16 @@ avoid_when:
 
 | Role | Utility | Size | Use for |
 |---|---|---|---|
-| Display | `text-display` | 50 | Marketing hero |
-| Large title | `text-large-title` | 35 | Top page title in content apps |
-| Title 1 | `text-title-1` | 29 | Page title |
-| Title 2 | `text-title-2` | 24 | Section |
-| Title 3 | `text-title-3` | 20 | Subsection, modal, card titles |
-| Headline | `text-headline` | 17 | Group labels, emphasised rows |
-| Body large | `text-body-lg` | 16 | Long reading, onboarding |
-| Body | `text-body` | 14 | Default UI text |
-| Footnote | `text-footnote` | 13 | Labels, secondary info |
-| Caption | `text-caption` | 12 | Helper text, metadata |
+| Display | `text-display` | 47 | Marketing hero |
+| Large title | `text-large-title` | 32 | Top page title in content apps |
+| Title 1 | `text-title-1` | 27 | Page title |
+| Title 2 | `text-title-2` | 22 | Section |
+| Title 3 | `text-title-3` | 19 | Subsection, modal, card titles |
+| Headline | `text-headline` | 16 | Group labels, emphasised rows |
+| Body large | `text-body-lg` | 15 | Long reading, onboarding |
+| Body | `text-body` | 13 | Default UI text |
+| Footnote | `text-footnote` | 12 | Labels, secondary info |
+| Caption | `text-caption` | 11 | Helper text, metadata |
 
 ## Rules
 

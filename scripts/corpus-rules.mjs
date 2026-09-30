@@ -2,7 +2,7 @@
  * Shared Corpus lint rules — used by scripts/corpus-audit.mjs (CLI/CI/agent hooks)
  * and eslint/corpus-plugin.mjs (editor feedback). One source of truth.
  */
-export const ALLOWED_SPACING = new Set(["0", "0.5", "1", "1.5", "2", "3", "4", "6", "8", "10", "12", "16", "20", "24", "40", "px", "auto", "full"])
+export const ALLOWED_SPACING = new Set(["0", "0.5", "1", "1.5", "2", "2.5", "3", "4", "5", "6", "8", "10", "12", "16", "20", "24", "40", "px", "auto", "full"])
 
 export function createRules({ alias = "@/components/corpus" } = {}) {
   const ALIAS = alias
@@ -35,7 +35,7 @@ export function createRules({ alias = "@/components/corpus" } = {}) {
       while ((m = re.exec(line))) if (!ALLOWED_SPACING.has(m[1])) return m
       return null
     },
-    msg: "Off-scale spacing. Allowed steps: 0.5 1 2 3 4 6 8 10 12 16 20 24 40 (2·4·8·12·16·24·32·40·48·64·80·96·160px).",
+    msg: "Off-scale spacing. Allowed steps: 0.5 1 1.5 2 2.5 3 4 5 6 8 10 12 16 20 24 40 (2·4·6·8·10·12·16·20·24·32·40·48·64·80·96·160px).",
   },
   {
     id: "raw-shape",

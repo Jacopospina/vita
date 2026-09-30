@@ -28,7 +28,7 @@ export function PopoverContent({
         sideOffset={sideOffset}
         collisionPadding={8}
         className={cn(
-          "z-50 w-72 scope-lg border border-border-subtle bg-raised p-4 text-foreground shadow-floating outline-none",
+          "z-50 w-72 scope-lg border border-border-subtle bg-raised p-3 text-foreground shadow-floating outline-none",
           "data-[state=open]:animate-enter-scale data-[state=closed]:animate-exit-scale origin-(--radix-popover-content-transform-origin)",
           className,
         )}

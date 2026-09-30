@@ -29,7 +29,7 @@ export function LoginBlock({ productName, onSubmit, onSso, forgotHref = "#", sig
   const emailInvalid = error === "email"
 
   return (
-    <div className="flex w-full max-w-sm flex-col gap-6">
+    <div className="flex w-full max-w-sm flex-col gap-4">
       <div className="flex flex-col gap-1">
         <h1 className="text-title-1">Log in to {productName}</h1>
         {signupHref && (
@@ -41,7 +41,7 @@ export function LoginBlock({ productName, onSubmit, onSso, forgotHref = "#", sig
       {error && error !== "email" && <InlineNotification kind="error" title="Couldn't log in" subtitle={error} />}
       <form
         noValidate
-        className="flex flex-col gap-6"
+        className="flex flex-col gap-3"
         onSubmit={async (e) => {
           e.preventDefault()
           setError(null)

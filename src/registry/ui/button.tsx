@@ -18,7 +18,7 @@ import { animateChildren } from "@/registry/ui/animated"
 const buttonVariants = cva(
   [
     "tilt relative inline-flex shrink-0 select-none items-center justify-center gap-2 whitespace-nowrap font-medium will-change-transform",
-    "rounded-md duration-fast-02 ease-productive",
+    "squircle duration-fast-02 ease-productive",
     "focus-ring active:scale-98 motion-reduce:active:scale-100",
     "disabled:pointer-events-none disabled:bg-layer-2 disabled:text-disabled-foreground disabled:border-transparent",
     "aria-disabled:pointer-events-none aria-disabled:opacity-60",
@@ -34,10 +34,11 @@ const buttonVariants = cva(
         "danger-tertiary": "border border-error bg-transparent text-error-foreground hover:bg-error hover:text-primary-foreground",
         "danger-ghost": "bg-transparent text-error-foreground hover:bg-error hover:text-primary-foreground",
       },
+      /* Right side is ~2× the left: the pointer or thumb rests beside the label, never on it. */
       size: {
-        sm: "h-control-sm px-inset text-body",
-        md: "h-control-md px-inset-lg text-body",
-        lg: "h-control-lg px-inset-lg text-body-lg",
+        sm: "h-control-sm pr-4 pl-2 text-body",
+        md: "h-control-md pr-6 pl-3 text-body",
+        lg: "h-control-lg pr-8 pl-4 text-body-lg",
       },
       fullWidth: { true: "w-full", false: "" },
     },

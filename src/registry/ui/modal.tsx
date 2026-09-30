@@ -107,7 +107,7 @@ export function ModalAction({ onAction, children, loading, ...props }: Omit<Butt
 
 export function ModalHeader({ label, title, description, className }: { label?: React.ReactNode; title: React.ReactNode; description?: React.ReactNode; className?: string }) {
   return (
-    <div className={cn("flex flex-col gap-1 px-6 pt-6 pr-16 pb-4", className)}>
+    <div className={cn("flex flex-col gap-1 px-5 pt-5 pr-14 pb-3", className)}>
       {label && <p className="text-footnote text-muted-foreground">{label}</p>}
       <DialogPrimitive.Title className="text-title-3 text-foreground">{title}</DialogPrimitive.Title>
       {description ? (
@@ -120,7 +120,7 @@ export function ModalHeader({ label, title, description, className }: { label?: 
 }
 
 export function ModalBody({ className, scroll = false, ...props }: React.HTMLAttributes<HTMLDivElement> & { scroll?: boolean }) {
-  return <div className={cn("min-h-0 flex-1 px-6 pb-6 text-body", scroll && "overflow-y-auto border-y border-border-subtle pt-4", className)} {...props} />
+  return <div className={cn("min-h-0 flex-1 px-5 pb-5 text-body", scroll && "overflow-y-auto border-y border-border-subtle pt-3", className)} {...props} />
 }
 
 /** ModalFooter — a full-bleed ActionBar. The primary action only (optionally one secondary alternative). Never Cancel. */

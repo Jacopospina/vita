@@ -23,7 +23,7 @@ avoid_when:
 | `--corpus-radius` | `0.5rem` | Every corner |
 | `--corpus-density` | `1` | Control heights and insets fully; padding, margin and gap at half strength (never below 90%) |
 | `--corpus-font-sans` / `-mono` / `-numeric` | Google Sans Flex / Code / Code | Typefaces |
-| `--corpus-type-base` / `-ratio` | `0.875rem` / `1.2` | The whole type ramp |
+| `--corpus-type-base` / `-ratio` | `0.8125rem` / `1.2` | The whole type ramp (13px body: desktop-native) |
 | `--corpus-motion-scale` | `1` | Every duration (0 = off) |
 
 ## Presets

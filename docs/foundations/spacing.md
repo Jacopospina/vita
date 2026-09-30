@@ -27,8 +27,9 @@ avoid_when:
 
 ## Sizes follow density
 
-- **Control heights.** `h-control-xs` 24 · `sm` 32 · `md` 40 · `lg` 48 · `xl` 64.
-- **Control insets.** `px-inset-sm` 8 · `px-inset` 12 · `px-inset-lg` 16.
+- **Control heights.** `h-control-xs` 20 · `sm` 24 · `md` 28 · `lg` 32 · `xl` 36 — desktop-native density (mini · small · regular · large · extra large).
+- **Field heights.** `h-field-sm` 36 · `md` 40 · `lg` 44 — a step taller to hold the floating label.
+- **Control insets.** `px-inset-sm` 6 · `px-inset` 8 · `px-inset-lg` 12.
 - **One knob.** `--corpus-density` scales control sizes fully, and the spacing scale (padding, margin, gap) at half strength with a 90% floor — so small gaps stay comfortable at low density.
 
 ## Radius

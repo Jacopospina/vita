@@ -64,6 +64,12 @@
   15% { transform: translateY(0.25rem); opacity: 1 }
   100% { transform: translateY(-60vh) scale(0.97); opacity: 0 }
 }
+/* In-progress glyph: the pie fills around the ring, then empties from its start — the icon never spins. */
+@keyframes corpus-pie {
+  0% { stroke-dasharray: 0 100; stroke-dashoffset: 0 }
+  50% { stroke-dasharray: 100 100; stroke-dashoffset: 0 }
+  100% { stroke-dasharray: 100 100; stroke-dashoffset: -100 }
+}
 @keyframes corpus-rise-in { from { opacity: 0; transform: translateY(1.25rem); filter: blur(10px) } }
 @keyframes corpus-sink-out { to { opacity: 0; transform: translateY(-0.5rem); filter: blur(4px) } }
 @keyframes corpus-pulse { 50% { opacity: 0.55 } }
