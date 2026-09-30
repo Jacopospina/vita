@@ -21,3 +21,9 @@ related: [checkbox, dropdown, tile, content-switcher]
 3. **Helper text per option** for consequences ("Next working day · €12").
 4. **Vertical by default.** Horizontal only for 2–3 very short labels (Yes/No, Metric/Imperial).
 5. **A disabled option explains itself** in its helper text ("Not available in your area").
+
+## Choreography
+
+- **Select, expressive.** The fill disc springs out from the centre, then the dot pops in from blur to sharp.
+- **Deselect, productive.** The dot shrinks first, then the disc shrinks back into the centre and reveals the empty ring.
+- **Handoff.** Choosing another option plays both at once: one drains while the other fills.

@@ -23,6 +23,10 @@
   --ease-*: initial;
   --font-*: initial;
   --blur-*: initial;
+  /* choreography blurs only (enter/exit, cross-blur morphs) — not a decorative scale */
+  --blur-xs: 2px;
+  --blur-sm: 4px;
+  --blur-md: 8px;
   --tracking-*: initial;
   --leading-*: initial;
 

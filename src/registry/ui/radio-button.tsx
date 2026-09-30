@@ -49,13 +49,28 @@ export function RadioButton({ label, helperText, className, id: idProp, ...props
       <RadioPrimitive.Item
         id={id}
         className={cn(
-          "peer mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full border border-border-strong bg-field",
-          " duration-fast-01 ease-productive focus-ring",
-          "data-[state=checked]:border-primary disabled:cursor-not-allowed disabled:border-disabled-foreground",
+          "peer relative mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full border border-border-strong bg-field",
+          "duration-moderate-02 ease-productive focus-ring active:scale-90",
+          "data-[state=checked]:border-primary data-[state=checked]:ease-expressive",
+          "disabled:cursor-not-allowed disabled:border-disabled-foreground",
         )}
         {...props}
       >
-        <RadioPrimitive.Indicator forceMount className="size-2 scale-0 rounded-full bg-primary opacity-0 duration-moderate-01 ease-spring data-[state=checked]:scale-100 data-[state=checked]:opacity-100 data-[disabled]:bg-disabled-foreground" />
+        {/*
+          Always mounted so BOTH directions choreograph.
+          Select (expressive):  the fill disc springs out from the centre → the dot pops in, blur → sharp.
+          Deselect (productive): the dot shrinks first → the disc shrinks back into the centre, revealing the empty ring.
+        */}
+        <RadioPrimitive.Indicator
+          forceMount
+          className={cn(
+            "group/ind absolute -inset-px flex scale-0 items-center justify-center rounded-full bg-primary opacity-0 delay-75 duration-moderate-02 ease-productive",
+            "data-[state=checked]:scale-100 data-[state=checked]:opacity-100 data-[state=checked]:delay-0 data-[state=checked]:ease-spring",
+            "data-[disabled]:bg-disabled-foreground",
+          )}
+        >
+          <span className="size-1.5 scale-0 rounded-full bg-primary-foreground opacity-0 blur-xs duration-moderate-01 ease-productive group-data-[state=checked]/ind:scale-100 group-data-[state=checked]/ind:opacity-100 group-data-[state=checked]/ind:blur-none group-data-[state=checked]/ind:delay-75 group-data-[state=checked]/ind:ease-spring" />
+        </RadioPrimitive.Indicator>
       </RadioPrimitive.Item>
       <div className="flex flex-col gap-0.5">
         <Label htmlFor={id} className="text-body font-normal peer-disabled:text-disabled-foreground">
