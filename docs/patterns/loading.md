@@ -1,6 +1,6 @@
 ---
 title: Loading
-summary: Orchestrating loading across a page — progressive, region by region, without layout shift or spinner soup.
+summary: Orchestrating loading across a page — progressive, region by region, without layout shift and without loaders everywhere.
 status: stable
 use_when:
   - Any view that fetches data
@@ -14,7 +14,7 @@ related: [loading, inline-loading, progress-bar, empty-states]
 | Elapsed | Show |
 |---|---|
 | 0–300ms | Nothing (keep the previous content if navigating) |
-| 300ms–2s | Skeletons in the regions that are loading |
+| 300ms–2s | Skeletons in the regions that are loading; `Thinking` for regions without a known layout |
 | 2–10s | Skeleton + a short status line if it's unusual ("Crunching 12 months of data…") |
 | > 10s or measurable | `ProgressBar` with time remaining; let the user leave and notify on completion |
 

@@ -4,6 +4,7 @@ import { cn } from "@/registry/lib/utils"
 import { Icon } from "@/registry/ui/icon"
 import { Button } from "@/registry/ui/button"
 import { Label } from "@/registry/ui/form"
+import { Thinking } from "@/registry/ui/thinking"
 import { useExit } from "@/registry/hooks/use-exit"
 
 /**
@@ -83,7 +84,7 @@ function FileRow({ file: f, onRemove }: { file: UploadFile; onRemove: (id: strin
             <li className={cn("flex flex-col rounded-md bg-layer-1", leaving ? "animate-exit-scale" : "animate-enter-slide-up", f.status === "error" && "outline outline-error")}>
               <div className="flex h-control-md items-center gap-2 pr-1 pl-3">
                 <span className="min-w-0 flex-1 truncate text-body">{f.name}</span>
-                {f.status === "uploading" && <span role="status" aria-label="Uploading" className="size-4 animate-spin rounded-full border-2 border-primary border-r-transparent" />}
+                {f.status === "uploading" && <Thinking mode="basic" size="sm" tone="brand" label="Uploading" />}
                 {f.status === "complete" && <Icon as={CheckmarkFilled} className="text-success" label="Uploaded" />}
                 {f.status === "error" && <Icon as={WarningFilled} className="text-error" label="Upload failed" />}
                 {f.status !== "uploading" && (

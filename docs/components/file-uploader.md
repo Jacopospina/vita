@@ -15,7 +15,7 @@ related: [form, progress-bar, inline-loading]
 
 1. **State limits up front:** accepted types and max size, under the label, before the user tries.
 2. **Validate per file,** immediately on add. Show the reason and fix inline on the failing file ("HEIC isn't supported. Export as JPG or PDF and try again."). Other files continue.
-3. **Per-file status:** uploading (spinner) → complete (✓) → or error (⚠ + message). Large files show a `ProgressBar`.
+3. **Per-file status:** uploading (thinking orb) → complete (✓) → or error (⚠ + message). Large files show a `ProgressBar`.
 4. **Removal** is always possible except mid-upload (cancel instead).
 5. **Drop zone copy:** "Browse files or drag and drop here". The browse part is the link-styled word.
 6. **Don't auto-submit** the form after upload. Uploading and submitting are separate decisions.

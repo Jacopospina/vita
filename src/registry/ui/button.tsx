@@ -9,6 +9,7 @@ import { Group } from "@/registry/ui/layout"
 import { Kbd } from "@/registry/ui/kbd"
 import { useShortcut } from "@/registry/hooks/use-shortcut"
 import { useTilt } from "@/registry/hooks/use-tilt"
+import { Thinking } from "@/registry/ui/thinking"
 import { animateChildren } from "@/registry/ui/animated"
 
 /**
@@ -87,7 +88,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             {iconEl}
             {loading && (
               <span className="absolute inset-0 flex items-center justify-center">
-                <span className="size-4 animate-spin rounded-full border-2 border-current border-r-transparent" />
+                <Thinking mode="basic" size="sm" tone="current" label="Working" />
               </span>
             )}
           </>

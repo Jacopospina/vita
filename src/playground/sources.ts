@@ -16,7 +16,8 @@ const map: Record<string, string[]> = {
   "foundations/interaction": ["registry/hooks/use-shortcut.ts", "registry/ui/kbd.tsx"],
   // components (default: registry/ui/<slug>.tsx)
   "components/menu-buttons": ["registry/ui/menu-button.tsx"],
-  "components/inline-loading": ["registry/ui/loading.tsx"],
+  "components/inline-loading": ["registry/ui/loading.tsx", "registry/ui/thinking.tsx"],
+  "components/loading": ["registry/ui/loading.tsx", "registry/ui/thinking.tsx"],
   "components/ui-shell-header": ["registry/ui/ui-shell.tsx"],
   "components/ui-shell-left-panel": ["registry/ui/ui-shell.tsx"],
   "components/ui-shell-right-panel": ["registry/ui/ui-shell.tsx"],

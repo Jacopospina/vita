@@ -15,7 +15,7 @@ related: [composer, ai-label, forms, dialogs]
 ## The flow
 
 1. **Describe.** One `Composer` with 3 suggestions. Text, voice or files.
-2. **Prepare.** `InlineLoading` with what's happening ("Drafting your agent"). No spinner-only screens.
+2. **Prepare.** `InlineLoading mode="generating"` with what's happening ("Drafting your agent"). Never a bare loader.
 3. **Review.** An `AISurface` with every field prefilled and an `AILabel` explaining how it was derived.
 4. **Approve.** One joined action set: a secondary "Change request" and the primary ("Deploy agent", ⌘S).
 

@@ -101,7 +101,7 @@ Are items uniform records with the same attributes?
 | Layout known | `Skeleton` (preferred) |
 | One action in progress | `Button loading` or `InlineLoading` |
 | Measurable progress | `ProgressBar` |
-| Region with unknown layout | `Loading` (spinner), `overlay` only if interaction must be blocked |
+| Region with unknown layout | `Loading` / `Thinking` (mode: basic, retrieving, generating, searching), `overlay` only if interaction must be blocked |
 
 ## 8. Layers: what floats over what
 

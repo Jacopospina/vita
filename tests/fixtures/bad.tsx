@@ -13,3 +13,4 @@ export function Bad({ dark }: { dark: boolean }) {
 export function BadCopy() {
   return <Button label="Submit">Oops</Button>
 }
+export const OldWorld = () => <span className="size-4 animate-spin rounded-full" />

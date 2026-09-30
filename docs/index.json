@@ -610,18 +610,19 @@
       "slug": "loading",
       "path": "docs/components/loading.md",
       "title": "Loading",
-      "summary": "Spinner, overlay and skeletons. Pick by scope and duration; prefer skeletons whenever the layout is known.",
+      "summary": "Corpus never spins — it thinks. Tiny particles that blend like liquid show what kind of work is happening. Skeletons whenever the layout is known.",
       "status": "stable",
-      "import": "import { Loading, Skeleton, SkeletonText } from \"@/components/corpus/loading\"",
+      "import": "import { Loading, Skeleton, SkeletonText } from \"@/components/corpus/loading\"\nimport { Thinking } from \"@/components/corpus/thinking\"",
       "use_when": [
-        "Skeleton — content with a known shape is on its way (cards, tables, profile)",
-        "Loading — a region/page with unknown layout is loading",
+        "Skeleton — content with a known shape is on its way (cards, tables, profiles)",
+        "Loading / Thinking — a region is working and its layout is unknown",
         "Loading overlay — interaction must be blocked while a region recomputes"
       ],
       "avoid_when": [
         "A single action → Button loading / InlineLoading",
         "Measurable progress → ProgressBar",
-        "Anything under 300ms → show nothing"
+        "Anything under 300ms → show nothing",
+        "Spinners → they belong to the old world (the audit rejects them)"
       ],
       "related": [
         "inline-loading",
@@ -1423,7 +1424,7 @@
       "slug": "loading",
       "path": "docs/patterns/loading.md",
       "title": "Loading",
-      "summary": "Orchestrating loading across a page — progressive, region by region, without layout shift or spinner soup.",
+      "summary": "Orchestrating loading across a page — progressive, region by region, without layout shift and without loaders everywhere.",
       "status": "stable",
       "use_when": [
         "Any view that fetches data"

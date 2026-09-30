@@ -43,7 +43,7 @@ All follow density.
 3. **Sort cycles** asc → desc → none. Sort by what users compare (date, value, status), not by every column.
 4. **Selection is for batch actions only.** If there are no batch actions, don't make rows selectable.
 5. **Row click** opens the detail page only if every row has one. Otherwise put actions in the overflow menu.
-6. **Loading = skeleton rows**, never a spinner over a blank table.
+6. **Loading = skeleton rows**, never a loader over a blank table.
 7. **Empty = EmptyState** inside the table body, with the right message: first-use vs no-results.
 8. **Up to 2 inline row actions;** the rest go in the `OverflowMenu`.
 9. **Horizontal scroll** is acceptable for wide data. Wrapping cells is not (cells don't wrap by default).

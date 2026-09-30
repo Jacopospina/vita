@@ -96,9 +96,9 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/foun
 - [List](docs/components/list.md): Typographic lists inside content — bullets and numbered steps. Not interactive.
   - use: Unordered — sets of related points in content; Ordered — sequential instructions where order matters
   - avoid: Interactive rows → ContainedList; Records → DataTable / StructuredList
-- [Loading](docs/components/loading.md): Spinner, overlay and skeletons. Pick by scope and duration; prefer skeletons whenever the layout is known.
-  - use: Skeleton — content with a known shape is on its way (cards, tables, profile); Loading — a region/page with unknown layout is loading; Loading overlay — interaction must be blocked while a region recomputes
-  - avoid: A single action → Button loading / InlineLoading; Measurable progress → ProgressBar; Anything under 300ms → show nothing
+- [Loading](docs/components/loading.md): Corpus never spins — it thinks. Tiny particles that blend like liquid show what kind of work is happening. Skeletons whenever the layout is known.
+  - use: Skeleton — content with a known shape is on its way (cards, tables, profiles); Loading / Thinking — a region is working and its layout is unknown; Loading overlay — interaction must be blocked while a region recomputes
+  - avoid: A single action → Button loading / InlineLoading; Measurable progress → ProgressBar; Anything under 300ms → show nothing; Spinners → they belong to the old world (the audit rejects them)
 - [Menu buttons](docs/components/menu-buttons.md): Three buttons that open menus. MenuButton groups actions, ComboButton adds alternatives to a default action, OverflowMenu hides secondary actions.
   - use: MenuButton — several equally important related actions under one label ("Export ▾", "Create ▾"); ComboButton — one dominant action plus variations ("Save" | "Save as…", "Save as template"); OverflowMenu — secondary actions on a row, tile, card or page header (⋮)
   - avoid: Selecting a value → Dropdown; A single action → Button; Primary page actions hidden in an overflow → keep the primary visible
@@ -204,7 +204,7 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/foun
 - [Intent-first input](docs/patterns/intent-first.md): Describe, review, approve. The AI turns intent into a prepared result; the user corrects and ships it instead of filling in a form.
   - use: Creating or configuring something with more than ~4 fields; Tasks users describe more easily than they fill in (an agent, a report, a rule)
   - avoid: Tiny edits of one value → inline edit; Regulated data entry that must be typed exactly → Form
-- [Loading](docs/patterns/loading.md): Orchestrating loading across a page — progressive, region by region, without layout shift or spinner soup.
+- [Loading](docs/patterns/loading.md): Orchestrating loading across a page — progressive, region by region, without layout shift and without loaders everywhere.
   - use: Any view that fetches data
   - avoid: Blocking the whole page for partial data
 - [Login](docs/patterns/login.md): Two-step, calm, secure login — identifier first, then password or SSO. Errors never leak whether an account exists.

@@ -48,6 +48,11 @@ export function createRules({ alias = "@/components/corpus" } = {}) {
     msg: "Raw motion value. Use duration-fast-01…slow-02, ease-productive/expressive/spring, animate-enter-*/exit-*.",
   },
   {
+    id: "spinner",
+    test: (line) => /\banimate-spin\b|\bSpinner\b|\bspinner\b(?=["'\s>])/.exec(line),
+    msg: "Spinners belong to the old world. Use <Thinking mode=…> / <Loading> / <InlineLoading> / Skeleton.",
+  },
+  {
     id: "dark-variant",
     test: (line) => /(?<![\w-])dark:(?=[\w[-])/.exec(line),
     msg: "`dark:` override. Tokens already flip in dark mode — fix the token, not the component.",

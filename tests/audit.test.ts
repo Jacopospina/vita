@@ -7,7 +7,7 @@ describe("corpus-audit", () => {
   const rules = new Set(out.violations.map((v) => v.rule))
 
   it("fails the build on violations", () => expect(r.status).toBe(1))
-  for (const rule of ["foreign-icons", "foreign-ui", "raw-color", "palette-color", "arbitrary-value", "type-size", "off-scale-spacing", "raw-shape", "raw-motion", "dark-variant", "inline-style", "raw-element", "taxonomy"])
+  for (const rule of ["foreign-icons", "foreign-ui", "raw-color", "palette-color", "arbitrary-value", "type-size", "off-scale-spacing", "raw-shape", "raw-motion", "dark-variant", "inline-style", "raw-element", "taxonomy", "spinner"])
     it(`catches ${rule}`, () => expect(rules.has(rule)).toBe(true))
   it("honours a designer-approved corpus-allow with a reason", () => {
     expect(out.violations.some((v) => v.rule === "raw-element" && v.line === 9)).toBe(false)

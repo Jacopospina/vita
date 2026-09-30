@@ -5,6 +5,7 @@ import { Stack, Inline } from "@/registry/ui/layout"
 import { Text } from "@/registry/ui/text"
 import { Button, IconButton } from "@/registry/ui/button"
 import { Loading, InlineLoading, Skeleton, SkeletonText } from "@/registry/ui/loading"
+import { Thinking } from "@/registry/ui/thinking"
 import { InlineNotification, Callout, toast } from "@/registry/ui/notification"
 import { ProgressBar } from "@/registry/ui/progress-bar"
 import { ProgressIndicator } from "@/registry/ui/progress-indicator"
@@ -25,6 +26,7 @@ function InlineLoadingDemo() {
       <Button variant="secondary" disabled={status === "active"} onClick={() => { setStatus("active"); setTimeout(() => setStatus("finished"), 1500); setTimeout(() => setStatus("inactive"), 3500) }}>Save draft</Button>
       <InlineLoading status={status} description={status === "active" ? "Saving…" : status === "finished" ? "Saved" : undefined} />
       <InlineLoading status="error" description="Couldn't save. Retry?" />
+      <InlineLoading mode="searching" description="Searching the help center" />
     </Inline>
   )
 }
@@ -119,8 +121,27 @@ export function ShellDemo({ rail, right }: { rail?: boolean; right?: boolean }) 
 
 export const feedbackDemos: DemoMap = {
   "components/loading": [
-    { title: "Spinner sizes", render: () => <Inline gap="xl"><Loading size="sm" /><Loading size="md" /><Loading size="lg" /></Inline> },
-    { title: "Overlay (blocks a region)", render: () => <div className="relative h-40 rounded-md bg-layer-1 p-4"><Text tone="muted">Region content</Text><Loading overlay label="Loading report" /></div> },
+    {
+      title: "Thinking — four modes",
+      description: "Particles that blend like liquid. Pick the mode by what is happening; agentic modes wear the AI spectrum.",
+      render: () => (
+        <div className="grid grid-cols-2 gap-5 md:grid-cols-4">
+          {([
+            ["basic", "Basic logic", "No agent involved"],
+            ["retrieving", "Retrieving", "Recalling from memory"],
+            ["generating", "Generating", "Creating — the orb shape-shifts"],
+            ["searching", "Searching", "Looking things up"],
+          ] as const).map(([mode, title, sub]) => (
+            <Stack key={mode} gap="sm" align="center" className="text-center">
+              <Thinking mode={mode} size="xl" label={title} tone={mode === "basic" ? "brand" : undefined} />
+              <Stack gap="none" align="center"><Text variant="headline">{title}</Text><Text variant="caption" tone="muted">{sub}</Text></Stack>
+            </Stack>
+          ))}
+        </div>
+      ),
+    },
+    { title: "Sizes", render: () => <Inline gap="xl" align="end"><Thinking mode="generating" size="sm" /><Thinking mode="generating" size="md" /><Thinking mode="generating" size="lg" /><Thinking mode="generating" size="xl" /><Thinking mode="generating" size="2xl" /></Inline> },
+    { title: "Overlay (blocks a region)", render: () => <div className="relative h-40 rounded-md bg-layer-1 p-4"><Text tone="muted">Region content</Text><Loading overlay mode="retrieving" label="Loading report" /></div> },
     { title: "Skeleton (preferred)", render: () => <Stack gap="md" className="max-w-md"><Inline gap="sm"><Skeleton shape="circle" className="size-10" /><Stack gap="xs" className="flex-1"><Skeleton shape="text" className="w-1/2" /><Skeleton shape="text" className="w-1/3" /></Stack></Inline><SkeletonText lines={4} /><Skeleton className="h-32" /></Stack> },
   ],
   "components/inline-loading": [{ title: "Save lifecycle", render: () => <InlineLoadingDemo /> }],
