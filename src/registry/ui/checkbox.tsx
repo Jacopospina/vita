@@ -24,7 +24,7 @@ export function Checkbox({ label, helperText, invalid, className, id: idProp, ..
       aria-invalid={invalid || undefined}
       aria-describedby={helperText ? `${id}-help` : undefined}
       className={cn(
-        "peer mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-sm border border-border-strong bg-field",
+        "peer mt-0.5 flex size-4 shrink-0 items-center justify-center squircle border border-border-strong bg-field [--corpus-squircle-r:22%]", // same proportional squircle as IconPlaceholder
         " duration-fast-01 ease-productive focus-ring",
         "data-[state=checked]:border-primary data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground",
         "data-[state=indeterminate]:border-primary data-[state=indeterminate]:bg-primary data-[state=indeterminate]:text-primary-foreground",

@@ -258,7 +258,7 @@ export function Banner({ o, leaving, onClose }: { o: ToastOptions; leaving?: boo
 function Story({ story }: { story?: CapsuleStory }) {
   if (story && typeof story === "object" && "progress" in (story as object)) {
     const s = story as { progress: number; max?: number }
-    return <ProgressRing value={s.progress} max={s.max} size={30} tone={s.progress >= (s.max ?? 100) ? "success" : "primary"} />
+    return <ProgressRing value={s.progress} max={s.max} size={36} tone={s.progress >= (s.max ?? 100) ? "success" : "primary"} />
   }
   if (story && typeof story === "object" && "status" in (story as object)) {
     const k = (story as { status: Kind }).status
@@ -302,7 +302,8 @@ export function Capsule({ o, leaving }: { o: CapsuleOptions; leaving?: boolean }
       {/* Compact: the story alone (or the icon when there is no story). Expanded: icon · text · story. */}
       <div className={cn("reveal-x duration-moderate-02 ease-productive", (open || !hasStory) && "reveal-x-open")}>
         <div>
-          <span className="flex size-8 items-center justify-center">{renderIcon(o.icon)}</span>
+          {/* Ends fill the capsule's full inner height, so the visible edge sits the same 6px from the rim on every side. */}
+          <span className="flex size-9 items-center justify-center rounded-full bg-icon-surface">{renderIcon(o.icon)}</span>
         </div>
       </div>
       <div className={cn("reveal-x duration-moderate-02 ease-productive", open && "reveal-x-open")}>
@@ -313,7 +314,7 @@ export function Capsule({ o, leaving }: { o: CapsuleOptions; leaving?: boolean }
           </div>
         </div>
       </div>
-      {hasStory && <span className="flex size-8 shrink-0 items-center justify-center"><Story story={o.story} /></span>}
+      {hasStory && <span className="flex size-9 shrink-0 items-center justify-center"><Story story={o.story} /></span>}
     </div>
   )
 }
