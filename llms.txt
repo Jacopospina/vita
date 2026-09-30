@@ -90,12 +90,18 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/foun
 - [Form](docs/components/form.md): The structural pieces of every form. Form, FormGroup, FormRow, FormActions, FluidForm and the FieldShell wiring every input uses.
   - use: Any time the user enters data that is submitted together
   - avoid: Single instant settings → Toggle rows, no form wrapper needed; Inline edits of one value → read-only-states pattern (view → edit)
+- [Icon tile](docs/components/icon-tile.md): A glyph on a small squircle tile. The one leading visual for list rows, notifications and banners.
+  - use: Leading visual of a list row (settings, objects); The left side of a notification or toast banner; An agent or app mark next to its name
+  - avoid: An icon inline with text or inside a button → Icon; Large illustrative marks → Pictogram; A person → avatar media
 - [Inline loading](docs/components/inline-loading.md): The status of one operation, in place — "Saving…" → "Saved" → gone.
   - use: Auto-save and background save feedback next to the thing being saved; An action whose result appears in place (toggle persisted, row updated)
   - avoid: Blocking actions → Button loading; Page/region loads → Skeleton / Loading
 - [Link](docs/components/link.md): Navigation to another page, section or resource. If it changes data, it's a Button.
   - use: Navigating to another page or anchor; Referencing a resource inside running text; Opening external documentation (external)
   - avoid: Performing an action (save, delete, open modal) → Button (ghost if it must look light); A whole card is the destination → ClickableTile; Going up a hierarchy → Breadcrumb
+- [List item](docs/components/list-item.md): The settings row. Icon tile on the left, title over an optional subtitle, and the control or chevron on the far right. Group related rows into one card.
+  - use: Settings, preferences and account pages; Navigating into an object or a sub-page; A short list of objects, each with one control
+  - avoid: Sorting, many attributes or bulk actions → DataTable; Pure text bullets → List; A titled list with a list-level action → ContainedList
 - [List](docs/components/list.md): Typographic lists inside content — bullets and numbered steps. Not interactive.
   - use: Unordered — sets of related points in content; Ordered — sequential instructions where order matters
   - avoid: Interactive rows → ContainedList; Records → DataTable / StructuredList

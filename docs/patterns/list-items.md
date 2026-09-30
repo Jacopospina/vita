@@ -11,7 +11,7 @@ avoid_when:
   - Comparing many attributes, sorting or bulk actions → DataTable
   - Pure text bullets → List
   - Lists with a titled header and a list-level action → ContainedList
-related: [contained-list, structured-list, data-table, toggle]
+related: [list-item, contained-list, structured-list, data-table, toggle]
 ---
 
 ## Anatomy
@@ -23,7 +23,7 @@ related: [contained-list, structured-list, data-table, toggle]
 ## Rules
 
 1. **Belonging has no gaps.** Rows about the same thing share one `ListGroup`: the card owns fill and radius, rows are flat, and separators are inset. A row on its own is a group of one.
-2. **Different topics stand apart.** Separate groups sit a small gap apart. Give a run of groups a `ListSection` heading when it helps scanning.
+2. **Different topics stand apart.** Separate groups sit a clear gap apart, owned by `ListSection`; never space them by hand. Give a run of groups a `ListSection` heading when it helps scanning.
 3. **One target per row.**
    - Navigation rows (`onClick` or `href`, no trailing) are fully clickable and end in a chevron.
    - Rows with a `trailing` control are not clickable; the control is the target.

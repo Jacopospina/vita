@@ -5,6 +5,7 @@ import { Icon } from "@/registry/ui/icon"
 import { Button } from "@/registry/ui/button"
 import { useExit } from "@/registry/hooks/use-exit"
 import { ProgressRing } from "@/registry/ui/progress-bar"
+import { IconTile } from "@/registry/ui/icon-tile"
 import { animateChildren } from "@/registry/ui/animated"
 import type { IconType } from "@/registry/icons"
 
@@ -23,12 +24,12 @@ const iconTone = { info: "text-info", success: "text-success", warning: "text-wa
 
 /**
  * Notice — the ONE notification anatomy, shared by inline notifications, callouts and toast banners:
- * squircle card on a NEUTRAL surface · icon tile on the left (the icon + its semantic color carry the kind —
+ * squircle card on a NEUTRAL surface · IconTile (soft) on the left (the icon + its semantic color carry the kind —
  * never a colored bar or tinted fill) · title over subtitle · optional action · × appears on hover/focus.
  *   surface solid → in page content (inline, callout) · glass → floating over content (toast banner)
  */
 function Notice({ icon, kind, eyebrow, source, title, subtitle, children, action, onClose, surface = "solid", motion, role, className }: {
-  icon?: React.ReactNode
+  icon?: IconType | React.ReactNode
   kind?: Kind
   eyebrow?: React.ReactNode
   source?: React.ReactNode
@@ -53,11 +54,7 @@ function Notice({ icon, kind, eyebrow, source, title, subtitle, children, action
         className,
       )}
     >
-      {icon && (
-        <span aria-hidden className={cn("flex size-10 shrink-0 items-center justify-center squircle bg-background/70 shadow-raised [--corpus-squircle-r:var(--corpus-radius-md)]", kind && iconTone[kind])}>
-          {icon}
-        </span>
-      )}
+      {icon && <IconTile icon={icon} variant="soft" tone={kind ?? "neutral"} size="lg" draw />}
       <div className={cn("flex min-w-0 flex-1 flex-col", !subtitle && !children && !eyebrow && !source && "self-center")}>
         {eyebrow && <p className="text-caption font-medium tracking-wide text-muted-foreground uppercase">{eyebrow}</p>}
         {source && <p className="font-semibold">{source}</p>}
@@ -104,12 +101,12 @@ export function InlineNotification({ kind = "info", title, subtitle, action, onC
   return (
     <Notice
       kind={kind}
-      icon={<Icon as={icon ?? icons[kind]} size="md" draw="in" />}
+      icon={icon ?? icons[kind]}
       title={title}
       subtitle={subtitle}
       action={action}
       role={role ?? (kind === "error" ? "alert" : "status")}
-      motion={leaving ? "animate-exit-slide-down" : "animate-enter-slide-up"}
+      motion={leaving ? "animate-exit-slide-down" : "animate-enter-fall"}
       onClose={onClose && (() => exit(() => { setClosed(true); onClose() }))}
       className={className}
     />
@@ -118,7 +115,7 @@ export function InlineNotification({ kind = "info", title, subtitle, action, onC
 
 /** Callout — permanent, non-dismissible guidance inside page content. Same anatomy, no close. */
 export function Callout({ kind = "info", title, children, className }: { kind?: Kind; title?: React.ReactNode; children: React.ReactNode; className?: string }) {
-  return <Notice kind={kind} icon={<Icon as={icons[kind]} size="md" />} title={title} role="note" className={className}>{children}</Notice>
+  return <Notice kind={kind} icon={icons[kind]} title={title} role="note" className={className}>{children}</Notice>
 }
 
 /* ---------------- Banners (toast) & Capsules (quick feedback) ---------------- */
@@ -151,8 +148,9 @@ export interface CapsuleOptions {
   icon: ToastIcon
   title: string
   subtitle?: string
-  /** ALWAYS present: the semantic story on the right — progress, status, or a custom node. */
-  story: CapsuleStory
+  /** The semantic story on the right — progress, status, or a custom node. Include it whenever there is one:
+   *  it's what the compact capsule shows first. Without it, the compact capsule shows the icon. */
+  story?: CapsuleStory
   /** ms. Default 3000. 0 = stays until dismissed/updated. */
   duration?: number
 }
@@ -245,7 +243,7 @@ export function Banner({ o, leaving, onClose }: { o: ToastOptions; leaving?: boo
     <Notice
       surface="glass"
       kind={o.kind}
-      icon={icon ? renderIcon(icon) : undefined}
+      icon={icon ?? undefined}
       eyebrow={o.eyebrow}
       source={o.source}
       title={o.title}
@@ -257,7 +255,7 @@ export function Banner({ o, leaving, onClose }: { o: ToastOptions; leaving?: boo
   )
 }
 
-function Story({ story }: { story: CapsuleStory }) {
+function Story({ story }: { story?: CapsuleStory }) {
   if (story && typeof story === "object" && "progress" in (story as object)) {
     const s = story as { progress: number; max?: number }
     return <ProgressRing value={s.progress} max={s.max} size={30} tone={s.progress >= (s.max ?? 100) ? "success" : "primary"} />
@@ -271,26 +269,27 @@ function Story({ story }: { story: CapsuleStory }) {
 
 /**
  * Capsule — the quick-feedback capsule. ALWAYS: icon left · title/subtitle centre · semantic story right.
- * Choreography: an icon-only pill falls in (and fades) from above the viewport with gravity; at its lowest point it
- * bounces back to rest and widens during that bounce to reveal
- * title and story. Exit is the same film rewound: it narrows back to the icon, then slides up and out.
+ * Choreography (productive — no bounce): a compact pill showing ONLY the story (or the icon, when there is no story)
+ * slides down from outside the viewport with a fade; ~400ms in it widens: the icon slides in on the left, the title
+ * opens, the story travels to the right. Exit is the same film rewound: it narrows back, then slides up and out.
  */
-/** Share of the island-in keyframes at which the pill hits its lowest point and starts bouncing back. */
-const ISLAND_LOW = 0.5
+/** How long the compact capsule (story only) stays readable before it expands, from the start of its enter. */
+const COMPACT_MS = 400
 
 export function Capsule({ o, leaving }: { o: CapsuleOptions; leaving?: boolean }) {
   const [landed, setLanded] = React.useState(false)
   const ref = React.useRef<HTMLDivElement>(null)
   React.useEffect(() => {
     const el = ref.current
-    const drop = el?.getAnimations().find((a) => (a as CSSAnimation).animationName === "corpus-island-in")
-    const total = Number(drop?.effect?.getComputedTiming().duration) || 0
-    // Widen at the exact moment the fall bottoms out — measured on the running animation's own clock.
-    const wait = total ? Math.max(0, total * ISLAND_LOW - Number(drop?.currentTime ?? 0)) : 0
+    const enter = el?.getAnimations().find((a) => (a as CSSAnimation).animationName === "corpus-island-in")
+    const reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+    // Measured on the enter animation's own clock, so the compact moment is always ~400ms.
+    const wait = reduced ? 0 : Math.max(0, COMPACT_MS - Number(enter?.currentTime ?? 0))
     const t = window.setTimeout(() => setLanded(true), wait)
     return () => window.clearTimeout(t)
   }, [])
   const open = landed && !leaving
+  const hasStory = o.story !== undefined && o.story !== null && o.story !== false
   return (
     <div
       ref={ref}
@@ -300,16 +299,21 @@ export function Capsule({ o, leaving }: { o: CapsuleOptions; leaving?: boolean }
         leaving ? "animate-island-out" : "animate-island-in",
       )}
     >
-      <span className="flex size-8 shrink-0 items-center justify-center">{renderIcon(o.icon)}</span>
-      <div className={cn("reveal-x duration-moderate-02 ease-expressive", open && "reveal-x-open")}>
-        <div className={cn("flex items-center gap-3 duration-moderate-02", open ? "opacity-100" : "opacity-0")}>
-          <div className="flex w-56 max-w-[calc(100vw-8rem)] flex-col items-center pl-3 text-center">
+      {/* Compact: the story alone (or the icon when there is no story). Expanded: icon · text · story. */}
+      <div className={cn("reveal-x duration-moderate-02 ease-productive", (open || !hasStory) && "reveal-x-open")}>
+        <div>
+          <span className="flex size-8 items-center justify-center">{renderIcon(o.icon)}</span>
+        </div>
+      </div>
+      <div className={cn("reveal-x duration-moderate-02 ease-productive", open && "reveal-x-open")}>
+        <div>
+          <div className={cn("flex w-56 max-w-[calc(100vw-8rem)] flex-col items-center px-3 text-center duration-moderate-02", open ? "opacity-100" : "opacity-0")}>
             <p className="w-full truncate text-body font-semibold">{o.title}</p>
             {o.subtitle && <p className="w-full truncate text-footnote text-muted-foreground">{animateChildren(o.subtitle)}</p>}
           </div>
-          <span className="flex size-8 shrink-0 items-center justify-center"><Story story={o.story} /></span>
         </div>
       </div>
+      {hasStory && <span className="flex size-8 shrink-0 items-center justify-center"><Story story={o.story} /></span>}
     </div>
   )
 }

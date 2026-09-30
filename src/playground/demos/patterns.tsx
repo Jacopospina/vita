@@ -8,6 +8,7 @@ import { Button, IconButton, ButtonSet } from "@/registry/ui/button"
 import { EmptyState } from "@/registry/ui/empty-state"
 import { StatusIndicator } from "@/registry/ui/status-indicator"
 import { ListItem, ListGroup, ListSection } from "@/registry/ui/list-item"
+import { IconTile } from "@/registry/ui/icon-tile"
 import { PageHeader } from "@/registry/ui/page-header"
 import { Truncate } from "@/registry/ui/truncate"
 import { LoginBlock } from "@/registry/blocks/login"
@@ -324,7 +325,7 @@ export const patternDemos: DemoMap = {
       title: "Grouped rows",
       description: "Rows that belong together join into one card. Separate groups stand apart.",
       render: () => (
-        <Stack gap="sm" className="max-w-xl">
+        <ListSection className="max-w-xl">
           <ListGroup>
             <ListItem icon={Information} title="About" onClick={() => {}} />
             <ListItem icon={Renew} tone="brand" title="Updates" value="Auto" onClick={() => {}} />
@@ -338,7 +339,7 @@ export const patternDemos: DemoMap = {
             <ListItem icon={Plug} tone="success" title="Integrations" onClick={() => {}} />
             <ListItem icon={Notification} tone="warning" title="Notifications" onClick={() => {}} />
           </ListGroup>
-        </Stack>
+        </ListSection>
       ),
     },
     {
@@ -372,5 +373,47 @@ function ControlRows() {
     </ListGroup>
   )
 }
+
+patternDemos["components/icon-tile"] = [
+  {
+    title: "Filled — categories",
+    description: "Colored tile, white glyph. Settings rows, agent and app marks.",
+    render: () => (
+      <Inline gap="md" wrap>
+        <IconTile icon={Information} />
+        <IconTile icon={Renew} tone="brand" />
+        <IconTile icon={Bot} tone="info" />
+        <IconTile icon={Plug} tone="success" />
+        <IconTile icon={Notification} tone="warning" />
+        <IconTile icon={Security} tone="error" />
+      </Inline>
+    ),
+  },
+  {
+    title: "Soft — semantic kinds",
+    description: "Neutral tile, colored glyph. Notifications: the glyph's color carries the kind.",
+    render: () => (
+      <Inline gap="md" wrap>
+        <IconTile icon={Information} variant="soft" tone="info" size="lg" />
+        <IconTile icon={Bot} variant="soft" tone="success" size="lg" />
+        <IconTile icon={Notification} variant="soft" tone="warning" size="lg" />
+        <IconTile icon={Security} variant="soft" tone="error" size="lg" />
+      </Inline>
+    ),
+  },
+  {
+    title: "Sizes",
+    render: () => (
+      <Inline gap="md">
+        <IconTile icon={Bot} tone="brand" size="sm" />
+        <IconTile icon={Bot} tone="brand" size="md" />
+        <IconTile icon={Bot} tone="brand" size="lg" />
+      </Inline>
+    ),
+  },
+]
+
+// The List item component page shows the same live rows as the pattern.
+patternDemos["components/list-item"] = patternDemos["patterns/list-items"]
 
 export { IconButton }

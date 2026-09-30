@@ -41,7 +41,27 @@
 @keyframes corpus-shimmer { from { background-position: 150% 0 } to { background-position: -50% 0 } }
 @keyframes corpus-indeterminate { from { transform: translateX(-100%) } to { transform: translateX(250%) } }
 @keyframes corpus-text-in { from { opacity: 0; transform: translateY(0.6em); filter: blur(8px) } to { opacity: 1; transform: none; filter: blur(0) } }
-@keyframes corpus-dialog-in { from { opacity: 0; transform: translateY(2rem) scale(0.95); filter: blur(12px) } }
+/*
+ * GRAVITY — expressive arrivals are briefly subject to gravity: they FALL in (accelerating), dip a hair below
+ * their resting place, and settle back (decelerating). Lowest point at 60%. Productive UI (menus, tooltips,
+ * page reflow) never bounces.
+ */
+@keyframes corpus-dialog-in {
+  0% { opacity: 0; transform: translateY(-1.5rem) scale(0.96); filter: blur(12px); animation-timing-function: cubic-bezier(0.5, 0, 1, 0.6) }
+  60% { opacity: 1; transform: translateY(0.3rem) scale(1); filter: blur(0); animation-timing-function: cubic-bezier(0.2, 0.7, 0.3, 1) }
+  100% { opacity: 1; transform: none; filter: none }
+}
+@keyframes corpus-fall-in {
+  0% { opacity: 0; transform: translateY(-0.75rem) scale(0.98); filter: blur(8px); animation-timing-function: cubic-bezier(0.5, 0, 1, 0.6) }
+  60% { opacity: 1; transform: translateY(0.2rem); filter: blur(0); animation-timing-function: cubic-bezier(0.2, 0.7, 0.3, 1) }
+  100% { opacity: 1; transform: none; filter: none }
+}
+/* Gravity as a LAYER on the independent `translate` property — stacks on any enter that moves via transform. */
+@keyframes corpus-gravity {
+  0% { translate: 0 -0.75rem; animation-timing-function: cubic-bezier(0.5, 0, 1, 0.6) }
+  60% { translate: 0 0.2rem; animation-timing-function: cubic-bezier(0.2, 0.7, 0.3, 1) }
+  100% { translate: 0 0 }
+}
 @keyframes corpus-ai-spin { to { --corpus-ai-angle: 360deg } }
 @keyframes corpus-focus-in { from { outline-color: transparent; outline-offset: 6px } }
 @keyframes corpus-draw-in {
@@ -72,17 +92,15 @@
 }
 @keyframes corpus-text-in-down { from { opacity: 0; transform: translateY(-0.55em); filter: blur(6px) } to { opacity: 1; transform: none; filter: blur(0) } }
 @keyframes corpus-text-out-down { from { opacity: 1; transform: none; filter: blur(0) } to { opacity: 0; transform: translateY(0.55em); filter: blur(6px) } }
-@keyframes corpus-drop-in { from { opacity: 0; transform: translateY(-0.35rem) } }
-@keyframes corpus-banner-in { from { opacity: 0; transform: translateX(110%) scale(0.96); filter: blur(8px) } }
-@keyframes corpus-banner-out { to { opacity: 0; transform: translateX(110%) scale(0.96); filter: blur(6px) } }
-/* Capsule drop, two equal halves: (1) the icon-only pill FALLS with gravity (accelerating) to its lowest point,
-   (2) BOUNCES BACK (decelerating) to rest — and widens during exactly that second half (ISLAND_LOW in notification.tsx;
-   the width transition is duration-moderate-02 = half of duration-expressive). */
-@keyframes corpus-island-in {
-  0% { opacity: 0; transform: translateY(calc(-100% - 2rem)); animation-timing-function: cubic-bezier(0.5, 0, 1, 0.6) }
-  50% { opacity: 1; transform: translateY(0.5rem); animation-timing-function: cubic-bezier(0.2, 0.7, 0.3, 1) }
+@keyframes corpus-drop-in {
+  0% { opacity: 0; transform: translateY(-0.35rem); animation-timing-function: cubic-bezier(0.5, 0, 1, 0.6) }
+  60% { opacity: 1; transform: translateY(0.1rem); animation-timing-function: cubic-bezier(0.2, 0.7, 0.3, 1) }
   100% { opacity: 1; transform: none }
 }
+@keyframes corpus-banner-in { from { opacity: 0; transform: translateX(110%) scale(0.96); filter: blur(8px) } }
+@keyframes corpus-banner-out { to { opacity: 0; transform: translateX(110%) scale(0.96); filter: blur(6px) } }
+/* Capsule: productive — a straight slide down from outside the viewport with a fade. No bounce. */
+@keyframes corpus-island-in { from { opacity: 0; transform: translateY(calc(-100% - 2rem)) } }
 @keyframes corpus-island-out { to { opacity: 0; transform: translateY(calc(-100% - 2rem)) } }
 @keyframes corpus-rise-in { from { opacity: 0; transform: translateY(1.25rem); filter: blur(10px) } }
 @keyframes corpus-sink-out { to { opacity: 0; transform: translateY(-0.5rem); filter: blur(4px) } }
@@ -123,6 +141,7 @@
     --animate-text-reveal-down: corpus-fade-in var(--corpus-duration-fast-02) linear both;
     --animate-text-leave-down: corpus-fade-out var(--corpus-duration-fast-02) linear both;
     --animate-drop-in: corpus-fade-in var(--corpus-duration-fast-02) linear;
+    --animate-enter-fall: corpus-fade-in var(--corpus-duration-fast-02) linear both;
     --animate-banner-in: corpus-fade-in var(--corpus-duration-fast-02) linear both;
     --animate-banner-out: corpus-fade-out var(--corpus-duration-fast-02) linear both;
     --animate-island-in: corpus-fade-in var(--corpus-duration-fast-02) linear both;

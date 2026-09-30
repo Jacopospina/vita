@@ -19,7 +19,7 @@ related: [capsule, notifications, modal, inline-loading, status-indicators]
 
 One structure everywhere:
 - **Squircle card on a neutral surface.** Never a colored bar or a tinted fill.
-- **Icon tile on the left.** The icon and its semantic color carry the kind: `info`, `success`, `warning` or `error`.
+- **[IconTile](#/components/icon-tile) on the left** (soft variant). The icon and its semantic color carry the kind: `info`, `success`, `warning` or `error`.
 - **Title over subtitle.**
 - **At most one action** on the right.
 - **×** appears on hover or focus.

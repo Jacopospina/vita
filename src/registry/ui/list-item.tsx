@@ -3,6 +3,7 @@ import { ChevronRight } from "@/registry/icons"
 import type { IconType } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { Icon } from "@/registry/ui/icon"
+import { IconTile, type IconTileTone } from "@/registry/ui/icon-tile"
 
 /**
  * ListItem — the settings-style row: leading icon tile · title (+ subtitle) · trailing control on the far right.
@@ -13,19 +14,10 @@ import { Icon } from "@/registry/ui/icon"
  *   control row      trailing = Toggle / Button / Dropdown / value text — the row itself is not clickable
  */
 
-const tileTone = {
-  neutral: "bg-secondary text-secondary-foreground",
-  brand: "bg-primary text-primary-foreground",
-  info: "bg-info text-primary-foreground",
-  success: "bg-success text-primary-foreground",
-  warning: "bg-warning text-primary-foreground",
-  error: "bg-error text-primary-foreground",
-} as const
-
 export interface ListItemProps {
   /** Leading glyph, drawn on a small squircle tile. */
   icon?: IconType
-  tone?: keyof typeof tileTone
+  tone?: IconTileTone
   /** Leading media instead of an icon tile — avatar, device image, app mark. */
   media?: React.ReactNode
   title: React.ReactNode
@@ -49,9 +41,7 @@ export function ListItem({ icon, tone = "neutral", media, title, subtitle, value
       {media ? (
         <span className="flex shrink-0 items-center">{media}</span>
       ) : icon ? (
-        <span aria-hidden className={cn("flex size-6 shrink-0 items-center justify-center squircle [--corpus-squircle-r:var(--corpus-radius-sm)]", tileTone[tone])}>
-          <Icon as={icon} size="sm" />
-        </span>
+        <IconTile icon={icon} tone={tone} size="sm" />
       ) : null}
       <span className="flex min-w-0 flex-1 flex-col">
         <span className="truncate text-body">{title}</span>
@@ -65,7 +55,7 @@ export function ListItem({ icon, tone = "neutral", media, title, subtitle, value
   const row = cn(
     "group/row relative flex w-full min-h-control-xl items-center gap-2.5 rounded-inner-1 px-2.5 py-1.5 text-left text-foreground",
     // inset separator between rows; it fades when either neighbour is hovered/selected
-    "before:absolute before:inset-x-2.5 before:top-0 before:h-px before:bg-border-subtle before:duration-fast-02 group-first/item:before:opacity-0",
+    "before:absolute before:inset-x-2.5 before:top-0 before:h-px before:bg-border before:duration-fast-02 group-first/item:before:opacity-0",
     navigable && "duration-fast-02 hover:bg-hover hover:before:opacity-0 active:bg-active focus-ring-inset",
     selected && "bg-selected text-selected-foreground before:opacity-0",
     disabled && "pointer-events-none text-disabled-foreground",
@@ -92,11 +82,14 @@ export function ListGroup({ className, children, ...props }: React.HTMLAttribute
   )
 }
 
-/** ListSection — a heading (and optional note) over one or more ListGroups. Groups inside stand apart by a small gap. */
+/**
+ * ListSection — one or more ListGroups, with an optional heading and note. It OWNS the gap between groups
+ * (different topics stand apart); never space groups with a loose Stack.
+ */
 export function ListSection({ title, description, className, children }: { title?: React.ReactNode; description?: React.ReactNode; className?: string; children: React.ReactNode }) {
   const id = React.useId()
   return (
-    <section aria-labelledby={title ? id : undefined} className={cn("flex flex-col gap-2", className)}>
+    <section aria-labelledby={title ? id : undefined} className={cn("flex flex-col gap-3", className)}>
       {(title || description) && (
         <header className="flex flex-col px-2.5 pt-2">
           {title && <h3 id={id} className="text-headline">{title}</h3>}

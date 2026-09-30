@@ -75,7 +75,7 @@ function TableDemo() {
       rows={filtered.slice((page - 1) * size, page * size)}
       selectable
       batchActions={() => (<><Button icon={Download}>Export</Button><Button icon={TrashCan}>Delete</Button></>)}
-      toolbar={<><div className="mr-auto w-64"><Search variant="toolbar" size="md" placeholder="Search agents" value={q} onValueChange={(v) => { setQ(v); setPage(1) }} /></div><IconButton icon={Filter} label="Filter" /><Button icon={Add}>Create agent</Button></>}
+      toolbar={<><Search variant="toolbar" size="md" placeholder="Search agents" value={q} onValueChange={(v) => { setQ(v); setPage(1) }} /><IconButton icon={Filter} label="Filter" /><Button icon={Add}>Create agent</Button></>}
       rowActions={() => (
         <OverflowMenu>
           <MenuItem icon={Edit}>Edit</MenuItem>

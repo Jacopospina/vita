@@ -13,7 +13,7 @@ Corpus is consumed by humans and AI agents in product repos, so every change mus
 3. **Decision guide:** update `docs/components/choosing-components.md` if the component changes any choice.
 4. **Demos:** add every variant and state to `src/playground/demos/*.tsx`. The first demo is the hero preview.
 5. **Manifest:** `src/playground/manifest.ts`. Map the sources in `src/playground/sources.ts` if the slug ≠ the filename.
-6. **Choreography check:** nothing may mount, unmount or swap on a state change without a transition (see *Motion → State changes never snap*): `forceMount` + data-state for indicators, `SwapIcon` for glyphs, `useExit`/`FieldMessage` for leaving content, `reveal` for expand/collapse.
+6. **Choreography check:** expressive arrivals (notifications, dialogs, field messages) obey *Motion → Gravity*. Nothing may mount, unmount or swap on a state change without a transition (see *Motion → State changes never snap*): `forceMount` + data-state for indicators, `SwapIcon` for glyphs, `useExit`/`FieldMessage` for leaving content, `reveal` for expand/collapse.
 7. Run `pnpm llms` (regenerates `docs/index.json` and `llms.txt`), then `pnpm check`.
 
 ## Writing docs (card-first — pages must be scannable in seconds)

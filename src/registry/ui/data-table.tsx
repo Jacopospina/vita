@@ -87,16 +87,18 @@ export function DataTable<T extends { id: string }>({
   const cellPad = "px-3"
 
   return (
-    <section className={cn("flex w-full flex-col overflow-hidden rounded-lg bg-layer-1", className)} aria-label={typeof title === "string" ? title : label}>
+    <section className={cn("flex w-full flex-col overflow-clip rounded-lg bg-layer-1", className)} aria-label={typeof title === "string" ? title : label}>
       {(title || description) && (
-        <header className="flex flex-col gap-1 px-3 pt-3 pb-3">
+        <header className={cn("flex flex-col gap-1 px-3 pt-3", toolbar || batchActions ? "pb-0" : "pb-3")}>
           {title && <h3 className="text-title-3">{title}</h3>}
           {description && <p className="text-body text-muted-foreground">{description}</p>}
         </header>
       )}
       {(toolbar || batchActions) && (
-        // ONE strip that MORPHS: toolbar ⇄ selection bar in the same place. Inset, with space before the table.
-        <div className="px-3 pb-3">
+        // ONE strip that MORPHS: toolbar ⇄ selection bar in the same place, with space before the table.
+        // Toolbar: full width, flush with the table. Selection bar: insets (px grows) so it reads as a raised layer.
+        // STICKY: it stays in reach while the rows scroll (overflow-clip on the section keeps sticky working).
+        <div className={cn("sticky top-0 z-20 bg-layer-1 pt-3 pb-3 motion-expressive", selecting ? "px-3" : "px-0")}>
           <div
             className={cn(
               "grid min-h-control-lg items-center squircle p-1 motion-expressive [grid-template-areas:'bar']",
@@ -106,7 +108,7 @@ export function DataTable<T extends { id: string }>({
             {toolbar && (
               <div
                 inert={selecting || undefined}
-                className={cn("flex items-center justify-end gap-2 motion-expressive [grid-area:bar]", selecting ? "pointer-events-none scale-98 opacity-0 blur-xs" : "opacity-100")}
+                className={cn("flex items-center justify-end gap-2 motion-expressive [grid-area:bar] [&>[role=search]]:min-w-0 [&>[role=search]]:flex-1", selecting ? "pointer-events-none scale-98 opacity-0 blur-xs" : "opacity-100")}
               >
                 {toolbar}
               </div>

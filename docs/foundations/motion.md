@@ -64,6 +64,25 @@ avoid_when:
 | `animate-enter-*` / `animate-exit-*` | Single elements: scale (popovers, menus), slide-up (notifications, toasts), panel (side panels), fade |
 | `useExit()` | Play the exit before removing something from the DOM |
 
+## Gravity
+
+Expressive arrivals are briefly subject to gravity:
+- They **fall** in, accelerating.
+- They **dip** a hair below their resting place.
+- They **settle** back, decelerating.
+
+The lowest point is at 60% of the enter. Exits never bounce; they are productive.
+
+| Arrives with gravity | Token |
+|---|---|
+| Toast banner: slides in from the edge, with the gravity layer | `animate-banner-in` |
+| Inline notification | `animate-enter-fall` |
+| Modal | `animate-enter-dialog` |
+| Field message | `animate-drop-in` |
+
+- **Gravity layer.** `corpus-gravity` animates the independent `translate` property, so it stacks on any enter that moves with `transform`. Don't use it on elements positioned with `translate` utilities; build the fall into their keyframes instead.
+- **Productive UI never bounces.** Capsules, menus, tooltips, popovers, reflow and page transitions stay straight.
+
 ## Durations
 
 | Token | ms | Use |

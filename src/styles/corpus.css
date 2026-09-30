@@ -165,7 +165,7 @@
 @theme {
   --animate-enter-scale: corpus-scale-in var(--corpus-duration-moderate-01) var(--corpus-ease-productive-enter);
   --animate-focus-in: corpus-focus-in var(--corpus-duration-slow-01) var(--corpus-ease-expressive-enter);
-  --animate-enter-dialog: corpus-dialog-in var(--corpus-duration-expressive) var(--corpus-ease-expressive-enter);
+  --animate-enter-dialog: corpus-dialog-in var(--corpus-duration-expressive) linear both;
   --animate-exit-dialog: corpus-scale-out var(--corpus-duration-moderate-01) var(--corpus-ease-expressive-exit);
   /* Exits are productive: the user has already moved on. */
   --animate-modal-fall: corpus-modal-fall var(--corpus-duration-moderate-02) var(--corpus-ease-productive-exit) both;
@@ -185,11 +185,12 @@
   --animate-text-reveal: corpus-text-in var(--corpus-duration-expressive) var(--corpus-ease-expressive-enter) both;
   --animate-text-reveal-down: corpus-text-in-down var(--corpus-duration-expressive) var(--corpus-ease-expressive-enter) both;
   --animate-text-leave-down: corpus-text-out-down var(--corpus-duration-moderate-02) var(--corpus-ease-productive-exit) both;
-  --animate-banner-in: corpus-banner-in var(--corpus-duration-expressive) var(--corpus-ease-expressive-enter) both;
+  --animate-banner-in: corpus-banner-in var(--corpus-duration-expressive) var(--corpus-ease-expressive-enter) both, corpus-gravity var(--corpus-duration-expressive) linear both;
+  --animate-enter-fall: corpus-fall-in var(--corpus-duration-expressive) linear both;
   --animate-banner-out: corpus-banner-out var(--corpus-duration-moderate-02) var(--corpus-ease-productive-exit) both;
-  --animate-island-in: corpus-island-in var(--corpus-duration-expressive) linear both;
+  --animate-island-in: corpus-island-in var(--corpus-duration-moderate-02) var(--corpus-ease-productive-enter) both;
   --animate-island-out: corpus-island-out var(--corpus-duration-moderate-02) var(--corpus-ease-productive-exit) var(--corpus-duration-moderate-02) both;
-  --animate-drop-in: corpus-drop-in var(--corpus-duration-expressive) var(--corpus-ease-expressive-enter);
+  --animate-drop-in: corpus-drop-in var(--corpus-duration-expressive) linear both;
   --animate-shimmer: corpus-shimmer 1.6s linear infinite;
   /* status glyphs: non-final states stay alive by animating an INNER path; the frame never moves */
   --animate-status-write: corpus-status-write 2.4s var(--corpus-ease-productive) infinite;
@@ -282,7 +283,8 @@
 /* Collapsible regions without measuring: grid rows 0fr ↔ 1fr, child overflow-hidden. */
 @utility reveal { display: grid; grid-template-rows: 0fr; & > * { overflow: hidden; min-height: 0; } }
 @utility reveal-open { grid-template-rows: 1fr; }
-/* Horizontal reveal: width grows from 0 to its content (capsule expanding sideways). */
+/* Horizontal reveal: width grows from 0 to its content (capsule expanding sideways).
+   The direct child must NOT have a fixed width (wrap sized content in a plain div), or the column can't collapse. */
 @utility reveal-x { display: grid; grid-template-columns: 0fr; & > * { overflow: hidden; min-width: 0; } }
 @utility reveal-x-open { grid-template-columns: 1fr; }
 

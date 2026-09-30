@@ -18,10 +18,12 @@ related: [pagination, structured-list, contained-list, filtering, search, empty-
 
 1. **Title + description** (optional when `PageHeader` already names it).
 2. **Toolbar:** Search (toolbar variant) · filter · settings · **primary action** (right).
-3. **The toolbar morphs into the selection bar.** One inset strip: when rows are selected its surface turns primary and the search/actions blur out as the count, batch actions and × (Esc) blur in — same place, nothing hidden behind anything.
-4. **Header row:** sortable columns show an arrow on hover and the direction when active.
-5. **Rows:** optional expand chevron · selection checkbox · cells · row overflow menu.
-6. **Pagination.**
+   - **Search fills the remaining width,** so it is always a short move from wherever the pointer is. Never a narrow box pinned far left. Pass `Search` directly; the toolbar stretches it.
+3. **The strip is sticky.** Toolbar and selection bar stay pinned at the top of the scroll area, so search and batch actions are always in reach.
+4. **The toolbar morphs into the selection bar.** One inset strip: when rows are selected its surface turns primary and the search/actions blur out as the count, batch actions and × (Esc) blur in — same place, nothing hidden behind anything.
+5. **Header row:** sortable columns show an arrow on hover and the direction when active.
+6. **Rows:** optional expand chevron · selection checkbox · cells · row overflow menu.
+7. **Pagination.**
 
 ## Sizes (row height)
 
