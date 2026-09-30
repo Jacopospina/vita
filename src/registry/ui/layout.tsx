@@ -44,8 +44,11 @@ export function Stack({ className, direction, gap, align, justify, wrap, asChild
   return <Comp ref={ref} className={cn(stackVariants({ direction, gap, align, justify, wrap }), className)} {...props} />
 }
 
-/** Inline — horizontal row. Defaults to centred items and a 6px gap. */
-export function Inline({ gap = "xs", align = "center", ...props }: Omit<StackProps, "direction">) {
+/**
+ * Inline — horizontal row of DIFFERENT components (a button and a status, a field and a toggletip):
+ * vertically centred, 12px apart by default. Things that belong together touch instead — use Group.
+ */
+export function Inline({ gap = "md", align = "center", ...props }: Omit<StackProps, "direction">) {
   return <Stack direction="row" gap={gap} align={align} {...props} />
 }
 

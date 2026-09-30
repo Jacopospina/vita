@@ -38,10 +38,10 @@ export function InlineLoading({ status = "active", description, className }: { s
       role="status"
       aria-live="polite"
       aria-hidden={!visible || undefined}
-      className={cn("inline-grid motion-productive", visible ? "grid-cols-[1fr] opacity-100 blur-none" : "grid-cols-[0fr] opacity-0 blur-xs", className)}
+      className={cn("inline-grid items-center self-center motion-productive", visible ? "grid-cols-[1fr] opacity-100 blur-none" : "grid-cols-[0fr] opacity-0 blur-xs", className)}
     >
-      <div className="min-w-0 overflow-hidden">
-        <div className="inline-flex items-center gap-2 text-footnote whitespace-nowrap text-muted-foreground">
+      <div className="flex min-w-0 items-center overflow-hidden">
+        <div className="flex items-center gap-2 text-footnote leading-none whitespace-nowrap text-muted-foreground">
           {shown.status === "active" && <span className="size-4 shrink-0 animate-spin rounded-full border-2 border-primary border-r-transparent" />}
           {shown.status === "finished" && <Icon as={CheckmarkFilled} draw="in" className="text-success" />}
           {shown.status === "error" && <Icon as={ErrorFilled} draw="in" className="text-error" />}

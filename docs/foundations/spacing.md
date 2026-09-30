@@ -11,6 +11,11 @@ avoid_when:
 
 > [!IMPORTANT] Belonging has no gaps. Items that belong together (button sets, action bars, swatches, segments) touch at 0px — use `Group`, `ButtonSet` or `ActionBar`. Spacing is for separating things that don't belong together.
 
+## Touch or space?
+
+- **Belong together → touch.** Button sets, action bars, joined fields, swatches: 0px, one shape (`Group`, `ButtonSet`, `FormRow`).
+- **Different components → space and align.** A button next to a status, a field next to a hint: at least 8px apart (12px by default with `Inline`), vertically centred on each other.
+
 ## The scale
 
 | Name | Tailwind | px at density 1 | Typical use |

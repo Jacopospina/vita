@@ -34,7 +34,7 @@ avoid_when:
 ## Stacks
 
 - **`Stack`.** Vertical, 16px gap by default.
-- **`Inline`.** Horizontal and centred, 8px gap by default.
+- **`Inline`.** Horizontal, vertically centred, 12px gap by default — for different components side by side.
 - **`Group`.** Zero gap, joined edges, only outer corners rounded — for things that belong together.
 - **Gap names.** `2xs` 4 · `xs` 8 · `sm` 12 · `md` 16 · `lg` 24 · `xl` 32 · `2xl` 48.
 

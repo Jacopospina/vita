@@ -17,6 +17,7 @@ Consistency comes from rules, not taste. Run this checklist on every screen, top
 ## 2. Rhythm & spacing
 
 - [ ] Things that belong together touch (0 gap): button sets, action bars, swatches, segments. Use `Group`/`ButtonSet`/`ActionBar`.
+- [ ] Different components side by side have a real gap (≥ 8px, `Inline` default 12px) and are vertically centred on each other.
 - [ ] Gaps inside groups are smaller than gaps between groups: related `xs`, siblings `md`/`lg`, sections `xl`/`2xl`.
 - [ ] Form fields are 24px apart (`Form` handles this). Sections are 32–48px apart.
 - [ ] Container padding is consistent: tiles `p-4` (compact) or `p-6` (roomy), never mixed on one screen.

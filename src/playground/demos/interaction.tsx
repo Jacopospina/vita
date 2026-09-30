@@ -143,8 +143,8 @@ export const interactionDemos: DemoMap = {
       title: "Belonging has no gaps",
       render: () => (
         <Stack gap="lg">
-          <ButtonSet><Button variant="tertiary" icon={Download} iconPosition="start">Export</Button><Button variant="tertiary" icon={Copy} iconPosition="start">Duplicate</Button><Button variant="tertiary" icon={Share} iconPosition="start">Share</Button></ButtonSet>
-          <Group><Button variant="secondary" icon={Edit} iconPosition="start">Edit</Button><Button>Deploy agent</Button></Group>
+          <ButtonSet><Button variant="tertiary" icon={Download}>Export</Button><Button variant="tertiary" icon={Copy}>Duplicate</Button><Button variant="tertiary" icon={Share}>Share</Button></ButtonSet>
+          <Group><Button variant="secondary" icon={Edit}>Edit</Button><Button>Deploy agent</Button></Group>
         </Stack>
       ),
     },

@@ -118,7 +118,7 @@ export const actionDemos: DemoMap = {
       render: () => (
         <Inline wrap gap="sm">
           <Button icon={Add}>Create agent</Button>
-          <Button variant="tertiary" icon={Download} iconPosition="start">Export</Button>
+          <Button variant="tertiary" icon={Download}>Export</Button>
           <IconButton icon={Edit} label="Edit" shortcut="mod+e" />
           <IconButton icon={Settings} label="Settings" variant="secondary" />
           <Button loading>Saving</Button>
@@ -132,7 +132,7 @@ export const actionDemos: DemoMap = {
       render: () => (
         <Stack gap="lg">
           <ButtonSet><Button variant="secondary">Save as draft</Button><Button>Deploy agent</Button></ButtonSet>
-          <ButtonSet><Button variant="tertiary" icon={Download} iconPosition="start">Export</Button><Button variant="tertiary" icon={Copy} iconPosition="start">Duplicate</Button><Button variant="tertiary" icon={Share} iconPosition="start">Share</Button></ButtonSet>
+          <ButtonSet><Button variant="tertiary" icon={Download}>Export</Button><Button variant="tertiary" icon={Copy}>Duplicate</Button><Button variant="tertiary" icon={Share}>Share</Button></ButtonSet>
           <div className="max-w-xs"><ButtonSet stacked><Button variant="secondary">Save as draft</Button><Button>Deploy agent</Button></ButtonSet></div>
         </Stack>
       ),

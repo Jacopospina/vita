@@ -25,7 +25,7 @@ avoid_when:
 2. **Icons inherit text color.** Only status icons get their own color.
 3. **Decorative by default.** Pass `label` only when the icon alone carries meaning.
 4. **One icon per concept.** The taxonomy maps concepts to icons: delete is always `TrashCan`.
-5. **Trailing on actions.** Forward and primary actions put the icon after the label; toolbar actions may lead.
+5. **Far right on buttons.** A button's icon always sits at its right edge, after the label.
 6. **Icon-only needs a label.** `IconButton` requires it and shows it as a tooltip.
 
 ## Common mapping

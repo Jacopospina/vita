@@ -48,7 +48,7 @@ function FilteringDemo() {
       <Inline gap="xs" wrap>
         <div className="w-64"><Search size="md" placeholder="Search agent or team" value={q} onValueChange={setQ} /></div>
         <Popover>
-          <PopoverTrigger asChild><Button variant="secondary" icon={Filter} iconPosition="start">Filter{applied.length ? ` (${applied.length})` : ""}</Button></PopoverTrigger>
+          <PopoverTrigger asChild><Button variant="secondary" icon={Filter}>Filter{applied.length ? ` (${applied.length})` : ""}</Button></PopoverTrigger>
           <PopoverContent className="w-72">
             <Stack gap="md">
               <CheckboxGroup legend="Status">{all.map((s) => <Checkbox key={s} label={s} checked={statuses.includes(s)} onCheckedChange={(c) => setStatuses((x) => (c ? [...x, s] : x.filter((y) => y !== s)))} />)}</CheckboxGroup>
@@ -73,7 +73,7 @@ function ReadOnlyDemo() {
   const [editing, setEditing] = React.useState(false)
   return (
     <Stack gap="md" className="max-w-lg">
-      <Inline justify="between"><Text variant="title-3">Workspace settings</Text>{editing ? <IconButton icon={Close} label="Discard changes" shortcut="escape" onClick={() => setEditing(false)} /> : <Button variant="ghost" icon={Edit} iconPosition="start" shortcut="mod+e" onClick={() => setEditing(true)}>Edit</Button>}</Inline>
+      <Inline justify="between"><Text variant="title-3">Workspace settings</Text>{editing ? <IconButton icon={Close} label="Discard changes" shortcut="escape" onClick={() => setEditing(false)} /> : <Button variant="ghost" icon={Edit} shortcut="mod+e" onClick={() => setEditing(true)}>Edit</Button>}</Inline>
       {editing ? (
         <Form onSubmit={(e) => { e.preventDefault(); setEditing(false); toast({ kind: "success", title: "Settings saved" }) }}>
           <TextInput label="Workspace name" defaultValue="Vita Support" />
@@ -138,7 +138,7 @@ function CommonActionsDemo() {
         title="Support triage"
         status={<StatusIndicator kind="success">Live</StatusIndicator>}
         description="Answers and routes support tickets · Vita Large · Production"
-        actions={<><Button variant="secondary" icon={Copy} iconPosition="start">Duplicate</Button><Button icon={Renew}>Redeploy</Button><OverflowMenu label="More actions"><MenuItem icon={Edit}>Edit</MenuItem><MenuItem icon={Download}>Export config</MenuItem><MenuSeparator /><MenuItem icon={TrashCan} danger onSelect={() => setDel(true)}>Delete agent</MenuItem></OverflowMenu></>}
+        actions={<><Button variant="secondary" icon={Copy}>Duplicate</Button><Button icon={Renew}>Redeploy</Button><OverflowMenu label="More actions"><MenuItem icon={Edit}>Edit</MenuItem><MenuItem icon={Download}>Export config</MenuItem><MenuSeparator /><MenuItem icon={TrashCan} danger onSelect={() => setDel(true)}>Delete agent</MenuItem></OverflowMenu></>}
         tabs={<Tabs defaultValue="o"><TabsList><TabsTrigger value="o">Overview</TabsTrigger><TabsTrigger value="h">History</TabsTrigger></TabsList></Tabs>}
       />
       <ConfirmModal danger open={del} onOpenChange={setDel} title="Delete Support triage?" description="It stops answering tickets and its run history is removed." confirmLabel="Delete agent" onConfirm={() => setDel(false)} />

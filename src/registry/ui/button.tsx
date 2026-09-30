@@ -48,8 +48,9 @@ const buttonVariants = cva(
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
   asChild?: boolean
-  /** Icon from @/registry/icons. Placed after the label unless iconPosition="start". */
+  /** Icon from @/registry/icons. Always on the FAR RIGHT, after the label. */
   icon?: IconType
+  /** @deprecated (0.2) Icons are always on the far right; this prop is ignored. */
   iconPosition?: "start" | "end"
   /** Shows an inline spinner, keeps width, blocks re-submit. */
   loading?: boolean
@@ -58,7 +59,8 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, fullWidth, asChild, icon, iconPosition = "end", loading, disabled, shortcut, children, ...props }, ref) => {
+  ({ className, variant, size, fullWidth, asChild, icon, iconPosition: _iconPosition, loading, disabled, shortcut, children, ...props }, ref) => {
+    void _iconPosition
     const Comp = asChild ? Slot.Root : "button"
     const inner = React.useRef<HTMLButtonElement | null>(null)
     React.useImperativeHandle(ref, () => inner.current as HTMLButtonElement)
@@ -69,7 +71,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       <Comp
         ref={inner}
         aria-keyshortcuts={shortcut}
-        className={cn(buttonVariants({ variant, size, fullWidth }), fullWidth && icon && "justify-between", className)}
+        className={cn(buttonVariants({ variant, size, fullWidth }), icon && "justify-between gap-3", className)}
         disabled={asChild ? undefined : disabled || loading}
         aria-busy={loading || undefined}
         {...props}
@@ -79,9 +81,8 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           children
         ) : (
           <>
-            {iconPosition === "start" && iconEl}
             <span className={cn("inline-flex items-center gap-2", loading && "invisible")}>{animateChildren(children)}</span>
-            {iconPosition === "end" && iconEl}
+            {iconEl}
             {loading && (
               <span className="absolute inset-0 flex items-center justify-center">
                 <span className="size-4 animate-spin rounded-full border-2 border-current border-r-transparent" />

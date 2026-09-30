@@ -45,7 +45,7 @@ Heights follow `--corpus-density`. Buttons in a `ButtonSet` share one size.
    - Never: "OK", "Yes", "Submit", "Click here".
    - Max 3 words.
 2. **Belonging has no gaps.** A `ButtonSet` joins its buttons edge to edge, primary last (rightmost). No Cancel buttons: surfaces close with × or Esc.
-3. **Icons:** trailing for forward and primary actions (`Add`, `ArrowRight`), leading for toolbar-style tertiary and ghost. Never both. Never an icon that repeats the label's meaning without adding clarity.
+3. **Icons sit on the far right, always.** Label left, icon pushed to the right edge. One icon at most, and only when it adds clarity. (`iconPosition` is deprecated and ignored.)
 4. **Loading, not double-clicking:** on async actions pass `loading`. It keeps the width and blocks re-submission.
 5. **Disabled buttons need a reason.** If the reason isn't obvious, keep the button enabled and validate on click, or wrap it in a Tooltip (see *Disabled states*).
 6. **Full-width only** on mobile, in narrow panels and on login forms.
