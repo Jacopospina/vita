@@ -271,19 +271,26 @@ function Story({ story }: { story: CapsuleStory }) {
 
 /**
  * Capsule — the quick-feedback capsule. ALWAYS: icon left · title/subtitle centre · semantic story right.
- * Choreography: an icon-only pill slides in (and fades) from above the viewport → then widens to reveal
+ * Choreography: an icon-only pill falls in (and fades) from above the viewport, bounces a hair with gravity, and
+ * widens while it bounces back to reveal
  * title and story. Exit is the same film rewound: it narrows back to the icon, then slides up and out.
  */
+const ISLAND_LAND = 0.55
+
 export function Capsule({ o, leaving }: { o: CapsuleOptions; leaving?: boolean }) {
   const [landed, setLanded] = React.useState(false)
+  const ref = React.useRef<HTMLDivElement>(null)
   React.useEffect(() => {
     const reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
-    const t = window.setTimeout(() => setLanded(true), reduced ? 0 : 380)
+    // Expand the moment the drop bounces back: 55% into the island-in keyframes.
+    const dur = (parseFloat(ref.current ? getComputedStyle(ref.current).animationDuration : "") || 0.48) * 1000
+    const t = window.setTimeout(() => setLanded(true), reduced ? 0 : dur * ISLAND_LAND)
     return () => window.clearTimeout(t)
   }, [])
   const open = landed && !leaving
   return (
     <div
+      ref={ref}
       role="status"
       className={cn(
         "glass pointer-events-auto flex items-center rounded-full p-1.5 text-foreground",

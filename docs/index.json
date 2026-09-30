@@ -294,6 +294,30 @@
     },
     {
       "section": "components",
+      "slug": "capsule",
+      "path": "docs/components/capsule.md",
+      "title": "Capsule",
+      "summary": "Quick feedback at the top centre. Icon on the left, title over subtitle in the middle, the semantic story on the right.",
+      "status": "stable",
+      "import": "import { capsule } from \"@/components/corpus/notification\"\n\nconst id = capsule({ icon: <Icon as={CloudUpload} size=\"md\" />, title: \"Syncing knowledge\", subtitle: \"Help center\", story: { progress: 40 }, duration: 0 })\ncapsule.update(id, { story: { progress: 100 }, duration: 1800 })",
+      "use_when": [
+        "Glanceable feedback that something connected, finished or is progressing",
+        "A live value worth watching for a few seconds (sync progress, a connection)"
+      ],
+      "avoid_when": [
+        "Anything that needs reading or an action → toast banner",
+        "Errors the user must fix → InlineNotification next to the cause",
+        "Long-running work the user should track → ProgressBar in the page"
+      ],
+      "related": [
+        "notification",
+        "notifications",
+        "progress-bar",
+        "loading"
+      ]
+    },
+    {
+      "section": "components",
       "slug": "checkbox",
       "path": "docs/components/checkbox.md",
       "title": "Checkbox",
@@ -711,9 +735,9 @@
       "slug": "notification",
       "path": "docs/components/notification.md",
       "title": "Notification",
-      "summary": "System messages. Inline for problems tied to a place, toast for confirmation of a user action, callout for static guidance.",
+      "summary": "System messages with one anatomy — icon tile, title over subtitle, optional action. Inline for problems tied to a place, toast banner for confirmation, callout for static guidance.",
       "status": "stable",
-      "import": "import { InlineNotification, Callout, Toaster, toast } from \"@/components/corpus/notification\"",
+      "import": "import { InlineNotification, Callout, Toaster, toast } from \"@/components/corpus/notification\"\n\ntoast({ icon: Bot, source: \"Vita\", title: \"Agent deployed\", subtitle: \"Support triage is live\" })",
       "use_when": [
         "Inline — errors/warnings about a section, form summary, account-level issues",
         "Toast — brief confirmation of something the user just did (with optional Undo)",
@@ -726,6 +750,7 @@
         "Marketing/announcements → not a system notification"
       ],
       "related": [
+        "capsule",
         "notifications",
         "modal",
         "inline-loading",
@@ -1417,6 +1442,31 @@
         "ai-label",
         "forms",
         "dialogs"
+      ]
+    },
+    {
+      "section": "patterns",
+      "slug": "list-items",
+      "path": "docs/patterns/list-items.md",
+      "title": "List items",
+      "summary": "The settings row. Icon tile on the left, title (and subtitle) in the middle, the control or chevron on the far right. Rows that belong together join into one card.",
+      "status": "stable",
+      "import": "import { ListGroup, ListItem, ListSection } from \"@/components/corpus/list-item\"\n\n<ListGroup>\n  <ListItem icon={Bot} tone=\"brand\" title=\"Support triage\" subtitle=\"Zendesk · Live\" onClick={open} />\n</ListGroup>",
+      "use_when": [
+        "Settings, preferences and account pages",
+        "Navigating into an object or sub-page (chevron rows)",
+        "A short list of objects, each with one control (toggle, button, status)"
+      ],
+      "avoid_when": [
+        "Comparing many attributes, sorting or bulk actions → DataTable",
+        "Pure text bullets → List",
+        "Lists with a titled header and a list-level action → ContainedList"
+      ],
+      "related": [
+        "contained-list",
+        "structured-list",
+        "data-table",
+        "toggle"
       ]
     },
     {

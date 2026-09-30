@@ -56,6 +56,9 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/foun
 - [Button](docs/components/button.md): Triggers an action. Clear hierarchy, strict restraint. One primary per view, and every other button steps down.
   - use: The user performs an action (save, create, send, delete, open a modal); Grouping the actions that end a form, modal or flow (ButtonSet)
   - avoid: Navigating to another page → Link (or ClickableTile); Choosing a value → Dropdown / RadioGroup / ContentSwitcher; Several related actions under one label → MenuButton; Toggling a setting → Toggle
+- [Capsule](docs/components/capsule.md): Quick feedback at the top centre. Icon on the left, title over subtitle in the middle, the semantic story on the right.
+  - use: Glanceable feedback that something connected, finished or is progressing; A live value worth watching for a few seconds (sync progress, a connection)
+  - avoid: Anything that needs reading or an action → toast banner; Errors the user must fix → InlineNotification next to the cause; Long-running work the user should track → ProgressBar in the page
 - [Checkbox](docs/components/checkbox.md): Independent choices that take effect on submit, and multi-selection from a short list.
   - use: Selecting any number of options from ≤ 6 (CheckboxGroup); A single opt-in inside a form (agree to terms, subscribe); Selecting rows in a table (handled by DataTable)
   - avoid: The change applies immediately → Toggle; Exactly one choice → RadioGroup; More than ~6 options → MultiSelect
@@ -108,7 +111,7 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/foun
 - [Modal](docs/components/modal.md): Interrupts to focus on one task or decision. Modality is a last resort.
   - use: Confirming a destructive or irreversible action (ConfirmModal danger); A short, self-contained task (≤ 5 fields) that shouldn't leave the page; Critical information that must be acknowledged
   - avoid: The user needs to see the page while working → RightPanel; A couple of options next to a control → Popover; Long forms or multi-step flows → a page; Success messages → toast; Opening a modal from a modal → never
-- [Notification](docs/components/notification.md): System messages. Inline for problems tied to a place, toast for confirmation of a user action, callout for static guidance.
+- [Notification](docs/components/notification.md): System messages with one anatomy — icon tile, title over subtitle, optional action. Inline for problems tied to a place, toast banner for confirmation, callout for static guidance.
   - use: Inline — errors/warnings about a section, form summary, account-level issues; Toast — brief confirmation of something the user just did (with optional Undo); Callout — permanent, non-dismissible contextual guidance
   - avoid: A decision is required before continuing → Modal; Field-level validation → the field's invalidText; Errors inside a toast that need action → InlineNotification near the cause; Marketing/announcements → not a system notification
 - [Number input](docs/components/number-input.md): Precise numeric entry with steppers, bounds and units.
@@ -204,6 +207,9 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/foun
 - [Intent-first input](docs/patterns/intent-first.md): Describe, review, approve. The AI turns intent into a prepared result; the user corrects and ships it instead of filling in a form.
   - use: Creating or configuring something with more than ~4 fields; Tasks users describe more easily than they fill in (an agent, a report, a rule)
   - avoid: Tiny edits of one value → inline edit; Regulated data entry that must be typed exactly → Form
+- [List items](docs/patterns/list-items.md): The settings row. Icon tile on the left, title (and subtitle) in the middle, the control or chevron on the far right. Rows that belong together join into one card.
+  - use: Settings, preferences and account pages; Navigating into an object or sub-page (chevron rows); A short list of objects, each with one control (toggle, button, status)
+  - avoid: Comparing many attributes, sorting or bulk actions → DataTable; Pure text bullets → List; Lists with a titled header and a list-level action → ContainedList
 - [Loading](docs/patterns/loading.md): Orchestrating loading across a page — progressive, region by region, without layout shift and without loaders everywhere.
   - use: Any view that fetches data
   - avoid: Blocking the whole page for partial data

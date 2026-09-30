@@ -75,7 +75,13 @@
 @keyframes corpus-drop-in { from { opacity: 0; transform: translateY(-0.35rem) } }
 @keyframes corpus-banner-in { from { opacity: 0; transform: translateX(110%) scale(0.96); filter: blur(8px) } }
 @keyframes corpus-banner-out { to { opacity: 0; transform: translateX(110%) scale(0.96); filter: blur(6px) } }
-@keyframes corpus-island-in { from { opacity: 0; transform: translateY(calc(-100% - 2rem)) } }
+/* Capsule drop: falls in with gravity (accelerating), overshoots a hair, settles back. The bounce-back starts
+   at 55% — the capsule starts expanding at exactly that moment (ISLAND_LAND in notification.tsx). */
+@keyframes corpus-island-in {
+  0% { opacity: 0; transform: translateY(calc(-100% - 2rem)); animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45) }
+  55% { opacity: 1; transform: translateY(0.25rem); animation-timing-function: cubic-bezier(0.2, 0, 0.3, 1) }
+  100% { opacity: 1; transform: none }
+}
 @keyframes corpus-island-out { to { opacity: 0; transform: translateY(calc(-100% - 2rem)) } }
 @keyframes corpus-rise-in { from { opacity: 0; transform: translateY(1.25rem); filter: blur(10px) } }
 @keyframes corpus-sink-out { to { opacity: 0; transform: translateY(-0.5rem); filter: blur(4px) } }
