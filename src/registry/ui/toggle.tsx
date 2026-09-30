@@ -45,17 +45,17 @@ export function Toggle({ label, hideLabel, helperText, stateText, size = "md", l
             // Squircle track; the knob inside is concentric (its radius = track radius − the 2px padding).
             "group/switch peer inline-flex shrink-0 cursor-pointer items-center squircle p-0.5 duration-fast-02 ease-productive focus-ring [--corpus-squircle-r:var(--corpus-radius-sm)]",
             "bg-border-strong data-[state=checked]:bg-success disabled:cursor-not-allowed disabled:bg-layer-3",
-            size === "md" ? "h-6 w-11" : "h-4 w-7",
+            size === "md" ? "h-6 w-10" : "h-4 w-7",
           )}
         >
           <SwitchPrimitive.Thumb
             className={cn(
               "pointer-events-none block squircle bg-background shadow-raised duration-moderate-01 ease-spring [--corpus-squircle-r:calc(var(--corpus-radius-sm)-2px)]",
-              // A rectangle knob (wider than tall). Press: it stretches toward where it will travel (anchored on its
+              // A slim rectangle knob (half as wide as tall-ish: 12×20 md, 8×12 sm). Press: it stretches toward where it will travel (anchored on its
               // resting side); release: springs back.
               size === "md"
-                ? "h-5 w-6 data-[state=checked]:translate-x-4 group-active/switch:w-7 group-active/switch:data-[state=checked]:translate-x-3"
-                : "h-3 w-4 data-[state=checked]:translate-x-2 group-active/switch:w-5 group-active/switch:data-[state=checked]:translate-x-1",
+                ? "h-5 w-3 data-[state=checked]:translate-x-6 group-active/switch:w-4 group-active/switch:data-[state=checked]:translate-x-5"
+                : "h-3 w-2 data-[state=checked]:translate-x-4 group-active/switch:w-3 group-active/switch:data-[state=checked]:translate-x-3",
             )}
           />
         </SwitchPrimitive.Root>

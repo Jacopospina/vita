@@ -22,6 +22,6 @@ related: [checkbox, content-switcher, forms]
 
 ## Choreography
 
-- **Shape.** A rectangular squircle knob inside a squircle track. The radii are concentric: the knob's radius is the track's radius minus the padding.
+- **Shape.** A slim rectangular squircle knob (12 × 20) inside a squircle track. The radii are concentric: the knob's radius is the track's radius minus the padding.
 - **Press.** The knob stretches toward the side it will travel to.
 - **Release.** It springs across and back to its resting width, and the track colour follows.
