@@ -37,7 +37,9 @@ function Digit({ value, index }: { value: number; index: number }) {
   return (
     // Clipped with clip-path, NOT overflow: overflow would move the reel's baseline to its bottom edge and
     // misalign digits against separators ($ , .) and surrounding text. The invisible "0" keeps the text baseline.
-    <span className="relative inline-block h-[1lh] [clip-path:inset(0)]">
+    // Whole-pixel line height (round(1lh)): each reel shifts by an exact multiple of it, so no digit lands on a
+    // fractional pixel and gets snapped up or down relative to its neighbours.
+    <span className="relative inline-block h-[1lh] leading-[round(1lh,1px)] [clip-path:inset(0)]">
       <span className="invisible">0</span>
       <span
         ref={strip}

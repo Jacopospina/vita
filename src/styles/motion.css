@@ -105,6 +105,11 @@
 @keyframes corpus-rise-in { from { opacity: 0; transform: translateY(1.25rem); filter: blur(10px) } }
 @keyframes corpus-sink-out { to { opacity: 0; transform: translateY(-0.5rem); filter: blur(4px) } }
 @keyframes corpus-pulse { 50% { opacity: 0.55 } }
+/* Liquid progress: droplets bob off the fill's head and merge back; indeterminate droplets flow along the track. */
+@keyframes corpus-drip-a { 0%, 100% { transform: translateX(0) } 50% { transform: translateX(0.5rem) } }
+@keyframes corpus-drip-b { 0%, 100% { transform: translateX(0) scale(0.75) } 50% { transform: translateX(0.3rem) scale(0.75) } }
+@keyframes corpus-flow { from { left: -16% } to { left: 100% } }
+@keyframes corpus-spectrum-shift { to { background-position: 200% 0 } }
 @keyframes corpus-status-write { 0% { stroke-dashoffset: 100 } 45%, 60% { stroke-dashoffset: 0 } 100% { stroke-dashoffset: -100 } }
 @keyframes corpus-status-dot { 0%, 100% { opacity: 0.25 } 40% { opacity: 1 } }
 @keyframes corpus-status-turn { to { transform: rotate(360deg) } }
@@ -147,6 +152,12 @@
     --animate-island-in: corpus-fade-in var(--corpus-duration-fast-02) linear both;
     --animate-island-out: corpus-fade-out var(--corpus-duration-fast-02) linear both;
     --animate-indeterminate: corpus-pulse 1.5s linear infinite;
+    --animate-drip-a: none;
+    --animate-drip-b: none;
+    --animate-flow-1: none;
+    --animate-flow-2: none;
+    --animate-flow-3: none;
+    --animate-spectrum: none;
   }
 }
 
@@ -168,8 +179,9 @@
     transition-duration: var(--corpus-duration-moderate-01);
     transition-timing-function: var(--corpus-ease-productive);
   }
-  /* Positioning layers are measured, not animated. */
-  :where([data-radix-popper-content-wrapper], [data-radix-popper-content-wrapper] *, [data-radix-scroll-area-viewport]) {
+  /* Positioning layers are measured, not animated — the WRAPPER only. Everything inside a popover, menu or
+     listbox keeps full choreography (checkbox draws, toggles slide, icons swap). */
+  :where([data-radix-popper-content-wrapper], [data-radix-scroll-area-viewport]) {
     transition-property: color, background-color, border-color, opacity, box-shadow;
   }
 }

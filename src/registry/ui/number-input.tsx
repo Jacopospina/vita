@@ -22,6 +22,9 @@ export interface NumberInputProps extends Omit<React.InputHTMLAttributes<HTMLInp
   unit?: string
 }
 
+/** A press starting this soon after the previous release belongs to a click series and never auto-repeats. */
+const SERIES_MS = 400
+
 export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
   ({ label, hideLabel, helperText, invalid, invalidText, warn, warnText, optional, labelAddon, className, id, value, defaultValue = null, onValueChange, min, max, step = 1, size = "md", unit, disabled, readOnly, ...props }, ref) => {
     const [val, setVal] = useControllable<number | null>(value, defaultValue, onValueChange)
@@ -42,9 +45,14 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
     }
     // Press-and-hold: one step at once; held > 100ms it keeps stepping, accelerating, until release or a bound.
     const hold = React.useRef<number[]>([])
+    const lastRelease = React.useRef(-Infinity)
     const stop = () => {
       hold.current.forEach((t) => window.clearTimeout(t))
       hold.current = []
+    }
+    const release = () => {
+      if (hold.current.length) lastRelease.current = performance.now()
+      stop()
     }
     React.useEffect(() => stop, [])
     const press = (dir: 1 | -1) => (e: React.PointerEvent<HTMLButtonElement>) => {
@@ -52,6 +60,10 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
       e.preventDefault() // keep focus where it is
       stop()
       bump(dir)
+      // Rapid sequential clicks are a click SERIES, not a hold: each one steps exactly once.
+      const inSeries = performance.now() - lastRelease.current < SERIES_MS
+      hold.current.push(-1) // marks "pressed" so release() can timestamp it
+      if (inSeries) return
       let delay = 90
       const repeat = () => {
         const at = latest.current ?? 0
@@ -64,9 +76,9 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
     }
     const holdProps = (dir: 1 | -1) => ({
       onPointerDown: press(dir),
-      onPointerUp: stop,
-      onPointerLeave: stop,
-      onPointerCancel: stop,
+      onPointerUp: release,
+      onPointerLeave: release,
+      onPointerCancel: release,
       // Keyboard / assistive tech activation (no pointer): a single step.
       onClick: (e: React.MouseEvent) => {
         if (e.detail === 0) bump(dir)

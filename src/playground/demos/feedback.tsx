@@ -11,7 +11,7 @@ import { InlineNotification, Callout, toast, capsule } from "@/registry/ui/notif
 import { ProgressBar } from "@/registry/ui/progress-bar"
 import { ProgressIndicator } from "@/registry/ui/progress-indicator"
 import { Modal, ModalTrigger, ModalContent, ModalHeader, ModalBody, ModalFooter, ModalAction, ConfirmModal } from "@/registry/ui/modal"
-import { Popover, PopoverTrigger, PopoverContent, Toggletip } from "@/registry/ui/popover"
+import { Popover, PopoverTrigger, PopoverContent, PopoverFooter, Toggletip } from "@/registry/ui/popover"
 import { Tooltip, DefinitionTooltip } from "@/registry/ui/tooltip"
 import { TextInput } from "@/registry/ui/text-input"
 import { Dropdown } from "@/registry/ui/dropdown"
@@ -62,6 +62,7 @@ function ProgressDemo() {
       <ProgressBar label="Indexing help-center.csv" value={v} helperText={`${v}% · about 20 seconds left`} />
       <Inline><Button size="sm" variant="secondary" onClick={() => setV((x) => Math.min(100, x + 15))}>Advance</Button></Inline>
       <ProgressBar label="Deploying Support triage" helperText="This usually takes under a minute" />
+      <ProgressBar label="Agent reading the help center" tone="spectrum" value={v} helperText="Spectrum tone for agent work" />
       <ProgressBar label="Indexing complete" status="finished" helperText="1,240 articles indexed" />
       <ProgressBar label="Indexing failed" value={62} status="error" helperText="refund-policy.pdf is password-protected" />
       <ProgressBar label="Runs this month" value={7} max={10} size="sm" helperText="7,000 of 10,000 runs" />
@@ -219,7 +220,7 @@ export const feedbackDemos: DemoMap = {
           <Inline gap="2xs"><Text>Confidence threshold</Text><Toggletip>Below this score the agent hands the conversation to a person instead of answering. <Link inline href="#">Learn more</Link></Toggletip></Inline>
           <Popover>
             <PopoverTrigger asChild><Button variant="ghost">Assign</Button></PopoverTrigger>
-            <PopoverContent caret><Stack gap="sm"><Dropdown label="Owner" items={[{ value: "a", label: "Ada" }, { value: "g", label: "Grace" }]} /><Button size="sm">Assign</Button></Stack></PopoverContent>
+            <PopoverContent caret><Dropdown label="Owner" items={[{ value: "a", label: "Ada" }, { value: "g", label: "Grace" }]} /><PopoverFooter><Button>Assign</Button></PopoverFooter></PopoverContent>
           </Popover>
         </Inline>
       ),

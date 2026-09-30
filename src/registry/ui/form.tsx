@@ -125,12 +125,15 @@ export interface FieldShellProps extends FieldBaseProps {
   /** Inline controls (toolbars, pagination): no reserved message line, so they align with their row. */
   bare?: boolean
   children: (a11y: { id: string; "aria-describedby"?: string; "aria-invalid"?: true; "aria-required"?: true }) => React.ReactNode
+  /** Float the label on focus (default). Pick-from-a-list fields (Dropdown, Select, MultiSelect) pass false:
+   *  opening the list isn't typing, so the label stays full-size until a value is chosen. */
+  floatOnFocus?: boolean
 }
 
 /* The label floats (moves up, shrinks) when the field is focused or holds a value. */
 /* Straight up + smaller type — no scaling, so it never looks like it tilts. */
-const floated = [
-  "group-focus-within/field:-translate-y-[calc(50%+0.55rem)] group-focus-within/field:text-caption",
+const floatWhenFocused = "group-focus-within/field:-translate-y-[calc(50%+0.55rem)] group-focus-within/field:text-caption"
+const floatWhenFilled = [
   "group-has-[:is(input,textarea):not(:placeholder-shown)]/field:-translate-y-[calc(50%+0.55rem)] group-has-[:is(input,textarea):not(:placeholder-shown)]/field:text-caption",
   "group-data-[filled]/field:-translate-y-[calc(50%+0.55rem)] group-data-[filled]/field:text-caption",
 ].join(" ")
@@ -144,7 +147,7 @@ const floatedMultiline = [
  * The label rests inside the field like a placeholder; on focus or once filled it glides up and shrinks,
  * still inside the field. Labels are never placed above fields. Fields are required unless marked optional.
  */
-export function FieldShell({ id: idProp, label, hideLabel, helperText, invalid, invalidText, warn, warnText, optional, labelAddon, filled, multiline, fadeLabel, bare, className, children }: FieldShellProps) {
+export function FieldShell({ id: idProp, label, hideLabel, helperText, invalid, invalidText, warn, warnText, optional, labelAddon, filled, multiline, fadeLabel, bare, floatOnFocus = true, className, children }: FieldShellProps) {
   const auto = React.useId()
   const id = idProp ?? auto
   const msgId = `${id}-msg`
@@ -160,7 +163,7 @@ export function FieldShell({ id: idProp, label, hideLabel, helperText, invalid, 
           className={cn(
             "pointer-events-none absolute left-inset max-w-[calc(100%-4rem)] truncate text-body text-placeholder select-none motion-productive",
             "group-focus-within/field:text-muted-foreground group-data-[invalid]/field:text-error-foreground",
-            multiline ? cn("top-3", floatedMultiline) : cn("top-1/2 -translate-y-1/2", floated),
+            multiline ? cn("top-3", floatedMultiline) : cn("top-1/2 -translate-y-1/2", floatWhenFilled, floatOnFocus && floatWhenFocused),
             hideLabel && "sr-only",
             fadeLabel && "opacity-0 blur-xs",
           )}

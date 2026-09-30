@@ -20,3 +20,10 @@ related: [progress-indicator, loading, file-uploader]
 3. **Indeterminate → determinate** as soon as the total is known.
 4. **Finish states:** `finished` turns green with a check. `error` turns red and the helper explains the failure and the fix.
 5. **Usage bars** don't turn red until the limit is actually a problem (≥ 90%). Use `warning` wording first.
+
+## Look
+
+- **Liquid, like Thinking.** The fill runs through the same goo filter as the Thinking orb, with gloss on top and a soft glow. The liquid always stays inside the track.
+- **Determinate:** the fill's head is a living droplet; small drops wobble off it and merge back. The head is part of the fill, so it never runs ahead of the bar.
+- **Indeterminate:** droplets flow along the track at different speeds, catching up and fusing. There is no sliding bar.
+- **Tone:** `brand` by default. Use `spectrum` for agent work. Finished and error switch to success and error.

@@ -46,7 +46,7 @@ export function Dropdown({ items, value, defaultValue, onValueChange, placeholde
   const [current, setCurrent] = useControllable<string | undefined>(value, defaultValue, onValueChange as ((v: string | undefined) => void) | undefined)
   const selected = items.find((i) => i.value === current)
   return (
-    <FieldShell {...field} filled={!!selected || type === "inline"} bare={type === "inline"} className={className}>
+    <FieldShell {...field} filled={!!selected || type === "inline"} bare={type === "inline"} floatOnFocus={false} className={className}>
       {(a11y) => (
         <SelectPrimitive.Root value={current} onValueChange={setCurrent} disabled={disabled}>
           <SelectPrimitive.Trigger
@@ -192,7 +192,7 @@ export function MultiSelect({ items, value, defaultValue = [], onValueChange, si
   const [val, setVal] = useControllable(value, defaultValue, onValueChange)
   const toggle = (v: string) => setVal(val.includes(v) ? val.filter((x) => x !== v) : [...val, v])
   return (
-    <FieldShell {...field} filled={val.length > 0} fadeLabel={val.length > 0} className={className}>
+    <FieldShell {...field} filled={val.length > 0} fadeLabel={val.length > 0} floatOnFocus={false} className={className}>
       {(a11y) => (
         <PopoverPrimitive.Root>
           <PopoverPrimitive.Trigger {...a11y} disabled={disabled} className={cn(fieldClasses, fieldSize[size], "relative flex items-center gap-2 pr-10 text-left", val.length > 0 && "pt-0")}>

@@ -182,7 +182,7 @@ export function ButtonSet({ className, stacked, ...props }: React.HTMLAttributes
 }
 
 /**
- * ActionBar — the action row of a surface (modal, side panel). Full-bleed, joined, no gaps.
+ * ActionBar — the action row of a surface (modal, popover, side panel). Full-bleed, joined, no gaps; the surface owns the corners.
  * NEVER include Cancel/Close/Dismiss: the surface's × , Escape and click-outside already do that.
  * 1 action = full width. 2 actions = a secondary alternative (not a dismissal) + the primary.
  */
@@ -192,7 +192,7 @@ export function ActionBar({ className, ...props }: React.HTMLAttributes<HTMLDivE
       role="group"
       className={cn(
         "flex shrink-0 gap-0 border-t border-border-subtle",
-        "*:h-control-xl *:flex-1 *:justify-start *:rounded-none *:px-inset-lg *:text-body *:active:scale-100",
+        "*:h-control-xl *:flex-1 *:justify-start *:rounded-none *:px-inset-lg *:text-body *:active:scale-100 *:[--corpus-squircle-r:0px]",
         className,
       )}
       {...props}

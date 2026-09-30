@@ -2,6 +2,7 @@ import * as React from "react"
 import { Popover as PopoverPrimitive } from "radix-ui"
 import { Information } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
+import { ActionBar } from "@/registry/ui/button"
 import { Icon } from "@/registry/ui/icon"
 
 /**
@@ -28,7 +29,7 @@ export function PopoverContent({
         sideOffset={sideOffset}
         collisionPadding={8}
         className={cn(
-          "z-50 w-72 scope-lg border border-border-subtle bg-raised p-3 text-foreground shadow-floating outline-none",
+          "z-50 w-72 overflow-hidden scope-lg border border-border-subtle bg-raised p-3 text-foreground shadow-floating outline-none",
           "data-[state=open]:animate-enter-scale data-[state=closed]:animate-exit-scale origin-(--radix-popover-content-transform-origin)",
           className,
         )}
@@ -45,6 +46,14 @@ export function PopoverContent({
  * Toggletip — an "i" button that opens a small popover with explanation and optional link/action.
  * Use instead of a tooltip whenever the content is interactive or longer than one sentence.
  */
+/**
+ * PopoverFooter — the popover's action row, exactly like a dialog's: full-bleed to the popover's edges, joined
+ * buttons, a hairline above; the popover owns the corners. Same rules: no Cancel (Esc / click-outside close it).
+ */
+export function PopoverFooter({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
+  return <ActionBar className={cn("-mx-3 mt-3 -mb-3", className)} {...props} />
+}
+
 export function Toggletip({ label = "More information", children, align = "start" }: { label?: string; children: React.ReactNode; align?: "start" | "center" | "end" }) {
   return (
     <Popover>

@@ -2,7 +2,7 @@
 title: Popover
 summary: A non-modal layer anchored to a trigger, opened by click, for rich or interactive content. Includes Toggletip.
 status: stable
-import: "import { Popover, PopoverTrigger, PopoverContent, PopoverClose, Toggletip } from \"@/components/corpus/popover\""
+import: "import { Popover, PopoverTrigger, PopoverContent, PopoverFooter, PopoverClose, Toggletip } from \"@/components/corpus/popover\""
 use_when:
   - Small interactive content next to a control (column picker, quick assign, filter panel)
   - Toggletip — an explanation with a link or more than one sentence, opened by an ⓘ button
@@ -21,3 +21,8 @@ related: [tooltip, modal, menu, filtering]
 3. **Closes** on Escape, on outside click, and after its primary action completes.
 4. **The caret** (`caret`) is used for toggletips and callouts attached to small triggers. Otherwise omit it.
 5. **Toggletip vs tooltip:** a tooltip is for names and short hints; a toggletip is for explanations that deserve a click and may contain a link.
+
+## Actions
+
+- **Same as dialogs.** Put actions in a `PopoverFooter`: full-bleed to the popover's edges, joined buttons, a hairline above. The popover owns the corners.
+- **No Cancel.** Escape and click-outside close a popover, exactly like a dialog's ×.

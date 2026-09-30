@@ -41,7 +41,7 @@ export function Select({ value, defaultValue, onValueChange, size = "md", disabl
   const [current, setCurrent] = useControllable<string | undefined>(value, defaultValue, onValueChange as ((v: string | undefined) => void) | undefined)
   const label = current ? labels(children).get(current) : undefined
   return (
-    <FieldShell {...field} filled={!!current} className={className}>
+    <FieldShell {...field} filled={!!current} floatOnFocus={false} className={className}>
       {(a11y) => (
         <SelectPrimitive.Root value={current} onValueChange={setCurrent} disabled={disabled} name={name}>
           <SelectPrimitive.Trigger {...a11y} className={cn(fieldClasses, fieldSize[size], "group relative flex items-center gap-2 pr-10 text-left")}>
