@@ -39,9 +39,9 @@ export function ComboButton({ label, onClick, variant = "tertiary", size = "md",
             size={size}
             disabled={disabled}
             aria-label={`More ${label.toLowerCase()} options`}
-            className={cn("rounded-l-none px-0", size === "sm" ? "w-control-sm" : size === "lg" ? "w-control-lg" : "w-control-md", variant === "primary" ? "border-l border-primary-foreground/30" : "-ml-px")}
+            className={cn("group/split rounded-l-none px-0", size === "sm" ? "w-control-sm" : size === "lg" ? "w-control-lg" : "w-control-md", variant === "primary" ? "border-l border-primary-foreground/30" : "-ml-px")}
           >
-            <Icon as={ChevronDown} />
+            <Icon as={ChevronDown} className="duration-moderate-01 ease-productive group-data-[state=open]/split:rotate-180" />
           </Button>
         </MenuTrigger>
         <MenuContent align="end">{children}</MenuContent>

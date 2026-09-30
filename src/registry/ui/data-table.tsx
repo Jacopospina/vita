@@ -1,5 +1,5 @@
 import * as React from "react"
-import { ArrowDown, ArrowUp, ArrowsVertical, ChevronRight, Close } from "@/registry/icons"
+import { ArrowDown, ArrowUp, ArrowsVertical, ChevronDown, Close } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { Icon, SwapIcon } from "@/registry/ui/icon"
 import { Checkbox } from "@/registry/ui/checkbox"
@@ -190,7 +190,7 @@ export function DataTable<T extends { id: string }>({
                       {renderExpanded && (
                         <td className="pl-2">
                           <button type="button" aria-expanded={isOpen} aria-label={isOpen ? "Collapse row" : "Expand row"} onClick={() => setOpen((s) => { const n = new Set(s); if (n.has(row.id)) n.delete(row.id); else n.add(row.id); return n })} className="flex size-control-sm items-center justify-center rounded-sm hover:bg-hover focus-ring">
-                            <Icon as={ChevronRight} className={cn(" duration-moderate-01 ease-productive", isOpen && "rotate-90")} />
+                            <Icon as={ChevronDown} className={cn(" duration-moderate-01 ease-productive", isOpen && "rotate-180")} />
                           </button>
                         </td>
                       )}

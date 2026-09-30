@@ -28,6 +28,7 @@ The docs renderer turns markdown into Corpus components. Write for it:
 
 ## Rules
 
+- **Disclosure chevrons point down when closed and up when open.** Any chevron that reveals content below it (accordion, dropdown, section, expandable row, tree node) follows this rule, and it rotates with a transition. Chevrons pointing sideways only mean "go to" or "open to the side" (navigation rows, submenus, pagination).
 - **Docs never name external design systems or vendors.** Corpus speaks in its own voice.
 - **Example product in demos and docs is "Vita".** No real company or client names.
 - **The playground is product code.** It must pass `pnpm audit:ds` with zero violations (dogfooding).

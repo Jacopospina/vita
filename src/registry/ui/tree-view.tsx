@@ -95,7 +95,7 @@ export function TreeView({ nodes, label, selected, onSelect, defaultExpanded = [
             )}
           >
             <span className="flex size-4 items-center justify-center">
-              {has && <Icon as={CaretDown} className={cn(" duration-moderate-01 ease-productive", !open && "-rotate-90")} />}
+              {has && <Icon as={CaretDown} className={cn(" duration-moderate-01 ease-productive", open && "rotate-180")} />}
             </span>
             {n.icon && <Icon as={n.icon} className="text-muted-foreground" />}
             <span className="truncate">{n.label}</span>

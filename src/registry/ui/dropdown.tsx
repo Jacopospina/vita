@@ -147,7 +147,7 @@ export function Combobox({ items, value, defaultValue = "", onValueChange, size 
                   <Icon as={Close} />
                 </button>
               )}
-              <Icon as={ChevronDown} className="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground" />
+              <Icon as={ChevronDown} className={cn("pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground duration-moderate-01 ease-productive", open && "rotate-180")} />
             </div>
           </PopoverPrimitive.Anchor>
           <PopoverPrimitive.Portal>
@@ -195,7 +195,7 @@ export function MultiSelect({ items, value, defaultValue = [], onValueChange, si
     <FieldShell {...field} filled={val.length > 0} fadeLabel={val.length > 0} floatOnFocus={false} className={className}>
       {(a11y) => (
         <PopoverPrimitive.Root>
-          <PopoverPrimitive.Trigger {...a11y} disabled={disabled} className={cn(fieldClasses, fieldSize[size], "relative flex items-center gap-2 pr-10 text-left", val.length > 0 && "pt-0")}>
+          <PopoverPrimitive.Trigger {...a11y} disabled={disabled} className={cn(fieldClasses, fieldSize[size], "group/ms relative flex items-center gap-2 pr-10 text-left", val.length > 0 && "pt-0")}>
             <span
               aria-hidden={val.length === 0 || undefined}
               className={cn(
@@ -218,7 +218,7 @@ export function MultiSelect({ items, value, defaultValue = [], onValueChange, si
             <span className="flex-1 truncate">
               <AnimatedText>{val.length === 0 ? " " : items.filter((i) => val.includes(i.value)).map((i) => i.label).join(", ")}</AnimatedText>
             </span>
-            <Icon as={ChevronDown} className="absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground" />
+            <Icon as={ChevronDown} className="absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground duration-moderate-01 ease-productive group-data-[state=open]/ms:rotate-180" />
           </PopoverPrimitive.Trigger>
           <PopoverPrimitive.Portal>
             <PopoverPrimitive.Content align="start" sideOffset={4} className={cn(listClasses, "w-(--radix-popover-trigger-width) min-w-0 overflow-y-auto")}>

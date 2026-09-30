@@ -1,5 +1,5 @@
 import * as React from "react"
-import { ColorPalette, Moon, Sun, LogoGithub, Book, Grid as GridIcon, Application } from "@/registry/icons"
+import { ColorPalette, Moon, Sun, LogoGithub } from "@/registry/icons"
 import { Shell, ShellBody, ShellMain, Header, HeaderGlobalAction, LeftPanel, SideNavItem, SideNavSection, RightPanel } from "@/registry/ui/ui-shell"
 import { TooltipProvider } from "@/registry/ui/tooltip"
 import { Toaster } from "@/registry/ui/notification"
@@ -7,8 +7,6 @@ import { Search } from "@/registry/ui/search"
 import { manifest, sectionTitles, type Section } from "./manifest"
 import { DocPage } from "./doc-page"
 import { ThemePanel } from "./theme-panel"
-
-const sectionIcons = { foundations: Book, components: Application, patterns: GridIcon } as const
 
 function useRoute() {
   const read = (): [Section, string] => {
@@ -74,7 +72,7 @@ export function App() {
               return (
                 <SideNavSection key={s + (filter ? "-f" : "")} title={sectionTitles[s]} collapsible defaultOpen={!!filter || s === section}>
                   {entries.map((e) => (
-                    <SideNavItem key={e.slug} href={`#/${s}/${e.slug}`} icon={sectionIcons[s]} active={s === section && e.slug === slug}>
+                    <SideNavItem key={e.slug} href={`#/${s}/${e.slug}`} active={s === section && e.slug === slug}>
                       {e.title}
                     </SideNavItem>
                   ))}

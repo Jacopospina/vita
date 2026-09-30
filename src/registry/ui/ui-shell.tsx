@@ -127,7 +127,7 @@ export function SideNavItem({ href, icon, active, children, onClick }: { href?: 
       aria-current={active ? "page" : undefined}
       className={cn(
         // Finder row: compact, accent icon + label, soft grey highlight when selected.
-        "relative flex h-control-sm shrink-0 items-center gap-2 rounded-inner-2 px-2 text-body whitespace-nowrap text-foreground duration-fast-02",
+        "relative flex h-control-md shrink-0 items-center gap-2 rounded-inner-2 px-2.5 text-body-lg whitespace-nowrap text-foreground duration-fast-02",
         "hover:bg-hover focus-ring-inset",
         active && "bg-active font-medium",
       )}
@@ -159,7 +159,7 @@ export function SideNavMenu({ icon, title, defaultOpen, children }: { icon?: Ico
  */
 export function SideNavSection({ title, collapsible, defaultOpen = true, children }: { title?: string; collapsible?: boolean; defaultOpen?: boolean; children: React.ReactNode }) {
   const [open, setOpen] = React.useState(defaultOpen)
-  const header = "flex h-6 w-full items-end justify-between px-2 pb-1 text-caption font-semibold text-muted-foreground group-data-[rail]/nav:lg:opacity-0 group-data-[rail]/nav:lg:group-hover/nav:opacity-100"
+  const header = "flex h-8 w-full items-end justify-between px-2.5 pb-1 text-footnote font-semibold text-muted-foreground group-data-[rail]/nav:lg:opacity-0 group-data-[rail]/nav:lg:group-hover/nav:opacity-100"
   if (!collapsible) {
     return (
       <div className="flex flex-col gap-px pt-2 first:pt-0">
@@ -172,7 +172,7 @@ export function SideNavSection({ title, collapsible, defaultOpen = true, childre
     <div className="group/sec flex flex-col pt-2 first:pt-0">
       <button type="button" aria-expanded={open} onClick={() => setOpen((o) => !o)} className={cn(header, "rounded-inner-2 text-left focus-ring-inset")}>
         <span className="truncate">{title}</span>
-        <Icon as={ChevronDown} size="sm" className={cn("opacity-0 duration-moderate-01 group-hover/sec:opacity-100 group-focus-within/sec:opacity-100", !open && "-rotate-90")} />
+        <Icon as={ChevronDown} size="sm" className={cn("opacity-0 duration-moderate-01 group-hover/sec:opacity-100 group-focus-within/sec:opacity-100", open && "rotate-180")} />
       </button>
       <div className={cn("reveal motion-productive", open && "reveal-open")} inert={!open || undefined}>
         <div className="flex flex-col gap-px">{children}</div>
