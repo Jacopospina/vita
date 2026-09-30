@@ -1,19 +1,17 @@
 import * as React from "react"
 import * as Icons from "@/registry/icons"
-import { Cloud, Database, Security, Rocket, Analytics, Collaboration, Idea, Magnify, Upload_01, Conversation } from "@/registry/pictograms"
 import type { DemoMap } from "./types"
 import { Stack, Inline, Grid, Column } from "@/registry/ui/layout"
 import { Text, Heading } from "@/registry/ui/text"
 import { Icon } from "@/registry/ui/icon"
-import { Pictogram } from "@/registry/ui/pictogram"
 import { Button } from "@/registry/ui/button"
 import { Tile } from "@/registry/ui/tile"
 import { Tag } from "@/registry/ui/tag"
 import { TextInput } from "@/registry/ui/text-input"
 import { StructuredList } from "@/registry/ui/structured-list"
-import { ContentSwitcher } from "@/registry/ui/content-switcher"
 import { cn } from "@/registry/lib/utils"
 import palette from "@/styles/palette.json"
+import { GlyphGallery } from "./galleries"
 
 function PaletteGrid() {
   const steps = palette.steps as number[]
@@ -157,24 +155,6 @@ function MotionDemo() {
   )
 }
 
-function IconGallery() {
-  const [size, setSize] = React.useState<"sm" | "md" | "lg" | "xl">("md")
-  const names = ["Add", "Edit", "TrashCan", "Download", "Upload", "Search", "Filter", "Settings", "User", "Notification", "Information", "WarningAlt", "CheckmarkOutline", "Close", "ChevronDown", "ArrowRight", "Launch", "Copy", "Share", "Calendar", "Time", "Document", "Folder", "Home", "Chat", "Email", "Star", "Favorite", "View", "Locked", "Renew", "OverflowMenuVertical"] as const
-  return (
-    <Stack gap="md">
-      <ContentSwitcher label="Icon size" value={size} onValueChange={(v) => setSize(v as typeof size)} items={[{ value: "sm", label: "16 · sm" }, { value: "md", label: "20 · md" }, { value: "lg", label: "24 · lg" }, { value: "xl", label: "32 · xl" }]} />
-      <div className="grid grid-cols-4 gap-px overflow-hidden rounded-md bg-border-subtle sm:grid-cols-8">
-        {names.map((n) => (
-          <div key={n} className="flex flex-col items-center gap-2 bg-background p-4">
-            <Icon as={(Icons as unknown as Record<string, Icons.IconType>)[n]} size={size} />
-            <Text variant="caption" tone="muted" truncate className="max-w-full">{n}</Text>
-          </div>
-        ))}
-      </div>
-    </Stack>
-  )
-}
-
 export const foundationDemos: DemoMap = {
   "foundations/theming": [
     {
@@ -302,20 +282,8 @@ export const foundationDemos: DemoMap = {
     },
   ],
   "foundations/motion": [{ title: "Easing & duration tokens", render: () => <MotionDemo /> }],
-  "foundations/icons": [{ title: "Icons via <Icon />", render: () => <IconGallery /> }],
-  "foundations/pictograms": [
-    {
-      title: "Pictograms via <Pictogram />",
-      render: () => (
-        <Stack gap="lg">
-          <Inline gap="xl" wrap>
-            {[Cloud, Database, Security, Rocket, Analytics, Collaboration, Idea, Magnify, Upload_01, Conversation].map((P, i) => <Pictogram key={i} as={P} size="lg" />)}
-          </Inline>
-          <Inline gap="xl" align="end"><Pictogram as={Rocket} size="md" /><Pictogram as={Rocket} size="lg" /><Pictogram as={Rocket} size="xl" /><Pictogram as={Rocket} size="xl" tone="neutral" /></Inline>
-        </Stack>
-      ),
-    },
-  ],
+  "foundations/icons": [{ title: "Every icon", description: "The full set, searchable. Click any icon to copy its import.", render: () => <GlyphGallery kind="icons" /> }],
+  "foundations/pictograms": [{ title: "Every pictogram", description: "The full set, searchable. Click any pictogram to copy its import.", render: () => <GlyphGallery kind="pictograms" /> }],
   "foundations/accessibility": [
     {
       title: "Focus is always visible",
