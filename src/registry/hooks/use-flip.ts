@@ -1,0 +1,54 @@
+import * as React from "react"
+
+/**
+ * useFlip — NOTHING JUMPS. When a container's children move because something appeared, disappeared
+ * or changed size, each child glides from its old position to the new one (FLIP), productive motion.
+ * Built into Stack/Inline, so every Corpus layout choreographs its own reflow.
+ */
+export function useFlip<T extends HTMLElement>(ref: React.RefObject<T | null>, enabled = true) {
+  React.useEffect(() => {
+    const el = ref.current
+    if (!el || !enabled || typeof window === "undefined") return
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return
+
+    const cache = new WeakMap<Element, { x: number; y: number }>()
+    const kids = () => Array.from(el.children) as HTMLElement[]
+    const snap = () => kids().forEach((c) => cache.set(c, { x: c.offsetLeft, y: c.offsetTop }))
+
+    // Runs in observer callbacks: after layout, before paint — so the jump is never seen.
+    const settle = () => {
+      for (const c of kids()) {
+        const prev = cache.get(c)
+        if (!prev) continue
+        const dx = prev.x - c.offsetLeft
+        const dy = prev.y - c.offsetTop
+        if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
+          c.animate([{ translate: `${dx}px ${dy}px` }, { translate: "0px 0px" }], {
+            duration: 240,
+            easing: "cubic-bezier(0.2, 0, 0.38, 0.9)",
+            composite: "add",
+          })
+        }
+      }
+      snap()
+    }
+
+    snap()
+    const ro = new ResizeObserver(settle)
+    const watch = () => {
+      ro.disconnect()
+      ro.observe(el)
+      kids().forEach((c) => ro.observe(c))
+    }
+    watch()
+    const mo = new MutationObserver((records) => {
+      if (records.some((r) => r.type === "childList" && r.target === el)) watch()
+      settle()
+    })
+    mo.observe(el, { childList: true, subtree: true, characterData: true })
+    return () => {
+      ro.disconnect()
+      mo.disconnect()
+    }
+  }, [ref, enabled])
+}

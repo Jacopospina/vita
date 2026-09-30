@@ -2,7 +2,7 @@ import * as React from "react"
 import { Label as LabelPrimitive } from "radix-ui"
 import { WarningFilled, WarningAltFilled } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
-import { SwapIcon } from "@/registry/ui/icon"
+import { Icon } from "@/registry/ui/icon"
 import { animateChildren } from "@/registry/ui/animated"
 import { Group } from "@/registry/ui/layout"
 
@@ -11,10 +11,10 @@ import { Group } from "@/registry/ui/layout"
 /* ------------------------------------------------------------------ */
 export const fieldClasses = cn(
   "w-full min-w-0 rounded-md border border-border-field bg-field text-body text-foreground",
-  " duration-fast-02 ease-productive",
+  "duration-moderate-02 ease-productive",
   // The floating label owns the empty state; placeholders (examples, formats) appear only while focused.
   "placeholder:text-transparent focus:placeholder:text-placeholder",
-  "hover:border-border-strong",
+  "hover:border-border-strong hover:bg-layer-1 hover:shadow-raised",
   "focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-focus focus-visible:border-transparent focus-visible:animate-focus-in",
   "disabled:cursor-not-allowed disabled:border-border-subtle disabled:bg-layer-1 disabled:text-disabled-foreground",
   "read-only:border-border-subtle read-only:bg-transparent read-only:hover:border-border-subtle",
@@ -86,22 +86,23 @@ export function FieldMessage({ id, kind, children, className }: { id?: string; k
   const open = !!shown && !leaving
   const k = shown?.kind ?? kind
   return (
-    <div className={cn("reveal motion-productive", open && "reveal-open", className)} aria-live={k === "error" ? "assertive" : "polite"}>
-      <div>
+    // The slot always reserves one line, so messages appearing or leaving never push the layout.
+    <div data-message="" className={cn("min-h-6 pt-1.5", className)} aria-live={k === "error" ? "assertive" : "polite"}>
+      {shown && (
         <p
           id={id}
           className={cn(
-            "flex items-start gap-1 pt-1.5 text-caption motion-expressive",
+            "flex items-start gap-1 text-caption motion-expressive",
             k === "error" ? "text-error-foreground" : k === "warn" ? "text-warning-foreground" : "text-helper",
             open ? "translate-y-0 opacity-100 blur-none" : "-translate-y-1 opacity-0 blur-xs",
           )}
         >
-          <span className={cn("inline-flex shrink-0 overflow-hidden motion-expressive", k === "help" ? "max-w-0 scale-50 opacity-0" : "max-w-4 scale-100 opacity-100")}>
-            <SwapIcon as={k === "warn" ? WarningAltFilled : WarningFilled} size="sm" className="mt-px" />
+          <span className={cn("inline-flex shrink-0 overflow-hidden motion-expressive", k === "help" ? "max-w-0 opacity-0" : "max-w-4 opacity-100")}>
+            {k !== "help" && <Icon key={k} as={k === "warn" ? WarningAltFilled : WarningFilled} size="sm" className="mt-px" draw="in" />}
           </span>
-          <span>{animateChildren(shown?.text)}</span>
+          <span className={open ? "animate-enter-fade" : undefined}>{animateChildren(shown.text)}</span>
         </p>
-      </div>
+      )}
     </div>
   )
 }
@@ -171,9 +172,10 @@ export function FieldShell({ id: idProp, label, hideLabel, helperText, invalid, 
 
 /* ------------------------------------------------------------------ */
 
-/** Form — vertical stack with the system's form rhythm (24px between fields). */
+/** Form — vertical stack with the system's form rhythm (message line + 8px between fields). */
 export function Form({ className, ...props }: React.FormHTMLAttributes<HTMLFormElement>) {
-  return <form noValidate className={cn("flex w-full max-w-xl flex-col gap-6", className)} {...props} />
+  // Each field already reserves a line for its message, so the gap between fields is small.
+  return <form noValidate className={cn("flex w-full max-w-xl flex-col gap-2", className)} {...props} />
 }
 
 /** FormGroup — a fieldset with a legend for related fields (address, radio group, checkbox group). */
@@ -188,35 +190,24 @@ export function FormGroup({ legend, helperText, className, children, ...props }:
 }
 
 /*
- * BLEND — fields that are ONE data point share one container: the parent owns border, radius and
- * background; the fields inside are flat (no border, no radius), labels sit inside, hairlines divide.
+ * JOIN — fields that belong together TOUCH, but every field stays exactly the Corpus field
+ * (its own border, radius, hover, focus, floating label). Joining only squares the inner corners,
+ * collapses the shared border into one, and lifts the hovered/focused field so its outline is whole.
  */
-const ctl = "[&_[data-field]_:is(input,select,textarea,button[aria-haspopup],button[role=combobox])]"
-const blendFields = cn(
-  "overflow-hidden rounded-md [&_[data-field]]:bg-field",
-  "[&_[data-field]:focus-within]:outline-2 [&_[data-field]:focus-within]:-outline-offset-2 [&_[data-field]:focus-within]:outline-focus [&_[data-field]:focus-within]:animate-focus-in",
-  "[&_[data-field][data-invalid]]:outline-2 [&_[data-field][data-invalid]]:-outline-offset-2 [&_[data-field][data-invalid]]:outline-error",
-  `${ctl}:rounded-none ${ctl}:border-0 ${ctl}:bg-transparent ${ctl}:outline-none ${ctl}:animate-none`,
-  "[&_[data-field]_[aria-live]]:px-inset [&_[data-field]_[aria-live]]:pb-1",
-  // Calm inside a blend: no staggered rise, no sliding messages — fades only.
-  "*:animate-none! [&_[aria-live]_p]:translate-y-0",
-)
 
 /**
  * FormRow — the ONLY way to put fields side by side, and only when they are ONE data point for the user
- * (first + last name, card expiry month + year, street + number). Forms are otherwise one column:
- * people scan forms top-left in an F pattern and miss the second column.
- * The pair blends: one container (border, radius, background), flat fields inside, a hairline between.
+ * (first + last name, card expiry month + year, a range). Forms are otherwise one column:
+ * people scan forms top-left in an F pattern and miss a second column.
  */
 export function FormRow({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       role="group"
       className={cn(
-        "grid grid-cols-1 gap-px border border-border-field bg-border-field sm:auto-cols-fr sm:grid-flow-col",
-        blendFields,
-        "*:first:rounded-t-[calc(var(--corpus-radius-md)-1px)] *:last:rounded-b-[calc(var(--corpus-radius-md)-1px)]",
-        "sm:*:first:rounded-bl-[calc(var(--corpus-radius-md)-1px)] sm:*:first:rounded-tr-none sm:*:last:rounded-tr-[calc(var(--corpus-radius-md)-1px)] sm:*:last:rounded-bl-none",
+        "flex items-start *:min-w-0 *:flex-1",
+        "[&>*:not(:first-child)]:-ml-px [&>*:not(:first-child)_:is(input,textarea,button[role=combobox],button[aria-haspopup])]:rounded-l-none [&>*:not(:last-child)_:is(input,textarea,button[role=combobox],button[aria-haspopup])]:rounded-r-none",
+        "[&_:is(input,textarea,button[role=combobox],button[aria-haspopup]):hover]:relative [&_:is(input,textarea,button[role=combobox],button[aria-haspopup]):hover]:z-10 [&_:is(input,textarea,button[role=combobox],button[aria-haspopup]):focus-visible]:relative [&_:is(input,textarea,button[role=combobox],button[aria-haspopup]):focus-visible]:z-20",
         className,
       )}
       {...props}
@@ -230,7 +221,7 @@ export function FormActions({ className, ...props }: React.HTMLAttributes<HTMLDi
 }
 
 /**
- * FluidForm — dense, expert data entry: every field blends into one tall container, labels inside.
+ * FluidForm — dense, expert data entry: every field joins the next into one continuous column.
  * Always ONE column (F-pattern rule). Pairs that are one data point go in a FormRow inside it.
  * BREAKING (0.2): the `columns` prop was removed — multi-column forms are not allowed.
  */
@@ -238,10 +229,9 @@ export function FluidForm({ className, ...props }: React.HTMLAttributes<HTMLDivE
   return (
     <div
       className={cn(
-        "grid w-full grid-cols-1 gap-px border border-border-subtle bg-border-subtle",
-        "[&>[role=group]]:rounded-none [&>[role=group]]:border-0",
-        blendFields,
-        "rounded-lg *:first:rounded-t-[calc(var(--corpus-radius-lg)-1px)] *:last:rounded-b-[calc(var(--corpus-radius-lg)-1px)]",
+        "flex w-full flex-col [&_[data-message]]:min-h-0 [&_[data-message]]:pt-0 [&_[data-message]:has(p)]:pt-1.5 [&_[data-message]:has(p)]:pb-1",
+        "[&>*:not(:first-child)]:-mt-px [&>*:not(:first-child)_:is(input,textarea,button[role=combobox],button[aria-haspopup])]:rounded-t-none [&>*:not(:last-child)_:is(input,textarea,button[role=combobox],button[aria-haspopup])]:rounded-b-none",
+        "[&_:is(input,textarea,button[role=combobox],button[aria-haspopup]):hover]:relative [&_:is(input,textarea,button[role=combobox],button[aria-haspopup]):hover]:z-10 [&_:is(input,textarea,button[role=combobox],button[aria-haspopup]):focus-visible]:relative [&_:is(input,textarea,button[role=combobox],button[aria-haspopup]):focus-visible]:z-20",
         className,
       )}
       {...props}

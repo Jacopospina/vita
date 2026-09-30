@@ -50,10 +50,11 @@ avoid_when:
 
 1. **Indicators stay mounted.** Checkmarks, radio dots, selected marks and menu checks scale and fade in *and* out; they never unmount on state change.
 2. **Icons draw their path.** `SwapIcon` un-draws the old glyph while the new one traces its outline and fills in; `<Icon draw="in">` for icons that appear. Checkmarks (`DrawnMark`) draw on select and un-draw on clear.
-3. **Controls that come and go keep their slot.** Clear buttons, shortcut hints, counts and batch bars fade and scale, then give their space back smoothly.
-4. **Messages leave gracefully.** A resolved error or warning collapses, blurs and fades out (`FieldMessage`); switching kinds cross-fades.
-5. **Branches expand.** Tree and disclosure content open and close with `reveal` / `reveal-open`.
-6. **Focus settles in.** Focus rings arrive over 400ms, from wide and transparent to tight and solid.
+3. **Layouts reflow smoothly.** When something appears, leaves or resizes, its siblings glide to their new place (FLIP, built into `Stack` / `Inline`).
+4. **Controls that come and go keep their slot.** Clear buttons, shortcut hints, counts and batch bars fade and scale, then give their space back smoothly.
+5. **Messages never shift the layout.** Every field reserves one line for help, warnings and errors; messages fade, blur and slide within it (`FieldMessage`).
+6. **Branches expand.** Tree and disclosure content open and close with `reveal` / `reveal-open`.
+7. **Focus settles in.** Focus rings arrive over 400ms, from wide and transparent to tight and solid.
 
 ## Enter & exit
 

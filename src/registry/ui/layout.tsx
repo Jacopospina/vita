@@ -2,6 +2,7 @@ import * as React from "react"
 import { Slot } from "radix-ui"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/registry/lib/utils"
+import { useFlip } from "@/registry/hooks/use-flip"
 
 /**
  * Layout primitives. Spacing scale (2·4·8·12·16·24·32·40·48·64·80·96·160 px).
@@ -38,7 +39,9 @@ export interface StackProps extends React.HTMLAttributes<HTMLDivElement>, Varian
 /** Stack — vertical rhythm . The default container for anything laid out top-to-bottom. */
 export function Stack({ className, direction, gap, align, justify, wrap, asChild, ...props }: StackProps) {
   const Comp = asChild ? Slot.Root : "div"
-  return <Comp className={cn(stackVariants({ direction, gap, align, justify, wrap }), className)} {...props} />
+  const ref = React.useRef<HTMLDivElement>(null)
+  useFlip(ref) // children glide when siblings appear, leave or resize — never jump
+  return <Comp ref={ref} className={cn(stackVariants({ direction, gap, align, justify, wrap }), className)} {...props} />
 }
 
 /** Inline — horizontal row . Defaults to centred items and a 8px gap. */

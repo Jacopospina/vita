@@ -28,13 +28,26 @@ export function Loading({ size = "md", label = "Loading", overlay, className }: 
  * InlineLoading — status of a single operation, in place: "Saving…" → "Saved" → (fades). Also covers error.
  */
 export function InlineLoading({ status = "active", description, className }: { status?: "active" | "finished" | "error" | "inactive"; description?: React.ReactNode; className?: string }) {
-  if (status === "inactive") return null
+  // Never pops: while inactive it keeps a zero-width slot; appearing/leaving fades, blurs and grows/collapses its width.
+  const [last, setLast] = React.useState({ status, description })
+  if (status !== "inactive" && (status !== last.status || description !== last.description)) setLast({ status, description })
+  const shown = status === "inactive" ? last : { status, description }
+  const visible = status !== "inactive"
   return (
-    <div role="status" aria-live="polite" className={cn("inline-flex items-center gap-2 text-footnote text-muted-foreground", className)}>
-      {status === "active" && <span className="size-4 animate-spin rounded-full border-2 border-primary border-r-transparent" />}
-      {status === "finished" && <Icon as={CheckmarkFilled} draw="in" className="text-success" />}
-      {status === "error" && <Icon as={ErrorFilled} draw="in" className="text-error" />}
-      {description && <span className={status === "error" ? "text-error-foreground" : undefined}>{typeof description === "string" ? <AnimatedText>{description}</AnimatedText> : description}</span>}
+    <div
+      role="status"
+      aria-live="polite"
+      aria-hidden={!visible || undefined}
+      className={cn("inline-grid motion-productive", visible ? "grid-cols-[1fr] opacity-100 blur-none" : "grid-cols-[0fr] opacity-0 blur-xs", className)}
+    >
+      <div className="min-w-0 overflow-hidden">
+        <div className="inline-flex items-center gap-2 text-footnote whitespace-nowrap text-muted-foreground">
+          {shown.status === "active" && <span className="size-4 shrink-0 animate-spin rounded-full border-2 border-primary border-r-transparent" />}
+          {shown.status === "finished" && <Icon as={CheckmarkFilled} draw="in" className="text-success" />}
+          {shown.status === "error" && <Icon as={ErrorFilled} draw="in" className="text-error" />}
+          {shown.description && <span className={shown.status === "error" ? "text-error-foreground" : undefined}>{typeof shown.description === "string" ? <AnimatedText>{shown.description}</AnimatedText> : shown.description}</span>}
+        </div>
+      </div>
     </div>
   )
 }
