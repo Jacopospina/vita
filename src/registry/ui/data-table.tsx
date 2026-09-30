@@ -76,6 +76,7 @@ export function DataTable<T extends { id: string }>({
     })
   }, [rows, sort, columns])
 
+  const selecting = selected.length > 0
   const allSel = rows.length > 0 && selected.length === rows.length
   const someSel = selected.length > 0 && !allSel
   // Re-sorting MORPHS: each row glides to its new position.
@@ -94,23 +95,37 @@ export function DataTable<T extends { id: string }>({
         </header>
       )}
       {(toolbar || batchActions) && (
-        <div className="relative flex h-control-lg items-center">
-          {toolbar && <div className="flex h-full w-full items-center justify-end gap-1 pl-2">{toolbar}</div>}
-          {batchActions && (
-            <div
-              inert={selected.length === 0 || undefined}
-              className={cn(
-                "absolute inset-0 flex items-center bg-primary text-primary-foreground motion-expressive",
-                selected.length > 0 ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-2 opacity-0",
-              )}
-            >
-              <span className="inline-flex items-baseline gap-1 px-3 text-body" aria-live="polite"><AnimatedNumber value={selected.length} /> <AnimatedText>{selected.length === 1 ? "item selected" : "items selected"}</AnimatedText></span>
-              <div className="ml-auto flex h-full items-center [&_button]:h-full [&_button]:rounded-none [&_button]:bg-transparent [&_button]:text-primary-foreground [&_button:hover]:bg-primary-hover">
-                {batchActions(selected)}
-                <IconButton icon={Close} label="Clear selection" shortcut="escape" variant="primary" size="lg" onClick={() => setSelected([])} />
+        // ONE strip that MORPHS: toolbar ⇄ selection bar in the same place. Inset, with space before the table.
+        <div className="px-3 pb-3">
+          <div
+            className={cn(
+              "grid min-h-control-lg items-center squircle p-1 motion-expressive [grid-template-areas:'bar']",
+              selecting ? "bg-primary text-primary-foreground shadow-raised" : "bg-layer-2",
+            )}
+          >
+            {toolbar && (
+              <div
+                inert={selecting || undefined}
+                className={cn("flex items-center justify-end gap-2 motion-expressive [grid-area:bar]", selecting ? "pointer-events-none scale-98 opacity-0 blur-xs" : "opacity-100")}
+              >
+                {toolbar}
               </div>
-            </div>
-          )}
+            )}
+            {batchActions && (
+              <div
+                inert={!selecting || undefined}
+                className={cn("flex items-center gap-2 motion-expressive [grid-area:bar]", selecting ? "opacity-100" : "pointer-events-none scale-98 opacity-0 blur-xs")}
+              >
+                <span className="inline-flex items-baseline gap-1 pl-2 text-body" aria-live="polite">
+                  <AnimatedNumber value={selected.length} /> <AnimatedText>{selected.length === 1 ? "item selected" : "items selected"}</AnimatedText>
+                </span>
+                <div className="ml-auto flex items-center gap-1 [&_button]:bg-transparent [&_button]:text-primary-foreground [&_button:hover]:bg-primary-hover">
+                  {batchActions(selected)}
+                  <IconButton icon={Close} label="Clear selection" shortcut="escape" variant="primary" onClick={() => setSelected([])} />
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       )}
       <div className={cn("w-full overflow-x-auto", stickyHeader && "max-h-120 overflow-y-auto")}>

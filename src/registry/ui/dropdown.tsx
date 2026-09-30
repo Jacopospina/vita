@@ -45,7 +45,7 @@ export function Dropdown({ items, value, defaultValue, onValueChange, placeholde
   const [current, setCurrent] = useControllable<string | undefined>(value, defaultValue, onValueChange as ((v: string | undefined) => void) | undefined)
   const selected = items.find((i) => i.value === current)
   return (
-    <FieldShell {...field} filled={!!selected || type === "inline"} className={className}>
+    <FieldShell {...field} filled={!!selected || type === "inline"} bare={type === "inline"} className={className}>
       {(a11y) => (
         <SelectPrimitive.Root value={current} onValueChange={setCurrent} disabled={disabled}>
           <SelectPrimitive.Trigger

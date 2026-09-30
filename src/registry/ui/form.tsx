@@ -116,6 +116,8 @@ export interface FieldShellProps extends FieldBaseProps {
   multiline?: boolean
   /** Exception: the value speaks for itself (e.g. MultiSelect chips) — the label fades out, still announced. */
   fadeLabel?: boolean
+  /** Inline controls (toolbars, pagination): no reserved message line, so they align with their row. */
+  bare?: boolean
   children: (a11y: { id: string; "aria-describedby"?: string; "aria-invalid"?: true; "aria-required"?: true }) => React.ReactNode
 }
 
@@ -136,7 +138,7 @@ const floatedMultiline = [
  * The label rests inside the field like a placeholder; on focus or once filled it glides up and shrinks,
  * still inside the field. Labels are never placed above fields. Fields are required unless marked optional.
  */
-export function FieldShell({ id: idProp, label, hideLabel, helperText, invalid, invalidText, warn, warnText, optional, labelAddon, filled, multiline, fadeLabel, className, children }: FieldShellProps) {
+export function FieldShell({ id: idProp, label, hideLabel, helperText, invalid, invalidText, warn, warnText, optional, labelAddon, filled, multiline, fadeLabel, bare, className, children }: FieldShellProps) {
   const auto = React.useId()
   const id = idProp ?? auto
   const msgId = `${id}-msg`
@@ -166,7 +168,7 @@ export function FieldShell({ id: idProp, label, hideLabel, helperText, invalid, 
           {labelAddon && <span className="pt-1">{labelAddon}</span>}
           <FieldMessage id={msgId} kind={showInvalid ? "error" : showWarn ? "warn" : "help"} className="min-w-0 flex-1">{message}</FieldMessage>
         </div>
-      ) : (
+      ) : bare ? null : (
         <FieldMessage id={msgId} kind="help" />
       )}
     </div>
