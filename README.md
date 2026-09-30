@@ -45,8 +45,8 @@ pnpm check         # typecheck + lint + corpus-audit + tests
 The repo is private, so anyone with access installs straight from GitHub:
 
 ```bash
-pnpm dlx github:jacopoenergy/corpus-design-system init
-# or: npx github:jacopoenergy/corpus-design-system init   (if npm reports ECOMPROMISED, run `npm cache verify` first)
+pnpm dlx github:jacopoenergy/corpus init
+# or: npx github:jacopoenergy/corpus init   (if npm reports ECOMPROMISED, run `npm cache verify` first)
 ```
 
 `init` does the following:
@@ -69,9 +69,9 @@ Then:
 Other commands:
 
 ```bash
-npx github:jacopoenergy/corpus-design-system add data-table modal   # just some components (+ their deps)
-npx github:jacopoenergy/corpus-design-system update                 # pull latest system files; keeps theme.css and corpus/
-npx github:jacopoenergy/corpus-design-system audit                  # run the audit
+npx github:jacopoenergy/corpus add data-table modal   # just some components (+ their deps)
+npx github:jacopoenergy/corpus update                 # pull latest system files; keeps theme.css and corpus/
+npx github:jacopoenergy/corpus audit                  # run the audit
 ```
 
 ## Personalise in about 10 variables

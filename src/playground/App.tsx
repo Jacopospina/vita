@@ -59,7 +59,7 @@ export function App() {
             <>
               <HeaderGlobalAction icon={dark ? Sun : Moon} label={dark ? "Light theme" : "Dark theme"} onClick={() => setDark((d) => !d)} />
               <HeaderGlobalAction icon={ColorPalette} label="Theme" active={themeOpen} onClick={() => setThemeOpen((o) => !o)} />
-              <HeaderGlobalAction icon={LogoGithub} label="Repository" onClick={() => window.open("https://github.com/jacopoenergy/corpus-design-system", "_blank")} />
+              <HeaderGlobalAction icon={LogoGithub} label="Repository" onClick={() => window.open("https://github.com/jacopoenergy/corpus", "_blank")} />
             </>
           }
         />
