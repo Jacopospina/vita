@@ -3,7 +3,7 @@ import { Label as LabelPrimitive } from "radix-ui"
 import { WarningFilled, WarningAltFilled } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { Icon } from "@/registry/ui/icon"
-import { animateChildren } from "@/registry/ui/animated"
+import { animateChildren, AnimatedText } from "@/registry/ui/animated"
 import { Group } from "@/registry/ui/layout"
 
 /* ------------------------------------------------------------------ */
@@ -57,7 +57,7 @@ type MessageKind = "help" | "warn" | "error"
 interface Message { kind: MessageKind; text: React.ReactNode }
 
 /** Keeps the last message around while it plays its exit, then lets it go. */
-function useLinger(msg: Message | null, ms = 280) {
+function useLinger(msg: Message | null, ms = 420) {
   const [shown, setShown] = React.useState<Message | null>(msg)
   const [leaving, setLeaving] = React.useState(false)
   if (msg && (msg.kind !== shown?.kind || msg.text !== shown?.text)) {
@@ -83,7 +83,6 @@ function useLinger(msg: Message | null, ms = 280) {
  */
 export function FieldMessage({ id, kind, children, className }: { id?: string; kind: MessageKind; children?: React.ReactNode; className?: string }) {
   const [shown, leaving] = useLinger(children ? { kind, text: children } : null)
-  const open = !!shown && !leaving
   const k = shown?.kind ?? kind
   return (
     // The slot always reserves one line, so messages appearing or leaving never push the layout.
@@ -92,15 +91,22 @@ export function FieldMessage({ id, kind, children, className }: { id?: string; k
         <p
           id={id}
           className={cn(
-            "flex items-start gap-1 text-caption motion-expressive",
+            "flex items-start gap-1 text-caption",
             k === "error" ? "text-error-foreground" : k === "warn" ? "text-warning-foreground" : "text-helper",
-            open ? "translate-y-0 opacity-100 blur-none" : "-translate-y-1 opacity-0 blur-xs",
+            leaving ? "translate-y-1 opacity-0 motion-productive" : "animate-drop-in",
           )}
         >
-          <span className={cn("inline-flex shrink-0 overflow-hidden motion-expressive", k === "help" ? "max-w-0 opacity-0" : "max-w-4 opacity-100")}>
-            {k !== "help" && <Icon key={k} as={k === "warn" ? WarningAltFilled : WarningFilled} size="sm" className="mt-px" draw="in" />}
+          {k !== "help" && (
+            // Icons are SVG-animated: the glyph draws its path in, and un-draws on exit.
+            <Icon key={k} as={k === "warn" ? WarningAltFilled : WarningFilled} size="sm" className="mt-px" draw={leaving ? "out" : "in"} />
+          )}
+          <span>
+            {typeof shown.text === "string" ? (
+              <AnimatedText enter="mount" direction="down" leaving={leaving}>{shown.text}</AnimatedText>
+            ) : (
+              animateChildren(shown.text)
+            )}
           </span>
-          <span className={open ? "animate-enter-fade" : undefined}>{animateChildren(shown.text)}</span>
         </p>
       )}
     </div>
@@ -163,13 +169,12 @@ export function FieldShell({ id: idProp, label, hideLabel, helperText, invalid, 
           {optional && <span> (optional)</span>}
         </LabelPrimitive.Root>
       </div>
-      {labelAddon || message ? (
+      {/* The message slot keeps ONE stable position, so a message can play its exit before it goes. */}
+      {!(bare && !message && !labelAddon) && (
         <div className="flex items-start gap-1">
           {labelAddon && <span className="pt-1">{labelAddon}</span>}
           <FieldMessage id={msgId} kind={showInvalid ? "error" : showWarn ? "warn" : "help"} className="min-w-0 flex-1">{message}</FieldMessage>
         </div>
-      ) : bare ? null : (
-        <FieldMessage id={msgId} kind="help" />
       )}
     </div>
   )

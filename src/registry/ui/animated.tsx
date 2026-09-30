@@ -80,13 +80,24 @@ export function AnimatedNumber({ value, format, locale, className }: AnimatedNum
 const LETTER_STAGGER = 18 // ms between letters
 const MAX_STAGGER = 600 // long labels still finish quickly
 
-export function AnimatedText({ children, className }: { children: string; className?: string }) {
+export function AnimatedText({ children, className, enter = "change", direction = "up", leaving = false }: {
+  children: string
+  className?: string
+  /** "change" (default): animate when the text changes. "mount": also animate its first appearance. */
+  enter?: "change" | "mount"
+  /** Letters come from below (up) or drop in from above (down). */
+  direction?: "up" | "down"
+  /** Play the exit: letters stagger out downward and blur away. */
+  leaving?: boolean
+}) {
   const [first] = React.useState(children)
   const [changed, setChanged] = React.useState(false)
   if (!changed && children !== first) setChanged(true)
-  const animate = changed && !reduced()
+  const motion = !reduced()
+  const animate = motion && (changed || enter === "mount")
   const letters = children.replace(/\s+/g, "").length || 1
-  const step = Math.min(LETTER_STAGGER, MAX_STAGGER / letters)
+  const step = Math.min(LETTER_STAGGER, (leaving ? 240 : MAX_STAGGER) / letters)
+  const cls = leaving && motion ? "animate-text-leave-down" : animate ? (direction === "down" ? "animate-text-reveal-down" : "animate-text-reveal") : undefined
   let n = 0
   return (
     <span className={className}>
@@ -96,10 +107,10 @@ export function AnimatedText({ children, className }: { children: string; classN
           /^\s+$/.test(word) ? (
             <span key={w}>{word}</span>
           ) : (
-            // each word stays whole on wrap; each letter reveals in turn
+            // each word stays whole on wrap; each letter moves in turn
             <span key={w} className="inline-block whitespace-nowrap">
               {Array.from(word).map((ch, c) => (
-                <span key={c} className={cn("inline-block", animate && "animate-text-reveal")} style={animate ? { animationDelay: `${Math.round(n++ * step)}ms` } : undefined}>
+                <span key={c} className={cn("inline-block", cls)} style={cls ? { animationDelay: `${Math.round(n++ * step)}ms` } : undefined}>
                   {ch}
                 </span>
               ))}

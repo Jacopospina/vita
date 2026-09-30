@@ -52,7 +52,7 @@ avoid_when:
 2. **Icons draw their path.** `SwapIcon` un-draws the old glyph while the new one traces its outline and fills in; `<Icon draw="in">` for icons that appear. Checkmarks (`DrawnMark`) draw on select and un-draw on clear.
 3. **Layouts reflow smoothly.** When something appears, leaves or resizes, its siblings glide to their new place (FLIP, built into `Stack` / `Inline`).
 4. **Controls that come and go keep their slot.** Clear buttons, shortcut hints, counts and batch bars fade and scale, then give their space back smoothly.
-5. **Messages never shift the layout.** Every field reserves one line for help, warnings and errors; messages fade, blur and slide within it (`FieldMessage`).
+5. **Messages drop in and drop out.** Every field reserves one line for its message; the message slides down, its letters cascade in one after another (blur → sharp) and its icon draws its path — the exit reverses it, letters staggering downward and the icon un-drawing.
 6. **Branches expand.** Tree and disclosure content open and close with `reveal` / `reveal-open`.
 7. **Focus settles in.** Focus rings arrive over 400ms, from wide and transparent to tight and solid.
 

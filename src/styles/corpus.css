@@ -183,6 +183,9 @@
   --animate-collapse: corpus-collapse-up var(--corpus-duration-moderate-01) var(--corpus-ease-productive);
   --animate-spin: corpus-spin 690ms linear infinite;
   --animate-text-reveal: corpus-text-in var(--corpus-duration-expressive) var(--corpus-ease-expressive-enter) both;
+  --animate-text-reveal-down: corpus-text-in-down var(--corpus-duration-expressive) var(--corpus-ease-expressive-enter) both;
+  --animate-text-leave-down: corpus-text-out-down var(--corpus-duration-moderate-02) var(--corpus-ease-productive-exit) both;
+  --animate-drop-in: corpus-drop-in var(--corpus-duration-expressive) var(--corpus-ease-expressive-enter);
   --animate-shimmer: corpus-shimmer 1.6s linear infinite;
   --animate-indeterminate: corpus-indeterminate 1.4s var(--corpus-ease-productive) infinite;
 }
