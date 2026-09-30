@@ -83,17 +83,19 @@ export function Spacer() {
 
 /* ---------------- 16-column grid ---------------- */
 
+// The gutter sets BOTH directions: the gap between rows always equals the gap between columns.
+// rowGap is only an explicit override (e.g. "none" for flush rows).
 const gridVariants = cva("grid grid-cols-4 md:grid-cols-8 lg:grid-cols-16", {
   variants: {
-    gutter: { wide: "gap-x-5", narrow: "gap-x-3", condensed: "gap-x-px" },
+    gutter: { wide: "gap-5", narrow: "gap-3", condensed: "gap-px" },
     rowGap: { none: "gap-y-0", md: "gap-y-3", lg: "gap-y-5" },
   },
-  defaultVariants: { gutter: "wide", rowGap: "md" },
+  defaultVariants: { gutter: "wide" },
 })
 
 export interface GridProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof gridVariants> {}
 
-/** Grid — 16 columns (lg) · 8 (md) · 4 (sm). Wide gutter 32px for content, narrow 16px for dense data, condensed 1px for tiles. */
+/** Grid — 16 columns (lg) · 8 (md) · 4 (sm). Gutter (both directions): wide 20px for content, narrow 12px for dense data, condensed 1px for tiles. */
 export function Grid({ className, gutter, rowGap, ...props }: GridProps) {
   return <div className={cn(gridVariants({ gutter, rowGap }), className)} {...props} />
 }

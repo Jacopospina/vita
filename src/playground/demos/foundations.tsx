@@ -287,7 +287,7 @@ export const foundationDemos: DemoMap = {
       description: "16 columns at lg, 8 at md, 4 at sm. Resize the window.",
       render: () => (
         <Stack gap="md">
-          <Grid gutter="narrow" rowGap="md">
+          <Grid gutter="narrow">
             {Array.from({ length: 16 }).map((_, i) => (
               <Column key={i} sm={1} md={1} lg={1}><div className="h-12 rounded-sm bg-primary-subtle" /></Column>
             ))}

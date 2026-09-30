@@ -23,7 +23,7 @@ export const aboutDemos: DemoMap = {
     {
       title: "Mind, soul, body",
       render: () => (
-        <Grid gutter="narrow" rowGap="md">
+        <Grid gutter="narrow">
           <Column sm={4} md={8} lg={5}><Part name="Animus" role="Mind" line="Backend logic that reasons and decides." /></Column>
           <Column sm={4} md={8} lg={5}><Part name="Anima" role="Soul" line="Purpose, character and the human experience." /></Column>
           <Column sm={4} md={8} lg={6}>

@@ -45,3 +45,6 @@ avoid_when:
 - Nest a Grid inside a Column more than once.
 - Use percentages or arbitrary widths.
 - Centre body text or forms in product UI.
+
+> [!IMPORTANT]
+> The gutter is the same in both directions: the gap between rows always equals the gap between columns (wide 20px, narrow 12px, condensed 1px).
