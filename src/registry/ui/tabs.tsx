@@ -10,7 +10,7 @@ import { useDragSelect } from "@/registry/hooks/use-drag-select"
  *   line      → underline that glides; for dense toolbars or when a track would be too heavy
  *   contained → tabs attached to a panel/card (secondary level)
  * Switching filters or modes of ONE dataset → ContentSwitcher. Sequential steps → ProgressIndicator.
- * Hold and nudge to browse: while pressed, sideways movement (accelerated) snaps to the next/previous tab (content follows);
+ * Hold and nudge to browse: while pressed, a gentle sideways swing snaps to the next/previous tab (content follows);
  * the pill leans with the pointer so movement and position always agree.
  */
 export function Tabs({ className, ...props }: React.ComponentProps<typeof TabsPrimitive.Root>) {

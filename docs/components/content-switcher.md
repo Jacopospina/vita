@@ -30,5 +30,5 @@ related: [tabs, radio-button, toggle]
 
 ## Hold and drag
 
-- **Browse without aiming.** Press and just hint a direction. Moving sideways snaps to the next or previous segment, and the content changes live. Movement is accelerated like the cursor: slow and careful needs a longer move per step, while a quick swipe crosses several. The selection leans with your pointer, so movement and position always agree. Release to keep the one you're on.
+- **Swing to browse.** Press and give a gentle swing left or right: each swing moves exactly one step in that direction and shows its content. To keep going, pause briefly and swing again, or swing the other way. It's a gesture, not a distance, so there's no aiming and no effort.
 - **Click still works.** A plain click selects one segment, and keyboard arrows move between segments.

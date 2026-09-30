@@ -55,7 +55,7 @@ export function ContentSwitcher({
     setInner(v)
     onValueChange?.(v)
   }
-  // Hold and nudge to browse (shared with Tabs): sideways movement (accelerated) snaps to the next/previous segment.
+  // Hold and nudge to browse (shared with Tabs): a gentle sideways swing snaps to the next/previous segment.
   const drag = useDragSelect("button[data-value]", (el) => el.dataset.value && select(el.dataset.value), { activeSelector: '[data-state="on"]' })
   return (
     <ToggleGroup.Root
