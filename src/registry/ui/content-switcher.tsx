@@ -55,7 +55,7 @@ export function ContentSwitcher({
     setInner(v)
     onValueChange?.(v)
   }
-  // Hold and nudge to browse (shared with Tabs): each small sideways nudge snaps to the next/previous segment.
+  // Hold and nudge to browse (shared with Tabs): ~20px of sideways movement snaps to the next/previous segment.
   const drag = useDragSelect("button[data-value]", (el) => el.dataset.value && select(el.dataset.value), { activeSelector: '[data-state="on"]' })
   return (
     <ToggleGroup.Root
@@ -76,8 +76,8 @@ export function ContentSwitcher({
       {rect && (
         <span
           aria-hidden
-          className={cn("pointer-events-none absolute top-0 left-0 rounded-inner-0.5 bg-raised shadow-raised duration-moderate-02 ease-spring", drag.dragging && "scale-95")}
-          style={{ width: rect.w, height: rect.h, transform: `translate(${rect.x}px, ${rect.y}px)` }}
+          className={cn("pointer-events-none absolute top-0 left-0 rounded-inner-0.5 bg-raised shadow-raised ease-spring", drag.dragging ? "duration-moderate-01" : "duration-moderate-02")}
+          style={{ width: rect.w, height: rect.h, transform: `translate(${rect.x + drag.offset}px, ${rect.y}px)` }}
         />
       )}
       {items.map((it) => {

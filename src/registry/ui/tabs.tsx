@@ -10,7 +10,8 @@ import { useDragSelect } from "@/registry/hooks/use-drag-select"
  *   line      → underline that glides; for dense toolbars or when a track would be too heavy
  *   contained → tabs attached to a panel/card (secondary level)
  * Switching filters or modes of ONE dataset → ContentSwitcher. Sequential steps → ProgressIndicator.
- * Hold and nudge to browse: while pressed, each small sideways nudge snaps to the next/previous tab and shows its content.
+ * Hold and nudge to browse: while pressed, ~20px of sideways movement snaps to the next/previous tab (content follows);
+ * the pill leans with the pointer so movement and position always agree.
  */
 export function Tabs({ className, ...props }: React.ComponentProps<typeof TabsPrimitive.Root>) {
   return <TabsPrimitive.Root className={cn("flex flex-col", className)} {...props} />
@@ -50,15 +51,15 @@ export function TabsList({ className, variant = "pill", fullWidth, children, onP
       {variant === "pill" && rect && (
         <span
           aria-hidden
-          className={cn("pointer-events-none absolute top-0 left-0 rounded-inner-0.5 bg-raised shadow-raised duration-expressive ease-spring", drag.dragging && "scale-95")}
-          style={{ width: rect.w, height: rect.h, transform: `translate(${rect.x}px, ${rect.y}px)` }}
+          className={cn("pointer-events-none absolute top-0 left-0 rounded-inner-0.5 bg-raised shadow-raised ease-spring", drag.dragging ? "duration-moderate-01" : "duration-expressive")}
+          style={{ width: rect.w, height: rect.h, transform: `translate(${rect.x + drag.offset}px, ${rect.y}px)` }}
         />
       )}
       {variant === "line" && rect && (
         <span
           aria-hidden
           className="pointer-events-none absolute bottom-0 left-0 h-0.5 rounded-full bg-primary motion-expressive"
-          style={{ width: rect.w, transform: `translateX(${rect.x}px)` }}
+          style={{ width: rect.w, transform: `translateX(${rect.x + drag.offset}px)` }}
         />
       )}
     </TabsPrimitive.List>

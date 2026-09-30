@@ -30,5 +30,5 @@ related: [tabs, radio-button, toggle]
 
 ## Hold and drag
 
-- **Browse without aiming.** Press and just hint a direction. Each small sideways nudge, about 48px, snaps to the next or previous segment, and the content changes live. Keep nudging to keep stepping; release to keep the one you're on.
+- **Browse without aiming.** Press and just hint a direction. Every 20px or so of sideways movement snaps to the next or previous segment, and the content changes live. The selection leans with your pointer, so movement and position always agree. Release to keep the one you're on.
 - **Click still works.** A plain click selects one segment, and keyboard arrows move between segments.

@@ -35,5 +35,5 @@ related: [content-switcher, progress-indicator, page-header]
 
 ## Hold and nudge
 
-- **Browse without aiming.** Press a tab and just hint a direction. Each small sideways nudge, about 48px, snaps to the next or previous tab and shows its content. Keep nudging to keep stepping.
+- **Browse without aiming.** Press a tab and just hint a direction. Every 20px or so of sideways movement snaps to the next or previous tab and shows its content. The selection leans with your pointer, so movement and position always agree.
 - **Click and keyboard unchanged.** A click selects a tab, and arrow keys move between tabs.
