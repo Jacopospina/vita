@@ -22,11 +22,11 @@ avoid_when:
 | Productive (`motion-productive`) | Expressive (`motion-expressive`) |
 |---|---|
 | Hover, press and focus states | Page enter and leave choreography |
-| Dropdowns, menus, tooltips, popovers | Modals opening, falling away when dismissed, flying out when sent |
+| Dropdowns, menus, tooltips, popovers | Modals opening |
 | Accordions, disclosures, reveals | Primary button press |
 | Table sorting, pagination, data rendering | Toasts and notifications appearing |
 | Checkbox, radio, toggle state | Side panels sliding in |
-| Field validation messages | Tab underline and segmented pill travel |
+| Field validation messages, modal exits (fall / send) | Tab underline and segmented pill travel |
 | Search clear, file rows | Number rolls and text reveals |
 
 > [!TIP] Unsure? If the user is mid-task, it's productive. If the moment deserves attention or the movement itself means something, it's expressive.

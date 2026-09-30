@@ -54,16 +54,15 @@
   35% { stroke-dashoffset: 0; stroke-opacity: 1; fill-opacity: 0 }
   100% { stroke-dashoffset: -1; stroke-opacity: 1; fill-opacity: 0 }
 }
-/* Modal exits: dismissed → falls with gravity and tilts; sent → anticipates, then flies out the top. */
+/* Modal exits (productive: quick, quiet): dismissed → falls with gravity and tilts; sent → slight dip, then out the top. */
 @keyframes corpus-modal-fall {
   0% { transform: none; opacity: 1 }
-  14% { transform: translateY(-0.5rem) rotate(-1deg); opacity: 1; animation-timing-function: cubic-bezier(0.55, 0, 0.9, 0.35) }
-  100% { transform: translateY(85vh) rotate(9deg); opacity: 0 }
+  100% { transform: translateY(40vh) rotate(6deg); opacity: 0 }
 }
 @keyframes corpus-modal-send {
   0% { transform: none; opacity: 1 }
-  18% { transform: translateY(0.75rem) scale(0.985); opacity: 1; animation-timing-function: cubic-bezier(0.6, 0, 0.8, 0.2) }
-  100% { transform: translateY(-110vh) scale(0.96); opacity: 0.9 }
+  15% { transform: translateY(0.25rem); opacity: 1 }
+  100% { transform: translateY(-60vh) scale(0.97); opacity: 0 }
 }
 @keyframes corpus-rise-in { from { opacity: 0; transform: translateY(1.25rem); filter: blur(10px) } }
 @keyframes corpus-sink-out { to { opacity: 0; transform: translateY(-0.5rem); filter: blur(4px) } }
