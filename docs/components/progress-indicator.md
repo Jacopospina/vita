@@ -15,7 +15,7 @@ related: [progress-bar, tabs, forms]
 
 ## Corpus opinions
 
-1. **Step labels are nouns** describing the content ("Route", "Cargo", "Review"), not "Step 1".
+1. **Step labels are nouns** describing the content ("Purpose", "Knowledge", "Review"), not "Step 1".
 2. **Completed steps are clickable** to go back. Future steps are not.
 3. **Invalid steps** show a warning icon and a secondary label saying what's missing.
 4. **Horizontal** above the form on desktop; **vertical** in narrow side layouts and on mobile.

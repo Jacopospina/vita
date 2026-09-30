@@ -1,74 +1,88 @@
 {
-  "$comment": "Corpus taxonomy — the ONE vocabulary of the product. Example values use the demo product 'Vita'. Maintained with the corpus-personas skill; enforced by corpus-content + corpus-audit (avoid list).",
+  "$comment": "Corpus taxonomy — the ONE vocabulary of the product. Example values use the demo product 'Vita', a platform that deploys custom AI agents. Maintained with the corpus-personas skill; enforced by corpus-content + corpus-audit (avoid list).",
   "product": "Vita",
-  "personas": ["pricing-specialist", "operations-manager"],
+  "personas": ["agent-builder", "business-owner"],
   "objects": {
-    "quote": {
-      "singular": "quote",
-      "plural": "quotes",
-      "definition": "A priced offer for moving goods on a lane, sent to a customer.",
-      "icon": "Document",
-      "overrides": { "operations-manager": { "singular": "offer", "plural": "offers" } }
+    "agent": {
+      "singular": "agent",
+      "plural": "agents",
+      "definition": "A custom AI worker with instructions, knowledge and tools, deployed to do one job.",
+      "icon": "Bot",
+      "overrides": { "business-owner": { "singular": "assistant", "plural": "assistants" } }
     },
-    "shipment": {
-      "singular": "shipment",
-      "plural": "shipments",
-      "definition": "Goods booked to move from origin to destination.",
-      "icon": "Delivery"
+    "deployment": {
+      "singular": "deployment",
+      "plural": "deployments",
+      "definition": "A version of an agent running in an environment (staging or production).",
+      "icon": "Deploy"
     },
-    "customer": {
-      "singular": "customer",
-      "plural": "customers",
-      "definition": "The company that receives quotes and books shipments.",
+    "run": {
+      "singular": "run",
+      "plural": "runs",
+      "definition": "One execution of an agent, from trigger to result.",
+      "icon": "Activity"
+    },
+    "knowledge-source": {
+      "singular": "knowledge source",
+      "plural": "knowledge sources",
+      "definition": "Documents, sites or data the agent is allowed to answer from.",
+      "icon": "Book"
+    },
+    "tool": {
+      "singular": "tool",
+      "plural": "tools",
+      "definition": "A connected app the agent can act in (Slack, Salesforce, Gmail…).",
+      "icon": "Plug"
+    },
+    "workspace": {
+      "singular": "workspace",
+      "plural": "workspaces",
+      "definition": "A team's space: its agents, members, tools and billing.",
       "icon": "Enterprise"
-    },
-    "lane": {
-      "singular": "lane",
-      "plural": "lanes",
-      "definition": "An origin–destination pair with its own rates.",
-      "icon": "Direction"
     }
   },
   "actions": {
     "create": { "label": "Create {object}", "icon": "Add", "variant": "primary", "confirm": false },
     "edit": { "label": "Edit", "icon": "Edit", "variant": "ghost", "confirm": false },
+    "test": { "label": "Test agent", "icon": "Play", "variant": "secondary", "confirm": false },
+    "deploy": { "label": "Deploy agent", "icon": "Deploy", "variant": "primary", "confirm": true },
+    "pause": { "label": "Pause", "icon": "Pause", "variant": "menu", "confirm": false, "undo": true },
     "duplicate": { "label": "Duplicate", "icon": "Copy", "variant": "menu", "confirm": false },
-    "send": { "label": "Send {object}", "icon": "Send", "variant": "primary", "confirm": true },
-    "archive": { "label": "Archive", "icon": "Archive", "variant": "menu", "confirm": false, "undo": true },
     "delete": { "label": "Delete {object}", "icon": "TrashCan", "variant": "danger", "confirm": true },
     "export": { "label": "Export", "icon": "Download", "variant": "tertiary", "confirm": false }
   },
   "statuses": {
-    "quote": {
+    "agent": {
       "Draft": "draft",
-      "Sent": "pending",
-      "Awaiting customer": "pending",
-      "Accepted": "success",
-      "Expired": "warning",
-      "Rejected": "error"
+      "Deploying": "in-progress",
+      "Live": "success",
+      "Degraded": "warning",
+      "Paused": "draft",
+      "Failed": "error"
     },
-    "shipment": {
-      "Booked": "info",
-      "In transit": "in-progress",
-      "Delayed": "warning",
-      "Delivered": "success",
-      "Cancelled": "draft"
+    "run": {
+      "Queued": "pending",
+      "Running": "in-progress",
+      "Handed off": "info",
+      "Succeeded": "success",
+      "Failed": "error"
     }
   },
   "avoid": {
-    "Submit": "a verb + object, e.g. \"Send quote\"",
+    "Submit": "a verb + object, e.g. \"Deploy agent\"",
     "Oops": "say what happened and how to fix it",
     "Successfully": "(remove — success is implied)",
-    "Estimate": "quote",
-    "Client": "customer",
+    "Bot": "agent",
+    "Robot": "agent",
+    "Job": "run",
     "Sign in": "Log in",
     "Sign out": "Log out"
   },
   "voice": {
-    "rules": ["Sentence case", "Front-load the key word", "Numerals for numbers", "No blame", "No 'please', 'simply', 'just'"],
+    "rules": ["Sentence case", "Front-load the key word", "Numerals for numbers", "No blame", "No 'please', 'simply', 'just'", "Never anthropomorphise agents ('thinks', 'wants')"],
     "personas": {
-      "pricing-specialist": "Expert, terse, domain terms welcome (BAF, FCL, LDM).",
-      "operations-manager": "Plain language, outcome-first, no jargon."
+      "agent-builder": "Technical, terse; terms like model, prompt, tool call and evaluation are welcome.",
+      "business-owner": "Plain language, outcome-first (tickets resolved, hours saved), no jargon."
     }
   }
 }

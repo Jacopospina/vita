@@ -70,10 +70,10 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/foun
   - use: Many records with the same attributes (> ~5 rows or any sorting/selecting need); Users compare values across rows or act on several rows at once
   - avoid: Few rows of key/value details → StructuredList; Heterogeneous items with one action each → ContainedList; Visual browsing → Tile grid; One column → it's a list
 - [Date picker](docs/components/date-picker.md): Dates by typing first, with a calendar when it helps. Simple, single and range.
-  - use: simple — known dates far from today (birthday, contract start years ago): typing is fastest; single — near-future scheduling where weekday context matters (pickup, deadline); range — periods (reporting range, booking)
+  - use: simple — known dates far from today (birthday, contract start years ago): typing is fastest; single — near-future scheduling where weekday context matters (go-live, deadline); range — periods (reporting range, booking)
   - avoid: Relative ranges ("Last 7 days") → Dropdown of presets (optionally + custom range); Time only → TextInput with time type
 - [Dropdown](docs/components/dropdown.md): Custom listbox for choosing values. Dropdown (one), Combobox (one, filterable) and MultiSelect (many).
-  - use: Dropdown — one of 7–20 options, options need descriptions/icons, or consistent styling in app chrome; Combobox — one of 20+ options where users know what to type (customer, country, carrier); MultiSelect — several of more than 6 options (markets, tags, assignees); Inline type — compact "Sort by: Newest ▾" in toolbars
+  - use: Dropdown — one of 7–20 options, options need descriptions/icons, or consistent styling in app chrome; Combobox — one of 20+ options where users know what to type (tool, country, team member); MultiSelect — several of more than 6 options (markets, tags, assignees); Inline type — compact "Sort by: Newest ▾" in toolbars
   - avoid: 2–6 options → RadioGroup (or ContentSwitcher for views); Actions → Menu / MenuButton (dropdowns choose values; menus do things); Plain long lists in mobile forms → Select
 - [File uploader](docs/components/file-uploader.md): Attach files by browsing or dropping, with per-file status and errors that explain the fix.
   - use: dropzone — uploading is the main task of the view (import, document collection); button — attaching as one field among others in a form
@@ -106,7 +106,7 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/foun
   - use: Inline — errors/warnings about a section, form summary, account-level issues; Toast — brief confirmation of something the user just did (with optional Undo); Callout — permanent, non-dismissible contextual guidance
   - avoid: A decision is required before continuing → Modal; Field-level validation → the field's invalidText; Errors inside a toast that need action → InlineNotification near the cause; Marketing/announcements → not a system notification
 - [Number input](docs/components/number-input.md): Precise numeric entry with steppers, bounds and units.
-  - use: Exact quantities with small adjustments (pallets, seats, percentage, weight); Values with min/max bounds the user must respect
+  - use: Exact quantities with small adjustments (concurrent runs, seats, timeout, percentage); Values with min/max bounds the user must respect
   - avoid: Approximate values where feel matters → Slider; Identifiers that happen to be digits (phone, postcode, ID) → TextInput inputMode="numeric"; Large free-form amounts (currency) → TextInput with inputMode="decimal" and formatting
 - [Pagination](docs/components/pagination.md): Split large datasets into pages, with page-size control and an honest item count.
   - use: Tables and lists with more items than fit comfortably (> 25–50); Users need to reference positions ("it was on page 3") or know the total
@@ -133,7 +133,7 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/foun
   - use: Adjusting a continuous value with immediate feedback (volume, opacity, zoom); Filtering by a numeric range (price, weight) with two thumbs
   - avoid: Exact values matter → NumberInput; Few discrete options → RadioGroup / ContentSwitcher; The range is huge (0–1,000,000) → NumberInput(s)
 - [Structured list](docs/components/structured-list.md): A small, read-mostly set of rows and columns — details, specs and comparisons. Selectable when choosing one row.
-  - use: Key/value details of one object (condensed + flush); Comparing a few options across attributes (plans, carriers); Choosing one of a few rows with multiple attributes (selectable)
+  - use: Key/value details of one object (condensed + flush); Comparing a few options across attributes (plans, models); Choosing one of a few rows with multiple attributes (selectable)
   - avoid: Many rows, sorting, pagination, bulk actions → DataTable; Items with individual actions → ContainedList
 - [Tabs](docs/components/tabs.md): Switch between peer views of the same context — Overview · Activity · Settings.
   - use: line — page-level views of one object, under the PageHeader; contained — tabs attached to a panel/tile (secondary level)
@@ -214,7 +214,7 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/foun
   - use: Users know what they're looking for by name/ID
   - avoid: Browsing by attributes → Filtering
 - [Status indicators](docs/patterns/status-indicators.md): One vocabulary of states across the product — shape, color and word together, mapped in the taxonomy.
-  - use: Showing the state of an object (job, shipment, invoice, server)
+  - use: Showing the state of an object (agent, run, deployment, integration)
   - avoid: Categorising (not a state) → Tag neutral; Transient feedback about a user action → toast / InlineLoading
 - [Text toolbar](docs/patterns/text-toolbar.md): Formatting controls for rich-text editing — grouped, labelled, keyboard-friendly, with shortcuts.
   - use: Rich text editors (comments, descriptions, email drafts, notes)

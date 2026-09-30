@@ -15,7 +15,7 @@ related: [read-only-states, button, tooltip]
 | Situation | Do |
 |---|---|
 | The user will **never** be able to use it (permissions, plan) | **Hide** it. If awareness matters (upsell), show it enabled and explain on click. |
-| The user can make it available by doing something **on this screen** | **Disable** it and explain how (helper text or tooltip): "Add at least one lane to publish" |
+| The user can make it available by doing something **on this screen** | **Disable** it and explain how (helper text or tooltip): "Connect at least one knowledge source to deploy" |
 | The form is incomplete or invalid | **Keep submit enabled**, validate on click, focus the first error |
 | An action is in progress | Button `loading` (not disabled) |
 | The value can be seen but not changed | **Read-only**, not disabled (see *Read-only states*) |

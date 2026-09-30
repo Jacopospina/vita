@@ -36,7 +36,7 @@ Heights follow `--corpus-density`. Buttons in a `ButtonSet` share one size.
 ## Corpus opinions
 
 1. **Label = verb + object.**
-   - Good: "Create quote", "Delete 3 files", "Send invite".
+   - Good: "Create agent", "Delete 3 runs", "Send invite".
    - Never: "OK", "Yes", "Submit", "Click here".
    - Max 3 words.
 2. **The primary is always last (rightmost) in a `ButtonSet`.** Cancel goes to its left as `secondary`. In stacked sets (mobile), the primary is on top.
@@ -57,6 +57,6 @@ Heights follow `--corpus-density`. Buttons in a `ButtonSet` share one size.
 ```tsx
 <ButtonSet>
   <Button variant="secondary">Cancel</Button>
-  <Button icon={Add}>Create quote</Button>
+  <Button icon={Add}>Create agent</Button>
 </ButtonSet>
 ```

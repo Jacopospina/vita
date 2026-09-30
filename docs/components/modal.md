@@ -21,8 +21,8 @@ related: [dialogs, ui-shell-right-panel, popover, notification]
 | Type | Footer | Example |
 |---|---|---|
 | Passive | none (× only) | Keyboard shortcuts, info |
-| Transactional | Cancel + primary | "Send quote" with a recipient field |
-| Danger | Cancel + danger | "Delete 3 shipments?" |
+| Transactional | Cancel + primary | "Deploy agent" with a release note |
+| Danger | Cancel + danger | "Delete 3 agents?" |
 | Acknowledgement | primary only | Terms update |
 
 ## Sizes
@@ -34,7 +34,7 @@ related: [dialogs, ui-shell-right-panel, popover, notification]
 
 ## Corpus opinions
 
-1. **The title asks or states:** "Delete 3 shipments?" / "Send quote to customer". The primary button repeats the verb ("Delete shipments").
+1. **The title asks or states:** "Delete 3 agents?" / "Deploy to production". The primary button repeats the verb ("Delete agents").
 2. **Danger modals:**
    - They can't be dismissed by clicking the scrim.
    - Focus lands on Cancel, not on the destructive button.

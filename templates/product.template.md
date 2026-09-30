@@ -3,7 +3,7 @@
 > Fill this in first. The `corpus-personas` skill reads it to create personas, journeys and the taxonomy.
 
 ## In one sentence
-<!-- What the product does, for whom. e.g. "Vita lets freight forwarders price and send transport quotes in minutes." -->
+<!-- What the product does, for whom. e.g. "Vita lets teams build and deploy custom AI agents that work inside their own tools." -->
 
 ## Who uses it
 <!-- Roles, rough numbers, internal vs external, how often they use it. -->

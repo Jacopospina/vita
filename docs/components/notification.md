@@ -27,7 +27,7 @@ related: [notifications, modal, inline-loading, status-indicators]
    - Maximum 3 stacked.
    - Bottom-right on desktop, bottom-centre on mobile.
 2. **Offer "Undo" in the toast** for reversible actions instead of asking "Are you sure?" beforehand. Keep undo toasts visible for 8s.
-3. **Inline errors sit next to what failed** and stay until resolved. They have **one** action (Retry, Assign carriers).
+3. **Inline errors sit next to what failed** and stay until resolved. They have **one** action (Retry, Reconnect tools).
 4. **Title = what happened** (≤ 5 words). **Subtitle = detail or next step.**
 5. **Never use `error` for validation that the field already shows.**
 6. **Mount `<Toaster />` once** at the app root, and call `toast()` anywhere.

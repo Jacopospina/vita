@@ -14,9 +14,9 @@ related: [data-table, search, filtering, loading]
 
 | Kind | Title | Description | Action | Pictogram tone |
 |---|---|---|---|---|
-| **First use** | What to create ("Create your first quote") | The value + effort ("Quotes you create or receive appear here. It takes about a minute.") | Primary: create. Optional secondary: import, learn more | brand |
-| **No results** | "No results for “{query}”" / "No shipments match these filters" | How to broaden ("Check the spelling or search by reference") | Tertiary: "Clear search" / "Clear all filters" | neutral |
-| **Error** | What failed ("We couldn't load shipments") | Reassure + cause if known ("The connection timed out. Your data is safe.") | Tertiary: "Try again" | neutral |
+| **First use** | What to create ("Create your first agent") | The value + effort ("Describe what it should do, connect your tools and deploy. It takes about five minutes.") | Primary: create. Optional secondary: import, learn more | brand |
+| **No results** | "No results for “{query}”" / "No agents match these filters" | How to broaden ("Check the spelling or search by agent ID") | Tertiary: "Clear search" / "Clear all filters" | neutral |
+| **Error** | What failed ("We couldn't load agents") | Reassure + cause if known ("The connection timed out. Your data is safe.") | Tertiary: "Try again" | neutral |
 
 Sometimes empty is a success ("All caught up"). Say so positively and offer no action.
 

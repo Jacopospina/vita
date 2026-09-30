@@ -20,19 +20,19 @@ Every string passes through the **taxonomy** (`corpus/taxonomy.json`) and the **
 
 | Element | Formula | Example |
 |---|---|---|
-| Button | Verb + object (≤ 3 words) | "Create quote" |
-| Page title | Object (plural for lists) or object name | "Quotes" / "Q-2041 · Acme GmbH" |
-| Field label | Noun, sentence case | "Pickup date" |
-| Helper text | Constraint or format, before the user errs | "Weekdays only. We'll confirm by 17:00." |
-| Error | What happened + how to fix | "Enter a pickup date on a weekday." |
-| Empty, first-use | Title: create your first X · Body: value + effort · Action | "Create your first quote" / "…about a minute." |
+| Button | Verb + object (≤ 3 words) | "Create agent" |
+| Page title | Object (plural for lists) or object name | "Agents" / "Support triage" |
+| Field label | Noun, sentence case | "Go-live date" |
+| Helper text | Constraint or format, before the user errs | "Weekdays only. Deployments start at 09:00." |
+| Error | What happened + how to fix | "Enter a go-live date on a weekday." |
+| Empty, first-use | Title: create your first X · Body: value + effort · Action | "Create your first agent" / "…about five minutes." |
 | Empty, no results | "No {objects} match…" + how to broaden + clear action | |
-| Toast | Past-tense result, ≤ 5 words | "Quote sent" |
-| Confirmation title | Question with verb + count + object | "Delete 3 quotes?" |
-| Confirmation body | Consequence | "Customers lose access to the links. This can't be undone." |
-| Confirmation button | Repeat the verb + object | "Delete quotes" |
-| Status | Taxonomy status word | "Awaiting customer" |
-| AI message | What was done + confidence, no "I" | "Suggested from 3 similar quotes · high confidence" |
+| Toast | Past-tense result, ≤ 5 words | "Agent deployed" |
+| Confirmation title | Question with verb + count + object | "Delete 3 agents?" |
+| Confirmation body | Consequence | "They stop running and their history is removed. This can't be undone." |
+| Confirmation button | Repeat the verb + object | "Delete agents" |
+| Status | Taxonomy status word | "Awaiting approval" |
+| AI message | What was done + confidence, no "I" | "Suggested from 3 similar tickets · high confidence" |
 
 ## Voice
 

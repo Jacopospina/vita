@@ -15,7 +15,7 @@ related: [progress-indicator, loading, file-uploader]
 
 ## Corpus opinions
 
-1. **Label says what's progressing** ("Importing lanes"). Helper text gives the numbers or time left ("812 of 1,240 · about 20 seconds").
+1. **Label says what's progressing** ("Indexing help center"). Helper text gives the numbers or time left ("812 of 1,240 articles · about 20 seconds").
 2. **Never go backwards.** If an estimate was wrong, slow down; don't rewind.
 3. **Indeterminate → determinate** as soon as the total is known.
 4. **Finish states:** `finished` turns green with a check. `error` turns red and the helper explains the failure and the fix.

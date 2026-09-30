@@ -21,9 +21,9 @@ related: [filtering, search-pattern, data-table]
 
 ## Corpus opinions
 
-1. **Placeholder states the scope:** "Search shipments", not "Search…".
+1. **Placeholder states the scope:** "Search agents", not "Search…".
 2. **Filter live** for local data (debounce 150–300ms). Search on Enter for expensive server queries, and say so ("Press Enter to search").
 3. **Escape clears; × clears** and returns focus to the field.
 4. **Always show the result count** (`aria-live`) and a helpful empty state with a "Clear search" action (see *Empty states*).
-5. **Keep the query visible** in the results ("12 results for “acme”").
+5. **Keep the query visible** in the results ("12 results for “support”").
 6. **Search ≠ filter.** Search narrows by free text; filters narrow by attributes. Use both together (see the *Filtering* pattern).

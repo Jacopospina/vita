@@ -23,14 +23,14 @@ const countries = ["Austria", "Belgium", "Denmark", "France", "Germany", "Irelan
 
 function UploaderDemo({ variant }: { variant: "button" | "dropzone" }) {
   const [files, setFiles] = React.useState<UploadFile[]>([
-    { id: "a", name: "rate-card-2026.pdf", status: "complete" },
-    { id: "b", name: "invoice-scan.heic", status: "error", error: "HEIC isn't supported. Export as JPG or PDF and try again." },
+    { id: "a", name: "refund-policy.pdf", status: "complete" },
+    { id: "b", name: "help-center.pages", status: "error", error: "Pages files aren't supported. Export as PDF or Markdown and try again." },
   ])
   return (
     <FileUploader
       variant={variant}
-      label="Supporting documents"
-      accept=".pdf,.jpg,.png"
+      label="Knowledge sources"
+      accept=".pdf,.md,.csv"
       maxSizeMb={10}
       files={files}
       onRemove={(id) => setFiles((f) => f.filter((x) => x.id !== id))}
@@ -48,20 +48,20 @@ function FormDemo() {
   const [email, setEmail] = React.useState("")
   const invalid = submitted && !/^\S+@\S+\.\S+$/.test(email)
   return (
-    <Form onSubmit={(e) => { e.preventDefault(); setSubmitted(true); if (!invalid && email) toast({ kind: "success", title: "Account created" }) }}>
+    <Form onSubmit={(e) => { e.preventDefault(); setSubmitted(true); if (!invalid && email) toast({ kind: "success", title: "Workspace created" }) }}>
       <FormRow>
         <TextInput label="First name" autoComplete="given-name" />
         <TextInput label="Last name" autoComplete="family-name" />
       </FormRow>
       <TextInput label="Work email" type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} invalid={invalid} invalidText="Enter an email address like name@company.com" />
-      <TextInput label="Company" optional helperText="Shown on quotes you send" />
+      <TextInput label="Workspace name" optional helperText="Shown to everyone you invite" />
       <FormGroup legend="Notifications">
-        <Checkbox label="Email me when a quote is accepted" defaultChecked />
-        <Checkbox label="Weekly summary" helperText="Every Monday at 09:00" />
+        <Checkbox label="Email me when an agent fails" defaultChecked />
+        <Checkbox label="Weekly usage summary" helperText="Every Monday at 09:00" />
       </FormGroup>
       <Checkbox label={<>I agree to the <Link inline href="#">terms of service</Link></>} />
       <FormActions>
-        <Button type="submit">Create account</Button>
+        <Button type="submit">Create workspace</Button>
         <Button type="button" variant="ghost">Cancel</Button>
       </FormActions>
     </Form>
@@ -74,28 +74,28 @@ export const inputDemos: DemoMap = {
       title: "States",
       render: () => (
         <Stack gap="lg" className="max-w-sm">
-          <TextInput label="Project name" placeholder="e.g. Q3 forecast" helperText="Visible to everyone in the workspace" />
-          <TextInput label="Reference" optional labelAddon={<Toggletip>Your internal PO or job number. Appears on the invoice.</Toggletip>} />
+          <TextInput label="Agent name" placeholder="e.g. Support triage" helperText="Visible to everyone in the workspace" />
+          <TextInput label="Cost centre" optional labelAddon={<Toggletip>Used to split run costs on your invoice.</Toggletip>} />
           <TextInput label="Email" defaultValue="jacopo@" invalid invalidText="Enter a complete email address" />
-          <TextInput label="Budget code" defaultValue="MKT-2026" warn warnText="This code closes on 31 Oct" />
+          <TextInput label="Webhook URL" defaultValue="http://hooks.vita.dev/in" warn warnText="Use https in production" />
           <TextInput label="Workspace ID" defaultValue="ws_83hf72" readOnly helperText="Read-only" />
           <TextInput label="Disabled" disabled placeholder="Not available" />
-          <TextInput label="Title" maxLength={60} showCount defaultValue="Quarterly review" />
+          <TextInput label="Greeting" maxLength={60} showCount defaultValue="Hi! How can I help?" />
         </Stack>
       ),
     },
     { title: "Sizes", render: () => <Stack gap="md" className="max-w-sm"><TextInput size="sm" label="Small" /><TextInput size="md" label="Medium (default)" /><TextInput size="lg" label="Large" /></Stack> },
-    { title: "Password & text area", render: () => <Stack gap="lg" className="max-w-sm"><PasswordInput label="Password" helperText="At least 12 characters" /><TextArea label="Description" maxLength={280} showCount placeholder="What is this project about?" /></Stack> },
+    { title: "Password & text area", render: () => <Stack gap="lg" className="max-w-sm"><PasswordInput label="API key" helperText="Stored encrypted. Shown once." /><TextArea label="Instructions" maxLength={280} showCount placeholder="What should this agent do, and never do?" /></Stack> },
   ],
   "components/number-input": [
     {
       title: "Default, units, bounds, invalid, read-only",
       render: () => (
         <Stack gap="lg" className="max-w-xs">
-          <NumberInput label="Quantity" defaultValue={1} min={1} max={99} />
-          <NumberInput label="Weight" unit="kg" defaultValue={12.5} step={0.5} min={0} />
-          <NumberInput label="Seats" defaultValue={120} min={1} max={100} helperText="Max 100 on your plan" />
-          <NumberInput label="Rate" defaultValue={4} readOnly unit="%" />
+          <NumberInput label="Max concurrent runs" defaultValue={4} min={1} max={50} />
+          <NumberInput label="Timeout" unit="s" defaultValue={30} step={5} min={5} />
+          <NumberInput label="Agents" defaultValue={120} min={1} max={100} helperText="Max 100 on your plan" />
+          <NumberInput label="Temperature" defaultValue={0.2} readOnly />
         </Stack>
       ),
     },
@@ -105,8 +105,8 @@ export const inputDemos: DemoMap = {
       title: "Field, toolbar, expandable, sizes",
       render: () => (
         <Stack gap="lg" className="max-w-md">
-          <Search placeholder="Search projects" />
-          <Search size="sm" variant="toolbar" placeholder="Search in table" />
+          <Search placeholder="Search agents" />
+          <Search size="sm" variant="toolbar" placeholder="Search runs" />
           <Inline><Search variant="expandable" /><Text tone="muted">← expandable</Text></Inline>
           <Search size="lg" placeholder="Large" />
         </Stack>
@@ -123,7 +123,7 @@ export const inputDemos: DemoMap = {
             <SelectGroup label="Europe"><SelectOption value="emea">EMEA</SelectOption><SelectOption value="uk">UK &amp; Ireland</SelectOption></SelectGroup>
             <SelectGroup label="Americas"><SelectOption value="na">North America</SelectOption><SelectOption value="latam">LATAM</SelectOption></SelectGroup>
           </Select>
-          <Select label="Currency" invalid invalidText="Choose a currency" placeholder="Choose"><SelectOption value="eur">EUR</SelectOption></Select>
+          <Select label="Model" invalid invalidText="Choose a model" placeholder="Choose"><SelectOption value="large">Vita Large</SelectOption></Select>
           <Select label="Disabled" disabled placeholder="Unavailable" />
         </Stack>
       ),
@@ -134,9 +134,9 @@ export const inputDemos: DemoMap = {
       title: "Dropdown · Combobox · Multiselect",
       render: () => (
         <Stack gap="lg" className="max-w-xs">
-          <Dropdown label="Priority" items={[{ value: "low", label: "Low", description: "Handle this week" }, { value: "normal", label: "Normal" }, { value: "high", label: "High", description: "Handle today" }]} defaultValue="normal" />
+          <Dropdown label="Model" items={[{ value: "fast", label: "Vita Fast", description: "Lowest latency and cost" }, { value: "large", label: "Vita Large" }, { value: "vision", label: "Vita Vision", description: "Reads images and PDFs" }]} defaultValue="large" />
           <Combobox label="Country" items={countries} helperText="Type to filter" />
-          <MultiSelect label="Markets" items={countries.slice(0, 8)} defaultValue={["france", "germany"]} />
+          <MultiSelect label="Data residency" items={countries.slice(0, 8)} defaultValue={["france", "germany"]} />
           <Dropdown label="Disabled" items={[]} disabled />
           <Inline gap="2xs"><Text tone="muted">Sort by</Text><Dropdown type="inline" label="Sort by" hideLabel items={[{ value: "new", label: "Newest" }, { value: "old", label: "Oldest" }]} defaultValue="new" /></Inline>
         </Stack>
@@ -148,10 +148,10 @@ export const inputDemos: DemoMap = {
       title: "Simple · Single · Range",
       render: () => (
         <Stack gap="lg">
-          <DatePicker mode="simple" label="Date of birth" helperText="Type the date — no calendar needed" />
-          <DatePicker label="Pickup date" minDate={new Date()} />
+          <DatePicker mode="simple" label="Contract start" helperText="Type the date — no calendar needed" />
+          <DatePicker label="Go-live date" minDate={new Date()} />
           <DateRangePicker startLabel="From" endLabel="To" />
-          <DatePicker label="Invalid" invalid invalidText="Pickup must be a weekday" />
+          <DatePicker label="Invalid" invalid invalidText="Go-live must be a weekday" />
         </Stack>
       ),
     },
@@ -161,11 +161,11 @@ export const inputDemos: DemoMap = {
       title: "States & group",
       render: () => (
         <Stack gap="lg">
-          <CheckboxGroup legend="Transport modes" helperText="Select all that apply">
-            <Checkbox label="Road" defaultChecked />
-            <Checkbox label="Sea" />
-            <Checkbox label="Air" helperText="Surcharges may apply" />
-            <Checkbox label="Rail" disabled />
+          <CheckboxGroup legend="Channels" helperText="Select all that apply">
+            <Checkbox label="Web chat" defaultChecked />
+            <Checkbox label="Email" />
+            <Checkbox label="Voice" helperText="Uses Vita Voice, billed per minute" />
+            <Checkbox label="WhatsApp" disabled />
           </CheckboxGroup>
           <Checkbox label="Select all (indeterminate)" checked="indeterminate" />
           <CheckboxGroup legend="Terms" invalid invalidText="You must accept to continue"><Checkbox label="I accept the terms" invalid /></CheckboxGroup>
@@ -178,10 +178,10 @@ export const inputDemos: DemoMap = {
       title: "Vertical, horizontal, invalid",
       render: () => (
         <Stack gap="lg">
-          <RadioGroup legend="Shipping speed" defaultValue="standard">
-            <RadioButton value="standard" label="Standard" helperText="3–5 working days · Free" />
-            <RadioButton value="express" label="Express" helperText="Next working day · €12" />
-            <RadioButton value="same" label="Same day" disabled helperText="Not available in your area" />
+          <RadioGroup legend="Environment" defaultValue="standard">
+            <RadioButton value="standard" label="Staging" helperText="Test with sample data · Free" />
+            <RadioButton value="express" label="Production" helperText="Real users · billed per run" />
+            <RadioButton value="same" label="Dedicated" disabled helperText="Available on Enterprise" />
           </RadioGroup>
           <RadioGroup legend="Units" orientation="horizontal" defaultValue="metric"><RadioButton value="metric" label="Metric" /><RadioButton value="imperial" label="Imperial" /></RadioGroup>
           <RadioGroup legend="Plan" invalid invalidText="Choose a plan"><RadioButton value="a" label="Team" /><RadioButton value="b" label="Enterprise" /></RadioGroup>
@@ -194,9 +194,9 @@ export const inputDemos: DemoMap = {
       title: "Toggle",
       render: () => (
         <Stack gap="md" className="max-w-sm">
-          <Toggle label="Email notifications" defaultChecked />
-          <Toggle label="Dark mode" helperText="Follows your system unless set" />
-          <Toggle label="Auto-renew" stateText defaultChecked labelPosition="end" />
+          <Toggle label="Human handoff" defaultChecked />
+          <Toggle label="Log conversations" helperText="Kept for 30 days" />
+          <Toggle label="Auto-deploy" stateText defaultChecked labelPosition="end" />
           <Toggle label="Small" size="sm" />
           <Toggle label="Disabled" disabled />
         </Stack>
@@ -208,9 +208,9 @@ export const inputDemos: DemoMap = {
       title: "Single, range, formatted",
       render: () => (
         <Stack gap="xl" className="max-w-md">
-          <Slider label="Volume" defaultValue={[40]} />
-          <Slider label="Price range" min={0} max={2000} step={50} defaultValue={[200, 1200]} formatValue={(v) => `€${v}`} />
-          <Slider label="Opacity" defaultValue={[80]} formatValue={(v) => `${v}%`} helperText="Applies to the whole layer" />
+          <Slider label="Creativity" defaultValue={[40]} />
+          <Slider label="Monthly budget" min={0} max={2000} step={50} defaultValue={[200, 1200]} formatValue={(v) => `$${v}`} />
+          <Slider label="Confidence threshold" defaultValue={[80]} formatValue={(v) => `${v}%`} helperText="Below this, the agent hands off to a person" />
           <Slider label="Disabled" disabled defaultValue={[30]} />
         </Stack>
       ),
@@ -226,10 +226,10 @@ export const inputDemos: DemoMap = {
       title: "Fluid form",
       render: () => (
         <FluidForm>
-          <TextInput label="First name" defaultValue="Jacopo" />
-          <TextInput label="Last name" />
-          <Select label="Country" defaultValue="italy"><SelectOption value="italy">Italy</SelectOption><SelectOption value="uk">United Kingdom</SelectOption></Select>
-          <TextInput label="Postcode" invalid invalidText="Enter a valid postcode" defaultValue="ABC" />
+          <TextInput label="Agent name" defaultValue="Support triage" />
+          <TextInput label="Owner" />
+          <Select label="Model" defaultValue="large"><SelectOption value="large">Vita Large</SelectOption><SelectOption value="fast">Vita Fast</SelectOption></Select>
+          <TextInput label="Max tokens" invalid invalidText="Enter a number from 256 to 32,000" defaultValue="abc" />
         </FluidForm>
       ),
     },

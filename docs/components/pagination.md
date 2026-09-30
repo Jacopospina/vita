@@ -16,6 +16,6 @@ related: [data-table]
 
 1. **Attach it to the table's bottom edge** (it's styled as the table footer).
 2. **Default page size is 25.** Offer 10 · 25 · 50 · 100. Remember the user's choice.
-3. **Show "1–25 of 1,240 items"**, using the taxonomy noun ("shipments").
+3. **Show "1–25 of 1,240 items"**, using the taxonomy noun ("agents").
 4. **Reset to page 1** whenever search, filters or sorting change.
 5. **Unknown totals** (cursor APIs): hide the page select and show "Next" and "Previous" only.

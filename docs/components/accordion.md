@@ -26,7 +26,7 @@ related: [disclosures, tabs, tile]
 
 ## Corpus opinions
 
-1. **Headers are specific:** "How long is a quote valid?" beats "Validity".
+1. **Headers are specific:** "How are runs billed?" beats "Billing".
 2. **Never nest accordions.**
 3. **Open the first or the most relevant item by default** when the user arrives with a goal.
 4. **The motion is a height expand at `moderate-02`** and the chevron rotates. Reduced motion shows the content instantly.

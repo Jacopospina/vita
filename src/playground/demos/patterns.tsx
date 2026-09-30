@@ -33,38 +33,38 @@ import { Icon } from "@/registry/ui/icon"
 import { StructuredList } from "@/registry/ui/structured-list"
 import { Form, FormActions, FluidForm } from "@/registry/ui/form"
 import { ProgressIndicator } from "@/registry/ui/progress-indicator"
-import { shipments, shipmentColumns } from "./data"
+import { agents, agentColumns } from "./data"
 import { ShellDemo } from "./feedback"
 
 function FilteringDemo() {
   const [q, setQ] = React.useState("")
-  const [statuses, setStatuses] = React.useState<string[]>(["In transit", "Delayed"])
-  const [customer, setCustomer] = React.useState("")
-  const all = ["Delivered", "In transit", "Delayed", "Cancelled"]
-  const rows = shipments.filter((s) => (!statuses.length || statuses.includes(s.status)) && (!customer || s.customer === customer) && (s.ref + s.customer).toLowerCase().includes(q.toLowerCase())).slice(0, 6)
-  const applied = [...statuses.map((s) => ({ k: "status", v: s })), ...(customer ? [{ k: "customer", v: customer }] : [])]
+  const [statuses, setStatuses] = React.useState<string[]>(["Deploying", "Degraded"])
+  const [team, setTeam] = React.useState("")
+  const all = ["Live", "Deploying", "Degraded", "Paused"]
+  const rows = agents.filter((s) => (!statuses.length || statuses.includes(s.status)) && (!team || s.team === team) && (s.name + s.team).toLowerCase().includes(q.toLowerCase())).slice(0, 6)
+  const applied = [...statuses.map((s) => ({ k: "status", v: s })), ...(team ? [{ k: "team", v: team }] : [])]
   return (
     <Stack gap="sm">
       <Inline gap="xs" wrap>
-        <div className="w-64"><Search size="md" placeholder="Search reference or customer" value={q} onValueChange={setQ} /></div>
+        <div className="w-64"><Search size="md" placeholder="Search agent or team" value={q} onValueChange={setQ} /></div>
         <Popover>
           <PopoverTrigger asChild><Button variant="secondary" icon={Filter} iconPosition="start">Filter{applied.length ? ` (${applied.length})` : ""}</Button></PopoverTrigger>
           <PopoverContent className="w-72">
             <Stack gap="md">
               <CheckboxGroup legend="Status">{all.map((s) => <Checkbox key={s} label={s} checked={statuses.includes(s)} onCheckedChange={(c) => setStatuses((x) => (c ? [...x, s] : x.filter((y) => y !== s)))} />)}</CheckboxGroup>
-              <Dropdown label="Customer" items={["Acme GmbH", "Northwind", "Globex"].map((c) => ({ value: c, label: c }))} value={customer} onValueChange={setCustomer} />
+              <Dropdown label="Team" items={["Support", "Finance", "Sales"].map((c) => ({ value: c, label: c }))} value={team} onValueChange={setTeam} />
             </Stack>
           </PopoverContent>
         </Popover>
       </Inline>
       {applied.length > 0 && (
         <Inline gap="xs" wrap>
-          {applied.map((a) => <Tag key={a.k + a.v} tone="outline" onDismiss={() => (a.k === "status" ? setStatuses((x) => x.filter((y) => y !== a.v)) : setCustomer(""))}>{a.v}</Tag>)}
-          <Button size="sm" variant="ghost" onClick={() => { setStatuses([]); setCustomer("") }}>Clear filters</Button>
+          {applied.map((a) => <Tag key={a.k + a.v} tone="outline" onDismiss={() => (a.k === "status" ? setStatuses((x) => x.filter((y) => y !== a.v)) : setTeam(""))}>{a.v}</Tag>)}
+          <Button size="sm" variant="ghost" onClick={() => { setStatuses([]); setTeam("") }}>Clear filters</Button>
         </Inline>
       )}
       <Text variant="footnote" tone="muted" aria-live="polite">{rows.length} results</Text>
-      <DataTable label="Filtered shipments" size="md" columns={shipmentColumns} rows={rows} emptyState={<EmptyState size="sm" pictogram={SearchPict} title="No shipments match these filters" action={<Button variant="tertiary" onClick={() => { setStatuses([]); setCustomer(""); setQ("") }}>Clear all filters</Button>} />} />
+      <DataTable label="Filtered agents" size="md" columns={agentColumns} rows={rows} emptyState={<EmptyState size="sm" pictogram={SearchPict} title="No agents match these filters" action={<Button variant="tertiary" onClick={() => { setStatuses([]); setTeam(""); setQ("") }}>Clear all filters</Button>} />} />
     </Stack>
   )
 }
@@ -73,16 +73,16 @@ function ReadOnlyDemo() {
   const [editing, setEditing] = React.useState(false)
   return (
     <Stack gap="md" className="max-w-lg">
-      <Inline justify="between"><Text variant="title-3">Company details</Text>{!editing && <Button variant="ghost" icon={Edit} iconPosition="start" onClick={() => setEditing(true)}>Edit</Button>}</Inline>
+      <Inline justify="between"><Text variant="title-3">Workspace settings</Text>{!editing && <Button variant="ghost" icon={Edit} iconPosition="start" onClick={() => setEditing(true)}>Edit</Button>}</Inline>
       {editing ? (
-        <Form onSubmit={(e) => { e.preventDefault(); setEditing(false); toast({ kind: "success", title: "Details saved" }) }}>
-          <TextInput label="Legal name" defaultValue="Acme Logistics GmbH" />
-          <TextInput label="VAT number" defaultValue="DE123456789" />
-          <TextInput label="Account ID" defaultValue="acc_8f2k1" readOnly helperText="Set by the system" />
+        <Form onSubmit={(e) => { e.preventDefault(); setEditing(false); toast({ kind: "success", title: "Settings saved" }) }}>
+          <TextInput label="Workspace name" defaultValue="Vita Support" />
+          <TextInput label="Default model" defaultValue="Vita Large" />
+          <TextInput label="Workspace ID" defaultValue="ws_8f2k1" readOnly helperText="Set by the system" />
           <FormActions><Button type="submit">Save</Button><Button type="button" variant="ghost" onClick={() => setEditing(false)}>Cancel</Button></FormActions>
         </Form>
       ) : (
-        <StructuredList flush condensed label="Company details" columns={["Field", "Value"]} rows={[{ id: "1", cells: ["Legal name", "Acme Logistics GmbH"] }, { id: "2", cells: ["VAT number", "DE123456789"] }, { id: "3", cells: ["Account ID", <Inline key="x" gap="2xs">acc_8f2k1<Icon as={Locked} label="Set by the system" className="text-helper" /></Inline>] }]} />
+        <StructuredList flush condensed label="Workspace settings" columns={["Field", "Value"]} rows={[{ id: "1", cells: ["Workspace name", "Vita Support"] }, { id: "2", cells: ["Default model", "Vita Large"] }, { id: "3", cells: ["Workspace ID", <Inline key="x" gap="2xs">ws_8f2k1<Icon as={Locked} label="Set by the system" className="text-helper" /></Inline>] }]} />
       )}
     </Stack>
   )
@@ -119,11 +119,11 @@ function DisabledDemo() {
     <Stack gap="lg" className="max-w-md">
       <Inline wrap>
         <Button disabled>Disabled</Button>
-        <Tooltip content="Add at least one lane to publish"><span tabIndex={0} className="rounded-md focus-ring"><Button disabled className="pointer-events-none">Publish</Button></span></Tooltip>
+        <Tooltip content="Connect at least one knowledge source to deploy"><span tabIndex={0} className="rounded-md focus-ring"><Button disabled className="pointer-events-none">Deploy</Button></span></Tooltip>
         <Text variant="footnote" tone="muted">← explain why when it isn't obvious</Text>
       </Inline>
-      <TextInput label="Disabled field" disabled defaultValue="Can't be changed right now" />
-      <Toggle label="Beta features" disabled helperText="Your admin has turned this off" />
+      <TextInput label="Model" disabled defaultValue="Locked while a deployment runs" />
+      <Toggle label="Allow web browsing" disabled helperText="Your admin has turned this off" />
       <InlineNotification kind="info" title="Read-only access" subtitle="Ask a workspace admin for edit rights." />
     </Stack>
   )
@@ -134,14 +134,14 @@ function CommonActionsDemo() {
   return (
     <Stack gap="lg">
       <PageHeader
-        breadcrumb={[{ label: "Quotes", href: "#" }, { label: "Q-2041" }]}
-        title="Q-2041 · Acme GmbH"
-        status={<StatusIndicator kind="pending">Awaiting customer</StatusIndicator>}
-        description="Rotterdam → Milan · 12 pallets · valid until 14 Oct"
-        actions={<><Button variant="secondary" icon={Copy} iconPosition="start">Duplicate</Button><Button icon={Download}>Download PDF</Button><OverflowMenu label="More actions"><MenuItem icon={Edit}>Edit</MenuItem><MenuItem icon={Renew}>Recalculate</MenuItem><MenuSeparator /><MenuItem icon={TrashCan} danger onSelect={() => setDel(true)}>Delete quote</MenuItem></OverflowMenu></>}
+        breadcrumb={[{ label: "Agents", href: "#" }, { label: "Support triage" }]}
+        title="Support triage"
+        status={<StatusIndicator kind="success">Live</StatusIndicator>}
+        description="Answers and routes support tickets · Vita Large · Production"
+        actions={<><Button variant="secondary" icon={Copy} iconPosition="start">Duplicate</Button><Button icon={Renew}>Redeploy</Button><OverflowMenu label="More actions"><MenuItem icon={Edit}>Edit</MenuItem><MenuItem icon={Download}>Export config</MenuItem><MenuSeparator /><MenuItem icon={TrashCan} danger onSelect={() => setDel(true)}>Delete agent</MenuItem></OverflowMenu></>}
         tabs={<Tabs defaultValue="o"><TabsList><TabsTrigger value="o">Overview</TabsTrigger><TabsTrigger value="h">History</TabsTrigger></TabsList></Tabs>}
       />
-      <ConfirmModal danger open={del} onOpenChange={setDel} title="Delete quote Q-2041?" description="The customer's link will stop working." confirmLabel="Delete quote" onConfirm={() => setDel(false)} />
+      <ConfirmModal danger open={del} onOpenChange={setDel} title="Delete Support triage?" description="It stops answering tickets and its run history is removed." confirmLabel="Delete agent" onConfirm={() => setDel(false)} />
     </Stack>
   )
 }
@@ -155,7 +155,7 @@ function LoadingPatternDemo() {
       <Grid gutter="narrow">
         {[0, 1, 2].map((i) => (
           <Column key={i} sm={4} md={4} lg={5}>
-            <Tile className="h-32">{loaded ? <><Text variant="footnote" tone="muted">Quotes sent</Text><Text variant="title-1" className="tabular-nums">{[128, 42, 87][i]}</Text></> : <><Skeleton shape="text" className="w-1/3" /><Skeleton className="mt-2 h-8 w-1/2" /></>}</Tile>
+            <Tile className="h-32">{loaded ? <><Text variant="footnote" tone="muted">{["Runs today", "Handoffs", "Resolved"][i]}</Text><Text variant="title-1" className="tabular-nums">{[128, 42, 87][i]}</Text></> : <><Skeleton shape="text" className="w-1/3" /><Skeleton className="mt-2 h-8 w-1/2" /></>}</Tile>
           </Column>
         ))}
       </Grid>
@@ -191,15 +191,15 @@ export const patternDemos: DemoMap = {
             <DisclosureTrigger asChild><Button variant="ghost" size="sm">Show advanced options</Button></DisclosureTrigger>
             <DisclosureContent><Stack gap="md"><TextInput label="Custom webhook URL" /><Toggle label="Retry on failure" defaultChecked /></Stack></DisclosureContent>
           </Disclosure>
-          <Accordion type="single" collapsible><AccordionItem value="a"><AccordionTrigger>Billing address</AccordionTrigger><AccordionContent>Via Roma 1, Milan</AccordionContent></AccordionItem><AccordionItem value="b"><AccordionTrigger>Shipping address</AccordionTrigger><AccordionContent>Same as billing</AccordionContent></AccordionItem></Accordion>
+          <Accordion type="single" collapsible><AccordionItem value="a"><AccordionTrigger>Guardrails</AccordionTrigger><AccordionContent>Never issue refunds above $200 without approval.</AccordionContent></AccordionItem><AccordionItem value="b"><AccordionTrigger>Escalation</AccordionTrigger><AccordionContent>Hand off to the Support queue after 2 failed answers.</AccordionContent></AccordionItem></Accordion>
         </Stack>
       ),
     },
   ],
   "patterns/empty-states": [
-    { title: "First use", render: () => <EmptyState size="lg" pictogram={Report} title="Create your first quote" description="Quotes you create or receive by email appear here. It takes about a minute." action={<Button icon={Add}>Create quote</Button>} secondaryAction={<Button variant="ghost">Import from CSV</Button>} /> },
-    { title: "No results", render: () => <EmptyState pictogram={SearchPict} title="No results for “rotterdm”" description="Check the spelling or search by reference number." action={<Button variant="tertiary">Clear search</Button>} /> },
-    { title: "Error", render: () => <EmptyState pictogram={ErrorPict} title="We couldn't load shipments" description="The connection to the TMS timed out. Your data is safe." action={<Button variant="tertiary" icon={Renew}>Try again</Button>} /> },
+    { title: "First use", render: () => <EmptyState size="lg" pictogram={Report} title="Create your first agent" description="Describe what it should do, connect your tools and deploy. It takes about five minutes." action={<Button icon={Add}>Create agent</Button>} secondaryAction={<Button variant="ghost">Start from a template</Button>} /> },
+    { title: "No results", render: () => <EmptyState pictogram={SearchPict} title="No results for “suport”" description="Check the spelling or search by agent ID." action={<Button variant="tertiary">Clear search</Button>} /> },
+    { title: "Error", render: () => <EmptyState pictogram={ErrorPict} title="We couldn't load agents" description="The connection timed out. Your agents are still running." action={<Button variant="tertiary" icon={Renew}>Try again</Button>} /> },
   ],
   "patterns/filtering": [{ title: "Search + filter popover + applied tags", render: () => <FilteringDemo /> }],
   "patterns/fluid-styles": [
@@ -207,8 +207,8 @@ export const patternDemos: DemoMap = {
       title: "Fluid vs default",
       render: () => (
         <Grid gutter="wide" rowGap="lg">
-          <Column sm={4} md={8} lg={8}><Stack gap="sm"><Text variant="headline">Fluid (dense data entry)</Text><FluidForm columns={2}><TextInput label="Origin" defaultValue="Rotterdam" /><TextInput label="Destination" defaultValue="Milan" /><Select label="Mode" defaultValue="road"><SelectOption value="road">Road</SelectOption><SelectOption value="sea">Sea</SelectOption></Select><TextInput label="Pallets" defaultValue="12" /></FluidForm></Stack></Column>
-          <Column sm={4} md={8} lg={8}><Stack gap="sm"><Text variant="headline">Default</Text><Stack gap="md"><TextInput label="Origin" defaultValue="Rotterdam" /><TextInput label="Destination" defaultValue="Milan" /></Stack></Stack></Column>
+          <Column sm={4} md={8} lg={8}><Stack gap="sm"><Text variant="headline">Fluid (dense data entry)</Text><FluidForm columns={2}><TextInput label="Agent name" defaultValue="Support triage" /><TextInput label="Owner" defaultValue="Support" /><Select label="Model" defaultValue="large"><SelectOption value="large">Vita Large</SelectOption><SelectOption value="fast">Vita Fast</SelectOption></Select><TextInput label="Max concurrent runs" defaultValue="12" /></FluidForm></Stack></Column>
+          <Column sm={4} md={8} lg={8}><Stack gap="sm"><Text variant="headline">Default</Text><Stack gap="md"><TextInput label="Agent name" defaultValue="Support triage" /><TextInput label="Owner" defaultValue="Support" /></Stack></Stack></Column>
         </Grid>
       ),
     },
@@ -218,12 +218,12 @@ export const patternDemos: DemoMap = {
       title: "Multi-step form",
       render: () => (
         <Stack gap="xl" className="max-w-xl">
-          <ProgressIndicator steps={[{ label: "Route" }, { label: "Cargo" }, { label: "Review" }]} current={1} />
+          <ProgressIndicator steps={[{ label: "Purpose" }, { label: "Knowledge" }, { label: "Review" }]} current={1} />
           <Form>
-            <Text variant="title-3">Cargo details</Text>
-            <Select label="Cargo type" defaultValue="pallets"><SelectOption value="pallets">Pallets</SelectOption><SelectOption value="container">Container</SelectOption></Select>
-            <TextInput label="Number of pallets" inputMode="numeric" />
-            <TextInput label="Handling notes" optional />
+            <Text variant="title-3">Knowledge</Text>
+            <Select label="Source type" defaultValue="site"><SelectOption value="site">Help center</SelectOption><SelectOption value="drive">Shared drive</SelectOption></Select>
+            <TextInput label="Help center URL" inputMode="url" />
+            <TextInput label="Pages to exclude" optional />
             <ButtonSet className="justify-start"><Button variant="secondary">Back</Button><Button>Continue to review</Button></ButtonSet>
           </Form>
         </Stack>
@@ -253,9 +253,9 @@ export const patternDemos: DemoMap = {
       title: "Truncation modes",
       render: () => (
         <Stack gap="md" className="max-w-sm">
-          <Truncate>Quarterly logistics performance review for the EMEA region</Truncate>
-          <Truncate mode="middle">invoice-2026-acme-logistics-gmbh-rotterdam-final-v3.pdf</Truncate>
-          <Truncate mode="lines" lines={2}>Freight rates are calculated using the active rate card for the lane, adjusted for fuel surcharge, seasonal peaks and any customer-specific discount. Accessorial charges such as tail-lift delivery, waiting time and customs are itemised separately on the quote.</Truncate>
+          <Truncate>Quarterly support deflection review for the enterprise workspace</Truncate>
+          <Truncate mode="middle">knowledge-export-support-workspace-2026-09-30-final-v3.csv</Truncate>
+          <Truncate mode="lines" lines={2}>Support triage reads each new ticket, checks the help center and past resolutions, and answers when it is confident. When confidence is below the threshold or the customer asks for a person, it hands the conversation to the Support queue with a summary and suggested reply.</Truncate>
         </Stack>
       ),
     },
@@ -266,14 +266,14 @@ export const patternDemos: DemoMap = {
       title: "Search with scoped results",
       render: () => {
         const S = () => {
-          const [q, setQ] = React.useState("acme")
-          const res = shipments.filter((s) => q && (s.ref + s.customer).toLowerCase().includes(q.toLowerCase())).slice(0, 4)
+          const [q, setQ] = React.useState("support")
+          const res = agents.filter((s) => q && (s.name + s.team).toLowerCase().includes(q.toLowerCase())).slice(0, 4)
           return (
             <Stack gap="sm" className="max-w-lg">
-              <Search size="lg" placeholder="Search quotes, shipments, customers" value={q} onValueChange={setQ} />
-              <Inline gap="xs">{["All", "Shipments", "Quotes", "Customers"].map((s, i) => <SelectableTag key={s} selected={i === 1} onSelectedChange={() => {}}>{s}</SelectableTag>)}</Inline>
+              <Search size="lg" placeholder="Search agents, runs, knowledge" value={q} onValueChange={setQ} />
+              <Inline gap="xs">{["All", "Agents", "Runs", "Knowledge"].map((s, i) => <SelectableTag key={s} selected={i === 1} onSelectedChange={() => {}}>{s}</SelectableTag>)}</Inline>
               <Text variant="footnote" tone="muted">{res.length} results for “{q}”</Text>
-              {res.map((r) => <Tile key={r.id} className="gap-1 p-3"><Text weight="medium">{r.ref} · {r.customer}</Text><Text variant="footnote" tone="muted">{r.lane}</Text></Tile>)}
+              {res.map((r) => <Tile key={r.id} className="gap-1 p-3"><Text weight="medium">{r.name} · {r.team}</Text><Text variant="footnote" tone="muted">{r.ref} · {r.model}</Text></Tile>)}
             </Stack>
           )
         }
@@ -287,11 +287,11 @@ export const patternDemos: DemoMap = {
       render: () => (
         <Stack gap="lg">
           <Inline gap="lg" wrap>
-            <StatusIndicator kind="success">Delivered</StatusIndicator>
-            <StatusIndicator kind="in-progress">In transit</StatusIndicator>
-            <StatusIndicator kind="pending">Awaiting carrier</StatusIndicator>
-            <StatusIndicator kind="warning">Delayed</StatusIndicator>
-            <StatusIndicator kind="caution">Partial</StatusIndicator>
+            <StatusIndicator kind="success">Live</StatusIndicator>
+            <StatusIndicator kind="in-progress">Deploying</StatusIndicator>
+            <StatusIndicator kind="pending">Awaiting approval</StatusIndicator>
+            <StatusIndicator kind="warning">Degraded</StatusIndicator>
+            <StatusIndicator kind="caution">Rate limited</StatusIndicator>
             <StatusIndicator kind="error">Failed</StatusIndicator>
             <StatusIndicator kind="info">Scheduled</StatusIndicator>
             <StatusIndicator kind="draft">Draft</StatusIndicator>
@@ -301,7 +301,7 @@ export const patternDemos: DemoMap = {
             <StatusIndicator kind="warning" variant="dot" size="sm">Degraded</StatusIndicator>
             <StatusIndicator kind="error" variant="dot" size="sm">Down</StatusIndicator>
           </Inline>
-          <Inline gap="xs"><Tag tone="success">Paid</Tag><Tag tone="warning">Overdue</Tag><Tag tone="error">Rejected</Tag><Text variant="footnote" tone="muted">← tags for categorical status inside dense rows</Text></Inline>
+          <Inline gap="xs"><Tag tone="success">Passed</Tag><Tag tone="warning">Flaky</Tag><Tag tone="error">Failed</Tag><Text variant="footnote" tone="muted">← tags for categorical status inside dense rows</Text></Inline>
         </Stack>
       ),
     },

@@ -23,9 +23,9 @@ Must the user decide/act before anything else?
 
 ## Writing dialogs
 
-- **Title:** the question or the task ("Delete 3 shipments?", "Invite teammates").
+- **Title:** the question or the task ("Delete 3 agents?", "Invite teammates").
 - **Body:** the consequence in one or two sentences. No "Are you sure?"
-- **Buttons:** Cancel + a verb that matches the title ("Delete shipments"). Never Yes/No or OK/Cancel.
+- **Buttons:** Cancel + a verb that matches the title ("Delete agents"). Never Yes/No or OK/Cancel.
 
 ## Rules
 

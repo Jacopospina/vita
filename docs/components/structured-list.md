@@ -5,7 +5,7 @@ status: stable
 import: "import { StructuredList } from \"@/components/corpus/structured-list\""
 use_when:
   - Key/value details of one object (condensed + flush)
-  - Comparing a few options across attributes (plans, carriers)
+  - Comparing a few options across attributes (plans, models)
   - Choosing one of a few rows with multiple attributes (selectable)
 avoid_when:
   - Many rows, sorting, pagination, bulk actions → DataTable

@@ -23,7 +23,7 @@ related: [button, breadcrumb, tile]
 
 ## Corpus opinions
 
-1. **Link text says where it goes:** "View shipment SHP-1042", not "click here" or a bare URL.
+1. **Link text says where it goes:** "View run 8812", not "click here" or a bare URL.
 2. **Don't open internal pages in new tabs.** Users decide that.
 3. **Links don't carry icons** except the external indicator.
 4. **Visited color** applies to content links only; navigation chrome ignores it.

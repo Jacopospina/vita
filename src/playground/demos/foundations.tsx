@@ -308,12 +308,12 @@ export const foundationDemos: DemoMap = {
       render: () => (
         <StructuredList
           label="Taxonomy example"
-          columns={["Concept", "Operator persona", "Executive persona", "Never say"]}
+          columns={["Concept", "Builder persona", "Business-owner persona", "Never say"]}
           rows={[
-            { id: "1", cells: ["Delete an item", "Delete", "Remove", "Nuke, Kill, Erase"] },
-            { id: "2", cells: ["A saved query", "Saved filter", "View", "Preset, Template"] },
-            { id: "3", cells: ["Customer", "Account", "Client", "User, Tenant"] },
-            { id: "4", cells: ["Primary CTA to begin", "Create quote", "Start a quote", "Submit, OK, Go"] },
+            { id: "1", cells: ["Remove an item", "Delete", "Remove", "Nuke, Kill, Erase"] },
+            { id: "2", cells: ["An automated worker", "Agent", "Assistant", "Bot, Robot, AI"] },
+            { id: "3", cells: ["One execution", "Run", "Task", "Job, Invocation"] },
+            { id: "4", cells: ["Primary CTA to begin", "Create agent", "Set up an assistant", "Submit, OK, Go"] },
           ]}
         />
       ),

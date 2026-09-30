@@ -53,25 +53,25 @@ function MenuDemo() {
 }
 
 function AIDemo() {
-  const [value, setValue] = React.useState("Acme Logistics GmbH")
+  const [value, setValue] = React.useState("Refund requests")
   return (
     <Stack gap="lg">
       <Inline gap="md"><AILabel size="xs" /><AILabel size="sm" /><AILabel size="md" /></Inline>
       <div className="max-w-sm">
         <TextInput
-          label="Company name"
+          label="Agent purpose"
           value={value}
           onChange={(e) => setValue(e.target.value)}
           labelAddon={
-            <AILabel size="xs" title="Autofilled from the email" onRevert={() => setValue("")}>
-              Extracted from the sender signature with 92% confidence. Model: claude-sonnet-5-5.
+            <AILabel size="xs" title="Suggested from your tickets" onRevert={() => setValue("")}>
+              Inferred from the 200 most recent tickets with 92% confidence. Model: Vita Large.
             </AILabel>
           }
         />
       </div>
       <AISurface className="max-w-md">
         <Inline justify="between"><Text variant="headline">Suggested reply</Text><AILabel size="sm" /></Inline>
-        <Text tone="muted" className="mt-2">Thanks for the request — we can ship 12 pallets from Rotterdam on Monday. I've attached the quote.</Text>
+        <Text tone="muted" className="mt-2">Hi Sam, your refund for order 4821 was approved today. It should reach your card within 3–5 working days.</Text>
         <Inline className="mt-4"><Button size="sm">Use reply</Button><Button size="sm" variant="ghost">Regenerate</Button></Inline>
       </AISurface>
     </Stack>
@@ -117,7 +117,7 @@ export const actionDemos: DemoMap = {
       title: "With icon, icon-only, loading, disabled",
       render: () => (
         <Inline wrap gap="sm">
-          <Button icon={Add}>Create quote</Button>
+          <Button icon={Add}>Create agent</Button>
           <Button variant="tertiary" icon={Download} iconPosition="start">Export</Button>
           <IconButton icon={Edit} label="Edit" />
           <IconButton icon={Settings} label="Settings" variant="secondary" />
@@ -209,8 +209,8 @@ export const actionDemos: DemoMap = {
       title: "Default and collapsed",
       render: () => (
         <Stack gap="md">
-          <Breadcrumb items={[{ label: "Workspace", href: "#" }, { label: "Projects", href: "#" }, { label: "Q3 forecast" }]} />
-          <Breadcrumb items={[{ label: "Home", href: "#" }, { label: "Accounts", href: "#" }, { label: "EMEA", href: "#" }, { label: "Germany", href: "#" }, { label: "Berlin", href: "#" }, { label: "Acme GmbH" }]} />
+          <Breadcrumb items={[{ label: "Workspace", href: "#" }, { label: "Agents", href: "#" }, { label: "Support triage" }]} />
+          <Breadcrumb items={[{ label: "Home", href: "#" }, { label: "Workspaces", href: "#" }, { label: "Support", href: "#" }, { label: "Agents", href: "#" }, { label: "Support triage", href: "#" }, { label: "Run 8812" }]} />
         </Stack>
       ),
     },

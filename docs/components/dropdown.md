@@ -5,7 +5,7 @@ status: stable
 import: "import { Dropdown, Combobox, MultiSelect } from \"@/components/corpus/dropdown\""
 use_when:
   - Dropdown — one of 7–20 options, options need descriptions/icons, or consistent styling in app chrome
-  - Combobox — one of 20+ options where users know what to type (customer, country, carrier)
+  - Combobox — one of 20+ options where users know what to type (tool, country, team member)
   - MultiSelect — several of more than 6 options (markets, tags, assignees)
   - Inline type — compact "Sort by: Newest ▾" in toolbars
 avoid_when:

@@ -16,7 +16,7 @@ related: [button, menu-buttons, dialogs, notifications]
 |---|---|---|
 | Whole product | Header global actions | 5 icons |
 | Page / object | `PageHeader` actions, right | 1 primary + 2 secondary, rest in `OverflowMenu` |
-| Collection | DataTable toolbar, right | 1 primary ("New shipment") + search/filter |
+| Collection | DataTable toolbar, right | 1 primary ("Create agent") + search/filter |
 | Selection | Batch action bar | ≤ 4 + Cancel |
 | Row / card | Trailing `OverflowMenu` (+ ≤ 2 inline ghost icons) | 2 |
 | Form / modal / panel | Footer `ButtonSet`, primary last | 2–3 |
@@ -25,12 +25,12 @@ related: [button, menu-buttons, dialogs, notifications]
 
 | Action | Verb | Button | Confirmation | Feedback |
 |---|---|---|---|---|
-| Create | "Create {object}" / "New {object}" | primary + `Add` icon | none | Navigate to the new object, or toast "Quote created" |
+| Create | "Create {object}" / "New {object}" | primary + `Add` icon | none | Navigate to the new object, or toast "Agent created" |
 | Edit | "Edit" | ghost/secondary + `Edit` | none | Read-only → edit (see *Read-only states*) |
 | Save | "Save" / "Save changes" | primary | none | Inline "Saved" or toast; stay on the page |
 | Cancel | "Cancel" | secondary / ghost | Only if there are unsaved changes: "Discard changes?" | Return to the previous state |
 | Delete (reversible) | "Delete" | menu item, danger | **none**; toast with **Undo** (8s) | Item removed, toast |
-| Delete (irreversible) | "Delete {object}" | danger in `ConfirmModal` | Yes, stating the consequence | Toast "3 shipments deleted" |
+| Delete (irreversible) | "Delete {object}" | danger in `ConfirmModal` | Yes, stating the consequence | Toast "3 agents deleted" |
 | Duplicate | "Duplicate" | menu item | none | New item opens as "Copy of …" |
 | Export / download | "Export" / "Download {format}" | tertiary or MenuButton | none | Inline loading, then the browser download |
 | Share | "Share" | secondary + `Share` | none | Popover with link + copy |

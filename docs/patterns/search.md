@@ -19,8 +19,8 @@ related: [search-component, filtering, empty-states, global-header]
 
 ## Results
 
-- Echo the query: "12 results for “acme”".
-- Scope chips (SelectableTag): All · Shipments · Quotes · Customers.
+- Echo the query: "12 results for “support”".
+- Scope chips (SelectableTag): All · Agents · Runs · Knowledge.
 - Highlight matched text. Show the object type and one line of context.
 - Keyboard: ↑↓ through results, Enter opens, Esc clears and closes.
 

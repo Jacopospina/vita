@@ -4,7 +4,7 @@ summary: One vocabulary of states across the product — shape, color and word t
 status: stable
 import: "import { StatusIndicator } from \"@/components/corpus/status-indicator\""
 use_when:
-  - Showing the state of an object (job, shipment, invoice, server)
+  - Showing the state of an object (agent, run, deployment, integration)
 avoid_when:
   - Categorising (not a state) → Tag neutral
   - Transient feedback about a user action → toast / InlineLoading
@@ -16,7 +16,7 @@ related: [tag, notification, data-table]
 | Kind | Meaning | Example words |
 |---|---|---|
 | `success` | Done, healthy, approved | Delivered, Paid, Active |
-| `in-progress` | Running now | In transit, Processing |
+| `in-progress` | Running now | Deploying, Running |
 | `pending` | Waiting on someone/something else | Awaiting customer, Queued |
 | `warning` | Needs attention soon | Delayed, Expiring |
 | `caution` | Degraded but working | Partial, Degraded |
@@ -34,5 +34,5 @@ related: [tag, notification, data-table]
 
 1. **Icon + color + text,** always.
 2. **The object's statuses are a closed set** defined in `taxonomy.json → statuses.{object}`, each mapped to a kind. Agents never invent new status words.
-3. **One kind per meaning** across objects: "Delayed" is `warning` for shipments *and* invoices.
+3. **One kind per meaning** across objects: "Degraded" is `warning` for agents *and* integrations.
 4. **Spinning `in-progress`** only when it's really live; `motion-safe` handles reduced motion.

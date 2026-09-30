@@ -4,7 +4,7 @@ summary: Precise numeric entry with steppers, bounds and units.
 status: stable
 import: "import { NumberInput } from \"@/components/corpus/number-input\""
 use_when:
-  - Exact quantities with small adjustments (pallets, seats, percentage, weight)
+  - Exact quantities with small adjustments (concurrent runs, seats, timeout, percentage)
   - Values with min/max bounds the user must respect
 avoid_when:
   - Approximate values where feel matters → Slider

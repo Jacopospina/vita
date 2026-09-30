@@ -32,7 +32,7 @@ related: [forms, text-input, fluid-styles, read-only-states]
    - On submit with errors, focus the first invalid field.
    - For long forms, also show an `InlineNotification` summary at the top listing the errors.
 5. **Don't disable the submit button** to signal invalid state. Let users submit and show what to fix.
-6. **Submit label = outcome:** "Create account", "Send quote". The secondary is "Cancel" (ghost or secondary).
+6. **Submit label = outcome:** "Create workspace", "Deploy agent". The secondary is "Cancel" (ghost or secondary).
 7. **Long forms:**
    - Split them with `FormGroup` headings.
    - Beyond ~12 fields or distinct phases, use a multi-step flow (see the *Forms* pattern).

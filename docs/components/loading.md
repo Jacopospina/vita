@@ -19,6 +19,6 @@ related: [inline-loading, progress-bar, loading-pattern]
 1. **Skeletons first.** They preserve layout, prevent shift and feel faster. Match the real dimensions.
 2. **Delay indicators by about 300ms** so fast responses never flash a spinner.
 3. **Never a full-page spinner** for partial data. Load regions independently.
-4. **Overlays** only when the user must not interact (recalculating a quote). They dim with `overlay`.
-5. **Always label spinners** (`label="Loading shipments"`) for screen readers.
+4. **Overlays** only when the user must not interact (re-indexing a knowledge source). They dim with `overlay`.
+5. **Always label spinners** (`label="Loading agents"`) for screen readers.
 6. **Reduced motion:** the shimmer becomes a gentle pulse.

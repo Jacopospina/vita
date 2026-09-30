@@ -38,8 +38,8 @@ The taxonomy records one **preferred term per concept** and, when personas diffe
 
 ## Taxonomy rules
 
-1. **One concept, one word.** If it's a "quote" on the list page, it's a "quote" in the email, the toast and the API error. Never "estimate" somewhere else.
-2. **Objects are nouns, actions are verbs.** The taxonomy lists both. Buttons are `verb + object` ("Create quote"), never just "Submit".
+1. **One concept, one word.** If it's an "agent" on the list page, it's an "agent" in the email, the toast and the API error. Never "bot" or "assistant" somewhere else.
+2. **Objects are nouns, actions are verbs.** The taxonomy lists both. Buttons are `verb + object` ("Create agent"), never just "Submit".
 3. **Banned words** live in `taxonomy.json → avoid`, with the replacement. The audit script flags them in JSX strings.
 4. **Statuses are a closed set** per object, each mapped to a `StatusIndicator` kind.
 

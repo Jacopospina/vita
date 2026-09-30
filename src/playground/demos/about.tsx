@@ -29,8 +29,8 @@ export const aboutDemos: DemoMap = {
           <Column sm={4} md={8} lg={6}>
             <Part name="Corpus" role="Body" line="The visible form people touch, read and trust." active>
               <Stack gap="sm" className="pt-2">
-                <TextInput label="Quote reference" size="sm" defaultValue="Q-2041" />
-                <Inline justify="between"><StatusIndicator kind="success" size="sm">Accepted</StatusIndicator><Button size="sm">Send quote</Button></Inline>
+                <TextInput label="Agent name" size="sm" defaultValue="Support triage" />
+                <Inline justify="between"><StatusIndicator kind="success" size="sm">Live</StatusIndicator><Button size="sm">Deploy agent</Button></Inline>
               </Stack>
             </Part>
           </Column>

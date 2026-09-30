@@ -414,7 +414,7 @@
       "import": "import { DatePicker, DateRangePicker, Calendar } from \"@/components/corpus/date-picker\"",
       "use_when": [
         "simple — known dates far from today (birthday, contract start years ago): typing is fastest",
-        "single — near-future scheduling where weekday context matters (pickup, deadline)",
+        "single — near-future scheduling where weekday context matters (go-live, deadline)",
         "range — periods (reporting range, booking)"
       ],
       "avoid_when": [
@@ -436,7 +436,7 @@
       "import": "import { Dropdown, Combobox, MultiSelect } from \"@/components/corpus/dropdown\"",
       "use_when": [
         "Dropdown — one of 7–20 options, options need descriptions/icons, or consistent styling in app chrome",
-        "Combobox — one of 20+ options where users know what to type (customer, country, carrier)",
+        "Combobox — one of 20+ options where users know what to type (tool, country, team member)",
         "MultiSelect — several of more than 6 options (markets, tags, assignees)",
         "Inline type — compact \"Sort by: Newest ▾\" in toolbars"
       ],
@@ -698,7 +698,7 @@
       "status": "stable",
       "import": "import { NumberInput } from \"@/components/corpus/number-input\"",
       "use_when": [
-        "Exact quantities with small adjustments (pallets, seats, percentage, weight)",
+        "Exact quantities with small adjustments (concurrent runs, seats, timeout, percentage)",
         "Values with min/max bounds the user must respect"
       ],
       "avoid_when": [
@@ -906,7 +906,7 @@
       "import": "import { StructuredList } from \"@/components/corpus/structured-list\"",
       "use_when": [
         "Key/value details of one object (condensed + flush)",
-        "Comparing a few options across attributes (plans, carriers)",
+        "Comparing a few options across attributes (plans, models)",
         "Choosing one of a few rows with multiple attributes (selectable)"
       ],
       "avoid_when": [
@@ -1484,7 +1484,7 @@
       "status": "stable",
       "import": "import { StatusIndicator } from \"@/components/corpus/status-indicator\"",
       "use_when": [
-        "Showing the state of an object (job, shipment, invoice, server)"
+        "Showing the state of an object (agent, run, deployment, integration)"
       ],
       "avoid_when": [
         "Categorising (not a state) → Tag neutral",
