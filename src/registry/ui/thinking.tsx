@@ -29,6 +29,41 @@ const shapes: ((u: number, t: number) => [number, number])[] = [
   (u) => { const a = u * TAU; const r = 0.5 + 0.16 * Math.cos(3 * a); return [Math.cos(a) * r, Math.sin(a) * r] },
 ]
 
+/**
+ * Small orbs (≤ 24px) drop the detail and keep one bold, readable silhouette per mode:
+ *   basic → three drops orbit and merge · retrieving → a few drops fall into the core
+ *   generating → four drops split apart and fuse again · searching → a comet circles with a short tail
+ */
+function simpleParticles(mode: ThinkingMode, t: number): P[] {
+  const out: P[] = []
+  if (mode === "retrieving") {
+    out.push({ x: 0, y: 0, r: 0.3 + 0.05 * Math.sin(t * 3) })
+    for (let i = 0; i < 3; i++) {
+      const p = (t * 0.7 + i / 3) % 1
+      const a = (i * TAU) / 3 + 0.6
+      const rad = 0.95 * (1 - p) ** 1.3
+      out.push({ x: Math.cos(a) * rad, y: Math.sin(a) * rad, r: 0.12 + 0.08 * p })
+    }
+    return out
+  }
+  if (mode === "generating") {
+    const rad = 0.08 + 0.42 * smooth((Math.sin(t * 2.4) + 1) / 2)
+    for (let k = 0; k < 4; k++) {
+      const a = t * 1.1 + (k * TAU) / 4
+      out.push({ x: Math.cos(a) * rad, y: Math.sin(a) * rad, r: 0.24 })
+    }
+    return out
+  }
+  if (mode === "searching") {
+    for (let j = 0; j < 4; j++) {
+      const a = t * 3 - j * 0.38
+      out.push({ x: Math.cos(a) * 0.52, y: Math.sin(a) * 0.52, r: 0.26 - j * 0.055 })
+    }
+    return out
+  }
+  return particles("basic", 3, t, [])
+}
+
 function particles(mode: ThinkingMode, n: number, t: number, seeds: number[]): P[] {
   const out: P[] = []
   if (mode === "basic") {
@@ -114,6 +149,7 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
       gctx.scale(dpr, dpr)
     }
     const glints = mode !== "basic" && px >= 48
+    const simple = px <= 24
     // Small orbs: fewer, proportionally larger particles so they stay solid down to 16px.
     const n = mode === "searching" ? Math.max(6, Math.min(28, Math.round(px / 3))) : Math.max(7, Math.min(90, Math.round(px / 1.1)))
     const grow = Math.min(2.4, Math.max(1, 40 / px))
@@ -141,9 +177,9 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
       } else {
         ctx.fillStyle = color
       }
-      for (const p of particles(mode, n, t, seeds)) {
+      for (const p of simple ? simpleParticles(mode, t) : particles(mode, n, t, seeds)) {
         ctx.beginPath()
-        ctx.arc(px / 2 + p.x * R, px / 2 + p.y * R, Math.max(0.6, Math.min(0.34, p.r * grow) * R), 0, TAU)
+        ctx.arc(px / 2 + p.x * R, px / 2 + p.y * R, simple ? p.r * R : Math.max(0.6, Math.min(0.34, p.r * grow) * R), 0, TAU)
         ctx.fill()
       }
       // Glints: tiny twinkling sparkles around agentic orbs (drawn crisp, outside the liquid).
@@ -170,8 +206,8 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
   }, [mode, px, resolvedTone])
 
   // Liquid + light: goo (soft threshold for antialiasing) → specular highlight → glow → drop shadow.
-  const blur = px < 32 ? 0.5 : px * 0.04
-  const lit = px >= 24
+  const blur = px <= 24 ? px * 0.05 : px * 0.04
+  const lit = px > 24
   return (
     <span role="status" aria-live="polite" className={cn("relative inline-flex shrink-0", resolvedTone === "brand" && "text-primary", className)} style={{ width: px, height: px }}>
       <svg aria-hidden width="0" height="0" className="absolute">

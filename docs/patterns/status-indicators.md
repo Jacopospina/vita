@@ -13,16 +13,30 @@ related: [tag, notification, data-table]
 
 ## Kinds
 
+**Final states hold still:**
+
 | Kind | Meaning | Example words |
 |---|---|---|
-| `success` | Done, healthy, approved | Delivered, Paid, Active |
-| `in-progress` | Running now | Deploying, Running |
-| `pending` | Waiting on someone/something else | Awaiting customer, Queued |
-| `warning` | Needs attention soon | Delayed, Expiring |
-| `caution` | Degraded but working | Partial, Degraded |
+| `success` | Done, healthy, approved | Live, Paid, Active |
 | `error` | Failed, blocked, rejected | Failed, Rejected, Down |
+| `critical` | Severe, act now | Critical, Breached |
+| `warning` | Needs attention soon | Delayed, Expiring |
+| `caution` | Degraded but working | Partial, Rate limited |
 | `info` | Neutral fact | Scheduled |
-| `draft` | Not started, inactive | Draft, Inactive |
+| `undefined` | No state defined | Not set |
+| `unknown` | State can't be determined | Unknown, No signal |
+
+**Non-final states are alive.** An inner path animates while the frame stays still:
+
+| Kind | Meaning | What moves |
+|---|---|---|
+| `in-progress` | Running now | The pie sweeps the ring |
+| `pending` | Waiting on someone | Three dots take turns |
+| `draft` | Being written | A stroke writes and unwrites |
+| `queued` | Waiting its turn | A clock hand turns |
+| `not-started` | Will run, hasn't yet | The core breathes |
+| `incomplete` | Partly done | The half-fill breathes |
+| `paused` | Stopped on purpose | The bars breathe in turn |
 
 ## Variants
 
@@ -35,4 +49,4 @@ related: [tag, notification, data-table]
 1. **Icon + color + text,** always.
 2. **The object's statuses are a closed set** defined in `taxonomy.json → statuses.{object}`, each mapped to a kind. Agents never invent new status words.
 3. **One kind per meaning** across objects: "Degraded" is `warning` for agents *and* integrations.
-4. **`in-progress` is alive, not spinning:** the ring holds still while its pie sweeps (`ProgressGlyph`). Use it only when the work is really running.
+4. **Alive, never spinning.** Non-final glyphs animate an inner path; the icon never rotates as a whole. `isFinalStatus(kind)` tells them apart. With reduced motion, the glyphs are still.

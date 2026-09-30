@@ -1,8 +1,8 @@
 ---
 title: Notification
-summary: System messages. Inline for problems tied to a place, toast for confirmation of a user action, callout for static guidance.
+summary: System messages with one anatomy — icon tile, title over subtitle, optional action. Inline for problems tied to a place, toast banner for confirmation, callout for static guidance.
 status: stable
-import: "import { InlineNotification, Callout, Toaster, toast } from \"@/components/corpus/notification\""
+import: "import { InlineNotification, Callout, Toaster, toast } from \"@/components/corpus/notification\"\n\ntoast({ icon: Bot, source: \"Vita\", title: \"Agent deployed\", subtitle: \"Support triage is live\" })"
 use_when:
   - Inline — errors/warnings about a section, form summary, account-level issues
   - Toast — brief confirmation of something the user just did (with optional Undo)
@@ -12,12 +12,24 @@ avoid_when:
   - Field-level validation → the field's invalidText
   - Errors inside a toast that need action → InlineNotification near the cause
   - Marketing/announcements → not a system notification
-related: [notifications, modal, inline-loading, status-indicators]
+related: [capsule, notifications, modal, inline-loading, status-indicators]
 ---
 
-## Kinds
+## Anatomy
 
-`info` · `success` · `warning` · `error`. Each kind has a fixed icon and a colored left bar. Never recolor them.
+One structure everywhere:
+- **Squircle card on a neutral surface.** Never a colored bar or a tinted fill.
+- **Icon tile on the left.** The icon and its semantic color carry the kind: `info`, `success`, `warning` or `error`.
+- **Title over subtitle.**
+- **At most one action** on the right.
+- **×** appears on hover or focus.
+
+| Surface | Where | Material |
+|---|---|---|
+| Inline / Callout | In page content | Solid neutral layer |
+| Toast banner | Floating, top-right | Frosted `glass`: blur, saturation, hairline |
+
+Toast banners can carry a `source` (who is speaking) and an `eyebrow` ("Time sensitive"). `icon: false` gives the no-icon variant.
 
 ## Rules
 
@@ -25,7 +37,8 @@ related: [notifications, modal, inline-loading, status-indicators]
    - Success and info only.
    - 5s default, minimum 4s.
    - Maximum 3 stacked.
-   - Bottom-right on desktop, bottom-centre on mobile.
+   - Top-right, sliding in from the edge.
+   - Quick "it happened" feedback with a live value → [Capsule](#/components/capsule), not a toast.
 2. **Offer "Undo" in the toast** for reversible actions instead of asking "Are you sure?" beforehand. Keep undo toasts visible for 8s.
 3. **Inline errors sit next to what failed** and stay until resolved. They have **one** action (Retry, Reconnect tools).
 4. **Title = what happened** (≤ 5 words). **Subtitle = detail or next step.**

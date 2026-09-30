@@ -2,6 +2,7 @@ import * as React from "react"
 import { CheckmarkFilled, ErrorFilled } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { Icon } from "@/registry/ui/icon"
+import { AnimatedNumber } from "@/registry/ui/animated"
 import { animateChildren } from "@/registry/ui/animated"
 
 /**
@@ -57,5 +58,24 @@ export function ProgressBar({
       </div>
       {helperText && <p className={cn("text-caption", status === "error" ? "text-error-foreground" : "text-helper")}>{animateChildren(helperText)}</p>}
     </div>
+  )
+}
+
+/**
+ * ProgressRing — compact circular progress with its value inside (rolling number). For capsules,
+ * device/battery-like readouts and tight spaces. Tone follows meaning: success when complete.
+ */
+export function ProgressRing({ value, max = 100, size = 32, showValue = true, tone, label, className }: { value: number; max?: number; size?: number; showValue?: boolean; tone?: "primary" | "success" | "warning" | "error"; label?: string; className?: string }) {
+  const pct = Math.min(1, Math.max(0, value / max))
+  const t = tone ?? (pct >= 1 ? "success" : "primary")
+  const stroke = { primary: "stroke-primary", success: "stroke-success", warning: "stroke-warning", error: "stroke-error" }[t]
+  return (
+    <span role="progressbar" aria-label={label} aria-valuemin={0} aria-valuemax={max} aria-valuenow={Math.round(value)} className={cn("relative inline-flex shrink-0 items-center justify-center", className)} style={{ width: size, height: size }}>
+      <svg viewBox="0 0 36 36" width={size} height={size} className="-rotate-90">
+        <circle cx="18" cy="18" r="15.5" fill="none" strokeWidth="3.5" className="stroke-current opacity-20" />
+        <circle cx="18" cy="18" r="15.5" fill="none" strokeWidth="3.5" strokeLinecap="round" pathLength={100} strokeDasharray="100 100" strokeDashoffset={100 - pct * 100} className={cn(stroke, "duration-expressive ease-expressive")} />
+      </svg>
+      {showValue && <span className="absolute text-[0.6rem] font-semibold"><AnimatedNumber value={Math.round(value)} /></span>}
+    </span>
   )
 }

@@ -81,23 +81,16 @@ export function ModalContent({ size = "md", danger, className, children, ...prop
  * ModalAction — the modal's primary action. Runs `onAction` (sync or async) with a loading state;
  * on success the modal leaves with the "sent" exit, on failure it stays open for the user to fix.
  */
-export function ModalAction({ onAction, children, loading, ...props }: Omit<ButtonProps, "onClick"> & { onAction: () => unknown | Promise<unknown> }) {
+export function ModalAction({ onAction, children, ...props }: Omit<ButtonProps, "onClick" | "onAction"> & { onAction: () => unknown | Promise<unknown> }) {
   const { send } = useModal()
-  const [pending, setPending] = React.useState(false)
+  // The consequence plays IN the button (thinking → drawn check), then the modal flies out.
+  // On failure the button shows the error and the modal stays open for the user to fix it.
   return (
     <Button
       {...props}
-      loading={pending || loading}
-      onClick={async () => {
-        setPending(true)
-        try {
-          await onAction()
-          send()
-        } catch {
-          /* stay open — the caller shows what went wrong */
-        } finally {
-          setPending(false)
-        }
+      onAction={async () => {
+        await onAction()
+        window.setTimeout(send, 520)
       }}
     >
       {children}

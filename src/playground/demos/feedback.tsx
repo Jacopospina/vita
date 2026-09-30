@@ -1,12 +1,13 @@
 import * as React from "react"
-import { Notification, Help, Search as SearchIcon, UserAvatar, Dashboard, Activity, Document, Settings, Chat } from "@/registry/icons"
+import { Notification, Help, Bot, Headphones, CloudUpload, Rocket, Time, Search as SearchIcon, UserAvatar, Dashboard, Activity, Document, Settings, Chat } from "@/registry/icons"
 import type { DemoMap } from "./types"
 import { Stack, Inline } from "@/registry/ui/layout"
 import { Text } from "@/registry/ui/text"
 import { Button, IconButton } from "@/registry/ui/button"
 import { Loading, InlineLoading, Skeleton, SkeletonText } from "@/registry/ui/loading"
 import { Thinking } from "@/registry/ui/thinking"
-import { InlineNotification, Callout, toast } from "@/registry/ui/notification"
+import { Icon } from "@/registry/ui/icon"
+import { InlineNotification, Callout, toast, capsule } from "@/registry/ui/notification"
 import { ProgressBar } from "@/registry/ui/progress-bar"
 import { ProgressIndicator } from "@/registry/ui/progress-indicator"
 import { Modal, ModalTrigger, ModalContent, ModalHeader, ModalBody, ModalFooter, ModalAction, ConfirmModal } from "@/registry/ui/modal"
@@ -27,6 +28,29 @@ function InlineLoadingDemo() {
       <InlineLoading status={status} description={status === "active" ? "Saving…" : status === "finished" ? "Saved" : undefined} />
       <InlineLoading status="error" description="Couldn't save. Retry?" />
       <InlineLoading mode="searching" description="Searching the help center" />
+    </Inline>
+  )
+}
+
+function CapsuleDemo() {
+  const sync = () => {
+    const id = capsule({ icon: <Icon as={CloudUpload} size="md" />, title: "Syncing knowledge", subtitle: "Help center", story: { progress: 8 }, duration: 0 })
+    let v = 8
+    const t = window.setInterval(() => {
+      v = Math.min(100, v + 23)
+      capsule.update(id, { story: { progress: v }, subtitle: v >= 100 ? "Up to date" : "Help center" })
+      if (v >= 100) {
+        window.clearInterval(t)
+        capsule.update(id, { duration: 1800 })
+      }
+    }, 650)
+  }
+  return (
+    <Inline wrap>
+      <Button variant="secondary" onClick={() => capsule({ icon: <Icon as={Headphones} size="md" />, title: "Voice agent", subtitle: "Connected", story: { progress: 100 } })}>Connected · 100</Button>
+      <Button variant="secondary" onClick={() => capsule({ icon: <Icon as={Rocket} size="md" />, title: "Agent deployed", subtitle: "Support triage", story: { status: "success" } })}>Deployed · status</Button>
+      <Button variant="secondary" onClick={sync}>Syncing · live progress</Button>
+      <Button variant="secondary" onClick={() => capsule({ icon: <Icon as={Bot} size="md" />, title: "Refund assistant", subtitle: "Thinking", story: <Thinking size="md" mode="generating" /> })}>Thinking · custom story</Button>
     </Inline>
   )
 }
@@ -157,8 +181,26 @@ export const feedbackDemos: DemoMap = {
         </Stack>
       ),
     },
-    { title: "Toast", render: () => <Inline wrap><Button variant="secondary" onClick={() => toast({ kind: "success", title: "Agent deployed", subtitle: "Support triage is live" })}>Success toast</Button><Button variant="secondary" onClick={() => toast({ kind: "info", title: "Link copied" })}>Info toast</Button><Button variant="secondary" onClick={() => toast({ kind: "success", title: "Agent paused", action: { label: "Undo", onClick: () => toast({ title: "Restored" }) }, duration: 8000 })}>Toast with undo</Button></Inline> },
+    {
+      title: "Toast banners",
+      description: "Top-right, frosted glass. With an icon tile, without one, or time-sensitive.",
+      render: () => (
+        <Inline wrap>
+          <Button variant="secondary" onClick={() => toast({ icon: Bot, source: "Vita", title: "Agent deployed", subtitle: "Support triage is live and answering tickets." })}>With icon</Button>
+          <Button variant="secondary" onClick={() => toast({ icon: false, title: "Link copied", subtitle: "Anyone in the workspace can open it." })}>Without icon</Button>
+          <Button variant="secondary" onClick={() => toast({ icon: Time, eyebrow: "Time sensitive", source: "Approvals", title: "Refund over $200 waiting", subtitle: "Refund assistant needs your approval within 10 minutes.", action: { label: "Review", onClick: () => {} }, duration: 8000 })}>Time sensitive</Button>
+          <Button variant="secondary" onClick={() => toast({ kind: "success", title: "Agent paused", subtitle: "It stops taking new conversations.", action: { label: "Undo", onClick: () => toast({ kind: "info", title: "Restored" }) }, duration: 8000 })}>With undo</Button>
+        </Inline>
+      ),
+    },
     { title: "Callout", render: () => <Callout kind="info" title="How agents use knowledge">Agents only answer from the sources you connect. Anything outside them is handed to a person.</Callout> },
+  ],
+  "components/capsule": [
+    {
+      title: "Capsule — quick feedback, top centre",
+      description: "Always: icon left · title and subtitle centre · the semantic story right.",
+      render: () => <CapsuleDemo />,
+    },
   ],
   "components/progress-bar": [{ title: "Determinate, indeterminate, finished, error, quota", render: () => <ProgressDemo /> }],
   "components/progress-indicator": [{ title: "Horizontal & vertical", render: () => <StepsDemo /> }],

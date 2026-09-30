@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Add, Edit, TrashCan, Download, Copy, Filter, Close, TextBold, TextItalic, TextUnderline, TextStrikethrough, ListBulleted, ListNumbered, Link as LinkIcon, Code, Renew, Locked } from "@/registry/icons"
+import { Add, Edit, TrashCan, Download, Copy, Filter, Close, TextBold, TextItalic, TextUnderline, TextStrikethrough, ListBulleted, ListNumbered, Link as LinkIcon, Code, Renew, Locked, Information, DataBase, Security, Plug, Bot, Notification } from "@/registry/icons"
 import { Report, Magnify as SearchPict, Warning_01 as ErrorPict } from "@/registry/pictograms"
 import type { DemoMap } from "./types"
 import { Stack, Inline, Grid, Column } from "@/registry/ui/layout"
@@ -7,6 +7,7 @@ import { Text } from "@/registry/ui/text"
 import { Button, IconButton, ButtonSet } from "@/registry/ui/button"
 import { EmptyState } from "@/registry/ui/empty-state"
 import { StatusIndicator } from "@/registry/ui/status-indicator"
+import { ListItem, ListGroup, ListSection } from "@/registry/ui/list-item"
 import { PageHeader } from "@/registry/ui/page-header"
 import { Truncate } from "@/registry/ui/truncate"
 import { LoginBlock } from "@/registry/blocks/login"
@@ -286,27 +287,90 @@ export const patternDemos: DemoMap = {
       title: "Status kinds",
       render: () => (
         <Stack gap="lg">
+          <Text variant="footnote" tone="muted">Final — hold still</Text>
           <Inline gap="lg" wrap>
             <StatusIndicator kind="success">Live</StatusIndicator>
-            <StatusIndicator kind="in-progress">Deploying</StatusIndicator>
-            <StatusIndicator kind="pending">Awaiting approval</StatusIndicator>
+            <StatusIndicator kind="error">Failed</StatusIndicator>
+            <StatusIndicator kind="critical">Critical</StatusIndicator>
             <StatusIndicator kind="warning">Degraded</StatusIndicator>
             <StatusIndicator kind="caution">Rate limited</StatusIndicator>
-            <StatusIndicator kind="error">Failed</StatusIndicator>
             <StatusIndicator kind="info">Scheduled</StatusIndicator>
+            <StatusIndicator kind="undefined">Not set</StatusIndicator>
+            <StatusIndicator kind="unknown">Unknown</StatusIndicator>
+          </Inline>
+          <Text variant="footnote" tone="muted">Not final — alive, inner path moves</Text>
+          <Inline gap="lg" wrap>
+            <StatusIndicator kind="in-progress">Deploying</StatusIndicator>
+            <StatusIndicator kind="pending">Awaiting approval</StatusIndicator>
             <StatusIndicator kind="draft">Draft</StatusIndicator>
+            <StatusIndicator kind="queued">Queued</StatusIndicator>
+            <StatusIndicator kind="not-started">Not started</StatusIndicator>
+            <StatusIndicator kind="incomplete">Incomplete</StatusIndicator>
+            <StatusIndicator kind="paused">Paused</StatusIndicator>
           </Inline>
           <Inline gap="lg" wrap>
             <StatusIndicator kind="success" variant="dot" size="sm">Healthy</StatusIndicator>
             <StatusIndicator kind="warning" variant="dot" size="sm">Degraded</StatusIndicator>
             <StatusIndicator kind="error" variant="dot" size="sm">Down</StatusIndicator>
+            <StatusIndicator kind="in-progress" variant="dot" size="sm">Syncing</StatusIndicator>
           </Inline>
           <Inline gap="xs"><Tag tone="success">Passed</Tag><Tag tone="warning">Flaky</Tag><Tag tone="error">Failed</Tag><Text variant="footnote" tone="muted">← tags for categorical status inside dense rows</Text></Inline>
         </Stack>
       ),
     },
   ],
+  "patterns/list-items": [
+    {
+      title: "Grouped rows",
+      description: "Rows that belong together join into one card. Separate groups stand apart.",
+      render: () => (
+        <Stack gap="sm" className="max-w-xl">
+          <ListGroup>
+            <ListItem icon={Information} title="About" onClick={() => {}} />
+            <ListItem icon={Renew} tone="brand" title="Updates" value="Auto" onClick={() => {}} />
+            <ListItem icon={DataBase} title="Storage" onClick={() => {}} />
+          </ListGroup>
+          <ListGroup>
+            <ListItem icon={Security} tone="error" title="Security & access" onClick={() => {}} />
+          </ListGroup>
+          <ListGroup>
+            <ListItem icon={Bot} tone="info" title="Agents" value="12" onClick={() => {}} />
+            <ListItem icon={Plug} tone="success" title="Integrations" onClick={() => {}} />
+            <ListItem icon={Notification} tone="warning" title="Notifications" onClick={() => {}} />
+          </ListGroup>
+        </Stack>
+      ),
+    },
+    {
+      title: "Title + subtitle, with a section heading",
+      render: () => (
+        <ListSection title="Agents" description="Everything deployed in this workspace." className="max-w-xl">
+          <ListGroup>
+            <ListItem icon={Bot} tone="brand" title="Support triage" subtitle="Zendesk · Live" onClick={() => {}} />
+            <ListItem icon={Bot} tone="info" title="Refund assistant" subtitle="Help center · Awaiting approval" onClick={() => {}} />
+            <ListItem icon={Bot} title="Sales call notes" subtitle="Salesforce · Draft" onClick={() => {}} />
+          </ListGroup>
+        </ListSection>
+      ),
+    },
+    {
+      title: "Controls on the far right",
+      description: "With a trailing control the row is not a link — the control is the target.",
+      render: () => <ControlRows />,
+    },
+  ],
   "patterns/text-toolbar": [{ title: "Formatting toolbar", render: () => <TextToolbarDemo /> }],
+}
+
+function ControlRows() {
+  const [on, setOn] = React.useState(true)
+  return (
+    <ListGroup className="max-w-xl">
+      <ListItem icon={Notification} tone="warning" title="Notify on hand-off" subtitle="Ping the owner when an agent escalates" trailing={<Toggle size="sm" hideLabel label="Notify on hand-off" checked={on} onCheckedChange={setOn} />} />
+      <ListItem icon={Plug} tone="success" title="Slack" subtitle="Connected as #support" trailing={<Button size="sm" variant="secondary">Manage</Button>} />
+      <ListItem icon={Bot} tone="info" title="Default model" trailing={<StatusIndicator kind="success" size="sm">Healthy</StatusIndicator>} />
+    </ListGroup>
+  )
 }
 
 export { IconButton }

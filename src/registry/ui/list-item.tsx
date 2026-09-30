@@ -1,0 +1,109 @@
+import * as React from "react"
+import { ChevronRight } from "@/registry/icons"
+import type { IconType } from "@/registry/icons"
+import { cn } from "@/registry/lib/utils"
+import { Icon } from "@/registry/ui/icon"
+
+/**
+ * ListItem — the settings-style row: leading icon tile · title (+ subtitle) · trailing control on the far right.
+ * ListGroup joins rows that BELONG together into one card (zero gap, the card owns fill + radius, rows are flat,
+ * separators are inset). Different groups stand apart. ListSection gives a run of groups a heading.
+ *
+ *   navigation row   onClick / href, no trailing → chevron on the far right, whole row is the target
+ *   control row      trailing = Toggle / Button / Dropdown / value text — the row itself is not clickable
+ */
+
+const tileTone = {
+  neutral: "bg-secondary text-secondary-foreground",
+  brand: "bg-primary text-primary-foreground",
+  info: "bg-info text-primary-foreground",
+  success: "bg-success text-primary-foreground",
+  warning: "bg-warning text-primary-foreground",
+  error: "bg-error text-primary-foreground",
+} as const
+
+export interface ListItemProps {
+  /** Leading glyph, drawn on a small squircle tile. */
+  icon?: IconType
+  tone?: keyof typeof tileTone
+  /** Leading media instead of an icon tile — avatar, device image, app mark. */
+  media?: React.ReactNode
+  title: React.ReactNode
+  /** Second line, only when it adds information (model, owner, state). */
+  subtitle?: React.ReactNode
+  /** Quiet value shown before the chevron, e.g. "On", "3 agents". */
+  value?: React.ReactNode
+  /** Control on the far right: Toggle, Button, Tag, Dropdown. Replaces the chevron. */
+  trailing?: React.ReactNode
+  onClick?: () => void
+  href?: string
+  selected?: boolean
+  disabled?: boolean
+  className?: string
+}
+
+export function ListItem({ icon, tone = "neutral", media, title, subtitle, value, trailing, onClick, href, selected, disabled, className }: ListItemProps) {
+  const navigable = !trailing && (!!onClick || !!href)
+  const body = (
+    <>
+      {media ? (
+        <span className="flex shrink-0 items-center">{media}</span>
+      ) : icon ? (
+        <span aria-hidden className={cn("flex size-6 shrink-0 items-center justify-center squircle [--corpus-squircle-r:var(--corpus-radius-sm)]", tileTone[tone])}>
+          <Icon as={icon} size="sm" />
+        </span>
+      ) : null}
+      <span className="flex min-w-0 flex-1 flex-col">
+        <span className="truncate text-body">{title}</span>
+        {subtitle && <span className="truncate text-footnote text-muted-foreground">{subtitle}</span>}
+      </span>
+      {value && <span className="shrink-0 text-body text-muted-foreground">{value}</span>}
+      {trailing && <span className="flex shrink-0 items-center">{trailing}</span>}
+      {navigable && <Icon as={ChevronRight} size="sm" className="shrink-0 text-muted-foreground duration-fast-02 group-hover/row:translate-x-0.5" />}
+    </>
+  )
+  const row = cn(
+    "group/row relative flex w-full min-h-control-xl items-center gap-2.5 rounded-inner-1 px-2.5 py-1.5 text-left text-foreground",
+    // inset separator between rows; it fades when either neighbour is hovered/selected
+    "before:absolute before:inset-x-2.5 before:top-0 before:h-px before:bg-border-subtle before:duration-fast-02 group-first/item:before:opacity-0",
+    navigable && "duration-fast-02 hover:bg-hover hover:before:opacity-0 active:bg-active focus-ring-inset",
+    selected && "bg-selected text-selected-foreground before:opacity-0",
+    disabled && "pointer-events-none text-disabled-foreground",
+  )
+  return (
+    <li className={cn("group/item list-none", className)}>
+      {navigable && href ? (
+        <a href={href} aria-current={selected || undefined} className={row}>{body}</a>
+      ) : navigable ? (
+        <button type="button" disabled={disabled} aria-current={selected || undefined} onClick={onClick} className={row}>{body}</button>
+      ) : (
+        <div className={row}>{body}</div>
+      )}
+    </li>
+  )
+}
+
+/** ListGroup — rows that belong together, joined into one card. A single row on its own is a group of one. */
+export function ListGroup({ className, children, ...props }: React.HTMLAttributes<HTMLUListElement>) {
+  return (
+    <ul role="list" className={cn("flex flex-col scope-lg squircle border border-border-subtle bg-layer-2 p-1 [--corpus-squircle-r:var(--corpus-radius-lg)]", className)} {...props}>
+      {children}
+    </ul>
+  )
+}
+
+/** ListSection — a heading (and optional note) over one or more ListGroups. Groups inside stand apart by a small gap. */
+export function ListSection({ title, description, className, children }: { title?: React.ReactNode; description?: React.ReactNode; className?: string; children: React.ReactNode }) {
+  const id = React.useId()
+  return (
+    <section aria-labelledby={title ? id : undefined} className={cn("flex flex-col gap-2", className)}>
+      {(title || description) && (
+        <header className="flex flex-col px-2.5 pt-2">
+          {title && <h3 id={id} className="text-headline">{title}</h3>}
+          {description && <p className="text-footnote text-muted-foreground">{description}</p>}
+        </header>
+      )}
+      {children}
+    </section>
+  )
+}

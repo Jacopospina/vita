@@ -85,6 +85,7 @@ Are items uniform records with the same attributes?
 | Situation | Use |
 |---|---|
 | "Done": the user's action succeeded | `toast` (success, auto-dismiss) |
+| Glanceable "it connected / it's syncing" with a live value | `capsule` (icon · title · story) |
 | Something needs fixing, tied to a section | `InlineNotification` near the cause |
 | Must decide before continuing | `ConfirmModal` / `Modal` |
 | Static guidance in content | `Callout` |

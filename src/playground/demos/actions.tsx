@@ -81,6 +81,17 @@ function AIDemo() {
 export const actionDemos: DemoMap = {
   "components/button": [
     {
+      title: "Consequence in the button",
+      description: "Loading, success and failure play inside the button — the user never looks elsewhere.",
+      render: () => (
+        <Inline wrap>
+          <Button feedback={{ loading: "Deploying", success: "Deployed" }} onAction={() => new Promise((r) => setTimeout(r, 1400))}>Deploy agent</Button>
+          <Button variant="secondary" icon={Save} feedback={{ loading: "Saving", success: "Saved", error: "Couldn't save" }} onAction={() => new Promise((_, no) => setTimeout(() => no(new Error("offline")), 1200))}>Save draft</Button>
+          <Button variant="tertiary" feedback={{ loading: "Testing", success: "All 12 passed" }} onAction={() => new Promise((r) => setTimeout(r, 1800))}>Run tests</Button>
+        </Inline>
+      ),
+    },
+    {
       title: "Hierarchy",
       description: "One primary per view. Step down: secondary → tertiary → ghost.",
       render: () => (

@@ -28,7 +28,7 @@ related: [menu-buttons, link, modal, common-actions]
 ## Shape & padding
 
 - **Squircle corners.** Buttons (and button groups) use continuous-curvature squircle corners, not simple rounded corners.
-- **Room to rest.** Without an icon, the right padding is about twice the left, so a cursor or thumb can rest on the button without covering the label. With an icon, padding is symmetric and that extra room becomes the gap between label and icon.
+- **Symmetric padding.** Left and right padding are always equal. With an icon, the icon sits on the far right.
 
 ## Sizes
 
@@ -46,7 +46,13 @@ Heights follow `--corpus-density`. Buttons in a `ButtonSet` share one size.
    - Max 3 words.
 2. **Belonging has no gaps.** A `ButtonSet` joins its buttons edge to edge, primary last (rightmost). No Cancel buttons: surfaces close with × or Esc.
 3. **Icons sit on the far right, always.** Label left, icon pushed to the right edge. One icon at most, and only when it adds clarity. (`iconPosition` is deprecated and ignored.)
-4. **Loading, not double-clicking:** on async actions pass `loading`. It keeps the width and blocks re-submission.
+4. **The consequence lives IN the button.** The button is the last thing the user looks at, so they never look elsewhere to learn what their click did.
+   - Pass `onAction` (async; throw to fail) and the button runs the lifecycle itself:
+     - **Loading:** the label can change (`feedback.loading`) and a Thinking orb sits in the far-right slot.
+     - **Success:** the button turns green and draws a check.
+     - **Failure:** the button turns red with an error mark, then settles back.
+   - Re-submission is blocked while it works.
+   - Controlled alternative: `status` plus `feedback`.
 5. **Disabled buttons need a reason.** If the reason isn't obvious, keep the button enabled and validate on click, or wrap it in a Tooltip (see *Disabled states*).
 6. **Full-width only** on mobile, in narrow panels and on login forms.
 7. **Icon-only = `IconButton`** with a required `label`, which becomes the tooltip and the accessible name. Use icon-only only for universally understood glyphs or dense toolbars.
