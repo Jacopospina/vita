@@ -567,9 +567,9 @@
       "slug": "icon-placeholder",
       "path": "docs/components/icon-placeholder.md",
       "title": "Icon placeholder",
-      "summary": "The leading visual slot — a glyph on a squircle tile in small, medium and large. Used by list items, notifications and toast banners.",
+      "summary": "The leading visual slot — a colored glyph on a neutral squircle tile, in small, medium and large. One look for list items, notifications and toast banners.",
       "status": "stable",
-      "import": "import { IconPlaceholder } from \"@/components/corpus/icon-placeholder\"\n\n<IconPlaceholder icon={Bot} tone=\"brand\" />\n<IconPlaceholder icon={WarningAltFilled} variant=\"soft\" tone=\"warning\" size=\"lg\" />",
+      "import": "import { IconPlaceholder } from \"@/components/corpus/icon-placeholder\"\n\n<IconPlaceholder icon={Bot} tone=\"info\" size=\"md\" />\n<IconPlaceholder icon={WarningAltFilled} tone=\"warning\" size=\"lg\" />",
       "use_when": [
         "Leading visual of a list row (settings, objects)",
         "The left side of a notification or toast banner",

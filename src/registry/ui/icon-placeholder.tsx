@@ -4,40 +4,38 @@ import { cn } from "@/registry/lib/utils"
 import { Icon } from "@/registry/ui/icon"
 
 /**
- * IconPlaceholder — the leading visual slot: a glyph on a squircle tile, in three sizes (sm 24 · md 32 · lg 40).
- * Used by list items (sm), notifications and toast banners (lg). The ONE way to put an icon on a tile;
- * never hand-roll a colored square.
- *
- *   filled  colored tile, white glyph → categories (settings rows, app/agent marks)
- *   soft    neutral tile, colored glyph → semantic kinds (notifications: the glyph's color carries the kind)
+ * IconPlaceholder — the leading visual slot: a colored glyph on a neutral squircle tile.
+ * ONE look everywhere; only the size changes:
+ *   sm 24 → dense rows, inline marks · md 32 → list items · lg 40 → notifications, toast banners
+ * The glyph's tone carries the category or the kind. Never hand-roll an icon-on-a-square.
  *
  * Need a bare icon inline with text → Icon. Need a big illustrative mark → Pictogram.
  */
 const tones = {
-  neutral: { filled: "bg-muted-foreground text-background", soft: "text-foreground" },
-  brand: { filled: "bg-primary text-primary-foreground", soft: "text-primary" },
-  info: { filled: "bg-info text-primary-foreground", soft: "text-info" },
-  success: { filled: "bg-success text-primary-foreground", soft: "text-success" },
-  warning: { filled: "bg-warning text-primary-foreground", soft: "text-warning" },
-  error: { filled: "bg-error text-primary-foreground", soft: "text-error" },
+  neutral: "text-foreground",
+  brand: "text-primary",
+  info: "text-info",
+  success: "text-success",
+  warning: "text-warning",
+  error: "text-error",
 } as const
 
-// Tile size → glyph size; the tile radius follows the tile (concentric with its container).
+// Tile size → glyph size. The radius is proportional (22% of the tile), so every size is the same shape.
 const sizes = {
-  sm: { tile: "size-6 [--corpus-squircle-r:var(--corpus-radius-sm)]", icon: "sm" },
-  md: { tile: "size-8 [--corpus-squircle-r:var(--corpus-radius-sm)]", icon: "md" },
-  lg: { tile: "size-10 [--corpus-squircle-r:var(--corpus-radius-md)]", icon: "md" },
+  sm: { tile: "size-6", icon: "sm" },
+  md: { tile: "size-8", icon: "md" },
+  lg: { tile: "size-10", icon: "md" },
 } as const
 
 export type IconPlaceholderTone = keyof typeof tones
+export type IconPlaceholderSize = keyof typeof sizes
 
 export interface IconPlaceholderProps {
   /** An icon type, or any node (agent/app mark, avatar image). */
   icon: IconType | React.ReactNode
   tone?: IconPlaceholderTone
-  variant?: "filled" | "soft"
-  /** sm 24 · list rows · md 32 · compact headers · lg 40 · notifications and banners */
-  size?: keyof typeof sizes
+  /** sm 24 · md 32 · lg 40 */
+  size?: IconPlaceholderSize
   /** Draw the glyph in on mount (notifications). */
   draw?: boolean
   className?: string
@@ -46,16 +44,15 @@ export interface IconPlaceholderProps {
 const isIconType = (x: unknown): x is IconType =>
   typeof x === "function" || (typeof x === "object" && x !== null && "render" in x && !React.isValidElement(x))
 
-export function IconPlaceholder({ icon, tone = "neutral", variant = "filled", size = "sm", draw, className }: IconPlaceholderProps) {
+export function IconPlaceholder({ icon, tone = "neutral", size = "md", draw, className }: IconPlaceholderProps) {
   const s = sizes[size]
   return (
     <span
       aria-hidden
       className={cn(
-        "flex shrink-0 items-center justify-center squircle duration-moderate-01",
+        "flex shrink-0 items-center justify-center squircle bg-icon-surface duration-moderate-01 [--corpus-squircle-r:22%]",
         s.tile,
-        variant === "soft" && "bg-background/70 shadow-raised",
-        tones[tone][variant],
+        tones[tone],
         className,
       )}
     >

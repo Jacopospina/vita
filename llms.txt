@@ -90,7 +90,7 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/foun
 - [Form](docs/components/form.md): The structural pieces of every form. Form, FormGroup, FormRow, FormActions, FluidForm and the FieldShell wiring every input uses.
   - use: Any time the user enters data that is submitted together
   - avoid: Single instant settings → Toggle rows, no form wrapper needed; Inline edits of one value → read-only-states pattern (view → edit)
-- [Icon placeholder](docs/components/icon-placeholder.md): The leading visual slot — a glyph on a squircle tile in small, medium and large. Used by list items, notifications and toast banners.
+- [Icon placeholder](docs/components/icon-placeholder.md): The leading visual slot — a colored glyph on a neutral squircle tile, in small, medium and large. One look for list items, notifications and toast banners.
   - use: Leading visual of a list row (settings, objects); The left side of a notification or toast banner; An agent or app mark next to its name
   - avoid: An icon inline with text or inside a button → Icon; Large illustrative marks → Pictogram; A person → avatar media
 - [Inline loading](docs/components/inline-loading.md): The status of one operation, in place — "Saving…" → "Saved" → gone.

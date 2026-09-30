@@ -54,7 +54,7 @@ function Notice({ icon, kind, eyebrow, source, title, subtitle, children, action
         className,
       )}
     >
-      {icon && <IconPlaceholder icon={icon} variant="soft" tone={kind ?? "neutral"} size="lg" draw />}
+      {icon && <IconPlaceholder icon={icon} tone={kind ?? "neutral"} size="lg" draw />}
       <div className={cn("flex min-w-0 flex-1 flex-col", !subtitle && !children && !eyebrow && !source && "self-center")}>
         {eyebrow && <p className="text-caption font-medium tracking-wide text-muted-foreground uppercase">{eyebrow}</p>}
         {source && <p className="font-semibold">{source}</p>}

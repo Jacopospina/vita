@@ -376,38 +376,27 @@ function ControlRows() {
 
 patternDemos["components/icon-placeholder"] = [
   {
-    title: "Filled — categories",
-    description: "Colored tile, white glyph. Settings rows, agent and app marks.",
-    render: () => (
-      <Inline gap="md" wrap>
-        <IconPlaceholder icon={Information} />
-        <IconPlaceholder icon={Renew} tone="brand" />
-        <IconPlaceholder icon={Bot} tone="info" />
-        <IconPlaceholder icon={Plug} tone="success" />
-        <IconPlaceholder icon={Notification} tone="warning" />
-        <IconPlaceholder icon={Security} tone="error" />
-      </Inline>
-    ),
-  },
-  {
-    title: "Soft — semantic kinds",
-    description: "Neutral tile, colored glyph. Notifications: the glyph's color carries the kind.",
-    render: () => (
-      <Inline gap="md" wrap>
-        <IconPlaceholder icon={Information} variant="soft" tone="info" size="lg" />
-        <IconPlaceholder icon={Bot} variant="soft" tone="success" size="lg" />
-        <IconPlaceholder icon={Notification} variant="soft" tone="warning" size="lg" />
-        <IconPlaceholder icon={Security} variant="soft" tone="error" size="lg" />
-      </Inline>
-    ),
-  },
-  {
-    title: "Sizes",
+    title: "Sizes — small, medium, large",
+    description: "Medium in list items, large in notifications and toast banners.",
     render: () => (
       <Inline gap="md">
-        <IconPlaceholder icon={Bot} tone="brand" size="sm" />
-        <IconPlaceholder icon={Bot} tone="brand" size="md" />
-        <IconPlaceholder icon={Bot} tone="brand" size="lg" />
+        <IconPlaceholder icon={Bot} tone="info" size="sm" />
+        <IconPlaceholder icon={Bot} tone="info" size="md" />
+        <IconPlaceholder icon={Bot} tone="info" size="lg" />
+      </Inline>
+    ),
+  },
+  {
+    title: "Tones",
+    description: "Neutral tile; the glyph's color carries the category or kind.",
+    render: () => (
+      <Inline gap="md" wrap>
+        <IconPlaceholder icon={Information} size="lg" />
+        <IconPlaceholder icon={Renew} tone="brand" size="lg" />
+        <IconPlaceholder icon={Bot} tone="info" size="lg" />
+        <IconPlaceholder icon={Plug} tone="success" size="lg" />
+        <IconPlaceholder icon={Notification} tone="warning" size="lg" />
+        <IconPlaceholder icon={Security} tone="error" size="lg" />
       </Inline>
     ),
   },

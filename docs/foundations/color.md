@@ -26,6 +26,7 @@ avoid_when:
 | Text | `foreground` · `muted-foreground` · `helper` · `placeholder` · `disabled-foreground` | Two text levels per region at most. |
 | Interactive | `primary` (+ `-hover` `-active` `-foreground` `-subtle`) · `secondary` · `link` · `focus` | Brand color means "you can act here". |
 | State | `hover` · `active` · `selected` · `selected-foreground` | Translucent washes that work on any layer. |
+| Icon surface | `icon-surface` | The IconPlaceholder tile. Translucent white: a light well in light mode, a faint lift in dark mode. |
 | Support | `success` · `warning` · `error` · `info` (+ `-subtle`, `-foreground`) | Status only. Text on tints uses `-foreground`. |
 | Lines | `border-subtle` · `border` · `border-field` · `border-strong` | Fields use `border-field` (≥ 3:1). |
 | AI | `ai-spectrum` · `ai-subtle` | The rainbow outline, only for AI-generated content. |

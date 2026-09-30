@@ -65,6 +65,8 @@
   --corpus-selected: var(--corpus-primary-subtle);
   --corpus-selected-foreground: oklch(0.464 calc(var(--_bc) * 1.1) calc(var(--_bh) + 6));
   --corpus-skeleton: oklch(0.923 var(--_nc) var(--_nh));
+  /* icon placeholder tile — translucent, so it reads on any layer */
+  --corpus-icon-surface: color-mix(in oklab, oklch(1 0 0) 72%, transparent);
 
   /* support — system green, orange, red, blue */
   --corpus-success: oklch(0.73 0.194 var(--_hs));
@@ -135,6 +137,7 @@
   --corpus-active: color-mix(in oklab, oklch(0.75 0.02 var(--_nh)) 22%, transparent);
   --corpus-selected-foreground: oklch(0.685 calc(var(--_bc) * 0.78) calc(var(--_bh) - 4));
   --corpus-skeleton: oklch(0.294 var(--_nc) var(--_nh));
+  --corpus-icon-surface: color-mix(in oklab, oklch(1 0 0) 10%, transparent);
 
   --corpus-success: oklch(0.756 0.208 var(--_hs));
   --corpus-success-subtle: color-mix(in oklab, var(--corpus-success) 18%, var(--corpus-background));
