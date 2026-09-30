@@ -5,7 +5,9 @@ import { cn } from "@/registry/lib/utils"
  * Text choreography — values never snap.
  *   AnimatedNumber: digits roll like a slot machine (up when increasing, down when decreasing),
  *                   staggered from the last digit, each digit de-blurring as it lands.
- *   AnimatedText:   when text CHANGES, words reveal in a stagger, sliding up and de-blurring.
+ *   RollingText:    the same reels for ANY value string ("$1,200", "40%", "20 – 80").
+ *   AnimatedText:   when text CHANGES, letters reveal in a stagger, sliding up and de-blurring —
+ *                   unless the change is a number, which always rolls.
  *                   First render is static, so pages don't shimmer on load.
  * Screen readers get the plain value; the animated glyphs are hidden from them.
  */
@@ -14,16 +16,18 @@ const STAGGER = 35 // ms between digits / words
 
 /* ---------------- AnimatedNumber ---------------- */
 
+/** One reel: a strip of 0–9 rolling behind a one-line window. */
 function Digit({ value, index }: { value: number; index: number }) {
   const strip = React.useRef<HTMLSpanElement>(null)
   const prev = React.useRef(value)
   React.useEffect(() => {
-    if (prev.current === value || !strip.current || reduced()) {
+    const el = strip.current
+    if (prev.current === value || !el || reduced() || typeof el.animate !== "function") {
       prev.current = value
       return
     }
     prev.current = value
-    strip.current.animate([{ filter: "blur(4px)" }, { filter: "blur(0)" }], {
+    el.animate([{ filter: "blur(4px)" }, { filter: "blur(0)" }], {
       duration: 520,
       delay: index * STAGGER,
       easing: "cubic-bezier(0.16, 1, 0.3, 1)",
@@ -56,12 +60,20 @@ export interface AnimatedNumberProps {
 
 export function AnimatedNumber({ value, format, locale, className }: AnimatedNumberProps) {
   const text = React.useMemo(() => new Intl.NumberFormat(locale, format).format(value), [value, format, locale])
+  return <RollingText text={text} className={className} />
+}
+
+/**
+ * RollingText — ANY value string rolls like a slot machine: every digit is a reel, everything else
+ * ($, %, commas, units, "–") stays put. Reels are keyed from the right, so 99 → 100 adds a reel on the left.
+ */
+export function RollingText({ text, className }: { text: string; className?: string }) {
   const chars = Array.from(text)
   let digitsFromRight = chars.filter((c) => /\d/.test(c)).length
   return (
     <span className={cn("inline-flex items-baseline tabular-nums", className)}>
       <span className="sr-only">{text}</span>
-      <span aria-hidden className="inline-flex items-baseline">
+      <span aria-hidden className="inline-flex items-baseline whitespace-pre">
         {chars.map((c, i) => {
           const fromRight = chars.length - i
           if (/\d/.test(c)) {
@@ -74,6 +86,11 @@ export function AnimatedNumber({ value, format, locale, className }: AnimatedNum
     </span>
   )
 }
+
+/** Digits masked out: "3 agents" and "12 agents" share the template "# agents". */
+const template = (t: string) => t.replace(/\d+([.,]\d+)*/g, "#")
+/** A value is numeric when it has digits and no words, e.g. "$1,200", "40%", "20 – 80", "1.2k". */
+const isNumericValue = (t: string) => /\d/.test(t) && !/[a-z]{2,}/i.test(t)
 
 /* ---------------- AnimatedText ---------------- */
 
@@ -93,6 +110,10 @@ export function AnimatedText({ children, className, enter = "change", direction 
   const [first] = React.useState(children)
   const [changed, setChanged] = React.useState(false)
   if (!changed && children !== first) setChanged(true)
+  // Numbers are never letter-revealed: numeric values, or text whose only change is its digits, roll like a slot machine.
+  if (!leaving && enter === "change" && (isNumericValue(children) || (/\d/.test(children) && template(children) === template(first)))) {
+    return <RollingText text={children} className={className} />
+  }
   const motion = !reduced()
   const animate = motion && (changed || enter === "mount")
   const letters = children.replace(/\s+/g, "").length || 1

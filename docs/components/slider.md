@@ -20,3 +20,9 @@ related: [number-input, filtering]
 3. **Live preview:** whatever the slider controls updates while dragging.
 4. **Step** matches meaning: €50 steps for prices, 1% for opacity.
 5. **Keyboard:** arrows step, PageUp/PageDown step ×10, Home/End jump to the bounds.
+
+## Value
+
+- **Single value lives in the knob.** The eye is already on the knob, so the value never sits elsewhere. Ranges show both values beside the label.
+- **Dragging pops it out.** While you drag, the value springs up into a bubble 4px above the knob, and the knob becomes a small circle so your pointer never hides the number. On release it drops back into the knob.
+- **Values roll.** Every numeric value, formatted or not (`40%`, `$1,200`), rolls like a slot machine.

@@ -7,6 +7,7 @@ import { AnimatedNumber, AnimatedText } from "@/registry/ui/animated"
 /**
  * Slider — choose a value (or range) where relative position matters more than precision: volume, opacity, price range.
  * Always pair with a visible value; for exact entry add `withInput`.
+ * Single value → the value lives IN the knob (the eye is already there). Range → both values beside the label.
  */
 export interface SliderProps extends Omit<React.ComponentProps<typeof SliderPrimitive.Root>, "onValueChange"> {
   label: React.ReactNode
@@ -18,17 +19,34 @@ export interface SliderProps extends Omit<React.ComponentProps<typeof SliderPrim
   showBounds?: boolean
 }
 
-export function Slider({ label, hideLabel, helperText, formatValue = String, showBounds = true, min = 0, max = 100, className, defaultValue, value, onValueChange, ...props }: SliderProps) {
+export function Slider({ label, hideLabel, helperText, formatValue = String, showBounds = true, min = 0, max = 100, className, defaultValue, value, onValueChange, onValueCommit, onPointerDown, ...props }: SliderProps) {
   const id = React.useId()
   const [inner, setInner] = React.useState<number[]>(defaultValue ?? [min])
   const current = value ?? inner
+  const single = current.length === 1
+  // While dragging, the value pops out ABOVE the knob (the finger/pointer would hide it); on release it drops back in.
+  const [dragging, setDragging] = React.useState(false)
+  React.useEffect(() => {
+    if (!dragging) return
+    const end = () => setDragging(false)
+    window.addEventListener("pointerup", end)
+    window.addEventListener("pointercancel", end)
+    return () => {
+      window.removeEventListener("pointerup", end)
+      window.removeEventListener("pointercancel", end)
+    }
+  }, [dragging])
+  // Values always roll like a slot machine (AnimatedText rolls numeric strings).
+  const shown = (v: number) => (formatValue === String ? <AnimatedNumber value={v} /> : <AnimatedText>{formatValue(v)}</AnimatedText>)
   return (
     <div className={cn("flex w-full flex-col gap-2", className)}>
       <div className={cn("flex items-baseline justify-between", hideLabel && "sr-only")}>
         <Label id={id}>{label}</Label>
-        <output aria-live="polite" className="text-footnote text-foreground tabular-nums">
-          {formatValue === String ? current.map((v, i) => <React.Fragment key={i}>{i > 0 && " – "}<AnimatedNumber value={v} /></React.Fragment>) : <AnimatedText>{current.map(formatValue).join(" – ")}</AnimatedText>}
-        </output>
+        {!single && (
+          <output aria-live="polite" className="text-footnote text-foreground tabular-nums">
+            {current.map((v, i) => <React.Fragment key={i}>{i > 0 && " – "}{shown(v)}</React.Fragment>)}
+          </output>
+        )}
       </div>
       <SliderPrimitive.Root
         aria-labelledby={id}
@@ -39,18 +57,53 @@ export function Slider({ label, hideLabel, helperText, formatValue = String, sho
           setInner(v)
           onValueChange?.(v)
         }}
-        className="relative flex h-5 w-full touch-none items-center select-none data-[disabled]:opacity-50"
+        onValueCommit={(v) => {
+          setDragging(false)
+          onValueCommit?.(v)
+        }}
+        onPointerDown={(e) => {
+          if (single) setDragging(true)
+          onPointerDown?.(e)
+        }}
+        className={cn("relative flex w-full touch-none items-center select-none data-[disabled]:opacity-50", single ? "h-7" : "h-5")}
         {...props}
       >
         <SliderPrimitive.Track className="relative h-1 grow overflow-hidden rounded-full bg-border">
           <SliderPrimitive.Range className="absolute h-full bg-primary" />
         </SliderPrimitive.Track>
-        {current.map((_, i) => (
+        {current.map((v, i) => (
           <SliderPrimitive.Thumb
             key={i}
-            aria-label={current.length > 1 ? (i === 0 ? "Minimum" : "Maximum") : undefined}
-            className="block size-4 rounded-full border-2 border-primary bg-background shadow-raised duration-fast-01 ease-productive hover:scale-110 focus-ring active:scale-110"
-          />
+            aria-label={single ? undefined : i === 0 ? "Minimum" : "Maximum"}
+            aria-valuetext={formatValue(v)}
+            className={cn(
+              "relative block rounded-full border-2 border-primary bg-background shadow-raised duration-moderate-01 ease-productive focus-ring",
+              single ? "flex h-6 items-center justify-center text-caption font-semibold text-foreground" : "size-4 hover:scale-110 active:scale-110",
+              single && (dragging ? "min-w-6 px-0" : "min-w-8 px-1.5"), // dragging: a perfect 24px circle
+            )}
+          >
+            {single && (
+              <>
+                {/* Sizer: keeps the knob wide enough for the value while it rests inside; collapses while it's out. */}
+                <span aria-hidden className={cn("reveal-x duration-moderate-01 ease-productive", !dragging && "reveal-x-open")}>
+                  <span>
+                    <span className="invisible">{formatValue(v)}</span>
+                  </span>
+                </span>
+                {/* The value itself. Out: springs up into a bubble 4px above the knob (expressive). Back: drops into the knob (productive). */}
+                <span
+                  className={cn(
+                    "pointer-events-none absolute top-1/2 left-1/2 origin-bottom -translate-x-1/2 -translate-y-1/2 rounded-full whitespace-nowrap",
+                    dragging
+                      ? "translate-y-[calc(-100%-var(--spacing)*4)] scale-110 bg-inverse px-2 py-0.5 text-inverse-foreground shadow-overlay duration-moderate-02 ease-spring"
+                      : "bg-transparent px-0 py-0 text-foreground shadow-none duration-moderate-01 ease-productive",
+                  )}
+                >
+                  {shown(v)}
+                </span>
+              </>
+            )}
+          </SliderPrimitive.Thumb>
         ))}
       </SliderPrimitive.Root>
       {showBounds && (
