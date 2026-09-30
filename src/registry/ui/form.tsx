@@ -144,7 +144,7 @@ export function FieldShell({ id: idProp, label, hideLabel, helperText, invalid, 
   const showWarn = !invalid && warn && warnText
   const message = showInvalid ? invalidText : showWarn ? warnText : helperText
   return (
-    <div data-field="" data-invalid={invalid || undefined} data-filled={filled || undefined} className={cn("group/field flex min-w-0 flex-col", className)}>
+    <div data-field="" data-ai-context="" data-invalid={invalid || undefined} data-filled={filled || undefined} className={cn("group/field flex min-w-0 flex-col", className)}>
       <div className="relative">
         {children({ id, "aria-describedby": message ? msgId : undefined, "aria-invalid": invalid || undefined, "aria-required": optional ? undefined : true })}
         <LabelPrimitive.Root

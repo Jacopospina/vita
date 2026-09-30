@@ -48,7 +48,7 @@ export function InlineNotification({ kind = "info", title, subtitle, action, onC
   const [closed, setClosed] = React.useState(false)
   if (closed) return null
   return (
-    <div role={role ?? (kind === "error" ? "alert" : "status")} className={cn(shell({ kind, contrast }), leaving ? "animate-exit-slide-down" : "animate-enter-slide-up", "items-start py-3 pr-2 pl-4", className)}>
+    <div data-ai-context="" role={role ?? (kind === "error" ? "alert" : "status")} className={cn(shell({ kind, contrast }), leaving ? "animate-exit-slide-down" : "animate-enter-slide-up", "items-start py-3 pr-2 pl-4", className)}>
       <Icon as={icons[kind]} size="md" className={cn("mt-px", iconTone[kind])} />
       <div className="flex min-w-0 flex-1 flex-wrap items-baseline gap-x-2 gap-y-1 py-px">
         <p className="font-semibold">{title}</p>
@@ -71,7 +71,7 @@ export function InlineNotification({ kind = "info", title, subtitle, action, onC
 /** Callout — permanent, non-dismissible guidance inside page content. */
 export function Callout({ kind = "info", title, children, className }: { kind?: Kind; title?: React.ReactNode; children: React.ReactNode; className?: string }) {
   return (
-    <aside className={cn(shell({ kind }), "items-start p-3", className)}>
+    <aside data-ai-context="" className={cn(shell({ kind }), "items-start p-3", className)}>
       <Icon as={icons[kind]} size="md" className={cn("mt-px", iconTone[kind])} />
       <div className="flex flex-col gap-1">
         {title && <p className="font-semibold">{title}</p>}

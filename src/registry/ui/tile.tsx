@@ -15,7 +15,7 @@ import { useTilt } from "@/registry/hooks/use-tilt"
 const base = "relative flex flex-col gap-1.5 scope-lg bg-layer-1 p-3 text-foreground"
 
 export function Tile({ className, elevated, ...props }: React.HTMLAttributes<HTMLDivElement> & { elevated?: boolean }) {
-  return <div className={cn(base, elevated && "border border-border-subtle bg-raised shadow-raised", className)} {...props} />
+  return <div data-ai-context="" className={cn(base, elevated && "border border-border-subtle bg-raised shadow-raised", className)} {...props} />
 }
 
 export const ClickableTile = React.forwardRef<HTMLAnchorElement, React.AnchorHTMLAttributes<HTMLAnchorElement> & { disabled?: boolean }>(
@@ -115,5 +115,5 @@ export function TileSet({ columns = 2, tone = "default", className, children }: 
 }
 
 export function TileSetItem({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn("flex flex-col gap-1.5 border-r border-b border-border-subtle p-3 text-foreground", className)} {...props} />
+  return <div data-ai-context="" className={cn("flex flex-col gap-1.5 border-r border-b border-border-subtle p-3 text-foreground", className)} {...props} />
 }
