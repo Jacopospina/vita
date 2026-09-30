@@ -27,3 +27,9 @@ related: [ui-shell-header, tree-view, breadcrumb]
 4. **Icons:** all top-level items have one, or none do. In rail mode they're required.
 5. **Labels match page titles exactly** (taxonomy).
 6. **Order by frequency of use,** not alphabetically. Settings go last.
+
+## Look
+
+- **Floating glass.** The panel floats 8px from the window's edges, with frosted `glass` and rounded corners. Rows inside use the concentric radius.
+- **Sections like a file browser.** A `SideNavSection` shows a small muted header over its rows. With `collapsible`, a chevron appears on hover and the rows fold away.
+- **Rows.** Compact, with an accent icon and the label. The current page gets a soft grey highlight, not a coloured fill.

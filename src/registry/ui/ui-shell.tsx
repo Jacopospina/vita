@@ -9,7 +9,9 @@ import { IconButton, ActionBar } from "@/registry/ui/button"
 /**
  * UI Shell — the persistent frame of a product. Three parts:
  *   Header      → product name, global nav, global actions (search, notifications, help, user). 48px, always visible.
- *   LeftPanel   → side navigation between the product's main areas. Rail (icons) or expanded.
+ *   LeftPanel   → side navigation between the product's main areas: a floating, frosted-glass sidebar inset from the
+ *                 window edges (concentric radius), with Finder-style sections (small header, collapses on hover chevron).
+ *                 Rail (icons) or expanded.
  *   RightPanel  → contextual/global panels (notifications, help, AI assistant) that slide over the content.
  * Build every app screen inside <Shell>. Never build a custom header or nav.
  */
@@ -101,16 +103,18 @@ export function LeftPanel({ children, rail, className, label = "Side navigation"
         aria-label={label}
         data-rail={rail || undefined}
         className={cn(
-          "group/nav z-30 flex shrink-0 flex-col overflow-y-auto border-r border-border-subtle bg-layer-1 py-2",
-          "fixed inset-y-0 top-12 left-0 w-64 -translate-x-full duration-moderate-02 ease-productive lg:static lg:translate-x-0",
+          // Floating sidebar: frosted glass, inset from the window, rounded; rows inside are concentric (rounded-inner-2).
+          "group/nav z-30 flex shrink-0 flex-col overflow-y-auto glass scope-xl p-2",
+          "fixed top-14 bottom-2 left-2 w-60 -translate-x-[calc(100%+1rem)] duration-moderate-02 ease-productive",
+          "lg:static lg:m-2 lg:mr-0 lg:translate-x-0",
           navOpen && "translate-x-0",
-          rail && "lg:w-12 lg:hover:w-64 lg:hover:shadow-floating lg:absolute lg:inset-y-0 lg:top-0",
+          rail && "lg:absolute lg:inset-y-0 lg:w-12 lg:hover:w-60",
           className,
         )}
       >
         {children}
       </nav>
-      {rail && <div className="hidden w-12 shrink-0 lg:block" aria-hidden />}
+      {rail && <div className="hidden w-14 shrink-0 lg:block" aria-hidden />}
     </>
   )
 }
@@ -122,12 +126,13 @@ export function SideNavItem({ href, icon, active, children, onClick }: { href?: 
       onClick={onClick}
       aria-current={active ? "page" : undefined}
       className={cn(
-        "relative mx-2 flex h-control-md items-center gap-3 rounded-md px-2 text-body whitespace-nowrap text-muted-foreground duration-fast-02",
-        "hover:bg-hover hover:text-foreground focus-ring-inset",
-        active && "bg-selected font-medium text-selected-foreground",
+        // Finder row: compact, accent icon + label, soft grey highlight when selected.
+        "relative flex h-control-sm shrink-0 items-center gap-2 rounded-inner-2 px-2 text-body whitespace-nowrap text-foreground duration-fast-02",
+        "hover:bg-hover focus-ring-inset",
+        active && "bg-active font-medium",
       )}
     >
-      {icon && <Icon as={icon} />}
+      {icon && <Icon as={icon} className="text-primary" />}
       <span className="truncate group-data-[rail]/nav:lg:opacity-0 group-data-[rail]/nav:lg:group-hover/nav:opacity-100">{children}</span>
     </a>
   )
@@ -136,23 +141,42 @@ export function SideNavItem({ href, icon, active, children, onClick }: { href?: 
 export function SideNavMenu({ icon, title, defaultOpen, children }: { icon?: IconType; title: string; defaultOpen?: boolean; children: React.ReactNode }) {
   return (
     <Collapsible.Root defaultOpen={defaultOpen}>
-      <Collapsible.Trigger className="group mx-2 flex h-control-md w-[calc(100%-1rem)] items-center gap-3 rounded-md px-2 text-body text-muted-foreground hover:bg-hover hover:text-foreground focus-ring-inset">
-        {icon && <Icon as={icon} />}
+      <Collapsible.Trigger className="group flex h-control-sm w-full items-center gap-2 rounded-inner-2 px-2 text-body text-foreground hover:bg-hover focus-ring-inset">
+        {icon && <Icon as={icon} className="text-primary" />}
         <span className="flex-1 truncate text-left">{title}</span>
         <Icon as={ChevronDown} className=" duration-moderate-01 group-data-[state=open]:rotate-180" />
       </Collapsible.Trigger>
       <Collapsible.Content className="overflow-hidden data-[state=closed]:animate-collapse data-[state=open]:animate-expand">
-        <div className="flex flex-col py-0.5 [&>a]:pl-9">{children}</div>
+        <div className="flex flex-col py-0.5 [&>a]:pl-8">{children}</div>
       </Collapsible.Content>
     </Collapsible.Root>
   )
 }
 
-export function SideNavSection({ title, children }: { title?: string; children: React.ReactNode }) {
+/**
+ * SideNavSection — a Finder-style group: small muted header ("Favourites", "Locations") over its rows.
+ * `collapsible`: a disclosure chevron appears on hover at the header's end; the rows fold away (reveal, not snap).
+ */
+export function SideNavSection({ title, collapsible, defaultOpen = true, children }: { title?: string; collapsible?: boolean; defaultOpen?: boolean; children: React.ReactNode }) {
+  const [open, setOpen] = React.useState(defaultOpen)
+  const header = "flex h-6 w-full items-end justify-between px-2 pb-1 text-caption font-semibold text-muted-foreground group-data-[rail]/nav:lg:opacity-0 group-data-[rail]/nav:lg:group-hover/nav:opacity-100"
+  if (!collapsible) {
+    return (
+      <div className="flex flex-col gap-px pt-2 first:pt-0">
+        {title && <p className={header}>{title}</p>}
+        {children}
+      </div>
+    )
+  }
   return (
-    <div className="flex flex-col gap-0.5 py-2">
-      {title && <p className="px-4 pb-1 text-caption font-medium text-helper group-data-[rail]/nav:lg:opacity-0 group-data-[rail]/nav:lg:group-hover/nav:opacity-100">{title}</p>}
-      {children}
+    <div className="group/sec flex flex-col pt-2 first:pt-0">
+      <button type="button" aria-expanded={open} onClick={() => setOpen((o) => !o)} className={cn(header, "rounded-inner-2 text-left focus-ring-inset")}>
+        <span className="truncate">{title}</span>
+        <Icon as={ChevronDown} size="sm" className={cn("opacity-0 duration-moderate-01 group-hover/sec:opacity-100 group-focus-within/sec:opacity-100", !open && "-rotate-90")} />
+      </button>
+      <div className={cn("reveal motion-productive", open && "reveal-open")} inert={!open || undefined}>
+        <div className="flex flex-col gap-px">{children}</div>
+      </div>
     </div>
   )
 }
