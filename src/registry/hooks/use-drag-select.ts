@@ -2,14 +2,14 @@ import * as React from "react"
 
 /**
  * useDragSelect — hold and nudge to browse. Press on a segmented control (Tabs, ContentSwitcher), then just HINT a
- * direction: every ~20px of horizontal movement snaps to the next or previous item — no aiming at targets.
+ * direction: every ~40px of horizontal movement snaps to the next or previous item — no aiming at targets.
  * The selection indicator follows the pointer live (`offset`, damped) so movement and position always agree;
  * past the first/last item it rubber-bands. Mouse/pen only (on touch the row may scroll; a tap selects).
  *
  *   const drag = useDragSelect('[role="tab"]', (el) => activate(el), { activeSelector: '[data-state="active"]' })
  *   <div onPointerDown={drag.onPointerDown}>  … indicator: translateX(rect.x + drag.offset)
  */
-const STEP_PX = 20
+const STEP_PX = 40
 /** How much of the in-between movement the indicator shows (lean toward the next item). */
 const LEAN = 0.5
 /** Past the ends, the indicator gives a little, then resists. */
