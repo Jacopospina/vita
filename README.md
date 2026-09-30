@@ -45,7 +45,8 @@ pnpm check         # typecheck + lint + corpus-audit + tests
 The repo is private, so anyone with access installs straight from GitHub:
 
 ```bash
-npx github:jacopoenergy/corpus-design-system init
+pnpm dlx github:jacopoenergy/corpus-design-system init
+# or: npx github:jacopoenergy/corpus-design-system init   (if npm reports ECOMPROMISED, run `npm cache verify` first)
 ```
 
 `init` does the following:
