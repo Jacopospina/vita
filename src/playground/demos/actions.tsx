@@ -156,7 +156,7 @@ export const actionDemos: DemoMap = {
         <Stack gap="md">
           <Inline gap="lg" wrap>
             <Link href="#/components/link">Standalone link</Link>
-            <Link href="https://github.com/jacopoenergy/corpus" external>Corpus repository</Link>
+            <Link href="https://github.com/Jacopospina/corpus" external>Corpus repository</Link>
             <Link disabled>Disabled</Link>
             <Link size="sm" href="#/components/link">Small</Link>
             <Link size="lg" href="#/components/link">Large</Link>
@@ -209,7 +209,7 @@ export const actionDemos: DemoMap = {
       render: () => (
         <Stack gap="md">
           <Text>Install with <CodeSnippet type="inline">pnpm add radix-ui</CodeSnippet> then import.</Text>
-          <CodeSnippet>npx github:jacopoenergy/corpus init</CodeSnippet>
+          <CodeSnippet>npx github:Jacopospina/corpus init</CodeSnippet>
           <CodeSnippet type="multi">{`import { Button } from "@/components/corpus/button"\n\nexport function Save() {\n  return <Button>Save changes</Button>\n}`}</CodeSnippet>
         </Stack>
       ),

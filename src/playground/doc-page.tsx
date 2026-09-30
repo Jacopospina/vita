@@ -20,7 +20,7 @@ import { sourcesFor, tokensIn } from "./sources"
 import { TokensTable } from "./tokens-table"
 import { cn } from "@/registry/lib/utils"
 
-const REPO = "github:jacopoenergy/corpus"
+const REPO = "github:Jacopospina/corpus"
 
 function Stage({ demo, hero }: { demo: Demo; hero?: boolean }) {
   return (

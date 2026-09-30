@@ -2,11 +2,11 @@
 /**
  * corpus — install and keep Corpus in sync inside any React + Tailwind v4 repo.
  *
- *   npx github:jacopoenergy/corpus init        full install (components, styles, docs, skills, audit, hook, templates)
- *   npx github:jacopoenergy/corpus add button  add components (+ internal deps)
- *   npx github:jacopoenergy/corpus update      refresh system files; never touches theme.css or corpus/ (your product files)
- *   npx github:jacopoenergy/corpus audit       run the design-system audit
- *   npx github:jacopoenergy/corpus list        list components
+ *   npx github:Jacopospina/corpus init        full install (components, styles, docs, skills, audit, hook, templates)
+ *   npx github:Jacopospina/corpus add button  add components (+ internal deps)
+ *   npx github:Jacopospina/corpus update      refresh system files; never touches theme.css or corpus/ (your product files)
+ *   npx github:Jacopospina/corpus audit       run the design-system audit
+ *   npx github:Jacopospina/corpus list        list components
  *
  * Options: --dir src/components/corpus  --styles src/styles/corpus  --alias @/components/corpus  --no-skills  --no-hook  --yes
  */
@@ -165,7 +165,7 @@ function patchPackageJson() {
   const pkg = JSON.parse(fs.readFileSync(p, "utf8"))
   pkg.scripts ??= {}
   pkg.scripts["corpus:audit"] ??= "node .corpus/scripts/corpus-audit.mjs"
-  pkg.scripts["corpus:update"] ??= "npx github:jacopoenergy/corpus update"
+  pkg.scripts["corpus:update"] ??= "npx github:Jacopospina/corpus update"
   fs.writeFileSync(p, JSON.stringify(pkg, null, 2) + "\n")
   ok("package.json scripts: corpus:audit, corpus:update")
 }
