@@ -18,7 +18,7 @@ export function PageHeader({ breadcrumb, title, status, description, actions, ta
   className?: string
 }) {
   return (
-    <header className={cn("flex flex-col gap-3 border-b border-border-subtle bg-background px-4 pt-5 md:px-5", !tabs && "pb-5", className)}>
+    <header className={cn("flex flex-col gap-3 border-b border-border-subtle bg-background px-4 py-5 md:px-5", className)}>
       {breadcrumb && <Breadcrumb items={breadcrumb} />}
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="flex min-w-0 flex-col gap-1">
@@ -30,7 +30,7 @@ export function PageHeader({ breadcrumb, title, status, description, actions, ta
         </div>
         {actions && <div className="flex shrink-0 flex-wrap items-center gap-2">{actions}</div>}
       </div>
-      {tabs && <div className="-mb-px">{tabs}</div>}
+      {tabs && <div>{tabs}</div>}
     </header>
   )
 }
