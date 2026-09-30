@@ -1,0 +1,28 @@
+---
+title: Tile
+summary: A surface that groups related content. Base, clickable, selectable and expandable, and never nested.
+status: stable
+import: "import { Tile, ClickableTile, SelectableTile, ExpandableTile, TileGroup } from \"@/components/corpus/tile\""
+use_when:
+  - Base — grouping related info on a page (a metric, a summary)
+  - Clickable — a card that is one destination (a project, a feature area)
+  - Selectable — choosing among rich options (plans, templates) — single or multi
+  - Expandable — summary first, details on demand
+avoid_when:
+  - Tables of records → DataTable
+  - Wrapping every section in a card "to make it look designed" → use whitespace
+  - Tiles inside tiles → flatten the hierarchy
+related: [contained-list, radio-button, checkbox, accordion]
+---
+
+## Corpus opinions
+
+1. **Surfaces:**
+   - `Tile` sits on `layer-1` with no border.
+   - `elevated` (raised + border + shadow) is only for tiles floating over complex backgrounds.
+2. **A ClickableTile has one destination and no inner interactive elements.** Its arrow slides slightly on hover (productive motion).
+3. **Selectable tiles:**
+   - `single` uses radio semantics inside a `TileGroup`; `multi` uses checkbox semantics.
+   - The selected state is a primary border plus a `selected` background plus a check icon, never color alone.
+4. **Titles** use `headline`, descriptions `body muted`. At most one pictogram, at the top.
+5. **Grids of tiles** use `Grid gutter="narrow"`, or `condensed` for mosaic layouts.

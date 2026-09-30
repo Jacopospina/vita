@@ -1,0 +1,27 @@
+import { describe, it, expect, afterEach } from "vitest"
+import { render, cleanup } from "@testing-library/react"
+import { demos } from "@/playground/demos"
+import { manifest } from "@/playground/manifest"
+import { getDoc } from "@/playground/docs"
+import { TooltipProvider } from "@/registry/ui/tooltip"
+
+afterEach(cleanup)
+
+describe("every Corpus page is documented", () => {
+  for (const [section, entries] of Object.entries(manifest))
+    for (const e of entries)
+      it(`${section}/${e.slug} has docs with a summary`, () => {
+        const doc = getDoc(section, e.slug)
+        expect(doc, `docs/${section}/${e.slug}.md`).toBeTruthy()
+        expect(doc!.meta.summary).toBeTruthy()
+      })
+})
+
+describe("every demo renders", () => {
+  for (const [key, list] of Object.entries(demos))
+    for (const d of list)
+      it(`${key} — ${d.title}`, () => {
+        const { container } = render(<TooltipProvider>{d.render()}</TooltipProvider>)
+        expect(container.innerHTML.length).toBeGreaterThan(0)
+      })
+})

@@ -1,0 +1,39 @@
+/*
+ * CORPUS THEME KNOBS
+ * ------------------------------------------------------------------
+ * This is the ONLY file a team edits to personalise Corpus end to end.
+ * Every semantic token (colors, radii, control heights, type ramp,
+ * motion) is derived from these variables in tokens.css.
+ *
+ * Rules
+ *  - Change values here, never in components.
+ *  - Keep hues in degrees (0–360) and chroma in OKLCH units (0–0.37).
+ *  - Run the playground (`pnpm dev`) → "Theme" panel to tune live and copy the result.
+ */
+:root {
+  /* 1. COLOR ------------------------------------------------------ */
+  --corpus-brand-hue: 258;        /* primary/interactive hue          */
+  --corpus-brand-chroma: 0.2;     /* 0 = monochrome brand, 0.25 = vivid */
+  --corpus-neutral-hue: 258;      /* tint of greys (use brand hue for harmony) */
+  --corpus-neutral-chroma: 0.006; /* 0 = pure grey, 0.02 = clearly tinted */
+  --corpus-hue-success: 150;
+  --corpus-hue-warning: 75;
+  --corpus-hue-error: 25;
+  --corpus-hue-info: 245;
+
+  /* 2. SHAPE ------------------------------------------------------ */
+  --corpus-radius: 0.5rem;        /* 0 = square · 0.5rem = default · 0.75rem = soft */
+
+  /* 3. DENSITY ---------------------------------------------------- */
+  --corpus-density: 1;            /* 0.8 compact · 1 default · 1.2 comfortable/touch */
+
+  /* 4. TYPOGRAPHY ------------------------------------------------- */
+  --corpus-font-sans: "Inter Variable", system-ui, "Segoe UI", Roboto, sans-serif;
+  --corpus-font-display: var(--corpus-font-sans);
+  --corpus-font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --corpus-type-base: 0.875rem;   /* body size. 0.875rem (14px) product UI · 1rem (16px) content/marketing */
+  --corpus-type-ratio: 1.2;       /* modular scale. 1.125 tight · 1.2 default (balanced) · 1.25 expressive */
+
+  /* 5. MOTION ----------------------------------------------------- */
+  --corpus-motion-scale: 1;       /* multiplies every duration. 0 disables motion, 1.25 calmer */
+}

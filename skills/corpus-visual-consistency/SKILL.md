@@ -1,0 +1,66 @@
+---
+name: corpus-visual-consistency
+description: Make any Corpus screen look like it was designed by the same person as every other screen — hierarchy, spacing rhythm, alignment, surfaces, color restraint, typography roles, density. Use when building or polishing a screen, when asked to "make it look better/cleaner/more consistent", or when reviewing UI visually.
+---
+
+# Corpus visual consistency
+
+Consistency comes from rules, not taste. Run this checklist on every screen, top to bottom. Every "no" gets fixed with a Corpus token or component, never a one-off.
+
+## 1. Hierarchy (squint test)
+
+- [ ] The most important thing is found first. Exactly **one** `title-1` (via `PageHeader`) and **one** primary button in view.
+- [ ] Heading levels step down one at a time: `title-1` → `title-2` sections → `title-3` subsections → `headline` groups.
+- [ ] Hierarchy comes from size, weight and position. Color is not used to rank things.
+- [ ] At most two text colors per region: `text-foreground` + `text-muted-foreground`. `text-helper` only for helper text and metadata.
+
+## 2. Rhythm & spacing
+
+- [ ] Gaps inside groups are smaller than gaps between groups: related `xs`, siblings `md`/`lg`, sections `xl`/`2xl`.
+- [ ] Form fields are 24px apart (`Form` handles this). Sections are 32–48px apart.
+- [ ] Container padding is consistent: tiles `p-4` (compact) or `p-6` (roomy), never mixed on one screen.
+- [ ] Every value is on the scale (the audit enforces this).
+
+## 3. Alignment
+
+- [ ] Everything aligns to the grid's left edge. There are no centred body text or forms in product UI (empty states and login are the exceptions).
+- [ ] Numbers are right-aligned with `tabular-nums` in tables and metrics.
+- [ ] Icons are optically aligned with their text (Corpus components handle this; don't nudge with margins).
+
+## 4. Surfaces & depth
+
+- [ ] One surface step per nesting: `background` → `layer-1` → `layer-2`. No card inside a card.
+- [ ] Borders are used sparingly: whitespace first, `border-border-subtle` second, `border` for fields only.
+- [ ] Only floating layers have shadows (`shadow-floating` / `shadow-overlay`).
+- [ ] Radius nests: the outer radius is bigger than the inner radius (`rounded-lg` tile with `rounded-md` controls inside).
+
+## 5. Color restraint
+
+- [ ] The screen is about 90% neutral. Brand color only marks "you can act here" (primary, links, selection, focus).
+- [ ] Status colors appear only for status, always with an icon and text.
+- [ ] The AI gradient appears only on AI-generated content.
+
+## 6. Components used the same way everywhere
+
+- [ ] The same action has the same label, icon and position as on other screens (`corpus/taxonomy.json → actions`).
+- [ ] Controls in a row share one size (`sm`/`md`/`lg`), matching density.
+- [ ] Icons come from the Corpus set, at sizes `sm` (inline) or `md` (standalone), and are the same icon for the same concept.
+
+## 7. States are designed, not forgotten
+
+For every data region, confirm it has:
+
+- **Loading:** a skeleton.
+- **Empty:** an `EmptyState` of the right kind.
+- **Error:** an inline error or error empty state, with retry.
+- **Overflow:** truncation rules applied.
+
+Also check disabled and read-only states per their patterns, dark mode and 200% zoom.
+
+## Output
+
+When asked to polish, return:
+
+1. The checklist items that failed.
+2. The exact Corpus-native change for each.
+3. The code.

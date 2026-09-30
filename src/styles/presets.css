@@ -1,0 +1,31 @@
+/*
+ * Optional presets. Apply with <html data-corpus-preset="square|soft|mono">.
+ * They only override knobs from theme.css — proof that the whole system
+ * re-skins from a handful of variables.
+ */
+[data-corpus-preset="square"] {
+  --corpus-brand-hue: 262;
+  --corpus-brand-chroma: 0.22;
+  --corpus-neutral-chroma: 0;
+  --corpus-radius: 0rem;
+  --corpus-font-sans: "Helvetica Neue", Arial, sans-serif;
+  --corpus-type-ratio: 1.2;
+}
+
+[data-corpus-preset="soft"] {
+  --corpus-brand-hue: 250;
+  --corpus-brand-chroma: 0.19;
+  --corpus-neutral-chroma: 0.004;
+  --corpus-radius: 0.75rem;
+  --corpus-density: 1.1;
+  --corpus-font-sans: system-ui, "Inter Variable", sans-serif;
+  --corpus-type-base: 0.9375rem;
+}
+
+[data-corpus-preset="mono"] {
+  --corpus-brand-hue: 285;
+  --corpus-brand-chroma: 0.02;
+  --corpus-neutral-chroma: 0;
+  --corpus-radius: 0.625rem;
+  --corpus-density: 0.9;
+}

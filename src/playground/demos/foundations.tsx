@@ -1,0 +1,324 @@
+import * as React from "react"
+import * as Icons from "@/registry/icons"
+import { Cloud, Database, Security, Rocket, Analytics, Collaboration, Idea, Magnify, Upload_01, Conversation } from "@/registry/pictograms"
+import type { DemoMap } from "./types"
+import { Stack, Inline, Grid, Column } from "@/registry/ui/layout"
+import { Text, Heading } from "@/registry/ui/text"
+import { Icon } from "@/registry/ui/icon"
+import { Pictogram } from "@/registry/ui/pictogram"
+import { Button } from "@/registry/ui/button"
+import { Tile } from "@/registry/ui/tile"
+import { Tag } from "@/registry/ui/tag"
+import { TextInput } from "@/registry/ui/text-input"
+import { StructuredList } from "@/registry/ui/structured-list"
+import { ContentSwitcher } from "@/registry/ui/content-switcher"
+import { cn } from "@/registry/lib/utils"
+
+/* Token swatches are rendered with Tailwind token classes only (no raw values). */
+const colorGroups: { title: string; tokens: { name: string; cls: string; fg?: string }[] }[] = [
+  {
+    title: "Surfaces",
+    tokens: [
+      { name: "background", cls: "bg-background" },
+      { name: "layer-1", cls: "bg-layer-1" },
+      { name: "layer-2", cls: "bg-layer-2" },
+      { name: "layer-3", cls: "bg-layer-3" },
+      { name: "raised", cls: "bg-raised shadow-raised" },
+      { name: "field", cls: "bg-field" },
+      { name: "inverse", cls: "bg-inverse", fg: "text-inverse-foreground" },
+    ],
+  },
+  {
+    title: "Text",
+    tokens: [
+      { name: "foreground", cls: "bg-foreground", fg: "text-background" },
+      { name: "muted-foreground", cls: "bg-muted-foreground", fg: "text-background" },
+      { name: "helper", cls: "bg-helper", fg: "text-background" },
+      { name: "placeholder", cls: "bg-placeholder", fg: "text-background" },
+      { name: "disabled-foreground", cls: "bg-disabled-foreground" },
+    ],
+  },
+  {
+    title: "Interactive",
+    tokens: [
+      { name: "primary", cls: "bg-primary", fg: "text-primary-foreground" },
+      { name: "primary-hover", cls: "bg-primary-hover", fg: "text-primary-foreground" },
+      { name: "primary-active", cls: "bg-primary-active", fg: "text-primary-foreground" },
+      { name: "primary-subtle", cls: "bg-primary-subtle", fg: "text-selected-foreground" },
+      { name: "secondary", cls: "bg-secondary" },
+      { name: "link", cls: "bg-link", fg: "text-primary-foreground" },
+      { name: "focus", cls: "bg-focus", fg: "text-focus-inset" },
+    ],
+  },
+  {
+    title: "Support",
+    tokens: [
+      { name: "success", cls: "bg-success", fg: "text-primary-foreground" },
+      { name: "success-subtle", cls: "bg-success-subtle", fg: "text-success-foreground" },
+      { name: "warning", cls: "bg-warning", fg: "text-foreground" },
+      { name: "warning-subtle", cls: "bg-warning-subtle", fg: "text-warning-foreground" },
+      { name: "error", cls: "bg-error", fg: "text-primary-foreground" },
+      { name: "error-subtle", cls: "bg-error-subtle", fg: "text-error-foreground" },
+      { name: "info", cls: "bg-info", fg: "text-primary-foreground" },
+      { name: "info-subtle", cls: "bg-info-subtle", fg: "text-info-foreground" },
+    ],
+  },
+  {
+    title: "Lines",
+    tokens: [
+      { name: "border-subtle", cls: "bg-border-subtle" },
+      { name: "border", cls: "bg-border" },
+      { name: "border-field", cls: "bg-border-field", fg: "text-background" },
+      { name: "border-strong", cls: "bg-border-strong", fg: "text-background" },
+    ],
+  },
+]
+
+const typeRoles = [
+  ["display", "Display", "Marketing hero only"],
+  ["large-title", "Large title", "Top-level page title in content apps"],
+  ["title-1", "Title 1", "Page title"],
+  ["title-2", "Title 2", "Section heading"],
+  ["title-3", "Title 3", "Subsection, modal & card titles"],
+  ["headline", "Headline", "Group labels, emphasised rows"],
+  ["body-lg", "Body large", "Long-form reading"],
+  ["body", "Body", "Default UI text"],
+  ["footnote", "Footnote", "Labels, secondary info"],
+  ["caption", "Caption", "Helper text, metadata, timestamps"],
+] as const
+
+const spacing = [
+  ["3xs", "0.5", 2], ["2xs", "1", 4], ["xs", "2", 8], ["sm", "3", 12], ["md", "4", 16], ["lg", "6", 24],
+  ["xl", "8", 32], ["2xl", "10", 40], ["3xl", "12", 48], ["4xl", "16", 64], ["5xl", "20", 80], ["6xl", "24", 96], ["7xl", "40", 160],
+] as const
+const spacingW: Record<string, string> = { "0.5": "w-0.5", "1": "w-1", "2": "w-2", "3": "w-3", "4": "w-4", "6": "w-6", "8": "w-8", "10": "w-10", "12": "w-12", "16": "w-16", "20": "w-20", "24": "w-24", "40": "w-40" }
+
+function MotionDemo() {
+  const [on, setOn] = React.useState(false)
+  const easings = [
+    ["ease-productive", "Productive standard"],
+    ["ease-productive-enter", "Productive entrance"],
+    ["ease-productive-exit", "Productive exit"],
+    ["ease-expressive", "Expressive standard"],
+    ["ease-expressive-enter", "Expressive entrance"],
+    ["ease-spring", "Spring"],
+  ] as const
+  const durations = ["duration-fast-01", "duration-fast-02", "duration-moderate-01", "duration-moderate-02", "duration-slow-01", "duration-slow-02"] as const
+  return (
+    <Stack gap="lg">
+      <Inline><Button onClick={() => setOn((o) => !o)}>Play motion</Button><Text tone="muted">Respects prefers-reduced-motion and the motion-scale knob.</Text></Inline>
+      <Stack gap="sm">
+        <Text variant="headline">Easing (duration-moderate-02)</Text>
+        {easings.map(([cls, label]) => (
+          <div key={cls} className="relative h-8 rounded-md bg-layer-1">
+            <div className={cn("absolute top-1 left-1 size-6 rounded-sm bg-primary transition-transform duration-moderate-02", cls, on && "translate-x-64")} />
+            <Text variant="caption" tone="muted" className="absolute top-2 right-2">{label}</Text>
+          </div>
+        ))}
+      </Stack>
+      <Stack gap="sm">
+        <Text variant="headline">Duration (ease-productive)</Text>
+        {durations.map((d) => (
+          <div key={d} className="relative h-8 rounded-md bg-layer-1">
+            <div className={cn("absolute top-1 left-1 size-6 rounded-sm bg-primary transition-transform ease-productive", d, on && "translate-x-64")} />
+            <Text variant="caption" tone="muted" className="absolute top-2 right-2 font-mono">{d}</Text>
+          </div>
+        ))}
+      </Stack>
+    </Stack>
+  )
+}
+
+function IconGallery() {
+  const [size, setSize] = React.useState<"sm" | "md" | "lg" | "xl">("md")
+  const names = ["Add", "Edit", "TrashCan", "Download", "Upload", "Search", "Filter", "Settings", "User", "Notification", "Information", "WarningAlt", "CheckmarkOutline", "Close", "ChevronDown", "ArrowRight", "Launch", "Copy", "Share", "Calendar", "Time", "Document", "Folder", "Home", "Chat", "Email", "Star", "Favorite", "View", "Locked", "Renew", "OverflowMenuVertical"] as const
+  return (
+    <Stack gap="md">
+      <ContentSwitcher label="Icon size" value={size} onValueChange={(v) => setSize(v as typeof size)} items={[{ value: "sm", label: "16 · sm" }, { value: "md", label: "20 · md" }, { value: "lg", label: "24 · lg" }, { value: "xl", label: "32 · xl" }]} />
+      <div className="grid grid-cols-4 gap-px overflow-hidden rounded-md bg-border-subtle sm:grid-cols-8">
+        {names.map((n) => (
+          <div key={n} className="flex flex-col items-center gap-2 bg-background p-4">
+            <Icon as={(Icons as unknown as Record<string, Icons.IconType>)[n]} size={size} />
+            <Text variant="caption" tone="muted" truncate className="max-w-full">{n}</Text>
+          </div>
+        ))}
+      </div>
+    </Stack>
+  )
+}
+
+export const foundationDemos: DemoMap = {
+  "foundations/theming": [
+    {
+      title: "Live theming",
+      description: "Open the palette icon in the header. Every component on every page re-renders from ~10 knobs.",
+      render: () => (
+        <Stack gap="md">
+          <Inline wrap><Button>Primary</Button><Button variant="secondary">Secondary</Button><Button variant="tertiary">Tertiary</Button><Tag tone="brand">Brand</Tag><Tag tone="success">Active</Tag></Inline>
+          <TextInput label="Project name" placeholder="e.g. Q3 forecast" helperText="Density, radius and type scale all come from theme.css" />
+        </Stack>
+      ),
+    },
+  ],
+  "foundations/color": colorGroups.map((g) => ({
+    title: g.title,
+    render: () => (
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        {g.tokens.map((t) => (
+          <div key={t.name} className="flex flex-col gap-1">
+            <div className={cn("flex h-16 items-end rounded-md border border-border-subtle p-2", t.cls)}>
+              <Text variant="caption" tone="inherit" className={t.fg ?? "text-foreground"}>Aa</Text>
+            </div>
+            <Text variant="caption" className="font-mono">{t.name}</Text>
+          </div>
+        ))}
+      </div>
+    ),
+  })),
+  "foundations/typography": [
+    {
+      title: "Type ramp",
+      description: "base × ratio^n. With base 14px and ratio 1.2 the ramp lands on 12 · 14 · 17 · 20 · 24 · 29 · 35.",
+      render: () => (
+        <Stack gap="md">
+          {typeRoles.map(([v, name, use]) => (
+            <div key={v} className="grid grid-cols-1 items-baseline gap-2 border-b border-border-subtle pb-3 md:grid-cols-4">
+              <Stack gap="3xs"><Text variant="footnote" weight="medium">{name}</Text><Text variant="caption" tone="helper" className="font-mono">text-{v}</Text></Stack>
+              <Text variant={v} className="md:col-span-2" truncate>The quick brown fox</Text>
+              <Text variant="caption" tone="muted">{use}</Text>
+            </div>
+          ))}
+        </Stack>
+      ),
+    },
+    {
+      title: "Semantic headings",
+      render: () => (
+        <Stack gap="xs">
+          <Heading level={1}>Heading level 1 · page</Heading>
+          <Heading level={2}>Heading level 2 · section</Heading>
+          <Heading level={3}>Heading level 3 · subsection</Heading>
+          <Heading level={4}>Heading level 4 · group</Heading>
+          <Text>Body copy follows headings with the default rhythm. Keep lines between 45 and 75 characters for comfortable reading.</Text>
+        </Stack>
+      ),
+    },
+  ],
+  "foundations/spacing": [
+    {
+      title: "Spacing scale",
+      description: "The 2px-based scale. Only these steps are allowed; the audit rejects every other step.",
+      render: () => (
+        <Stack gap="xs">
+          {spacing.map(([name, tw, px]) => (
+            <div key={name} className="grid grid-cols-4 items-center gap-4">
+              <Text variant="footnote" className="font-mono">{name}</Text>
+              <Text variant="footnote" tone="muted" className="font-mono">*-{tw}</Text>
+              <Text variant="footnote" tone="muted" className="tabular-nums">{px}px</Text>
+              <div className={cn("h-4 rounded-sm bg-primary", spacingW[tw])} />
+            </div>
+          ))}
+        </Stack>
+      ),
+    },
+    {
+      title: "Radius & elevation",
+      render: () => (
+        <Inline gap="lg" wrap align="end">
+          {(["rounded-sm", "rounded-md", "rounded-lg", "rounded-xl", "rounded-full"] as const).map((r) => (
+            <Stack key={r} gap="xs" align="center"><div className={cn("size-16 border border-border bg-layer-2", r)} /><Text variant="caption" className="font-mono">{r}</Text></Stack>
+          ))}
+          {(["shadow-raised", "shadow-floating", "shadow-overlay"] as const).map((s) => (
+            <Stack key={s} gap="xs" align="center"><div className={cn("size-16 rounded-md bg-raised", s)} /><Text variant="caption" className="font-mono">{s}</Text></Stack>
+          ))}
+        </Inline>
+      ),
+    },
+    {
+      title: "Density-driven control sizes",
+      render: () => (
+        <Inline gap="sm" align="end" wrap>
+          {(["h-control-xs", "h-control-sm", "h-control-md", "h-control-lg", "h-control-xl"] as const).map((h) => (
+            <Stack key={h} gap="xs" align="center"><div className={cn("w-16 rounded-sm bg-primary-subtle", h)} /><Text variant="caption" className="font-mono">{h.replace("h-", "")}</Text></Stack>
+          ))}
+        </Inline>
+      ),
+    },
+  ],
+  "foundations/grid": [
+    {
+      title: "2x Grid — 16 columns",
+      description: "16 columns at lg, 8 at md, 4 at sm. Resize the window.",
+      render: () => (
+        <Stack gap="md">
+          <Grid gutter="narrow" rowGap="md">
+            {Array.from({ length: 16 }).map((_, i) => (
+              <Column key={i} sm={1} md={1} lg={1}><div className="h-12 rounded-sm bg-primary-subtle" /></Column>
+            ))}
+          </Grid>
+          <Grid gutter="narrow">
+            <Column sm={4} md={8} lg={4}><Tile className="h-24">lg 4 · sidebar</Tile></Column>
+            <Column sm={4} md={8} lg={12}><Tile className="h-24">lg 12 · content</Tile></Column>
+          </Grid>
+          <Grid gutter="condensed" className="overflow-hidden rounded-lg">
+            {[1, 2, 3, 4].map((i) => <Column key={i} sm={4} md={4} lg={4}><Tile className="h-24 rounded-none">Condensed tile {i}</Tile></Column>)}
+          </Grid>
+        </Stack>
+      ),
+    },
+  ],
+  "foundations/motion": [{ title: "Easing & duration tokens", render: () => <MotionDemo /> }],
+  "foundations/icons": [{ title: "Icons via <Icon />", render: () => <IconGallery /> }],
+  "foundations/pictograms": [
+    {
+      title: "Pictograms via <Pictogram />",
+      render: () => (
+        <Stack gap="lg">
+          <Inline gap="xl" wrap>
+            {[Cloud, Database, Security, Rocket, Analytics, Collaboration, Idea, Magnify, Upload_01, Conversation].map((P, i) => <Pictogram key={i} as={P} size="lg" />)}
+          </Inline>
+          <Inline gap="xl" align="end"><Pictogram as={Rocket} size="md" /><Pictogram as={Rocket} size="lg" /><Pictogram as={Rocket} size="xl" /><Pictogram as={Rocket} size="xl" tone="neutral" /></Inline>
+        </Stack>
+      ),
+    },
+  ],
+  "foundations/accessibility": [
+    {
+      title: "Focus is always visible",
+      description: "Press Tab. One focus treatment across the system: 2px focus ring.",
+      render: () => (
+        <Inline wrap><Button>Primary</Button><Button variant="ghost">Ghost</Button><TextInput label="Field" hideLabel placeholder="Tab into me" className="w-48" /></Inline>
+      ),
+    },
+    {
+      title: "Never color alone",
+      render: () => (
+        <Inline wrap gap="sm">
+          <Tag tone="success" icon={Icons.CheckmarkFilled}>Healthy</Tag>
+          <Tag tone="warning" icon={Icons.WarningAltFilled}>Degraded</Tag>
+          <Tag tone="error" icon={Icons.ErrorFilled}>Down</Tag>
+        </Inline>
+      ),
+    },
+  ],
+  "foundations/content": [
+    {
+      title: "Taxonomy in action",
+      description: "Same screen, two personas. The taxonomy file decides the words; components never hard-code them.",
+      render: () => (
+        <StructuredList
+          label="Taxonomy example"
+          columns={["Concept", "Operator persona", "Executive persona", "Never say"]}
+          rows={[
+            { id: "1", cells: ["Delete an item", "Delete", "Remove", "Nuke, Kill, Erase"] },
+            { id: "2", cells: ["A saved query", "Saved filter", "View", "Preset, Template"] },
+            { id: "3", cells: ["Customer", "Account", "Client", "User, Tenant"] },
+            { id: "4", cells: ["Primary CTA to begin", "Create quote", "Start a quote", "Submit, OK, Go"] },
+          ]}
+        />
+      ),
+    },
+  ],
+}
+
+export { Icon }

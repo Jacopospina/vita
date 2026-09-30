@@ -1,0 +1,221 @@
+# Corpus design system
+
+> Corpus is the body of the product: the only source of UI. Components are imported from @/components/corpus/*, tokens are Tailwind utilities, patterns are documented flows. Never create local components or raw values.
+
+Start with: docs/components/choosing-components.md (decision guide) · docs/foundations/principles.md · skills/corpus-design-system/SKILL.md
+
+## Foundations
+
+- [Corpus](docs/foundations/about.md): The body of every product we build — the visible form through which its mind and soul reach the world.
+- [Accessibility](docs/foundations/accessibility.md): WCAG 2.2 AA is the floor. Corpus components are accessible by default, and composition is where teams break it.
+  - use: Always
+  - avoid: Never "add accessibility later"
+- [Color](docs/foundations/color.md): Semantic tokens only. Color communicates interactivity, status and hierarchy; it never decorates.
+  - use: Coloring anything, via semantic utilities (bg-layer-1, text-muted-foreground, border-border-subtle)
+  - avoid: Palette colors (bg-blue-500) → they don't exist in Corpus; Hex/rgb/oklch literals in product code → forbidden; Color as the only carrier of meaning → pair it with an icon and text
+- [Content, personas & taxonomy](docs/foundations/content.md): Words are part of the design system. Personas define who we speak to; the taxonomy fixes the words; the corpus-content skill enforces them.
+  - use: Writing any user-visible string: labels, buttons, errors, empty states, emails, AI responses; Starting a new product or flow (create personas first)
+  - avoid: Inventing a term that isn't in the taxonomy → add it to the taxonomy first; Writing copy before knowing the persona
+- [Grid & layout](docs/foundations/grid.md): A 16-column grid for page structure, stacks for everything inside it.
+  - use: Laying out a page or region (Grid + Column); Arranging elements vertically (Stack) or horizontally (Inline)
+  - avoid: Hand-written flex/grid divs with custom gaps → use Stack/Inline/Grid; Absolute positioning for layout → only for overlays, badges and icons inside controls
+- [Icons](docs/foundations/icons.md): One icon set through one Icon component, at four sizes. An icon supports a label; it rarely replaces one.
+  - use: Reinforcing an action or a status label; Icon-only controls with universally understood meaning (close, search, menu, overflow), always with a tooltip
+  - avoid: Other icon libraries (lucide, heroicons, material) → forbidden; Decorating headings or list items for visual interest; Large illustrative use → Pictogram
+- [Motion](docs/foundations/motion.md): Productive and expressive tokens with physical, spring-like feel. Motion explains change; it never decorates.
+  - use: Showing a change of state, a spatial relationship, or feedback to an action
+  - avoid: Decorative loops, parallax, bouncing attention-seekers; Raw durations or cubic-beziers (duration-300, ease-[...]) → use tokens; Animating layout properties (width/height/top) on large surfaces → use transform/opacity
+- [Pictograms](docs/foundations/pictograms.md): Large pictograms for empty states, onboarding and feature tiles. Never as controls.
+  - use: Empty states (first use, no results, error); Onboarding and feature explanations; Large clickable tiles that introduce a product area
+  - avoid: Buttons, navigation, table cells, anything under 48px → Icon; Decorating every section of a page → one pictogram per view at most
+- [Design principles](docs/foundations/principles.md): Seven rules every Corpus screen obeys. When two rules conflict, the higher one wins.
+- [Spacing](docs/foundations/spacing.md): One scale (2px-based), density-aware control sizes, and a hard ban on off-scale values.
+  - use: Any padding, margin or gap
+  - avoid: Arbitrary values like p-[13px] → forbidden; Off-scale steps (p-5, gap-7, m-9, p-11) → the audit rejects them
+- [Theming & personalisation](docs/foundations/theming.md): Change about ten variables in one file and the whole system re-skins: color, shape, density, type and motion.
+  - use: Adapting Corpus to a new brand or product; Making a denser admin tool or a calmer consumer app
+  - avoid: Tweaking a single component (never) → change the knob, or propose a new variant upstream; Adding a one-off color → add a semantic token to tokens.css via a design-system PR
+- [Typography](docs/foundations/typography.md): Ten typographic roles, generated from one base size and one ratio.
+  - use: Any text: pick the ROLE (title-2, body, caption), not a size
+  - avoid: Tailwind sizes (text-sm, text-2xl) → they don't exist in Corpus; Changing font-size to create emphasis inside a paragraph → use font-medium/semibold
+
+## Components
+
+- [Accordion](docs/components/accordion.md): A vertical stack of headers that each reveal a section. Progressive disclosure for content users scan by title.
+  - use: FAQs, help content, long settings grouped by topic; Filter panels with many facets; Mobile layouts where sections would otherwise make the page very long
+  - avoid: One section → Disclosure or ExpandableTile; Content most users need → show it; Peer views of an object → Tabs; Sequential steps → ProgressIndicator
+- [AI label](docs/components/ai-label.md): Marks anything generated, suggested or autofilled by AI, and explains how, in one click.
+  - use: A field value, cell, tile or message was produced or changed by AI; An AI-powered feature needs a visible, explainable marker
+  - avoid: Branding or marketing flair → the AI gradient is reserved for AI provenance; Content that a human reviewed and edited → remove the label once a human takes ownership, or show "Edited"
+- [Breadcrumb](docs/components/breadcrumb.md): Shows where the user is in a hierarchy of three or more levels and lets them move up.
+  - use: Pages nested ≥ 3 levels deep (Workspace / Projects / Q3 forecast); Detail pages reached from a list, where "up" is meaningful
+  - avoid: Flat products (≤ 2 levels) → the side nav already tells users where they are; Showing history ("back") → browser back / explicit Back button in flows; Steps in a process → ProgressIndicator
+- [Button](docs/components/button.md): Triggers an action. Clear hierarchy, strict restraint. One primary per view, and every other button steps down.
+  - use: The user performs an action (save, create, send, delete, open a modal); Grouping the actions that end a form, modal or flow (ButtonSet)
+  - avoid: Navigating to another page → Link (or ClickableTile); Choosing a value → Dropdown / RadioGroup / ContentSwitcher; Several related actions under one label → MenuButton; Toggling a setting → Toggle
+- [Checkbox](docs/components/checkbox.md): Independent choices that take effect on submit, and multi-selection from a short list.
+  - use: Selecting any number of options from ≤ 6 (CheckboxGroup); A single opt-in inside a form (agree to terms, subscribe); Selecting rows in a table (handled by DataTable)
+  - avoid: The change applies immediately → Toggle; Exactly one choice → RadioGroup; More than ~6 options → MultiSelect
+- [Choosing a component](docs/components/choosing-components.md): The decision guide. Agents read this BEFORE picking any component. Start from the user's intent, not from the component you remember.
+- [Code snippet](docs/components/code-snippet.md): Code, commands and identifiers the user will copy. Copying is one click, with instant feedback.
+  - use: Showing commands, API keys, IDs, config the user must copy; Displaying code samples in docs/onboarding
+  - avoid: Displaying non-copyable monospace data in tables → Text variant="code"; Secrets that should be hidden by default → PasswordInput-style reveal + copy
+- [Contained list](docs/components/contained-list.md): A titled list of similar items, each a row with an optional action.
+  - use: Members, connected apps, recent files, settings groups; Rows that each open something or have one trailing action; Lists inside panels and popovers (kind="disclosed")
+  - avoid: Multi-attribute records to sort/compare → DataTable; Plain bullet points → List; Hierarchies → TreeView
+- [Content switcher](docs/components/content-switcher.md): A segmented control. Switch between alternate presentations of the same content. One segment is always selected.
+  - use: Changing how the same data is shown (List | Grid, Chart | Table); Changing the granularity of one dataset (Day | Week | Month); A mode with 2–5 mutually exclusive, equally weighted options that applies instantly
+  - avoid: The panels contain different content → Tabs; It's a form value submitted later → RadioGroup; More than 5 options → Dropdown; Binary on/off → Toggle
+- [Data table](docs/components/data-table.md): View, compare, sort, select and act on many uniform records. The workhorse of product UI.
+  - use: Many records with the same attributes (> ~5 rows or any sorting/selecting need); Users compare values across rows or act on several rows at once
+  - avoid: Few rows of key/value details → StructuredList; Heterogeneous items with one action each → ContainedList; Visual browsing → Tile grid; One column → it's a list
+- [Date picker](docs/components/date-picker.md): Dates by typing first, with a calendar when it helps. Simple, single and range.
+  - use: simple — known dates far from today (birthday, contract start years ago): typing is fastest; single — near-future scheduling where weekday context matters (pickup, deadline); range — periods (reporting range, booking)
+  - avoid: Relative ranges ("Last 7 days") → Dropdown of presets (optionally + custom range); Time only → TextInput with time type
+- [Dropdown](docs/components/dropdown.md): Custom listbox for choosing values. Dropdown (one), Combobox (one, filterable) and MultiSelect (many).
+  - use: Dropdown — one of 7–20 options, options need descriptions/icons, or consistent styling in app chrome; Combobox — one of 20+ options where users know what to type (customer, country, carrier); MultiSelect — several of more than 6 options (markets, tags, assignees); Inline type — compact "Sort by: Newest ▾" in toolbars
+  - avoid: 2–6 options → RadioGroup (or ContentSwitcher for views); Actions → Menu / MenuButton (dropdowns choose values; menus do things); Plain long lists in mobile forms → Select
+- [File uploader](docs/components/file-uploader.md): Attach files by browsing or dropping, with per-file status and errors that explain the fix.
+  - use: dropzone — uploading is the main task of the view (import, document collection); button — attaching as one field among others in a form
+  - avoid: Importing structured data with mapping → a dedicated import flow (pattern), with FileUploader as step 1
+- [Form](docs/components/form.md): The structural pieces of every form. Form, FormGroup, FormRow, FormActions, FluidForm and the FieldShell wiring every input uses.
+  - use: Any time the user enters data that is submitted together
+  - avoid: Single instant settings → Toggle rows, no form wrapper needed; Inline edits of one value → read-only-states pattern (view → edit)
+- [Inline loading](docs/components/inline-loading.md): The status of one operation, in place — "Saving…" → "Saved" → gone.
+  - use: Auto-save and background save feedback next to the thing being saved; An action whose result appears in place (toggle persisted, row updated)
+  - avoid: Blocking actions → Button loading; Page/region loads → Skeleton / Loading
+- [Link](docs/components/link.md): Navigation to another page, section or resource. If it changes data, it's a Button.
+  - use: Navigating to another page or anchor; Referencing a resource inside running text; Opening external documentation (external)
+  - avoid: Performing an action (save, delete, open modal) → Button (ghost if it must look light); A whole card is the destination → ClickableTile; Going up a hierarchy → Breadcrumb
+- [List](docs/components/list.md): Typographic lists inside content — bullets and numbered steps. Not interactive.
+  - use: Unordered — sets of related points in content; Ordered — sequential instructions where order matters
+  - avoid: Interactive rows → ContainedList; Records → DataTable / StructuredList
+- [Loading](docs/components/loading.md): Spinner, overlay and skeletons. Pick by scope and duration; prefer skeletons whenever the layout is known.
+  - use: Skeleton — content with a known shape is on its way (cards, tables, profile); Loading — a region/page with unknown layout is loading; Loading overlay — interaction must be blocked while a region recomputes
+  - avoid: A single action → Button loading / InlineLoading; Measurable progress → ProgressBar; Anything under 300ms → show nothing
+- [Menu buttons](docs/components/menu-buttons.md): Three buttons that open menus. MenuButton groups actions, ComboButton adds alternatives to a default action, OverflowMenu hides secondary actions.
+  - use: MenuButton — several equally important related actions under one label ("Export ▾", "Create ▾"); ComboButton — one dominant action plus variations ("Save" | "Save as…", "Save as template"); OverflowMenu — secondary actions on a row, tile, card or page header (⋮)
+  - avoid: Selecting a value → Dropdown; A single action → Button; Primary page actions hidden in an overflow → keep the primary visible
+- [Menu](docs/components/menu.md): A temporary list of actions, opened from a trigger or right-click. Menus hold verbs, not values and not destinations.
+  - use: Offering 3–10 actions without taking permanent space; View options that toggle (show grid, compact rows) via MenuCheckboxItem; Power-user shortcuts via right-click (ContextMenu), always duplicated elsewhere
+  - avoid: Choosing a form value → Dropdown / Select; Navigation → Side nav, Tabs, Links; 1–2 actions → show them as buttons; More than ~10 items or deep nesting → rethink the IA
+- [Modal](docs/components/modal.md): Interrupts to focus on one task or decision. Modality is a last resort.
+  - use: Confirming a destructive or irreversible action (ConfirmModal danger); A short, self-contained task (≤ 5 fields) that shouldn't leave the page; Critical information that must be acknowledged
+  - avoid: The user needs to see the page while working → RightPanel; A couple of options next to a control → Popover; Long forms or multi-step flows → a page; Success messages → toast; Opening a modal from a modal → never
+- [Notification](docs/components/notification.md): System messages. Inline for problems tied to a place, toast for confirmation of a user action, callout for static guidance.
+  - use: Inline — errors/warnings about a section, form summary, account-level issues; Toast — brief confirmation of something the user just did (with optional Undo); Callout — permanent, non-dismissible contextual guidance
+  - avoid: A decision is required before continuing → Modal; Field-level validation → the field's invalidText; Errors inside a toast that need action → InlineNotification near the cause; Marketing/announcements → not a system notification
+- [Number input](docs/components/number-input.md): Precise numeric entry with steppers, bounds and units.
+  - use: Exact quantities with small adjustments (pallets, seats, percentage, weight); Values with min/max bounds the user must respect
+  - avoid: Approximate values where feel matters → Slider; Identifiers that happen to be digits (phone, postcode, ID) → TextInput inputMode="numeric"; Large free-form amounts (currency) → TextInput with inputMode="decimal" and formatting
+- [Pagination](docs/components/pagination.md): Split large datasets into pages, with page-size control and an honest item count.
+  - use: Tables and lists with more items than fit comfortably (> 25–50); Users need to reference positions ("it was on page 3") or know the total
+  - avoid: Feeds or activity streams users scroll through → "Load more" / infinite loading; Fewer items than one page → no pagination
+- [Popover](docs/components/popover.md): A non-modal layer anchored to a trigger, opened by click, for rich or interactive content. Includes Toggletip.
+  - use: Small interactive content next to a control (column picker, quick assign, filter panel); Toggletip — an explanation with a link or more than one sentence, opened by an ⓘ button
+  - avoid: Plain text hint on hover → Tooltip; Blocking decisions or long forms → Modal; Large contextual work areas → RightPanel; A list of actions → Menu
+- [Progress bar](docs/components/progress-bar.md): Progress of a system process with a measurable end — or indeterminate when the end is unknown. Also quota and usage.
+  - use: Uploads, imports, exports, setup jobs longer than ~2 seconds; Usage vs limit (seats, storage) with helper text
+  - avoid: Steps the user completes → ProgressIndicator; Short actions → Button loading / InlineLoading; Content loading with known layout → Skeleton
+- [Progress indicator](docs/components/progress-indicator.md): The steps of a multi-step task, with where the user is and what's left. Completed steps stay reachable.
+  - use: Wizards, onboarding, checkout — 3–6 sequential steps the user completes
+  - avoid: System progress → ProgressBar; Non-sequential sections → Tabs; 2 steps → a single page with a clear continue; 7+ steps → split the flow or group steps
+- [Radio button](docs/components/radio-button.md): Exactly one choice from 2–6 visible options. Showing all options makes decisions faster.
+  - use: One choice from 2–6 options the user should compare; Options need helper text explaining consequences (price, speed)
+  - avoid: More than 6 options → Dropdown / Select; Rich visual options → SelectableTile (single); Switching a view instantly → ContentSwitcher; On/off → Toggle / Checkbox
+- [Search](docs/components/search.md): Find items in a collection by query. Always labelled, instantly clearable, and scoped to what it searches.
+  - use: Filtering a table/list by text (toolbar variant); Global or page-level search (field variant, lg); Space-constrained headers/toolbars (expandable)
+  - avoid: Picking one value from a known list → Combobox; Entering a value that will be saved → TextInput
+- [Select](docs/components/select.md): The native select. Fast, familiar, excellent on mobile, and the right choice for long plain-text lists in forms.
+  - use: Picking one plain-text option from 7+ in a form (country, currency, timezone); Mobile-heavy flows (native pickers are best-in-class); Grouped options (optgroup)
+  - avoid: 2–6 options → RadioGroup (show them); Options need icons, descriptions or custom rendering → Dropdown; Very long lists where users type → Combobox; Multiple selection → MultiSelect / CheckboxGroup
+- [Slider](docs/components/slider.md): Choose a value or range where relative position matters more than precision. The value is always visible.
+  - use: Adjusting a continuous value with immediate feedback (volume, opacity, zoom); Filtering by a numeric range (price, weight) with two thumbs
+  - avoid: Exact values matter → NumberInput; Few discrete options → RadioGroup / ContentSwitcher; The range is huge (0–1,000,000) → NumberInput(s)
+- [Structured list](docs/components/structured-list.md): A small, read-mostly set of rows and columns — details, specs and comparisons. Selectable when choosing one row.
+  - use: Key/value details of one object (condensed + flush); Comparing a few options across attributes (plans, carriers); Choosing one of a few rows with multiple attributes (selectable)
+  - avoid: Many rows, sorting, pagination, bulk actions → DataTable; Items with individual actions → ContainedList
+- [Tabs](docs/components/tabs.md): Switch between peer views of the same context — Overview · Activity · Settings.
+  - use: line — page-level views of one object, under the PageHeader; contained — tabs attached to a panel/tile (secondary level)
+  - avoid: Same data in different presentations → ContentSwitcher; Steps the user must complete in order → ProgressIndicator; Navigation between different objects/areas → Side nav; Content users need to compare side by side → show both; A single tab → no tabs
+- [Tag](docs/components/tag.md): Short labels that categorise, show status in dense rows, or represent applied filters.
+  - use: Read-only — categories/metadata on items (region, type); Status in dense table rows (with icon); Dismissible — applied filters / chosen values the user can remove; Selectable — quick filter chips (toggle on/off); Operational — "+3" that reveals more in a popover
+  - avoid: Actions → Button; Status on detail pages or with more nuance → StatusIndicator; Long text (> 3 words) → it's not a tag
+- [Text input](docs/components/text-input.md): Single-line free text (plus TextArea and PasswordInput). Label on top, helper below, errors that explain the fix.
+  - use: Free text the system can't predict (names, titles, references); Numeric identifiers — phone, postcode, card (inputMode="numeric"); Long text — TextArea; secrets — PasswordInput
+  - avoid: A known set of answers → RadioGroup / Dropdown / Combobox; Quantities → NumberInput; Dates → DatePicker; Searching a collection → Search
+- [Tile](docs/components/tile.md): A surface that groups related content. Base, clickable, selectable and expandable, and never nested.
+  - use: Base — grouping related info on a page (a metric, a summary); Clickable — a card that is one destination (a project, a feature area); Selectable — choosing among rich options (plans, templates) — single or multi; Expandable — summary first, details on demand
+  - avoid: Tables of records → DataTable; Wrapping every section in a card "to make it look designed" → use whitespace; Tiles inside tiles → flatten the hierarchy
+- [Toggle](docs/components/toggle.md): A switch for binary settings that take effect immediately. The rule: no Save button after a toggle.
+  - use: Turning a feature or preference on/off with immediate effect (settings pages, panels)
+  - avoid: The change applies on form submit → Checkbox; More than two states → RadioGroup / ContentSwitcher; Selecting items in a list → Checkbox
+- [Tooltip](docs/components/tooltip.md): A short plain-text name or hint on hover/focus. Includes DefinitionTooltip for glossary terms.
+  - use: Naming icon-only buttons (automatic with IconButton); Revealing the full text of truncated content; Defining a domain term inline (DefinitionTooltip); Explaining why a control is disabled
+  - avoid: Interactive content, links, or anything the user must read → Toggletip / Popover; Critical information → put it on the page; Repeating the visible label → no tooltip
+- [Tree view](docs/components/tree-view.md): Navigate or select within a hierarchy of unknown depth, with full keyboard support.
+  - use: File/folder structures, org charts, category taxonomies, nested workspaces; The user needs to see siblings and ancestors while choosing
+  - avoid: ≤ 2 fixed levels of navigation → Side nav (SideNavMenu); Collapsible content sections → Accordion; Nested records with attributes → DataTable with expandable rows
+- [UI shell header](docs/components/ui-shell-header.md): The product's persistent top bar — name, global navigation and global actions. 48px, on every screen.
+  - use: Every authenticated product screen (inside Shell)
+  - avoid: Building a custom top bar → forbidden; Page-level titles and actions → PageHeader (inside the main area); Marketing sites → a marketing header block
+- [UI shell left panel](docs/components/ui-shell-left-panel.md): Side navigation between the product's main areas. Expanded (default) or rail; an overlay drawer on small screens.
+  - use: Products with 5+ top-level areas or two-level navigation; Settings/admin areas with many sections
+  - avoid: 2–4 areas → HeaderNavItem in the Header; Views of one object → Tabs; Deep hierarchies → TreeView inside the panel
+- [UI shell right panel](docs/components/ui-shell-right-panel.md): A non-modal panel that slides over the content from the right — notifications, help, AI assistant, details, edit-in-context.
+  - use: Global panels opened from header actions (notifications, help, assistant); Viewing or editing an item's details while keeping the list visible; Filters for large tables (lg)
+  - avoid: Blocking decisions → Modal; Tiny content near a control → Popover; Primary page content → it belongs in the page
+
+## Patterns
+
+- [Common actions](docs/patterns/common-actions.md): Where actions live, how many are visible, and how create, edit, delete, save, cancel and export behave everywhere.
+  - use: Any page, table, card or panel that exposes actions
+  - avoid: Inventing a new placement or verb for an action that already has one here
+- [Dialogs](docs/patterns/dialogs.md): Choosing between Modal, RightPanel, Popover, Toggletip and toast — and writing dialogs people understand in one glance.
+  - use: Any time UI needs to appear on top of the current page
+  - avoid: Content that could simply live on the page
+- [Disabled states](docs/patterns/disabled-states.md): When to disable, hide, or keep enabled and explain. Disabled without a reason is a dead end.
+  - use: A control exists but is temporarily not actionable
+  - avoid: Signalling form validity (keep submit enabled, validate on click); Permanently unavailable features (hide them)
+- [Disclosures](docs/patterns/disclosures.md): Progressive disclosure — show what most people need, reveal the rest on demand.
+  - use: Advanced options most users don't touch; Secondary details that would clutter a summary
+  - avoid: Hiding required fields; Hiding errors or critical information
+- [Empty states](docs/patterns/empty-states.md): Every region that can be empty has a designed empty state — first use, no results, or error — each with a next step.
+  - use: A table, list, dashboard widget or page has nothing to show
+  - avoid: Showing a blank area or a lonely "No data"
+- [Filtering](docs/patterns/filtering.md): Narrowing a collection by attributes. Search + filters + visible applied state + an instant result count.
+  - use: Collections large enough that users look for subsets (tables, catalogs, logs)
+  - avoid: < ~20 items → sorting and scanning are enough
+- [Fluid styles](docs/patterns/fluid-styles.md): Fluid inputs — fields tile edge to edge with labels inside. For dense expert data entry.
+  - use: Expert users entering lots of structured data (configurations, admin records, bookings); Forms inside dense tools where vertical space is precious
+  - avoid: Consumer/first-time flows → default form style (more whitespace, calmer); Mixing with default fields in the same form
+- [Forms](docs/patterns/forms.md): How forms are structured end to end — single page vs multi-step, layout, validation, submission and recovery.
+  - use: Collecting data from the user
+  - avoid: Instant settings → Toggle rows; Editing one value → inline read-only → edit
+- [Global header](docs/patterns/global-header.md): What goes in the product-wide header, in which order, and what each global action opens.
+  - use: Every authenticated product
+  - avoid: Page-specific actions in the global header → PageHeader
+- [Loading](docs/patterns/loading.md): Orchestrating loading across a page — progressive, region by region, without layout shift or spinner soup.
+  - use: Any view that fetches data
+  - avoid: Blocking the whole page for partial data
+- [Login](docs/patterns/login.md): Two-step, calm, secure login — identifier first, then password or SSO. Errors never leak whether an account exists.
+  - use: Any sign-in screen
+  - avoid: Custom login layouts per product → use LoginBlock and theme it
+- [Notifications](docs/patterns/notifications.md): Matching the message to the right channel — toast, inline, modal, callout, or the notification panel.
+  - use: The system needs to tell the user something
+  - avoid: Messages the user doesn't need to act on or know about → don't send them
+- [Overflow content](docs/patterns/overflow-content.md): What to do when content doesn't fit — truncate, wrap, clamp, scroll, or collapse — and what must never be cut.
+  - use: Long names in tables, cards, nav, breadcrumbs; Long descriptions in constrained layouts; Too many tags/actions/items for the space
+  - avoid: Truncating labels, errors, buttons, or anything the user must read to act
+- [Read-only states](docs/patterns/read-only-states.md): Showing values the user can see but not change — and switching between viewing and editing.
+  - use: Detail pages where viewing is more common than editing; Values set by the system or by someone with more permissions
+  - avoid: Using disabled fields to display data (low contrast, not selectable)
+- [Search](docs/patterns/search.md): Global and scoped search — where it lives, how results appear, and how to handle nothing found.
+  - use: Users know what they're looking for by name/ID
+  - avoid: Browsing by attributes → Filtering
+- [Status indicators](docs/patterns/status-indicators.md): One vocabulary of states across the product — shape, color and word together, mapped in the taxonomy.
+  - use: Showing the state of an object (job, shipment, invoice, server)
+  - avoid: Categorising (not a state) → Tag neutral; Transient feedback about a user action → toast / InlineLoading
+- [Text toolbar](docs/patterns/text-toolbar.md): Formatting controls for rich-text editing — grouped, labelled, keyboard-friendly, with shortcuts.
+  - use: Rich text editors (comments, descriptions, email drafts, notes)
+  - avoid: Plain text fields → TextArea; Page-level actions → PageHeader / ButtonSet

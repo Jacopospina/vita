@@ -1,0 +1,1520 @@
+{
+  "name": "Corpus",
+  "generated": "2026-09-30",
+  "entries": [
+    {
+      "section": "foundations",
+      "slug": "about",
+      "path": "docs/foundations/about.md",
+      "title": "Corpus",
+      "summary": "The body of every product we build — the visible form through which its mind and soul reach the world.",
+      "status": "stable"
+    },
+    {
+      "section": "foundations",
+      "slug": "accessibility",
+      "path": "docs/foundations/accessibility.md",
+      "title": "Accessibility",
+      "summary": "WCAG 2.2 AA is the floor. Corpus components are accessible by default, and composition is where teams break it.",
+      "status": "stable",
+      "use_when": [
+        "Always"
+      ],
+      "avoid_when": [
+        "Never \"add accessibility later\""
+      ]
+    },
+    {
+      "section": "foundations",
+      "slug": "color",
+      "path": "docs/foundations/color.md",
+      "title": "Color",
+      "summary": "Semantic tokens only. Color communicates interactivity, status and hierarchy; it never decorates.",
+      "status": "stable",
+      "use_when": [
+        "Coloring anything, via semantic utilities (bg-layer-1, text-muted-foreground, border-border-subtle)"
+      ],
+      "avoid_when": [
+        "Palette colors (bg-blue-500) → they don't exist in Corpus",
+        "Hex/rgb/oklch literals in product code → forbidden",
+        "Color as the only carrier of meaning → pair it with an icon and text"
+      ]
+    },
+    {
+      "section": "foundations",
+      "slug": "content",
+      "path": "docs/foundations/content.md",
+      "title": "Content, personas & taxonomy",
+      "summary": "Words are part of the design system. Personas define who we speak to; the taxonomy fixes the words; the corpus-content skill enforces them.",
+      "status": "stable",
+      "use_when": [
+        "Writing any user-visible string: labels, buttons, errors, empty states, emails, AI responses",
+        "Starting a new product or flow (create personas first)"
+      ],
+      "avoid_when": [
+        "Inventing a term that isn't in the taxonomy → add it to the taxonomy first",
+        "Writing copy before knowing the persona"
+      ]
+    },
+    {
+      "section": "foundations",
+      "slug": "grid",
+      "path": "docs/foundations/grid.md",
+      "title": "Grid & layout",
+      "summary": "A 16-column grid for page structure, stacks for everything inside it.",
+      "status": "stable",
+      "import": "import { Grid, Column, Stack, Inline, Spacer, Container } from \"@/components/corpus/layout\"",
+      "use_when": [
+        "Laying out a page or region (Grid + Column)",
+        "Arranging elements vertically (Stack) or horizontally (Inline)"
+      ],
+      "avoid_when": [
+        "Hand-written flex/grid divs with custom gaps → use Stack/Inline/Grid",
+        "Absolute positioning for layout → only for overlays, badges and icons inside controls"
+      ]
+    },
+    {
+      "section": "foundations",
+      "slug": "icons",
+      "path": "docs/foundations/icons.md",
+      "title": "Icons",
+      "summary": "One icon set through one Icon component, at four sizes. An icon supports a label; it rarely replaces one.",
+      "status": "stable",
+      "import": "import { Icon } from \"@/components/corpus/icon\"\nimport { Add } from \"@/components/corpus/icons\"\n\n<Icon as={Add} size=\"sm\" />",
+      "use_when": [
+        "Reinforcing an action or a status label",
+        "Icon-only controls with universally understood meaning (close, search, menu, overflow), always with a tooltip"
+      ],
+      "avoid_when": [
+        "Other icon libraries (lucide, heroicons, material) → forbidden",
+        "Decorating headings or list items for visual interest",
+        "Large illustrative use → Pictogram"
+      ]
+    },
+    {
+      "section": "foundations",
+      "slug": "motion",
+      "path": "docs/foundations/motion.md",
+      "title": "Motion",
+      "summary": "Productive and expressive tokens with physical, spring-like feel. Motion explains change; it never decorates.",
+      "status": "stable",
+      "use_when": [
+        "Showing a change of state, a spatial relationship, or feedback to an action"
+      ],
+      "avoid_when": [
+        "Decorative loops, parallax, bouncing attention-seekers",
+        "Raw durations or cubic-beziers (duration-300, ease-[...]) → use tokens",
+        "Animating layout properties (width/height/top) on large surfaces → use transform/opacity"
+      ]
+    },
+    {
+      "section": "foundations",
+      "slug": "pictograms",
+      "path": "docs/foundations/pictograms.md",
+      "title": "Pictograms",
+      "summary": "Large pictograms for empty states, onboarding and feature tiles. Never as controls.",
+      "status": "stable",
+      "import": "import { Pictogram } from \"@/components/corpus/pictogram\"\nimport { Rocket } from \"@/components/corpus/pictograms\"",
+      "use_when": [
+        "Empty states (first use, no results, error)",
+        "Onboarding and feature explanations",
+        "Large clickable tiles that introduce a product area"
+      ],
+      "avoid_when": [
+        "Buttons, navigation, table cells, anything under 48px → Icon",
+        "Decorating every section of a page → one pictogram per view at most"
+      ]
+    },
+    {
+      "section": "foundations",
+      "slug": "principles",
+      "path": "docs/foundations/principles.md",
+      "title": "Design principles",
+      "summary": "Seven rules every Corpus screen obeys. When two rules conflict, the higher one wins.",
+      "status": "stable"
+    },
+    {
+      "section": "foundations",
+      "slug": "spacing",
+      "path": "docs/foundations/spacing.md",
+      "title": "Spacing",
+      "summary": "One scale (2px-based), density-aware control sizes, and a hard ban on off-scale values.",
+      "status": "stable",
+      "use_when": [
+        "Any padding, margin or gap"
+      ],
+      "avoid_when": [
+        "Arbitrary values like p-[13px] → forbidden",
+        "Off-scale steps (p-5, gap-7, m-9, p-11) → the audit rejects them"
+      ]
+    },
+    {
+      "section": "foundations",
+      "slug": "theming",
+      "path": "docs/foundations/theming.md",
+      "title": "Theming & personalisation",
+      "summary": "Change about ten variables in one file and the whole system re-skins: color, shape, density, type and motion.",
+      "status": "stable",
+      "import": "@import \"./styles/corpus.css\";  /* once, at the app root */\n/* then edit ONLY src/styles/theme.css */",
+      "use_when": [
+        "Adapting Corpus to a new brand or product",
+        "Making a denser admin tool or a calmer consumer app"
+      ],
+      "avoid_when": [
+        "Tweaking a single component (never) → change the knob, or propose a new variant upstream",
+        "Adding a one-off color → add a semantic token to tokens.css via a design-system PR"
+      ]
+    },
+    {
+      "section": "foundations",
+      "slug": "typography",
+      "path": "docs/foundations/typography.md",
+      "title": "Typography",
+      "summary": "Ten typographic roles, generated from one base size and one ratio.",
+      "status": "stable",
+      "import": "import { Text, Heading } from \"@/components/corpus/text\"",
+      "use_when": [
+        "Any text: pick the ROLE (title-2, body, caption), not a size"
+      ],
+      "avoid_when": [
+        "Tailwind sizes (text-sm, text-2xl) → they don't exist in Corpus",
+        "Changing font-size to create emphasis inside a paragraph → use font-medium/semibold"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "accordion",
+      "path": "docs/components/accordion.md",
+      "title": "Accordion",
+      "summary": "A vertical stack of headers that each reveal a section. Progressive disclosure for content users scan by title.",
+      "status": "stable",
+      "import": "import { Accordion, AccordionItem, AccordionTrigger, AccordionContent, Disclosure } from \"@/components/corpus/accordion\"",
+      "use_when": [
+        "FAQs, help content, long settings grouped by topic",
+        "Filter panels with many facets",
+        "Mobile layouts where sections would otherwise make the page very long"
+      ],
+      "avoid_when": [
+        "One section → Disclosure or ExpandableTile",
+        "Content most users need → show it",
+        "Peer views of an object → Tabs",
+        "Sequential steps → ProgressIndicator"
+      ],
+      "related": [
+        "disclosures",
+        "tabs",
+        "tile"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "ai-label",
+      "path": "docs/components/ai-label.md",
+      "title": "AI label",
+      "summary": "Marks anything generated, suggested or autofilled by AI, and explains how, in one click.",
+      "status": "stable",
+      "import": "import { AILabel, AISurface } from \"@/components/corpus/ai-label\"",
+      "use_when": [
+        "A field value, cell, tile or message was produced or changed by AI",
+        "An AI-powered feature needs a visible, explainable marker"
+      ],
+      "avoid_when": [
+        "Branding or marketing flair → the AI gradient is reserved for AI provenance",
+        "Content that a human reviewed and edited → remove the label once a human takes ownership, or show \"Edited\""
+      ],
+      "related": [
+        "tooltip",
+        "popover",
+        "notification"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "breadcrumb",
+      "path": "docs/components/breadcrumb.md",
+      "title": "Breadcrumb",
+      "summary": "Shows where the user is in a hierarchy of three or more levels and lets them move up.",
+      "status": "stable",
+      "import": "import { Breadcrumb } from \"@/components/corpus/breadcrumb\"",
+      "use_when": [
+        "Pages nested ≥ 3 levels deep (Workspace / Projects / Q3 forecast)",
+        "Detail pages reached from a list, where \"up\" is meaningful"
+      ],
+      "avoid_when": [
+        "Flat products (≤ 2 levels) → the side nav already tells users where they are",
+        "Showing history (\"back\") → browser back / explicit Back button in flows",
+        "Steps in a process → ProgressIndicator"
+      ],
+      "related": [
+        "ui-shell-left-panel",
+        "tabs"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "button",
+      "path": "docs/components/button.md",
+      "title": "Button",
+      "summary": "Triggers an action. Clear hierarchy, strict restraint. One primary per view, and every other button steps down.",
+      "status": "stable",
+      "import": "import { Button, IconButton, ButtonSet } from \"@/components/corpus/button\"",
+      "use_when": [
+        "The user performs an action (save, create, send, delete, open a modal)",
+        "Grouping the actions that end a form, modal or flow (ButtonSet)"
+      ],
+      "avoid_when": [
+        "Navigating to another page → Link (or ClickableTile)",
+        "Choosing a value → Dropdown / RadioGroup / ContentSwitcher",
+        "Several related actions under one label → MenuButton",
+        "Toggling a setting → Toggle"
+      ],
+      "related": [
+        "menu-buttons",
+        "link",
+        "modal",
+        "common-actions"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "checkbox",
+      "path": "docs/components/checkbox.md",
+      "title": "Checkbox",
+      "summary": "Independent choices that take effect on submit, and multi-selection from a short list.",
+      "status": "stable",
+      "import": "import { Checkbox, CheckboxGroup } from \"@/components/corpus/checkbox\"",
+      "use_when": [
+        "Selecting any number of options from ≤ 6 (CheckboxGroup)",
+        "A single opt-in inside a form (agree to terms, subscribe)",
+        "Selecting rows in a table (handled by DataTable)"
+      ],
+      "avoid_when": [
+        "The change applies immediately → Toggle",
+        "Exactly one choice → RadioGroup",
+        "More than ~6 options → MultiSelect"
+      ],
+      "related": [
+        "toggle",
+        "radio-button",
+        "form"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "choosing-components",
+      "path": "docs/components/choosing-components.md",
+      "title": "Choosing a component",
+      "summary": "The decision guide. Agents read this BEFORE picking any component. Start from the user's intent, not from the component you remember.",
+      "status": "stable"
+    },
+    {
+      "section": "components",
+      "slug": "code-snippet",
+      "path": "docs/components/code-snippet.md",
+      "title": "Code snippet",
+      "summary": "Code, commands and identifiers the user will copy. Copying is one click, with instant feedback.",
+      "status": "stable",
+      "import": "import { CodeSnippet } from \"@/components/corpus/code-snippet\"",
+      "use_when": [
+        "Showing commands, API keys, IDs, config the user must copy",
+        "Displaying code samples in docs/onboarding"
+      ],
+      "avoid_when": [
+        "Displaying non-copyable monospace data in tables → Text variant=\"code\"",
+        "Secrets that should be hidden by default → PasswordInput-style reveal + copy"
+      ],
+      "related": [
+        "text-input"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "contained-list",
+      "path": "docs/components/contained-list.md",
+      "title": "Contained list",
+      "summary": "A titled list of similar items, each a row with an optional action.",
+      "status": "stable",
+      "import": "import { ContainedList, ContainedListItem } from \"@/components/corpus/contained-list\"",
+      "use_when": [
+        "Members, connected apps, recent files, settings groups",
+        "Rows that each open something or have one trailing action",
+        "Lists inside panels and popovers (kind=\"disclosed\")"
+      ],
+      "avoid_when": [
+        "Multi-attribute records to sort/compare → DataTable",
+        "Plain bullet points → List",
+        "Hierarchies → TreeView"
+      ],
+      "related": [
+        "data-table",
+        "list",
+        "structured-list"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "content-switcher",
+      "path": "docs/components/content-switcher.md",
+      "title": "Content switcher",
+      "summary": "A segmented control. Switch between alternate presentations of the same content. One segment is always selected.",
+      "status": "stable",
+      "import": "import { ContentSwitcher } from \"@/components/corpus/content-switcher\"",
+      "use_when": [
+        "Changing how the same data is shown (List | Grid, Chart | Table)",
+        "Changing the granularity of one dataset (Day | Week | Month)",
+        "A mode with 2–5 mutually exclusive, equally weighted options that applies instantly"
+      ],
+      "avoid_when": [
+        "The panels contain different content → Tabs",
+        "It's a form value submitted later → RadioGroup",
+        "More than 5 options → Dropdown",
+        "Binary on/off → Toggle"
+      ],
+      "related": [
+        "tabs",
+        "radio-button",
+        "toggle"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "data-table",
+      "path": "docs/components/data-table.md",
+      "title": "Data table",
+      "summary": "View, compare, sort, select and act on many uniform records. The workhorse of product UI.",
+      "status": "stable",
+      "import": "import { DataTable, type DataTableColumn } from \"@/components/corpus/data-table\"",
+      "use_when": [
+        "Many records with the same attributes (> ~5 rows or any sorting/selecting need)",
+        "Users compare values across rows or act on several rows at once"
+      ],
+      "avoid_when": [
+        "Few rows of key/value details → StructuredList",
+        "Heterogeneous items with one action each → ContainedList",
+        "Visual browsing → Tile grid",
+        "One column → it's a list"
+      ],
+      "related": [
+        "pagination",
+        "structured-list",
+        "contained-list",
+        "filtering",
+        "search",
+        "empty-states",
+        "loading"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "date-picker",
+      "path": "docs/components/date-picker.md",
+      "title": "Date picker",
+      "summary": "Dates by typing first, with a calendar when it helps. Simple, single and range.",
+      "status": "stable",
+      "import": "import { DatePicker, DateRangePicker, Calendar } from \"@/components/corpus/date-picker\"",
+      "use_when": [
+        "simple — known dates far from today (birthday, contract start years ago): typing is fastest",
+        "single — near-future scheduling where weekday context matters (pickup, deadline)",
+        "range — periods (reporting range, booking)"
+      ],
+      "avoid_when": [
+        "Relative ranges (\"Last 7 days\") → Dropdown of presets (optionally + custom range)",
+        "Time only → TextInput with time type"
+      ],
+      "related": [
+        "text-input",
+        "form"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "dropdown",
+      "path": "docs/components/dropdown.md",
+      "title": "Dropdown",
+      "summary": "Custom listbox for choosing values. Dropdown (one), Combobox (one, filterable) and MultiSelect (many).",
+      "status": "stable",
+      "import": "import { Dropdown, Combobox, MultiSelect } from \"@/components/corpus/dropdown\"",
+      "use_when": [
+        "Dropdown — one of 7–20 options, options need descriptions/icons, or consistent styling in app chrome",
+        "Combobox — one of 20+ options where users know what to type (customer, country, carrier)",
+        "MultiSelect — several of more than 6 options (markets, tags, assignees)",
+        "Inline type — compact \"Sort by: Newest ▾\" in toolbars"
+      ],
+      "avoid_when": [
+        "2–6 options → RadioGroup (or ContentSwitcher for views)",
+        "Actions → Menu / MenuButton (dropdowns choose values; menus do things)",
+        "Plain long lists in mobile forms → Select"
+      ],
+      "related": [
+        "select",
+        "radio-button",
+        "checkbox",
+        "menu",
+        "filtering"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "file-uploader",
+      "path": "docs/components/file-uploader.md",
+      "title": "File uploader",
+      "summary": "Attach files by browsing or dropping, with per-file status and errors that explain the fix.",
+      "status": "stable",
+      "import": "import { FileUploader } from \"@/components/corpus/file-uploader\"",
+      "use_when": [
+        "dropzone — uploading is the main task of the view (import, document collection)",
+        "button — attaching as one field among others in a form"
+      ],
+      "avoid_when": [
+        "Importing structured data with mapping → a dedicated import flow (pattern), with FileUploader as step 1"
+      ],
+      "related": [
+        "form",
+        "progress-bar",
+        "inline-loading"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "form",
+      "path": "docs/components/form.md",
+      "title": "Form",
+      "summary": "The structural pieces of every form. Form, FormGroup, FormRow, FormActions, FluidForm and the FieldShell wiring every input uses.",
+      "status": "stable",
+      "import": "import { Form, FormGroup, FormRow, FormActions, FluidForm, Label, FieldShell } from \"@/components/corpus/form\"",
+      "use_when": [
+        "Any time the user enters data that is submitted together"
+      ],
+      "avoid_when": [
+        "Single instant settings → Toggle rows, no form wrapper needed",
+        "Inline edits of one value → read-only-states pattern (view → edit)"
+      ],
+      "related": [
+        "forms",
+        "text-input",
+        "fluid-styles",
+        "read-only-states"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "inline-loading",
+      "path": "docs/components/inline-loading.md",
+      "title": "Inline loading",
+      "summary": "The status of one operation, in place — \"Saving…\" → \"Saved\" → gone.",
+      "status": "stable",
+      "import": "import { InlineLoading } from \"@/components/corpus/loading\"",
+      "use_when": [
+        "Auto-save and background save feedback next to the thing being saved",
+        "An action whose result appears in place (toggle persisted, row updated)"
+      ],
+      "avoid_when": [
+        "Blocking actions → Button loading",
+        "Page/region loads → Skeleton / Loading"
+      ],
+      "related": [
+        "loading",
+        "button",
+        "notification"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "link",
+      "path": "docs/components/link.md",
+      "title": "Link",
+      "summary": "Navigation to another page, section or resource. If it changes data, it's a Button.",
+      "status": "stable",
+      "import": "import { Link } from \"@/components/corpus/link\"",
+      "use_when": [
+        "Navigating to another page or anchor",
+        "Referencing a resource inside running text",
+        "Opening external documentation (external)"
+      ],
+      "avoid_when": [
+        "Performing an action (save, delete, open modal) → Button (ghost if it must look light)",
+        "A whole card is the destination → ClickableTile",
+        "Going up a hierarchy → Breadcrumb"
+      ],
+      "related": [
+        "button",
+        "breadcrumb",
+        "tile"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "list",
+      "path": "docs/components/list.md",
+      "title": "List",
+      "summary": "Typographic lists inside content — bullets and numbered steps. Not interactive.",
+      "status": "stable",
+      "import": "import { UnorderedList, OrderedList, ListItem } from \"@/components/corpus/list\"",
+      "use_when": [
+        "Unordered — sets of related points in content",
+        "Ordered — sequential instructions where order matters"
+      ],
+      "avoid_when": [
+        "Interactive rows → ContainedList",
+        "Records → DataTable / StructuredList"
+      ],
+      "related": [
+        "contained-list",
+        "structured-list"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "loading",
+      "path": "docs/components/loading.md",
+      "title": "Loading",
+      "summary": "Spinner, overlay and skeletons. Pick by scope and duration; prefer skeletons whenever the layout is known.",
+      "status": "stable",
+      "import": "import { Loading, Skeleton, SkeletonText } from \"@/components/corpus/loading\"",
+      "use_when": [
+        "Skeleton — content with a known shape is on its way (cards, tables, profile)",
+        "Loading — a region/page with unknown layout is loading",
+        "Loading overlay — interaction must be blocked while a region recomputes"
+      ],
+      "avoid_when": [
+        "A single action → Button loading / InlineLoading",
+        "Measurable progress → ProgressBar",
+        "Anything under 300ms → show nothing"
+      ],
+      "related": [
+        "inline-loading",
+        "progress-bar",
+        "loading-pattern"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "menu-buttons",
+      "path": "docs/components/menu-buttons.md",
+      "title": "Menu buttons",
+      "summary": "Three buttons that open menus. MenuButton groups actions, ComboButton adds alternatives to a default action, OverflowMenu hides secondary actions.",
+      "status": "stable",
+      "import": "import { MenuButton, ComboButton, OverflowMenu } from \"@/components/corpus/menu-button\"",
+      "use_when": [
+        "MenuButton — several equally important related actions under one label (\"Export ▾\", \"Create ▾\")",
+        "ComboButton — one dominant action plus variations (\"Save\" | \"Save as…\", \"Save as template\")",
+        "OverflowMenu — secondary actions on a row, tile, card or page header (⋮)"
+      ],
+      "avoid_when": [
+        "Selecting a value → Dropdown",
+        "A single action → Button",
+        "Primary page actions hidden in an overflow → keep the primary visible"
+      ],
+      "related": [
+        "menu",
+        "button",
+        "common-actions"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "menu",
+      "path": "docs/components/menu.md",
+      "title": "Menu",
+      "summary": "A temporary list of actions, opened from a trigger or right-click. Menus hold verbs, not values and not destinations.",
+      "status": "stable",
+      "import": "import { Menu, MenuTrigger, MenuContent, MenuItem, MenuSeparator, MenuLabel, MenuCheckboxItem, MenuRadioGroup, MenuRadioItem, MenuSub, MenuSubTrigger, MenuSubContent, ContextMenu, ContextMenuTrigger, ContextMenuContent, ContextMenuItem } from \"@/components/corpus/menu\"",
+      "use_when": [
+        "Offering 3–10 actions without taking permanent space",
+        "View options that toggle (show grid, compact rows) via MenuCheckboxItem",
+        "Power-user shortcuts via right-click (ContextMenu), always duplicated elsewhere"
+      ],
+      "avoid_when": [
+        "Choosing a form value → Dropdown / Select",
+        "Navigation → Side nav, Tabs, Links",
+        "1–2 actions → show them as buttons",
+        "More than ~10 items or deep nesting → rethink the IA"
+      ],
+      "related": [
+        "menu-buttons",
+        "dropdown",
+        "common-actions"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "modal",
+      "path": "docs/components/modal.md",
+      "title": "Modal",
+      "summary": "Interrupts to focus on one task or decision. Modality is a last resort.",
+      "status": "stable",
+      "import": "import { Modal, ModalTrigger, ModalContent, ModalHeader, ModalBody, ModalFooter, ModalClose, ConfirmModal } from \"@/components/corpus/modal\"",
+      "use_when": [
+        "Confirming a destructive or irreversible action (ConfirmModal danger)",
+        "A short, self-contained task (≤ 5 fields) that shouldn't leave the page",
+        "Critical information that must be acknowledged"
+      ],
+      "avoid_when": [
+        "The user needs to see the page while working → RightPanel",
+        "A couple of options next to a control → Popover",
+        "Long forms or multi-step flows → a page",
+        "Success messages → toast",
+        "Opening a modal from a modal → never"
+      ],
+      "related": [
+        "dialogs",
+        "ui-shell-right-panel",
+        "popover",
+        "notification"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "notification",
+      "path": "docs/components/notification.md",
+      "title": "Notification",
+      "summary": "System messages. Inline for problems tied to a place, toast for confirmation of a user action, callout for static guidance.",
+      "status": "stable",
+      "import": "import { InlineNotification, Callout, Toaster, toast } from \"@/components/corpus/notification\"",
+      "use_when": [
+        "Inline — errors/warnings about a section, form summary, account-level issues",
+        "Toast — brief confirmation of something the user just did (with optional Undo)",
+        "Callout — permanent, non-dismissible contextual guidance"
+      ],
+      "avoid_when": [
+        "A decision is required before continuing → Modal",
+        "Field-level validation → the field's invalidText",
+        "Errors inside a toast that need action → InlineNotification near the cause",
+        "Marketing/announcements → not a system notification"
+      ],
+      "related": [
+        "notifications",
+        "modal",
+        "inline-loading",
+        "status-indicators"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "number-input",
+      "path": "docs/components/number-input.md",
+      "title": "Number input",
+      "summary": "Precise numeric entry with steppers, bounds and units.",
+      "status": "stable",
+      "import": "import { NumberInput } from \"@/components/corpus/number-input\"",
+      "use_when": [
+        "Exact quantities with small adjustments (pallets, seats, percentage, weight)",
+        "Values with min/max bounds the user must respect"
+      ],
+      "avoid_when": [
+        "Approximate values where feel matters → Slider",
+        "Identifiers that happen to be digits (phone, postcode, ID) → TextInput inputMode=\"numeric\"",
+        "Large free-form amounts (currency) → TextInput with inputMode=\"decimal\" and formatting"
+      ],
+      "related": [
+        "slider",
+        "text-input"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "pagination",
+      "path": "docs/components/pagination.md",
+      "title": "Pagination",
+      "summary": "Split large datasets into pages, with page-size control and an honest item count.",
+      "status": "stable",
+      "import": "import { Pagination } from \"@/components/corpus/pagination\"",
+      "use_when": [
+        "Tables and lists with more items than fit comfortably (> 25–50)",
+        "Users need to reference positions (\"it was on page 3\") or know the total"
+      ],
+      "avoid_when": [
+        "Feeds or activity streams users scroll through → \"Load more\" / infinite loading",
+        "Fewer items than one page → no pagination"
+      ],
+      "related": [
+        "data-table"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "popover",
+      "path": "docs/components/popover.md",
+      "title": "Popover",
+      "summary": "A non-modal layer anchored to a trigger, opened by click, for rich or interactive content. Includes Toggletip.",
+      "status": "stable",
+      "import": "import { Popover, PopoverTrigger, PopoverContent, PopoverClose, Toggletip } from \"@/components/corpus/popover\"",
+      "use_when": [
+        "Small interactive content next to a control (column picker, quick assign, filter panel)",
+        "Toggletip — an explanation with a link or more than one sentence, opened by an ⓘ button"
+      ],
+      "avoid_when": [
+        "Plain text hint on hover → Tooltip",
+        "Blocking decisions or long forms → Modal",
+        "Large contextual work areas → RightPanel",
+        "A list of actions → Menu"
+      ],
+      "related": [
+        "tooltip",
+        "modal",
+        "menu",
+        "filtering"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "progress-bar",
+      "path": "docs/components/progress-bar.md",
+      "title": "Progress bar",
+      "summary": "Progress of a system process with a measurable end — or indeterminate when the end is unknown. Also quota and usage.",
+      "status": "stable",
+      "import": "import { ProgressBar } from \"@/components/corpus/progress-bar\"",
+      "use_when": [
+        "Uploads, imports, exports, setup jobs longer than ~2 seconds",
+        "Usage vs limit (seats, storage) with helper text"
+      ],
+      "avoid_when": [
+        "Steps the user completes → ProgressIndicator",
+        "Short actions → Button loading / InlineLoading",
+        "Content loading with known layout → Skeleton"
+      ],
+      "related": [
+        "progress-indicator",
+        "loading",
+        "file-uploader"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "progress-indicator",
+      "path": "docs/components/progress-indicator.md",
+      "title": "Progress indicator",
+      "summary": "The steps of a multi-step task, with where the user is and what's left. Completed steps stay reachable.",
+      "status": "stable",
+      "import": "import { ProgressIndicator } from \"@/components/corpus/progress-indicator\"",
+      "use_when": [
+        "Wizards, onboarding, checkout — 3–6 sequential steps the user completes"
+      ],
+      "avoid_when": [
+        "System progress → ProgressBar",
+        "Non-sequential sections → Tabs",
+        "2 steps → a single page with a clear continue",
+        "7+ steps → split the flow or group steps"
+      ],
+      "related": [
+        "progress-bar",
+        "tabs",
+        "forms"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "radio-button",
+      "path": "docs/components/radio-button.md",
+      "title": "Radio button",
+      "summary": "Exactly one choice from 2–6 visible options. Showing all options makes decisions faster.",
+      "status": "stable",
+      "import": "import { RadioGroup, RadioButton } from \"@/components/corpus/radio-button\"",
+      "use_when": [
+        "One choice from 2–6 options the user should compare",
+        "Options need helper text explaining consequences (price, speed)"
+      ],
+      "avoid_when": [
+        "More than 6 options → Dropdown / Select",
+        "Rich visual options → SelectableTile (single)",
+        "Switching a view instantly → ContentSwitcher",
+        "On/off → Toggle / Checkbox"
+      ],
+      "related": [
+        "checkbox",
+        "dropdown",
+        "tile",
+        "content-switcher"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "search",
+      "path": "docs/components/search.md",
+      "title": "Search",
+      "summary": "Find items in a collection by query. Always labelled, instantly clearable, and scoped to what it searches.",
+      "status": "stable",
+      "import": "import { Search } from \"@/components/corpus/search\"",
+      "use_when": [
+        "Filtering a table/list by text (toolbar variant)",
+        "Global or page-level search (field variant, lg)",
+        "Space-constrained headers/toolbars (expandable)"
+      ],
+      "avoid_when": [
+        "Picking one value from a known list → Combobox",
+        "Entering a value that will be saved → TextInput"
+      ],
+      "related": [
+        "filtering",
+        "search-pattern",
+        "data-table"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "select",
+      "path": "docs/components/select.md",
+      "title": "Select",
+      "summary": "The native select. Fast, familiar, excellent on mobile, and the right choice for long plain-text lists in forms.",
+      "status": "stable",
+      "import": "import { Select, SelectOption, SelectGroup } from \"@/components/corpus/select\"",
+      "use_when": [
+        "Picking one plain-text option from 7+ in a form (country, currency, timezone)",
+        "Mobile-heavy flows (native pickers are best-in-class)",
+        "Grouped options (optgroup)"
+      ],
+      "avoid_when": [
+        "2–6 options → RadioGroup (show them)",
+        "Options need icons, descriptions or custom rendering → Dropdown",
+        "Very long lists where users type → Combobox",
+        "Multiple selection → MultiSelect / CheckboxGroup"
+      ],
+      "related": [
+        "dropdown",
+        "radio-button"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "slider",
+      "path": "docs/components/slider.md",
+      "title": "Slider",
+      "summary": "Choose a value or range where relative position matters more than precision. The value is always visible.",
+      "status": "stable",
+      "import": "import { Slider } from \"@/components/corpus/slider\"",
+      "use_when": [
+        "Adjusting a continuous value with immediate feedback (volume, opacity, zoom)",
+        "Filtering by a numeric range (price, weight) with two thumbs"
+      ],
+      "avoid_when": [
+        "Exact values matter → NumberInput",
+        "Few discrete options → RadioGroup / ContentSwitcher",
+        "The range is huge (0–1,000,000) → NumberInput(s)"
+      ],
+      "related": [
+        "number-input",
+        "filtering"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "structured-list",
+      "path": "docs/components/structured-list.md",
+      "title": "Structured list",
+      "summary": "A small, read-mostly set of rows and columns — details, specs and comparisons. Selectable when choosing one row.",
+      "status": "stable",
+      "import": "import { StructuredList } from \"@/components/corpus/structured-list\"",
+      "use_when": [
+        "Key/value details of one object (condensed + flush)",
+        "Comparing a few options across attributes (plans, carriers)",
+        "Choosing one of a few rows with multiple attributes (selectable)"
+      ],
+      "avoid_when": [
+        "Many rows, sorting, pagination, bulk actions → DataTable",
+        "Items with individual actions → ContainedList"
+      ],
+      "related": [
+        "data-table",
+        "contained-list",
+        "read-only-states",
+        "radio-button"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "tabs",
+      "path": "docs/components/tabs.md",
+      "title": "Tabs",
+      "summary": "Switch between peer views of the same context — Overview · Activity · Settings.",
+      "status": "stable",
+      "import": "import { Tabs, TabsList, TabsTrigger, TabsContent } from \"@/components/corpus/tabs\"",
+      "use_when": [
+        "line — page-level views of one object, under the PageHeader",
+        "contained — tabs attached to a panel/tile (secondary level)"
+      ],
+      "avoid_when": [
+        "Same data in different presentations → ContentSwitcher",
+        "Steps the user must complete in order → ProgressIndicator",
+        "Navigation between different objects/areas → Side nav",
+        "Content users need to compare side by side → show both",
+        "A single tab → no tabs"
+      ],
+      "related": [
+        "content-switcher",
+        "progress-indicator",
+        "page-header"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "tag",
+      "path": "docs/components/tag.md",
+      "title": "Tag",
+      "summary": "Short labels that categorise, show status in dense rows, or represent applied filters.",
+      "status": "stable",
+      "import": "import { Tag, SelectableTag, OperationalTag } from \"@/components/corpus/tag\"",
+      "use_when": [
+        "Read-only — categories/metadata on items (region, type)",
+        "Status in dense table rows (with icon)",
+        "Dismissible — applied filters / chosen values the user can remove",
+        "Selectable — quick filter chips (toggle on/off)",
+        "Operational — \"+3\" that reveals more in a popover"
+      ],
+      "avoid_when": [
+        "Actions → Button",
+        "Status on detail pages or with more nuance → StatusIndicator",
+        "Long text (> 3 words) → it's not a tag"
+      ],
+      "related": [
+        "status-indicators",
+        "filtering",
+        "dropdown"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "text-input",
+      "path": "docs/components/text-input.md",
+      "title": "Text input",
+      "summary": "Single-line free text (plus TextArea and PasswordInput). Label on top, helper below, errors that explain the fix.",
+      "status": "stable",
+      "import": "import { TextInput, TextArea, PasswordInput } from \"@/components/corpus/text-input\"",
+      "use_when": [
+        "Free text the system can't predict (names, titles, references)",
+        "Numeric identifiers — phone, postcode, card (inputMode=\"numeric\")",
+        "Long text — TextArea; secrets — PasswordInput"
+      ],
+      "avoid_when": [
+        "A known set of answers → RadioGroup / Dropdown / Combobox",
+        "Quantities → NumberInput",
+        "Dates → DatePicker",
+        "Searching a collection → Search"
+      ],
+      "related": [
+        "form",
+        "number-input",
+        "search",
+        "forms"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "tile",
+      "path": "docs/components/tile.md",
+      "title": "Tile",
+      "summary": "A surface that groups related content. Base, clickable, selectable and expandable, and never nested.",
+      "status": "stable",
+      "import": "import { Tile, ClickableTile, SelectableTile, ExpandableTile, TileGroup } from \"@/components/corpus/tile\"",
+      "use_when": [
+        "Base — grouping related info on a page (a metric, a summary)",
+        "Clickable — a card that is one destination (a project, a feature area)",
+        "Selectable — choosing among rich options (plans, templates) — single or multi",
+        "Expandable — summary first, details on demand"
+      ],
+      "avoid_when": [
+        "Tables of records → DataTable",
+        "Wrapping every section in a card \"to make it look designed\" → use whitespace",
+        "Tiles inside tiles → flatten the hierarchy"
+      ],
+      "related": [
+        "contained-list",
+        "radio-button",
+        "checkbox",
+        "accordion"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "toggle",
+      "path": "docs/components/toggle.md",
+      "title": "Toggle",
+      "summary": "A switch for binary settings that take effect immediately. The rule: no Save button after a toggle.",
+      "status": "stable",
+      "import": "import { Toggle } from \"@/components/corpus/toggle\"",
+      "use_when": [
+        "Turning a feature or preference on/off with immediate effect (settings pages, panels)"
+      ],
+      "avoid_when": [
+        "The change applies on form submit → Checkbox",
+        "More than two states → RadioGroup / ContentSwitcher",
+        "Selecting items in a list → Checkbox"
+      ],
+      "related": [
+        "checkbox",
+        "content-switcher",
+        "forms"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "tooltip",
+      "path": "docs/components/tooltip.md",
+      "title": "Tooltip",
+      "summary": "A short plain-text name or hint on hover/focus. Includes DefinitionTooltip for glossary terms.",
+      "status": "stable",
+      "import": "import { Tooltip, TooltipProvider, DefinitionTooltip } from \"@/components/corpus/tooltip\"",
+      "use_when": [
+        "Naming icon-only buttons (automatic with IconButton)",
+        "Revealing the full text of truncated content",
+        "Defining a domain term inline (DefinitionTooltip)",
+        "Explaining why a control is disabled"
+      ],
+      "avoid_when": [
+        "Interactive content, links, or anything the user must read → Toggletip / Popover",
+        "Critical information → put it on the page",
+        "Repeating the visible label → no tooltip"
+      ],
+      "related": [
+        "popover",
+        "button",
+        "overflow-content"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "tree-view",
+      "path": "docs/components/tree-view.md",
+      "title": "Tree view",
+      "summary": "Navigate or select within a hierarchy of unknown depth, with full keyboard support.",
+      "status": "stable",
+      "import": "import { TreeView, type TreeNode } from \"@/components/corpus/tree-view\"",
+      "use_when": [
+        "File/folder structures, org charts, category taxonomies, nested workspaces",
+        "The user needs to see siblings and ancestors while choosing"
+      ],
+      "avoid_when": [
+        "≤ 2 fixed levels of navigation → Side nav (SideNavMenu)",
+        "Collapsible content sections → Accordion",
+        "Nested records with attributes → DataTable with expandable rows"
+      ],
+      "related": [
+        "ui-shell-left-panel",
+        "accordion"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "ui-shell-header",
+      "path": "docs/components/ui-shell-header.md",
+      "title": "UI shell header",
+      "summary": "The product's persistent top bar — name, global navigation and global actions. 48px, on every screen.",
+      "status": "stable",
+      "import": "import { Shell, ShellBody, ShellMain, Header, HeaderNavItem, HeaderGlobalAction } from \"@/components/corpus/ui-shell\"",
+      "use_when": [
+        "Every authenticated product screen (inside Shell)"
+      ],
+      "avoid_when": [
+        "Building a custom top bar → forbidden",
+        "Page-level titles and actions → PageHeader (inside the main area)",
+        "Marketing sites → a marketing header block"
+      ],
+      "related": [
+        "ui-shell-left-panel",
+        "ui-shell-right-panel",
+        "global-header"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "ui-shell-left-panel",
+      "path": "docs/components/ui-shell-left-panel.md",
+      "title": "UI shell left panel",
+      "summary": "Side navigation between the product's main areas. Expanded (default) or rail; an overlay drawer on small screens.",
+      "status": "stable",
+      "import": "import { LeftPanel, SideNavItem, SideNavMenu, SideNavSection } from \"@/components/corpus/ui-shell\"",
+      "use_when": [
+        "Products with 5+ top-level areas or two-level navigation",
+        "Settings/admin areas with many sections"
+      ],
+      "avoid_when": [
+        "2–4 areas → HeaderNavItem in the Header",
+        "Views of one object → Tabs",
+        "Deep hierarchies → TreeView inside the panel"
+      ],
+      "related": [
+        "ui-shell-header",
+        "tree-view",
+        "breadcrumb"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "ui-shell-right-panel",
+      "path": "docs/components/ui-shell-right-panel.md",
+      "title": "UI shell right panel",
+      "summary": "A non-modal panel that slides over the content from the right — notifications, help, AI assistant, details, edit-in-context.",
+      "status": "stable",
+      "import": "import { RightPanel } from \"@/components/corpus/ui-shell\"",
+      "use_when": [
+        "Global panels opened from header actions (notifications, help, assistant)",
+        "Viewing or editing an item's details while keeping the list visible",
+        "Filters for large tables (lg)"
+      ],
+      "avoid_when": [
+        "Blocking decisions → Modal",
+        "Tiny content near a control → Popover",
+        "Primary page content → it belongs in the page"
+      ],
+      "related": [
+        "modal",
+        "ui-shell-header",
+        "popover",
+        "filtering"
+      ]
+    },
+    {
+      "section": "patterns",
+      "slug": "common-actions",
+      "path": "docs/patterns/common-actions.md",
+      "title": "Common actions",
+      "summary": "Where actions live, how many are visible, and how create, edit, delete, save, cancel and export behave everywhere.",
+      "status": "stable",
+      "import": "import { PageHeader } from \"@/components/corpus/page-header\"",
+      "use_when": [
+        "Any page, table, card or panel that exposes actions"
+      ],
+      "avoid_when": [
+        "Inventing a new placement or verb for an action that already has one here"
+      ],
+      "related": [
+        "button",
+        "menu-buttons",
+        "dialogs",
+        "notifications"
+      ]
+    },
+    {
+      "section": "patterns",
+      "slug": "dialogs",
+      "path": "docs/patterns/dialogs.md",
+      "title": "Dialogs",
+      "summary": "Choosing between Modal, RightPanel, Popover, Toggletip and toast — and writing dialogs people understand in one glance.",
+      "status": "stable",
+      "use_when": [
+        "Any time UI needs to appear on top of the current page"
+      ],
+      "avoid_when": [
+        "Content that could simply live on the page"
+      ],
+      "related": [
+        "modal",
+        "ui-shell-right-panel",
+        "popover",
+        "notification"
+      ]
+    },
+    {
+      "section": "patterns",
+      "slug": "disabled-states",
+      "path": "docs/patterns/disabled-states.md",
+      "title": "Disabled states",
+      "summary": "When to disable, hide, or keep enabled and explain. Disabled without a reason is a dead end.",
+      "status": "stable",
+      "use_when": [
+        "A control exists but is temporarily not actionable"
+      ],
+      "avoid_when": [
+        "Signalling form validity (keep submit enabled, validate on click)",
+        "Permanently unavailable features (hide them)"
+      ],
+      "related": [
+        "read-only-states",
+        "button",
+        "tooltip"
+      ]
+    },
+    {
+      "section": "patterns",
+      "slug": "disclosures",
+      "path": "docs/patterns/disclosures.md",
+      "title": "Disclosures",
+      "summary": "Progressive disclosure — show what most people need, reveal the rest on demand.",
+      "status": "stable",
+      "import": "import { Disclosure } from \"@/components/corpus/accordion\"",
+      "use_when": [
+        "Advanced options most users don't touch",
+        "Secondary details that would clutter a summary"
+      ],
+      "avoid_when": [
+        "Hiding required fields",
+        "Hiding errors or critical information"
+      ],
+      "related": [
+        "accordion",
+        "tile",
+        "overflow-content"
+      ]
+    },
+    {
+      "section": "patterns",
+      "slug": "empty-states",
+      "path": "docs/patterns/empty-states.md",
+      "title": "Empty states",
+      "summary": "Every region that can be empty has a designed empty state — first use, no results, or error — each with a next step.",
+      "status": "stable",
+      "import": "import { EmptyState } from \"@/components/corpus/empty-state\"",
+      "use_when": [
+        "A table, list, dashboard widget or page has nothing to show"
+      ],
+      "avoid_when": [
+        "Showing a blank area or a lonely \"No data\""
+      ],
+      "related": [
+        "data-table",
+        "search",
+        "filtering",
+        "loading"
+      ]
+    },
+    {
+      "section": "patterns",
+      "slug": "filtering",
+      "path": "docs/patterns/filtering.md",
+      "title": "Filtering",
+      "summary": "Narrowing a collection by attributes. Search + filters + visible applied state + an instant result count.",
+      "status": "stable",
+      "use_when": [
+        "Collections large enough that users look for subsets (tables, catalogs, logs)"
+      ],
+      "avoid_when": [
+        "< ~20 items → sorting and scanning are enough"
+      ],
+      "related": [
+        "search",
+        "data-table",
+        "tag",
+        "dropdown",
+        "ui-shell-right-panel"
+      ]
+    },
+    {
+      "section": "patterns",
+      "slug": "fluid-styles",
+      "path": "docs/patterns/fluid-styles.md",
+      "title": "Fluid styles",
+      "summary": "Fluid inputs — fields tile edge to edge with labels inside. For dense expert data entry.",
+      "status": "stable",
+      "import": "import { FluidForm } from \"@/components/corpus/form\"",
+      "use_when": [
+        "Expert users entering lots of structured data (configurations, admin records, bookings)",
+        "Forms inside dense tools where vertical space is precious"
+      ],
+      "avoid_when": [
+        "Consumer/first-time flows → default form style (more whitespace, calmer)",
+        "Mixing with default fields in the same form"
+      ],
+      "related": [
+        "form",
+        "forms",
+        "text-input"
+      ]
+    },
+    {
+      "section": "patterns",
+      "slug": "forms",
+      "path": "docs/patterns/forms.md",
+      "title": "Forms",
+      "summary": "How forms are structured end to end — single page vs multi-step, layout, validation, submission and recovery.",
+      "status": "stable",
+      "use_when": [
+        "Collecting data from the user"
+      ],
+      "avoid_when": [
+        "Instant settings → Toggle rows",
+        "Editing one value → inline read-only → edit"
+      ],
+      "related": [
+        "form",
+        "text-input",
+        "fluid-styles",
+        "progress-indicator",
+        "read-only-states"
+      ]
+    },
+    {
+      "section": "patterns",
+      "slug": "global-header",
+      "path": "docs/patterns/global-header.md",
+      "title": "Global header",
+      "summary": "What goes in the product-wide header, in which order, and what each global action opens.",
+      "status": "stable",
+      "import": "import { Header, HeaderGlobalAction } from \"@/components/corpus/ui-shell\"",
+      "use_when": [
+        "Every authenticated product"
+      ],
+      "avoid_when": [
+        "Page-specific actions in the global header → PageHeader"
+      ],
+      "related": [
+        "ui-shell-header",
+        "ui-shell-right-panel",
+        "search"
+      ]
+    },
+    {
+      "section": "patterns",
+      "slug": "loading",
+      "path": "docs/patterns/loading.md",
+      "title": "Loading",
+      "summary": "Orchestrating loading across a page — progressive, region by region, without layout shift or spinner soup.",
+      "status": "stable",
+      "use_when": [
+        "Any view that fetches data"
+      ],
+      "avoid_when": [
+        "Blocking the whole page for partial data"
+      ],
+      "related": [
+        "loading",
+        "inline-loading",
+        "progress-bar",
+        "empty-states"
+      ]
+    },
+    {
+      "section": "patterns",
+      "slug": "login",
+      "path": "docs/patterns/login.md",
+      "title": "Login",
+      "summary": "Two-step, calm, secure login — identifier first, then password or SSO. Errors never leak whether an account exists.",
+      "status": "stable",
+      "import": "import { LoginBlock } from \"@/components/corpus/blocks/login\"",
+      "use_when": [
+        "Any sign-in screen"
+      ],
+      "avoid_when": [
+        "Custom login layouts per product → use LoginBlock and theme it"
+      ],
+      "related": [
+        "forms",
+        "text-input",
+        "notification"
+      ]
+    },
+    {
+      "section": "patterns",
+      "slug": "notifications",
+      "path": "docs/patterns/notifications.md",
+      "title": "Notifications",
+      "summary": "Matching the message to the right channel — toast, inline, modal, callout, or the notification panel.",
+      "status": "stable",
+      "use_when": [
+        "The system needs to tell the user something"
+      ],
+      "avoid_when": [
+        "Messages the user doesn't need to act on or know about → don't send them"
+      ],
+      "related": [
+        "notification",
+        "dialogs",
+        "status-indicators",
+        "global-header"
+      ]
+    },
+    {
+      "section": "patterns",
+      "slug": "overflow-content",
+      "path": "docs/patterns/overflow-content.md",
+      "title": "Overflow content",
+      "summary": "What to do when content doesn't fit — truncate, wrap, clamp, scroll, or collapse — and what must never be cut.",
+      "status": "stable",
+      "import": "import { Truncate } from \"@/components/corpus/truncate\"",
+      "use_when": [
+        "Long names in tables, cards, nav, breadcrumbs",
+        "Long descriptions in constrained layouts",
+        "Too many tags/actions/items for the space"
+      ],
+      "avoid_when": [
+        "Truncating labels, errors, buttons, or anything the user must read to act"
+      ],
+      "related": [
+        "tooltip",
+        "tag",
+        "breadcrumb",
+        "data-table",
+        "disclosures"
+      ]
+    },
+    {
+      "section": "patterns",
+      "slug": "read-only-states",
+      "path": "docs/patterns/read-only-states.md",
+      "title": "Read-only states",
+      "summary": "Showing values the user can see but not change — and switching between viewing and editing.",
+      "status": "stable",
+      "use_when": [
+        "Detail pages where viewing is more common than editing",
+        "Values set by the system or by someone with more permissions"
+      ],
+      "avoid_when": [
+        "Using disabled fields to display data (low contrast, not selectable)"
+      ],
+      "related": [
+        "disabled-states",
+        "structured-list",
+        "forms"
+      ]
+    },
+    {
+      "section": "patterns",
+      "slug": "search",
+      "path": "docs/patterns/search.md",
+      "title": "Search",
+      "summary": "Global and scoped search — where it lives, how results appear, and how to handle nothing found.",
+      "status": "stable",
+      "use_when": [
+        "Users know what they're looking for by name/ID"
+      ],
+      "avoid_when": [
+        "Browsing by attributes → Filtering"
+      ],
+      "related": [
+        "search-component",
+        "filtering",
+        "empty-states",
+        "global-header"
+      ]
+    },
+    {
+      "section": "patterns",
+      "slug": "status-indicators",
+      "path": "docs/patterns/status-indicators.md",
+      "title": "Status indicators",
+      "summary": "One vocabulary of states across the product — shape, color and word together, mapped in the taxonomy.",
+      "status": "stable",
+      "import": "import { StatusIndicator } from \"@/components/corpus/status-indicator\"",
+      "use_when": [
+        "Showing the state of an object (job, shipment, invoice, server)"
+      ],
+      "avoid_when": [
+        "Categorising (not a state) → Tag neutral",
+        "Transient feedback about a user action → toast / InlineLoading"
+      ],
+      "related": [
+        "tag",
+        "notification",
+        "data-table"
+      ]
+    },
+    {
+      "section": "patterns",
+      "slug": "text-toolbar",
+      "path": "docs/patterns/text-toolbar.md",
+      "title": "Text toolbar",
+      "summary": "Formatting controls for rich-text editing — grouped, labelled, keyboard-friendly, with shortcuts.",
+      "status": "stable",
+      "import": "import { Toolbar, ToolbarButton, ToolbarToggle, ToolbarToggleGroup, ToolbarSeparator } from \"@/components/corpus/toolbar\"",
+      "use_when": [
+        "Rich text editors (comments, descriptions, email drafts, notes)"
+      ],
+      "avoid_when": [
+        "Plain text fields → TextArea",
+        "Page-level actions → PageHeader / ButtonSet"
+      ],
+      "related": [
+        "button",
+        "tooltip"
+      ]
+    }
+  ]
+}

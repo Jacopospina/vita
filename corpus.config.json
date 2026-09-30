@@ -1,0 +1,10 @@
+{
+  "componentsDir": "src/registry",
+  "stylesDir": "src/styles",
+  "componentsAlias": "@/registry",
+  "taxonomy": "templates/taxonomy.template.json",
+  "audit": {
+    "include": ["src/playground"],
+    "exclude": ["src/registry", "src/styles", "src/playground/sources.ts"]
+  }
+}

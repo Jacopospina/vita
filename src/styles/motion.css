@@ -1,0 +1,58 @@
+/*
+ * CORPUS MOTION
+ * Productive vs expressive durations & easings, plus a physical spring.
+ * Every duration is multiplied by --corpus-motion-scale. Reduced motion swaps
+ * movement for opacity (cross-fade instead of movement), never removes feedback.
+ */
+:root {
+  --_m: var(--corpus-motion-scale);
+  --corpus-duration-fast-01: calc(70ms * var(--_m));     /* micro: toggle, checkbox, button press */
+  --corpus-duration-fast-02: calc(110ms * var(--_m));    /* fades, hover, color changes */
+  --corpus-duration-moderate-01: calc(150ms * var(--_m));/* small expand: dropdown, tooltip, popover */
+  --corpus-duration-moderate-02: calc(240ms * var(--_m));/* expand: accordion, toast, side panel */
+  --corpus-duration-slow-01: calc(400ms * var(--_m));    /* large: modal, page-level transition */
+  --corpus-duration-slow-02: calc(700ms * var(--_m));    /* background dim, expressive hero */
+
+  --corpus-ease-productive: cubic-bezier(0.2, 0, 0.38, 0.9);
+  --corpus-ease-productive-enter: cubic-bezier(0, 0, 0.38, 0.9);
+  --corpus-ease-productive-exit: cubic-bezier(0.2, 0, 1, 0.9);
+  --corpus-ease-expressive: cubic-bezier(0.4, 0.14, 0.3, 1);
+  --corpus-ease-expressive-enter: cubic-bezier(0, 0, 0.3, 1);
+  --corpus-ease-expressive-exit: cubic-bezier(0.4, 0.14, 1, 1);
+  /* critically damped spring (no visible bounce) */
+  --corpus-ease-spring: linear(0, 0.18 4%, 0.5 11%, 0.76 19%, 0.9 27%, 0.97 37%, 1.005 50%, 1.008 62%, 1.002 80%, 1);
+}
+
+@keyframes corpus-fade-in { from { opacity: 0 } }
+@keyframes corpus-fade-out { to { opacity: 0 } }
+@keyframes corpus-scale-in { from { opacity: 0; transform: scale(0.96) } }
+@keyframes corpus-scale-out { to { opacity: 0; transform: scale(0.96) } }
+@keyframes corpus-slide-up-in { from { opacity: 0; transform: translateY(0.5rem) } }
+@keyframes corpus-slide-down-out { to { opacity: 0; transform: translateY(0.5rem) } }
+@keyframes corpus-slide-left-in { from { transform: translateX(100%) } }
+@keyframes corpus-slide-right-out { to { transform: translateX(100%) } }
+@keyframes corpus-slide-right-in { from { transform: translateX(-100%) } }
+@keyframes corpus-slide-left-out { to { transform: translateX(-100%) } }
+@keyframes corpus-collapse-down { from { height: 0 } to { height: var(--radix-accordion-content-height, var(--radix-collapsible-content-height)) } }
+@keyframes corpus-collapse-up { from { height: var(--radix-accordion-content-height, var(--radix-collapsible-content-height)) } to { height: 0 } }
+@keyframes corpus-spin { to { transform: rotate(360deg) } }
+@keyframes corpus-shimmer { from { background-position: 150% 0 } to { background-position: -50% 0 } }
+@keyframes corpus-indeterminate { from { transform: translateX(-100%) } to { transform: translateX(250%) } }
+@keyframes corpus-pulse { 50% { opacity: 0.55 } }
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --animate-enter-scale: corpus-fade-in var(--corpus-duration-fast-02) linear;
+    --animate-exit-scale: corpus-fade-out var(--corpus-duration-fast-02) linear;
+    --animate-enter-slide-up: corpus-fade-in var(--corpus-duration-fast-02) linear;
+    --animate-exit-slide-down: corpus-fade-out var(--corpus-duration-fast-02) linear;
+    --animate-enter-panel-right: corpus-fade-in var(--corpus-duration-fast-02) linear;
+    --animate-exit-panel-right: corpus-fade-out var(--corpus-duration-fast-02) linear;
+    --animate-enter-panel-left: corpus-fade-in var(--corpus-duration-fast-02) linear;
+    --animate-exit-panel-left: corpus-fade-out var(--corpus-duration-fast-02) linear;
+    --animate-expand: none;
+    --animate-collapse: none;
+    --animate-shimmer: corpus-pulse 2s linear infinite;
+    --animate-indeterminate: corpus-pulse 1.5s linear infinite;
+  }
+}

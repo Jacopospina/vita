@@ -1,0 +1,102 @@
+import * as React from "react"
+import { Slot } from "radix-ui"
+import { cva, type VariantProps } from "class-variance-authority"
+import { cn } from "@/registry/lib/utils"
+
+/**
+ * Layout primitives. Spacing scale (2·4·8·12·16·24·32·40·48·64·80·96·160 px).
+ * Gap names: none 0 · 3xs 2 · 2xs 4 · xs 8 · sm 12 · md 16 · lg 24 · xl 32 · 2xl 48 · 3xl 64
+ */
+const gap = {
+  none: "gap-0",
+  "3xs": "gap-0.5",
+  "2xs": "gap-1",
+  xs: "gap-2",
+  sm: "gap-3",
+  md: "gap-4",
+  lg: "gap-6",
+  xl: "gap-8",
+  "2xl": "gap-12",
+  "3xl": "gap-16",
+} as const
+
+const stackVariants = cva("flex", {
+  variants: {
+    direction: { column: "flex-col", row: "flex-row" },
+    gap,
+    align: { start: "items-start", center: "items-center", end: "items-end", stretch: "items-stretch", baseline: "items-baseline" },
+    justify: { start: "justify-start", center: "justify-center", end: "justify-end", between: "justify-between" },
+    wrap: { true: "flex-wrap", false: "" },
+  },
+  defaultVariants: { direction: "column", gap: "md", align: "stretch", justify: "start", wrap: false },
+})
+
+export interface StackProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof stackVariants> {
+  asChild?: boolean
+}
+
+/** Stack — vertical rhythm . The default container for anything laid out top-to-bottom. */
+export function Stack({ className, direction, gap, align, justify, wrap, asChild, ...props }: StackProps) {
+  const Comp = asChild ? Slot.Root : "div"
+  return <Comp className={cn(stackVariants({ direction, gap, align, justify, wrap }), className)} {...props} />
+}
+
+/** Inline — horizontal row . Defaults to centred items and a 8px gap. */
+export function Inline({ gap = "xs", align = "center", ...props }: Omit<StackProps, "direction">) {
+  return <Stack direction="row" gap={gap} align={align} {...props} />
+}
+
+/** Spacer — pushes siblings apart inside an Inline/Stack. */
+export function Spacer() {
+  return <div aria-hidden className="flex-1" />
+}
+
+/* ---------------- 16-column grid ---------------- */
+
+const gridVariants = cva("grid grid-cols-4 md:grid-cols-8 lg:grid-cols-16", {
+  variants: {
+    gutter: { wide: "gap-x-8", narrow: "gap-x-4", condensed: "gap-x-px" },
+    rowGap: { none: "gap-y-0", md: "gap-y-4", lg: "gap-y-8" },
+  },
+  defaultVariants: { gutter: "wide", rowGap: "md" },
+})
+
+export interface GridProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof gridVariants> {}
+
+/** Grid — 16 columns (lg) · 8 (md) · 4 (sm). Wide gutter 32px for content, narrow 16px for dense data, condensed 1px for tiles. */
+export function Grid({ className, gutter, rowGap, ...props }: GridProps) {
+  return <div className={cn(gridVariants({ gutter, rowGap }), className)} {...props} />
+}
+
+type Span = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | "full"
+const smSpan: Record<string, string> = { 1: "col-span-1", 2: "col-span-2", 3: "col-span-3", 4: "col-span-4", full: "col-span-full" }
+const mdSpan: Record<string, string> = { 1: "md:col-span-1", 2: "md:col-span-2", 3: "md:col-span-3", 4: "md:col-span-4", 5: "md:col-span-5", 6: "md:col-span-6", 7: "md:col-span-7", 8: "md:col-span-8", full: "md:col-span-full" }
+const lgSpan: Record<string, string> = {
+  1: "lg:col-span-1", 2: "lg:col-span-2", 3: "lg:col-span-3", 4: "lg:col-span-4", 5: "lg:col-span-5", 6: "lg:col-span-6", 7: "lg:col-span-7", 8: "lg:col-span-8",
+  9: "lg:col-span-9", 10: "lg:col-span-10", 11: "lg:col-span-11", 12: "lg:col-span-12", 13: "lg:col-span-13", 14: "lg:col-span-14", 15: "lg:col-span-15", 16: "lg:col-span-16", full: "lg:col-span-full",
+}
+
+export interface ColumnProps extends React.HTMLAttributes<HTMLDivElement> {
+  sm?: Span
+  md?: Span
+  lg?: Span
+}
+
+export function Column({ sm = "full", md, lg, className, ...props }: ColumnProps) {
+  return <div className={cn(smSpan[String(sm)] ?? "col-span-full", md && mdSpan[String(md)], lg && lgSpan[String(lg)], className)} {...props} />
+}
+
+/** Container — page content width. `readable` caps line length (~70ch) for long-form content. */
+export function Container({ width = "wide", className, ...props }: React.HTMLAttributes<HTMLDivElement> & { width?: "wide" | "readable" | "full" }) {
+  return (
+    <div
+      className={cn(
+        "mx-auto w-full px-4 md:px-8",
+        width === "wide" && "max-w-7xl",
+        width === "readable" && "max-w-prose",
+        className,
+      )}
+      {...props}
+    />
+  )
+}

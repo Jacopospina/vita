@@ -1,0 +1,33 @@
+---
+title: Dropdown
+summary: Custom listbox for choosing values. Dropdown (one), Combobox (one, filterable) and MultiSelect (many).
+status: stable
+import: "import { Dropdown, Combobox, MultiSelect } from \"@/components/corpus/dropdown\""
+use_when:
+  - Dropdown — one of 7–20 options, options need descriptions/icons, or consistent styling in app chrome
+  - Combobox — one of 20+ options where users know what to type (customer, country, carrier)
+  - MultiSelect — several of more than 6 options (markets, tags, assignees)
+  - Inline type — compact "Sort by: Newest ▾" in toolbars
+avoid_when:
+  - 2–6 options → RadioGroup (or ContentSwitcher for views)
+  - Actions → Menu / MenuButton (dropdowns choose values; menus do things)
+  - Plain long lists in mobile forms → Select
+related: [select, radio-button, checkbox, menu, filtering]
+---
+
+## Variants
+
+| | Use |
+|---|---|
+| `Dropdown` default | Field in forms/panels, with label, helper and validation |
+| `Dropdown type="inline"` | Borderless, inside toolbars and sentences ("Sort by ▾") |
+| `Combobox` | Type-to-filter, keyboard-first, clearable |
+| `MultiSelect` | Checkbox list; the trigger shows a count tag plus selected labels; clear-all ✕ |
+
+## Corpus opinions
+
+1. **Values, not actions.** If selecting an item triggers something immediately, it's a Menu.
+2. **Descriptions** earn their space only when options are hard to tell apart ("High — Handle today").
+3. **Combobox shows "No results"** rather than an empty list, and never auto-selects on blur.
+4. **MultiSelect** closes only on outside click or Escape. Each toggle applies immediately inside the popover. Show the selection as removable tags below the field when it matters to see it (filters).
+5. **Selected item** is marked with a checkmark on the right, not by color only.

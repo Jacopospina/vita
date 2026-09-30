@@ -1,0 +1,23 @@
+/* Long-form docs typography. Tokens only. */
+.corpus-prose { color: var(--corpus-foreground); font-size: var(--corpus-text-body-lg); line-height: 1.6; max-width: 72ch; }
+.corpus-prose > * + * { margin-top: 1rem; }
+.corpus-prose h1 { font-size: var(--corpus-text-title-1); font-weight: 650; letter-spacing: -0.015em; line-height: 1.2; }
+.corpus-prose h2 { font-size: var(--corpus-text-title-2); font-weight: 600; letter-spacing: -0.01em; line-height: 1.25; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--corpus-border-subtle); }
+.corpus-prose h3 { font-size: var(--corpus-text-title-3); font-weight: 600; margin-top: 2rem; }
+.corpus-prose h4 { font-size: var(--corpus-text-headline); font-weight: 600; margin-top: 1.5rem; }
+.corpus-prose p, .corpus-prose li { color: var(--corpus-foreground); }
+.corpus-prose ul { list-style: disc; padding-left: 1.25rem; }
+.corpus-prose ol { list-style: decimal; padding-left: 1.25rem; }
+.corpus-prose li + li { margin-top: 0.25rem; }
+.corpus-prose li::marker { color: var(--corpus-muted-foreground); }
+.corpus-prose strong { font-weight: 600; }
+.corpus-prose a { color: var(--corpus-link); text-underline-offset: 4px; }
+.corpus-prose a:hover { text-decoration: underline; }
+.corpus-prose code { font-family: var(--corpus-font-mono); font-size: 0.88em; background: var(--corpus-layer-2); padding: 0.1em 0.35em; border-radius: var(--corpus-radius-sm); }
+.corpus-prose pre { background: var(--corpus-layer-1); border-radius: var(--corpus-radius-md); padding: 1rem; overflow-x: auto; font-size: var(--corpus-text-footnote); line-height: 1.55; }
+.corpus-prose pre code { background: none; padding: 0; font-size: inherit; }
+.corpus-prose blockquote { border-left: 3px solid var(--corpus-primary); padding: 0.25rem 0 0.25rem 1rem; color: var(--corpus-foreground); font-size: var(--corpus-text-headline); font-weight: 500; }
+.corpus-prose table { width: 100%; border-collapse: collapse; font-size: var(--corpus-text-body); display: block; overflow-x: auto; }
+.corpus-prose th { text-align: left; font-weight: 600; background: var(--corpus-layer-2); padding: 0.5rem 0.75rem; white-space: nowrap; }
+.corpus-prose td { padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--corpus-border-subtle); vertical-align: top; }
+.corpus-prose hr { border: 0; border-top: 1px solid var(--corpus-border-subtle); margin: 2rem 0; }

@@ -1,0 +1,74 @@
+{
+  "$comment": "Corpus taxonomy — the ONE vocabulary of the product. Example values use the demo product 'Vita'. Maintained with the corpus-personas skill; enforced by corpus-content + corpus-audit (avoid list).",
+  "product": "Vita",
+  "personas": ["pricing-specialist", "operations-manager"],
+  "objects": {
+    "quote": {
+      "singular": "quote",
+      "plural": "quotes",
+      "definition": "A priced offer for moving goods on a lane, sent to a customer.",
+      "icon": "Document",
+      "overrides": { "operations-manager": { "singular": "offer", "plural": "offers" } }
+    },
+    "shipment": {
+      "singular": "shipment",
+      "plural": "shipments",
+      "definition": "Goods booked to move from origin to destination.",
+      "icon": "Delivery"
+    },
+    "customer": {
+      "singular": "customer",
+      "plural": "customers",
+      "definition": "The company that receives quotes and books shipments.",
+      "icon": "Enterprise"
+    },
+    "lane": {
+      "singular": "lane",
+      "plural": "lanes",
+      "definition": "An origin–destination pair with its own rates.",
+      "icon": "Direction"
+    }
+  },
+  "actions": {
+    "create": { "label": "Create {object}", "icon": "Add", "variant": "primary", "confirm": false },
+    "edit": { "label": "Edit", "icon": "Edit", "variant": "ghost", "confirm": false },
+    "duplicate": { "label": "Duplicate", "icon": "Copy", "variant": "menu", "confirm": false },
+    "send": { "label": "Send {object}", "icon": "Send", "variant": "primary", "confirm": true },
+    "archive": { "label": "Archive", "icon": "Archive", "variant": "menu", "confirm": false, "undo": true },
+    "delete": { "label": "Delete {object}", "icon": "TrashCan", "variant": "danger", "confirm": true },
+    "export": { "label": "Export", "icon": "Download", "variant": "tertiary", "confirm": false }
+  },
+  "statuses": {
+    "quote": {
+      "Draft": "draft",
+      "Sent": "pending",
+      "Awaiting customer": "pending",
+      "Accepted": "success",
+      "Expired": "warning",
+      "Rejected": "error"
+    },
+    "shipment": {
+      "Booked": "info",
+      "In transit": "in-progress",
+      "Delayed": "warning",
+      "Delivered": "success",
+      "Cancelled": "draft"
+    }
+  },
+  "avoid": {
+    "Submit": "a verb + object, e.g. \"Send quote\"",
+    "Oops": "say what happened and how to fix it",
+    "Successfully": "(remove — success is implied)",
+    "Estimate": "quote",
+    "Client": "customer",
+    "Sign in": "Log in",
+    "Sign out": "Log out"
+  },
+  "voice": {
+    "rules": ["Sentence case", "Front-load the key word", "Numerals for numbers", "No blame", "No 'please', 'simply', 'just'"],
+    "personas": {
+      "pricing-specialist": "Expert, terse, domain terms welcome (BAF, FCL, LDM).",
+      "operations-manager": "Plain language, outcome-first, no jargon."
+    }
+  }
+}

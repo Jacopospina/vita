@@ -1,0 +1,222 @@
+/*
+ * CORPUS — entry stylesheet. Import once at the app root.
+ * Tailwind's default palette, font sizes, radii, shadows and easings are REMOVED:
+ * only Corpus tokens exist as utilities, so off-system values cannot compile.
+ */
+@import "tailwindcss";
+@import "./theme.css";
+@import "./presets.css";
+@import "./tokens.css";
+@import "./motion.css";
+
+@custom-variant dark (&:where(.dark, .dark *, [data-theme="dark"], [data-theme="dark"] *));
+
+@theme inline {
+  /* wipe Tailwind defaults */
+  --color-*: initial;
+  --text-*: initial;
+  --radius-*: initial;
+  --shadow-*: initial;
+  --inset-shadow-*: initial;
+  --drop-shadow-*: initial;
+  --ease-*: initial;
+  --font-*: initial;
+  --blur-*: initial;
+  --tracking-*: initial;
+  --leading-*: initial;
+
+  /* colors */
+  --color-transparent: transparent;
+  --color-current: currentColor;
+  --color-background: var(--corpus-background);
+  --color-layer-1: var(--corpus-layer-1);
+  --color-layer-2: var(--corpus-layer-2);
+  --color-layer-3: var(--corpus-layer-3);
+  --color-raised: var(--corpus-raised);
+  --color-field: var(--corpus-field);
+  --color-overlay: var(--corpus-overlay);
+  --color-inverse: var(--corpus-inverse);
+  --color-inverse-foreground: var(--corpus-inverse-foreground);
+  --color-foreground: var(--corpus-foreground);
+  --color-muted-foreground: var(--corpus-muted-foreground);
+  --color-helper: var(--corpus-helper);
+  --color-placeholder: var(--corpus-placeholder);
+  --color-disabled-foreground: var(--corpus-disabled-foreground);
+  --color-border-subtle: var(--corpus-border-subtle);
+  --color-border: var(--corpus-border);
+  --color-border-strong: var(--corpus-border-strong);
+  --color-border-field: var(--corpus-border-field);
+  --color-primary: var(--corpus-primary);
+  --color-primary-hover: var(--corpus-primary-hover);
+  --color-primary-active: var(--corpus-primary-active);
+  --color-primary-foreground: var(--corpus-primary-foreground);
+  --color-primary-subtle: var(--corpus-primary-subtle);
+  --color-secondary: var(--corpus-secondary);
+  --color-secondary-hover: var(--corpus-secondary-hover);
+  --color-secondary-foreground: var(--corpus-secondary-foreground);
+  --color-link: var(--corpus-link);
+  --color-link-visited: var(--corpus-link-visited);
+  --color-focus: var(--corpus-focus);
+  --color-focus-inset: var(--corpus-focus-inset);
+  --color-hover: var(--corpus-hover);
+  --color-active: var(--corpus-active);
+  --color-selected: var(--corpus-selected);
+  --color-selected-foreground: var(--corpus-selected-foreground);
+  --color-skeleton: var(--corpus-skeleton);
+  --color-success: var(--corpus-success);
+  --color-success-subtle: var(--corpus-success-subtle);
+  --color-success-foreground: var(--corpus-success-foreground);
+  --color-warning: var(--corpus-warning);
+  --color-warning-subtle: var(--corpus-warning-subtle);
+  --color-warning-foreground: var(--corpus-warning-foreground);
+  --color-error: var(--corpus-error);
+  --color-error-subtle: var(--corpus-error-subtle);
+  --color-error-foreground: var(--corpus-error-foreground);
+  --color-error-hover: var(--corpus-error-hover);
+  --color-info: var(--corpus-info);
+  --color-info-subtle: var(--corpus-info-subtle);
+  --color-info-foreground: var(--corpus-info-foreground);
+  --color-ai-from: var(--corpus-ai-from);
+  --color-ai-to: var(--corpus-ai-to);
+  --color-ai-subtle: var(--corpus-ai-subtle);
+
+  /* typography roles */
+  --font-sans: var(--corpus-font-sans);
+  --font-display: var(--corpus-font-display);
+  --font-mono: var(--corpus-font-mono);
+
+  --text-caption: var(--corpus-text-caption);
+  --text-caption--line-height: 1.4;
+  --text-caption--letter-spacing: 0.01em;
+  --text-footnote: var(--corpus-text-footnote);
+  --text-footnote--line-height: 1.4;
+  --text-footnote--letter-spacing: 0.005em;
+  --text-body: var(--corpus-text-body);
+  --text-body--line-height: 1.45;
+  --text-body-lg: var(--corpus-text-body-lg);
+  --text-body-lg--line-height: 1.5;
+  --text-headline: var(--corpus-text-headline);
+  --text-headline--line-height: 1.35;
+  --text-headline--font-weight: 600;
+  --text-title-3: var(--corpus-text-title-3);
+  --text-title-3--line-height: 1.3;
+  --text-title-3--font-weight: 600;
+  --text-title-3--letter-spacing: -0.005em;
+  --text-title-2: var(--corpus-text-title-2);
+  --text-title-2--line-height: 1.25;
+  --text-title-2--font-weight: 600;
+  --text-title-2--letter-spacing: -0.01em;
+  --text-title-1: var(--corpus-text-title-1);
+  --text-title-1--line-height: 1.2;
+  --text-title-1--font-weight: 650;
+  --text-title-1--letter-spacing: -0.015em;
+  --text-large-title: var(--corpus-text-large-title);
+  --text-large-title--line-height: 1.15;
+  --text-large-title--font-weight: 700;
+  --text-large-title--letter-spacing: -0.02em;
+  --text-display: var(--corpus-text-display);
+  --text-display--line-height: 1.05;
+  --text-display--font-weight: 700;
+  --text-display--letter-spacing: -0.025em;
+
+  /* shape */
+  --radius-sm: var(--corpus-radius-sm);
+  --radius-md: var(--corpus-radius-md);
+  --radius-lg: var(--corpus-radius-lg);
+  --radius-xl: var(--corpus-radius-xl);
+
+  /* elevation */
+  --shadow-raised: var(--corpus-shadow-raised);
+  --shadow-floating: var(--corpus-shadow-floating);
+  --shadow-overlay: var(--corpus-shadow-overlay);
+
+  /* density-driven sizes: h-control-md, px-inset, … */
+  --spacing-control-xs: var(--corpus-control-xs);
+  --spacing-control-sm: var(--corpus-control-sm);
+  --spacing-control-md: var(--corpus-control-md);
+  --spacing-control-lg: var(--corpus-control-lg);
+  --spacing-control-xl: var(--corpus-control-xl);
+  --spacing-inset-sm: var(--corpus-inset-sm);
+  --spacing-inset: var(--corpus-inset);
+  --spacing-inset-lg: var(--corpus-inset-lg);
+
+  /* motion */
+  --ease-productive: var(--corpus-ease-productive);
+  --ease-productive-enter: var(--corpus-ease-productive-enter);
+  --ease-productive-exit: var(--corpus-ease-productive-exit);
+  --ease-expressive: var(--corpus-ease-expressive);
+  --ease-expressive-enter: var(--corpus-ease-expressive-enter);
+  --ease-expressive-exit: var(--corpus-ease-expressive-exit);
+  --ease-spring: var(--corpus-ease-spring);
+  --default-transition-duration: var(--corpus-duration-fast-02);
+  --default-transition-timing-function: var(--corpus-ease-productive);
+}
+
+/* Animations are NOT inline so reduced-motion can swap them at runtime. */
+@theme {
+  --animate-enter-scale: corpus-scale-in var(--corpus-duration-moderate-01) var(--corpus-ease-productive-enter);
+  --animate-exit-scale: corpus-scale-out var(--corpus-duration-fast-02) var(--corpus-ease-productive-exit);
+  --animate-enter-fade: corpus-fade-in var(--corpus-duration-fast-02) var(--corpus-ease-productive-enter);
+  --animate-exit-fade: corpus-fade-out var(--corpus-duration-fast-02) var(--corpus-ease-productive-exit);
+  --animate-enter-slide-up: corpus-slide-up-in var(--corpus-duration-moderate-02) var(--corpus-ease-expressive-enter);
+  --animate-exit-slide-down: corpus-slide-down-out var(--corpus-duration-moderate-01) var(--corpus-ease-productive-exit);
+  --animate-enter-panel-right: corpus-slide-left-in var(--corpus-duration-moderate-02) var(--corpus-ease-expressive-enter);
+  --animate-exit-panel-right: corpus-slide-right-out var(--corpus-duration-moderate-01) var(--corpus-ease-productive-exit);
+  --animate-enter-panel-left: corpus-slide-right-in var(--corpus-duration-moderate-02) var(--corpus-ease-expressive-enter);
+  --animate-exit-panel-left: corpus-slide-left-out var(--corpus-duration-moderate-01) var(--corpus-ease-productive-exit);
+  --animate-expand: corpus-collapse-down var(--corpus-duration-moderate-02) var(--corpus-ease-productive);
+  --animate-collapse: corpus-collapse-up var(--corpus-duration-moderate-01) var(--corpus-ease-productive);
+  --animate-spin: corpus-spin 690ms linear infinite;
+  --animate-shimmer: corpus-shimmer 1.6s linear infinite;
+  --animate-indeterminate: corpus-indeterminate 1.4s var(--corpus-ease-productive) infinite;
+}
+
+/* Motion duration utilities */
+@utility duration-fast-01 { transition-duration: var(--corpus-duration-fast-01); }
+@utility duration-fast-02 { transition-duration: var(--corpus-duration-fast-02); }
+@utility duration-moderate-01 { transition-duration: var(--corpus-duration-moderate-01); }
+@utility duration-moderate-02 { transition-duration: var(--corpus-duration-moderate-02); }
+@utility duration-slow-01 { transition-duration: var(--corpus-duration-slow-01); }
+@utility duration-slow-02 { transition-duration: var(--corpus-duration-slow-02); }
+
+/* The one focus treatment. Use `focus-ring` on anything focusable that isn't an Corpus component. */
+@utility focus-ring {
+  &:focus-visible {
+    outline: 2px solid var(--corpus-focus);
+    outline-offset: 1px;
+  }
+}
+@utility focus-ring-inset {
+  &:focus-visible {
+    outline: 2px solid var(--corpus-focus);
+    outline-offset: -2px;
+  }
+}
+
+@utility ai-gradient-border {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(var(--corpus-ai-subtle), var(--corpus-ai-subtle)) padding-box,
+    linear-gradient(135deg, var(--corpus-ai-from), var(--corpus-ai-to)) border-box;
+}
+@utility ai-gradient-text {
+  background: linear-gradient(135deg, var(--corpus-ai-from), var(--corpus-ai-to));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@layer base {
+  *, ::before, ::after { border-color: var(--corpus-border); }
+  html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+  body {
+    background: var(--corpus-background);
+    color: var(--corpus-foreground);
+    font-family: var(--corpus-font-sans);
+    font-size: var(--corpus-text-body);
+    line-height: 1.45;
+    font-feature-settings: "cv11", "ss01";
+  }
+  ::selection { background: var(--corpus-primary-subtle); }
+  :focus-visible { outline: 2px solid var(--corpus-focus); outline-offset: 1px; }
+}
