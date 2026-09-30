@@ -8,7 +8,7 @@ import { Loading, InlineLoading, Skeleton, SkeletonText } from "@/registry/ui/lo
 import { InlineNotification, Callout, toast } from "@/registry/ui/notification"
 import { ProgressBar } from "@/registry/ui/progress-bar"
 import { ProgressIndicator } from "@/registry/ui/progress-indicator"
-import { Modal, ModalTrigger, ModalContent, ModalHeader, ModalBody, ModalFooter, ConfirmModal } from "@/registry/ui/modal"
+import { Modal, ModalTrigger, ModalContent, ModalHeader, ModalBody, ModalFooter, ModalAction, ConfirmModal } from "@/registry/ui/modal"
 import { Popover, PopoverTrigger, PopoverContent, Toggletip } from "@/registry/ui/popover"
 import { Tooltip, DefinitionTooltip } from "@/registry/ui/tooltip"
 import { TextInput } from "@/registry/ui/text-input"
@@ -65,7 +65,7 @@ function ModalDemo() {
         <ModalContent size="sm">
           <ModalHeader label="Support triage" title="Deploy to production" description="The agent starts answering real tickets as soon as it's live." />
           <ModalBody><Stack gap="md"><TextInput label="Release note" defaultValue="Handles refund questions" /><Checkbox label="Notify the Support team" defaultChecked /></Stack></ModalBody>
-          <ModalFooter><Button variant="secondary">Save as draft</Button><Button shortcut="mod+s" onClick={() => toast({ kind: "success", title: "Agent deployed", subtitle: "Support triage is live" })}>Deploy agent</Button></ModalFooter>
+          <ModalFooter><Button variant="secondary">Save as draft</Button><ModalAction shortcut="mod+s" onAction={async () => { await new Promise((r) => setTimeout(r, 700)); toast({ kind: "success", title: "Agent deployed", subtitle: "Support triage is live" }) }}>Deploy agent</ModalAction></ModalFooter>
         </ModalContent>
       </Modal>
       <Modal>
@@ -78,8 +78,8 @@ function ModalDemo() {
       </Modal>
       <Button variant="secondary" onClick={() => setConfirm(true)}>Confirm</Button>
       <Button variant="danger-tertiary" onClick={() => setDanger(true)}>Danger modal</Button>
-      <ConfirmModal open={confirm} onOpenChange={setConfirm} title="Publish new instructions?" description="Every live run will use the new instructions from now on." confirmLabel="Publish instructions" onConfirm={() => setConfirm(false)} />
-      <ConfirmModal danger open={danger} onOpenChange={setDanger} title="Delete 3 agents?" description="They stop running and their history is removed. This can't be undone." confirmLabel="Delete agents" onConfirm={() => { setDanger(false); toast({ kind: "success", title: "3 agents deleted" }) }} />
+      <ConfirmModal open={confirm} onOpenChange={setConfirm} title="Publish new instructions?" description="Every live run will use the new instructions from now on." confirmLabel="Publish instructions" onConfirm={() => toast({ kind: "success", title: "Instructions published" })} />
+      <ConfirmModal danger open={danger} onOpenChange={setDanger} title="Delete 3 agents?" description="They stop running and their history is removed. This can't be undone." confirmLabel="Delete agents" onConfirm={async () => { await new Promise((r) => setTimeout(r, 500)); toast({ kind: "success", title: "3 agents deleted" }) }} />
     </Inline>
   )
 }

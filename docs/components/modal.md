@@ -25,6 +25,18 @@ related: [dialogs, ui-shell-right-panel, popover, notification]
 | Danger | danger | "Delete 3 agents?" |
 | Acknowledgement | primary only | Terms update |
 
+## Exit choreography
+
+- **Dismissed → falls.** ×, Escape or click-outside: a tiny hop, then it drops with gravity and tilts away.
+- **Sent → flies up.** When its data is submitted successfully (`ModalAction`, `ConfirmModal`), it dips, then slides out through the top of the viewport.
+- **Failed → stays.** If the action throws, the modal stays open so the user can fix it.
+
+```tsx
+<ModalFooter>
+  <ModalAction onAction={deployAgent}>Deploy agent</ModalAction>
+</ModalFooter>
+```
+
 ## Sizes
 
 - `xs`: confirmations.

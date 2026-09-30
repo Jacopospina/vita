@@ -22,7 +22,7 @@ avoid_when:
 | Productive (`motion-productive`) | Expressive (`motion-expressive`) |
 |---|---|
 | Hover, press and focus states | Page enter and leave choreography |
-| Dropdowns, menus, tooltips, popovers | Modals opening (`animate-enter-dialog`) |
+| Dropdowns, menus, tooltips, popovers | Modals opening, falling away when dismissed, flying out when sent |
 | Accordions, disclosures, reveals | Primary button press |
 | Table sorting, pagination, data rendering | Toasts and notifications appearing |
 | Checkbox, radio, toggle state | Side panels sliding in |

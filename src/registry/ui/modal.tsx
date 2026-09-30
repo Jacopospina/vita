@@ -1,8 +1,9 @@
 import * as React from "react"
+import { flushSync } from "react-dom"
 import { Dialog as DialogPrimitive } from "radix-ui"
 import { Close } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
-import { Button, ActionBar } from "@/registry/ui/button"
+import { Button, ActionBar, type ButtonProps } from "@/registry/ui/button"
 import { Icon } from "@/registry/ui/icon"
 
 /**
@@ -13,6 +14,17 @@ import { Icon } from "@/registry/ui/icon"
  * Sizes: xs (confirmations) · sm (short forms/alerts) · md (default forms) · lg (complex content, tables)
  */
 export const Modal = DialogPrimitive.Root
+
+/* Exit choreography: "fall" (dismissed) or "send" (data submitted successfully). */
+type ModalExit = "fall" | "send"
+const ModalCtx = React.createContext<{ send: () => void } | null>(null)
+
+/** Inside a modal: `send()` closes it with the "sent" exit (flies out the top). */
+export function useModal() {
+  const ctx = React.useContext(ModalCtx)
+  if (!ctx) throw new Error("useModal must be used inside <ModalContent>")
+  return ctx
+}
 export const ModalTrigger = DialogPrimitive.Trigger
 export const ModalClose = DialogPrimitive.Close
 
@@ -26,16 +38,28 @@ export interface ModalContentProps extends React.ComponentProps<typeof DialogPri
 
 export function ModalContent({ size = "md", danger, className, children, ...props }: ModalContentProps) {
   const closeRef = React.useRef<HTMLButtonElement>(null)
+  const [exit, setExit] = React.useState<ModalExit>("fall")
+  const ctx = React.useMemo(
+    () => ({
+      send: () => {
+        flushSync(() => setExit("send"))
+        closeRef.current?.click()
+      },
+    }),
+    [],
+  )
   return (
+    <ModalCtx.Provider value={ctx}>
     <DialogPrimitive.Portal>
       <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-overlay data-[state=open]:animate-enter-fade data-[state=closed]:animate-exit-fade" />
       <DialogPrimitive.Content
         onPointerDownOutside={danger ? (e) => e.preventDefault() : undefined}
         onOpenAutoFocus={danger ? (e) => { e.preventDefault(); closeRef.current?.focus() } : undefined}
+        data-exit={exit}
         className={cn(
           "fixed top-1/2 left-1/2 z-50 flex max-h-[calc(100dvh-4rem)] w-[calc(100vw-2rem)] -translate-x-1/2 -translate-y-1/2 flex-col",
           "overflow-hidden scope-xl border border-border-subtle bg-raised text-foreground shadow-overlay outline-none",
-          "data-[state=open]:animate-enter-dialog data-[state=closed]:animate-exit-dialog",
+          "data-[state=open]:animate-enter-dialog data-[state=closed]:data-[exit=fall]:animate-modal-fall data-[state=closed]:data-[exit=send]:animate-modal-send",
           sizes[size],
           className,
         )}
@@ -49,6 +73,35 @@ export function ModalContent({ size = "md", danger, className, children, ...prop
         </DialogPrimitive.Close>
       </DialogPrimitive.Content>
     </DialogPrimitive.Portal>
+    </ModalCtx.Provider>
+  )
+}
+
+/**
+ * ModalAction — the modal's primary action. Runs `onAction` (sync or async) with a loading state;
+ * on success the modal leaves with the "sent" exit, on failure it stays open for the user to fix.
+ */
+export function ModalAction({ onAction, children, loading, ...props }: Omit<ButtonProps, "onClick"> & { onAction: () => unknown | Promise<unknown> }) {
+  const { send } = useModal()
+  const [pending, setPending] = React.useState(false)
+  return (
+    <Button
+      {...props}
+      loading={pending || loading}
+      onClick={async () => {
+        setPending(true)
+        try {
+          await onAction()
+          send()
+        } catch {
+          /* stay open — the caller shows what went wrong */
+        } finally {
+          setPending(false)
+        }
+      }}
+    >
+      {children}
+    </Button>
   )
 }
 
@@ -95,7 +148,8 @@ export function ConfirmModal({
   title: string
   description?: React.ReactNode
   confirmLabel: string
-  onConfirm: () => void
+  /** May return a promise; the modal flies out (sent) on success and stays open on failure. */
+  onConfirm: () => unknown | Promise<unknown>
   danger?: boolean
   loading?: boolean
   children?: React.ReactNode
@@ -106,9 +160,9 @@ export function ConfirmModal({
         <ModalHeader title={title} description={description} />
         {children && <ModalBody>{children}</ModalBody>}
         <ModalFooter>
-          <Button variant={danger ? "danger" : "primary"} onClick={onConfirm} loading={loading}>
+          <ModalAction variant={danger ? "danger" : "primary"} onAction={onConfirm} loading={loading}>
             {confirmLabel}
-          </Button>
+          </ModalAction>
         </ModalFooter>
       </ModalContent>
     </Modal>
