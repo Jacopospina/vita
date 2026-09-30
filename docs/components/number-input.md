@@ -23,3 +23,9 @@ related: [slider, text-input]
 3. **Steppers are a convenience, not the main input.** They are skipped in the tab order; typing and arrow keys are primary.
 4. **Step** matches real-world precision (0.5 kg, not 0.01).
 5. **Empty is allowed** (`null`) unless the field is required. Don't default to 0 when 0 means something.
+
+## Choreography
+
+- **Values roll.** Changes from the steppers or arrow keys roll like a slot machine. While you type, the plain input shows, so typing is never delayed.
+- **Press and hold.** A press steps once. Hold for more than 100ms and it keeps stepping, faster the longer you hold, until you release or reach a bound.
+- **Square steppers.** Each stepper is as wide as the field is tall, at every size.

@@ -3,6 +3,8 @@ import { ArrowUp, Attachment, Microphone, MicrophoneFilled, Close } from "@/regi
 import { cn } from "@/registry/lib/utils"
 import { Icon } from "@/registry/ui/icon"
 import { IconButton } from "@/registry/ui/button"
+import { useExit } from "@/registry/hooks/use-exit"
+import { useFlip } from "@/registry/hooks/use-flip"
 
 /**
  * Composer — INTENT-FIRST INPUT. The user says what they want (type, speak, attach) and the system does the work.
@@ -29,6 +31,8 @@ export interface ComposerProps {
 export function Composer({ placeholder = "Describe what you need", onSubmit, suggestions = [], voice = true, attachments = true, loading, size = "md", className, label = "Message" }: ComposerProps) {
   const [value, setValue] = React.useState("")
   const [files, setFiles] = React.useState<File[]>([])
+  const chips = React.useRef<HTMLUListElement>(null)
+  useFlip(chips)
   const [listening, setListening] = React.useState(false)
   const recRef = React.useRef<SpeechRecognitionLike | null>(null)
   const inputRef = React.useRef<HTMLTextAreaElement>(null)
@@ -67,19 +71,12 @@ export function Composer({ placeholder = "Describe what you need", onSubmit, sug
           listening && "border-transparent outline-2 outline-primary",
         )}
       >
-        {files.length > 0 && (
-          <ul className="flex flex-wrap gap-1.5 px-3 pt-2.5">
-            {files.map((f, i) => (
-              <li key={i} className="inline-flex h-6 items-center gap-1 rounded-full bg-layer-2 pr-0.5 pl-2 text-caption">
-                <Icon as={Attachment} size="sm" />
-                <span className="max-w-40 truncate">{f.name}</span>
-                <button type="button" aria-label={`Remove ${f.name}`} onClick={() => setFiles((x) => x.filter((_, j) => j !== i))} className="flex size-5 items-center justify-center rounded-full hover:bg-hover focus-ring">
-                  <Icon as={Close} size="sm" />
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
+        {/* Always mounted: chips enter/exit and the rest glide (FLIP). Keyed by file identity, never by index. */}
+        <ul ref={chips} className={cn("flex flex-wrap gap-1.5 px-3 pt-2.5", files.length === 0 && "hidden")}>
+          {files.map((f) => (
+            <AttachmentChip key={`${f.name}-${f.size}-${f.lastModified}`} file={f} onRemove={() => setFiles((x) => x.filter((y) => y !== f))} />
+          ))}
+        </ul>
         <textarea
           ref={inputRef}
           aria-label={label}
@@ -127,5 +124,18 @@ export function Composer({ placeholder = "Describe what you need", onSubmit, sug
         </div>
       )}
     </div>
+  )
+}
+
+function AttachmentChip({ file, onRemove }: { file: File; onRemove: () => void }) {
+  const [leaving, exit] = useExit()
+  return (
+    <li className={cn("inline-flex h-6 items-center gap-1 rounded-full bg-layer-2 pr-0.5 pl-2 text-caption", leaving ? "animate-exit-scale" : "animate-enter-scale")}>
+      <Icon as={Attachment} size="sm" />
+      <span className="max-w-40 truncate">{file.name}</span>
+      <button type="button" aria-label={`Remove ${file.name}`} onClick={() => exit(onRemove)} className="flex size-5 items-center justify-center rounded-full hover:bg-hover focus-ring">
+        <Icon as={Close} size="sm" />
+      </button>
+    </li>
   )
 }

@@ -4,6 +4,7 @@ import { cn } from "@/registry/lib/utils"
 import { Icon } from "@/registry/ui/icon"
 import { Button } from "@/registry/ui/button"
 import { useExit } from "@/registry/hooks/use-exit"
+import { useFlip } from "@/registry/hooks/use-flip"
 import { ProgressRing } from "@/registry/ui/progress-bar"
 import { IconPlaceholder } from "@/registry/ui/icon-placeholder"
 import { animateChildren } from "@/registry/ui/animated"
@@ -269,8 +270,8 @@ function Story({ story }: { story?: CapsuleStory }) {
 
 /**
  * Capsule — the quick-feedback capsule. ALWAYS: icon left · title/subtitle centre · semantic story right.
- * Choreography (productive — no bounce): a compact pill showing ONLY the story (or the icon, when there is no story)
- * slides down from outside the viewport with a fade; ~400ms in it widens: the icon slides in on the left, the title
+ * Choreography — the same character as the toast banner, from the top instead of the edge: a compact pill showing
+ * ONLY the story (or the icon, when there is no story) falls in from above the viewport (scale, blur → sharp, gravity); ~400ms in it widens: the icon slides in on the left, the title
  * opens, the story travels to the right. Exit is the same film rewound: it narrows back, then slides up and out.
  */
 /** How long the compact capsule (story only) stays readable before it expands, from the start of its enter. */
@@ -328,12 +329,17 @@ const snapshot = () => store.items
 /** Toaster — mount once at the app root. Banners top-right (slide in from the edge); capsules top-centre. */
 export function Toaster() {
   const list = React.useSyncExternalStore(subscribe, snapshot, snapshot)
+  // When a banner leaves or arrives, the others GLIDE to their new place — the stack never snaps.
+  const banners = React.useRef<HTMLDivElement>(null)
+  const capsules = React.useRef<HTMLDivElement>(null)
+  useFlip(banners)
+  useFlip(capsules)
   return (
     <>
-      <div aria-live="polite" className="pointer-events-none fixed top-3 right-3 z-60 flex w-90 max-w-[calc(100vw-1.5rem)] flex-col gap-2">
+      <div ref={banners} aria-live="polite" className="pointer-events-none fixed top-3 right-3 z-60 flex w-90 max-w-[calc(100vw-1.5rem)] flex-col gap-2">
         {list.map((t) => (t.type === "banner" ? <Banner key={t.id} o={t.o} leaving={t.leaving} onClose={() => dismiss(t.id)} /> : null))}
       </div>
-      <div aria-live="polite" className="pointer-events-none fixed top-3 left-1/2 z-60 flex -translate-x-1/2 flex-col items-center gap-2">
+      <div ref={capsules} aria-live="polite" className="pointer-events-none fixed top-3 left-1/2 z-60 flex -translate-x-1/2 flex-col items-center gap-2">
         {list.map((t) => (t.type === "capsule" ? <Capsule key={t.id} o={t.o} leaving={t.leaving} /> : null))}
       </div>
     </>

@@ -100,8 +100,8 @@
 @keyframes corpus-banner-in { from { opacity: 0; transform: translateX(110%) scale(0.96); filter: blur(8px) } }
 @keyframes corpus-banner-out { to { opacity: 0; transform: translateX(110%) scale(0.96); filter: blur(6px) } }
 /* Capsule: productive — a straight slide down from outside the viewport with a fade. No bounce. */
-@keyframes corpus-island-in { from { opacity: 0; transform: translateY(calc(-100% - 2rem)) } }
-@keyframes corpus-island-out { to { opacity: 0; transform: translateY(calc(-100% - 2rem)) } }
+@keyframes corpus-island-in { from { opacity: 0; transform: translateY(calc(-100% - 2rem)) scale(0.96); filter: blur(8px) } }
+@keyframes corpus-island-out { to { opacity: 0; transform: translateY(calc(-100% - 2rem)) scale(0.96); filter: blur(6px) } }
 @keyframes corpus-rise-in { from { opacity: 0; transform: translateY(1.25rem); filter: blur(10px) } }
 @keyframes corpus-sink-out { to { opacity: 0; transform: translateY(-0.5rem); filter: blur(4px) } }
 @keyframes corpus-pulse { 50% { opacity: 0.55 } }

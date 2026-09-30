@@ -16,7 +16,7 @@ const STAGGER = 35 // ms between digits / words
 
 /* ---------------- AnimatedNumber ---------------- */
 
-/** One reel: a strip of 0–9 rolling behind a one-line window. */
+/** One reel: a strip of 0–9 rolling behind a one-line window (clip-path, so baselines stay aligned). */
 function Digit({ value, index }: { value: number; index: number }) {
   const strip = React.useRef<HTMLSpanElement>(null)
   const prev = React.useRef(value)
@@ -35,7 +35,9 @@ function Digit({ value, index }: { value: number; index: number }) {
     })
   }, [value, index])
   return (
-    <span className="relative inline-block h-[1lh] overflow-hidden">
+    // Clipped with clip-path, NOT overflow: overflow would move the reel's baseline to its bottom edge and
+    // misalign digits against separators ($ , .) and surrounding text. The invisible "0" keeps the text baseline.
+    <span className="relative inline-block h-[1lh] [clip-path:inset(0)]">
       <span className="invisible">0</span>
       <span
         ref={strip}

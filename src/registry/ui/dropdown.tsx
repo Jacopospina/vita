@@ -1,4 +1,5 @@
 import * as React from "react"
+import { useFlip } from "@/registry/hooks/use-flip"
 import { Select as SelectPrimitive, Popover as PopoverPrimitive } from "radix-ui"
 import { ChevronDown, Close } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
@@ -102,6 +103,9 @@ export function Combobox({ items, value, defaultValue = "", onValueChange, size 
   const listId = React.useId()
   const selected = items.find((i) => i.value === val)
   const filtered = items.filter((i) => i.label.toLowerCase().includes(query.toLowerCase()))
+  // Filtering glides the remaining options into place (FLIP); re-armed each time the list opens.
+  const options = React.useRef<HTMLUListElement>(null)
+  useFlip(options, open)
   const commit = (it: DropdownItem) => {
     setVal(it.value)
     setQuery("")
@@ -153,7 +157,7 @@ export function Combobox({ items, value, defaultValue = "", onValueChange, size 
               sideOffset={4}
               className={cn(listClasses, "w-(--radix-popover-trigger-width) min-w-0 overflow-y-auto")}
             >
-              <ul id={listId} role="listbox">
+              <ul ref={options} id={listId} role="listbox">
                 {filtered.length === 0 && <li className="px-inset-sm py-2 text-body text-muted-foreground">No results</li>}
                 {filtered.map((it, i) => (
                   <li

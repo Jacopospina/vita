@@ -6,6 +6,7 @@ import { Button } from "@/registry/ui/button"
 import { Label } from "@/registry/ui/form"
 import { Thinking } from "@/registry/ui/thinking"
 import { useExit } from "@/registry/hooks/use-exit"
+import { useFlip } from "@/registry/hooks/use-flip"
 
 /**
  * FileUploader — attach files. Two entry points, one list:
@@ -38,6 +39,9 @@ export function FileUploader({ label, description, accept, multiple = true, maxS
   const id = React.useId()
   const hint = description ?? [accept && `Accepted: ${accept.replaceAll(",", ", ")}`, maxSizeMb && `Max ${maxSizeMb} MB per file`].filter(Boolean).join(" · ")
   const pick = () => inputRef.current?.click()
+  // Always mounted, so removing a file lets the others glide up (FLIP) instead of snapping.
+  const list = React.useRef<HTMLUListElement>(null)
+  useFlip(list)
   return (
     <div className={cn("flex w-full max-w-xl flex-col gap-2", className)}>
       <div className="flex flex-col gap-1">
@@ -67,13 +71,11 @@ export function FileUploader({ label, description, accept, multiple = true, maxS
           <span><span className="text-link">Browse files</span> or drag and drop here</span>
         </button>
       )}
-      {files.length > 0 && (
-        <ul className="flex flex-col gap-2">
-          {files.map((f) => (
-            <FileRow key={f.id} file={f} onRemove={onRemove} />
-          ))}
-        </ul>
-      )}
+      <ul ref={list} className={cn("flex flex-col gap-2", files.length === 0 && "hidden")}>
+        {files.map((f) => (
+          <FileRow key={f.id} file={f} onRemove={onRemove} />
+        ))}
+      </ul>
     </div>
   )
 }
@@ -84,9 +86,12 @@ function FileRow({ file: f, onRemove }: { file: UploadFile; onRemove: (id: strin
             <li className={cn("flex flex-col rounded-md bg-layer-1", leaving ? "animate-exit-scale" : "animate-enter-slide-up", f.status === "error" && "outline outline-error")}>
               <div className="flex h-control-md items-center gap-2 pr-1 pl-3">
                 <span className="min-w-0 flex-1 truncate text-body">{f.name}</span>
-                {f.status === "uploading" && <Thinking mode="basic" size="sm" tone="brand" label="Uploading" />}
-                {f.status === "complete" && <Icon as={CheckmarkFilled} className="text-success" label="Uploaded" />}
-                {f.status === "error" && <Icon as={WarningFilled} className="text-error" label="Upload failed" />}
+                {/* Status glyph swaps with an enter, never a pop: orb → drawn check / warning */}
+                <span key={f.status} className="flex animate-enter-scale">
+                  {f.status === "uploading" && <Thinking mode="basic" size="sm" tone="brand" label="Uploading" />}
+                  {f.status === "complete" && <Icon as={CheckmarkFilled} className="text-success" label="Uploaded" draw="in" />}
+                  {f.status === "error" && <Icon as={WarningFilled} className="text-error" label="Upload failed" draw="in" />}
+                </span>
                 {f.status !== "uploading" && (
                   <button type="button" aria-label={`Remove ${f.name}`} onClick={() => exit(() => onRemove(f.id))} className="flex size-control-sm items-center justify-center rounded-sm text-muted-foreground hover:bg-hover hover:text-foreground focus-ring">
                     <Icon as={Close} />
