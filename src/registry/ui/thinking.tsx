@@ -115,6 +115,28 @@ function particles(mode: ThinkingMode, n: number, t: number, seeds: number[]): P
   return out
 }
 
+/**
+ * Performance budget — loading must never cost the user's machine:
+ *   · ONE shared animation loop for every orb on the page (not one per instance)
+ *   · orbs off-screen or in a hidden tab don't draw at all
+ *   · frame-capped: the liquid reads as smooth at 30fps (small) / 40fps (large); the goo filter only
+ *     re-runs when a frame is actually drawn
+ *   · canvases at device resolution (max 2×), the lighting chain + glints only on big orbs (≥ 48px)
+ *   · reduced motion / Save-Data → one still frame
+ */
+type Tick = (now: number) => void
+const ticks = new Set<Tick>()
+let loop = 0
+function frame(now: number) {
+  ticks.forEach((t) => t(now))
+  loop = ticks.size ? requestAnimationFrame(frame) : 0
+}
+function onTick(t: Tick) {
+  ticks.add(t)
+  if (!loop) loop = requestAnimationFrame(frame)
+  return () => void ticks.delete(t)
+}
+
 export interface ThinkingProps {
   mode?: ThinkingMode
   size?: keyof typeof sizes
@@ -136,35 +158,38 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
     const canvas = ref.current
     const ctx = canvas?.getContext("2d")
     if (!canvas || !ctx) return
-    // Supersampled for smooth, antialiased edges.
-    const dpr = Math.min(3, (window.devicePixelRatio || 1) * 1.5)
+    // Device resolution, capped: the goo blur already antialiases the edges.
+    const dpr = Math.min(2, window.devicePixelRatio || 1)
     canvas.width = px * dpr
     canvas.height = px * dpr
     ctx.scale(dpr, dpr)
-    const gcanvas = glintRef.current
+    const glintsOn = mode !== "basic" && px >= 48
+    const gcanvas = glintsOn ? glintRef.current : null
     const gctx = gcanvas?.getContext("2d") ?? null
     if (gcanvas && gctx) {
       gcanvas.width = px * dpr
       gcanvas.height = px * dpr
       gctx.scale(dpr, dpr)
     }
-    const glints = mode !== "basic" && px >= 48
+    const glints = glintsOn
     const simple = px <= 24
     // Small orbs: fewer, proportionally larger particles so they stay solid down to 16px.
     const n = mode === "searching" ? Math.max(6, Math.min(28, Math.round(px / 3))) : Math.max(7, Math.min(90, Math.round(px / 1.1)))
     const grow = Math.min(2.4, Math.max(1, 40 / px))
     const seeds = Array.from({ length: n }, (_, i) => (Math.sin(i * 127.1) * 43758.5453) % 1).map((s) => Math.abs(s))
-    const reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+    const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData === true
+    const reduced = saveData || window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+    const interval = 1000 / (px >= 48 ? 40 : 30)
     const root = getComputedStyle(document.documentElement)
     const spectrum = ["blue", "indigo", "purple", "pink", "orange", "mint", "cyan"].map((h) => root.getPropertyValue(`--corpus-palette-${h}-500`).trim())
     let color = getComputedStyle(canvas).color
-    let raf = 0
     let last = 0
+    let drawn = -Infinity
     const start = performance.now()
     const R = px * 0.42
     const draw = (now: number) => {
       const t = reduced ? 0.9 : (now - start) / 1000
-      if (now - last > 500) {
+      if (now - last > 2000) {
         color = getComputedStyle(canvas).color
         last = now
       }
@@ -199,15 +224,38 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
           gctx.globalAlpha = 1
         }
       }
-      if (!reduced) raf = requestAnimationFrame(draw)
     }
-    raf = requestAnimationFrame(draw)
-    return () => cancelAnimationFrame(raf)
+    draw(start)
+    if (reduced) return
+    // Only tick while on screen; the shared loop itself stops when no orb needs it.
+    let off: (() => void) | null = null
+    const tick = (now: number) => {
+      if (now - drawn < interval) return
+      drawn = now
+      draw(now)
+    }
+    const setVisible = (v: boolean) => {
+      if (v && !off) off = onTick(tick)
+      else if (!v && off) {
+        off()
+        off = null
+      }
+    }
+    if (typeof IntersectionObserver === "undefined") {
+      setVisible(true)
+      return () => setVisible(false)
+    }
+    const io = new IntersectionObserver(([e]) => setVisible(e.isIntersecting))
+    io.observe(canvas)
+    return () => {
+      io.disconnect()
+      setVisible(false)
+    }
   }, [mode, px, resolvedTone])
 
   // Liquid + light: goo (soft threshold for antialiasing) → specular highlight → glow → drop shadow.
   const blur = px <= 24 ? px * 0.05 : px * 0.04
-  const lit = px > 24
+  const lit = px >= 48
   return (
     <span role="status" aria-live="polite" className={cn("relative inline-flex shrink-0", resolvedTone === "brand" && "text-primary", className)} style={{ width: px, height: px }}>
       <svg aria-hidden width="0" height="0" className="absolute">
@@ -236,7 +284,7 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
         </defs>
       </svg>
       <canvas ref={ref} aria-hidden className="motion-reduce:animate-[corpus-pulse_2s_ease-in-out_infinite]" style={{ width: px, height: px, filter: `url(#${fid})` }} />
-      <canvas ref={glintRef} aria-hidden className="pointer-events-none absolute inset-0" style={{ width: px, height: px }} />
+      {mode !== "basic" && px >= 48 && <canvas ref={glintRef} aria-hidden className="pointer-events-none absolute inset-0" style={{ width: px, height: px }} />}
       <span className="sr-only">{label}</span>
     </span>
   )
