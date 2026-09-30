@@ -11,7 +11,7 @@ use_when:
 avoid_when:
   - 2–6 options → RadioGroup (or ContentSwitcher for views)
   - Actions → Menu / MenuButton (dropdowns choose values; menus do things)
-  - Plain long lists in mobile forms → Select
+  - Options written inline as children → Select (same control)
 related: [select, radio-button, checkbox, menu, filtering]
 ---
 

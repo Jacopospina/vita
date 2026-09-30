@@ -17,9 +17,12 @@ related: [form, forms, text-input]
 Wrap standard Corpus inputs in `FluidForm`. Nothing else changes: same props and same validation.
 
 ```tsx
-<FluidForm columns={2}>
-  <TextInput label="Origin" />
-  <TextInput label="Destination" />
+<FluidForm>
+  <TextInput label="Agent name" />
+  <FormRow>
+    <TextInput label="Budget from" />
+    <TextInput label="to" />
+  </FormRow>
 </FluidForm>
 ```
 
@@ -31,5 +34,5 @@ Wrap standard Corpus inputs in `FluidForm`. Nothing else changes: same props and
 ## Rules
 
 1. **All-or-nothing per form.**
-2. **Group logically** with 2–3 columns max. Related fields stay on the same row.
+2. **One column.** Only a `FormRow` of fields that are one data point shares a row.
 3. **Keep helper text short.** Long guidance belongs in a Toggletip in the label.

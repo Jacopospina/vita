@@ -22,6 +22,7 @@ export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
               ref={ref}
               {...a11y}
               {...props}
+              placeholder={props.placeholder ?? " "}
               onChange={(e) => {
                 setCount(e.target.value.length)
                 props.onChange?.(e)
@@ -49,7 +50,7 @@ export const PasswordInput = React.forwardRef<HTMLInputElement, Omit<TextInputPr
       <FieldShell {...{ id, label, hideLabel, helperText, invalid, invalidText, warn, warnText, optional, labelAddon, className }}>
         {(a11y) => (
           <div className="relative">
-            <input ref={ref} type={visible ? "text" : "password"} {...a11y} {...props} className={cn(fieldClasses, fieldSize[size], "pr-control-md")} />
+            <input ref={ref} type={visible ? "text" : "password"} {...a11y} {...props} placeholder={props.placeholder ?? " "} className={cn(fieldClasses, fieldSize[size], "pr-control-md")} />
             <button
               type="button"
               onClick={() => setVisible((v) => !v)}
@@ -75,7 +76,7 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
   ({ label, hideLabel, helperText, invalid, invalidText, warn, warnText, optional, labelAddon, className, id, rows = 4, showCount, ...props }, ref) => {
     const [count, setCount] = React.useState(String(props.value ?? props.defaultValue ?? "").length)
     return (
-      <FieldShell {...{ id, label, hideLabel, helperText, invalid, invalidText, warn, warnText, optional, labelAddon, className }}>
+      <FieldShell multiline {...{ id, label, hideLabel, helperText, invalid, invalidText, warn, warnText, optional, labelAddon, className }}>
         {(a11y) => (
           <>
             <textarea
@@ -83,11 +84,12 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
               rows={rows}
               {...a11y}
               {...props}
+              placeholder={props.placeholder ?? " "}
               onChange={(e) => {
                 setCount(e.target.value.length)
                 props.onChange?.(e)
               }}
-              className={cn(fieldClasses, "field-sizing-content min-h-20 resize-y px-inset py-2")}
+              className={cn(fieldClasses, "field-sizing-content min-h-24 resize-y px-inset pt-7 pb-2")}
             />
             {showCount && props.maxLength && (
               <span className="self-end text-caption text-helper tabular-nums">

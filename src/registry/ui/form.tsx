@@ -12,7 +12,8 @@ import { Group } from "@/registry/ui/layout"
 export const fieldClasses = cn(
   "w-full min-w-0 rounded-md border border-border-field bg-field text-body text-foreground",
   " duration-fast-02 ease-productive",
-  "placeholder:text-placeholder",
+  // The floating label owns the empty state; placeholders (examples, formats) appear only while focused.
+  "placeholder:text-transparent focus:placeholder:text-placeholder",
   "hover:border-border-strong",
   "focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-focus focus-visible:border-transparent focus-visible:animate-focus-in",
   "disabled:cursor-not-allowed disabled:border-border-subtle disabled:bg-layer-1 disabled:text-disabled-foreground",
@@ -20,10 +21,11 @@ export const fieldClasses = cn(
   "aria-invalid:border-error aria-invalid:focus-visible:outline-error",
 )
 
+/* Fields are tall enough to hold their floating label inside. Values sit below the floated label. */
 export const fieldSize = {
-  sm: "h-control-sm px-inset",
-  md: "h-control-md px-inset",
-  lg: "h-control-lg px-inset-lg",
+  sm: "h-control-md px-inset pt-3.5",
+  md: "h-control-lg px-inset pt-4",
+  lg: "h-14 px-inset-lg pt-5",
 } as const
 export type FieldSize = keyof typeof fieldSize
 
@@ -42,9 +44,9 @@ export interface FieldBaseProps {
   invalidText?: React.ReactNode
   warn?: boolean
   warnText?: React.ReactNode
-  /** Corpus marks OPTIONAL fields, not required ones. Most fields in a good form are required. */
+  /** Fields are REQUIRED by default. Mark the exceptions deliberately: the label reads "(optional)". */
   optional?: boolean
-  /** Slot rendered next to the label, e.g. a Toggletip. */
+  /** Extra help control (e.g. a Toggletip), shown at the start of the helper row — never above the field. */
   labelAddon?: React.ReactNode
 }
 
@@ -107,11 +109,31 @@ export function FieldMessage({ id, kind, children, className }: { id?: string; k
 export interface FieldShellProps extends FieldBaseProps {
   id?: string
   className?: string
-  children: (a11y: { id: string; "aria-describedby"?: string; "aria-invalid"?: true }) => React.ReactNode
+  /** The control has a value the input can't express via :placeholder-shown (select, dropdown, multiselect). */
+  filled?: boolean
+  /** Multi-line control: the label rests at the top instead of the vertical centre. */
+  multiline?: boolean
+  children: (a11y: { id: string; "aria-describedby"?: string; "aria-invalid"?: true; "aria-required"?: true }) => React.ReactNode
 }
 
-/** FieldShell — label → control → helper/validation. Wires ids & aria automatically. */
-export function FieldShell({ id: idProp, label, hideLabel, helperText, invalid, invalidText, warn, warnText, optional, labelAddon, className, children }: FieldShellProps) {
+/* The label floats (moves up, shrinks) when the field is focused or holds a value. */
+/* Straight up + smaller type — no scaling, so it never looks like it tilts. */
+const floated = [
+  "group-focus-within/field:-translate-y-[calc(50%+0.6rem)] group-focus-within/field:text-caption",
+  "group-has-[:is(input,textarea):not(:placeholder-shown)]/field:-translate-y-[calc(50%+0.6rem)] group-has-[:is(input,textarea):not(:placeholder-shown)]/field:text-caption",
+  "group-data-[filled]/field:-translate-y-[calc(50%+0.6rem)] group-data-[filled]/field:text-caption",
+].join(" ")
+const floatedMultiline = [
+  "group-focus-within/field:-translate-y-2 group-focus-within/field:text-caption",
+  "group-has-[textarea:not(:placeholder-shown)]/field:-translate-y-2 group-has-[textarea:not(:placeholder-shown)]/field:text-caption",
+].join(" ")
+
+/**
+ * FieldShell — the anatomy of every field: a FLOATING LABEL inside the control → the control → helper/validation.
+ * The label rests inside the field like a placeholder; on focus or once filled it glides up and shrinks,
+ * still inside the field. Labels are never placed above fields. Fields are required unless marked optional.
+ */
+export function FieldShell({ id: idProp, label, hideLabel, helperText, invalid, invalidText, warn, warnText, optional, labelAddon, filled, multiline, className, children }: FieldShellProps) {
   const auto = React.useId()
   const id = idProp ?? auto
   const msgId = `${id}-msg`
@@ -119,16 +141,30 @@ export function FieldShell({ id: idProp, label, hideLabel, helperText, invalid, 
   const showWarn = !invalid && warn && warnText
   const message = showInvalid ? invalidText : showWarn ? warnText : helperText
   return (
-    <div data-field="" data-invalid={invalid || undefined} className={cn("flex min-w-0 flex-col", className)}>
-      <div className={cn("flex items-center gap-1 pb-1.5", hideLabel && "sr-only")}>
-        <Label htmlFor={id}>
+    <div data-field="" data-invalid={invalid || undefined} data-filled={filled || undefined} className={cn("group/field flex min-w-0 flex-col", className)}>
+      <div className="relative">
+        {children({ id, "aria-describedby": message ? msgId : undefined, "aria-invalid": invalid || undefined, "aria-required": optional ? undefined : true })}
+        <LabelPrimitive.Root
+          htmlFor={id}
+          className={cn(
+            "pointer-events-none absolute left-inset max-w-[calc(100%-4rem)] truncate text-body text-placeholder select-none motion-productive",
+            "group-focus-within/field:text-muted-foreground group-data-[invalid]/field:text-error-foreground",
+            multiline ? cn("top-3", floatedMultiline) : cn("top-1/2 -translate-y-1/2", floated),
+            hideLabel && "sr-only",
+          )}
+        >
           {label}
-          {optional && <span className="font-normal text-muted-foreground"> (optional)</span>}
-        </Label>
-        {labelAddon}
+          {optional && <span> (optional)</span>}
+        </LabelPrimitive.Root>
       </div>
-      {children({ id, "aria-describedby": message ? msgId : undefined, "aria-invalid": invalid || undefined })}
-      <FieldMessage id={msgId} kind={showInvalid ? "error" : showWarn ? "warn" : "help"}>{message}</FieldMessage>
+      {labelAddon || message ? (
+        <div className="flex items-start gap-1">
+          {labelAddon && <span className="pt-1">{labelAddon}</span>}
+          <FieldMessage id={msgId} kind={showInvalid ? "error" : showWarn ? "warn" : "help"} className="min-w-0 flex-1">{message}</FieldMessage>
+        </div>
+      ) : (
+        <FieldMessage id={msgId} kind="help" />
+      )}
     </div>
   )
 }
@@ -151,9 +187,41 @@ export function FormGroup({ legend, helperText, className, children, ...props }:
   )
 }
 
-/** FormRow — side-by-side fields that belong together (first/last name, city/postcode). Collapses on small screens. */
+/*
+ * BLEND — fields that are ONE data point share one container: the parent owns border, radius and
+ * background; the fields inside are flat (no border, no radius), labels sit inside, hairlines divide.
+ */
+const ctl = "[&_[data-field]_:is(input,select,textarea,button[aria-haspopup],button[role=combobox])]"
+const blendFields = cn(
+  "overflow-hidden rounded-md [&_[data-field]]:bg-field",
+  "[&_[data-field]:focus-within]:outline-2 [&_[data-field]:focus-within]:-outline-offset-2 [&_[data-field]:focus-within]:outline-focus [&_[data-field]:focus-within]:animate-focus-in",
+  "[&_[data-field][data-invalid]]:outline-2 [&_[data-field][data-invalid]]:-outline-offset-2 [&_[data-field][data-invalid]]:outline-error",
+  `${ctl}:rounded-none ${ctl}:border-0 ${ctl}:bg-transparent ${ctl}:outline-none ${ctl}:animate-none`,
+  "[&_[data-field]_[aria-live]]:px-inset [&_[data-field]_[aria-live]]:pb-1",
+  // Calm inside a blend: no staggered rise, no sliding messages — fades only.
+  "*:animate-none! [&_[aria-live]_p]:translate-y-0",
+)
+
+/**
+ * FormRow — the ONLY way to put fields side by side, and only when they are ONE data point for the user
+ * (first + last name, card expiry month + year, street + number). Forms are otherwise one column:
+ * people scan forms top-left in an F pattern and miss the second column.
+ * The pair blends: one container (border, radius, background), flat fields inside, a hairline between.
+ */
 export function FormRow({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn("grid grid-cols-1 gap-4 sm:auto-cols-fr sm:grid-flow-col", className)} {...props} />
+  return (
+    <div
+      role="group"
+      className={cn(
+        "grid grid-cols-1 gap-px border border-border-field bg-border-field sm:auto-cols-fr sm:grid-flow-col",
+        blendFields,
+        "*:first:rounded-t-[calc(var(--corpus-radius-md)-1px)] *:last:rounded-b-[calc(var(--corpus-radius-md)-1px)]",
+        "sm:*:first:rounded-bl-[calc(var(--corpus-radius-md)-1px)] sm:*:first:rounded-tr-none sm:*:last:rounded-tr-[calc(var(--corpus-radius-md)-1px)] sm:*:last:rounded-bl-none",
+        className,
+      )}
+      {...props}
+    />
+  )
 }
 
 /** FormActions — the submit row of a page form. Actions belong together: joined, zero gap. Primary first (reading order). */
@@ -162,22 +230,18 @@ export function FormActions({ className, ...props }: React.HTMLAttributes<HTMLDi
 }
 
 /**
- * FluidForm — "fluid" style: fields tile edge-to-edge, labels sit INSIDE the box.
- * Use for dense, expert data-entry (configuration, long admin forms) where scanning many fields matters more than whitespace.
- * Don't mix fluid and default fields in one form.
+ * FluidForm — dense, expert data entry: every field blends into one tall container, labels inside.
+ * Always ONE column (F-pattern rule). Pairs that are one data point go in a FormRow inside it.
+ * BREAKING (0.2): the `columns` prop was removed — multi-column forms are not allowed.
  */
-export function FluidForm({ className, columns = 2, ...props }: React.HTMLAttributes<HTMLDivElement> & { columns?: 1 | 2 | 3 }) {
+export function FluidForm({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       className={cn(
-        "grid w-full gap-px overflow-hidden rounded-lg border border-border-subtle bg-border-subtle",
-        columns === 1 ? "grid-cols-1" : columns === 2 ? "grid-cols-1 sm:grid-cols-2" : "grid-cols-1 sm:grid-cols-3",
-        // restyle every Corpus field inside
-        "[&_[data-field]]:gap-0.5 [&_[data-field]]:bg-field [&_[data-field]]:px-inset [&_[data-field]]:pt-2 [&_[data-field]]:pb-1",
-        "[&_[data-field]:focus-within]:outline-2 [&_[data-field]:focus-within]:-outline-offset-2 [&_[data-field]:focus-within]:outline-focus",
-        "[&_[data-field][data-invalid]]:outline-2 [&_[data-field][data-invalid]]:-outline-offset-2 [&_[data-field][data-invalid]]:outline-error",
-        "[&_[data-field]_label]:text-caption [&_[data-field]_label]:text-muted-foreground",
-        "[&_[data-field]_:is(input,select,textarea,button[aria-haspopup],button[role=combobox])]:h-control-sm [&_[data-field]_:is(input,select,textarea,button[aria-haspopup],button[role=combobox])]:rounded-none [&_[data-field]_:is(input,select,textarea,button[aria-haspopup],button[role=combobox])]:border-0 [&_[data-field]_:is(input,select,textarea,button[aria-haspopup],button[role=combobox])]:bg-transparent [&_[data-field]_:is(input,select,textarea,button[aria-haspopup],button[role=combobox])]:px-0 [&_[data-field]_:is(input,select,textarea,button[aria-haspopup],button[role=combobox])]:outline-none",
+        "grid w-full grid-cols-1 gap-px border border-border-subtle bg-border-subtle",
+        "[&>[role=group]]:rounded-none [&>[role=group]]:border-0",
+        blendFields,
+        "rounded-lg *:first:rounded-t-[calc(var(--corpus-radius-lg)-1px)] *:last:rounded-b-[calc(var(--corpus-radius-lg)-1px)]",
         className,
       )}
       {...props}

@@ -1,34 +1,32 @@
 ---
 title: Select
-summary: The native select. Fast, familiar, excellent on mobile, and the right choice for long plain-text lists in forms.
+summary: Pick one value, written with SelectOption/SelectGroup children. The same Corpus listbox as Dropdown — never the operating system's menu.
 status: stable
 import: "import { Select, SelectOption, SelectGroup } from \"@/components/corpus/select\""
 use_when:
-  - Picking one plain-text option from 7+ in a form (country, currency, timezone)
-  - Mobile-heavy flows (native pickers are best-in-class)
-  - Grouped options (optgroup)
+  - One value from a list you write inline (a handful of known options, grouped options)
+  - Forms where the options live in the markup rather than in data
 avoid_when:
+  - Options come from data → Dropdown (items prop)
   - 2–6 options → RadioGroup (show them)
-  - Options need icons, descriptions or custom rendering → Dropdown
-  - Very long lists where users type → Combobox
-  - Multiple selection → MultiSelect / CheckboxGroup
-related: [dropdown, radio-button]
+  - Users need to type to find → Combobox
+  - Several values → MultiSelect / CheckboxGroup
+related: [dropdown, radio-button, combobox]
 ---
 
-## Select vs Dropdown
+> [!IMPORTANT] Corpus never uses the operating system's dropdown. Every picker is the Corpus listbox: floating label, drawn checkmark, choreography, same look on every platform.
 
-| | Select (native) | Dropdown (custom) |
+## Select or Dropdown?
+
+| | Select | Dropdown |
 |---|---|---|
-| Rich options (icon, description) | ✗ | ✓ |
-| Mobile experience | Best | Good |
-| Long lists | Good (OS typeahead) | OK (use Combobox beyond 20) |
-| Works without JS | ✓ | ✗ |
-| Visual consistency across OS | ✗ | ✓ |
-
-**Corpus default:** Select in forms, Dropdown in app chrome and toolbars.
+| Options defined as | `<SelectOption>` children | `items` array |
+| Descriptions per option | — | ✓ |
+| Groups | `<SelectGroup label>` | — |
+| Look and behaviour | identical | identical |
 
 ## Rules
 
-1. **Placeholder "Choose a …"** only when there's no sensible default. If there is one (the user's country, the most common option), preselect it.
-2. **Order options** by frequency (top 3 first, then a separator group), alphabetically, or by natural order (sizes, dates). Never randomly.
-3. **Never use Select for navigation** ("Jump to page…").
+1. **Preselect a sensible default** when there is one; otherwise the floating label reads the question.
+2. **Order options** by frequency, alphabetically or by natural order — never randomly.
+3. **Never for navigation** ("Jump to page…").

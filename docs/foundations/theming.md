@@ -21,7 +21,7 @@ avoid_when:
 | `--corpus-neutral-hue` / `-chroma` | `286` / `0.007` | The tint of every grey, surface and border |
 | `--corpus-hue-success/warning/error/info` | `147 / 63 / 29 / 257` | Support colors (keep their meaning) |
 | `--corpus-radius` | `0.5rem` | Every corner |
-| `--corpus-density` | `1` | Every control height, row and inset |
+| `--corpus-density` | `1` | Control heights and insets fully; padding, margin and gap at half strength (never below 90%) |
 | `--corpus-font-sans` / `-mono` / `-numeric` | Google Sans Flex / Code / Code | Typefaces |
 | `--corpus-type-base` / `-ratio` | `0.875rem` / `1.2` | The whole type ramp |
 | `--corpus-motion-scale` | `1` | Every duration (0 = off) |

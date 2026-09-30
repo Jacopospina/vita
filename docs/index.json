@@ -485,7 +485,7 @@
       "avoid_when": [
         "2–6 options → RadioGroup (or ContentSwitcher for views)",
         "Actions → Menu / MenuButton (dropdowns choose values; menus do things)",
-        "Plain long lists in mobile forms → Select"
+        "Options written inline as children → Select (same control)"
       ],
       "related": [
         "select",
@@ -897,23 +897,23 @@
       "slug": "select",
       "path": "docs/components/select.md",
       "title": "Select",
-      "summary": "The native select. Fast, familiar, excellent on mobile, and the right choice for long plain-text lists in forms.",
+      "summary": "Pick one value, written with SelectOption/SelectGroup children. The same Corpus listbox as Dropdown — never the operating system's menu.",
       "status": "stable",
       "import": "import { Select, SelectOption, SelectGroup } from \"@/components/corpus/select\"",
       "use_when": [
-        "Picking one plain-text option from 7+ in a form (country, currency, timezone)",
-        "Mobile-heavy flows (native pickers are best-in-class)",
-        "Grouped options (optgroup)"
+        "One value from a list you write inline (a handful of known options, grouped options)",
+        "Forms where the options live in the markup rather than in data"
       ],
       "avoid_when": [
+        "Options come from data → Dropdown (items prop)",
         "2–6 options → RadioGroup (show them)",
-        "Options need icons, descriptions or custom rendering → Dropdown",
-        "Very long lists where users type → Combobox",
-        "Multiple selection → MultiSelect / CheckboxGroup"
+        "Users need to type to find → Combobox",
+        "Several values → MultiSelect / CheckboxGroup"
       ],
       "related": [
         "dropdown",
-        "radio-button"
+        "radio-button",
+        "combobox"
       ]
     },
     {
@@ -1018,7 +1018,7 @@
       "slug": "text-input",
       "path": "docs/components/text-input.md",
       "title": "Text input",
-      "summary": "Single-line free text (plus TextArea and PasswordInput). Label on top, helper below, errors that explain the fix.",
+      "summary": "Single-line free text (plus TextArea and PasswordInput). Floating label inside, help below, errors that explain the fix.",
       "status": "stable",
       "import": "import { TextInput, TextArea, PasswordInput } from \"@/components/corpus/text-input\"",
       "use_when": [

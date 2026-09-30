@@ -207,7 +207,7 @@ export const patternDemos: DemoMap = {
       title: "Fluid vs default",
       render: () => (
         <Grid gutter="wide" rowGap="lg">
-          <Column sm={4} md={8} lg={8}><Stack gap="sm"><Text variant="headline">Fluid (dense data entry)</Text><FluidForm columns={2}><TextInput label="Agent name" defaultValue="Support triage" /><TextInput label="Owner" defaultValue="Support" /><Select label="Model" defaultValue="large"><SelectOption value="large">Vita Large</SelectOption><SelectOption value="fast">Vita Fast</SelectOption></Select><TextInput label="Max concurrent runs" defaultValue="12" /></FluidForm></Stack></Column>
+          <Column sm={4} md={8} lg={8}><Stack gap="sm"><Text variant="headline">Fluid (dense data entry)</Text><FluidForm><TextInput label="Agent name" defaultValue="Support triage" /><TextInput label="Owner" defaultValue="Support" /><Select label="Model" defaultValue="large"><SelectOption value="large">Vita Large</SelectOption><SelectOption value="fast">Vita Fast</SelectOption></Select><TextInput label="Max concurrent runs" defaultValue="12" /></FluidForm></Stack></Column>
           <Column sm={4} md={8} lg={8}><Stack gap="sm"><Text variant="headline">Default</Text><Stack gap="md"><TextInput label="Agent name" defaultValue="Support triage" /><TextInput label="Owner" defaultValue="Support" /></Stack></Stack></Column>
         </Grid>
       ),

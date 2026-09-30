@@ -13,7 +13,7 @@ avoid_when:
 
 ## The scale
 
-| Name | Tailwind | px | Typical use |
+| Name | Tailwind | px at density 1 | Typical use |
 |---|---|---|---|
 | 3xs | `0.5` | 2 | Icon nudges |
 | 2xs | `1` | 4 | Label → field |
@@ -29,7 +29,7 @@ avoid_when:
 
 - **Control heights.** `h-control-xs` 24 · `sm` 32 · `md` 40 · `lg` 48 · `xl` 64.
 - **Control insets.** `px-inset-sm` 8 · `px-inset` 12 · `px-inset-lg` 16.
-- **One knob.** Change `--corpus-density`, never individual paddings.
+- **One knob.** `--corpus-density` scales control sizes fully, and the spacing scale (padding, margin, gap) at half strength with a 90% floor — so small gaps stay comfortable at low density.
 
 ## Radius
 

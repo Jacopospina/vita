@@ -43,6 +43,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
               step={step}
               disabled={disabled}
               readOnly={readOnly}
+              placeholder={props.placeholder ?? " "}
               value={val ?? ""}
               onChange={(e) => setVal(e.target.value === "" ? null : Number(e.target.value))}
               className={cn(fieldClasses, fieldSize[size], "tabular-nums [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none", "pr-20")}

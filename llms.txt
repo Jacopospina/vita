@@ -80,7 +80,7 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/foun
   - avoid: Relative ranges ("Last 7 days") → Dropdown of presets (optionally + custom range); Time only → TextInput with time type
 - [Dropdown](docs/components/dropdown.md): Custom listbox for choosing values. Dropdown (one), Combobox (one, filterable) and MultiSelect (many).
   - use: Dropdown — one of 7–20 options, options need descriptions/icons, or consistent styling in app chrome; Combobox — one of 20+ options where users know what to type (tool, country, team member); MultiSelect — several of more than 6 options (markets, tags, assignees); Inline type — compact "Sort by: Newest ▾" in toolbars
-  - avoid: 2–6 options → RadioGroup (or ContentSwitcher for views); Actions → Menu / MenuButton (dropdowns choose values; menus do things); Plain long lists in mobile forms → Select
+  - avoid: 2–6 options → RadioGroup (or ContentSwitcher for views); Actions → Menu / MenuButton (dropdowns choose values; menus do things); Options written inline as children → Select (same control)
 - [File uploader](docs/components/file-uploader.md): Attach files by browsing or dropping, with per-file status and errors that explain the fix.
   - use: dropzone — uploading is the main task of the view (import, document collection); button — attaching as one field among others in a form
   - avoid: Importing structured data with mapping → a dedicated import flow (pattern), with FileUploader as step 1
@@ -132,9 +132,9 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/foun
 - [Search](docs/components/search.md): Find items in a collection by query. Always labelled, instantly clearable, and scoped to what it searches.
   - use: Filtering a table/list by text (toolbar variant); Global or page-level search (field variant, lg); Space-constrained headers/toolbars (expandable)
   - avoid: Picking one value from a known list → Combobox; Entering a value that will be saved → TextInput
-- [Select](docs/components/select.md): The native select. Fast, familiar, excellent on mobile, and the right choice for long plain-text lists in forms.
-  - use: Picking one plain-text option from 7+ in a form (country, currency, timezone); Mobile-heavy flows (native pickers are best-in-class); Grouped options (optgroup)
-  - avoid: 2–6 options → RadioGroup (show them); Options need icons, descriptions or custom rendering → Dropdown; Very long lists where users type → Combobox; Multiple selection → MultiSelect / CheckboxGroup
+- [Select](docs/components/select.md): Pick one value, written with SelectOption/SelectGroup children. The same Corpus listbox as Dropdown — never the operating system's menu.
+  - use: One value from a list you write inline (a handful of known options, grouped options); Forms where the options live in the markup rather than in data
+  - avoid: Options come from data → Dropdown (items prop); 2–6 options → RadioGroup (show them); Users need to type to find → Combobox; Several values → MultiSelect / CheckboxGroup
 - [Slider](docs/components/slider.md): Choose a value or range where relative position matters more than precision. The value is always visible.
   - use: Adjusting a continuous value with immediate feedback (volume, opacity, zoom); Filtering by a numeric range (price, weight) with two thumbs
   - avoid: Exact values matter → NumberInput; Few discrete options → RadioGroup / ContentSwitcher; The range is huge (0–1,000,000) → NumberInput(s)
@@ -147,7 +147,7 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/foun
 - [Tag](docs/components/tag.md): Short labels that categorise, show status in dense rows, or represent applied filters.
   - use: Read-only — categories/metadata on items (region, type); Status in dense table rows (with icon); Dismissible — applied filters / chosen values the user can remove; Selectable — quick filter chips (toggle on/off); Operational — "+3" that reveals more in a popover
   - avoid: Actions → Button; Status on detail pages or with more nuance → StatusIndicator; Long text (> 3 words) → it's not a tag
-- [Text input](docs/components/text-input.md): Single-line free text (plus TextArea and PasswordInput). Label on top, helper below, errors that explain the fix.
+- [Text input](docs/components/text-input.md): Single-line free text (plus TextArea and PasswordInput). Floating label inside, help below, errors that explain the fix.
   - use: Free text the system can't predict (names, titles, references); Numeric identifiers — phone, postcode, card (inputMode="numeric"); Long text — TextArea; secrets — PasswordInput
   - avoid: A known set of answers → RadioGroup / Dropdown / Combobox; Quantities → NumberInput; Dates → DatePicker; Searching a collection → Search
 - [Tile](docs/components/tile.md): A surface that groups related content. Base, clickable, selectable and expandable, and never nested.

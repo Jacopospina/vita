@@ -32,7 +32,7 @@ How many options?
 ├─ 2–5, switching the VIEW of the same data .. ContentSwitcher
 ├─ 7–20, pick ONE
 │   ├─ need icons/descriptions/custom UI .... Dropdown
-│   └─ plain text, mobile-heavy, form ....... Select (native)
+│   └─ options written inline, grouped ..... Select
 ├─ > 20, pick ONE, user knows what to type .. Combobox
 ├─ several of ≤ 6 ......................... CheckboxGroup
 ├─ several of > 6 ......................... MultiSelect

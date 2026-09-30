@@ -222,12 +222,14 @@ export const inputDemos: DemoMap = {
   "components/form": [
     { title: "Default form", description: "Submit empty to see validation.", render: () => <FormDemo /> },
     {
-      title: "Fluid form",
+      title: "Fluid form — one column, pairs blend",
+      description: "Every field in one container. The budget range is one data point, so its two ends share a row.",
       render: () => (
-        <FluidForm>
+        <FluidForm className="max-w-xl">
           <TextInput label="Agent name" defaultValue="Support triage" />
           <TextInput label="Owner" />
           <Select label="Model" defaultValue="large"><SelectOption value="large">Vita Large</SelectOption><SelectOption value="fast">Vita Fast</SelectOption></Select>
+          <FormRow><TextInput label="Monthly budget from" defaultValue="$200" /><TextInput label="to" defaultValue="$1,200" /></FormRow>
           <TextInput label="Max tokens" invalid invalidText="Enter a number from 256 to 32,000" defaultValue="abc" />
         </FluidForm>
       ),

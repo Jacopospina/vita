@@ -132,6 +132,10 @@
   --shadow-floating: var(--corpus-shadow-floating);
   --shadow-overlay: var(--corpus-shadow-overlay);
 
+  /* DENSITY drives the whole spacing scale: every p-*, m-*, gap-*, space-* (and spacing-based sizes) */
+  /* spacing follows density at half strength, never below 90% — small gaps (4·8·16) stay comfortable */
+  --spacing: calc(0.25rem * max(0.9, 1 + (var(--corpus-density) - 1) * 0.5));
+
   /* density-driven sizes: h-control-md, px-inset, … */
   --spacing-control-xs: var(--corpus-control-xs);
   --spacing-control-sm: var(--corpus-control-sm);

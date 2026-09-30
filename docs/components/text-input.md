@@ -1,6 +1,6 @@
 ---
 title: Text input
-summary: Single-line free text (plus TextArea and PasswordInput). Label on top, helper below, errors that explain the fix.
+summary: Single-line free text (plus TextArea and PasswordInput). Floating label inside, help below, errors that explain the fix.
 status: stable
 import: "import { TextInput, TextArea, PasswordInput } from \"@/components/corpus/text-input\""
 use_when:
@@ -28,10 +28,10 @@ related: [form, number-input, search, forms]
 
 ## Rules
 
-1. **Always a visible label.**
+1. **The label lives inside the field.** It rests where the value will be, then glides up and shrinks on focus or once filled — never above the field.
    - Placeholders are examples ("e.g. Q3 forecast"), never labels.
    - `hideLabel` only when the context is visually obvious (a search in a toolbar).
-2. **Mark optional fields, not required ones:** add "(optional)" via `optional`. A well-designed form asks mostly required things. If a form has many optional fields, question why they're there.
+2. **Required by default.** Every field is announced as required; mark the exceptions with `optional` ("(optional)" joins the label).
 3. **Width signals expected length.**
    - A postcode field is narrow; a description is wide.
    - Never stretch every field to 100% of a wide page. Forms cap at `max-w-xl`.
