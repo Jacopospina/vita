@@ -34,8 +34,8 @@ export function ProgressBar({
     <div className={cn("flex w-full flex-col gap-2", className)}>
       <div className={cn("flex items-center justify-between gap-2", hideLabel && "sr-only")}>
         <span id={id} className="text-footnote text-foreground">{label}</span>
-        {status === "finished" && <Icon as={CheckmarkFilled} className="animate-enter-scale text-success" label="Complete" />}
-        {status === "error" && <Icon as={ErrorFilled} className="animate-enter-scale text-error" label="Error" />}
+        {status === "finished" && <Icon as={CheckmarkFilled} draw="in" className="text-success" label="Complete" />}
+        {status === "error" && <Icon as={ErrorFilled} draw="in" className="text-error" label="Error" />}
       </div>
       <div
         role="progressbar"

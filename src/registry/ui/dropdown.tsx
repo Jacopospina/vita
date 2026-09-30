@@ -1,10 +1,10 @@
 import * as React from "react"
 import { Select as SelectPrimitive, Popover as PopoverPrimitive } from "radix-ui"
-import { Checkmark, ChevronDown, Close } from "@/registry/icons"
+import { ChevronDown, Close } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { useControllable } from "@/registry/hooks/use-controllable"
 import { FieldShell, fieldClasses, fieldSize, type FieldBaseProps, type FieldSize } from "@/registry/ui/form"
-import { Icon } from "@/registry/ui/icon"
+import { Icon, DrawnMark } from "@/registry/ui/icon"
 import { Checkbox } from "@/registry/ui/checkbox"
 import { AnimatedText, AnimatedNumber } from "@/registry/ui/animated"
 
@@ -69,7 +69,7 @@ export function Dropdown({ items, value, defaultValue, onValueChange, placeholde
                       <SelectPrimitive.ItemText>{it.label}</SelectPrimitive.ItemText>
                       {it.description && <span className="text-caption text-helper">{it.description}</span>}
                     </div>
-                    <Icon as={Checkmark} className="absolute right-2 scale-50 text-primary opacity-0 duration-moderate-01 ease-spring group-data-[state=checked]/item:scale-100 group-data-[state=checked]/item:opacity-100" />
+                    <DrawnMark on={it.value === current} className="absolute right-2 text-primary" />
                   </SelectPrimitive.Item>
                 ))}
               </SelectPrimitive.Viewport>
@@ -169,7 +169,7 @@ export function Combobox({ items, value, defaultValue = "", onValueChange, size 
                     className={itemClasses}
                   >
                     {it.label}
-                    <Icon as={Checkmark} className="absolute right-2 scale-50 text-primary opacity-0 duration-moderate-01 ease-spring group-aria-selected/item:scale-100 group-aria-selected/item:opacity-100" />
+                    <DrawnMark on={it.value === val} className="absolute right-2 text-primary" />
                   </li>
                 ))}
               </ul>

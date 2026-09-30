@@ -1,9 +1,9 @@
 import * as React from "react"
 import { DropdownMenu as MenuPrimitive, ContextMenu as ContextPrimitive } from "radix-ui"
 import type { IconType } from "@/registry/icons"
-import { Checkmark, ChevronRight } from "@/registry/icons"
+import { ChevronRight } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
-import { Icon } from "@/registry/ui/icon"
+import { Icon, DrawnMark } from "@/registry/ui/icon"
 
 /**
  * Menu — a temporary list of ACTIONS (verbs). Not for choosing a value (→ Dropdown) and not for navigation (→ links/Side nav).
@@ -24,7 +24,8 @@ const itemClasses = cn(
   "data-[highlighted]:bg-hover data-[disabled]:pointer-events-none data-[disabled]:text-disabled-foreground",
 )
 
-const indicatorClasses = "absolute left-2 flex scale-50 opacity-0 duration-moderate-01 ease-spring data-[state=checked]:scale-100 data-[state=checked]:opacity-100"
+// The mark is always drawn in the DOM; the item's data-state un-draws it (dashoffset 1) when unchecked.
+const indicatorClasses = "absolute left-2 flex [&[data-state=unchecked]_path]:[stroke-dashoffset:1]"
 
 export function MenuContent({ className, sideOffset = 4, align = "start", ...props }: React.ComponentProps<typeof MenuPrimitive.Content>) {
   return (
@@ -53,7 +54,7 @@ export function MenuItem({ icon, shortcut, danger, className, children, ...props
 export function MenuCheckboxItem({ className, children, ...props }: React.ComponentProps<typeof MenuPrimitive.CheckboxItem>) {
   return (
     <MenuPrimitive.CheckboxItem className={cn(itemClasses, "pl-8", className)} {...props}>
-      <MenuPrimitive.ItemIndicator forceMount className={indicatorClasses}><Icon as={Checkmark} /></MenuPrimitive.ItemIndicator>
+      <MenuPrimitive.ItemIndicator forceMount className={indicatorClasses}><DrawnMark on /></MenuPrimitive.ItemIndicator>
       {children}
     </MenuPrimitive.CheckboxItem>
   )
@@ -62,7 +63,7 @@ export function MenuCheckboxItem({ className, children, ...props }: React.Compon
 export function MenuRadioItem({ className, children, ...props }: React.ComponentProps<typeof MenuPrimitive.RadioItem>) {
   return (
     <MenuPrimitive.RadioItem className={cn(itemClasses, "pl-8", className)} {...props}>
-      <MenuPrimitive.ItemIndicator forceMount className={indicatorClasses}><Icon as={Checkmark} /></MenuPrimitive.ItemIndicator>
+      <MenuPrimitive.ItemIndicator forceMount className={indicatorClasses}><DrawnMark on /></MenuPrimitive.ItemIndicator>
       {children}
     </MenuPrimitive.RadioItem>
   )

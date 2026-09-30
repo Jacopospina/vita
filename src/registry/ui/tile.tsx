@@ -100,3 +100,20 @@ export function TileGroup({ label, mode = "single", className, children }: { lab
     </div>
   )
 }
+
+/**
+ * TileSet — cards that share one meaning are ONE object (belonging has no gaps).
+ * The set owns the surface: background, radius, clipping. Items inside are flat — no background,
+ * no radius — separated only by hairlines.
+ */
+export function TileSet({ columns = 2, tone = "default", className, children }: { columns?: 1 | 2 | 3; tone?: "default" | "negative" | "positive"; className?: string; children: React.ReactNode }) {
+  return (
+    <div className={cn("overflow-hidden scope-lg", tone === "negative" ? "bg-error-subtle" : tone === "positive" ? "bg-success-subtle" : "bg-layer-1", className)}>
+      <div className={cn("-mr-px -mb-px grid", columns === 2 && "md:grid-cols-2", columns === 3 && "md:grid-cols-2 lg:grid-cols-3")}>{children}</div>
+    </div>
+  )
+}
+
+export function TileSetItem({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
+  return <div className={cn("flex flex-col gap-2 border-r border-b border-border-subtle p-4 text-foreground", className)} {...props} />
+}

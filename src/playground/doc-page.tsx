@@ -3,8 +3,8 @@ import { CheckmarkOutline, Misuse } from "@/registry/icons"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/registry/ui/tabs"
 import { Tag } from "@/registry/ui/tag"
 import { Text } from "@/registry/ui/text"
-import { Stack, Inline, Container, Grid, Column } from "@/registry/ui/layout"
-import { Tile } from "@/registry/ui/tile"
+import { Stack, Inline, Container } from "@/registry/ui/layout"
+import { TileSet, TileSetItem } from "@/registry/ui/tile"
 import { Icon } from "@/registry/ui/icon"
 import { CodeSnippet } from "@/registry/ui/code-snippet"
 import { Breadcrumb } from "@/registry/ui/breadcrumb"
@@ -87,20 +87,16 @@ export function DocPage({ section, slug }: { section: Section; slug: string }) {
                   </Stack>
                 )}
                 {hasUsage && (
-                  <Grid gutter="narrow" rowGap="md">
-                    <Column sm={4} md={4} lg={8}>
-                      <Tile className="h-full gap-3">
-                        <Inline gap="xs"><Icon as={CheckmarkOutline} size="md" className="text-success" /><Text variant="headline">Use when</Text></Inline>
-                        <UnorderedList>{doc?.meta.use_when?.map((u) => <ListItem key={u}>{u}</ListItem>)}</UnorderedList>
-                      </Tile>
-                    </Column>
-                    <Column sm={4} md={4} lg={8}>
-                      <Tile className="h-full gap-3">
-                        <Inline gap="xs"><Icon as={Misuse} size="md" className="text-error" /><Text variant="headline">Don't use when</Text></Inline>
-                        <UnorderedList>{doc?.meta.avoid_when?.map((u) => <ListItem key={u}>{u}</ListItem>)}</UnorderedList>
-                      </Tile>
-                    </Column>
-                  </Grid>
+                  <TileSet>
+                    <TileSetItem className="gap-3">
+                      <Inline gap="xs"><Icon as={CheckmarkOutline} size="md" className="text-success" /><Text variant="headline">Use when</Text></Inline>
+                      <UnorderedList>{doc?.meta.use_when?.map((u) => <ListItem key={u}>{u}</ListItem>)}</UnorderedList>
+                    </TileSetItem>
+                    <TileSetItem className="gap-3">
+                      <Inline gap="xs"><Icon as={Misuse} size="md" className="text-error" /><Text variant="headline">Don't use when</Text></Inline>
+                      <UnorderedList>{doc?.meta.avoid_when?.map((u) => <ListItem key={u}>{u}</ListItem>)}</UnorderedList>
+                    </TileSetItem>
+                  </TileSet>
                 )}
                 {rest.map((d) => (
                   <Stack key={d.title} gap="sm">

@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Copy, Checkmark, ChevronDown } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
-import { Icon } from "@/registry/ui/icon"
+import { Icon, SwapIcon } from "@/registry/ui/icon"
 import { Tooltip } from "@/registry/ui/tooltip"
 import { AnimatedText } from "@/registry/ui/animated"
 
@@ -26,7 +26,7 @@ function CopyButton({ text, className }: { text: string; className?: string }) {
   return (
     <Tooltip content={<AnimatedText>{copied ? "Copied" : "Copy to clipboard"}</AnimatedText>} side="left">
       <button type="button" onClick={() => copy(text)} aria-label="Copy to clipboard" className={cn("flex size-control-sm shrink-0 items-center justify-center rounded-sm text-muted-foreground hover:bg-hover hover:text-foreground focus-ring", className)}>
-        <Icon as={copied ? Checkmark : Copy} className={copied ? "animate-enter-scale text-success" : undefined} />
+        <SwapIcon as={copied ? Checkmark : Copy} className={copied ? "text-success" : undefined} />
       </button>
     </Tooltip>
   )

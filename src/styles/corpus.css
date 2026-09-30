@@ -277,6 +277,21 @@
   }
 }
 
+/* DRAW — icons trace their outline, then fill (enter); fill fades, outline un-traces (exit). Paths get pathLength=1 from <Icon draw>. */
+@utility icon-draw {
+  & :is(path, circle, rect, polygon, ellipse):not([fill="none"]):not([data-name*="Transparent"]) {
+    stroke: currentColor; stroke-width: 1.25; stroke-linejoin: round; stroke-dasharray: 1;
+    animation: corpus-draw-in var(--corpus-duration-expressive) var(--corpus-ease-expressive-enter) both;
+  }
+  @media (prefers-reduced-motion: reduce) { & * { animation: none !important; stroke: none; } }
+}
+@utility icon-undraw {
+  & :is(path, circle, rect, polygon, ellipse):not([fill="none"]):not([data-name*="Transparent"]) {
+    stroke: currentColor; stroke-width: 1.25; stroke-linejoin: round; stroke-dasharray: 1;
+    animation: corpus-draw-out var(--corpus-duration-moderate-02) var(--corpus-ease-productive-exit) both;
+  }
+}
+
 /* AI outline: the rainbow spectrum, slowly rotating (still under reduced motion). */
 @property --corpus-ai-angle { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
 @utility ai-gradient-border {

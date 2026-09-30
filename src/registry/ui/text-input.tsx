@@ -2,7 +2,7 @@ import * as React from "react"
 import { View, ViewOff } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { FieldShell, fieldClasses, fieldSize, type FieldBaseProps, type FieldSize } from "@/registry/ui/form"
-import { Icon } from "@/registry/ui/icon"
+import { SwapIcon } from "@/registry/ui/icon"
 
 /** TextInput — single-line free text. If the answer set is known and ≤ ~7, use Radio/Select instead. */
 export interface TextInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size">, FieldBaseProps {
@@ -56,7 +56,7 @@ export const PasswordInput = React.forwardRef<HTMLInputElement, Omit<TextInputPr
               aria-label={visible ? "Hide password" : "Show password"}
               className="absolute inset-y-0 right-0 flex w-control-md items-center justify-center rounded-md text-muted-foreground hover:text-foreground focus-ring-inset"
             >
-              <Icon key={visible ? "off" : "on"} as={visible ? ViewOff : View} className="animate-enter-scale" />
+              <SwapIcon as={visible ? ViewOff : View} />
             </button>
           </div>
         )}

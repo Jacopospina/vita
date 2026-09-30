@@ -44,6 +44,16 @@
 @keyframes corpus-dialog-in { from { opacity: 0; transform: translateY(2rem) scale(0.95); filter: blur(12px) } }
 @keyframes corpus-ai-spin { to { --corpus-ai-angle: 360deg } }
 @keyframes corpus-focus-in { from { outline-color: transparent; outline-offset: 6px } }
+@keyframes corpus-draw-in {
+  0% { stroke-dashoffset: 1; stroke-opacity: 1; fill-opacity: 0 }
+  60% { stroke-dashoffset: 0; stroke-opacity: 1; fill-opacity: 0 }
+  100% { stroke-dashoffset: 0; stroke-opacity: 0; fill-opacity: 1 }
+}
+@keyframes corpus-draw-out {
+  0% { stroke-dashoffset: 0; stroke-opacity: 1; fill-opacity: 1 }
+  35% { stroke-dashoffset: 0; stroke-opacity: 1; fill-opacity: 0 }
+  100% { stroke-dashoffset: -1; stroke-opacity: 1; fill-opacity: 0 }
+}
 @keyframes corpus-rise-in { from { opacity: 0; transform: translateY(1.25rem); filter: blur(10px) } }
 @keyframes corpus-sink-out { to { opacity: 0; transform: translateY(-0.5rem); filter: blur(4px) } }
 @keyframes corpus-pulse { 50% { opacity: 0.55 } }
@@ -82,7 +92,7 @@
     transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke,
       box-shadow, opacity, transform, translate, scale, rotate, border-radius, width, height, min-height, max-height, max-width,
       padding, margin, gap, font-size, line-height, letter-spacing, font-weight, outline-offset, outline-width,
-      grid-template-rows, grid-template-columns, filter, backdrop-filter, visibility;
+      grid-template-rows, grid-template-columns, filter, backdrop-filter, visibility, stroke-dashoffset, fill-opacity, stroke-opacity;
     transition-behavior: allow-discrete;
     transition-duration: var(--corpus-duration-moderate-01);
     transition-timing-function: var(--corpus-ease-productive);

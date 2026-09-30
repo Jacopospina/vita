@@ -4,7 +4,7 @@ import { CheckmarkFilled, Misuse } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { Stack, Inline } from "@/registry/ui/layout"
 import { Text } from "@/registry/ui/text"
-import { Tile } from "@/registry/ui/tile"
+import { Tile, TileSet, TileSetItem } from "@/registry/ui/tile"
 import { Icon } from "@/registry/ui/icon"
 import { Callout } from "@/registry/ui/notification"
 import { CodeSnippet } from "@/registry/ui/code-snippet"
@@ -130,9 +130,9 @@ function List({ list, context }: { list: Tokens.List; context: string }) {
   // Rule cards: most items lead with a bold title.
   if (items.filter((i) => i.title).length >= Math.max(2, Math.ceil(items.length * 0.6))) {
     return (
-      <div className={cn("grid gap-4", items.length > 1 && "md:grid-cols-2")}>
+      <TileSet columns={items.length > 1 ? 2 : 1} tone={negative ? "negative" : "default"}>
         {items.map((it, i) => (
-          <Tile key={i} className={cn("h-full gap-2", negative && "bg-error-subtle")}>
+          <TileSetItem key={i}>
             <Inline gap="xs" align="start">
               {list.ordered && (
                 <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary text-caption font-semibold text-primary-foreground tabular-nums">
@@ -144,9 +144,9 @@ function List({ list, context }: { list: Tokens.List; context: string }) {
             </Inline>
             {it.title && it.body && <Text tone="muted">{inline(it.body)}</Text>}
             {it.nested.map((n, j) => <NestedList key={j} list={n} />)}
-          </Tile>
+          </TileSetItem>
         ))}
-      </div>
+      </TileSet>
     )
   }
 

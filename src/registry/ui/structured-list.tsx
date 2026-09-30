@@ -1,7 +1,6 @@
 import * as React from "react"
-import { CheckmarkFilled } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
-import { Icon } from "@/registry/ui/icon"
+import { DrawnMark } from "@/registry/ui/icon"
 
 /**
  * StructuredList — a small, read-mostly set of rows with a few columns: key/value details, plan comparison, spec sheets.
@@ -46,7 +45,7 @@ export function StructuredList({ columns, rows, selectable, value, onValueChange
               {r.cells.map((c, i) => (
                 <td key={i} className={cn(cell, i === 0 ? "font-medium text-foreground" : "text-muted-foreground")}>{c}</td>
               ))}
-              {selectable && <td className={cell}><Icon as={CheckmarkFilled} className={cn("text-primary duration-moderate-01 ease-spring", selected ? "scale-100 opacity-100" : "scale-50 opacity-0")} /></td>}
+              {selectable && <td className={cell}><DrawnMark on={selected} className="text-primary" /></td>}
             </tr>
           )
         })}

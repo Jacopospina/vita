@@ -151,7 +151,7 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/foun
   - use: Free text the system can't predict (names, titles, references); Numeric identifiers — phone, postcode, card (inputMode="numeric"); Long text — TextArea; secrets — PasswordInput
   - avoid: A known set of answers → RadioGroup / Dropdown / Combobox; Quantities → NumberInput; Dates → DatePicker; Searching a collection → Search
 - [Tile](docs/components/tile.md): A surface that groups related content. Base, clickable, selectable and expandable, and never nested.
-  - use: Base — grouping related info on a page (a metric, a summary); Clickable — a card that is one destination (a project, a feature area); Selectable — choosing among rich options (plans, templates) — single or multi; Expandable — summary first, details on demand
+  - use: Base — grouping related info on a page (a metric, a summary); Clickable — a card that is one destination (a project, a feature area); Selectable — choosing among rich options (plans, templates) — single or multi; Expandable — summary first, details on demand; TileSet — several cards that share one meaning, as one object
   - avoid: Tables of records → DataTable; Wrapping every section in a card "to make it look designed" → use whitespace; Tiles inside tiles → flatten the hierarchy
 - [Toggle](docs/components/toggle.md): A switch for binary settings that take effect immediately. The rule: no Save button after a toggle.
   - use: Turning a feature or preference on/off with immediate effect (settings pages, panels)

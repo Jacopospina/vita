@@ -1,8 +1,7 @@
 import * as React from "react"
 import { Checkbox as CheckboxPrimitive } from "radix-ui"
-import { Checkmark, Subtract } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
-import { Icon } from "@/registry/ui/icon"
+import { DrawnMark } from "@/registry/ui/icon"
 import { Label, FieldMessage } from "@/registry/ui/form"
 
 /**
@@ -16,6 +15,7 @@ export interface CheckboxProps extends React.ComponentProps<typeof CheckboxPrimi
 }
 
 export function Checkbox({ label, helperText, invalid, className, id: idProp, ...props }: CheckboxProps) {
+  const [checkedState, setCheckedState] = React.useState(props.defaultChecked ?? false)
   const auto = React.useId()
   const id = idProp ?? auto
   const box = (
@@ -33,11 +33,16 @@ export function Checkbox({ label, helperText, invalid, className, id: idProp, ..
         !label && className,
       )}
       {...props}
+      onCheckedChange={(c) => {
+        setCheckedState(c)
+        props.onCheckedChange?.(c)
+      }}
     >
       {/* Always mounted: the mark scales in AND out (checked ↔ indeterminate cross-fade). */}
-      <CheckboxPrimitive.Indicator forceMount className="group/ind relative flex size-full items-center justify-center">
-        <Icon as={Checkmark} size="sm" className="absolute scale-50 opacity-0 duration-moderate-01 ease-spring group-data-[state=checked]/ind:scale-100 group-data-[state=checked]/ind:opacity-100" />
-        <Icon as={Subtract} size="sm" className="absolute scale-50 opacity-0 duration-moderate-01 ease-spring group-data-[state=indeterminate]/ind:scale-100 group-data-[state=indeterminate]/ind:opacity-100" />
+      {/* Always mounted: the check DRAWS its path in, and un-draws on clear; indeterminate draws a dash. */}
+      <CheckboxPrimitive.Indicator forceMount className="relative flex size-full items-center justify-center">
+        <DrawnMark kind="check" on={props.checked === true || (props.checked === undefined && checkedState === true)} className="absolute size-3.5" />
+        <DrawnMark kind="dash" on={props.checked === "indeterminate"} className="absolute size-3.5" />
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Root>
   )
