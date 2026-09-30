@@ -3,7 +3,7 @@ import type { IconType } from "@/registry/icons"
 import { Close } from "@/registry/icons"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/registry/lib/utils"
-import { Icon } from "@/registry/ui/icon"
+import { Icon, SwapIcon } from "@/registry/ui/icon"
 import { animateChildren } from "@/registry/ui/animated"
 import { useExit } from "@/registry/hooks/use-exit"
 
@@ -46,7 +46,7 @@ export function Tag({ tone, size, icon, onDismiss, dismissLabel, disabled, class
   const [leaving, exit] = useExit()
   return (
     <span className={cn(tagVariants({ tone, size }), onDismiss && "pr-0.5", disabled && "opacity-50", leaving && "animate-exit-scale", className)} {...props}>
-      {icon && <Icon as={icon} size="sm" />}
+      {icon && <SwapIcon as={icon} size="sm" />}
       <span className="truncate">{animateChildren(children)}</span>
       {onDismiss && (
         <button
@@ -86,7 +86,7 @@ export function SelectableTag({ selected, onSelectedChange, disabled, children, 
 /** OperationalTag — a tag that opens something (e.g. a popover listing more items: "+3"). */
 export const OperationalTag = React.forwardRef<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement> & { tone?: TagProps["tone"] }>(
   ({ tone = "neutral", className, ...props }, ref) => (
-    <button ref={ref} type="button" className={cn(tagVariants({ tone }), "cursor-pointer underline-offset-2 hover:underline focus-ring", className)} {...props} />
+    <button ref={ref} type="button" className={cn(tagVariants({ tone }), "cursor-pointer underline-offset-2 underline decoration-transparent hover:decoration-current focus-ring", className)} {...props} />
   ),
 )
 OperationalTag.displayName = "OperationalTag"

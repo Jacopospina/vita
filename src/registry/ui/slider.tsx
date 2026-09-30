@@ -2,7 +2,7 @@ import * as React from "react"
 import { Slider as SliderPrimitive } from "radix-ui"
 import { cn } from "@/registry/lib/utils"
 import { Label } from "@/registry/ui/form"
-import { AnimatedNumber } from "@/registry/ui/animated"
+import { AnimatedNumber, AnimatedText } from "@/registry/ui/animated"
 
 /**
  * Slider — choose a value (or range) where relative position matters more than precision: volume, opacity, price range.
@@ -27,7 +27,7 @@ export function Slider({ label, hideLabel, helperText, formatValue = String, sho
       <div className={cn("flex items-baseline justify-between", hideLabel && "sr-only")}>
         <Label id={id}>{label}</Label>
         <output aria-live="polite" className="text-footnote text-foreground tabular-nums">
-          {formatValue === String ? current.map((v, i) => <React.Fragment key={i}>{i > 0 && " – "}<AnimatedNumber value={v} /></React.Fragment>) : current.map(formatValue).join(" – ")}
+          {formatValue === String ? current.map((v, i) => <React.Fragment key={i}>{i > 0 && " – "}<AnimatedNumber value={v} /></React.Fragment>) : <AnimatedText>{current.map(formatValue).join(" – ")}</AnimatedText>}
         </output>
       </div>
       <SliderPrimitive.Root

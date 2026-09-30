@@ -31,7 +31,7 @@ export function TabsList({ className, variant = "line", fullWidth, children, ...
       {variant === "line" && rect && (
         <span
           aria-hidden
-          className="pointer-events-none absolute bottom-0 left-0 h-0.5 rounded-full bg-primary duration-moderate-02 ease-expressive"
+          className="pointer-events-none absolute bottom-0 left-0 h-0.5 rounded-full bg-primary motion-expressive"
           style={{ width: rect.w, transform: `translateX(${rect.x}px)` }}
         />
       )}

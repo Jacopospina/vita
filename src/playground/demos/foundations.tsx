@@ -119,6 +119,28 @@ const spacing = [
 ] as const
 const spacingW: Record<string, string> = { "0.5": "w-0.5", "1": "w-1", "2": "w-2", "3": "w-3", "4": "w-4", "6": "w-6", "8": "w-8", "10": "w-10", "12": "w-12", "16": "w-16", "20": "w-20", "24": "w-24", "40": "w-40" }
 
+function CharacterDemo() {
+  const [on, setOn] = React.useState(false)
+  const lane = (label: string, sub: string, cls: string) => (
+    <Stack gap="sm" className="flex-1">
+      <Stack gap="none"><Text variant="headline">{label}</Text><Text variant="caption" tone="muted">{sub}</Text></Stack>
+      <div className="relative h-40 overflow-hidden scope-lg bg-layer-1 p-3">
+        <div className={cn("rounded-inner-3 bg-primary", cls, on ? "h-full w-full" : "h-10 w-24")} />
+        <div className={cn("absolute right-3 bottom-3 size-8 rounded-full bg-primary-subtle", cls, on ? "translate-x-0 opacity-100" : "translate-x-16 opacity-0")} />
+      </div>
+    </Stack>
+  )
+  return (
+    <Stack gap="md">
+      <Inline><Button onClick={() => setOn((o) => !o)}>{on ? "Collapse" : "Expand"}</Button><Text tone="muted">Same change, two characters.</Text></Inline>
+      <Inline gap="lg" align="start" wrap>
+        {lane("Productive", "Efficient, subtle — states, menus, reveals, tables", "motion-productive")}
+        {lane("Expressive", "Vibrant, visible — pages, primary actions, alerts", "motion-expressive")}
+      </Inline>
+    </Stack>
+  )
+}
+
 function MotionDemo() {
   const [on, setOn] = React.useState(false)
   const easings = [
@@ -281,7 +303,10 @@ export const foundationDemos: DemoMap = {
       ),
     },
   ],
-  "foundations/motion": [{ title: "Easing & duration tokens", render: () => <MotionDemo /> }],
+  "foundations/motion": [
+    { title: "Productive and expressive", description: "Every motion in Corpus has one of two characters. Press the button to compare them on the same change.", render: () => <CharacterDemo /> },
+    { title: "Easing & duration tokens", render: () => <MotionDemo /> },
+  ],
   "foundations/icons": [{ title: "Every icon", description: "The full set, searchable. Click any icon to copy its import.", render: () => <GlyphGallery kind="icons" /> }],
   "foundations/pictograms": [{ title: "Every pictogram", description: "The full set, searchable. Click any pictogram to copy its import.", render: () => <GlyphGallery kind="pictograms" /> }],
   "foundations/accessibility": [

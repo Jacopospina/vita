@@ -2,8 +2,9 @@ import * as React from "react"
 import { Label as LabelPrimitive } from "radix-ui"
 import { WarningFilled, WarningAltFilled } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
-import { Icon } from "@/registry/ui/icon"
+import { SwapIcon } from "@/registry/ui/icon"
 import { animateChildren } from "@/registry/ui/animated"
+import { Group } from "@/registry/ui/layout"
 
 /* ------------------------------------------------------------------ */
 /* Shared field styling. Every text-like control uses these classes.   */
@@ -13,7 +14,7 @@ export const fieldClasses = cn(
   " duration-fast-02 ease-productive",
   "placeholder:text-placeholder",
   "hover:border-border-strong",
-  "focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-focus focus-visible:border-transparent",
+  "focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-focus focus-visible:border-transparent focus-visible:animate-focus-in",
   "disabled:cursor-not-allowed disabled:border-border-subtle disabled:bg-layer-1 disabled:text-disabled-foreground",
   "read-only:border-border-subtle read-only:bg-transparent read-only:hover:border-border-subtle",
   "aria-invalid:border-error aria-invalid:focus-visible:outline-error",
@@ -47,6 +48,62 @@ export interface FieldBaseProps {
   labelAddon?: React.ReactNode
 }
 
+/* ------------------------------------------------------------------ */
+/* FieldMessage — helper / warning / error text that ENTERS and EXITS. */
+/* ------------------------------------------------------------------ */
+type MessageKind = "help" | "warn" | "error"
+interface Message { kind: MessageKind; text: React.ReactNode }
+
+/** Keeps the last message around while it plays its exit, then lets it go. */
+function useLinger(msg: Message | null, ms = 280) {
+  const [shown, setShown] = React.useState<Message | null>(msg)
+  const [leaving, setLeaving] = React.useState(false)
+  if (msg && (msg.kind !== shown?.kind || msg.text !== shown?.text)) {
+    setShown(msg)
+    setLeaving(false)
+  } else if (!msg && shown && !leaving) {
+    setLeaving(true)
+  }
+  React.useEffect(() => {
+    if (!leaving) return
+    const t = window.setTimeout(() => {
+      setShown(null)
+      setLeaving(false)
+    }, ms)
+    return () => window.clearTimeout(t)
+  }, [leaving, ms])
+  return [shown, leaving] as const
+}
+
+/**
+ * FieldMessage — the one place validation text lives. When an error or warning is resolved,
+ * its text and icon collapse, blur and fade out; switching kinds cross-fades. Nothing vanishes.
+ */
+export function FieldMessage({ id, kind, children, className }: { id?: string; kind: MessageKind; children?: React.ReactNode; className?: string }) {
+  const [shown, leaving] = useLinger(children ? { kind, text: children } : null)
+  const open = !!shown && !leaving
+  const k = shown?.kind ?? kind
+  return (
+    <div className={cn("reveal motion-productive", open && "reveal-open", className)} aria-live={k === "error" ? "assertive" : "polite"}>
+      <div>
+        <p
+          id={id}
+          className={cn(
+            "flex items-start gap-1 pt-1.5 text-caption motion-expressive",
+            k === "error" ? "text-error-foreground" : k === "warn" ? "text-warning-foreground" : "text-helper",
+            open ? "translate-y-0 opacity-100 blur-none" : "-translate-y-1 opacity-0 blur-xs",
+          )}
+        >
+          <span className={cn("inline-flex shrink-0 overflow-hidden motion-expressive", k === "help" ? "max-w-0 scale-50 opacity-0" : "max-w-4 scale-100 opacity-100")}>
+            <SwapIcon as={k === "warn" ? WarningAltFilled : WarningFilled} size="sm" className="mt-px" />
+          </span>
+          <span>{animateChildren(shown?.text)}</span>
+        </p>
+      </div>
+    </div>
+  )
+}
+
 export interface FieldShellProps extends FieldBaseProps {
   id?: string
   className?: string
@@ -62,8 +119,8 @@ export function FieldShell({ id: idProp, label, hideLabel, helperText, invalid, 
   const showWarn = !invalid && warn && warnText
   const message = showInvalid ? invalidText : showWarn ? warnText : helperText
   return (
-    <div data-field="" data-invalid={invalid || undefined} className={cn("flex min-w-0 flex-col gap-1.5", className)}>
-      <div className={cn("flex items-center gap-1", hideLabel && "sr-only")}>
+    <div data-field="" data-invalid={invalid || undefined} className={cn("flex min-w-0 flex-col", className)}>
+      <div className={cn("flex items-center gap-1 pb-1.5", hideLabel && "sr-only")}>
         <Label htmlFor={id}>
           {label}
           {optional && <span className="font-normal text-muted-foreground"> (optional)</span>}
@@ -71,19 +128,7 @@ export function FieldShell({ id: idProp, label, hideLabel, helperText, invalid, 
         {labelAddon}
       </div>
       {children({ id, "aria-describedby": message ? msgId : undefined, "aria-invalid": invalid || undefined })}
-      {message && (
-        <p
-          id={msgId}
-          className={cn(
-            "flex items-start gap-1 text-caption",
-            showInvalid ? "text-error-foreground" : showWarn ? "text-warning-foreground" : "text-helper",
-          )}
-        >
-          {showInvalid && <Icon as={WarningFilled} size="sm" className="mt-px" />}
-          {showWarn && <Icon as={WarningAltFilled} size="sm" className="mt-px" />}
-          <span>{animateChildren(message)}</span>
-        </p>
-      )}
+      <FieldMessage id={msgId} kind={showInvalid ? "error" : showWarn ? "warn" : "help"}>{message}</FieldMessage>
     </div>
   )
 }
@@ -113,7 +158,7 @@ export function FormRow({ className, ...props }: React.HTMLAttributes<HTMLDivEle
 
 /** FormActions — the submit row of a page form. Actions belong together: joined, zero gap. Primary first (reading order). */
 export function FormActions({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div role="group" className={cn("flex w-fit gap-0 pt-2 *:rounded-none *:first:rounded-l-md *:last:rounded-r-md", className)} {...props} />
+  return <div className="pt-2"><Group className={className} {...props} /></div>
 }
 
 /**

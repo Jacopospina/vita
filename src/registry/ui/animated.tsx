@@ -23,10 +23,10 @@ function Digit({ value, index }: { value: number; index: number }) {
       return
     }
     prev.current = value
-    strip.current.animate([{ filter: "blur(3px)" }, { filter: "blur(0)" }], {
-      duration: 420,
+    strip.current.animate([{ filter: "blur(4px)" }, { filter: "blur(0)" }], {
+      duration: 520,
       delay: index * STAGGER,
-      easing: "cubic-bezier(0, 0, 0.3, 1)",
+      easing: "cubic-bezier(0.16, 1, 0.3, 1)",
       fill: "backwards",
     })
   }, [value, index])
@@ -35,7 +35,7 @@ function Digit({ value, index }: { value: number; index: number }) {
       <span className="invisible">0</span>
       <span
         ref={strip}
-        className="absolute inset-x-0 top-0 flex flex-col duration-slow-01 ease-expressive"
+        className="absolute inset-x-0 top-0 flex flex-col duration-expressive ease-expressive"
         style={{ transform: `translateY(${-value * 10}%)`, transitionDelay: `${index * STAGGER}ms` }}
       >
         {Array.from({ length: 10 }, (_, d) => (

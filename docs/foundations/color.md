@@ -28,7 +28,7 @@ avoid_when:
 | State | `hover` · `active` · `selected` · `selected-foreground` | Translucent washes that work on any layer. |
 | Support | `success` · `warning` · `error` · `info` (+ `-subtle`, `-foreground`) | Status only. Text on tints uses `-foreground`. |
 | Lines | `border-subtle` · `border` · `border-field` · `border-strong` | Fields use `border-field` (≥ 3:1). |
-| AI | `ai-from` · `ai-to` · `ai-subtle` | Only for AI-generated content. |
+| AI | `ai-spectrum` · `ai-subtle` | The rainbow outline, only for AI-generated content. |
 
 ## Rules
 

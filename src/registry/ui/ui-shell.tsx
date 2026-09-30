@@ -71,7 +71,8 @@ export function HeaderNavItem({ href, active, children, onClick }: { href?: stri
       aria-current={active ? "page" : undefined}
       className={cn(
         "relative flex h-full items-center px-4 text-body text-muted-foreground duration-fast-02 hover:bg-hover hover:text-foreground focus-ring-inset",
-        active && "text-foreground after:absolute after:inset-x-4 after:bottom-0 after:h-0.5 after:bg-primary",
+        "after:absolute after:inset-x-8 after:bottom-0 after:h-0.5 after:rounded-full after:bg-transparent after:motion-expressive",
+        active && "text-foreground after:inset-x-4 after:bg-primary",
       )}
     >
       {children}

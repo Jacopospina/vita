@@ -81,10 +81,13 @@
   --corpus-info-subtle: color-mix(in oklab, var(--corpus-info) 12%, var(--corpus-background));
   --corpus-info-foreground: oklch(0.464 0.242 calc(var(--_hi) + 6));
 
-  /* AI — the only sanctioned gradient in the system */
-  --corpus-ai-from: oklch(0.603 var(--_bc) var(--_bh));
-  --corpus-ai-to: oklch(0.6 0.22 calc(var(--_bh) + 50));
-  --corpus-ai-subtle: color-mix(in oklab, var(--corpus-ai-to) 8%, var(--corpus-background));
+  /* AI — the only sanctioned gradient in the system: the full system spectrum */
+  --corpus-ai-from: var(--corpus-palette-blue-500);
+  --corpus-ai-to: var(--corpus-palette-orange-500);
+  --corpus-ai-spectrum: var(--corpus-palette-blue-500), var(--corpus-palette-indigo-500), var(--corpus-palette-purple-500),
+    var(--corpus-palette-pink-500), var(--corpus-palette-red-500), var(--corpus-palette-orange-500),
+    var(--corpus-palette-yellow-500), var(--corpus-palette-mint-500), var(--corpus-palette-cyan-500), var(--corpus-palette-blue-500);
+  --corpus-ai-subtle: color-mix(in oklab, var(--corpus-palette-purple-500) 5%, var(--corpus-background));
 
   /* elevation: soft, layered, never harsh */
   --corpus-shadow-raised: 0 1px 2px oklch(0 0 0 / 0.05), 0 1px 3px oklch(0 0 0 / 0.07);

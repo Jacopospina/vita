@@ -1,6 +1,6 @@
 import { CheckmarkOutline, CircleDash, Incomplete, Warning } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
-import { Icon } from "@/registry/ui/icon"
+import { SwapIcon } from "@/registry/ui/icon"
 
 /**
  * ProgressIndicator — the steps of a multi-step task the USER works through (wizard, onboarding, checkout).
@@ -36,7 +36,7 @@ export function ProgressIndicator({ steps, current, onStepClick, vertical, class
                 s.disabled && "text-disabled-foreground",
               )}
             >
-              <Icon as={glyph} className={cn("mt-0.5", state === "invalid" ? "text-error" : state === "upcoming" ? "text-muted-foreground" : "text-primary")} />
+              <SwapIcon as={glyph} className={cn("mt-0.5", state === "invalid" ? "text-error" : state === "upcoming" ? "text-muted-foreground" : "text-primary")} />
               <span className="flex min-w-0 flex-col">
                 <span className={cn("truncate text-footnote", state === "current" ? "font-semibold text-foreground" : "text-muted-foreground", clickable && "text-link")}>{s.label}</span>
                 {s.secondaryLabel && <span className="text-caption text-helper">{s.secondaryLabel}</span>}

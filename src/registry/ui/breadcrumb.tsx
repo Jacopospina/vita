@@ -21,7 +21,7 @@ export function Breadcrumb({ items, maxVisible = 4, className, renderLink }: {
   const collapse = items.length > maxVisible
   const visible: (BreadcrumbItem | "overflow")[] = collapse ? [items[0], "overflow", ...items.slice(-(maxVisible - 2))] : items
   const hidden = collapse ? items.slice(1, items.length - (maxVisible - 2)) : []
-  const linkCls = "rounded-sm text-link underline-offset-4 hover:underline focus-ring"
+  const linkCls = "rounded-sm text-link underline-offset-4 underline decoration-transparent hover:decoration-current focus-ring"
   return (
     <nav aria-label="Breadcrumb" className={className}>
       <ol className="flex flex-wrap items-center gap-1 text-footnote">

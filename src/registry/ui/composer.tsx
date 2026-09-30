@@ -63,7 +63,7 @@ export function Composer({ placeholder = "Describe what you need", onSubmit, sug
       <div
         className={cn(
           "flex flex-col scope-xl border border-border-field bg-field shadow-raised duration-fast-02 ease-productive",
-          "focus-within:border-transparent focus-within:outline-2 focus-within:outline-focus",
+          "focus-within:border-transparent focus-within:outline-2 focus-within:outline-focus focus-within:animate-focus-in",
           listening && "border-transparent outline-2 outline-primary",
         )}
       >

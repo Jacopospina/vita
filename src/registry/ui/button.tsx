@@ -3,11 +3,12 @@ import { Slot } from "radix-ui"
 import { cva, type VariantProps } from "class-variance-authority"
 import type { IconType } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
-import { Icon } from "@/registry/ui/icon"
+import { Icon, SwapIcon } from "@/registry/ui/icon"
 import { Tooltip } from "@/registry/ui/tooltip"
 import { Group } from "@/registry/ui/layout"
 import { Kbd } from "@/registry/ui/kbd"
 import { useShortcut } from "@/registry/hooks/use-shortcut"
+import { useTilt } from "@/registry/hooks/use-tilt"
 import { animateChildren } from "@/registry/ui/animated"
 
 /**
@@ -16,7 +17,7 @@ import { animateChildren } from "@/registry/ui/animated"
  */
 const buttonVariants = cva(
   [
-    "relative inline-flex shrink-0 select-none items-center justify-center gap-2 whitespace-nowrap font-medium",
+    "tilt relative inline-flex shrink-0 select-none items-center justify-center gap-2 whitespace-nowrap font-medium will-change-transform",
     "rounded-md duration-fast-02 ease-productive",
     "focus-ring active:scale-98 motion-reduce:active:scale-100",
     "disabled:pointer-events-none disabled:bg-layer-2 disabled:text-disabled-foreground disabled:border-transparent",
@@ -61,6 +62,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const inner = React.useRef<HTMLButtonElement | null>(null)
     React.useImperativeHandle(ref, () => inner.current as HTMLButtonElement)
     useShortcut(shortcut, () => inner.current?.click(), { enabled: !!shortcut && !disabled && !loading })
+    const tilt = useTilt<HTMLButtonElement>({ max: 12, lift: 1.05 }, { onPointerMove: props.onPointerMove, onPointerLeave: props.onPointerLeave })
     const iconEl = icon ? <Icon as={icon} size="sm" /> : null
     return (
       <Comp
@@ -70,6 +72,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={asChild ? undefined : disabled || loading}
         aria-busy={loading || undefined}
         {...props}
+        {...tilt}
       >
         {asChild ? (
           children
@@ -102,21 +105,6 @@ export interface IconButtonProps extends Omit<ButtonProps, "icon" | "iconPositio
   pressed?: boolean
 }
 
-const glyphIds = new WeakMap<object, number>()
-let glyphSeq = 0
-const glyphId = (icon: object) => {
-  if (!glyphIds.has(icon)) glyphIds.set(icon, ++glyphSeq)
-  return glyphIds.get(icon)!
-}
-
-/** SwapIcon — when a button's glyph changes (menu → close, sun → moon), the new glyph scales in. */
-function SwapIcon({ icon, size }: { icon: IconType; size: "sm" | "md" }) {
-  const [first] = React.useState(() => icon)
-  const [changed, setChanged] = React.useState(false)
-  if (!changed && icon !== first) setChanged(true)
-  return <Icon key={glyphId(icon)} as={icon} size={size} className={changed ? "animate-enter-scale" : undefined} />
-}
-
 /** IconButton — icon-only action. Defaults to ghost. Always has a tooltip. */
 export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
   ({ icon, label, variant = "ghost", size = "md", tooltipSide = "bottom", pressed, className, shortcut, ...props }, ref) => (
@@ -131,7 +119,7 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
         className={cn(iconButtonSize[size ?? "md"], "px-0", pressed && "bg-selected text-selected-foreground", className)}
         {...props}
       >
-        <SwapIcon icon={icon} size={size === "lg" ? "md" : "sm"} />
+        <SwapIcon as={icon} size={size === "lg" ? "md" : "sm"} />
       </Button>
     </Tooltip>
   ),
@@ -143,7 +131,7 @@ IconButton.displayName = "IconButton"
  * `stacked` for narrow containers: vertical join, primary on top.
  */
 export function ButtonSet({ className, stacked, ...props }: React.HTMLAttributes<HTMLDivElement> & { stacked?: boolean }) {
-  return <Group orientation={stacked ? "vertical" : "horizontal"} className={cn(stacked ? "flex-col-reverse *:w-full" : "w-fit", className)} {...props} />
+  return <Group orientation={stacked ? "vertical" : "horizontal"} className={cn(stacked && "w-full flex-col-reverse *:w-full", className)} {...props} />
 }
 
 /**

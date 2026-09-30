@@ -91,24 +91,24 @@ export const Search = React.forwardRef<HTMLInputElement, SearchProps>(
           className={cn(
             "h-full w-full min-w-0 rounded-md pr-control-md pl-control-md text-body text-foreground placeholder:text-placeholder",
             " duration-fast-02 ease-productive [&::-webkit-search-cancel-button]:appearance-none",
-            "focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-focus",
+            "focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-focus focus-visible:animate-focus-in",
             variant === "field" && "border border-border-field bg-field hover:border-border-strong",
             variant !== "field" && "border border-transparent bg-transparent hover:bg-hover focus:bg-field",
             collapsed && "pointer-events-none opacity-0",
           )}
         />
-        {shortcut && !val && !focused && !collapsed && (
-          <Kbd keys={shortcut} className="pointer-events-none absolute right-2" />
-        )}
-        {val && (
+        {shortcut && <Kbd keys={shortcut} className={cn("pointer-events-none absolute right-2", !val && !focused && !collapsed ? "opacity-100" : "scale-90 opacity-0")} />}
+        {(
           <button
             type="button"
             aria-label="Clear search"
+            aria-hidden={!val || undefined}
+            tabIndex={val ? 0 : -1}
             onClick={() => {
               setVal("")
               inputRef.current?.focus()
             }}
-            className="absolute right-0 flex h-full w-control-md animate-enter-scale items-center justify-center rounded-md text-muted-foreground hover:text-foreground focus-ring-inset"
+            className={cn("absolute right-0 flex h-full w-control-md items-center justify-center rounded-md text-muted-foreground duration-moderate-01 ease-spring hover:text-foreground focus-ring-inset", val ? "scale-100 opacity-100" : "pointer-events-none scale-75 opacity-0")}
           >
             <Icon as={Close} />
           </button>

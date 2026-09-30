@@ -3,7 +3,7 @@ import { Checkbox as CheckboxPrimitive } from "radix-ui"
 import { Checkmark, Subtract } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { Icon } from "@/registry/ui/icon"
-import { Label } from "@/registry/ui/form"
+import { Label, FieldMessage } from "@/registry/ui/form"
 
 /**
  * Checkbox — independent on/off choices that take effect on SUBMIT, or multi-select from a list.
@@ -34,8 +34,10 @@ export function Checkbox({ label, helperText, invalid, className, id: idProp, ..
       )}
       {...props}
     >
-      <CheckboxPrimitive.Indicator className="flex animate-enter-scale">
-        {props.checked === "indeterminate" ? <Icon as={Subtract} size="sm" /> : <Icon as={Checkmark} size="sm" />}
+      {/* Always mounted: the mark scales in AND out (checked ↔ indeterminate cross-fade). */}
+      <CheckboxPrimitive.Indicator forceMount className="group/ind relative flex size-full items-center justify-center">
+        <Icon as={Checkmark} size="sm" className="absolute scale-50 opacity-0 duration-moderate-01 ease-spring group-data-[state=checked]/ind:scale-100 group-data-[state=checked]/ind:opacity-100" />
+        <Icon as={Subtract} size="sm" className="absolute scale-50 opacity-0 duration-moderate-01 ease-spring group-data-[state=indeterminate]/ind:scale-100 group-data-[state=indeterminate]/ind:opacity-100" />
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Root>
   )
@@ -71,9 +73,7 @@ export function CheckboxGroup({ legend, helperText, invalid, invalidText, orient
     <fieldset className={cn("flex flex-col gap-2", className)} aria-invalid={invalid || undefined}>
       <legend className="mb-1 text-footnote font-medium text-foreground">{legend}</legend>
       <div className={cn("flex gap-3", orientation === "vertical" ? "flex-col" : "flex-row flex-wrap gap-x-6")}>{children}</div>
-      {(invalid && invalidText) || helperText ? (
-        <p className={cn("text-caption", invalid ? "text-error-foreground" : "text-helper")}>{invalid ? invalidText : helperText}</p>
-      ) : null}
+      <FieldMessage kind={invalid && invalidText ? "error" : "help"}>{invalid && invalidText ? invalidText : helperText}</FieldMessage>
     </fieldset>
   )
 }

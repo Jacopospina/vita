@@ -35,7 +35,7 @@ export function ModalContent({ size = "md", danger, className, children, ...prop
         className={cn(
           "fixed top-1/2 left-1/2 z-50 flex max-h-[calc(100dvh-4rem)] w-[calc(100vw-2rem)] -translate-x-1/2 -translate-y-1/2 flex-col",
           "overflow-hidden scope-xl border border-border-subtle bg-raised text-foreground shadow-overlay outline-none",
-          "data-[state=open]:animate-enter-scale data-[state=closed]:animate-exit-scale",
+          "data-[state=open]:animate-enter-dialog data-[state=closed]:animate-exit-dialog",
           sizes[size],
           className,
         )}

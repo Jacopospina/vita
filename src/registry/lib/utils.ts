@@ -15,7 +15,7 @@ const twMerge = extendTailwindMerge({
       ease: ["productive", "productive-enter", "productive-exit", "expressive", "expressive-enter", "expressive-exit", "spring"],
     },
     classGroups: {
-      duration: [{ duration: ["fast-01", "fast-02", "moderate-01", "moderate-02", "slow-01", "slow-02"] }],
+      duration: [{ duration: ["fast-01", "fast-02", "moderate-01", "moderate-02", "slow-01", "slow-02", "expressive"] }],
     },
   },
 })

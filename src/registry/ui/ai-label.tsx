@@ -33,7 +33,7 @@ export function AILabel({ size = "md", children, title = "AI explained", classNa
         </PopoverContent>
       </Popover>
       {onRevert && (
-        <button type="button" onClick={onRevert} className="rounded-sm px-1 text-caption text-link hover:underline focus-ring">
+        <button type="button" onClick={onRevert} className="rounded-sm px-1 text-caption text-link underline decoration-transparent hover:decoration-current focus-ring">
           Revert to AI input
         </button>
       )}

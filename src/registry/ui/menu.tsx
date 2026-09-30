@@ -24,6 +24,8 @@ const itemClasses = cn(
   "data-[highlighted]:bg-hover data-[disabled]:pointer-events-none data-[disabled]:text-disabled-foreground",
 )
 
+const indicatorClasses = "absolute left-2 flex scale-50 opacity-0 duration-moderate-01 ease-spring data-[state=checked]:scale-100 data-[state=checked]:opacity-100"
+
 export function MenuContent({ className, sideOffset = 4, align = "start", ...props }: React.ComponentProps<typeof MenuPrimitive.Content>) {
   return (
     <MenuPrimitive.Portal>
@@ -51,7 +53,7 @@ export function MenuItem({ icon, shortcut, danger, className, children, ...props
 export function MenuCheckboxItem({ className, children, ...props }: React.ComponentProps<typeof MenuPrimitive.CheckboxItem>) {
   return (
     <MenuPrimitive.CheckboxItem className={cn(itemClasses, "pl-8", className)} {...props}>
-      <MenuPrimitive.ItemIndicator className="absolute left-2 flex"><Icon as={Checkmark} /></MenuPrimitive.ItemIndicator>
+      <MenuPrimitive.ItemIndicator forceMount className={indicatorClasses}><Icon as={Checkmark} /></MenuPrimitive.ItemIndicator>
       {children}
     </MenuPrimitive.CheckboxItem>
   )
@@ -60,7 +62,7 @@ export function MenuCheckboxItem({ className, children, ...props }: React.Compon
 export function MenuRadioItem({ className, children, ...props }: React.ComponentProps<typeof MenuPrimitive.RadioItem>) {
   return (
     <MenuPrimitive.RadioItem className={cn(itemClasses, "pl-8", className)} {...props}>
-      <MenuPrimitive.ItemIndicator className="absolute left-2 flex"><Icon as={Checkmark} /></MenuPrimitive.ItemIndicator>
+      <MenuPrimitive.ItemIndicator forceMount className={indicatorClasses}><Icon as={Checkmark} /></MenuPrimitive.ItemIndicator>
       {children}
     </MenuPrimitive.RadioItem>
   )

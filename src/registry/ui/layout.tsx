@@ -55,10 +55,13 @@ export function Group({ orientation = "horizontal", fill, className, ...props }:
     <div
       role="group"
       className={cn(
-        "flex gap-0 *:rounded-none",
-        orientation === "horizontal"
-          ? "flex-row *:first:rounded-l-md *:last:rounded-r-md"
-          : "flex-col *:first:rounded-t-md *:last:rounded-b-md",
+        // The GROUP owns the shape: radius, clipping and the single outer outline.
+        "flex w-fit gap-0 overflow-hidden rounded-md",
+        // Children lose their own corners, borders and individual tilt; focus draws inside.
+        "*:rounded-none *:border-0 *:transform-none *:focus-visible:-outline-offset-2",
+        // Outline-style members (tertiary, danger-tertiary) → one outline around the whole group.
+        "has-[>.border-primary]:border has-[>.border-primary]:border-primary has-[>.border-error]:border has-[>.border-error]:border-error",
+        orientation === "horizontal" ? "flex-row" : "flex-col",
         fill && "*:flex-1",
         className,
       )}

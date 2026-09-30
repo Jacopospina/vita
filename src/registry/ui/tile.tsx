@@ -3,6 +3,7 @@ import { Collapsible } from "radix-ui"
 import { ArrowRight, CheckmarkFilled, ChevronDown, RadioButton as RadioEmpty, Checkbox as CheckboxEmpty } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { Icon } from "@/registry/ui/icon"
+import { useTilt } from "@/registry/hooks/use-tilt"
 
 /**
  * Tile — a surface that groups related content (a card that defers to its content).
@@ -18,22 +19,26 @@ export function Tile({ className, elevated, ...props }: React.HTMLAttributes<HTM
 }
 
 export const ClickableTile = React.forwardRef<HTMLAnchorElement, React.AnchorHTMLAttributes<HTMLAnchorElement> & { disabled?: boolean }>(
-  ({ className, children, disabled, ...props }, ref) => (
-    <a
-      ref={ref}
-      aria-disabled={disabled || undefined}
-      className={cn(
-        base,
-        "group cursor-pointer pb-12 duration-fast-02 ease-productive hover:bg-layer-2 focus-ring active:scale-99",
-        disabled && "pointer-events-none text-disabled-foreground",
-        className,
-      )}
-      {...props}
-    >
-      {children}
-      <Icon as={ArrowRight} size="md" className="absolute right-4 bottom-4 text-primary duration-moderate-01 ease-productive group-hover:translate-x-1" />
-    </a>
-  ),
+  ({ className, children, disabled, ...props }, ref) => {
+    const tilt = useTilt<HTMLAnchorElement>({ max: 6, lift: 1.02 }, { onPointerMove: props.onPointerMove, onPointerLeave: props.onPointerLeave })
+    return (
+      <a
+        ref={ref}
+        aria-disabled={disabled || undefined}
+        className={cn(
+          base,
+          "tilt group cursor-pointer pb-12 duration-moderate-01 ease-spring hover:bg-layer-2 hover:shadow-floating focus-ring active:scale-99",
+          disabled && "pointer-events-none text-disabled-foreground",
+          className,
+        )}
+        {...props}
+        {...tilt}
+      >
+        {children}
+        <Icon as={ArrowRight} size="md" className="absolute right-4 bottom-4 text-primary duration-moderate-01 ease-productive group-hover:translate-x-1" />
+      </a>
+    )
+  },
 )
 ClickableTile.displayName = "ClickableTile"
 
@@ -45,6 +50,7 @@ export interface SelectableTileProps extends Omit<React.ButtonHTMLAttributes<HTM
 }
 
 export function SelectableTile({ selected, onSelectedChange, mode = "multi", className, children, disabled, ...props }: SelectableTileProps) {
+  const tilt = useTilt<HTMLButtonElement>({ max: 6, lift: 1.02 }, { onPointerMove: props.onPointerMove, onPointerLeave: props.onPointerLeave })
   return (
     <button
       type="button"
@@ -54,15 +60,18 @@ export function SelectableTile({ selected, onSelectedChange, mode = "multi", cla
       onClick={() => onSelectedChange(mode === "single" ? true : !selected)}
       className={cn(
         base,
-        "cursor-pointer border border-transparent text-left duration-fast-02 ease-productive hover:bg-layer-2 focus-ring",
+        "tilt cursor-pointer border border-transparent text-left duration-moderate-01 ease-spring hover:bg-layer-2 hover:shadow-floating focus-ring",
         selected && "border-primary bg-selected hover:bg-selected",
         disabled && "pointer-events-none text-disabled-foreground",
         className,
       )}
       {...props}
+      {...tilt}
     >
       <span className="absolute top-4 right-4 flex text-primary">
-        {selected ? <Icon as={CheckmarkFilled} size="md" /> : <Icon as={mode === "single" ? RadioEmpty : CheckboxEmpty} size="md" className="text-border-strong" />}
+        {/* Empty and selected marks are stacked and cross-fade. */}
+        <Icon as={mode === "single" ? RadioEmpty : CheckboxEmpty} size="md" className={cn("text-border-strong duration-moderate-01", selected ? "scale-75 opacity-0" : "opacity-100")} />
+        <Icon as={CheckmarkFilled} size="md" className={cn("absolute inset-0 duration-moderate-01 ease-spring", selected ? "scale-100 opacity-100" : "scale-50 opacity-0")} />
       </span>
       <div className="pr-8">{children}</div>
     </button>

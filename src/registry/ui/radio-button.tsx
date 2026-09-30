@@ -1,7 +1,7 @@
 import * as React from "react"
 import { RadioGroup as RadioPrimitive } from "radix-ui"
 import { cn } from "@/registry/lib/utils"
-import { Label } from "@/registry/ui/form"
+import { Label, FieldMessage } from "@/registry/ui/form"
 
 /**
  * RadioGroup — exactly ONE choice from 2–6 visible options. All options visible = faster decisions (Hick's law).
@@ -31,9 +31,7 @@ export function RadioGroup({ legend, hideLegend, helperText, invalid, invalidTex
       >
         {children}
       </RadioPrimitive.Root>
-      {(invalid && invalidText) || helperText ? (
-        <p className={cn("text-caption", invalid ? "text-error-foreground" : "text-helper")}>{invalid ? invalidText : helperText}</p>
-      ) : null}
+      <FieldMessage kind={invalid && invalidText ? "error" : "help"}>{invalid && invalidText ? invalidText : helperText}</FieldMessage>
     </div>
   )
 }
@@ -57,7 +55,7 @@ export function RadioButton({ label, helperText, className, id: idProp, ...props
         )}
         {...props}
       >
-        <RadioPrimitive.Indicator className="size-2 animate-enter-scale rounded-full bg-primary data-[disabled]:bg-disabled-foreground" />
+        <RadioPrimitive.Indicator forceMount className="size-2 scale-0 rounded-full bg-primary opacity-0 duration-moderate-01 ease-spring data-[state=checked]:scale-100 data-[state=checked]:opacity-100 data-[disabled]:bg-disabled-foreground" />
       </RadioPrimitive.Item>
       <div className="flex flex-col gap-0.5">
         <Label htmlFor={id} className="text-body font-normal peer-disabled:text-disabled-foreground">

@@ -157,19 +157,22 @@
 /* Animations are NOT inline so reduced-motion can swap them at runtime. */
 @theme {
   --animate-enter-scale: corpus-scale-in var(--corpus-duration-moderate-01) var(--corpus-ease-productive-enter);
+  --animate-focus-in: corpus-focus-in var(--corpus-duration-slow-01) var(--corpus-ease-expressive-enter);
+  --animate-enter-dialog: corpus-dialog-in var(--corpus-duration-expressive) var(--corpus-ease-expressive-enter);
+  --animate-exit-dialog: corpus-scale-out var(--corpus-duration-moderate-01) var(--corpus-ease-expressive-exit);
   --animate-exit-scale: corpus-scale-out var(--corpus-duration-fast-02) var(--corpus-ease-productive-exit);
   --animate-enter-fade: corpus-fade-in var(--corpus-duration-fast-02) var(--corpus-ease-productive-enter);
   --animate-exit-fade: corpus-fade-out var(--corpus-duration-fast-02) var(--corpus-ease-productive-exit);
-  --animate-enter-slide-up: corpus-slide-up-in var(--corpus-duration-moderate-02) var(--corpus-ease-expressive-enter);
+  --animate-enter-slide-up: corpus-slide-up-in var(--corpus-duration-expressive) var(--corpus-ease-expressive-enter);
   --animate-exit-slide-down: corpus-slide-down-out var(--corpus-duration-moderate-01) var(--corpus-ease-productive-exit);
-  --animate-enter-panel-right: corpus-slide-left-in var(--corpus-duration-moderate-02) var(--corpus-ease-expressive-enter);
+  --animate-enter-panel-right: corpus-slide-left-in var(--corpus-duration-expressive) var(--corpus-ease-expressive-enter);
   --animate-exit-panel-right: corpus-slide-right-out var(--corpus-duration-moderate-01) var(--corpus-ease-productive-exit);
-  --animate-enter-panel-left: corpus-slide-right-in var(--corpus-duration-moderate-02) var(--corpus-ease-expressive-enter);
+  --animate-enter-panel-left: corpus-slide-right-in var(--corpus-duration-expressive) var(--corpus-ease-expressive-enter);
   --animate-exit-panel-left: corpus-slide-left-out var(--corpus-duration-moderate-01) var(--corpus-ease-productive-exit);
   --animate-expand: corpus-collapse-down var(--corpus-duration-moderate-02) var(--corpus-ease-productive);
   --animate-collapse: corpus-collapse-up var(--corpus-duration-moderate-01) var(--corpus-ease-productive);
   --animate-spin: corpus-spin 690ms linear infinite;
-  --animate-text-reveal: corpus-text-in var(--corpus-duration-slow-01) var(--corpus-ease-expressive-enter) both;
+  --animate-text-reveal: corpus-text-in var(--corpus-duration-expressive) var(--corpus-ease-expressive-enter) both;
   --animate-shimmer: corpus-shimmer 1.6s linear infinite;
   --animate-indeterminate: corpus-indeterminate 1.4s var(--corpus-ease-productive) infinite;
 }
@@ -181,8 +184,8 @@
  */
 @utility stagger {
   & > *, & > :only-child > * {
-    animation: corpus-rise-in var(--corpus-duration-slow-01) var(--corpus-ease-expressive-enter) both;
-    animation-delay: calc(var(--corpus-i, 12) * 60ms * var(--corpus-motion-scale));
+    animation: corpus-rise-in var(--corpus-duration-expressive) var(--corpus-ease-expressive-enter) both;
+    animation-delay: calc(var(--corpus-i, 12) * 70ms * var(--corpus-motion-scale));
   }
   & > :only-child:has(> *) { animation: none; }
   & > :nth-child(1), & > :only-child > :nth-child(1) { --corpus-i: 0; }
@@ -224,6 +227,10 @@
   border-radius: max(0px, calc(var(--corpus-scope-r2, var(--corpus-radius-sm)) - --value(number) * var(--spacing)));
 }
 
+/* The two motion characters, as one class each (duration + easing). */
+@utility motion-productive { transition-duration: var(--corpus-duration-moderate-01); transition-timing-function: var(--corpus-ease-productive); }
+@utility motion-expressive { transition-duration: var(--corpus-duration-expressive); transition-timing-function: var(--corpus-ease-expressive); }
+
 /* Motion duration utilities */
 @utility duration-fast-01 { transition-duration: var(--corpus-duration-fast-01); }
 @utility duration-fast-02 { transition-duration: var(--corpus-duration-fast-02); }
@@ -231,34 +238,57 @@
 @utility duration-moderate-02 { transition-duration: var(--corpus-duration-moderate-02); }
 @utility duration-slow-01 { transition-duration: var(--corpus-duration-slow-01); }
 @utility duration-slow-02 { transition-duration: var(--corpus-duration-slow-02); }
+@utility duration-expressive { transition-duration: var(--corpus-duration-expressive); }
 
 /* The one focus treatment. Use `focus-ring` on anything focusable that isn't an Corpus component. */
+/* Focus rings fade and settle in (outline exists transparently, so it can transition). */
 @utility focus-ring {
-  &:focus-visible {
-    outline: 2px solid var(--corpus-focus);
-    outline-offset: 1px;
-  }
+  outline: 2px solid transparent;
+  outline-offset: 4px;
+  &:focus-visible { outline-color: var(--corpus-focus); outline-offset: 1px; animation: var(--animate-focus-in); }
 }
 @utility focus-ring-inset {
-  &:focus-visible {
-    outline: 2px solid var(--corpus-focus);
-    outline-offset: -2px;
-  }
+  outline: 2px solid transparent;
+  outline-offset: 0px;
+  &:focus-visible { outline-color: var(--corpus-focus); outline-offset: -2px; animation: var(--animate-focus-in); }
 }
+
+/* Collapsible regions without measuring: grid rows 0fr ↔ 1fr, child overflow-hidden. */
+@utility reveal { display: grid; grid-template-rows: 0fr; & > * { overflow: hidden; min-height: 0; } }
+@utility reveal-open { grid-template-rows: 1fr; }
 
 /* Numbers & numeric values: tabular figures in the numeric face. `tabular-nums` alone is enough. */
 @layer utilities {
   .tabular-nums { font-family: var(--corpus-font-numeric); }
 }
 
+/* LIFT HOVER — perspective tilt toward the pointer + a following glare (driven by useTilt). */
+@utility tilt {
+  transform: perspective(28rem) rotateX(var(--corpus-tilt-x, 0deg)) rotateY(var(--corpus-tilt-y, 0deg)) scale(var(--corpus-tilt-s, 1));
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: radial-gradient(circle at var(--corpus-glare-x, 50%) var(--corpus-glare-y, 50%), oklch(1 0 0 / 0.28), transparent 65%);
+    opacity: var(--corpus-glare-o, 0);
+    mix-blend-mode: soft-light;
+  }
+}
+
+/* AI outline: the rainbow spectrum, slowly rotating (still under reduced motion). */
+@property --corpus-ai-angle { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
 @utility ai-gradient-border {
-  border: 1px solid transparent;
+  border: 1.5px solid transparent;
   background:
     linear-gradient(var(--corpus-ai-subtle), var(--corpus-ai-subtle)) padding-box,
-    linear-gradient(135deg, var(--corpus-ai-from), var(--corpus-ai-to)) border-box;
+    conic-gradient(from var(--corpus-ai-angle), var(--corpus-ai-spectrum)) border-box;
+  animation: corpus-ai-spin 6s linear infinite;
+  @media (prefers-reduced-motion: reduce) { animation: none; }
 }
 @utility ai-gradient-text {
-  background: linear-gradient(135deg, var(--corpus-ai-from), var(--corpus-ai-to));
+  background: linear-gradient(90deg, var(--corpus-palette-blue-500), var(--corpus-palette-purple-500), var(--corpus-palette-pink-500), var(--corpus-palette-orange-500));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -275,5 +305,5 @@
     line-height: 1.45;
   }
   ::selection { background: var(--corpus-primary-subtle); }
-  :focus-visible { outline: 2px solid var(--corpus-focus); outline-offset: 1px; }
+  :focus-visible { outline: 2px solid var(--corpus-focus); outline-offset: 1px; animation: var(--animate-focus-in); }
 }

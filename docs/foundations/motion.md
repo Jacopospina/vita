@@ -17,6 +17,20 @@ avoid_when:
 - **Productive.** Efficient, responsive, subtle and out of the way. The default for moments where the user is focused on a task: button states, dropdowns, revealing more information, rendering tables and charts.
 - **Expressive.** Enthusiastic, vibrant, highly visible. For significant moments: opening a new page, pressing the primary action, system alerts and notifications appearing, or when the movement itself carries meaning.
 
+## Who uses which
+
+| Productive (`motion-productive`) | Expressive (`motion-expressive`) |
+|---|---|
+| Hover, press and focus states | Page enter and leave choreography |
+| Dropdowns, menus, tooltips, popovers | Modals opening (`animate-enter-dialog`) |
+| Accordions, disclosures, reveals | Primary button press |
+| Table sorting, pagination, data rendering | Toasts and notifications appearing |
+| Checkbox, radio, toggle state | Side panels sliding in |
+| Field validation messages | Tab underline and segmented pill travel |
+| Search clear, file rows | Number rolls and text reveals |
+
+> [!TIP] Unsure? If the user is mid-task, it's productive. If the moment deserves attention or the movement itself means something, it's expressive.
+
 ## Nothing snaps
 
 1. **Every property transitions.** Color, background, border, radius, shadow, opacity, transform, width, height, padding, gap and font size animate by default, even to and from `auto`.
@@ -31,6 +45,15 @@ avoid_when:
 - **Numbers roll.** `AnimatedNumber`: every digit rolls like a slot machine, up when the value grows and down when it shrinks, staggered from the last digit, de-blurring as it lands.
 - **Text reveals.** `AnimatedText`: letter by letter, each sliding up from below and de-blurring, 18ms apart (capped so long labels finish in ~0.6s).
 - **Where it's built in.** Every `Text`, `Button` and `Tag` label, toggle state text, dropdown values, counts, slider values, loading messages, validation messages and status labels. Icons that swap (menu ↔ close, show ↔ hide) scale in.
+
+## State changes never snap
+
+1. **Indicators stay mounted.** Checkmarks, radio dots, selected marks and menu checks scale and fade in *and* out; they never unmount on state change.
+2. **Icons that depend on state swap.** Use `SwapIcon`: status, sort direction, step state, menu ↔ close.
+3. **Controls that come and go keep their slot.** Clear buttons, shortcut hints, counts and batch bars fade and scale, then give their space back smoothly.
+4. **Messages leave gracefully.** A resolved error or warning collapses, blurs and fades out (`FieldMessage`); switching kinds cross-fades.
+5. **Branches expand.** Tree and disclosure content open and close with `reveal` / `reveal-open`.
+6. **Focus settles in.** Focus rings arrive over 400ms, from wide and transparent to tight and solid.
 
 ## Enter & exit
 
@@ -50,6 +73,7 @@ avoid_when:
 | `duration-moderate-02` | 240 | Indicators, accordions, toasts, panels |
 | `duration-slow-01` | 400 | Modals, number rolls, text reveals |
 | `duration-slow-02` | 700 | Background dim, hero moments |
+| `duration-expressive` | 480 | The expressive character: gentle start, long graceful settle |
 
 ## Easings
 

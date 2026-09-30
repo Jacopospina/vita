@@ -17,7 +17,7 @@ export function Truncate({ children, mode = "end", lines = 3, className }: { chi
     return (
       <div className={cn("flex flex-col items-start gap-1", className)}>
         <p className={cn("text-body", !expanded && clamp)}>{children}</p>
-        <button type="button" onClick={() => setExpanded((e) => !e)} className="rounded-sm text-footnote text-link hover:underline focus-ring">
+        <button type="button" onClick={() => setExpanded((e) => !e)} className="rounded-sm text-footnote text-link underline decoration-transparent hover:decoration-current focus-ring">
           <AnimatedText>{expanded ? "Show less" : "Show more"}</AnimatedText>
         </button>
       </div>

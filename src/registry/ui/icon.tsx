@@ -15,6 +15,24 @@ export interface IconProps extends Omit<React.SVGProps<SVGSVGElement>, "ref"> {
   label?: string
 }
 
+const glyphIds = new WeakMap<object, number>()
+let glyphSeq = 0
+const glyphId = (icon: object) => {
+  if (!glyphIds.has(icon)) glyphIds.set(icon, ++glyphSeq)
+  return glyphIds.get(icon)!
+}
+
+/**
+ * SwapIcon — use whenever the glyph depends on state (status, sort direction, check/empty, menu/close).
+ * The first glyph renders still; every later change remounts the new glyph with a scale-in. Nothing snaps.
+ */
+export function SwapIcon({ as, ...props }: IconProps) {
+  const [first] = React.useState(() => as)
+  const [changed, setChanged] = React.useState(false)
+  if (!changed && as !== first) setChanged(true)
+  return <Icon key={glyphId(as)} as={as} {...props} className={cn(changed && "animate-enter-scale", props.className)} />
+}
+
 export function Icon({ as: Glyph, size = "sm", label, className, ...props }: IconProps) {
   return (
     <Glyph

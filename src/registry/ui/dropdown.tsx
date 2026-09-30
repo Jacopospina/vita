@@ -20,7 +20,7 @@ const listClasses = cn(
   "data-[state=open]:animate-enter-scale data-[state=closed]:animate-exit-scale",
 )
 const itemClasses = cn(
-  "relative flex min-h-control-sm w-full cursor-default items-center gap-2 rounded-inner-1 py-1.5 pr-8 pl-inset-sm text-body outline-none select-none",
+  "group/item relative flex min-h-control-sm w-full cursor-default items-center gap-2 rounded-inner-1 py-1.5 pr-8 pl-inset-sm text-body outline-none select-none",
   "data-[highlighted]:bg-hover data-[disabled]:pointer-events-none data-[disabled]:text-disabled-foreground",
 )
 
@@ -52,11 +52,11 @@ export function Dropdown({ items, value, defaultValue, onValueChange, placeholde
             {...a11y}
             className={cn(
               type === "default" ? [fieldClasses, fieldSize[size]] : "h-control-sm rounded-md px-2 text-body hover:bg-hover focus-ring",
-              "flex items-center justify-between gap-2 text-left data-[placeholder]:text-placeholder",
+              "group flex items-center justify-between gap-2 text-left data-[placeholder]:text-placeholder",
             )}
           >
             <span className="truncate"><SelectPrimitive.Value placeholder={placeholder}>{selected ? <AnimatedText>{selected.label}</AnimatedText> : undefined}</SelectPrimitive.Value></span>
-            <SelectPrimitive.Icon className="text-muted-foreground duration-moderate-01 ease-productive">
+            <SelectPrimitive.Icon className="text-muted-foreground duration-moderate-01 ease-productive group-data-[state=open]:rotate-180">
               <Icon as={ChevronDown} />
             </SelectPrimitive.Icon>
           </SelectPrimitive.Trigger>
@@ -69,9 +69,7 @@ export function Dropdown({ items, value, defaultValue, onValueChange, placeholde
                       <SelectPrimitive.ItemText>{it.label}</SelectPrimitive.ItemText>
                       {it.description && <span className="text-caption text-helper">{it.description}</span>}
                     </div>
-                    <SelectPrimitive.ItemIndicator className="absolute right-2 flex text-primary">
-                      <Icon as={Checkmark} />
-                    </SelectPrimitive.ItemIndicator>
+                    <Icon as={Checkmark} className="absolute right-2 scale-50 text-primary opacity-0 duration-moderate-01 ease-spring group-data-[state=checked]/item:scale-100 group-data-[state=checked]/item:opacity-100" />
                   </SelectPrimitive.Item>
                 ))}
               </SelectPrimitive.Viewport>
@@ -171,7 +169,7 @@ export function Combobox({ items, value, defaultValue = "", onValueChange, size 
                     className={itemClasses}
                   >
                     {it.label}
-                    {it.value === val && <Icon as={Checkmark} className="absolute right-2 text-primary" />}
+                    <Icon as={Checkmark} className="absolute right-2 scale-50 text-primary opacity-0 duration-moderate-01 ease-spring group-aria-selected/item:scale-100 group-aria-selected/item:opacity-100" />
                   </li>
                 ))}
               </ul>
@@ -194,21 +192,25 @@ export function MultiSelect({ items, value, defaultValue = [], onValueChange, si
       {(a11y) => (
         <PopoverPrimitive.Root>
           <PopoverPrimitive.Trigger {...a11y} disabled={disabled} className={cn(fieldClasses, fieldSize[size], "flex items-center gap-2 text-left")}>
-            {val.length > 0 ? (
-              <span className="inline-flex h-6 items-center gap-1 rounded-full bg-inverse pr-1 pl-2 text-caption font-medium text-inverse-foreground">
-                <AnimatedNumber value={val.length} />
-                <span
-                  role="button"
-                  tabIndex={0}
-                  aria-label="Clear all selected items"
-                  onClick={(e) => { e.stopPropagation(); setVal([]) }}
-                  onKeyDown={(e) => { if (e.key === "Enter") { e.stopPropagation(); setVal([]) } }}
-                  className="flex size-4 items-center justify-center rounded-full hover:bg-hover focus-ring"
-                >
-                  <Icon as={Close} size="sm" />
-                </span>
+            <span
+              aria-hidden={val.length === 0 || undefined}
+              className={cn(
+                "inline-flex h-6 shrink-0 items-center gap-1 overflow-hidden rounded-full bg-inverse text-caption font-medium text-inverse-foreground duration-moderate-01 ease-spring",
+                val.length > 0 ? "max-w-16 pr-1 pl-2 opacity-100" : "pointer-events-none -mr-2 max-w-0 scale-75 px-0 opacity-0",
+              )}
+            >
+              <AnimatedNumber value={val.length} />
+              <span
+                role="button"
+                tabIndex={val.length > 0 ? 0 : -1}
+                aria-label="Clear all selected items"
+                onClick={(e) => { e.stopPropagation(); setVal([]) }}
+                onKeyDown={(e) => { if (e.key === "Enter") { e.stopPropagation(); setVal([]) } }}
+                className="flex size-4 items-center justify-center rounded-full hover:bg-hover focus-ring"
+              >
+                <Icon as={Close} size="sm" />
               </span>
-            ) : null}
+            </span>
             <span className={cn("flex-1 truncate", val.length === 0 && "text-placeholder")}>
               <AnimatedText>{val.length === 0 ? placeholder : items.filter((i) => val.includes(i.value)).map((i) => i.label).join(", ")}</AnimatedText>
             </span>

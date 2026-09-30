@@ -33,7 +33,7 @@ export function InlineLoading({ status = "active", description, className }: { s
     <div role="status" aria-live="polite" className={cn("inline-flex items-center gap-2 text-footnote text-muted-foreground", className)}>
       {status === "active" && <span className="size-4 animate-spin rounded-full border-2 border-primary border-r-transparent" />}
       {status === "finished" && <Icon as={CheckmarkFilled} className="animate-enter-scale text-success" />}
-      {status === "error" && <Icon as={ErrorFilled} className="text-error" />}
+      {status === "error" && <Icon as={ErrorFilled} className="animate-enter-scale text-error" />}
       {description && <span className={status === "error" ? "text-error-foreground" : undefined}>{typeof description === "string" ? <AnimatedText>{description}</AnimatedText> : description}</span>}
     </div>
   )

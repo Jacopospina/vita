@@ -65,7 +65,7 @@ export function LoginBlock({ productName, onSubmit, onSso, forgotHref = "#", sig
           <>
             <div className="flex items-center justify-between rounded-md bg-layer-1 px-3 py-2 text-body">
               <span className="truncate">{email}</span>
-              <button type="button" onClick={() => setStep("id")} className="rounded-sm text-footnote text-link hover:underline focus-ring">Change</button>
+              <button type="button" onClick={() => setStep("id")} className="rounded-sm text-footnote text-link underline decoration-transparent hover:decoration-current focus-ring">Change</button>
             </div>
             <PasswordInput label="Password" autoComplete="current-password" autoFocus value={password} onChange={(e) => setPassword(e.target.value)} labelAddon={<Link size="sm" href={forgotHref} className="ml-auto">Forgot password?</Link>} />
           </>

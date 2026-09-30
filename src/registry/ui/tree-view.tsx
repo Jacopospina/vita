@@ -89,7 +89,8 @@ export function TreeView({ nodes, label, selected, onSelect, defaultExpanded = [
               "relative flex cursor-pointer items-center gap-2 rounded-sm pr-2 text-body duration-fast-02",
               size === "xs" ? "h-control-xs" : "h-control-sm",
               "hover:bg-hover",
-              isSel && "bg-selected font-medium text-selected-foreground before:absolute before:inset-y-0 before:left-0 before:w-0.5 before:bg-primary",
+              "before:absolute before:inset-y-1 before:left-0 before:w-0.5 before:rounded-full before:bg-transparent before:duration-moderate-01",
+              isSel && "bg-selected font-medium text-selected-foreground before:inset-y-0 before:bg-primary",
               n.disabled && "pointer-events-none text-disabled-foreground",
             )}
           >
@@ -99,7 +100,11 @@ export function TreeView({ nodes, label, selected, onSelect, defaultExpanded = [
             {n.icon && <Icon as={n.icon} className="text-muted-foreground" />}
             <span className="truncate">{n.label}</span>
           </div>
-          {has && open && <ul role="group">{renderLevel(n.children!, depth + 1)}</ul>}
+          {has && (
+            <div className={cn("reveal motion-productive", open && "reveal-open")} inert={!open || undefined}>
+              <ul role="group">{renderLevel(n.children!, depth + 1)}</ul>
+            </div>
+          )}
         </li>
       )
     })

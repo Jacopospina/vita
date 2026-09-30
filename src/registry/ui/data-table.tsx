@@ -1,7 +1,7 @@
 import * as React from "react"
 import { ArrowDown, ArrowUp, ArrowsVertical, ChevronRight, Close } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
-import { Icon } from "@/registry/ui/icon"
+import { Icon, SwapIcon } from "@/registry/ui/icon"
 import { Checkbox } from "@/registry/ui/checkbox"
 import { IconButton } from "@/registry/ui/button"
 import { Skeleton } from "@/registry/ui/loading"
@@ -96,8 +96,14 @@ export function DataTable<T extends { id: string }>({
       {(toolbar || batchActions) && (
         <div className="relative flex h-control-lg items-center">
           {toolbar && <div className="flex h-full w-full items-center justify-end gap-1 pl-2">{toolbar}</div>}
-          {batchActions && selected.length > 0 && (
-            <div className="absolute inset-0 flex animate-enter-fade items-center bg-primary text-primary-foreground">
+          {batchActions && (
+            <div
+              inert={selected.length === 0 || undefined}
+              className={cn(
+                "absolute inset-0 flex items-center bg-primary text-primary-foreground motion-expressive",
+                selected.length > 0 ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-2 opacity-0",
+              )}
+            >
               <span className="inline-flex items-baseline gap-1 px-4 text-body" aria-live="polite"><AnimatedNumber value={selected.length} /> <AnimatedText>{selected.length === 1 ? "item selected" : "items selected"}</AnimatedText></span>
               <div className="ml-auto flex h-full items-center [&_button]:h-full [&_button]:rounded-none [&_button]:bg-transparent [&_button]:text-primary-foreground [&_button:hover]:bg-primary-hover">
                 {batchActions(selected)}
@@ -125,7 +131,7 @@ export function DataTable<T extends { id: string }>({
                     {c.sortable ? (
                       <button type="button" onClick={() => cycleSort(c.key)} className={cn("group flex h-full w-full items-center gap-2 px-4 py-2 hover:bg-layer-2 focus-ring-inset", c.align === "end" && "flex-row-reverse")}>
                         {c.header}
-                        <Icon as={active ? (sort!.dir === "asc" ? ArrowUp : ArrowDown) : ArrowsVertical} className={cn(!active && "opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100")} />
+                        <SwapIcon as={active ? (sort!.dir === "asc" ? ArrowUp : ArrowDown) : ArrowsVertical} className={cn(!active && "opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100")} />
                       </button>
                     ) : (
                       c.header
@@ -159,7 +165,7 @@ export function DataTable<T extends { id: string }>({
                       aria-selected={selectable ? isSel : undefined}
                       className={cn(
                         rowH[size],
-                        "border-b border-border-subtle duration-fast-02 hover:bg-hover",
+                        "animate-enter-fade border-b border-border-subtle duration-fast-02 hover:bg-hover",
                         zebra && idx % 2 === 1 && "bg-layer-2",
                         isSel && "bg-selected hover:bg-selected",
                       )}
