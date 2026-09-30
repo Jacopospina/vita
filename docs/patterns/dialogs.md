@@ -25,7 +25,7 @@ Must the user decide/act before anything else?
 
 - **Title:** the question or the task ("Delete 3 agents?", "Invite teammates").
 - **Body:** the consequence in one or two sentences. No "Are you sure?"
-- **Buttons:** Cancel + a verb that matches the title ("Delete agents"). Never Yes/No or OK/Cancel.
+- **Buttons:** one action whose verb matches the title ("Delete agents"). No Cancel, no Yes/No, no OK: ×, Escape and click-outside already dismiss.
 
 ## Rules
 
@@ -33,5 +33,5 @@ Must the user decide/act before anything else?
 2. **No stacked modals.** If a modal needs a sub-decision, use inline disclosure inside it, or rethink the flow as a page.
 3. **Protect typed data:** closing a dialog with edits asks "Discard changes?" first.
 4. **Focus management:**
-   - On open, focus goes to the first field (transactional) or to Cancel (danger).
+   - On open, focus goes to the first field (transactional) or to × (danger), so a stray Enter never destroys anything.
    - On close, focus returns to the trigger.

@@ -86,7 +86,7 @@ export function TreeView({ nodes, label, selected, onSelect, defaultExpanded = [
             onClick={() => { setFocused(n.id); if (!n.disabled) onSelect?.(n.id); if (has) toggle(n.id) }}
             style={{ paddingLeft: `calc(${depth} * 1.5rem + 0.5rem)` }}
             className={cn(
-              "relative flex cursor-pointer items-center gap-2 rounded-sm pr-2 text-body transition-colors duration-fast-02",
+              "relative flex cursor-pointer items-center gap-2 rounded-sm pr-2 text-body duration-fast-02",
               size === "xs" ? "h-control-xs" : "h-control-sm",
               "hover:bg-hover",
               isSel && "bg-selected font-medium text-selected-foreground before:absolute before:inset-y-0 before:left-0 before:w-0.5 before:bg-primary",
@@ -94,7 +94,7 @@ export function TreeView({ nodes, label, selected, onSelect, defaultExpanded = [
             )}
           >
             <span className="flex size-4 items-center justify-center">
-              {has && <Icon as={CaretDown} className={cn("transition-transform duration-moderate-01 ease-productive", !open && "-rotate-90")} />}
+              {has && <Icon as={CaretDown} className={cn(" duration-moderate-01 ease-productive", !open && "-rotate-90")} />}
             </span>
             {n.icon && <Icon as={n.icon} className="text-muted-foreground" />}
             <span className="truncate">{n.label}</span>

@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Add, Edit, TrashCan, Download, Copy, Filter, TextBold, TextItalic, TextUnderline, TextStrikethrough, ListBulleted, ListNumbered, Link as LinkIcon, Code, Renew, Locked } from "@/registry/icons"
+import { Add, Edit, TrashCan, Download, Copy, Filter, Close, TextBold, TextItalic, TextUnderline, TextStrikethrough, ListBulleted, ListNumbered, Link as LinkIcon, Code, Renew, Locked } from "@/registry/icons"
 import { Report, Magnify as SearchPict, Warning_01 as ErrorPict } from "@/registry/pictograms"
 import type { DemoMap } from "./types"
 import { Stack, Inline, Grid, Column } from "@/registry/ui/layout"
@@ -73,13 +73,13 @@ function ReadOnlyDemo() {
   const [editing, setEditing] = React.useState(false)
   return (
     <Stack gap="md" className="max-w-lg">
-      <Inline justify="between"><Text variant="title-3">Workspace settings</Text>{!editing && <Button variant="ghost" icon={Edit} iconPosition="start" onClick={() => setEditing(true)}>Edit</Button>}</Inline>
+      <Inline justify="between"><Text variant="title-3">Workspace settings</Text>{editing ? <IconButton icon={Close} label="Discard changes" shortcut="escape" onClick={() => setEditing(false)} /> : <Button variant="ghost" icon={Edit} iconPosition="start" shortcut="mod+e" onClick={() => setEditing(true)}>Edit</Button>}</Inline>
       {editing ? (
         <Form onSubmit={(e) => { e.preventDefault(); setEditing(false); toast({ kind: "success", title: "Settings saved" }) }}>
           <TextInput label="Workspace name" defaultValue="Vita Support" />
           <TextInput label="Default model" defaultValue="Vita Large" />
           <TextInput label="Workspace ID" defaultValue="ws_8f2k1" readOnly helperText="Set by the system" />
-          <FormActions><Button type="submit">Save</Button><Button type="button" variant="ghost" onClick={() => setEditing(false)}>Cancel</Button></FormActions>
+          <FormActions><Button type="submit" shortcut="mod+s">Save</Button></FormActions>
         </Form>
       ) : (
         <StructuredList flush condensed label="Workspace settings" columns={["Field", "Value"]} rows={[{ id: "1", cells: ["Workspace name", "Vita Support"] }, { id: "2", cells: ["Default model", "Vita Large"] }, { id: "3", cells: ["Workspace ID", <Inline key="x" gap="2xs">ws_8f2k1<Icon as={Locked} label="Set by the system" className="text-helper" /></Inline>] }]} />
@@ -224,7 +224,7 @@ export const patternDemos: DemoMap = {
             <Select label="Source type" defaultValue="site"><SelectOption value="site">Help center</SelectOption><SelectOption value="drive">Shared drive</SelectOption></Select>
             <TextInput label="Help center URL" inputMode="url" />
             <TextInput label="Pages to exclude" optional />
-            <ButtonSet className="justify-start"><Button variant="secondary">Back</Button><Button>Continue to review</Button></ButtonSet>
+            <ButtonSet><Button variant="secondary">Back</Button><Button>Continue to review</Button></ButtonSet>
           </Form>
         </Stack>
       ),

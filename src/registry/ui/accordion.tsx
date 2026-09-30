@@ -21,7 +21,7 @@ export function AccordionTrigger({ className, children, ...props }: React.Compon
     <AccordionPrimitive.Header className="flex">
       <AccordionPrimitive.Trigger
         className={cn(
-          "group flex flex-1 items-center gap-3 px-4 text-left text-body text-foreground transition-colors duration-fast-02 ease-productive",
+          "group flex flex-1 items-center gap-3 px-4 text-left text-body text-foreground duration-fast-02 ease-productive",
           "h-control-md group-data-[size=sm]/accordion:h-control-sm group-data-[size=lg]/accordion:h-control-lg",
           "hover:bg-hover focus-ring-inset disabled:text-disabled-foreground",
           "group-data-[align=start]/accordion:flex-row-reverse group-data-[align=start]/accordion:justify-end",
@@ -30,7 +30,7 @@ export function AccordionTrigger({ className, children, ...props }: React.Compon
         {...props}
       >
         <span className="flex-1">{children}</span>
-        <Icon as={ChevronDown} className="text-muted-foreground transition-transform duration-moderate-01 ease-productive group-data-[state=open]:rotate-180" />
+        <Icon as={ChevronDown} className="text-muted-foreground duration-moderate-01 ease-productive group-data-[state=open]:rotate-180" />
       </AccordionPrimitive.Trigger>
     </AccordionPrimitive.Header>
   )

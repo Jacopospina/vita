@@ -26,7 +26,7 @@ export function Markdown({ source }: { source: string; className?: string }) {
   const tokens = React.useMemo(() => marked.lexer(source), [source])
   const sections = React.useMemo(() => splitSections(tokens), [tokens])
   return (
-    <Stack gap="2xl" className="max-w-5xl">
+    <Stack gap="2xl" className="stagger max-w-5xl">
       {sections.map((s, i) => (
         <Stack key={i} gap="md" asChild>
           <section>

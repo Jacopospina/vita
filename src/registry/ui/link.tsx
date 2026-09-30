@@ -7,7 +7,7 @@ import { Icon } from "@/registry/ui/icon"
 
 /** Link — navigation. If it changes data, it's a Button, not a Link. */
 const linkVariants = cva(
-  "inline-flex items-center gap-1 rounded-sm text-link underline-offset-4 transition-colors duration-fast-02 ease-productive focus-ring hover:underline visited:text-link-visited",
+  "inline-flex items-center gap-1 rounded-sm text-link underline-offset-4 duration-fast-02 ease-productive focus-ring hover:underline visited:text-link-visited",
   {
     variants: {
       size: { sm: "text-footnote", md: "text-body", lg: "text-body-lg" },

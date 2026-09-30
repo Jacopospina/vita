@@ -9,6 +9,7 @@ export const manifest: Record<Section, NavEntry[]> = {
   foundations: [
     { slug: "about", title: "Corpus" },
     { slug: "principles", title: "Design principles" },
+    { slug: "interaction", title: "Interaction" },
     { slug: "theming", title: "Theming & personalisation" },
     { slug: "grid", title: "Grid & layout" },
     { slug: "spacing", title: "Spacing" },
@@ -28,6 +29,7 @@ export const manifest: Record<Section, NavEntry[]> = {
     { slug: "button", title: "Button" },
     { slug: "checkbox", title: "Checkbox" },
     { slug: "code-snippet", title: "Code snippet" },
+    { slug: "composer", title: "Composer" },
     { slug: "contained-list", title: "Contained list" },
     { slug: "content-switcher", title: "Content switcher" },
     { slug: "data-table", title: "Data table" },
@@ -74,6 +76,7 @@ export const manifest: Record<Section, NavEntry[]> = {
     { slug: "fluid-styles", title: "Fluid styles" },
     { slug: "forms", title: "Forms" },
     { slug: "global-header", title: "Global header" },
+    { slug: "intent-first", title: "Intent-first input" },
     { slug: "loading", title: "Loading" },
     { slug: "login", title: "Login" },
     { slug: "notifications", title: "Notifications" },

@@ -28,7 +28,7 @@ export function PopoverContent({
         sideOffset={sideOffset}
         collisionPadding={8}
         className={cn(
-          "z-50 w-72 rounded-lg border border-border-subtle bg-raised p-4 text-foreground shadow-floating outline-none",
+          "z-50 w-72 scope-lg border border-border-subtle bg-raised p-4 text-foreground shadow-floating outline-none",
           "data-[state=open]:animate-enter-scale data-[state=closed]:animate-exit-scale origin-(--radix-popover-content-transform-origin)",
           className,
         )}
@@ -50,7 +50,7 @@ export function Toggletip({ label = "More information", children, align = "start
     <Popover>
       <PopoverTrigger
         aria-label={label}
-        className="inline-flex size-5 items-center justify-center rounded-sm text-muted-foreground transition-colors hover:text-foreground focus-ring"
+        className="inline-flex size-5 items-center justify-center rounded-sm text-muted-foreground hover:text-foreground focus-ring"
       >
         <Icon as={Information} size="sm" />
       </PopoverTrigger>

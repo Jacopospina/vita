@@ -3,13 +3,14 @@ import { Label as LabelPrimitive } from "radix-ui"
 import { WarningFilled, WarningAltFilled } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { Icon } from "@/registry/ui/icon"
+import { animateChildren } from "@/registry/ui/animated"
 
 /* ------------------------------------------------------------------ */
 /* Shared field styling. Every text-like control uses these classes.   */
 /* ------------------------------------------------------------------ */
 export const fieldClasses = cn(
   "w-full min-w-0 rounded-md border border-border-field bg-field text-body text-foreground",
-  "transition-[border-color,box-shadow,background-color] duration-fast-02 ease-productive",
+  " duration-fast-02 ease-productive",
   "placeholder:text-placeholder",
   "hover:border-border-strong",
   "focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-focus focus-visible:border-transparent",
@@ -80,7 +81,7 @@ export function FieldShell({ id: idProp, label, hideLabel, helperText, invalid, 
         >
           {showInvalid && <Icon as={WarningFilled} size="sm" className="mt-px" />}
           {showWarn && <Icon as={WarningAltFilled} size="sm" className="mt-px" />}
-          <span>{message}</span>
+          <span>{animateChildren(message)}</span>
         </p>
       )}
     </div>
@@ -110,9 +111,9 @@ export function FormRow({ className, ...props }: React.HTMLAttributes<HTMLDivEle
   return <div className={cn("grid grid-cols-1 gap-4 sm:auto-cols-fr sm:grid-flow-col", className)} {...props} />
 }
 
-/** FormActions — the submit row. Primary last. Lives at the end of the form, left-aligned with the fields in page forms. */
-export function FormActions({ className, align = "start", ...props }: React.HTMLAttributes<HTMLDivElement> & { align?: "start" | "end" }) {
-  return <div className={cn("flex flex-wrap items-center gap-2 pt-2", align === "end" ? "justify-end" : "flex-row-reverse justify-end", className)} {...props} />
+/** FormActions — the submit row of a page form. Actions belong together: joined, zero gap. Primary first (reading order). */
+export function FormActions({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
+  return <div role="group" className={cn("flex w-fit gap-0 pt-2 *:rounded-none *:first:rounded-l-md *:last:rounded-r-md", className)} {...props} />
 }
 
 /**

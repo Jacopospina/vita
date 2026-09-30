@@ -119,7 +119,7 @@ export const actionDemos: DemoMap = {
         <Inline wrap gap="sm">
           <Button icon={Add}>Create agent</Button>
           <Button variant="tertiary" icon={Download} iconPosition="start">Export</Button>
-          <IconButton icon={Edit} label="Edit" />
+          <IconButton icon={Edit} label="Edit" shortcut="mod+e" />
           <IconButton icon={Settings} label="Settings" variant="secondary" />
           <Button loading>Saving</Button>
           <Button disabled>Disabled</Button>
@@ -127,12 +127,13 @@ export const actionDemos: DemoMap = {
       ),
     },
     {
-      title: "Button set",
-      description: "Primary last (right). Stacked in narrow containers.",
+      title: "Button set — belonging has no gaps",
+      description: "Related actions touch: zero gap, joined edges, primary last. Never a Cancel — surfaces close with × or Esc.",
       render: () => (
         <Stack gap="lg">
-          <ButtonSet><Button variant="secondary">Cancel</Button><Button>Save changes</Button></ButtonSet>
-          <div className="max-w-xs"><ButtonSet stacked><Button variant="secondary">Cancel</Button><Button>Save changes</Button></ButtonSet></div>
+          <ButtonSet><Button variant="secondary">Save as draft</Button><Button>Deploy agent</Button></ButtonSet>
+          <ButtonSet><Button variant="tertiary" icon={Download} iconPosition="start">Export</Button><Button variant="tertiary" icon={Copy} iconPosition="start">Duplicate</Button><Button variant="tertiary" icon={Share} iconPosition="start">Share</Button></ButtonSet>
+          <div className="max-w-xs"><ButtonSet stacked><Button variant="secondary">Save as draft</Button><Button>Deploy agent</Button></ButtonSet></div>
         </Stack>
       ),
     },

@@ -2,11 +2,12 @@ import * as React from "react"
 import { Dialog as DialogPrimitive } from "radix-ui"
 import { Close } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
-import { Button, ButtonSet } from "@/registry/ui/button"
+import { Button, ActionBar } from "@/registry/ui/button"
 import { Icon } from "@/registry/ui/icon"
 
 /**
  * Modal — interrupts the user for a FOCUSED task or a decision that must be made before continuing.
+ * RULE: a modal never has a Cancel/Dismiss button. The × , Escape and (non-danger) click-outside close it.
  * Modality is a last resort. Prefer inline editing, a Popover, or a Side panel when the user benefits from seeing the page.
  *
  * Sizes: xs (confirmations) · sm (short forms/alerts) · md (default forms) · lg (complex content, tables)
@@ -19,21 +20,21 @@ const sizes = { xs: "max-w-sm", sm: "max-w-md", md: "max-w-xl", lg: "max-w-3xl" 
 
 export interface ModalContentProps extends React.ComponentProps<typeof DialogPrimitive.Content> {
   size?: keyof typeof sizes
-  /** Danger modals cannot be dismissed by clicking the scrim — the user must choose explicitly. */
+  /** Danger modals ignore click-outside and open with focus on × , so a stray Enter never destroys anything. */
   danger?: boolean
-  /** Hide the × button (only for modals with an explicit Cancel). */
-  hideClose?: boolean
 }
 
-export function ModalContent({ size = "md", danger, hideClose, className, children, ...props }: ModalContentProps) {
+export function ModalContent({ size = "md", danger, className, children, ...props }: ModalContentProps) {
+  const closeRef = React.useRef<HTMLButtonElement>(null)
   return (
     <DialogPrimitive.Portal>
       <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-overlay data-[state=open]:animate-enter-fade data-[state=closed]:animate-exit-fade" />
       <DialogPrimitive.Content
         onPointerDownOutside={danger ? (e) => e.preventDefault() : undefined}
+        onOpenAutoFocus={danger ? (e) => { e.preventDefault(); closeRef.current?.focus() } : undefined}
         className={cn(
           "fixed top-1/2 left-1/2 z-50 flex max-h-[calc(100dvh-4rem)] w-[calc(100vw-2rem)] -translate-x-1/2 -translate-y-1/2 flex-col",
-          "overflow-hidden rounded-xl border border-border-subtle bg-raised text-foreground shadow-overlay outline-none",
+          "overflow-hidden scope-xl border border-border-subtle bg-raised text-foreground shadow-overlay outline-none",
           "data-[state=open]:animate-enter-scale data-[state=closed]:animate-exit-scale",
           sizes[size],
           className,
@@ -41,13 +42,11 @@ export function ModalContent({ size = "md", danger, hideClose, className, childr
         {...props}
       >
         {children}
-        {!hideClose && (
-          <DialogPrimitive.Close asChild>
-            <Button variant="ghost" size="md" aria-label="Close" className="absolute top-3 right-3 size-control-md px-0">
-              <Icon as={Close} size="md" />
-            </Button>
-          </DialogPrimitive.Close>
-        )}
+        <DialogPrimitive.Close asChild>
+          <Button ref={closeRef} variant="ghost" size="md" aria-label="Close" aria-keyshortcuts="Escape" className="absolute top-3 right-3 size-control-md rounded-inner-3 px-0">
+            <Icon as={Close} size="md" />
+          </Button>
+        </DialogPrimitive.Close>
       </DialogPrimitive.Content>
     </DialogPrimitive.Portal>
   )
@@ -71,14 +70,14 @@ export function ModalBody({ className, scroll = false, ...props }: React.HTMLAtt
   return <div className={cn("min-h-0 flex-1 px-6 pb-6 text-body", scroll && "overflow-y-auto border-y border-border-subtle pt-4", className)} {...props} />
 }
 
-/** ModalFooter — Cancel (secondary) left of the primary. Max 2 buttons, 3 only for "Back · Cancel · Next". */
-export function ModalFooter({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return <ButtonSet className={cn("border-t border-border-subtle bg-layer-1 px-6 py-4", className)} {...props} />
+/** ModalFooter — a full-bleed ActionBar. The primary action only (optionally one secondary alternative). Never Cancel. */
+export function ModalFooter(props: React.HTMLAttributes<HTMLDivElement>) {
+  return <ActionBar {...props} />
 }
 
 /**
- * ConfirmModal — the canonical transactional/danger confirmation. Title asks the question, primary button repeats the verb.
- *   title="Delete 3 projects?"  confirmLabel="Delete projects"  (never "OK"/"Yes")
+ * ConfirmModal — the canonical confirmation. Title asks the question, the ONE button repeats the verb.
+ *   title="Delete 3 agents?"  confirmLabel="Delete agents"  (never "OK"/"Yes"; no Cancel — × closes)
  */
 export function ConfirmModal({
   open,
@@ -86,7 +85,6 @@ export function ConfirmModal({
   title,
   description,
   confirmLabel,
-  cancelLabel = "Cancel",
   onConfirm,
   danger,
   loading,
@@ -97,7 +95,6 @@ export function ConfirmModal({
   title: string
   description?: React.ReactNode
   confirmLabel: string
-  cancelLabel?: string
   onConfirm: () => void
   danger?: boolean
   loading?: boolean
@@ -109,10 +106,7 @@ export function ConfirmModal({
         <ModalHeader title={title} description={description} />
         {children && <ModalBody>{children}</ModalBody>}
         <ModalFooter>
-          <ModalClose asChild>
-            <Button variant="secondary">{cancelLabel}</Button>
-          </ModalClose>
-          <Button variant={danger ? "danger" : "primary"} onClick={onConfirm} loading={loading} autoFocus={!danger}>
+          <Button variant={danger ? "danger" : "primary"} onClick={onConfirm} loading={loading}>
             {confirmLabel}
           </Button>
         </ModalFooter>

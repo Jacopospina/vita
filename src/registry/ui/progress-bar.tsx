@@ -2,6 +2,7 @@ import * as React from "react"
 import { CheckmarkFilled, ErrorFilled } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { Icon } from "@/registry/ui/icon"
+import { animateChildren } from "@/registry/ui/animated"
 
 /**
  * ProgressBar — progress of a process with a measurable end (upload, import, setup). Omit `value` for indeterminate.
@@ -33,8 +34,8 @@ export function ProgressBar({
     <div className={cn("flex w-full flex-col gap-2", className)}>
       <div className={cn("flex items-center justify-between gap-2", hideLabel && "sr-only")}>
         <span id={id} className="text-footnote text-foreground">{label}</span>
-        {status === "finished" && <Icon as={CheckmarkFilled} className="text-success" label="Complete" />}
-        {status === "error" && <Icon as={ErrorFilled} className="text-error" label="Error" />}
+        {status === "finished" && <Icon as={CheckmarkFilled} className="animate-enter-scale text-success" label="Complete" />}
+        {status === "error" && <Icon as={ErrorFilled} className="animate-enter-scale text-error" label="Error" />}
       </div>
       <div
         role="progressbar"
@@ -47,14 +48,14 @@ export function ProgressBar({
       >
         <div
           className={cn(
-            "absolute inset-y-0 left-0 rounded-full transition-[width] duration-moderate-02 ease-productive",
+            "absolute inset-y-0 left-0 rounded-full duration-moderate-02 ease-productive",
             status === "error" ? "bg-error" : status === "finished" ? "bg-success" : "bg-primary",
             indeterminate ? "w-2/5 animate-indeterminate" : "",
           )}
           style={indeterminate ? undefined : { width: `${pct}%` }}
         />
       </div>
-      {helperText && <p className={cn("text-caption", status === "error" ? "text-error-foreground" : "text-helper")}>{helperText}</p>}
+      {helperText && <p className={cn("text-caption", status === "error" ? "text-error-foreground" : "text-helper")}>{animateChildren(helperText)}</p>}
     </div>
   )
 }

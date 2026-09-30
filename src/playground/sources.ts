@@ -13,6 +13,7 @@ const map: Record<string, string[]> = {
   "foundations/icons": ["registry/ui/icon.tsx", "registry/icons.ts"],
   "foundations/pictograms": ["registry/ui/pictogram.tsx", "registry/pictograms.ts"],
   "foundations/accessibility": ["styles/corpus.css"],
+  "foundations/interaction": ["registry/hooks/use-shortcut.ts", "registry/ui/kbd.tsx"],
   // components (default: registry/ui/<slug>.tsx)
   "components/menu-buttons": ["registry/ui/menu-button.tsx"],
   "components/inline-loading": ["registry/ui/loading.tsx"],
@@ -38,6 +39,7 @@ const map: Record<string, string[]> = {
   "patterns/search": ["registry/ui/search.tsx"],
   "patterns/status-indicators": ["registry/ui/status-indicator.tsx"],
   "patterns/text-toolbar": ["registry/ui/toolbar.tsx"],
+  "patterns/intent-first": ["registry/ui/composer.tsx", "registry/ui/ai-label.tsx"],
 }
 
 export interface SourceFile {

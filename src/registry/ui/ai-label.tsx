@@ -43,5 +43,5 @@ export function AILabel({ size = "md", children, title = "AI explained", classNa
 
 /** AISurface — container treatment for AI-generated regions (tiles, table cells, fields). */
 export function AISurface({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn("rounded-lg ai-gradient-border p-4", className)} {...props} />
+  return <div className={cn("scope-lg ai-gradient-border p-4", className)} {...props} />
 }

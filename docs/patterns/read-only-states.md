@@ -14,7 +14,7 @@ related: [disabled-states, structured-list, forms]
 
 | Situation | Show |
 |---|---|
-| Viewing an object the user *can* edit | Read view (`StructuredList` flush/condensed or label/value text) + **Edit** button → form → Save / Cancel |
+| Viewing an object the user *can* edit | Read view (`StructuredList` flush/condensed or label/value text) + **Edit** (⌘E) → form → **Save** (⌘S); × or Esc discards |
 | A field inside an editable form that the system controls | `TextInput readOnly` + helper "Set by the system" |
 | Content the user has no permission to change | Read view + an `InlineNotification` info explaining who can edit |
 

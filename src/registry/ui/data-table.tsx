@@ -1,10 +1,12 @@
 import * as React from "react"
-import { ArrowDown, ArrowUp, ArrowsVertical, ChevronRight } from "@/registry/icons"
+import { ArrowDown, ArrowUp, ArrowsVertical, ChevronRight, Close } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { Icon } from "@/registry/ui/icon"
 import { Checkbox } from "@/registry/ui/checkbox"
-import { Button } from "@/registry/ui/button"
+import { IconButton } from "@/registry/ui/button"
 import { Skeleton } from "@/registry/ui/loading"
+import { AnimatedNumber, AnimatedText } from "@/registry/ui/animated"
+import { morph, useMorphId } from "@/registry/hooks/use-morph"
 
 /**
  * DataTable — view, compare, sort, select and act on MANY records with the same attributes.
@@ -57,6 +59,7 @@ export function DataTable<T extends { id: string }>({
   batchActions, toolbar, rowActions, renderExpanded, loading, emptyState, footer, className, label,
 }: DataTableProps<T>) {
   const [sort, setSort] = React.useState<SortState>(null)
+  const mid = useMorphId()
   const [innerSel, setInnerSel] = React.useState<string[]>([])
   const [open, setOpen] = React.useState<Set<string>>(new Set())
   const selected = selectedProp ?? innerSel
@@ -75,8 +78,9 @@ export function DataTable<T extends { id: string }>({
 
   const allSel = rows.length > 0 && selected.length === rows.length
   const someSel = selected.length > 0 && !allSel
+  // Re-sorting MORPHS: each row glides to its new position.
   const cycleSort = (key: string) =>
-    setSort((s) => (s?.key !== key ? { key, dir: "asc" } : s.dir === "asc" ? { key, dir: "desc" } : null))
+    morph(() => setSort((s) => (s?.key !== key ? { key, dir: "asc" } : s.dir === "asc" ? { key, dir: "desc" } : null)))
 
   const colCount = columns.length + (selectable ? 1 : 0) + (renderExpanded ? 1 : 0) + (rowActions ? 1 : 0)
   const cellPad = "px-4"
@@ -94,11 +98,10 @@ export function DataTable<T extends { id: string }>({
           {toolbar && <div className="flex h-full w-full items-center justify-end gap-1 pl-2">{toolbar}</div>}
           {batchActions && selected.length > 0 && (
             <div className="absolute inset-0 flex animate-enter-fade items-center bg-primary text-primary-foreground">
-              <span className="px-4 text-body tabular-nums" aria-live="polite">{selected.length} {selected.length === 1 ? "item" : "items"} selected</span>
+              <span className="inline-flex items-baseline gap-1 px-4 text-body" aria-live="polite"><AnimatedNumber value={selected.length} /> <AnimatedText>{selected.length === 1 ? "item selected" : "items selected"}</AnimatedText></span>
               <div className="ml-auto flex h-full items-center [&_button]:h-full [&_button]:rounded-none [&_button]:bg-transparent [&_button]:text-primary-foreground [&_button:hover]:bg-primary-hover">
                 {batchActions(selected)}
-                <span aria-hidden className="h-4 w-px bg-primary-foreground/40" />
-                <Button variant="primary" onClick={() => setSelected([])}>Cancel</Button>
+                <IconButton icon={Close} label="Clear selection" shortcut="escape" variant="primary" size="lg" onClick={() => setSelected([])} />
               </div>
             </div>
           )}
@@ -120,7 +123,7 @@ export function DataTable<T extends { id: string }>({
                 return (
                   <th key={c.key} scope="col" aria-sort={aria} className={cn("text-footnote font-semibold text-foreground", c.align === "end" ? "text-right" : "text-left", !c.sortable && cellPad)}>
                     {c.sortable ? (
-                      <button type="button" onClick={() => cycleSort(c.key)} className={cn("group flex h-full w-full items-center gap-2 px-4 py-2 transition-colors hover:bg-layer-2 focus-ring-inset", c.align === "end" && "flex-row-reverse")}>
+                      <button type="button" onClick={() => cycleSort(c.key)} className={cn("group flex h-full w-full items-center gap-2 px-4 py-2 hover:bg-layer-2 focus-ring-inset", c.align === "end" && "flex-row-reverse")}>
                         {c.header}
                         <Icon as={active ? (sort!.dir === "asc" ? ArrowUp : ArrowDown) : ArrowsVertical} className={cn(!active && "opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100")} />
                       </button>
@@ -152,10 +155,11 @@ export function DataTable<T extends { id: string }>({
                 return (
                   <React.Fragment key={row.id}>
                     <tr
+                      style={{ viewTransitionName: `${mid}-${row.id.replace(/[^a-zA-Z0-9_-]/g, "")}` }}
                       aria-selected={selectable ? isSel : undefined}
                       className={cn(
                         rowH[size],
-                        "border-b border-border-subtle transition-colors duration-fast-02 hover:bg-hover",
+                        "border-b border-border-subtle duration-fast-02 hover:bg-hover",
                         zebra && idx % 2 === 1 && "bg-layer-2",
                         isSel && "bg-selected hover:bg-selected",
                       )}
@@ -163,7 +167,7 @@ export function DataTable<T extends { id: string }>({
                       {renderExpanded && (
                         <td className="pl-2">
                           <button type="button" aria-expanded={isOpen} aria-label={isOpen ? "Collapse row" : "Expand row"} onClick={() => setOpen((s) => { const n = new Set(s); if (n.has(row.id)) n.delete(row.id); else n.add(row.id); return n })} className="flex size-control-sm items-center justify-center rounded-sm hover:bg-hover focus-ring">
-                            <Icon as={ChevronRight} className={cn("transition-transform duration-moderate-01 ease-productive", isOpen && "rotate-90")} />
+                            <Icon as={ChevronRight} className={cn(" duration-moderate-01 ease-productive", isOpen && "rotate-90")} />
                           </button>
                         </td>
                       )}

@@ -18,7 +18,7 @@ related: [pagination, structured-list, contained-list, filtering, search, empty-
 
 1. **Title + description** (optional when `PageHeader` already names it).
 2. **Toolbar:** Search (toolbar variant) · filter · settings · **primary action** (right).
-3. **Batch action bar:** replaces the toolbar while rows are selected. It shows the count, the actions and Cancel.
+3. **Batch action bar:** replaces the toolbar while rows are selected. It shows the count (rolling number), the actions and × to clear the selection (Esc).
 4. **Header row:** sortable columns show an arrow on hover and the direction when active.
 5. **Rows:** optional expand chevron · selection checkbox · cells · row overflow menu.
 6. **Pagination.**

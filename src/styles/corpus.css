@@ -169,8 +169,59 @@
   --animate-expand: corpus-collapse-down var(--corpus-duration-moderate-02) var(--corpus-ease-productive);
   --animate-collapse: corpus-collapse-up var(--corpus-duration-moderate-01) var(--corpus-ease-productive);
   --animate-spin: corpus-spin 690ms linear infinite;
+  --animate-text-reveal: corpus-text-in var(--corpus-duration-slow-01) var(--corpus-ease-expressive-enter) both;
   --animate-shimmer: corpus-shimmer 1.6s linear infinite;
   --animate-indeterminate: corpus-indeterminate 1.4s var(--corpus-ease-productive) infinite;
+}
+
+/*
+ * CHOREOGRAPHY — every region enters and leaves in sequence.
+ * `stagger`: direct children (or the children of a single wrapper) rise from blur, 60ms apart.
+ * Inside an element with data-leaving, the same children sink out, 20ms apart, faster than they came.
+ */
+@utility stagger {
+  & > *, & > :only-child > * {
+    animation: corpus-rise-in var(--corpus-duration-slow-01) var(--corpus-ease-expressive-enter) both;
+    animation-delay: calc(var(--corpus-i, 12) * 60ms * var(--corpus-motion-scale));
+  }
+  & > :only-child:has(> *) { animation: none; }
+  & > :nth-child(1), & > :only-child > :nth-child(1) { --corpus-i: 0; }
+  & > :nth-child(2), & > :only-child > :nth-child(2) { --corpus-i: 1; }
+  & > :nth-child(3), & > :only-child > :nth-child(3) { --corpus-i: 2; }
+  & > :nth-child(4), & > :only-child > :nth-child(4) { --corpus-i: 3; }
+  & > :nth-child(5), & > :only-child > :nth-child(5) { --corpus-i: 4; }
+  & > :nth-child(6), & > :only-child > :nth-child(6) { --corpus-i: 5; }
+  & > :nth-child(7), & > :only-child > :nth-child(7) { --corpus-i: 6; }
+  & > :nth-child(8), & > :only-child > :nth-child(8) { --corpus-i: 7; }
+  & > :nth-child(9), & > :only-child > :nth-child(9) { --corpus-i: 8; }
+  & > :nth-child(10), & > :only-child > :nth-child(10) { --corpus-i: 9; }
+  & > :nth-child(11), & > :only-child > :nth-child(11) { --corpus-i: 10; }
+  & > :nth-child(12), & > :only-child > :nth-child(12) { --corpus-i: 11; }
+  [data-leaving] & > *, [data-leaving] & > :only-child > * {
+    animation: corpus-sink-out var(--corpus-duration-fast-02) var(--corpus-ease-productive-exit) both;
+    animation-delay: calc(var(--corpus-i, 12) * 20ms * var(--corpus-motion-scale));
+  }
+  @media (prefers-reduced-motion: reduce) {
+    & > *, & > :only-child > * { animation: corpus-fade-in var(--corpus-duration-fast-02) linear both; animation-delay: 0ms; }
+  }
+}
+
+/*
+ * CONCENTRIC RADIUS — inner radius = outer radius − padding (never below 0).
+ *   Container:  scope-lg p-2            (sets its radius and exposes it to children)
+ *   Child:      rounded-inner-2         (= radius-lg − spacing 2)
+ *   Grandchild: rounded-inner2-1        (= child radius − spacing 1)
+ */
+@utility scope-sm { border-radius: var(--corpus-radius-sm); --corpus-scope-r: var(--corpus-radius-sm); }
+@utility scope-md { border-radius: var(--corpus-radius-md); --corpus-scope-r: var(--corpus-radius-md); }
+@utility scope-lg { border-radius: var(--corpus-radius-lg); --corpus-scope-r: var(--corpus-radius-lg); }
+@utility scope-xl { border-radius: var(--corpus-radius-xl); --corpus-scope-r: var(--corpus-radius-xl); }
+@utility rounded-inner-* {
+  border-radius: max(0px, calc(var(--corpus-scope-r, var(--corpus-radius-md)) - --value(number) * var(--spacing)));
+  --corpus-scope-r2: max(0px, calc(var(--corpus-scope-r, var(--corpus-radius-md)) - --value(number) * var(--spacing)));
+}
+@utility rounded-inner2-* {
+  border-radius: max(0px, calc(var(--corpus-scope-r2, var(--corpus-radius-sm)) - --value(number) * var(--spacing)));
 }
 
 /* Motion duration utilities */

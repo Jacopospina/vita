@@ -5,6 +5,10 @@ import type { IconType } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { Icon } from "@/registry/ui/icon"
 import { Tooltip } from "@/registry/ui/tooltip"
+import { Group } from "@/registry/ui/layout"
+import { Kbd } from "@/registry/ui/kbd"
+import { useShortcut } from "@/registry/hooks/use-shortcut"
+import { animateChildren } from "@/registry/ui/animated"
 
 /**
  * Button — triggers an action. Clear hierarchy with restraint:
@@ -13,7 +17,7 @@ import { Tooltip } from "@/registry/ui/tooltip"
 const buttonVariants = cva(
   [
     "relative inline-flex shrink-0 select-none items-center justify-center gap-2 whitespace-nowrap font-medium",
-    "rounded-md transition-[background-color,color,border-color,box-shadow,transform] duration-fast-02 ease-productive",
+    "rounded-md duration-fast-02 ease-productive",
     "focus-ring active:scale-98 motion-reduce:active:scale-100",
     "disabled:pointer-events-none disabled:bg-layer-2 disabled:text-disabled-foreground disabled:border-transparent",
     "aria-disabled:pointer-events-none aria-disabled:opacity-60",
@@ -21,7 +25,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary: "bg-primary text-primary-foreground hover:bg-primary-hover active:bg-primary-active",
+        primary: "bg-primary text-primary-foreground ease-expressive hover:bg-primary-hover active:bg-primary-active active:scale-97",
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary-hover",
         tertiary: "border border-primary bg-transparent text-primary hover:bg-primary hover:text-primary-foreground",
         ghost: "bg-transparent text-foreground hover:bg-hover active:bg-active",
@@ -47,15 +51,21 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   iconPosition?: "start" | "end"
   /** Shows an inline spinner, keeps width, blocks re-submit. */
   loading?: boolean
+  /** Left-hand shortcut that triggers this button, e.g. "mod+s". Shown in tooltips; announced via aria-keyshortcuts. */
+  shortcut?: string
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, fullWidth, asChild, icon, iconPosition = "end", loading, disabled, children, ...props }, ref) => {
+  ({ className, variant, size, fullWidth, asChild, icon, iconPosition = "end", loading, disabled, shortcut, children, ...props }, ref) => {
     const Comp = asChild ? Slot.Root : "button"
+    const inner = React.useRef<HTMLButtonElement | null>(null)
+    React.useImperativeHandle(ref, () => inner.current as HTMLButtonElement)
+    useShortcut(shortcut, () => inner.current?.click(), { enabled: !!shortcut && !disabled && !loading })
     const iconEl = icon ? <Icon as={icon} size="sm" /> : null
     return (
       <Comp
-        ref={ref}
+        ref={inner}
+        aria-keyshortcuts={shortcut}
         className={cn(buttonVariants({ variant, size, fullWidth }), fullWidth && icon && "justify-between", className)}
         disabled={asChild ? undefined : disabled || loading}
         aria-busy={loading || undefined}
@@ -66,7 +76,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ) : (
           <>
             {iconPosition === "start" && iconEl}
-            <span className={cn("inline-flex items-center gap-2", loading && "invisible")}>{children}</span>
+            <span className={cn("inline-flex items-center gap-2", loading && "invisible")}>{animateChildren(children)}</span>
             {iconPosition === "end" && iconEl}
             {loading && (
               <span className="absolute inset-0 flex items-center justify-center">
@@ -92,20 +102,36 @@ export interface IconButtonProps extends Omit<ButtonProps, "icon" | "iconPositio
   pressed?: boolean
 }
 
+const glyphIds = new WeakMap<object, number>()
+let glyphSeq = 0
+const glyphId = (icon: object) => {
+  if (!glyphIds.has(icon)) glyphIds.set(icon, ++glyphSeq)
+  return glyphIds.get(icon)!
+}
+
+/** SwapIcon — when a button's glyph changes (menu → close, sun → moon), the new glyph scales in. */
+function SwapIcon({ icon, size }: { icon: IconType; size: "sm" | "md" }) {
+  const [first] = React.useState(() => icon)
+  const [changed, setChanged] = React.useState(false)
+  if (!changed && icon !== first) setChanged(true)
+  return <Icon key={glyphId(icon)} as={icon} size={size} className={changed ? "animate-enter-scale" : undefined} />
+}
+
 /** IconButton — icon-only action. Defaults to ghost. Always has a tooltip. */
 export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
-  ({ icon, label, variant = "ghost", size = "md", tooltipSide = "bottom", pressed, className, ...props }, ref) => (
-    <Tooltip content={label} side={tooltipSide}>
+  ({ icon, label, variant = "ghost", size = "md", tooltipSide = "bottom", pressed, className, shortcut, ...props }, ref) => (
+    <Tooltip content={shortcut ? <span className="inline-flex items-center gap-2">{label}<Kbd keys={shortcut} className="border-transparent bg-transparent text-inverse-foreground" /></span> : label} side={tooltipSide}>
       <Button
         ref={ref}
         variant={variant}
         size={size}
         aria-label={label}
         aria-pressed={pressed}
+        shortcut={shortcut}
         className={cn(iconButtonSize[size ?? "md"], "px-0", pressed && "bg-selected text-selected-foreground", className)}
         {...props}
       >
-        <Icon as={icon} size={size === "lg" ? "md" : "sm"} />
+        <SwapIcon icon={icon} size={size === "lg" ? "md" : "sm"} />
       </Button>
     </Tooltip>
   ),
@@ -113,14 +139,27 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
 IconButton.displayName = "IconButton"
 
 /**
- * ButtonSet — groups up to 3 related buttons. Primary goes LAST (right).
- * `stacked` for narrow containers (mobile, side panels): primary on top, full width.
+ * ButtonSet — related buttons BELONG TOGETHER, so they touch: zero gap, joined edges. Max 3. Primary goes LAST.
+ * `stacked` for narrow containers: vertical join, primary on top.
  */
 export function ButtonSet({ className, stacked, ...props }: React.HTMLAttributes<HTMLDivElement> & { stacked?: boolean }) {
+  return <Group orientation={stacked ? "vertical" : "horizontal"} className={cn(stacked ? "flex-col-reverse *:w-full" : "w-fit", className)} {...props} />
+}
+
+/**
+ * ActionBar — the action row of a surface (modal, side panel). Full-bleed, joined, no gaps.
+ * NEVER include Cancel/Close/Dismiss: the surface's × , Escape and click-outside already do that.
+ * 1 action = full width. 2 actions = a secondary alternative (not a dismissal) + the primary.
+ */
+export function ActionBar({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       role="group"
-      className={cn(stacked ? "flex flex-col-reverse gap-2 *:w-full" : "flex flex-wrap items-center justify-end gap-2", className)}
+      className={cn(
+        "flex shrink-0 gap-0 border-t border-border-subtle",
+        "*:h-control-xl *:flex-1 *:justify-start *:rounded-none *:px-inset-lg *:text-body *:active:scale-100",
+        className,
+      )}
       {...props}
     />
   )

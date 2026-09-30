@@ -67,7 +67,7 @@ export function TokensTable({ tokens }: { tokens: TokenRef[] }) {
   if (!tokens.length) return <Text tone="muted">This page uses no tokens directly. It composes other Corpus components.</Text>
 
   return (
-    <Stack gap="xl">
+    <Stack gap="xl" className="stagger">
       <Text tone="muted" className="max-w-prose">
         Extracted from the source. Values are resolved live from the current theme: change a knob in the Theme panel and watch them update. Product code uses the utility, never the raw value.
       </Text>

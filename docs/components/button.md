@@ -19,7 +19,7 @@ related: [menu-buttons, link, modal, common-actions]
 | Variant | Use for | Per view |
 |---|---|---|
 | `primary` | The single most important action | **Exactly 1** (0 in read-only views) |
-| `secondary` | Alternatives to the primary (Cancel, Back, Save draft) | ≤ 2 |
+| `secondary` | Alternatives to the primary (Back, Save as draft) — never a dismissal | ≤ 2 |
 | `tertiary` | Independent actions that need visibility but not emphasis (Export, Add filter) | Few |
 | `ghost` | Low-emphasis, repeated or in-context actions (toolbar, table rows, "Clear") | Unlimited |
 | `danger` | Confirming a destructive action, usually inside a `ConfirmModal` | 1 |
@@ -39,7 +39,7 @@ Heights follow `--corpus-density`. Buttons in a `ButtonSet` share one size.
    - Good: "Create agent", "Delete 3 runs", "Send invite".
    - Never: "OK", "Yes", "Submit", "Click here".
    - Max 3 words.
-2. **The primary is always last (rightmost) in a `ButtonSet`.** Cancel goes to its left as `secondary`. In stacked sets (mobile), the primary is on top.
+2. **Belonging has no gaps.** A `ButtonSet` joins its buttons edge to edge, primary last (rightmost). No Cancel buttons: surfaces close with × or Esc.
 3. **Icons:** trailing for forward and primary actions (`Add`, `ArrowRight`), leading for toolbar-style tertiary and ghost. Never both. Never an icon that repeats the label's meaning without adding clarity.
 4. **Loading, not double-clicking:** on async actions pass `loading`. It keeps the width and blocks re-submission.
 5. **Disabled buttons need a reason.** If the reason isn't obvious, keep the button enabled and validate on click, or wrap it in a Tooltip (see *Disabled states*).
@@ -56,7 +56,7 @@ Heights follow `--corpus-density`. Buttons in a `ButtonSet` share one size.
 
 ```tsx
 <ButtonSet>
-  <Button variant="secondary">Cancel</Button>
+  <Button variant="secondary">Save as draft</Button>
   <Button icon={Add}>Create agent</Button>
 </ButtonSet>
 ```

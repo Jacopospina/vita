@@ -23,6 +23,6 @@ related: [modal, ui-shell-header, popover, filtering]
 1. **Non-modal:** the page stays interactive. Escape and × close the panel, and focus returns to the trigger.
 2. **One right panel at a time.** Opening another replaces it.
 3. **Title** in the 48px header aligns with the global header height.
-4. **Footer actions** (Save / Cancel) only when the panel edits something. Otherwise, no footer.
+4. **Footer = ActionBar** with the primary action only, and only when the panel edits something. × and Esc close it; never a Cancel.
 5. **Motion:** slides in with an expressive entrance at `moderate-02` and exits faster with a productive exit. Reduced motion fades.
 6. **Deep-linkable:** a detail panel reflects its state in the URL (`?panel=run-8812`).

@@ -2,6 +2,7 @@ import * as React from "react"
 import { Switch as SwitchPrimitive } from "radix-ui"
 import { cn } from "@/registry/lib/utils"
 import { Label } from "@/registry/ui/form"
+import { AnimatedText } from "@/registry/ui/animated"
 
 /**
  * Toggle (switch) — a binary setting that takes effect IMMEDIATELY. No "Save" button after a toggle.
@@ -41,19 +42,19 @@ export function Toggle({ label, hideLabel, helperText, stateText, size = "md", l
             props.onCheckedChange?.(v)
           }}
           className={cn(
-            "peer inline-flex shrink-0 cursor-pointer items-center rounded-full p-0.5 transition-colors duration-fast-02 ease-productive focus-ring",
+            "peer inline-flex shrink-0 cursor-pointer items-center rounded-full p-0.5 duration-fast-02 ease-productive focus-ring",
             "bg-border-strong data-[state=checked]:bg-success disabled:cursor-not-allowed disabled:bg-layer-3",
             size === "md" ? "h-6 w-11" : "h-4 w-7",
           )}
         >
           <SwitchPrimitive.Thumb
             className={cn(
-              "pointer-events-none block rounded-full bg-background shadow-raised transition-transform duration-moderate-01 ease-spring",
+              "pointer-events-none block rounded-full bg-background shadow-raised duration-moderate-01 ease-spring",
               size === "md" ? "size-5 data-[state=checked]:translate-x-5" : "size-3 data-[state=checked]:translate-x-3",
             )}
           />
         </SwitchPrimitive.Root>
-        {stateText && <span aria-hidden className="min-w-6 text-footnote text-muted-foreground">{checked ? texts.on : texts.off}</span>}
+        {stateText && <span aria-hidden className="min-w-6 text-footnote text-muted-foreground"><AnimatedText>{checked ? texts.on : texts.off}</AnimatedText></span>}
       </div>
       {labelPosition === "end" && labelEl}
     </div>

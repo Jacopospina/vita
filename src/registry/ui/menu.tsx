@@ -16,11 +16,11 @@ export const MenuSub = MenuPrimitive.Sub
 export const MenuRadioGroup = MenuPrimitive.RadioGroup
 
 const contentClasses = cn(
-  "z-50 min-w-48 overflow-hidden rounded-md border border-border-subtle bg-raised p-1 text-foreground shadow-floating",
+  "z-50 min-w-48 overflow-hidden scope-md border border-border-subtle bg-raised p-1 text-foreground shadow-floating",
   "data-[state=open]:animate-enter-scale data-[state=closed]:animate-exit-scale origin-(--radix-dropdown-menu-content-transform-origin)",
 )
 const itemClasses = cn(
-  "relative flex h-control-sm cursor-default items-center gap-2 rounded-sm px-inset-sm text-body outline-none select-none",
+  "relative flex h-control-sm cursor-default items-center gap-2 rounded-inner-1 px-inset-sm text-body outline-none select-none",
   "data-[highlighted]:bg-hover data-[disabled]:pointer-events-none data-[disabled]:text-disabled-foreground",
 )
 

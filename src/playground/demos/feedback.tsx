@@ -8,7 +8,7 @@ import { Loading, InlineLoading, Skeleton, SkeletonText } from "@/registry/ui/lo
 import { InlineNotification, Callout, toast } from "@/registry/ui/notification"
 import { ProgressBar } from "@/registry/ui/progress-bar"
 import { ProgressIndicator } from "@/registry/ui/progress-indicator"
-import { Modal, ModalTrigger, ModalContent, ModalHeader, ModalBody, ModalFooter, ModalClose, ConfirmModal } from "@/registry/ui/modal"
+import { Modal, ModalTrigger, ModalContent, ModalHeader, ModalBody, ModalFooter, ConfirmModal } from "@/registry/ui/modal"
 import { Popover, PopoverTrigger, PopoverContent, Toggletip } from "@/registry/ui/popover"
 import { Tooltip, DefinitionTooltip } from "@/registry/ui/tooltip"
 import { TextInput } from "@/registry/ui/text-input"
@@ -65,7 +65,7 @@ function ModalDemo() {
         <ModalContent size="sm">
           <ModalHeader label="Support triage" title="Deploy to production" description="The agent starts answering real tickets as soon as it's live." />
           <ModalBody><Stack gap="md"><TextInput label="Release note" defaultValue="Handles refund questions" /><Checkbox label="Notify the Support team" defaultChecked /></Stack></ModalBody>
-          <ModalFooter><ModalClose asChild><Button variant="secondary">Cancel</Button></ModalClose><Button onClick={() => toast({ kind: "success", title: "Agent deployed", subtitle: "Support triage is live" })}>Deploy agent</Button></ModalFooter>
+          <ModalFooter><Button variant="secondary">Save as draft</Button><Button shortcut="mod+s" onClick={() => toast({ kind: "success", title: "Agent deployed", subtitle: "Support triage is live" })}>Deploy agent</Button></ModalFooter>
         </ModalContent>
       </Modal>
       <Modal>
@@ -74,7 +74,7 @@ function ModalDemo() {
       </Modal>
       <Modal>
         <ModalTrigger asChild><Button variant="tertiary">Large, scrolling</Button></ModalTrigger>
-        <ModalContent size="lg"><ModalHeader title="Acceptable use policy" /><ModalBody scroll className="max-h-80">{Array.from({ length: 12 }).map((_, i) => <Text key={i} className="mb-4">Clause {i + 1}. Agents deployed on Vita must act only within the permissions granted by the workspace owner and must disclose that they are automated when interacting with people.</Text>)}</ModalBody><ModalFooter><ModalClose asChild><Button>Done</Button></ModalClose></ModalFooter></ModalContent>
+        <ModalContent size="lg"><ModalHeader title="Acceptable use policy" /><ModalBody scroll className="max-h-80 border-b-0">{Array.from({ length: 12 }).map((_, i) => <Text key={i} className="mb-4">Clause {i + 1}. Agents deployed on Vita must act only within the permissions granted by the workspace owner and must disclose that they are automated when interacting with people.</Text>)}</ModalBody></ModalContent>
       </Modal>
       <Button variant="secondary" onClick={() => setConfirm(true)}>Confirm</Button>
       <Button variant="danger-tertiary" onClick={() => setDanger(true)}>Danger modal</Button>

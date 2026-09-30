@@ -15,7 +15,7 @@ export function MenuButton({ label, variant = "tertiary", size, children, align 
       <MenuTrigger asChild>
         <Button variant={variant} size={size} className="group">
           {label}
-          <Icon as={ChevronDown} className="transition-transform duration-moderate-01 ease-productive group-data-[state=open]:rotate-180" />
+          <Icon as={ChevronDown} className=" duration-moderate-01 ease-productive group-data-[state=open]:rotate-180" />
         </Button>
       </MenuTrigger>
       <MenuContent align={align}>{children}</MenuContent>

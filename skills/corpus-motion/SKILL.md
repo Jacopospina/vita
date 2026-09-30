@@ -7,15 +7,14 @@ description: Decide whether and how anything should animate in a Corpus product 
 
 Motion explains change. It never decorates. Read `.corpus/docs/foundations/motion.md` for the full rules.
 
-## Step 1: should it move at all?
+## Step 1: nothing snaps
 
-Animate only if it answers one of these:
+Corpus transitions every property change by default and morphs variants. Your job is to never break that and to use the right character:
 
-- **Where did this come from?** A popover from its trigger, a panel from its edge.
-- **Where did it go?** An item removed or moved.
-- **Did the system hear me?** A press, a toggle, a save.
-
-If none apply, **don't animate.** Nothing animates on page load, except skeletons and first-run moments.
+- **Productive** (default): task-focused changes — states, dropdowns, reveals, tables.
+- **Expressive**: significant moments — page changes, the primary action, alerts and notifications appearing, movement that carries meaning.
+- **Values**: numbers use `AnimatedNumber` (slot-machine roll, staggered, blur→sharp); changing text uses `AnimatedText` (letter-by-letter stagger, slide up, blur→sharp).
+- **Reorders and layout jumps**: wrap the state change in `morph()` and give moving items a `view-transition-name`.
 
 ## Step 2: prefer what the component already does
 

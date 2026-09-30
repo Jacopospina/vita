@@ -62,7 +62,6 @@ function FormDemo() {
       <Checkbox label={<>I agree to the <Link inline href="#">terms of service</Link></>} />
       <FormActions>
         <Button type="submit">Create workspace</Button>
-        <Button type="button" variant="ghost">Cancel</Button>
       </FormActions>
     </Form>
   )

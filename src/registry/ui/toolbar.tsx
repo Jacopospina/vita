@@ -10,10 +10,10 @@ import { Tooltip } from "@/registry/ui/tooltip"
  * table toolbars and canvas tools. Group with separators; icons need labels (tooltips).
  */
 export function Toolbar({ className, label, ...props }: React.ComponentProps<typeof ToolbarPrimitive.Root> & { label: string }) {
-  return <ToolbarPrimitive.Root aria-label={label} className={cn("flex h-control-md w-fit items-center gap-0.5 rounded-md border border-border-subtle bg-raised p-0.5 shadow-raised", className)} {...props} />
+  return <ToolbarPrimitive.Root aria-label={label} className={cn("flex h-control-md w-fit items-center gap-0.5 scope-md border border-border-subtle bg-raised p-0.5 shadow-raised", className)} {...props} />
 }
 
-const btn = "inline-flex h-full aspect-square items-center justify-center rounded-sm text-muted-foreground transition-colors duration-fast-02 hover:bg-hover hover:text-foreground focus-ring data-[state=on]:bg-selected data-[state=on]:text-selected-foreground disabled:text-disabled-foreground"
+const btn = "inline-flex h-full aspect-square items-center justify-center rounded-inner-0.5 text-muted-foreground duration-fast-02 hover:bg-hover hover:text-foreground focus-ring data-[state=on]:bg-selected data-[state=on]:text-selected-foreground disabled:text-disabled-foreground"
 
 export function ToolbarButton({ icon, label, className, ...props }: React.ComponentProps<typeof ToolbarPrimitive.Button> & { icon: IconType; label: string }) {
   return (

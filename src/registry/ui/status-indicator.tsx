@@ -2,6 +2,7 @@ import * as React from "react"
 import { CheckmarkFilled, ErrorFilled, WarningAltFilled, InformationFilled, CircleDash, InProgress, WarningFilled, Pending } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { Icon } from "@/registry/ui/icon"
+import { AnimatedText } from "@/registry/ui/animated"
 
 /**
  * StatusIndicator — the ONE way to show the state of an object (a job, a server, an invoice).
@@ -41,7 +42,7 @@ export function StatusIndicator({ kind, children, size = "md", variant = "icon",
       ) : (
         <span aria-hidden className={cn("size-2 rounded-full bg-current", k.color)} />
       )}
-      {children}
+      {typeof children === "string" ? <AnimatedText>{children}</AnimatedText> : children}
     </span>
   )
 }

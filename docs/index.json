@@ -93,18 +93,35 @@
     },
     {
       "section": "foundations",
+      "slug": "interaction",
+      "path": "docs/foundations/interaction.md",
+      "title": "Interaction",
+      "summary": "Built for products where AI carries the complexity. One hand per device, intent over input, nothing redundant, nothing that snaps.",
+      "status": "stable",
+      "import": "import { useShortcut } from \"@/components/corpus/hooks/use-shortcut\"\nimport { Kbd } from \"@/components/corpus/kbd\"\nimport { Composer } from \"@/components/corpus/composer\"",
+      "use_when": [
+        "Designing any flow, interaction or shortcut",
+        "Deciding between a form and an intent-first flow"
+      ],
+      "avoid_when": [
+        "Adding a control that repeats one that already exists (Cancel next to ×)",
+        "Shortcuts that need the right hand"
+      ]
+    },
+    {
+      "section": "foundations",
       "slug": "motion",
       "path": "docs/foundations/motion.md",
       "title": "Motion",
-      "summary": "Productive by default, expressive for rare moments, physical where users touch. Motion explains change; it never decorates.",
+      "summary": "Choreography is everything. Nothing snaps — every change transitions, variants morph like liquid, numbers roll and text reveals.",
       "status": "stable",
       "use_when": [
-        "Showing a change of state, a spatial relationship, or feedback to an action"
+        "Always — motion is on by default for every property change"
       ],
       "avoid_when": [
-        "Decorative loops, parallax, attention-seeking bounces",
+        "Switching transitions off on a component → tune duration or easing instead",
         "Raw durations or cubic-beziers (duration-300, ease-[...]) → use tokens",
-        "Animating layout properties on large surfaces → use transform and opacity"
+        "Decorative loops, parallax, attention-seeking bounces"
       ]
     },
     {
@@ -130,7 +147,7 @@
       "slug": "principles",
       "path": "docs/foundations/principles.md",
       "title": "Design principles",
-      "summary": "Seven ranked rules every Corpus screen obeys. When two conflict, the lower number wins.",
+      "summary": "Ten ranked rules every Corpus screen obeys. When two conflict, the lower number wins.",
       "status": "stable"
     },
     {
@@ -325,6 +342,31 @@
       ],
       "related": [
         "text-input"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "composer",
+      "path": "docs/components/composer.md",
+      "title": "Composer",
+      "summary": "The intent-first input. Users type, dictate or attach what they want; the AI does the work and hands back something to review.",
+      "status": "experimental",
+      "import": "import { Composer } from \"@/components/corpus/composer\"",
+      "use_when": [
+        "Starting any task an agent can do (create, find, change, summarise)",
+        "Replacing a long form with \"describe it, then review it\"",
+        "Chat, assistant panels, command entry"
+      ],
+      "avoid_when": [
+        "A single known value (a name, a date) → TextInput / DatePicker",
+        "Searching a list → Search",
+        "Instant settings → Toggle"
+      ],
+      "related": [
+        "intent-first",
+        "ai-label",
+        "text-input",
+        "search"
       ]
     },
     {
@@ -1167,7 +1209,7 @@
       "slug": "common-actions",
       "path": "docs/patterns/common-actions.md",
       "title": "Common actions",
-      "summary": "Where actions live, how many are visible, and how create, edit, delete, save, cancel and export behave everywhere.",
+      "summary": "Where actions live, how many are visible, and how create, edit, delete, save and export behave everywhere — with left-hand shortcuts.",
       "status": "stable",
       "import": "import { PageHeader } from \"@/components/corpus/page-header\"",
       "use_when": [
@@ -1349,6 +1391,29 @@
         "ui-shell-header",
         "ui-shell-right-panel",
         "search"
+      ]
+    },
+    {
+      "section": "patterns",
+      "slug": "intent-first",
+      "path": "docs/patterns/intent-first.md",
+      "title": "Intent-first input",
+      "summary": "Describe, review, approve. The AI turns intent into a prepared result; the user corrects and ships it instead of filling in a form.",
+      "status": "experimental",
+      "import": "import { Composer } from \"@/components/corpus/composer\"\nimport { AISurface, AILabel } from \"@/components/corpus/ai-label\"",
+      "use_when": [
+        "Creating or configuring something with more than ~4 fields",
+        "Tasks users describe more easily than they fill in (an agent, a report, a rule)"
+      ],
+      "avoid_when": [
+        "Tiny edits of one value → inline edit",
+        "Regulated data entry that must be typed exactly → Form"
+      ],
+      "related": [
+        "composer",
+        "ai-label",
+        "forms",
+        "dialogs"
       ]
     },
     {

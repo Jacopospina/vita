@@ -4,7 +4,7 @@ import { Close, Menu as MenuIcon, ChevronDown } from "@/registry/icons"
 import { Collapsible } from "radix-ui"
 import { cn } from "@/registry/lib/utils"
 import { Icon } from "@/registry/ui/icon"
-import { IconButton } from "@/registry/ui/button"
+import { IconButton, ActionBar } from "@/registry/ui/button"
 
 /**
  * UI Shell — the persistent frame of a product. Three parts:
@@ -29,8 +29,8 @@ export function ShellBody({ children, className }: { children: React.ReactNode; 
   return <div className={cn("relative flex min-h-0 flex-1", className)}>{children}</div>
 }
 
-export function ShellMain({ children, className }: { children: React.ReactNode; className?: string }) {
-  return <main id="main-content" className={cn("min-w-0 flex-1 overflow-y-auto", className)}>{children}</main>
+export function ShellMain({ children, className, ...props }: React.HTMLAttributes<HTMLElement>) {
+  return <main id="main-content" className={cn("min-w-0 flex-1 overflow-y-auto", className)} {...props}>{children}</main>
 }
 
 /* ---------------- Header ---------------- */
@@ -70,7 +70,7 @@ export function HeaderNavItem({ href, active, children, onClick }: { href?: stri
       onClick={onClick}
       aria-current={active ? "page" : undefined}
       className={cn(
-        "relative flex h-full items-center px-4 text-body text-muted-foreground transition-colors duration-fast-02 hover:bg-hover hover:text-foreground focus-ring-inset",
+        "relative flex h-full items-center px-4 text-body text-muted-foreground duration-fast-02 hover:bg-hover hover:text-foreground focus-ring-inset",
         active && "text-foreground after:absolute after:inset-x-4 after:bottom-0 after:h-0.5 after:bg-primary",
       )}
     >
@@ -101,9 +101,9 @@ export function LeftPanel({ children, rail, className, label = "Side navigation"
         data-rail={rail || undefined}
         className={cn(
           "group/nav z-30 flex shrink-0 flex-col overflow-y-auto border-r border-border-subtle bg-layer-1 py-2",
-          "fixed inset-y-0 top-12 left-0 w-64 -translate-x-full transition-transform duration-moderate-02 ease-productive lg:static lg:translate-x-0",
+          "fixed inset-y-0 top-12 left-0 w-64 -translate-x-full duration-moderate-02 ease-productive lg:static lg:translate-x-0",
           navOpen && "translate-x-0",
-          rail && "lg:w-12 lg:hover:w-64 lg:hover:shadow-floating lg:transition-[width] lg:absolute lg:inset-y-0 lg:top-0",
+          rail && "lg:w-12 lg:hover:w-64 lg:hover:shadow-floating lg:absolute lg:inset-y-0 lg:top-0",
           className,
         )}
       >
@@ -121,7 +121,7 @@ export function SideNavItem({ href, icon, active, children, onClick }: { href?: 
       onClick={onClick}
       aria-current={active ? "page" : undefined}
       className={cn(
-        "relative mx-2 flex h-control-sm items-center gap-3 rounded-md px-2 text-body whitespace-nowrap text-muted-foreground transition-colors duration-fast-02",
+        "relative mx-2 flex h-control-sm items-center gap-3 rounded-md px-2 text-body whitespace-nowrap text-muted-foreground duration-fast-02",
         "hover:bg-hover hover:text-foreground focus-ring-inset",
         active && "bg-selected font-medium text-selected-foreground",
       )}
@@ -138,7 +138,7 @@ export function SideNavMenu({ icon, title, defaultOpen, children }: { icon?: Ico
       <Collapsible.Trigger className="group mx-2 flex h-control-sm w-[calc(100%-1rem)] items-center gap-3 rounded-md px-2 text-body text-muted-foreground hover:bg-hover hover:text-foreground focus-ring-inset">
         {icon && <Icon as={icon} />}
         <span className="flex-1 truncate text-left">{title}</span>
-        <Icon as={ChevronDown} className="transition-transform duration-moderate-01 group-data-[state=open]:rotate-180" />
+        <Icon as={ChevronDown} className=" duration-moderate-01 group-data-[state=open]:rotate-180" />
       </Collapsible.Trigger>
       <Collapsible.Content className="overflow-hidden data-[state=closed]:animate-collapse data-[state=open]:animate-expand">
         <div className="flex flex-col py-0.5 [&>a]:pl-9">{children}</div>
@@ -164,6 +164,7 @@ export function RightPanel({ open, onOpenChange, title, children, footer, size =
   onOpenChange: (o: boolean) => void
   title: string
   children: React.ReactNode
+  /** Primary action(s) only — rendered as a full-bleed ActionBar. Never a Cancel: × and Escape close the panel. */
   footer?: React.ReactNode
   size?: "sm" | "md" | "lg"
   className?: string
@@ -197,7 +198,7 @@ export function RightPanel({ open, onOpenChange, title, children, footer, size =
         <IconButton icon={Close} label="Close panel" onClick={() => onOpenChange(false)} className="size-12 rounded-none" />
       </div>
       <div className="min-h-0 flex-1 overflow-y-auto p-4">{children}</div>
-      {footer && <div className="border-t border-border-subtle p-4">{footer}</div>}
+      {footer && <ActionBar>{footer}</ActionBar>}
     </aside>
   )
 }

@@ -4,6 +4,7 @@ import { cn } from "@/registry/lib/utils"
 import { Icon } from "@/registry/ui/icon"
 import { Button } from "@/registry/ui/button"
 import { Label } from "@/registry/ui/form"
+import { useExit } from "@/registry/hooks/use-exit"
 
 /**
  * FileUploader — attach files. Two entry points, one list:
@@ -57,7 +58,7 @@ export function FileUploader({ label, description, accept, multiple = true, maxS
           onDrop={(e) => { e.preventDefault(); setOver(false); onFilesAdded(Array.from(e.dataTransfer.files)) }}
           className={cn(
             "flex min-h-24 w-full flex-col items-center justify-center gap-1 rounded-lg border border-dashed border-border-strong p-6 text-body text-muted-foreground",
-            "transition-colors duration-fast-02 ease-productive hover:bg-hover focus-ring disabled:pointer-events-none disabled:text-disabled-foreground",
+            " duration-fast-02 ease-productive hover:bg-hover focus-ring disabled:pointer-events-none disabled:text-disabled-foreground",
             over && "border-primary bg-selected",
           )}
         >
@@ -68,23 +69,30 @@ export function FileUploader({ label, description, accept, multiple = true, maxS
       {files.length > 0 && (
         <ul className="flex flex-col gap-2">
           {files.map((f) => (
-            <li key={f.id} className={cn("flex flex-col rounded-md bg-layer-1", f.status === "error" && "outline outline-error")}>
+            <FileRow key={f.id} file={f} onRemove={onRemove} />
+          ))}
+        </ul>
+      )}
+    </div>
+  )
+}
+
+function FileRow({ file: f, onRemove }: { file: UploadFile; onRemove: (id: string) => void }) {
+  const [leaving, exit] = useExit()
+  return (
+            <li className={cn("flex flex-col rounded-md bg-layer-1", leaving ? "animate-exit-scale" : "animate-enter-slide-up", f.status === "error" && "outline outline-error")}>
               <div className="flex h-control-md items-center gap-2 pr-1 pl-4">
                 <span className="min-w-0 flex-1 truncate text-body">{f.name}</span>
                 {f.status === "uploading" && <span role="status" aria-label="Uploading" className="size-4 animate-spin rounded-full border-2 border-primary border-r-transparent" />}
                 {f.status === "complete" && <Icon as={CheckmarkFilled} className="text-success" label="Uploaded" />}
                 {f.status === "error" && <Icon as={WarningFilled} className="text-error" label="Upload failed" />}
                 {f.status !== "uploading" && (
-                  <button type="button" aria-label={`Remove ${f.name}`} onClick={() => onRemove(f.id)} className="flex size-control-sm items-center justify-center rounded-sm text-muted-foreground hover:bg-hover hover:text-foreground focus-ring">
+                  <button type="button" aria-label={`Remove ${f.name}`} onClick={() => exit(() => onRemove(f.id))} className="flex size-control-sm items-center justify-center rounded-sm text-muted-foreground hover:bg-hover hover:text-foreground focus-ring">
                     <Icon as={Close} />
                   </button>
                 )}
               </div>
               {f.error && <p className="border-t border-border-subtle px-4 py-2 text-caption text-error-foreground">{f.error}</p>}
             </li>
-          ))}
-        </ul>
-      )}
-    </div>
   )
 }

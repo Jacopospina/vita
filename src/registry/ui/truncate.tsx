@@ -1,6 +1,7 @@
 import * as React from "react"
 import { cn } from "@/registry/lib/utils"
 import { Tooltip } from "@/registry/ui/tooltip"
+import { AnimatedText } from "@/registry/ui/animated"
 
 /**
  * Truncate — the overflow-content rule in one component.
@@ -17,7 +18,7 @@ export function Truncate({ children, mode = "end", lines = 3, className }: { chi
       <div className={cn("flex flex-col items-start gap-1", className)}>
         <p className={cn("text-body", !expanded && clamp)}>{children}</p>
         <button type="button" onClick={() => setExpanded((e) => !e)} className="rounded-sm text-footnote text-link hover:underline focus-ring">
-          {expanded ? "Show less" : "Show more"}
+          <AnimatedText>{expanded ? "Show less" : "Show more"}</AnimatedText>
         </button>
       </div>
     )

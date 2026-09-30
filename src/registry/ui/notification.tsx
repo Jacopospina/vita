@@ -4,6 +4,7 @@ import { cva } from "class-variance-authority"
 import { cn } from "@/registry/lib/utils"
 import { Icon } from "@/registry/ui/icon"
 import { Button } from "@/registry/ui/button"
+import { useExit } from "@/registry/hooks/use-exit"
 
 /**
  * Notifications — tell users about system status.
@@ -43,8 +44,11 @@ export interface NotificationProps {
 }
 
 export function InlineNotification({ kind = "info", title, subtitle, action, onClose, contrast = "low", className, role }: NotificationProps) {
+  const [leaving, exit] = useExit()
+  const [closed, setClosed] = React.useState(false)
+  if (closed) return null
   return (
-    <div role={role ?? (kind === "error" ? "alert" : "status")} className={cn(shell({ kind, contrast }), "items-start py-3 pr-2 pl-4", className)}>
+    <div role={role ?? (kind === "error" ? "alert" : "status")} className={cn(shell({ kind, contrast }), leaving ? "animate-exit-slide-down" : "animate-enter-slide-up", "items-start py-3 pr-2 pl-4", className)}>
       <Icon as={icons[kind]} size="md" className={cn("mt-px", iconTone[kind])} />
       <div className="flex min-w-0 flex-1 flex-wrap items-baseline gap-x-2 gap-y-1 py-px">
         <p className="font-semibold">{title}</p>
@@ -56,7 +60,7 @@ export function InlineNotification({ kind = "info", title, subtitle, action, onC
         </Button>
       )}
       {onClose && (
-        <button type="button" aria-label="Close notification" onClick={onClose} className="-my-1 flex size-control-sm items-center justify-center rounded-sm opacity-70 hover:opacity-100 focus-ring">
+        <button type="button" aria-label="Close notification" onClick={() => exit(() => { setClosed(contrast === "low"); onClose() })} className="-my-1 flex size-control-sm items-center justify-center rounded-sm opacity-70 hover:opacity-100 focus-ring">
           <Icon as={Close} />
         </button>
       )}

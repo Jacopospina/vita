@@ -16,6 +16,11 @@ avoid_when:
 - **Google Sans Code.** Code, commands, IDs and tokens (`font-mono`).
 - **Numbers too.** Any value marked `tabular-nums` switches to Google Sans Code automatically.
 
+## Values never snap
+
+- **Numbers roll.** Any number that changes uses `AnimatedNumber`: slot-machine digits, staggered, blur to sharp.
+- **Text reveals.** Any label that changes uses `AnimatedText`: letters stagger in one after another, sliding up from blur to sharp.
+
 ## Roles
 
 | Role | Utility | Size | Use for |

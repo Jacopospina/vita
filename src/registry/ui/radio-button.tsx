@@ -52,12 +52,12 @@ export function RadioButton({ label, helperText, className, id: idProp, ...props
         id={id}
         className={cn(
           "peer mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full border border-border-strong bg-field",
-          "transition-colors duration-fast-01 ease-productive focus-ring",
+          " duration-fast-01 ease-productive focus-ring",
           "data-[state=checked]:border-primary disabled:cursor-not-allowed disabled:border-disabled-foreground",
         )}
         {...props}
       >
-        <RadioPrimitive.Indicator className="size-2 rounded-full bg-primary data-[disabled]:bg-disabled-foreground" />
+        <RadioPrimitive.Indicator className="size-2 animate-enter-scale rounded-full bg-primary data-[disabled]:bg-disabled-foreground" />
       </RadioPrimitive.Item>
       <div className="flex flex-col gap-0.5">
         <Label htmlFor={id} className="text-body font-normal peer-disabled:text-disabled-foreground">

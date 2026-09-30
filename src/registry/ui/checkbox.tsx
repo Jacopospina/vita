@@ -25,7 +25,7 @@ export function Checkbox({ label, helperText, invalid, className, id: idProp, ..
       aria-describedby={helperText ? `${id}-help` : undefined}
       className={cn(
         "peer mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-sm border border-border-strong bg-field",
-        "transition-colors duration-fast-01 ease-productive focus-ring",
+        " duration-fast-01 ease-productive focus-ring",
         "data-[state=checked]:border-primary data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground",
         "data-[state=indeterminate]:border-primary data-[state=indeterminate]:bg-primary data-[state=indeterminate]:text-primary-foreground",
         "disabled:cursor-not-allowed disabled:border-disabled-foreground disabled:data-[state=checked]:bg-disabled-foreground",
@@ -34,7 +34,7 @@ export function Checkbox({ label, helperText, invalid, className, id: idProp, ..
       )}
       {...props}
     >
-      <CheckboxPrimitive.Indicator className="flex">
+      <CheckboxPrimitive.Indicator className="flex animate-enter-scale">
         {props.checked === "indeterminate" ? <Icon as={Subtract} size="sm" /> : <Icon as={Checkmark} size="sm" />}
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Root>

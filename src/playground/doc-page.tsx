@@ -18,12 +18,13 @@ import { demos } from "./demos"
 import type { Demo } from "./demos/types"
 import { sourcesFor, tokensIn } from "./sources"
 import { TokensTable } from "./tokens-table"
+import { cn } from "@/registry/lib/utils"
 
 const REPO = "github:jacopoenergy/corpus-design-system"
 
 function Stage({ demo, hero }: { demo: Demo; hero?: boolean }) {
   return (
-    <div className={hero ? "rounded-xl bg-layer-1 p-6 md:p-12" : "rounded-lg border border-border-subtle bg-background p-6 md:p-8"}>
+    <div className={cn("stagger", hero ? "rounded-xl bg-layer-1 p-6 md:p-12" : "rounded-lg border border-border-subtle bg-background p-6 md:p-8")}>
       <DemoBoundary>{demo.render()}</DemoBoundary>
     </div>
   )
@@ -50,7 +51,7 @@ export function DocPage({ section, slug }: { section: Section; slug: string }) {
 
   return (
     <Container className="py-8 md:py-12">
-      <Stack gap="xl">
+      <Stack gap="xl" className="stagger">
         {/* Header */}
         <Stack gap="sm">
           <Breadcrumb items={[{ label: "Corpus", href: "#/foundations/about" }, { label: sectionTitles[section], href: `#/${section}/${manifest[section][0].slug}` }, { label: title }]} />
@@ -78,7 +79,7 @@ export function DocPage({ section, slug }: { section: Section; slug: string }) {
             </TabsList>
 
             <TabsContent value="overview">
-              <Stack gap="2xl">
+              <Stack gap="2xl" className="stagger">
                 {hero && (
                   <Stack gap="sm">
                     <Stage demo={hero} hero />
@@ -128,7 +129,7 @@ export function DocPage({ section, slug }: { section: Section; slug: string }) {
             )}
 
             <TabsContent value="code">
-              <Stack gap="lg" className="max-w-4xl">
+              <Stack gap="lg" className="stagger max-w-4xl">
                 {doc?.meta.import && (
                   <Stack gap="xs">
                     <Text variant="headline">Import</Text>

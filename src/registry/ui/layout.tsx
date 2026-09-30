@@ -46,6 +46,27 @@ export function Inline({ gap = "xs", align = "center", ...props }: Omit<StackPro
   return <Stack direction="row" gap={gap} align={align} {...props} />
 }
 
+/**
+ * Group — BELONGING HAS NO GAPS. Items that belong together touch: zero gap, shared edges,
+ * only the outer corners rounded. Use for button sets, segmented actions, swatch strips, input + button.
+ */
+export function Group({ orientation = "horizontal", fill, className, ...props }: React.HTMLAttributes<HTMLDivElement> & { orientation?: "horizontal" | "vertical"; fill?: boolean }) {
+  return (
+    <div
+      role="group"
+      className={cn(
+        "flex gap-0 *:rounded-none",
+        orientation === "horizontal"
+          ? "flex-row *:first:rounded-l-md *:last:rounded-r-md"
+          : "flex-col *:first:rounded-t-md *:last:rounded-b-md",
+        fill && "*:flex-1",
+        className,
+      )}
+      {...props}
+    />
+  )
+}
+
 /** Spacer — pushes siblings apart inside an Inline/Stack. */
 export function Spacer() {
   return <div aria-hidden className="flex-1" />

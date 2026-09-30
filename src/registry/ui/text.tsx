@@ -2,6 +2,7 @@ import * as React from "react"
 import { Slot } from "radix-ui"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/registry/lib/utils"
+import { animateChildren } from "@/registry/ui/animated"
 
 /**
  * Text & Heading — typography roles.
@@ -59,9 +60,13 @@ export interface TextProps extends React.HTMLAttributes<HTMLElement>, VariantPro
   asChild?: boolean
 }
 
-export function Text({ variant = "body", tone, weight, truncate, as, asChild, className, ...props }: TextProps) {
+export function Text({ variant = "body", tone, weight, truncate, as, asChild, className, children, ...props }: TextProps) {
   const Comp: React.ElementType = asChild ? Slot.Root : (as ?? defaultElement[variant ?? "body"])
-  return <Comp className={cn(textVariants({ variant, tone, weight, truncate }), className)} {...props} />
+  return (
+    <Comp className={cn(textVariants({ variant, tone, weight, truncate }), className)} {...props}>
+      {asChild ? children : animateChildren(children)}
+    </Comp>
+  )
 }
 
 export interface HeadingProps extends Omit<TextProps, "variant"> {

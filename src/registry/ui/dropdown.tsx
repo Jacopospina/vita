@@ -6,6 +6,7 @@ import { useControllable } from "@/registry/hooks/use-controllable"
 import { FieldShell, fieldClasses, fieldSize, type FieldBaseProps, type FieldSize } from "@/registry/ui/form"
 import { Icon } from "@/registry/ui/icon"
 import { Checkbox } from "@/registry/ui/checkbox"
+import { AnimatedText, AnimatedNumber } from "@/registry/ui/animated"
 
 export interface DropdownItem {
   value: string
@@ -15,11 +16,11 @@ export interface DropdownItem {
 }
 
 const listClasses = cn(
-  "z-50 max-h-80 min-w-(--radix-select-trigger-width) overflow-hidden rounded-md border border-border-subtle bg-raised p-1 text-foreground shadow-floating",
+  "z-50 max-h-80 min-w-(--radix-select-trigger-width) overflow-hidden scope-md border border-border-subtle bg-raised p-1 text-foreground shadow-floating",
   "data-[state=open]:animate-enter-scale data-[state=closed]:animate-exit-scale",
 )
 const itemClasses = cn(
-  "relative flex min-h-control-sm w-full cursor-default items-center gap-2 rounded-sm py-1.5 pr-8 pl-inset-sm text-body outline-none select-none",
+  "relative flex min-h-control-sm w-full cursor-default items-center gap-2 rounded-inner-1 py-1.5 pr-8 pl-inset-sm text-body outline-none select-none",
   "data-[highlighted]:bg-hover data-[disabled]:pointer-events-none data-[disabled]:text-disabled-foreground",
 )
 
@@ -41,10 +42,12 @@ export interface DropdownProps extends FieldBaseProps {
 }
 
 export function Dropdown({ items, value, defaultValue, onValueChange, placeholder = "Choose an option", size = "md", disabled, className, type = "default", ...field }: DropdownProps) {
+  const [current, setCurrent] = useControllable<string | undefined>(value, defaultValue, onValueChange as ((v: string | undefined) => void) | undefined)
+  const selected = items.find((i) => i.value === current)
   return (
     <FieldShell {...field} className={className}>
       {(a11y) => (
-        <SelectPrimitive.Root value={value} defaultValue={defaultValue} onValueChange={onValueChange} disabled={disabled}>
+        <SelectPrimitive.Root value={current} onValueChange={setCurrent} disabled={disabled}>
           <SelectPrimitive.Trigger
             {...a11y}
             className={cn(
@@ -52,8 +55,8 @@ export function Dropdown({ items, value, defaultValue, onValueChange, placeholde
               "flex items-center justify-between gap-2 text-left data-[placeholder]:text-placeholder",
             )}
           >
-            <span className="truncate"><SelectPrimitive.Value placeholder={placeholder} /></span>
-            <SelectPrimitive.Icon className="text-muted-foreground transition-transform duration-moderate-01 ease-productive">
+            <span className="truncate"><SelectPrimitive.Value placeholder={placeholder}>{selected ? <AnimatedText>{selected.label}</AnimatedText> : undefined}</SelectPrimitive.Value></span>
+            <SelectPrimitive.Icon className="text-muted-foreground duration-moderate-01 ease-productive">
               <Icon as={ChevronDown} />
             </SelectPrimitive.Icon>
           </SelectPrimitive.Trigger>
@@ -193,7 +196,7 @@ export function MultiSelect({ items, value, defaultValue = [], onValueChange, si
           <PopoverPrimitive.Trigger {...a11y} disabled={disabled} className={cn(fieldClasses, fieldSize[size], "flex items-center gap-2 text-left")}>
             {val.length > 0 ? (
               <span className="inline-flex h-6 items-center gap-1 rounded-full bg-inverse pr-1 pl-2 text-caption font-medium text-inverse-foreground">
-                {val.length}
+                <AnimatedNumber value={val.length} />
                 <span
                   role="button"
                   tabIndex={0}
@@ -207,7 +210,7 @@ export function MultiSelect({ items, value, defaultValue = [], onValueChange, si
               </span>
             ) : null}
             <span className={cn("flex-1 truncate", val.length === 0 && "text-placeholder")}>
-              {val.length === 0 ? placeholder : items.filter((i) => val.includes(i.value)).map((i) => i.label).join(", ")}
+              <AnimatedText>{val.length === 0 ? placeholder : items.filter((i) => val.includes(i.value)).map((i) => i.label).join(", ")}</AnimatedText>
             </span>
             <Icon as={ChevronDown} className="text-muted-foreground" />
           </PopoverPrimitive.Trigger>
@@ -215,7 +218,7 @@ export function MultiSelect({ items, value, defaultValue = [], onValueChange, si
             <PopoverPrimitive.Content align="start" sideOffset={4} className={cn(listClasses, "w-(--radix-popover-trigger-width) min-w-0 overflow-y-auto")}>
               <div role="listbox" aria-multiselectable className="flex flex-col">
                 {items.map((it) => (
-                  <div key={it.value} className="rounded-sm px-inset-sm py-2 hover:bg-hover">
+                  <div key={it.value} className="rounded-inner-1 px-inset-sm py-2 hover:bg-hover">
                     <Checkbox label={it.label} checked={val.includes(it.value)} disabled={it.disabled} onCheckedChange={() => toggle(it.value)} />
                   </div>
                 ))}

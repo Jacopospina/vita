@@ -1,6 +1,7 @@
 import { ChevronLeft, ChevronRight } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { IconButton } from "@/registry/ui/button"
+import { AnimatedNumber } from "@/registry/ui/animated"
 
 /**
  * Pagination — split LARGE datasets (tables, lists) into pages the user can jump between, with page-size control.
@@ -33,7 +34,7 @@ export function Pagination({ page, pageSize, total, onPageChange, onPageSizeChan
             </select>
           </label>
         )}
-        <span className="tabular-nums" aria-live="polite">{start}–{end} of {total} {itemLabel}</span>
+        <span className="inline-flex items-baseline gap-1" aria-live="polite"><AnimatedNumber value={start} />–<AnimatedNumber value={end} /> of <AnimatedNumber value={total} /> {itemLabel}</span>
       </div>
       <div className="flex h-full items-center">
         <label className="flex h-full items-center gap-1 border-l border-border-subtle px-2">

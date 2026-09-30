@@ -31,7 +31,7 @@ export function Calendar({ className, ...props }: React.ComponentProps<typeof Da
         weekday: "w-control-sm text-caption font-normal text-helper",
         week: "mt-0.5 flex",
         day: "size-control-sm p-0 text-center",
-        day_button: "size-control-sm rounded-sm tabular-nums transition-colors hover:bg-hover focus-ring",
+        day_button: "size-control-sm rounded-sm tabular-nums hover:bg-hover focus-ring",
         today: "font-semibold text-primary",
         selected: "[&>button]:bg-primary [&>button]:text-primary-foreground [&>button]:hover:bg-primary-hover",
         range_middle: "[&>button]:!bg-selected [&>button]:!text-selected-foreground rounded-none",

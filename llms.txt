@@ -22,13 +22,16 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/foun
 - [Icons](docs/foundations/icons.md): One icon set through one Icon component, at four sizes. An icon supports a label; it rarely replaces one.
   - use: Reinforcing an action or a status label; Icon-only controls with universal meaning (close, search, menu, overflow), always with a tooltip
   - avoid: Other icon libraries → forbidden; Decorating headings or list items; Large illustrative use → Pictogram
-- [Motion](docs/foundations/motion.md): Productive by default, expressive for rare moments, physical where users touch. Motion explains change; it never decorates.
-  - use: Showing a change of state, a spatial relationship, or feedback to an action
-  - avoid: Decorative loops, parallax, attention-seeking bounces; Raw durations or cubic-beziers (duration-300, ease-[...]) → use tokens; Animating layout properties on large surfaces → use transform and opacity
+- [Interaction](docs/foundations/interaction.md): Built for products where AI carries the complexity. One hand per device, intent over input, nothing redundant, nothing that snaps.
+  - use: Designing any flow, interaction or shortcut; Deciding between a form and an intent-first flow
+  - avoid: Adding a control that repeats one that already exists (Cancel next to ×); Shortcuts that need the right hand
+- [Motion](docs/foundations/motion.md): Choreography is everything. Nothing snaps — every change transitions, variants morph like liquid, numbers roll and text reveals.
+  - use: Always — motion is on by default for every property change
+  - avoid: Switching transitions off on a component → tune duration or easing instead; Raw durations or cubic-beziers (duration-300, ease-[...]) → use tokens; Decorative loops, parallax, attention-seeking bounces
 - [Pictograms](docs/foundations/pictograms.md): Large pictograms for empty states, onboarding and feature tiles. Never as controls.
   - use: Empty states (first use, no results, error); Onboarding and feature explanations; Large clickable tiles that introduce a product area
   - avoid: Buttons, navigation, table cells, anything under 48px → Icon; Decorating every section of a page → one pictogram per view at most
-- [Design principles](docs/foundations/principles.md): Seven ranked rules every Corpus screen obeys. When two conflict, the lower number wins.
+- [Design principles](docs/foundations/principles.md): Ten ranked rules every Corpus screen obeys. When two conflict, the lower number wins.
 - [Spacing](docs/foundations/spacing.md): One 2px-based scale, density-aware control sizes, and a hard ban on off-scale values.
   - use: Any padding, margin or gap
   - avoid: Arbitrary values like p-[13px] → forbidden; Off-scale steps (p-5, gap-7, m-9) → the audit rejects them
@@ -60,6 +63,9 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/foun
 - [Code snippet](docs/components/code-snippet.md): Code, commands and identifiers the user will copy. Copying is one click, with instant feedback.
   - use: Showing commands, API keys, IDs, config the user must copy; Displaying code samples in docs/onboarding
   - avoid: Displaying non-copyable monospace data in tables → Text variant="code"; Secrets that should be hidden by default → PasswordInput-style reveal + copy
+- [Composer](docs/components/composer.md): The intent-first input. Users type, dictate or attach what they want; the AI does the work and hands back something to review.
+  - use: Starting any task an agent can do (create, find, change, summarise); Replacing a long form with "describe it, then review it"; Chat, assistant panels, command entry
+  - avoid: A single known value (a name, a date) → TextInput / DatePicker; Searching a list → Search; Instant settings → Toggle
 - [Contained list](docs/components/contained-list.md): A titled list of similar items, each a row with an optional action.
   - use: Members, connected apps, recent files, settings groups; Rows that each open something or have one trailing action; Lists inside panels and popovers (kind="disclosed")
   - avoid: Multi-attribute records to sort/compare → DataTable; Plain bullet points → List; Hierarchies → TreeView
@@ -168,7 +174,7 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/foun
 
 ## Patterns
 
-- [Common actions](docs/patterns/common-actions.md): Where actions live, how many are visible, and how create, edit, delete, save, cancel and export behave everywhere.
+- [Common actions](docs/patterns/common-actions.md): Where actions live, how many are visible, and how create, edit, delete, save and export behave everywhere — with left-hand shortcuts.
   - use: Any page, table, card or panel that exposes actions
   - avoid: Inventing a new placement or verb for an action that already has one here
 - [Dialogs](docs/patterns/dialogs.md): Choosing between Modal, RightPanel, Popover, Toggletip and toast — and writing dialogs people understand in one glance.
@@ -195,6 +201,9 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/foun
 - [Global header](docs/patterns/global-header.md): What goes in the product-wide header, in which order, and what each global action opens.
   - use: Every authenticated product
   - avoid: Page-specific actions in the global header → PageHeader
+- [Intent-first input](docs/patterns/intent-first.md): Describe, review, approve. The AI turns intent into a prepared result; the user corrects and ships it instead of filling in a form.
+  - use: Creating or configuring something with more than ~4 fields; Tasks users describe more easily than they fill in (an agent, a report, a rule)
+  - avoid: Tiny edits of one value → inline edit; Regulated data entry that must be typed exactly → Form
 - [Loading](docs/patterns/loading.md): Orchestrating loading across a page — progressive, region by region, without layout shift or spinner soup.
   - use: Any view that fetches data
   - avoid: Blocking the whole page for partial data

@@ -15,6 +15,11 @@ This product's UI is built **only** with the Corpus design system. Corpus is the
 - **Never create local components, patterns or styles** that duplicate or re-skin Corpus. Never use raw values: hex/rgb, arbitrary Tailwind `[...]`, palette colors, `text-sm`-style sizes, off-scale spacing, inline styles, `dark:` overrides.
 - **Never edit files in `src/components/corpus/` or `src/styles/corpus/`** except `theme.css`. Those are synced from the design system (`npm run corpus:update`).
 - Missing something? Stop and tell the user. Propose a composition of existing Corpus components, or describe a design-system request. Only a designer can approve an exception, marked with `// corpus-allow <rule>: <reason> — approved by @name`.
+- **Modals and panels never get Cancel/Close/Dismiss buttons.** ×, Escape and click-outside close them.
+- **Belonging has no gaps:** related actions go in `ButtonSet` / `Group`.
+- **Left-hand shortcuts only** (`shortcut="mod+s"`); every task must also work by mouse alone.
+- **Intent over input:** prefer `Composer` + AI-prepared review over long forms.
+- **Nothing snaps:** never disable transitions; use `AnimatedNumber` / `AnimatedText` for changing values and `morph()` for reorders.
 - Done means `npm run corpus:audit` reports 0 violations, with typecheck and lint passing.
 
 ## Skills available

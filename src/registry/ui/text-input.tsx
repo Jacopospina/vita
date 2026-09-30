@@ -56,7 +56,7 @@ export const PasswordInput = React.forwardRef<HTMLInputElement, Omit<TextInputPr
               aria-label={visible ? "Hide password" : "Show password"}
               className="absolute inset-y-0 right-0 flex w-control-md items-center justify-center rounded-md text-muted-foreground hover:text-foreground focus-ring-inset"
             >
-              <Icon as={visible ? ViewOff : View} />
+              <Icon key={visible ? "off" : "on"} as={visible ? ViewOff : View} className="animate-enter-scale" />
             </button>
           </div>
         )}

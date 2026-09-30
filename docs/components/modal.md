@@ -21,8 +21,8 @@ related: [dialogs, ui-shell-right-panel, popover, notification]
 | Type | Footer | Example |
 |---|---|---|
 | Passive | none (× only) | Keyboard shortcuts, info |
-| Transactional | Cancel + primary | "Deploy agent" with a release note |
-| Danger | Cancel + danger | "Delete 3 agents?" |
+| Transactional | primary (+ optional secondary alternative) | "Deploy agent" with a release note |
+| Danger | danger | "Delete 3 agents?" |
 | Acknowledgement | primary only | Terms update |
 
 ## Sizes
@@ -37,10 +37,10 @@ related: [dialogs, ui-shell-right-panel, popover, notification]
 1. **The title asks or states:** "Delete 3 agents?" / "Deploy to production". The primary button repeats the verb ("Delete agents").
 2. **Danger modals:**
    - They can't be dismissed by clicking the scrim.
-   - Focus lands on Cancel, not on the destructive button.
+   - Focus lands on ×, not on the destructive button.
    - The description states the consequence ("can't be undone").
 3. **Prefer Undo over Confirm** for reversible actions (toast with Undo).
-4. **Max 2 footer buttons,** or 3 for Back · Cancel · Next.
+4. **Never a Cancel, Close or Dismiss button.** ×, Escape and click-outside already close it. The footer is a full-bleed, joined `ActionBar`: one primary, at most one secondary *alternative* (Save as draft, Back).
 5. **Motion:**
    - Enter: the scrim fades in while the dialog scales from 96%.
    - Exit: faster than enter.

@@ -10,26 +10,37 @@ import { ThemePanel } from "./theme-panel"
 
 const sectionIcons = { foundations: Book, components: Application, patterns: GridIcon } as const
 
-function useRoute(): [Section, string] {
+function useRoute() {
   const read = (): [Section, string] => {
     const [, section, slug] = window.location.hash.replace(/^#/, "").split("/")
     if (section && slug && section in manifest) return [section as Section, slug]
     return ["foundations", "about"]
   }
   const [route, setRoute] = React.useState(read)
+  const [leaving, setLeaving] = React.useState(false)
   React.useEffect(() => {
+    let t: number | undefined
+    // Leave (major containers sink out in sequence) → swap → enter (they rise in, staggered).
     const on = () => {
-      setRoute(read())
-      document.getElementById("main-content")?.scrollTo({ top: 0 })
+      setLeaving(true)
+      window.clearTimeout(t)
+      t = window.setTimeout(() => {
+        setRoute(read())
+        setLeaving(false)
+        document.getElementById("main-content")?.scrollTo({ top: 0 })
+      }, 200)
     }
     window.addEventListener("hashchange", on)
-    return () => window.removeEventListener("hashchange", on)
+    return () => {
+      window.removeEventListener("hashchange", on)
+      window.clearTimeout(t)
+    }
   }, [])
-  return route
+  return [...route, leaving] as const
 }
 
 export function App() {
-  const [section, slug] = useRoute()
+  const [section, slug, leaving] = useRoute()
   const [themeOpen, setThemeOpen] = React.useState(false)
   const [dark, setDark] = React.useState(() => window.matchMedia?.("(prefers-color-scheme: dark)").matches ?? false)
   const [filter, setFilter] = React.useState("")
@@ -55,7 +66,7 @@ export function App() {
         <ShellBody>
           <LeftPanel label="Documentation">
             <div className="px-2 pt-1 pb-2">
-              <Search size="sm" label="Filter pages" placeholder="Filter" value={filter} onValueChange={setFilter} />
+              <Search size="sm" label="Filter pages" placeholder="Filter" shortcut="mod+f" value={filter} onValueChange={setFilter} />
             </div>
             {(Object.keys(manifest) as Section[]).map((s) => {
               const entries = manifest[s].filter((e) => e.title.toLowerCase().includes(filter.toLowerCase()))
@@ -71,7 +82,7 @@ export function App() {
               )
             })}
           </LeftPanel>
-          <ShellMain>
+          <ShellMain data-leaving={leaving || undefined}>
             <DocPage key={`${section}/${slug}`} section={section} slug={slug} />
           </ShellMain>
           <RightPanel open={themeOpen} onOpenChange={setThemeOpen} title="Theme" size="md">

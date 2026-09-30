@@ -6,9 +6,11 @@ import { dataDemos } from "./data"
 import { feedbackDemos } from "./feedback"
 import { patternDemos } from "./patterns"
 import { aboutDemos } from "./about"
+import { interactionDemos } from "./interaction"
 
 export const demos: DemoMap = {
   ...aboutDemos,
+  ...interactionDemos,
   ...foundationDemos,
   ...actionDemos,
   ...inputDemos,

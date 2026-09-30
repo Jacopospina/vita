@@ -9,6 +9,8 @@ avoid_when:
   - Off-scale steps (p-5, gap-7, m-9) → the audit rejects them
 ---
 
+> [!IMPORTANT] Belonging has no gaps. Items that belong together (button sets, action bars, swatches, segments) touch at 0px — use `Group`, `ButtonSet` or `ActionBar`. Spacing is for separating things that don't belong together.
+
 ## The scale
 
 | Name | Tailwind | px | Typical use |
@@ -37,10 +39,17 @@ avoid_when:
 - **`rounded-xl`.** Modals.
 - **`rounded-full`.** Pills, avatars, switches.
 
+## Concentric radius
+
+- **Inner radius = outer radius − padding.** A 20px container with 8px padding gives its children a 12px radius; never below 0.
+- **Mark the container.** Use `scope-sm|md|lg|xl` instead of `rounded-*` on containers that hold rounded children.
+- **Derive the child.** Use `rounded-inner-{padding step}` (e.g. `rounded-inner-2` inside `p-2`); a second level uses `rounded-inner2-*`.
+- **Built in.** Segmented controls, toolbars, menus, lists, the composer, code snippets and modals already follow it.
+
 ## Elevation
 
 - **`shadow-raised`.** Cards above the page.
 - **`shadow-floating`.** Menus, popovers, tooltips.
 - **`shadow-overlay`.** Modals, panels, toasts.
 
-> [!NOTE] Anything that floats has a shadow; nothing in the page flow does. Nested corners are always smaller than their container's.
+> [!NOTE] Anything that floats has a shadow; nothing in the page flow does. Nested corners always follow the concentric formula.

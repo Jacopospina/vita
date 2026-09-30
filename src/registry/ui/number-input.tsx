@@ -27,7 +27,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
     const clamp = (n: number) => Math.min(max ?? Infinity, Math.max(min ?? -Infinity, n))
     const bump = (dir: 1 | -1) => setVal(clamp(Number(((val ?? 0) + dir * step).toFixed(10))))
     const outOfRange = val !== null && ((min !== undefined && val < min) || (max !== undefined && val > max))
-    const stepBtn = "flex w-control-sm items-center justify-center text-muted-foreground transition-colors hover:bg-hover hover:text-foreground focus-ring-inset disabled:text-disabled-foreground disabled:hover:bg-transparent"
+    const stepBtn = "flex w-control-sm items-center justify-center text-muted-foreground hover:bg-hover hover:text-foreground focus-ring-inset disabled:text-disabled-foreground disabled:hover:bg-transparent"
     return (
       <FieldShell {...{ id, label, hideLabel, helperText, invalid: invalid || outOfRange, invalidText: invalidText ?? (outOfRange ? `Enter a value from ${min ?? "−∞"} to ${max ?? "∞"}` : undefined), warn, warnText, optional, labelAddon, className }}>
         {(a11y) => (

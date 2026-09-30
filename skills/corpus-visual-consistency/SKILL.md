@@ -16,6 +16,7 @@ Consistency comes from rules, not taste. Run this checklist on every screen, top
 
 ## 2. Rhythm & spacing
 
+- [ ] Things that belong together touch (0 gap): button sets, action bars, swatches, segments. Use `Group`/`ButtonSet`/`ActionBar`.
 - [ ] Gaps inside groups are smaller than gaps between groups: related `xs`, siblings `md`/`lg`, sections `xl`/`2xl`.
 - [ ] Form fields are 24px apart (`Form` handles this). Sections are 32–48px apart.
 - [ ] Container padding is consistent: tiles `p-4` (compact) or `p-6` (roomy), never mixed on one screen.
@@ -32,7 +33,7 @@ Consistency comes from rules, not taste. Run this checklist on every screen, top
 - [ ] One surface step per nesting: `background` → `layer-1` → `layer-2`. No card inside a card.
 - [ ] Borders are used sparingly: whitespace first, `border-border-subtle` second, `border` for fields only.
 - [ ] Only floating layers have shadows (`shadow-floating` / `shadow-overlay`).
-- [ ] Radius nests: the outer radius is bigger than the inner radius (`rounded-lg` tile with `rounded-md` controls inside).
+- [ ] Radius is concentric: inner = outer − padding. Containers use `scope-*`, children `rounded-inner-{padding}`.
 
 ## 5. Color restraint
 

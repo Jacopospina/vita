@@ -49,7 +49,7 @@ export function ContainedListItem({ icon, action, onClick, disabled, className, 
   return (
     <li className={cn("flex items-center border-b border-border-subtle", className)}>
       {onClick ? (
-        <button type="button" disabled={disabled} onClick={onClick} className={cn(row, "transition-colors duration-fast-02 hover:bg-hover focus-ring-inset disabled:text-disabled-foreground")}>
+        <button type="button" disabled={disabled} onClick={onClick} className={cn(row, " duration-fast-02 hover:bg-hover focus-ring-inset disabled:text-disabled-foreground")}>
           {inner}
         </button>
       ) : (

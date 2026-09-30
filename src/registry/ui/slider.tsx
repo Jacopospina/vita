@@ -2,6 +2,7 @@ import * as React from "react"
 import { Slider as SliderPrimitive } from "radix-ui"
 import { cn } from "@/registry/lib/utils"
 import { Label } from "@/registry/ui/form"
+import { AnimatedNumber } from "@/registry/ui/animated"
 
 /**
  * Slider — choose a value (or range) where relative position matters more than precision: volume, opacity, price range.
@@ -26,7 +27,7 @@ export function Slider({ label, hideLabel, helperText, formatValue = String, sho
       <div className={cn("flex items-baseline justify-between", hideLabel && "sr-only")}>
         <Label id={id}>{label}</Label>
         <output aria-live="polite" className="text-footnote text-foreground tabular-nums">
-          {current.map(formatValue).join(" – ")}
+          {formatValue === String ? current.map((v, i) => <React.Fragment key={i}>{i > 0 && " – "}<AnimatedNumber value={v} /></React.Fragment>) : current.map(formatValue).join(" – ")}
         </output>
       </div>
       <SliderPrimitive.Root
@@ -48,7 +49,7 @@ export function Slider({ label, hideLabel, helperText, formatValue = String, sho
           <SliderPrimitive.Thumb
             key={i}
             aria-label={current.length > 1 ? (i === 0 ? "Minimum" : "Maximum") : undefined}
-            className="block size-4 rounded-full border-2 border-primary bg-background shadow-raised transition-transform duration-fast-01 ease-productive hover:scale-110 focus-ring active:scale-110"
+            className="block size-4 rounded-full border-2 border-primary bg-background shadow-raised duration-fast-01 ease-productive hover:scale-110 focus-ring active:scale-110"
           />
         ))}
       </SliderPrimitive.Root>

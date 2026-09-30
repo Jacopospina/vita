@@ -4,6 +4,8 @@ import { Close } from "@/registry/icons"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/registry/lib/utils"
 import { Icon } from "@/registry/ui/icon"
+import { animateChildren } from "@/registry/ui/animated"
+import { useExit } from "@/registry/hooks/use-exit"
 
 /**
  * Tag — label, categorise or filter. Four types:
@@ -14,7 +16,7 @@ import { Icon } from "@/registry/ui/icon"
  * Status (success/warning/error) must ALSO be conveyed by text; color is never the only signal.
  */
 const tagVariants = cva(
-  "inline-flex h-6 max-w-full shrink-0 items-center gap-1 rounded-full px-2 text-caption font-medium whitespace-nowrap transition-colors duration-fast-02 ease-productive",
+  "inline-flex h-6 max-w-full shrink-0 items-center gap-1 rounded-full px-2 text-caption font-medium whitespace-nowrap duration-fast-02 ease-productive",
   {
     variants: {
       tone: {
@@ -41,15 +43,16 @@ export interface TagProps extends React.HTMLAttributes<HTMLSpanElement>, Variant
 }
 
 export function Tag({ tone, size, icon, onDismiss, dismissLabel, disabled, className, children, ...props }: TagProps) {
+  const [leaving, exit] = useExit()
   return (
-    <span className={cn(tagVariants({ tone, size }), onDismiss && "pr-0.5", disabled && "opacity-50", className)} {...props}>
+    <span className={cn(tagVariants({ tone, size }), onDismiss && "pr-0.5", disabled && "opacity-50", leaving && "animate-exit-scale", className)} {...props}>
       {icon && <Icon as={icon} size="sm" />}
-      <span className="truncate">{children}</span>
+      <span className="truncate">{animateChildren(children)}</span>
       {onDismiss && (
         <button
           type="button"
           disabled={disabled}
-          onClick={onDismiss}
+          onClick={() => exit(onDismiss)}
           aria-label={dismissLabel ?? `Remove ${typeof children === "string" ? children : "tag"}`}
           className="flex size-5 items-center justify-center rounded-full hover:bg-hover focus-ring"
         >

@@ -2,6 +2,7 @@ import * as React from "react"
 import { CheckmarkFilled, ErrorFilled } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { Icon } from "@/registry/ui/icon"
+import { AnimatedText } from "@/registry/ui/animated"
 
 /**
  * Loading family. Choose by SCOPE and DURATION:
@@ -33,7 +34,7 @@ export function InlineLoading({ status = "active", description, className }: { s
       {status === "active" && <span className="size-4 animate-spin rounded-full border-2 border-primary border-r-transparent" />}
       {status === "finished" && <Icon as={CheckmarkFilled} className="animate-enter-scale text-success" />}
       {status === "error" && <Icon as={ErrorFilled} className="text-error" />}
-      {description && <span className={status === "error" ? "text-error-foreground" : undefined}>{description}</span>}
+      {description && <span className={status === "error" ? "text-error-foreground" : undefined}>{typeof description === "string" ? <AnimatedText>{description}</AnimatedText> : description}</span>}
     </div>
   )
 }

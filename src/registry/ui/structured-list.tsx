@@ -41,7 +41,7 @@ export function StructuredList({ columns, rows, selectable, value, onValueChange
               tabIndex={selectable ? 0 : undefined}
               onClick={selectable ? () => onValueChange?.(r.id) : undefined}
               onKeyDown={selectable ? (e) => (e.key === " " || e.key === "Enter") && onValueChange?.(r.id) : undefined}
-              className={cn("border-b border-border-subtle", selectable && "cursor-pointer transition-colors hover:bg-hover focus-ring-inset", selected && "bg-selected hover:bg-selected")}
+              className={cn("border-b border-border-subtle", selectable && "cursor-pointer hover:bg-hover focus-ring-inset", selected && "bg-selected hover:bg-selected")}
             >
               {r.cells.map((c, i) => (
                 <td key={i} className={cn(cell, i === 0 ? "font-medium text-foreground" : "text-muted-foreground")}>{c}</td>

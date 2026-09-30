@@ -19,17 +19,17 @@ function PaletteGrid() {
   const steps = palette.steps as number[]
   return (
     <div className="overflow-x-auto">
-      <div className="grid min-w-180 grid-cols-12 gap-1">
+      <div className="grid min-w-180 grid-cols-12 gap-0">
         <span />
-        {steps.map((st) => <Text key={st} variant="caption" tone="muted" className="text-center tabular-nums">{st}</Text>)}
+        {steps.map((st) => <Text key={st} variant="caption" tone="muted" className="pb-1 text-center tabular-nums">{st}</Text>)}
         {Object.entries(palette.colors).map(([name, c]) => (
           <React.Fragment key={name}>
-            <Stack gap="none" justify="center"><Text variant="footnote" weight="medium" className="capitalize">{name}</Text><Text variant="caption" tone="helper" className="tabular-nums">{c.base}</Text></Stack>
+            <Stack gap="none" justify="center" className="pr-3"><Text variant="footnote" weight="medium" className="capitalize">{name}</Text><Text variant="caption" tone="helper" className="tabular-nums">{c.base}</Text></Stack>
             {steps.map((st) => (
               <div
                 key={st}
                 title={`--corpus-palette-${name}-${st}\n${(c.steps as Record<string, string>)[st]}`}
-                className={cn("flex h-12 items-end justify-center rounded-sm pb-1", st === 500 && "ring-2 ring-foreground ring-offset-2 ring-offset-background")}
+                className={cn("relative flex h-12 items-end justify-center pb-1", st === 50 && "rounded-l-md", st === 950 && "rounded-r-md", st === 500 && "z-10 outline-2 -outline-offset-2 outline-foreground")}
                 style={{ ["--p" as string]: `var(--corpus-palette-${name}-${st})`, background: "var(--p)" }}
               >
                 {st === 500 && <span className={cn("text-caption font-semibold", name === "yellow" || name === "mint" ? "text-foreground" : "text-primary-foreground")}>●</span>}
@@ -139,7 +139,7 @@ function MotionDemo() {
         <Text variant="headline">Easing (duration-moderate-02)</Text>
         {easings.map(([cls, label]) => (
           <div key={cls} className="relative h-8 rounded-md bg-layer-1">
-            <div className={cn("absolute top-1 left-1 size-6 rounded-sm bg-primary transition-transform duration-moderate-02", cls, on && "translate-x-64")} />
+            <div className={cn("absolute top-1 left-1 size-6 rounded-sm bg-primary duration-moderate-02", cls, on && "translate-x-64")} />
             <Text variant="caption" tone="muted" className="absolute top-2 right-2">{label}</Text>
           </div>
         ))}
@@ -148,7 +148,7 @@ function MotionDemo() {
         <Text variant="headline">Duration (ease-productive)</Text>
         {durations.map((d) => (
           <div key={d} className="relative h-8 rounded-md bg-layer-1">
-            <div className={cn("absolute top-1 left-1 size-6 rounded-sm bg-primary transition-transform ease-productive", d, on && "translate-x-64")} />
+            <div className={cn("absolute top-1 left-1 size-6 rounded-sm bg-primary ease-productive", d, on && "translate-x-64")} />
             <Text variant="caption" tone="muted" className="absolute top-2 right-2 font-mono">{d}</Text>
           </div>
         ))}
@@ -196,14 +196,13 @@ export const foundationDemos: DemoMap = {
     },
     ...colorGroups.map((g) => ({
     title: g.title,
+    description: "One family, one block: swatches that belong together touch.",
     render: () => (
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <div className="grid grid-cols-2 gap-0 overflow-hidden rounded-lg border border-border-subtle sm:grid-cols-4">
         {g.tokens.map((t) => (
-          <div key={t.name} className="flex flex-col gap-1">
-            <div className={cn("flex h-16 items-end rounded-md border border-border-subtle p-2", t.cls)}>
-              <Text variant="caption" tone="inherit" className={t.fg ?? "text-foreground"}>Aa</Text>
-            </div>
-            <Text variant="caption" className="font-mono">{t.name}</Text>
+          <div key={t.name} className={cn("flex h-24 flex-col justify-between p-3", t.cls)}>
+            <Text variant="title-3" tone="inherit" className={t.fg ?? "text-foreground"}>Aa</Text>
+            <Text variant="caption" tone="inherit" className={cn("font-mono", t.fg ?? "text-foreground")}>{t.name}</Text>
           </div>
         ))}
       </div>
