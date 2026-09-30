@@ -1,6 +1,6 @@
 ---
 title: List items
-summary: The settings row. Icon tile on the left, title (and subtitle) in the middle, the control or chevron on the far right. Rows that belong together join into one card.
+summary: The settings row. Icon placeholder on the left, title (and subtitle) in the middle, the control or chevron on the far right. Rows that belong together join into one card.
 status: stable
 import: "import { ListGroup, ListItem, ListSection } from \"@/components/corpus/list-item\"\n\n<ListGroup>\n  <ListItem icon={Bot} tone=\"brand\" title=\"Support triage\" subtitle=\"Zendesk · Live\" onClick={open} />\n</ListGroup>"
 use_when:
@@ -18,7 +18,7 @@ related: [list-item, contained-list, structured-list, data-table, toggle]
 
 | Left | Middle | Far right |
 |---|---|---|
-| Icon tile (`tone`) or `media` (avatar, device) | Title, with an optional subtitle below | `trailing` control, `value` + chevron, or chevron |
+| Icon placeholder (`tone`) or `media` (avatar, device) | Title, with an optional subtitle below | `trailing` control, `value` + chevron, or chevron |
 
 ## Rules
 

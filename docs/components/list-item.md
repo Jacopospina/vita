@@ -1,6 +1,6 @@
 ---
 title: List item
-summary: The settings row. Icon tile on the left, title over an optional subtitle, and the control or chevron on the far right. Group related rows into one card.
+summary: The settings row. Icon placeholder on the left, title over an optional subtitle, and the control or chevron on the far right. Group related rows into one card.
 status: stable
 import: "import { ListGroup, ListItem, ListSection } from \"@/components/corpus/list-item\"\n\n<ListSection title=\"Agents\">\n  <ListGroup>\n    <ListItem icon={Bot} tone=\"brand\" title=\"Support triage\" subtitle=\"Zendesk · Live\" onClick={open} />\n    <ListItem icon={Plug} tone=\"success\" title=\"Slack\" trailing={<Button size=\"sm\" variant=\"secondary\">Manage</Button>} />\n  </ListGroup>\n</ListSection>"
 use_when:
@@ -11,14 +11,14 @@ avoid_when:
   - Sorting, many attributes or bulk actions → DataTable
   - Pure text bullets → List
   - A titled list with a list-level action → ContainedList
-related: [icon-tile, list-items, contained-list, structured-list, toggle]
+related: [icon-placeholder, list-items, contained-list, structured-list, toggle]
 ---
 
 ## Parts
 
 | Part | Props |
 |---|---|
-| `ListItem` | `icon` + `tone` ([IconTile](#/components/icon-tile)) or `media` (avatar, device) · `title` · `subtitle` · `value` · `trailing` · `onClick` / `href` · `selected` · `disabled` |
+| `ListItem` | `icon` + `tone` ([IconPlaceholder](#/components/icon-placeholder)) or `media` (avatar, device) · `title` · `subtitle` · `value` · `trailing` · `onClick` / `href` · `selected` · `disabled` |
 | `ListGroup` | Rows that belong together, joined into one card. A single row is a group of one. |
 | `ListSection` | One or more groups, with an optional `title` and `description`. It owns the gap between groups. |
 

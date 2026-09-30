@@ -5,7 +5,7 @@ import { Icon } from "@/registry/ui/icon"
 import { Button } from "@/registry/ui/button"
 import { useExit } from "@/registry/hooks/use-exit"
 import { ProgressRing } from "@/registry/ui/progress-bar"
-import { IconTile } from "@/registry/ui/icon-tile"
+import { IconPlaceholder } from "@/registry/ui/icon-placeholder"
 import { animateChildren } from "@/registry/ui/animated"
 import type { IconType } from "@/registry/icons"
 
@@ -24,7 +24,7 @@ const iconTone = { info: "text-info", success: "text-success", warning: "text-wa
 
 /**
  * Notice — the ONE notification anatomy, shared by inline notifications, callouts and toast banners:
- * squircle card on a NEUTRAL surface · IconTile (soft) on the left (the icon + its semantic color carry the kind —
+ * squircle card on a NEUTRAL surface · IconPlaceholder (soft) on the left (the icon + its semantic color carry the kind —
  * never a colored bar or tinted fill) · title over subtitle · optional action · × appears on hover/focus.
  *   surface solid → in page content (inline, callout) · glass → floating over content (toast banner)
  */
@@ -54,7 +54,7 @@ function Notice({ icon, kind, eyebrow, source, title, subtitle, children, action
         className,
       )}
     >
-      {icon && <IconTile icon={icon} variant="soft" tone={kind ?? "neutral"} size="lg" draw />}
+      {icon && <IconPlaceholder icon={icon} variant="soft" tone={kind ?? "neutral"} size="lg" draw />}
       <div className={cn("flex min-w-0 flex-1 flex-col", !subtitle && !children && !eyebrow && !source && "self-center")}>
         {eyebrow && <p className="text-caption font-medium tracking-wide text-muted-foreground uppercase">{eyebrow}</p>}
         {source && <p className="font-semibold">{source}</p>}
@@ -123,9 +123,9 @@ export function Callout({ kind = "info", title, children, className }: { kind?: 
 type ToastIcon = IconType | React.ReactNode
 
 export interface ToastOptions {
-  /** Semantic kind: picks the default icon tile when no icon is given. */
+  /** Semantic kind: picks the default icon placeholder when no icon is given. */
   kind?: Kind
-  /** Icon tile on the left. Pass an Icon type or any node (e.g. an app mark). `false` = the no-icon variant. */
+  /** Icon placeholder on the left. Pass an Icon type or any node (e.g. an app mark). `false` = the no-icon variant. */
   icon?: ToastIcon | false
   /** Who is speaking (app, agent or feature name), shown first. */
   source?: string
@@ -236,7 +236,7 @@ function renderIcon(icon: ToastIcon, className?: string) {
   return icon as React.ReactNode
 }
 
-/** Banner — the toast surface: the Notice anatomy on frosted glass. Icon tile optional (no-icon variant). */
+/** Banner — the toast surface: the Notice anatomy on frosted glass. Icon placeholder optional (no-icon variant). */
 export function Banner({ o, leaving, onClose }: { o: ToastOptions; leaving?: boolean; onClose: () => void }) {
   const icon = o.icon === false ? null : (o.icon ?? (o.kind ? kindIcon[o.kind] : null))
   return (

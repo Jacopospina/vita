@@ -4,8 +4,9 @@ import { cn } from "@/registry/lib/utils"
 import { Icon } from "@/registry/ui/icon"
 
 /**
- * IconTile — a glyph on a small squircle tile: the leading visual of list rows, notifications, banners and
- * settings pages. The ONE way to put an icon on a tile; never hand-roll a colored square.
+ * IconPlaceholder — the leading visual slot: a glyph on a squircle tile, in three sizes (sm 24 · md 32 · lg 40).
+ * Used by list items (sm), notifications and toast banners (lg). The ONE way to put an icon on a tile;
+ * never hand-roll a colored square.
  *
  *   filled  colored tile, white glyph → categories (settings rows, app/agent marks)
  *   soft    neutral tile, colored glyph → semantic kinds (notifications: the glyph's color carries the kind)
@@ -28,12 +29,12 @@ const sizes = {
   lg: { tile: "size-10 [--corpus-squircle-r:var(--corpus-radius-md)]", icon: "md" },
 } as const
 
-export type IconTileTone = keyof typeof tones
+export type IconPlaceholderTone = keyof typeof tones
 
-export interface IconTileProps {
+export interface IconPlaceholderProps {
   /** An icon type, or any node (agent/app mark, avatar image). */
   icon: IconType | React.ReactNode
-  tone?: IconTileTone
+  tone?: IconPlaceholderTone
   variant?: "filled" | "soft"
   /** sm 24 · list rows · md 32 · compact headers · lg 40 · notifications and banners */
   size?: keyof typeof sizes
@@ -45,7 +46,7 @@ export interface IconTileProps {
 const isIconType = (x: unknown): x is IconType =>
   typeof x === "function" || (typeof x === "object" && x !== null && "render" in x && !React.isValidElement(x))
 
-export function IconTile({ icon, tone = "neutral", variant = "filled", size = "sm", draw, className }: IconTileProps) {
+export function IconPlaceholder({ icon, tone = "neutral", variant = "filled", size = "sm", draw, className }: IconPlaceholderProps) {
   const s = sizes[size]
   return (
     <span

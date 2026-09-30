@@ -3,10 +3,10 @@ import { ChevronRight } from "@/registry/icons"
 import type { IconType } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { Icon } from "@/registry/ui/icon"
-import { IconTile, type IconTileTone } from "@/registry/ui/icon-tile"
+import { IconPlaceholder, type IconPlaceholderTone } from "@/registry/ui/icon-placeholder"
 
 /**
- * ListItem — the settings-style row: leading icon tile · title (+ subtitle) · trailing control on the far right.
+ * ListItem — the settings-style row: leading icon placeholder · title (+ subtitle) · trailing control on the far right.
  * ListGroup joins rows that BELONG together into one card (zero gap, the card owns fill + radius, rows are flat,
  * separators are inset). Different groups stand apart. ListSection gives a run of groups a heading.
  *
@@ -17,8 +17,8 @@ import { IconTile, type IconTileTone } from "@/registry/ui/icon-tile"
 export interface ListItemProps {
   /** Leading glyph, drawn on a small squircle tile. */
   icon?: IconType
-  tone?: IconTileTone
-  /** Leading media instead of an icon tile — avatar, device image, app mark. */
+  tone?: IconPlaceholderTone
+  /** Leading media instead of an icon placeholder — avatar, device image, app mark. */
   media?: React.ReactNode
   title: React.ReactNode
   /** Second line, only when it adds information (model, owner, state). */
@@ -41,7 +41,7 @@ export function ListItem({ icon, tone = "neutral", media, title, subtitle, value
       {media ? (
         <span className="flex shrink-0 items-center">{media}</span>
       ) : icon ? (
-        <IconTile icon={icon} tone={tone} size="sm" />
+        <IconPlaceholder icon={icon} tone={tone} size="sm" />
       ) : null}
       <span className="flex min-w-0 flex-1 flex-col">
         <span className="truncate text-body">{title}</span>

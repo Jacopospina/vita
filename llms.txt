@@ -90,7 +90,7 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/foun
 - [Form](docs/components/form.md): The structural pieces of every form. Form, FormGroup, FormRow, FormActions, FluidForm and the FieldShell wiring every input uses.
   - use: Any time the user enters data that is submitted together
   - avoid: Single instant settings → Toggle rows, no form wrapper needed; Inline edits of one value → read-only-states pattern (view → edit)
-- [Icon tile](docs/components/icon-tile.md): A glyph on a small squircle tile. The one leading visual for list rows, notifications and banners.
+- [Icon placeholder](docs/components/icon-placeholder.md): The leading visual slot — a glyph on a squircle tile in small, medium and large. Used by list items, notifications and toast banners.
   - use: Leading visual of a list row (settings, objects); The left side of a notification or toast banner; An agent or app mark next to its name
   - avoid: An icon inline with text or inside a button → Icon; Large illustrative marks → Pictogram; A person → avatar media
 - [Inline loading](docs/components/inline-loading.md): The status of one operation, in place — "Saving…" → "Saved" → gone.
@@ -99,7 +99,7 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/foun
 - [Link](docs/components/link.md): Navigation to another page, section or resource. If it changes data, it's a Button.
   - use: Navigating to another page or anchor; Referencing a resource inside running text; Opening external documentation (external)
   - avoid: Performing an action (save, delete, open modal) → Button (ghost if it must look light); A whole card is the destination → ClickableTile; Going up a hierarchy → Breadcrumb
-- [List item](docs/components/list-item.md): The settings row. Icon tile on the left, title over an optional subtitle, and the control or chevron on the far right. Group related rows into one card.
+- [List item](docs/components/list-item.md): The settings row. Icon placeholder on the left, title over an optional subtitle, and the control or chevron on the far right. Group related rows into one card.
   - use: Settings, preferences and account pages; Navigating into an object or a sub-page; A short list of objects, each with one control
   - avoid: Sorting, many attributes or bulk actions → DataTable; Pure text bullets → List; A titled list with a list-level action → ContainedList
 - [List](docs/components/list.md): Typographic lists inside content — bullets and numbered steps. Not interactive.
@@ -117,7 +117,7 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/foun
 - [Modal](docs/components/modal.md): Interrupts to focus on one task or decision. Modality is a last resort.
   - use: Confirming a destructive or irreversible action (ConfirmModal danger); A short, self-contained task (≤ 5 fields) that shouldn't leave the page; Critical information that must be acknowledged
   - avoid: The user needs to see the page while working → RightPanel; A couple of options next to a control → Popover; Long forms or multi-step flows → a page; Success messages → toast; Opening a modal from a modal → never
-- [Notification](docs/components/notification.md): System messages with one anatomy — icon tile, title over subtitle, optional action. Inline for problems tied to a place, toast banner for confirmation, callout for static guidance.
+- [Notification](docs/components/notification.md): System messages with one anatomy — icon placeholder, title over subtitle, optional action. Inline for problems tied to a place, toast banner for confirmation, callout for static guidance.
   - use: Inline — errors/warnings about a section, form summary, account-level issues; Toast — brief confirmation of something the user just did (with optional Undo); Callout — permanent, non-dismissible contextual guidance
   - avoid: A decision is required before continuing → Modal; Field-level validation → the field's invalidText; Errors inside a toast that need action → InlineNotification near the cause; Marketing/announcements → not a system notification
 - [Number input](docs/components/number-input.md): Precise numeric entry with steppers, bounds and units.
@@ -213,7 +213,7 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/foun
 - [Intent-first input](docs/patterns/intent-first.md): Describe, review, approve. The AI turns intent into a prepared result; the user corrects and ships it instead of filling in a form.
   - use: Creating or configuring something with more than ~4 fields; Tasks users describe more easily than they fill in (an agent, a report, a rule)
   - avoid: Tiny edits of one value → inline edit; Regulated data entry that must be typed exactly → Form
-- [List items](docs/patterns/list-items.md): The settings row. Icon tile on the left, title (and subtitle) in the middle, the control or chevron on the far right. Rows that belong together join into one card.
+- [List items](docs/patterns/list-items.md): The settings row. Icon placeholder on the left, title (and subtitle) in the middle, the control or chevron on the far right. Rows that belong together join into one card.
   - use: Settings, preferences and account pages; Navigating into an object or sub-page (chevron rows); A short list of objects, each with one control (toggle, button, status)
   - avoid: Comparing many attributes, sorting or bulk actions → DataTable; Pure text bullets → List; Lists with a titled header and a list-level action → ContainedList
 - [Loading](docs/patterns/loading.md): Orchestrating loading across a page — progressive, region by region, without layout shift and without loaders everywhere.

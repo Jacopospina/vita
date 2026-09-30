@@ -1,6 +1,6 @@
 ---
 title: Notification
-summary: System messages with one anatomy — icon tile, title over subtitle, optional action. Inline for problems tied to a place, toast banner for confirmation, callout for static guidance.
+summary: System messages with one anatomy — icon placeholder, title over subtitle, optional action. Inline for problems tied to a place, toast banner for confirmation, callout for static guidance.
 status: stable
 import: "import { InlineNotification, Callout, Toaster, toast } from \"@/components/corpus/notification\"\n\ntoast({ icon: Bot, source: \"Vita\", title: \"Agent deployed\", subtitle: \"Support triage is live\" })"
 use_when:
@@ -19,7 +19,7 @@ related: [capsule, notifications, modal, inline-loading, status-indicators]
 
 One structure everywhere:
 - **Squircle card on a neutral surface.** Never a colored bar or a tinted fill.
-- **[IconTile](#/components/icon-tile) on the left** (soft variant). The icon and its semantic color carry the kind: `info`, `success`, `warning` or `error`.
+- **[IconPlaceholder](#/components/icon-placeholder) on the left** (soft variant). The icon and its semantic color carry the kind: `info`, `success`, `warning` or `error`.
 - **Title over subtitle.**
 - **At most one action** on the right.
 - **×** appears on hover or focus.
