@@ -22,15 +22,15 @@ const knobs = [
 ] as const
 
 const fonts = [
-  { value: "inter", label: "Inter", css: `"Inter Variable", system-ui, sans-serif` },
-  { value: "system", label: "System UI", css: `system-ui, "Inter Variable", sans-serif` },
+  { value: "flex", label: "Google Sans Flex (default)", css: `"Google Sans Flex Variable", "Google Sans Flex", system-ui, sans-serif` },
+  { value: "system", label: "System UI", css: `system-ui, sans-serif` },
   { value: "grotesk", label: "Grotesk", css: `"Helvetica Neue", Arial, sans-serif` },
   { value: "serif", label: "Serif (editorial)", css: `"New York", "Iowan Old Style", Georgia, serif` },
 ]
 
 export function ThemePanel({ dark, onDarkChange }: { dark: boolean; onDarkChange: (d: boolean) => void }) {
   const [values, setValues] = React.useState<Record<string, number>>(() => Object.fromEntries(knobs.map((k) => [k.key, k.def])))
-  const [font, setFont] = React.useState("inter")
+  const [font, setFont] = React.useState("flex")
   const [preset, setPreset] = React.useState("default")
 
   React.useEffect(() => {
@@ -52,7 +52,7 @@ export function ThemePanel({ dark, onDarkChange }: { dark: boolean; onDarkChange
       const cs = getComputedStyle(root)
       setValues(Object.fromEntries(knobs.map((k) => [k.key, parseFloat(cs.getPropertyValue(k.key)) || k.def])))
       const f = cs.getPropertyValue("--corpus-font-sans")
-      setFont(f.includes("Helvetica") ? "grotesk" : f.trim().startsWith("system-ui") ? "system" : "inter")
+      setFont(f.includes("Helvetica") ? "grotesk" : f.trim().startsWith("system-ui") ? "system" : "flex")
     })
   }
 

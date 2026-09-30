@@ -83,7 +83,8 @@ All visual decisions derive from `src/styles/theme.css`:
   --corpus-brand-hue: 258;      --corpus-brand-chroma: 0.2;
   --corpus-neutral-hue: 258;    --corpus-neutral-chroma: 0.006;
   --corpus-radius: 0.5rem;      --corpus-density: 1;
-  --corpus-font-sans: "Inter Variable", system-ui, sans-serif;
+  --corpus-font-sans: "Google Sans Flex Variable", system-ui, sans-serif;
+  --corpus-font-mono: "Google Sans Code Variable", ui-monospace, monospace;  /* code + numbers */
   --corpus-type-base: 0.875rem; --corpus-type-ratio: 1.2;
   --corpus-motion-scale: 1;
 }

@@ -28,9 +28,10 @@
   --corpus-density: 1;            /* 0.8 compact · 1 default · 1.2 comfortable/touch */
 
   /* 4. TYPOGRAPHY ------------------------------------------------- */
-  --corpus-font-sans: "Inter Variable", system-ui, "Segoe UI", Roboto, sans-serif;
+  --corpus-font-sans: "Google Sans Flex Variable", "Google Sans Flex", system-ui, sans-serif;  /* everything */
   --corpus-font-display: var(--corpus-font-sans);
-  --corpus-font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --corpus-font-mono: "Google Sans Code Variable", "Google Sans Code", ui-monospace, monospace; /* code */
+  --corpus-font-numeric: var(--corpus-font-mono);  /* numbers & numeric values (tables, metrics, counters) */
   --corpus-type-base: 0.875rem;   /* body size. 0.875rem (14px) product UI · 1rem (16px) content/marketing */
   --corpus-type-ratio: 1.2;       /* modular scale. 1.125 tight · 1.2 default (balanced) · 1.25 expressive */
 

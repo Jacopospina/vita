@@ -36,13 +36,19 @@ Sizes are `base × ratio^n`. Change `--corpus-type-base` and `--corpus-type-rati
    - `font-medium` only for active and selected UI states. No light or thin weights.
 3. **Line length 45–75 characters** for anything longer than two lines (`max-w-prose`).
 4. **Sentence case everywhere**: titles, buttons, tabs, menu items. Title Case only for proper nouns.
-5. **Numbers in tables and metrics use `tabular-nums`**, and right-align when they are comparable.
+5. **Every number the user reads as a value uses `tabular-nums`** (which also sets Google Sans Code). Right-align them when they are comparable.
 6. **Truncation:** see the *Overflow content* pattern. Never truncate labels, errors or actions.
 
 ## Typefaces
 
-- **Default:** Inter Variable, falling back to the platform's system UI font.
-- **Square preset:** Helvetica Neue / Arial.
-- **Mono** (code, IDs, tokens): JetBrains Mono.
+| Face | Token | Used for |
+|---|---|---|
+| **Google Sans Flex** | `font-sans` (`--corpus-font-sans`) | Everything: headings, body, labels, buttons |
+| **Google Sans Code** | `font-mono` (`--corpus-font-mono`) | Code, commands, IDs, tokens |
+| **Google Sans Code** | `--corpus-font-numeric` (applied by `tabular-nums`) | Numbers and numeric values: table figures, metrics, counters, prices, dates in fields, steppers |
 
-One sans and one mono. No third typeface in product UI.
+- **Numbers:** any element with `tabular-nums` automatically switches to the numeric face. You never set the font by hand; you mark the value as numeric.
+- **Mono is the default for numeric values** because equal-width figures align in columns and are easy to compare. To keep numbers in the sans face, set `--corpus-font-numeric: var(--corpus-font-sans)`.
+- **Square preset:** Helvetica Neue / Arial.
+
+One sans and one code face. No third typeface in product UI.

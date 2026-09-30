@@ -23,7 +23,7 @@ avoid_when:
 | `--corpus-hue-success/warning/error/info` | `150/75/25/245` | Support colors (keep their meaning) |
 | `--corpus-radius` | `0.5rem` | Every corner, via `sm` (×0.5), `md` (×1), `lg` (×1.5), `xl` (×2) |
 | `--corpus-density` | `1` | Height of every control, row and inset (0.8 compact → 1.2 touch) |
-| `--corpus-font-sans` / `-display` / `-mono` | Inter / Inter / JetBrains Mono | Typefaces |
+| `--corpus-font-sans` / `-display` / `-mono` / `-numeric` | Google Sans Flex / Flex / Google Sans Code / Code | Typefaces (numeric = numbers & values) |
 | `--corpus-type-base` | `0.875rem` | Body size; the whole ramp scales from it |
 | `--corpus-type-ratio` | `1.2` | Contrast between type levels |
 | `--corpus-motion-scale` | `1` | Multiplies every duration (0 turns motion off) |

@@ -80,7 +80,7 @@ function DateField({ value, onValueChange, a11y, size, placeholder, onOpen, disa
           const d = parse(text, FMT, new Date())
           onValueChange(isValid(d) ? d : undefined)
         }}
-        className={cn(fieldClasses, fieldSize[size], onOpen && "pr-10")}
+        className={cn(fieldClasses, fieldSize[size], "tabular-nums", onOpen && "pr-10")}
       />
       {onOpen && (
         <button type="button" aria-label="Open calendar" disabled={disabled} onClick={onOpen} className="absolute inset-y-0 right-0 flex w-10 items-center justify-center rounded-md text-muted-foreground hover:text-foreground focus-ring-inset">

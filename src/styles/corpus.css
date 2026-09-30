@@ -84,6 +84,7 @@
   --font-sans: var(--corpus-font-sans);
   --font-display: var(--corpus-font-display);
   --font-mono: var(--corpus-font-mono);
+  --font-numeric: var(--corpus-font-numeric);
 
   --text-caption: var(--corpus-text-caption);
   --text-caption--line-height: 1.4;
@@ -193,6 +194,11 @@
   }
 }
 
+/* Numbers & numeric values: tabular figures in the numeric face. `tabular-nums` alone is enough. */
+@layer utilities {
+  .tabular-nums { font-family: var(--corpus-font-numeric); }
+}
+
 @utility ai-gradient-border {
   border: 1px solid transparent;
   background:
@@ -215,7 +221,6 @@
     font-family: var(--corpus-font-sans);
     font-size: var(--corpus-text-body);
     line-height: 1.45;
-    font-feature-settings: "cv11", "ss01";
   }
   ::selection { background: var(--corpus-primary-subtle); }
   :focus-visible { outline: 2px solid var(--corpus-focus); outline-offset: 1px; }
