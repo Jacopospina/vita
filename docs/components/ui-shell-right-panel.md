@@ -18,7 +18,7 @@ related: [modal, ui-shell-header, popover, filtering]
 
 `sm` 320 · `md` 400 (default) · `lg` 560. It goes full width on mobile.
 
-## Corpus opinions
+## Rules
 
 1. **Non-modal:** the page stays interactive. Escape and × close the panel, and focus returns to the trigger.
 2. **One right panel at a time.** Opening another replaces it.

@@ -13,7 +13,7 @@ avoid_when:
 related: [data-table, contained-list, read-only-states, radio-button]
 ---
 
-## Corpus opinions
+## Rules
 
 1. **≤ ~10 rows.** Beyond that it's a data table.
 2. **First column = the label** (`foreground`, medium); the others are values (`muted-foreground`).

@@ -32,7 +32,7 @@ related: [dialogs, ui-shell-right-panel, popover, notification]
 - `md`: the default.
 - `lg`: tables and complex content, with `ModalBody scroll`.
 
-## Corpus opinions
+## Rules
 
 1. **The title asks or states:** "Delete 3 agents?" / "Deploy to production". The primary button repeats the verb ("Delete agents").
 2. **Danger modals:**

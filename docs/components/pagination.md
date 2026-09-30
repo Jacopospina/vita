@@ -12,7 +12,7 @@ avoid_when:
 related: [data-table]
 ---
 
-## Corpus opinions
+## Rules
 
 1. **Attach it to the table's bottom edge** (it's styled as the table footer).
 2. **Default page size is 25.** Offer 10 · 25 · 50 · 100. Remember the user's choice.

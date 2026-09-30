@@ -14,7 +14,7 @@ avoid_when:
 related: [tooltip, modal, menu, filtering]
 ---
 
-## Corpus opinions
+## Rules
 
 1. **Opens on click, never on hover.** Hover content can't be interactive (you can't reach it).
 2. **Small:** 1–3 controls or ~3 sentences. It grows into a panel beyond that.

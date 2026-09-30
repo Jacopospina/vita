@@ -7,37 +7,37 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/foun
 ## Foundations
 
 - [Corpus](docs/foundations/about.md): The body of every product we build — the visible form through which its mind and soul reach the world.
-- [Accessibility](docs/foundations/accessibility.md): WCAG 2.2 AA is the floor. Corpus components are accessible by default, and composition is where teams break it.
+- [Accessibility](docs/foundations/accessibility.md): WCAG 2.2 AA is the floor. Components are accessible by default; composition is where teams break it.
   - use: Always
   - avoid: Never "add accessibility later"
 - [Color](docs/foundations/color.md): Semantic tokens only. Color communicates interactivity, status and hierarchy; it never decorates.
   - use: Coloring anything, via semantic utilities (bg-layer-1, text-muted-foreground, border-border-subtle)
-  - avoid: Palette colors (bg-blue-500) → they don't exist in Corpus; Hex/rgb/oklch literals in product code → forbidden; Color as the only carrier of meaning → pair it with an icon and text
-- [Content, personas & taxonomy](docs/foundations/content.md): Words are part of the design system. Personas define who we speak to; the taxonomy fixes the words; the corpus-content skill enforces them.
-  - use: Writing any user-visible string: labels, buttons, errors, empty states, emails, AI responses; Starting a new product or flow (create personas first)
+  - avoid: Palette colors in product code (bg-blue-500) → they don't exist as utilities; Hex/rgb/oklch literals → forbidden; Color as the only carrier of meaning → pair it with an icon and text
+- [Content, personas & taxonomy](docs/foundations/content.md): Words are part of the design system. Personas decide who we speak to, the taxonomy fixes the words, and skills enforce them.
+  - use: Writing any user-visible string — labels, buttons, errors, empty states, emails, AI responses; Starting a new product or flow (create personas first)
   - avoid: Inventing a term that isn't in the taxonomy → add it to the taxonomy first; Writing copy before knowing the persona
 - [Grid & layout](docs/foundations/grid.md): A 16-column grid for page structure, stacks for everything inside it.
   - use: Laying out a page or region (Grid + Column); Arranging elements vertically (Stack) or horizontally (Inline)
-  - avoid: Hand-written flex/grid divs with custom gaps → use Stack/Inline/Grid; Absolute positioning for layout → only for overlays, badges and icons inside controls
+  - avoid: Hand-written flex/grid divs with custom gaps → use Stack, Inline and Grid; Absolute positioning for layout → only for overlays, badges and icons in controls
 - [Icons](docs/foundations/icons.md): One icon set through one Icon component, at four sizes. An icon supports a label; it rarely replaces one.
-  - use: Reinforcing an action or a status label; Icon-only controls with universally understood meaning (close, search, menu, overflow), always with a tooltip
-  - avoid: Other icon libraries (lucide, heroicons, material) → forbidden; Decorating headings or list items for visual interest; Large illustrative use → Pictogram
-- [Motion](docs/foundations/motion.md): Productive and expressive tokens with physical, spring-like feel. Motion explains change; it never decorates.
+  - use: Reinforcing an action or a status label; Icon-only controls with universal meaning (close, search, menu, overflow), always with a tooltip
+  - avoid: Other icon libraries → forbidden; Decorating headings or list items; Large illustrative use → Pictogram
+- [Motion](docs/foundations/motion.md): Productive by default, expressive for rare moments, physical where users touch. Motion explains change; it never decorates.
   - use: Showing a change of state, a spatial relationship, or feedback to an action
-  - avoid: Decorative loops, parallax, bouncing attention-seekers; Raw durations or cubic-beziers (duration-300, ease-[...]) → use tokens; Animating layout properties (width/height/top) on large surfaces → use transform/opacity
+  - avoid: Decorative loops, parallax, attention-seeking bounces; Raw durations or cubic-beziers (duration-300, ease-[...]) → use tokens; Animating layout properties on large surfaces → use transform and opacity
 - [Pictograms](docs/foundations/pictograms.md): Large pictograms for empty states, onboarding and feature tiles. Never as controls.
   - use: Empty states (first use, no results, error); Onboarding and feature explanations; Large clickable tiles that introduce a product area
   - avoid: Buttons, navigation, table cells, anything under 48px → Icon; Decorating every section of a page → one pictogram per view at most
-- [Design principles](docs/foundations/principles.md): Seven rules every Corpus screen obeys. When two rules conflict, the higher one wins.
-- [Spacing](docs/foundations/spacing.md): One scale (2px-based), density-aware control sizes, and a hard ban on off-scale values.
+- [Design principles](docs/foundations/principles.md): Seven ranked rules every Corpus screen obeys. When two conflict, the lower number wins.
+- [Spacing](docs/foundations/spacing.md): One 2px-based scale, density-aware control sizes, and a hard ban on off-scale values.
   - use: Any padding, margin or gap
-  - avoid: Arbitrary values like p-[13px] → forbidden; Off-scale steps (p-5, gap-7, m-9, p-11) → the audit rejects them
-- [Theming & personalisation](docs/foundations/theming.md): Change about ten variables in one file and the whole system re-skins: color, shape, density, type and motion.
+  - avoid: Arbitrary values like p-[13px] → forbidden; Off-scale steps (p-5, gap-7, m-9) → the audit rejects them
+- [Theming & personalisation](docs/foundations/theming.md): Change about ten variables in one file and the whole system re-skins — color, shape, density, type and motion.
   - use: Adapting Corpus to a new brand or product; Making a denser admin tool or a calmer consumer app
-  - avoid: Tweaking a single component (never) → change the knob, or propose a new variant upstream; Adding a one-off color → add a semantic token to tokens.css via a design-system PR
-- [Typography](docs/foundations/typography.md): Ten typographic roles, generated from one base size and one ratio.
-  - use: Any text: pick the ROLE (title-2, body, caption), not a size
-  - avoid: Tailwind sizes (text-sm, text-2xl) → they don't exist in Corpus; Changing font-size to create emphasis inside a paragraph → use font-medium/semibold
+  - avoid: Tweaking a single component → change the knob, or propose a variant upstream; Adding a one-off color → add a semantic token through a design-system change
+- [Typography](docs/foundations/typography.md): Ten roles generated from one base size and one ratio. Google Sans Flex for words, Google Sans Code for code and numbers.
+  - use: Any text — pick the ROLE (title-2, body, caption), not a size
+  - avoid: Tailwind sizes (text-sm, text-2xl) → they don't exist in Corpus; Changing size to create emphasis inside a paragraph → use font-medium or font-semibold
 
 ## Components
 

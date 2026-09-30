@@ -26,7 +26,7 @@ related: [form, number-input, search, forms]
 | Read-only | `readOnly` | no border fill, still selectable/copyable |
 | Disabled | `disabled` | `layer-1` fill, `disabled-foreground` text |
 
-## Corpus opinions
+## Rules
 
 1. **Always a visible label.**
    - Placeholders are examples ("e.g. Q3 forecast"), never labels.

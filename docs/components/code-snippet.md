@@ -18,7 +18,7 @@ related: [text-input]
 - **single**: one line, horizontally scrollable, with a copy button.
 - **multi**: a block. It collapses after `maxCollapsedLines` (default 12) with a "Show more" toggle.
 
-## Corpus opinions
+## Rules
 
 1. **Copy feedback** is the icon morphing to a checkmark plus a "Copied" tooltip for 1.5s. No toast.
 2. **Show exactly what should be pasted.** No `$` prompts, no trailing comments the user would have to delete.

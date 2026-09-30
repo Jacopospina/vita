@@ -63,8 +63,8 @@ export function DocPage({ section, slug }: { section: Section; slug: string }) {
 
         {!doc && <InlineNotification kind="warning" title="No documentation yet" subtitle={`Add docs/${section}/${slug}.md`} />}
 
-        {/* The thing itself, always first */}
-        {hero && <Stage demo={hero} hero />}
+        {/* Articles show the thing first; tabbed pages show it at the top of Overview. */}
+        {hero && isArticle && <Stage demo={hero} hero />}
 
         {isArticle ? (
           doc && <Markdown source={doc.body} />
@@ -79,6 +79,12 @@ export function DocPage({ section, slug }: { section: Section; slug: string }) {
 
             <TabsContent value="overview">
               <Stack gap="2xl">
+                {hero && (
+                  <Stack gap="sm">
+                    <Stage demo={hero} hero />
+                    {hero.description && <Text variant="footnote" tone="muted" className="max-w-prose">{hero.description}</Text>}
+                  </Stack>
+                )}
                 {hasUsage && (
                   <Grid gutter="narrow" rowGap="md">
                     <Column sm={4} md={4} lg={8}>
@@ -104,7 +110,6 @@ export function DocPage({ section, slug }: { section: Section; slug: string }) {
                     <Stage demo={d} />
                   </Stack>
                 ))}
-                {hero && hero.description && <Text tone="muted" className="max-w-prose">{hero.title}: {hero.description}</Text>}
                 {related.length > 0 && (
                   <Stack gap="xs">
                     <Text variant="headline">Related</Text>

@@ -24,7 +24,7 @@ related: [status-indicators, filtering, dropdown]
 - `outline`: filters.
 - `inverse`: counts and selected chips.
 
-## Corpus opinions
+## Rules
 
 1. **Status tags include an icon.** Color is never the only signal.
 2. **One tone per meaning, product-wide.** The status → tone map belongs in the taxonomy.

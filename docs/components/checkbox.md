@@ -18,7 +18,7 @@ related: [toggle, radio-button, form]
 
 Unchecked · checked · indeterminate (a parent of a partially selected group) · invalid · disabled.
 
-## Corpus opinions
+## Rules
 
 1. **Labels are positive statements:** "Email me updates", not "Don't email me".
 2. **Group with a legend** (`CheckboxGroup legend`) that asks the question. Vertical by default; horizontal only for 2–3 short options.

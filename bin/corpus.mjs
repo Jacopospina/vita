@@ -108,7 +108,7 @@ function pm() {
 
 function installStyles({ keepTheme }) {
   const dest = path.join(CWD, cfg.stylesDir)
-  for (const f of ["corpus.css", "tokens.css", "motion.css", "presets.css"]) writeFile(path.join(dest, f), fs.readFileSync(path.join(PKG, "src/styles", f), "utf8"))
+  for (const f of ["corpus.css", "tokens.css", "motion.css", "presets.css", "palette.css"]) writeFile(path.join(dest, f), fs.readFileSync(path.join(PKG, "src/styles", f), "utf8"))
   const wroteTheme = writeFile(path.join(dest, "theme.css"), fs.readFileSync(path.join(PKG, "src/styles/theme.css"), "utf8"), { overwrite: !keepTheme })
   ok(`styles → ${rel(dest)}${wroteTheme ? "" : " (kept your theme.css)"}`)
 }

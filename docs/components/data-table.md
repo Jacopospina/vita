@@ -33,7 +33,7 @@ related: [pagination, structured-list, contained-list, filtering, search, empty-
 
 All follow density.
 
-## Corpus opinions
+## Rules
 
 1. **The first column identifies the row** (name, reference) in `foreground`. Other cells use `muted-foreground`.
 2. **Alignment:**

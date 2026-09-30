@@ -24,7 +24,7 @@ related: [tooltip, popover, notification]
 - `sm`: tiles and cards.
 - `md`: section headers.
 
-## Corpus opinions
+## Rules
 
 1. **Transparency is mandatory.** Every AI-produced value the user might rely on carries a label. No silent AI.
 2. **Explain in human terms:** what was done, from what source, and how sure the model is ("Extracted from the sender's signature · 92% confidence").

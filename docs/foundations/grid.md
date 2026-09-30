@@ -7,58 +7,40 @@ use_when:
   - Laying out a page or region (Grid + Column)
   - Arranging elements vertically (Stack) or horizontally (Inline)
 avoid_when:
-  - Hand-written flex/grid divs with custom gaps → use Stack/Inline/Grid
-  - Absolute positioning for layout → only for overlays, badges and icons inside controls
+  - Hand-written flex/grid divs with custom gaps → use Stack, Inline and Grid
+  - Absolute positioning for layout → only for overlays, badges and icons in controls
 ---
 
 ## The grid
 
-| Breakpoint | Columns | Gutter (`wide`) | Page margin |
+| Breakpoint | Columns | Gutter | Margin |
 |---|---|---|---|
 | sm (< 672px) | 4 | 32px | 16px |
 | md (≥ 672px) | 8 | 32px | 32px |
 | lg (≥ 1056px) | 16 | 32px | 32px |
 
-The gutter comes in three modes:
+- **wide gutter (32px).** Content pages; the default.
+- **narrow gutter (16px).** Dashboards and dense UI.
+- **condensed gutter (1px).** Tile mosaics.
 
-- **wide** (32px): default, for content pages.
-- **narrow** (16px): dashboards and dense UIs.
-- **condensed** (1px): tile mosaics and image walls.
+## Standard layouts
 
-```tsx
-<Grid>
-  <Column sm={4} md={8} lg={4}>Filters</Column>
-  <Column sm={4} md={8} lg={12}>Results</Column>
-</Grid>
-```
-
-## Opinionated layouts
-
-Use these instead of inventing proportions.
-
-| Layout | lg columns | When |
-|---|---|---|
-| Full | 16 | Tables, dashboards, canvases |
-| Sidebar + content | 4 + 12 | Filters + results, settings nav + form |
-| Content + aside | 11 + 5 | Detail page + metadata/activity |
-| Readable | `Container width="readable"` | Articles, docs, long forms (~65ch) |
-| Form | 8, max `max-w-xl` | Every form. Never stretch fields to full width. |
+- **Full (16).** Tables, dashboards, canvases.
+- **Sidebar + content (4 + 12).** Filters and results, settings nav and form.
+- **Content + aside (11 + 5).** A detail page with metadata or activity.
+- **Readable.** `Container width="readable"` for long-form (~65 characters).
+- **Form.** At most `max-w-xl`; never stretch fields full width.
 
 ## Stacks
 
-- `Stack` is vertical and has a 16px gap by default.
-- `Inline` is horizontal, centred, with an 8px gap.
-- Gap names map to the spacing scale: `3xs 2 · 2xs 4 · xs 8 · sm 12 · md 16 · lg 24 · xl 32 · 2xl 48 · 3xl 64`.
+- **`Stack`.** Vertical, 16px gap by default.
+- **`Inline`.** Horizontal and centred, 8px gap by default.
+- **Gap names.** `2xs` 4 · `xs` 8 · `sm` 12 · `md` 16 · `lg` 24 · `xl` 32 · `2xl` 48.
 
-Rhythm rules:
-
-- **Related** items (a label and its value, an icon and its text): `2xs`–`xs`.
-- **Siblings** in a group (form fields, list rows): `md`–`lg`.
-- **Sections**: `xl`–`2xl`.
-- The gap between groups must always be larger than the gap within a group. That's how proximity creates hierarchy without borders.
+> [!IMPORTANT] Gaps between groups are always larger than gaps within a group. Proximity creates hierarchy without borders.
 
 ## Don't
 
-- Nest a `Grid` inside a `Column` more than once.
+- Nest a Grid inside a Column more than once.
 - Use percentages or arbitrary widths.
-- Center-align body text or forms in product UI. Left alignment scans faster.
+- Centre body text or forms in product UI.

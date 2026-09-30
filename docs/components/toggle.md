@@ -12,7 +12,7 @@ avoid_when:
 related: [checkbox, content-switcher, forms]
 ---
 
-## Corpus opinions
+## Rules
 
 1. **Immediate effect.** Persist on change, and show `InlineLoading` if saving takes more than 300ms. Revert with an error if it fails.
 2. **Label names the setting** as a noun or noun phrase ("Email notifications"). The switch shows the state. Add `stateText` (On/Off) when the label alone is ambiguous.

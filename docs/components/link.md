@@ -21,7 +21,7 @@ related: [button, breadcrumb, tile]
 - **External** (`external`): opens a new tab. Adds a Launch icon and a screen-reader hint. Use it only for off-product destinations.
 - **Sizes:** `sm` / `md` / `lg` follow the text they sit next to.
 
-## Corpus opinions
+## Rules
 
 1. **Link text says where it goes:** "View run 8812", not "click here" or a bare URL.
 2. **Don't open internal pages in new tabs.** Users decide that.

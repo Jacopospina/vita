@@ -15,6 +15,16 @@ Corpus is consumed by humans and AI agents in product repos, so every change mus
 5. **Manifest:** `src/playground/manifest.ts`. Map the sources in `src/playground/sources.ts` if the slug ≠ the filename.
 6. Run `pnpm llms` (regenerates `docs/index.json` and `llms.txt`), then `pnpm check`.
 
+## Writing docs (card-first — pages must be scannable in seconds)
+
+The docs renderer turns markdown into Corpus components. Write for it:
+
+- **Every rule is a card.** Use a list whose items start with `**Title.** one sentence.` Numbered lists become numbered cards.
+- **Alerts instead of paragraphs.** Use `> [!NOTE]`, `> [!TIP]`, `> [!IMPORTANT]`, `> [!WARNING]` or `> [!CAUTION]` for the one thing to remember. At most 2 per page.
+- **No paragraph longer than 2 sentences.** If it's longer, it's a list of cards.
+- **Comparisons are tables.** Tables become structured lists.
+- **Negative lists** under a heading containing "Don't", "Never" or "Avoid" render as red ✕ cards.
+
 ## Rules
 
 - **Docs never name external design systems or vendors.** Corpus speaks in its own voice.

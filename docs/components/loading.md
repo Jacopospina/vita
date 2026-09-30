@@ -14,7 +14,7 @@ avoid_when:
 related: [inline-loading, progress-bar, loading-pattern]
 ---
 
-## Corpus opinions
+## Rules
 
 1. **Skeletons first.** They preserve layout, prevent shift and feel faster. Match the real dimensions.
 2. **Delay indicators by about 300ms** so fast responses never flash a spinner.

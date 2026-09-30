@@ -22,7 +22,7 @@ related: [menu, button, common-actions]
 | Are the options peers, and does the label describe the category? | **MenuButton** |
 | Are the actions secondary and would they clutter the surface? | **OverflowMenu** |
 
-## Corpus opinions
+## Rules
 
 1. **MenuButton label = category verb** ("Export", "Add", "Share") + chevron. The chevron rotates on open.
 2. **ComboButton main label = the default action.** The menu never repeats it.

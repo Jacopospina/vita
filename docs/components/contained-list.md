@@ -14,7 +14,7 @@ avoid_when:
 related: [data-table, list, structured-list]
 ---
 
-## Corpus opinions
+## Rules
 
 1. **The label is a heading** (`headline`), with the list-level action on the right ("Add member", Search).
 2. **Rows are either clickable** (`onClick`, the whole row) **or carry a trailing action** (`action`). Never both, because two hit targets per row confuse.

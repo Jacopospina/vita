@@ -19,7 +19,7 @@ related: [menu-buttons, dropdown, common-actions]
 
 Trigger → content (surface `raised`, `shadow-floating`) → items (icon? · label · shortcut?) → separators → optional sub-menus.
 
-## Corpus opinions
+## Rules
 
 1. **Order by frequency, group by meaning.** Put separators between groups. Destructive items always go last, styled `danger`.
 2. **Item labels are verbs,** ≤ 2 words: "Rename", "Duplicate", "Move to…". The ellipsis means the item opens more UI before acting.

@@ -13,7 +13,7 @@ avoid_when:
 related: [ui-shell-left-panel, accordion]
 ---
 
-## Corpus opinions
+## Rules
 
 1. **Parents both expand and select** on click. The caret alone toggles.
 2. **Icons distinguish node types** (folder vs document), and every node gets one or none does.

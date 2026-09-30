@@ -19,7 +19,7 @@ related: [notifications, modal, inline-loading, status-indicators]
 
 `info` · `success` · `warning` · `error`. Each kind has a fixed icon and a colored left bar. Never recolor them.
 
-## Corpus opinions
+## Rules
 
 1. **Toasts confirm; they don't inform about problems.**
    - Success and info only.

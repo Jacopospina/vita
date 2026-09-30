@@ -13,7 +13,7 @@ avoid_when:
 related: [number-input, filtering]
 ---
 
-## Corpus opinions
+## Rules
 
 1. **Always show the current value** (top right, `tabular-nums`, formatted with its unit via `formatValue`).
 2. **Show the bounds** under the track unless space forbids it.

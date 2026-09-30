@@ -13,7 +13,7 @@ avoid_when:
 related: [slider, text-input]
 ---
 
-## Corpus opinions
+## Rules
 
 1. **Show the unit** inside the field (`unit="kg"`) rather than in the label, so the label stays the noun.
 2. **Bounds are enforced softly.**

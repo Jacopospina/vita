@@ -33,7 +33,7 @@ related: [menu-buttons, link, modal, common-actions]
 
 Heights follow `--corpus-density`. Buttons in a `ButtonSet` share one size.
 
-## Corpus opinions
+## Rules
 
 1. **Label = verb + object.**
    - Good: "Create agent", "Delete 3 runs", "Send invite".

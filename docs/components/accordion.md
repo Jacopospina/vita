@@ -24,7 +24,7 @@ related: [disclosures, tabs, tile]
   - `single collapsible` when sections are alternatives.
   - `multiple` when users compare sections.
 
-## Corpus opinions
+## Rules
 
 1. **Headers are specific:** "How are runs billed?" beats "Billing".
 2. **Never nest accordions.**

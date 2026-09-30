@@ -14,7 +14,7 @@ avoid_when:
 related: [checkbox, dropdown, tile, content-switcher]
 ---
 
-## Corpus opinions
+## Rules
 
 1. **Preselect the recommended or most common option** unless choosing is the point, for example when a neutral choice matters legally.
 2. **Order logically:** by magnitude (slow → fast, cheap → expensive) or by likelihood.

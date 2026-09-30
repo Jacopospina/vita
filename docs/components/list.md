@@ -12,7 +12,7 @@ avoid_when:
 related: [contained-list, structured-list]
 ---
 
-## Corpus opinions
+## Rules
 
 1. **Parallel grammar:** every item starts the same way (all verbs, or all nouns).
 2. **One nesting level max.** Deeper structure belongs in headings.

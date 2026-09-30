@@ -24,7 +24,7 @@ related: [select, radio-button, checkbox, menu, filtering]
 | `Combobox` | Type-to-filter, keyboard-first, clearable |
 | `MultiSelect` | Checkbox list; the trigger shows a count tag plus selected labels; clear-all ✕ |
 
-## Corpus opinions
+## Rules
 
 1. **Values, not actions.** If selecting an item triggers something immediately, it's a Menu.
 2. **Descriptions** earn their space only when options are hard to tell apart ("High — Handle today").

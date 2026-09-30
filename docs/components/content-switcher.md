@@ -21,7 +21,7 @@ related: [tabs, radio-button, toggle]
 - **Icon-only** (`iconOnly`): only for universally understood glyphs (list/grid). Each item still has a label, which becomes the tooltip and accessible name.
 - **Sizes:** `sm` / `md` / `lg`, matching adjacent controls.
 
-## Corpus opinions
+## Rules
 
 1. **Changes apply instantly** with a subtle fade. No "Apply" button.
 2. **The selected segment is a raised pill** on a `layer-2` track. Don't restyle it as a tab.

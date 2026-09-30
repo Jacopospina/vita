@@ -15,7 +15,7 @@ avoid_when:
 related: [popover, button, overflow-content]
 ---
 
-## Corpus opinions
+## Rules
 
 1. **One short line** (≤ ~80 characters), with no period for fragments.
 2. **Delay 400ms on first hover** and instant for subsequent ones (`TooltipProvider`, mounted once at the root).

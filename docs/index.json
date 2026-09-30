@@ -15,7 +15,7 @@
       "slug": "accessibility",
       "path": "docs/foundations/accessibility.md",
       "title": "Accessibility",
-      "summary": "WCAG 2.2 AA is the floor. Corpus components are accessible by default, and composition is where teams break it.",
+      "summary": "WCAG 2.2 AA is the floor. Components are accessible by default; composition is where teams break it.",
       "status": "stable",
       "use_when": [
         "Always"
@@ -35,8 +35,8 @@
         "Coloring anything, via semantic utilities (bg-layer-1, text-muted-foreground, border-border-subtle)"
       ],
       "avoid_when": [
-        "Palette colors (bg-blue-500) → they don't exist in Corpus",
-        "Hex/rgb/oklch literals in product code → forbidden",
+        "Palette colors in product code (bg-blue-500) → they don't exist as utilities",
+        "Hex/rgb/oklch literals → forbidden",
         "Color as the only carrier of meaning → pair it with an icon and text"
       ]
     },
@@ -45,10 +45,10 @@
       "slug": "content",
       "path": "docs/foundations/content.md",
       "title": "Content, personas & taxonomy",
-      "summary": "Words are part of the design system. Personas define who we speak to; the taxonomy fixes the words; the corpus-content skill enforces them.",
+      "summary": "Words are part of the design system. Personas decide who we speak to, the taxonomy fixes the words, and skills enforce them.",
       "status": "stable",
       "use_when": [
-        "Writing any user-visible string: labels, buttons, errors, empty states, emails, AI responses",
+        "Writing any user-visible string — labels, buttons, errors, empty states, emails, AI responses",
         "Starting a new product or flow (create personas first)"
       ],
       "avoid_when": [
@@ -69,8 +69,8 @@
         "Arranging elements vertically (Stack) or horizontally (Inline)"
       ],
       "avoid_when": [
-        "Hand-written flex/grid divs with custom gaps → use Stack/Inline/Grid",
-        "Absolute positioning for layout → only for overlays, badges and icons inside controls"
+        "Hand-written flex/grid divs with custom gaps → use Stack, Inline and Grid",
+        "Absolute positioning for layout → only for overlays, badges and icons in controls"
       ]
     },
     {
@@ -83,11 +83,11 @@
       "import": "import { Icon } from \"@/components/corpus/icon\"\nimport { Add } from \"@/components/corpus/icons\"\n\n<Icon as={Add} size=\"sm\" />",
       "use_when": [
         "Reinforcing an action or a status label",
-        "Icon-only controls with universally understood meaning (close, search, menu, overflow), always with a tooltip"
+        "Icon-only controls with universal meaning (close, search, menu, overflow), always with a tooltip"
       ],
       "avoid_when": [
-        "Other icon libraries (lucide, heroicons, material) → forbidden",
-        "Decorating headings or list items for visual interest",
+        "Other icon libraries → forbidden",
+        "Decorating headings or list items",
         "Large illustrative use → Pictogram"
       ]
     },
@@ -96,15 +96,15 @@
       "slug": "motion",
       "path": "docs/foundations/motion.md",
       "title": "Motion",
-      "summary": "Productive and expressive tokens with physical, spring-like feel. Motion explains change; it never decorates.",
+      "summary": "Productive by default, expressive for rare moments, physical where users touch. Motion explains change; it never decorates.",
       "status": "stable",
       "use_when": [
         "Showing a change of state, a spatial relationship, or feedback to an action"
       ],
       "avoid_when": [
-        "Decorative loops, parallax, bouncing attention-seekers",
+        "Decorative loops, parallax, attention-seeking bounces",
         "Raw durations or cubic-beziers (duration-300, ease-[...]) → use tokens",
-        "Animating layout properties (width/height/top) on large surfaces → use transform/opacity"
+        "Animating layout properties on large surfaces → use transform and opacity"
       ]
     },
     {
@@ -130,7 +130,7 @@
       "slug": "principles",
       "path": "docs/foundations/principles.md",
       "title": "Design principles",
-      "summary": "Seven rules every Corpus screen obeys. When two rules conflict, the higher one wins.",
+      "summary": "Seven ranked rules every Corpus screen obeys. When two conflict, the lower number wins.",
       "status": "stable"
     },
     {
@@ -138,14 +138,14 @@
       "slug": "spacing",
       "path": "docs/foundations/spacing.md",
       "title": "Spacing",
-      "summary": "One scale (2px-based), density-aware control sizes, and a hard ban on off-scale values.",
+      "summary": "One 2px-based scale, density-aware control sizes, and a hard ban on off-scale values.",
       "status": "stable",
       "use_when": [
         "Any padding, margin or gap"
       ],
       "avoid_when": [
         "Arbitrary values like p-[13px] → forbidden",
-        "Off-scale steps (p-5, gap-7, m-9, p-11) → the audit rejects them"
+        "Off-scale steps (p-5, gap-7, m-9) → the audit rejects them"
       ]
     },
     {
@@ -153,7 +153,7 @@
       "slug": "theming",
       "path": "docs/foundations/theming.md",
       "title": "Theming & personalisation",
-      "summary": "Change about ten variables in one file and the whole system re-skins: color, shape, density, type and motion.",
+      "summary": "Change about ten variables in one file and the whole system re-skins — color, shape, density, type and motion.",
       "status": "stable",
       "import": "@import \"./styles/corpus.css\";  /* once, at the app root */\n/* then edit ONLY src/styles/theme.css */",
       "use_when": [
@@ -161,8 +161,8 @@
         "Making a denser admin tool or a calmer consumer app"
       ],
       "avoid_when": [
-        "Tweaking a single component (never) → change the knob, or propose a new variant upstream",
-        "Adding a one-off color → add a semantic token to tokens.css via a design-system PR"
+        "Tweaking a single component → change the knob, or propose a variant upstream",
+        "Adding a one-off color → add a semantic token through a design-system change"
       ]
     },
     {
@@ -170,15 +170,15 @@
       "slug": "typography",
       "path": "docs/foundations/typography.md",
       "title": "Typography",
-      "summary": "Ten typographic roles, generated from one base size and one ratio.",
+      "summary": "Ten roles generated from one base size and one ratio. Google Sans Flex for words, Google Sans Code for code and numbers.",
       "status": "stable",
       "import": "import { Text, Heading } from \"@/components/corpus/text\"",
       "use_when": [
-        "Any text: pick the ROLE (title-2, body, caption), not a size"
+        "Any text — pick the ROLE (title-2, body, caption), not a size"
       ],
       "avoid_when": [
         "Tailwind sizes (text-sm, text-2xl) → they don't exist in Corpus",
-        "Changing font-size to create emphasis inside a paragraph → use font-medium/semibold"
+        "Changing size to create emphasis inside a paragraph → use font-medium or font-semibold"
       ]
     },
     {

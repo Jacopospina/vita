@@ -13,7 +13,7 @@ avoid_when:
 related: [progress-indicator, loading, file-uploader]
 ---
 
-## Corpus opinions
+## Rules
 
 1. **Label says what's progressing** ("Indexing help center"). Helper text gives the numbers or time left ("812 of 1,240 articles · about 20 seconds").
 2. **Never go backwards.** If an estimate was wrong, slow down; don't rewind.

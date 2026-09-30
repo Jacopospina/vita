@@ -16,7 +16,7 @@ related: [ui-shell-left-panel, ui-shell-right-panel, global-header]
 
 `[☰ on mobile] [Prefix Product name] [Header nav (optional)] ········ [Global actions]`
 
-## Corpus opinions
+## Rules
 
 1. **Product name, left:** "Prefix **Name**" (platform in regular weight, product in semibold). It links home.
 2. **Header nav** only for 2–5 top-level areas when there's no side nav. With a side nav, leave the header nav empty.

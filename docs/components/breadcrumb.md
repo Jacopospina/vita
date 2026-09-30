@@ -13,7 +13,7 @@ avoid_when:
 related: [ui-shell-left-panel, tabs]
 ---
 
-## Corpus opinions
+## Rules
 
 1. **Place it at the top of `PageHeader`,** above the title. Never in the global header.
 2. **The last item is the current page,** in plain text with `aria-current`. It's not a link, and it may be omitted when the page title directly follows.

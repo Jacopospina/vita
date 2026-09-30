@@ -19,7 +19,7 @@ related: [filtering, search-pattern, data-table]
 - **toolbar**: transparent until hover or focus. Use it inside `DataTable` toolbars and headers.
 - **expandable**: an icon button that grows into a field. Use it where space is scarce. It collapses when empty and blurred.
 
-## Corpus opinions
+## Rules
 
 1. **Placeholder states the scope:** "Search agents", not "Search…".
 2. **Filter live** for local data (debounce 150–300ms). Search on Enter for expensive server queries, and say so ("Press Enter to search").

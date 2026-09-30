@@ -20,7 +20,7 @@ related: [forms, text-input, fluid-styles, read-only-states]
 - **FluidForm**: The fluid style for dense expert entry (see the *Fluid styles* pattern).
 - **FieldShell**: the label → control → helper/validation wrapper. Use it only to build a new Corpus input upstream, never in product code.
 
-## Corpus opinions
+## Rules
 
 1. **One column.**
    - Multi-column forms slow people down: eyes zig-zag and fields get skipped.

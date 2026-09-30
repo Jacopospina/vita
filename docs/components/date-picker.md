@@ -13,7 +13,7 @@ avoid_when:
 related: [text-input, form]
 ---
 
-## Corpus opinions
+## Rules
 
 1. **Typing always works.** The calendar is a helper, never the only input (accessibility and speed).
 2. **Format as placeholder** (`dd/mm/yyyy`), localized to the user's locale in production. Parse on blur, never reformat mid-typing.

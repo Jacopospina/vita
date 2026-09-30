@@ -14,138 +14,170 @@
   --_nc: var(--corpus-neutral-chroma);
   --_bh: var(--corpus-brand-hue);
   --_bc: var(--corpus-brand-chroma);
+  --_hs: var(--corpus-hue-success);
+  --_hw: var(--corpus-hue-warning);
+  --_he: var(--corpus-hue-error);
+  --_hi: var(--corpus-hue-info);
 
   color-scheme: light;
 
-  /* surfaces */
+  /* surfaces — grouped layering: white canvas, soft grey layers */
   --corpus-background: oklch(1 0 0);
-  --corpus-layer-1: oklch(0.975 var(--_nc) var(--_nh));
-  --corpus-layer-2: oklch(0.955 var(--_nc) var(--_nh));
-  --corpus-layer-3: oklch(0.935 var(--_nc) var(--_nh));
+  --corpus-layer-1: oklch(0.963 var(--_nc) var(--_nh));
+  --corpus-layer-2: oklch(0.923 var(--_nc) var(--_nh));
+  --corpus-layer-3: oklch(0.862 var(--_nc) var(--_nh));
   --corpus-raised: oklch(1 0 0);
   --corpus-field: oklch(1 0 0);
-  --corpus-overlay: oklch(0.2 var(--_nc) var(--_nh) / 0.45);
-  --corpus-inverse: oklch(0.26 var(--_nc) var(--_nh));
-  --corpus-inverse-foreground: oklch(0.97 var(--_nc) var(--_nh));
+  --corpus-overlay: oklch(0 0 0 / 0.4);
+  --corpus-inverse: oklch(0.232 var(--_nc) var(--_nh));
+  --corpus-inverse-foreground: oklch(0.971 var(--_nc) var(--_nh));
 
   /* text */
-  --corpus-foreground: oklch(0.22 var(--_nc) var(--_nh));
-  --corpus-muted-foreground: oklch(0.45 var(--_nc) var(--_nh));
-  --corpus-helper: oklch(0.5 var(--_nc) var(--_nh));
-  --corpus-placeholder: oklch(0.6 var(--_nc) var(--_nh));
-  --corpus-disabled-foreground: oklch(0.75 var(--_nc) var(--_nh));
+  --corpus-foreground: oklch(0.232 var(--_nc) var(--_nh));
+  --corpus-muted-foreground: oklch(0.54 var(--_nc) var(--_nh));
+  --corpus-helper: oklch(0.54 var(--_nc) var(--_nh));
+  --corpus-placeholder: oklch(0.622 var(--_nc) var(--_nh));
+  --corpus-disabled-foreground: oklch(0.752 var(--_nc) var(--_nh));
 
   /* lines */
-  --corpus-border-subtle: oklch(0.93 var(--_nc) var(--_nh));
-  --corpus-border: oklch(0.88 var(--_nc) var(--_nh));
-  --corpus-border-strong: oklch(0.62 var(--_nc) var(--_nh));
-  --corpus-border-field: oklch(0.62 var(--_nc) var(--_nh)); /* ≥3:1 on white — WCAG 1.4.11 */
+  --corpus-border-subtle: oklch(0.923 var(--_nc) var(--_nh));
+  --corpus-border: oklch(0.827 var(--_nc) var(--_nh));
+  --corpus-border-strong: oklch(0.648 var(--_nc) var(--_nh));
+  --corpus-border-field: oklch(0.648 var(--_nc) var(--_nh)); /* ≥3:1 on white */
 
   /* interactive */
-  --corpus-primary: oklch(0.53 var(--_bc) var(--_bh));
-  --corpus-primary-hover: oklch(0.47 var(--_bc) var(--_bh));
-  --corpus-primary-active: oklch(0.41 var(--_bc) var(--_bh));
-  --corpus-primary-foreground: oklch(0.99 0 0);
-  --corpus-primary-subtle: oklch(0.95 calc(var(--_bc) * 0.2) var(--_bh));
-  --corpus-secondary: oklch(0.94 var(--_nc) var(--_nh));
-  --corpus-secondary-hover: oklch(0.9 var(--_nc) var(--_nh));
+  --corpus-primary: oklch(0.603 var(--_bc) var(--_bh));
+  --corpus-primary-hover: oklch(0.55 var(--_bc) var(--_bh));
+  --corpus-primary-active: oklch(0.5 var(--_bc) var(--_bh));
+  --corpus-primary-foreground: oklch(1 0 0);
+  --corpus-primary-subtle: color-mix(in oklab, var(--corpus-primary) 12%, var(--corpus-background));
+  --corpus-secondary: oklch(0.923 var(--_nc) var(--_nh));
+  --corpus-secondary-hover: oklch(0.862 var(--_nc) var(--_nh));
   --corpus-secondary-foreground: var(--corpus-foreground);
-  --corpus-link: oklch(0.5 var(--_bc) var(--_bh));
-  --corpus-link-visited: oklch(0.45 var(--_bc) calc(var(--_bh) + 40));
-  --corpus-focus: oklch(0.55 var(--_bc) var(--_bh));
+  --corpus-link: oklch(0.522 calc(var(--_bc) * 0.81) var(--_bh));
+  --corpus-link-visited: oklch(0.529 0.191 calc(var(--_bh) + 21));
+  --corpus-focus: oklch(0.603 var(--_bc) var(--_bh));
   --corpus-focus-inset: oklch(1 0 0);
 
   /* state washes — work on any layer */
-  --corpus-hover: color-mix(in oklch, var(--corpus-foreground) 6%, transparent);
-  --corpus-active: color-mix(in oklch, var(--corpus-foreground) 11%, transparent);
+  --corpus-hover: color-mix(in oklab, oklch(0.55 0.02 var(--_nh)) 10%, transparent);
+  --corpus-active: color-mix(in oklab, oklch(0.55 0.02 var(--_nh)) 18%, transparent);
   --corpus-selected: var(--corpus-primary-subtle);
-  --corpus-selected-foreground: oklch(0.42 var(--_bc) var(--_bh));
-  --corpus-skeleton: oklch(0.93 var(--_nc) var(--_nh));
+  --corpus-selected-foreground: oklch(0.464 calc(var(--_bc) * 1.1) calc(var(--_bh) + 6));
+  --corpus-skeleton: oklch(0.923 var(--_nc) var(--_nh));
 
-  /* support */
-  --corpus-success: oklch(0.52 0.13 var(--corpus-hue-success));
-  --corpus-success-subtle: oklch(0.96 0.035 var(--corpus-hue-success));
-  --corpus-success-foreground: oklch(0.4 0.1 var(--corpus-hue-success));
-  --corpus-warning: oklch(0.8 0.16 var(--corpus-hue-warning));
-  --corpus-warning-subtle: oklch(0.97 0.05 var(--corpus-hue-warning));
-  --corpus-warning-foreground: oklch(0.45 0.1 var(--corpus-hue-warning));
-  --corpus-error: oklch(0.55 0.2 var(--corpus-hue-error));
-  --corpus-error-subtle: oklch(0.96 0.03 var(--corpus-hue-error));
-  --corpus-error-foreground: oklch(0.47 0.18 var(--corpus-hue-error));
-  --corpus-error-hover: oklch(0.49 0.2 var(--corpus-hue-error));
-  --corpus-info: oklch(0.55 0.15 var(--corpus-hue-info));
-  --corpus-info-subtle: oklch(0.96 0.03 var(--corpus-hue-info));
-  --corpus-info-foreground: oklch(0.45 0.13 var(--corpus-hue-info));
+  /* support — system green, orange, red, blue */
+  --corpus-success: oklch(0.73 0.194 var(--_hs));
+  --corpus-success-subtle: color-mix(in oklab, var(--corpus-success) 14%, var(--corpus-background));
+  --corpus-success-foreground: oklch(0.558 0.146 var(--_hs));
+  --corpus-warning: oklch(0.765 0.175 var(--_hw));
+  --corpus-warning-subtle: color-mix(in oklab, var(--corpus-warning) 16%, var(--corpus-background));
+  --corpus-warning-foreground: oklch(0.552 0.192 calc(var(--_hw) - 27));
+  --corpus-error: oklch(0.654 0.232 var(--_he));
+  --corpus-error-subtle: color-mix(in oklab, var(--corpus-error) 12%, var(--corpus-background));
+  --corpus-error-foreground: oklch(0.553 0.225 var(--_he));
+  --corpus-error-hover: oklch(0.6 0.232 var(--_he));
+  --corpus-info: oklch(0.603 0.218 var(--_hi));
+  --corpus-info-subtle: color-mix(in oklab, var(--corpus-info) 12%, var(--corpus-background));
+  --corpus-info-foreground: oklch(0.464 0.242 calc(var(--_hi) + 6));
 
   /* AI — the only sanctioned gradient in the system */
-  --corpus-ai-from: oklch(0.6 var(--_bc) var(--_bh));
-  --corpus-ai-to: oklch(0.62 var(--_bc) calc(var(--_bh) + 60));
-  --corpus-ai-subtle: oklch(0.97 calc(var(--_bc) * 0.15) calc(var(--_bh) + 30));
+  --corpus-ai-from: oklch(0.603 var(--_bc) var(--_bh));
+  --corpus-ai-to: oklch(0.6 0.22 calc(var(--_bh) + 50));
+  --corpus-ai-subtle: color-mix(in oklab, var(--corpus-ai-to) 8%, var(--corpus-background));
 
   /* elevation: soft, layered, never harsh */
-  --corpus-shadow-raised: 0 1px 2px oklch(0.2 0 0 / 0.06), 0 1px 3px oklch(0.2 0 0 / 0.08);
-  --corpus-shadow-floating: 0 4px 12px oklch(0.2 0 0 / 0.08), 0 1px 3px oklch(0.2 0 0 / 0.06);
-  --corpus-shadow-overlay: 0 16px 48px oklch(0.2 0 0 / 0.16), 0 4px 12px oklch(0.2 0 0 / 0.08);
+  --corpus-shadow-raised: 0 1px 2px oklch(0 0 0 / 0.05), 0 1px 3px oklch(0 0 0 / 0.07);
+  --corpus-shadow-floating: 0 4px 16px oklch(0 0 0 / 0.1), 0 1px 3px oklch(0 0 0 / 0.06);
+  --corpus-shadow-overlay: 0 20px 60px oklch(0 0 0 / 0.18), 0 4px 12px oklch(0 0 0 / 0.08);
 }
 
 :root.dark,
 [data-theme="dark"] {
   color-scheme: dark;
 
-  --corpus-background: oklch(0.17 var(--_nc) var(--_nh));
-  --corpus-layer-1: oklch(0.205 var(--_nc) var(--_nh));
-  --corpus-layer-2: oklch(0.24 var(--_nc) var(--_nh));
-  --corpus-layer-3: oklch(0.28 var(--_nc) var(--_nh));
-  --corpus-raised: oklch(0.24 var(--_nc) var(--_nh));
-  --corpus-field: oklch(0.21 var(--_nc) var(--_nh));
-  --corpus-overlay: oklch(0.08 0 0 / 0.6);
-  --corpus-inverse: oklch(0.95 var(--_nc) var(--_nh));
-  --corpus-inverse-foreground: oklch(0.2 var(--_nc) var(--_nh));
+  --corpus-background: oklch(0 0 0);
+  --corpus-layer-1: oklch(0.227 var(--_nc) var(--_nh));
+  --corpus-layer-2: oklch(0.294 var(--_nc) var(--_nh));
+  --corpus-layer-3: oklch(0.349 var(--_nc) var(--_nh));
+  --corpus-raised: oklch(0.227 var(--_nc) var(--_nh));
+  --corpus-field: oklch(0.227 var(--_nc) var(--_nh));
+  --corpus-overlay: oklch(0 0 0 / 0.6);
+  --corpus-inverse: oklch(0.971 var(--_nc) var(--_nh));
+  --corpus-inverse-foreground: oklch(0.232 var(--_nc) var(--_nh));
 
-  --corpus-foreground: oklch(0.96 var(--_nc) var(--_nh));
-  --corpus-muted-foreground: oklch(0.76 var(--_nc) var(--_nh));
-  --corpus-helper: oklch(0.7 var(--_nc) var(--_nh));
-  --corpus-placeholder: oklch(0.6 var(--_nc) var(--_nh));
-  --corpus-disabled-foreground: oklch(0.45 var(--_nc) var(--_nh));
+  --corpus-foreground: oklch(0.971 var(--_nc) var(--_nh));
+  --corpus-muted-foreground: oklch(0.681 var(--_nc) var(--_nh));
+  --corpus-helper: oklch(0.681 var(--_nc) var(--_nh));
+  --corpus-placeholder: oklch(0.501 var(--_nc) var(--_nh));
+  --corpus-disabled-foreground: oklch(0.402 var(--_nc) var(--_nh));
 
-  --corpus-border-subtle: oklch(0.26 var(--_nc) var(--_nh));
-  --corpus-border: oklch(0.32 var(--_nc) var(--_nh));
-  --corpus-border-strong: oklch(0.55 var(--_nc) var(--_nh));
-  --corpus-border-field: oklch(0.55 var(--_nc) var(--_nh));
+  --corpus-border-subtle: oklch(0.294 var(--_nc) var(--_nh));
+  --corpus-border: oklch(0.341 var(--_nc) var(--_nh));
+  --corpus-border-strong: oklch(0.648 var(--_nc) var(--_nh));
+  --corpus-border-field: oklch(0.6 var(--_nc) var(--_nh));
 
-  --corpus-primary: oklch(0.55 var(--_bc) var(--_bh));
-  --corpus-primary-hover: oklch(0.6 var(--_bc) var(--_bh));
-  --corpus-primary-active: oklch(0.5 var(--_bc) var(--_bh));
-  --corpus-primary-subtle: oklch(0.3 calc(var(--_bc) * 0.35) var(--_bh));
-  --corpus-secondary: oklch(0.3 var(--_nc) var(--_nh));
-  --corpus-secondary-hover: oklch(0.35 var(--_nc) var(--_nh));
-  --corpus-link: oklch(0.74 calc(var(--_bc) * 0.7) var(--_bh));
-  --corpus-link-visited: oklch(0.74 calc(var(--_bc) * 0.7) calc(var(--_bh) + 40));
-  --corpus-focus: oklch(0.97 0 0);
-  --corpus-focus-inset: oklch(0.17 0 0);
+  --corpus-primary: oklch(0.624 calc(var(--_bc) * 0.945) calc(var(--_bh) - 2));
+  --corpus-primary-hover: oklch(0.685 calc(var(--_bc) * 0.78) calc(var(--_bh) - 4));
+  --corpus-primary-active: oklch(0.56 var(--_bc) var(--_bh));
+  --corpus-primary-subtle: color-mix(in oklab, var(--corpus-primary) 22%, var(--corpus-background));
+  --corpus-secondary: oklch(0.294 var(--_nc) var(--_nh));
+  --corpus-secondary-hover: oklch(0.349 var(--_nc) var(--_nh));
+  --corpus-link: oklch(0.669 calc(var(--_bc) * 0.83) calc(var(--_bh) - 6));
+  --corpus-link-visited: oklch(0.6 0.19 calc(var(--_bh) + 21));
+  --corpus-focus: oklch(0.624 calc(var(--_bc) * 0.945) calc(var(--_bh) - 2));
+  --corpus-focus-inset: oklch(0 0 0);
 
-  --corpus-selected-foreground: oklch(0.85 calc(var(--_bc) * 0.5) var(--_bh));
-  --corpus-skeleton: oklch(0.27 var(--_nc) var(--_nh));
+  --corpus-hover: color-mix(in oklab, oklch(0.75 0.02 var(--_nh)) 14%, transparent);
+  --corpus-active: color-mix(in oklab, oklch(0.75 0.02 var(--_nh)) 22%, transparent);
+  --corpus-selected-foreground: oklch(0.685 calc(var(--_bc) * 0.78) calc(var(--_bh) - 4));
+  --corpus-skeleton: oklch(0.294 var(--_nc) var(--_nh));
 
-  --corpus-success: oklch(0.68 0.14 var(--corpus-hue-success));
-  --corpus-success-subtle: oklch(0.27 0.04 var(--corpus-hue-success));
-  --corpus-success-foreground: oklch(0.82 0.12 var(--corpus-hue-success));
-  --corpus-warning: oklch(0.82 0.15 var(--corpus-hue-warning));
-  --corpus-warning-subtle: oklch(0.28 0.04 var(--corpus-hue-warning));
-  --corpus-warning-foreground: oklch(0.87 0.12 var(--corpus-hue-warning));
-  --corpus-error: oklch(0.64 0.19 var(--corpus-hue-error));
-  --corpus-error-subtle: oklch(0.27 0.05 var(--corpus-hue-error));
-  --corpus-error-foreground: oklch(0.8 0.12 var(--corpus-hue-error));
-  --corpus-error-hover: oklch(0.58 0.19 var(--corpus-hue-error));
-  --corpus-info: oklch(0.7 0.13 var(--corpus-hue-info));
-  --corpus-info-subtle: oklch(0.27 0.04 var(--corpus-hue-info));
-  --corpus-info-foreground: oklch(0.82 0.1 var(--corpus-hue-info));
+  --corpus-success: oklch(0.756 0.208 var(--_hs));
+  --corpus-success-subtle: color-mix(in oklab, var(--corpus-success) 18%, var(--corpus-background));
+  --corpus-success-foreground: oklch(0.782 0.218 var(--_hs));
+  --corpus-warning: oklch(0.782 0.171 calc(var(--_hw) + 4));
+  --corpus-warning-subtle: color-mix(in oklab, var(--corpus-warning) 18%, var(--corpus-background));
+  --corpus-warning-foreground: oklch(0.82 0.152 calc(var(--_hw) + 10));
+  --corpus-error: oklch(0.663 0.224 var(--_he));
+  --corpus-error-subtle: color-mix(in oklab, var(--corpus-error) 18%, var(--corpus-background));
+  --corpus-error-foreground: oklch(0.707 0.185 calc(var(--_he) - 3));
+  --corpus-error-hover: oklch(0.707 0.2 var(--_he));
+  --corpus-info: oklch(0.624 0.206 calc(var(--_hi) - 2));
+  --corpus-info-subtle: color-mix(in oklab, var(--corpus-info) 18%, var(--corpus-background));
+  --corpus-info-foreground: oklch(0.685 0.17 calc(var(--_hi) - 4));
 
-  --corpus-ai-subtle: oklch(0.26 calc(var(--_bc) * 0.3) calc(var(--_bh) + 30));
+  --corpus-shadow-raised: 0 1px 2px oklch(0 0 0 / 0.5);
+  --corpus-shadow-floating: 0 4px 16px oklch(0 0 0 / 0.5), 0 0 0 1px oklch(1 0 0 / 0.08);
+  --corpus-shadow-overlay: 0 20px 60px oklch(0 0 0 / 0.7), 0 0 0 1px oklch(1 0 0 / 0.1);
+}
 
-  --corpus-shadow-raised: 0 1px 2px oklch(0 0 0 / 0.4);
-  --corpus-shadow-floating: 0 4px 12px oklch(0 0 0 / 0.45), 0 0 0 1px oklch(1 0 0 / 0.06);
-  --corpus-shadow-overlay: 0 16px 48px oklch(0 0 0 / 0.6), 0 0 0 1px oklch(1 0 0 / 0.08);
+/* Increased contrast — follows the OS setting, or force it with data-corpus-contrast="high". */
+@media (prefers-contrast: more) {
+  :root:not([data-corpus-contrast="standard"]) {
+    --corpus-primary: oklch(0.464 calc(var(--_bc) * 1.1) calc(var(--_bh) + 6));
+    --corpus-primary-hover: oklch(0.42 calc(var(--_bc) * 1.1) calc(var(--_bh) + 6));
+    --corpus-link: oklch(0.464 calc(var(--_bc) * 1.1) calc(var(--_bh) + 6));
+    --corpus-focus: oklch(0.464 calc(var(--_bc) * 1.1) calc(var(--_bh) + 6));
+    --corpus-error: oklch(0.553 0.225 var(--_he));
+    --corpus-success: oklch(0.558 0.146 var(--_hs));
+    --corpus-muted-foreground: oklch(0.45 var(--_nc) var(--_nh));
+    --corpus-helper: oklch(0.45 var(--_nc) var(--_nh));
+    --corpus-border: oklch(0.648 var(--_nc) var(--_nh));
+    --corpus-border-field: oklch(0.45 var(--_nc) var(--_nh));
+  }
+}
+:root[data-corpus-contrast="high"] {
+  --corpus-primary: oklch(0.464 calc(var(--_bc) * 1.1) calc(var(--_bh) + 6));
+  --corpus-primary-hover: oklch(0.42 calc(var(--_bc) * 1.1) calc(var(--_bh) + 6));
+  --corpus-link: oklch(0.464 calc(var(--_bc) * 1.1) calc(var(--_bh) + 6));
+  --corpus-focus: oklch(0.464 calc(var(--_bc) * 1.1) calc(var(--_bh) + 6));
+  --corpus-error: oklch(0.553 0.225 var(--_he));
+  --corpus-success: oklch(0.558 0.146 var(--_hs));
+  --corpus-muted-foreground: oklch(0.45 var(--_nc) var(--_nh));
+  --corpus-helper: oklch(0.45 var(--_nc) var(--_nh));
+  --corpus-border: oklch(0.648 var(--_nc) var(--_nh));
+  --corpus-border-field: oklch(0.45 var(--_nc) var(--_nh));
 }
 
 /* Derived scales ------------------------------------------------------------ */

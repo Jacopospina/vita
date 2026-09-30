@@ -13,7 +13,7 @@ avoid_when:
 related: [progress-bar, tabs, forms]
 ---
 
-## Corpus opinions
+## Rules
 
 1. **Step labels are nouns** describing the content ("Purpose", "Knowledge", "Review"), not "Step 1".
 2. **Completed steps are clickable** to go back. Future steps are not.

@@ -15,7 +15,7 @@ avoid_when:
 related: [content-switcher, progress-indicator, page-header]
 ---
 
-## Corpus opinions
+## Rules
 
 1. **2–6 tabs.** Labels are 1–2 word nouns, in sentence case, without icons. Don't use counts unless they're essential ("Comments 3").
 2. **The first tab is the most used** (Overview).

@@ -11,7 +11,7 @@ avoid_when:
 related: [form, progress-bar, inline-loading]
 ---
 
-## Corpus opinions
+## Rules
 
 1. **State limits up front:** accepted types and max size, under the label, before the user tries.
 2. **Validate per file,** immediately on add. Show the reason and fix inline on the failing file ("HEIC isn't supported. Export as JPG or PDF and try again."). Other files continue.

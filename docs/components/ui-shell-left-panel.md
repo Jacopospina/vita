@@ -19,7 +19,7 @@ related: [ui-shell-header, tree-view, breadcrumb]
 - **Rail** (48px, expands on hover): content-heavy products where screen space matters. Icons are mandatory.
 - **Mobile:** an off-canvas drawer opened from the header's ☰, with a scrim.
 
-## Corpus opinions
+## Rules
 
 1. **Max two levels:** `SideNavMenu` groups children. A third level means the IA needs rethinking.
 2. **Sections** (`SideNavSection title`) group areas by purpose ("Workspace", "Admin"), with ≤ 7 items per section.

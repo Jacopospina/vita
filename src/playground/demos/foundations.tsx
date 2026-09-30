@@ -13,6 +13,34 @@ import { TextInput } from "@/registry/ui/text-input"
 import { StructuredList } from "@/registry/ui/structured-list"
 import { ContentSwitcher } from "@/registry/ui/content-switcher"
 import { cn } from "@/registry/lib/utils"
+import palette from "@/styles/palette.json"
+
+function PaletteGrid() {
+  const steps = palette.steps as number[]
+  return (
+    <div className="overflow-x-auto">
+      <div className="grid min-w-180 grid-cols-12 gap-1">
+        <span />
+        {steps.map((st) => <Text key={st} variant="caption" tone="muted" className="text-center tabular-nums">{st}</Text>)}
+        {Object.entries(palette.colors).map(([name, c]) => (
+          <React.Fragment key={name}>
+            <Stack gap="none" justify="center"><Text variant="footnote" weight="medium" className="capitalize">{name}</Text><Text variant="caption" tone="helper" className="tabular-nums">{c.base}</Text></Stack>
+            {steps.map((st) => (
+              <div
+                key={st}
+                title={`--corpus-palette-${name}-${st}\n${(c.steps as Record<string, string>)[st]}`}
+                className={cn("flex h-12 items-end justify-center rounded-sm pb-1", st === 500 && "ring-2 ring-foreground ring-offset-2 ring-offset-background")}
+                style={{ ["--p" as string]: `var(--corpus-palette-${name}-${st})`, background: "var(--p)" }}
+              >
+                {st === 500 && <span className={cn("text-caption font-semibold", name === "yellow" || name === "mint" ? "text-foreground" : "text-primary-foreground")}>●</span>}
+              </div>
+            ))}
+          </React.Fragment>
+        ))}
+      </div>
+    </div>
+  )
+}
 
 /* Token swatches are rendered with Tailwind token classes only (no raw values). */
 const colorGroups: { title: string; tokens: { name: string; cls: string; fg?: string }[] }[] = [
@@ -160,7 +188,13 @@ export const foundationDemos: DemoMap = {
       ),
     },
   ],
-  "foundations/color": colorGroups.map((g) => ({
+  "foundations/color": [
+    {
+      title: "Palette — every hue, every step",
+      description: "13 hues × 11 steps. The ringed swatch (500) is the exact system color; hover any swatch for its variable and value. Primitives feed charts and new semantic tokens — product code uses the semantic tokens below.",
+      render: () => <PaletteGrid />,
+    },
+    ...colorGroups.map((g) => ({
     title: g.title,
     render: () => (
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -175,6 +209,7 @@ export const foundationDemos: DemoMap = {
       </div>
     ),
   })),
+  ],
   "foundations/typography": [
     {
       title: "Type ramp",

@@ -12,7 +12,7 @@ avoid_when:
 related: [loading, button, notification]
 ---
 
-## Corpus opinions
+## Rules
 
 1. **Lifecycle:** `active` ("Saving…") → `finished` ("Saved", with a check that scales in) → `inactive` after about 2s.
 2. **Error stays** until the user acts, with a retry path: "Couldn't save. Retry?"

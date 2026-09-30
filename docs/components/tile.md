@@ -15,7 +15,7 @@ avoid_when:
 related: [contained-list, radio-button, checkbox, accordion]
 ---
 
-## Corpus opinions
+## Rules
 
 1. **Surfaces:**
    - `Tile` sits on `layer-1` with no border.

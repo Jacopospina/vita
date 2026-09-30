@@ -27,7 +27,7 @@ related: [dropdown, radio-button]
 
 **Corpus default:** Select in forms, Dropdown in app chrome and toolbars.
 
-## Corpus opinions
+## Rules
 
 1. **Placeholder "Choose a …"** only when there's no sensible default. If there is one (the user's country, the most common option), preselect it.
 2. **Order options** by frequency (top 3 first, then a separator group), alphabetically, or by natural order (sizes, dates). Never randomly.
