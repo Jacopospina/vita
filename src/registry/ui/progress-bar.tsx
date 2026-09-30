@@ -41,12 +41,12 @@ export function ProgressBar({
   const pct = status === "finished" ? 100 : Math.min(100, Math.max(0, ((value ?? 0) / max) * 100))
   const color = status === "error" ? "text-error" : status === "finished" ? "text-success" : "text-primary"
   const spectrum = tone === "spectrum" && status === "active"
-  // The fill's colour drifts; droplets keep a still paint so their own motion (drip / flow) isn't overridden.
-  const paint = spectrum ? "liquid-spectrum motion-safe:animate-spectrum" : "bg-current"
-  const dropPaint = spectrum ? "liquid-spectrum" : "bg-current"
   const h = size === "sm" ? 4 : 8
-  // Droplets are exactly track-height: the liquid never bulges or leaks outside its container.
-  const drop = size === "sm" ? "size-1" : "size-2"
+  const r = h / 2
+  const reduced = typeof window !== "undefined" && !!window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+  const hues = ["blue", "indigo", "purple", "pink", "orange", "blue"]
+  // Fill and head move by the SAME eased value, as one body.
+  const move = "duration-expressive ease-expressive"
   return (
     <div className={cn("flex w-full flex-col gap-2", className)}>
       <div className={cn("flex items-center justify-between gap-2", hideLabel && "sr-only")}>
@@ -61,43 +61,56 @@ export function ProgressBar({
         aria-valuemax={max}
         aria-valuenow={indeterminate ? undefined : Math.round(pct)}
         aria-busy={status === "active"}
-        className={cn("relative w-full overflow-hidden rounded-full bg-border-subtle", size === "sm" ? "h-1" : "h-2")}
+        className={cn("relative w-full rounded-full bg-border-subtle", size === "sm" ? "h-1" : "h-2")}
       >
-        <svg aria-hidden width="0" height="0" className="absolute">
+        {/*
+          The liquid is ONE svg: fill + droplets share one goo filter AND one gradient spanning the whole track,
+          so the head is visibly part of the bar (same colour where they meet) and melts into it. The svg viewport
+          clips, so nothing leaks outside the track.
+        */}
+        <svg aria-hidden width="100%" height={h} className={cn("absolute inset-0 overflow-hidden rounded-full", color)} style={{ filter: `drop-shadow(0 0 ${h * 0.6}px currentColor)` }}>
           <defs>
-            <filter id={fid} x="-20%" y="-150%" width="140%" height="400%" colorInterpolationFilters="sRGB">
-              <feGaussianBlur in="SourceGraphic" stdDeviation={h * 0.35} result="b" />
-              <feColorMatrix in="b" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 16 -7" result="goo" />
+            <filter id={fid} x="-10%" y="-150%" width="120%" height="400%" colorInterpolationFilters="sRGB">
+              <feGaussianBlur in="SourceGraphic" stdDeviation={h * 0.55} result="b" />
+              <feColorMatrix in="b" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8" result="goo" />
               <feComposite in="SourceGraphic" in2="goo" operator="atop" />
             </filter>
+            {spectrum && (
+              <linearGradient id={`${fid}-g`} gradientUnits="userSpaceOnUse" x1="0%" x2="100%" y1="0" y2="0" spreadMethod="repeat">
+                {hues.map((c, i) => <stop key={i} offset={i / (hues.length - 1)} stopColor={`var(--corpus-palette-${c}-500)`} />)}
+                {!reduced && <animate attributeName="x1" values="0%;-100%" dur="4s" repeatCount="indefinite" />}
+                {!reduced && <animate attributeName="x2" values="100%;0%" dur="4s" repeatCount="indefinite" />}
+              </linearGradient>
+            )}
+            <linearGradient id={`${fid}-gloss`} x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0" stopColor="white" stopOpacity="0.5" />
+              <stop offset="0.7" stopColor="white" stopOpacity="0" />
+            </linearGradient>
           </defs>
-        </svg>
-        {/* The liquid: fill + droplets share one goo filter, so they fuse like the Thinking orbs. */}
-        <div className={cn("absolute inset-0", color)} style={{ filter: `url(#${fid}) drop-shadow(0 0 ${h * 0.6}px currentColor)` }}>
-          {indeterminate ? (
-            <>
-              {["motion-safe:animate-flow-1", "motion-safe:animate-flow-2", "motion-safe:animate-flow-3"].map((a, i) => (
-                <span key={i} className={cn("absolute top-1/2 -translate-y-1/2 rounded-full", i === 1 ? "h-full w-1/6" : drop, dropPaint, a)} />
-              ))}
-            </>
-          ) : (
-            <>
-              {/* ONE body: the head droplets live inside the fill at its right edge, so they ride the same eased
-                  width — the head never jumps ahead and the bar never lags behind. */}
-              <div className="absolute inset-y-0 left-0 duration-expressive ease-expressive" style={{ width: `${pct}%` }}>
-                <div className={cn("absolute inset-0 rounded-full", paint)} />
+          <g filter={`url(#${fid})`} fill={spectrum ? `url(#${fid}-g)` : "currentColor"}>
+            {indeterminate ? (
+              <>
+                <rect x="0" y="0" width="14%" height={h} rx={r} className="motion-safe:animate-flow-1" />
+                <circle cx="0" cy={r} r={r} className="motion-safe:animate-flow-2" />
+                <rect x="0" y="0" width="7%" height={h} rx={r} className="motion-safe:animate-flow-3" />
+                <circle cx="0" cy={r} r={r * 0.8} className="motion-safe:animate-flow-4" />
+              </>
+            ) : (
+              <>
+                <rect x="0" y="0" height={h} rx={r} className={move} style={{ width: `${pct}%` }} />
                 {status === "active" && pct > 0 && pct < 100 && (
-                  <span className="absolute top-0 right-0">
-                    <span className={cn("absolute top-0 -left-1 rounded-full motion-safe:animate-drip-a", drop, dropPaint)} />
-                    <span className={cn("absolute top-0 -left-1 rounded-full motion-safe:animate-drip-b", drop, dropPaint)} />
-                  </span>
+                  // The head rides the fill's end (translateX in % of the track), with the same easing.
+                  <g className={move} style={{ transform: `translateX(${pct}%)` }}>
+                    <circle cx={-r} cy={r} r={r} className="motion-safe:animate-drip-a" />
+                    <circle cx={-r} cy={r} r={r * 0.75} className="motion-safe:animate-drip-b" />
+                  </g>
                 )}
-              </div>
-            </>
-          )}
-        </div>
-        {/* Gloss: the light catching the top of the liquid. */}
-        {!indeterminate && <div aria-hidden className="pointer-events-none absolute top-0 left-0 h-1/2 rounded-full liquid-shine duration-expressive ease-expressive" style={{ width: `${pct}%` }} />}
+              </>
+            )}
+          </g>
+          {/* Gloss: the light catching the top of the liquid. */}
+          {!indeterminate && <rect x="0" y="0" height={h / 2} rx={r / 2} fill={`url(#${fid}-gloss)`} className={move} style={{ width: `${pct}%` }} />}
+        </svg>
       </div>
       {helperText && <p className={cn("text-caption", status === "error" ? "text-error-foreground" : "text-helper")}>{animateChildren(helperText)}</p>}
     </div>

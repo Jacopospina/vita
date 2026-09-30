@@ -27,3 +27,8 @@ related: [tabs, radio-button, toggle]
 2. **The selected segment is a raised pill** on a `layer-2` track. Don't restyle it as a tab.
 3. **Remember the choice** per user where it's a view preference.
 4. **Place it above the content it controls,** right-aligned in toolbars and left-aligned under headings.
+
+## Hold and drag
+
+- **Browse without aiming.** Press anywhere on the switcher and slide: the segment under the pointer is selected as you pass it, so the content changes live. Release to keep it.
+- **Click still works.** A plain click selects one segment, and keyboard arrows move between segments.

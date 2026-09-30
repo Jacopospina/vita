@@ -209,10 +209,11 @@
   --animate-indeterminate: corpus-indeterminate 1.4s var(--corpus-ease-productive) infinite;
   --animate-drip-a: corpus-drip-a 1.6s var(--corpus-ease-productive) infinite;
   --animate-drip-b: corpus-drip-b 2.1s var(--corpus-ease-productive) 0.4s infinite;
-  --animate-flow-1: corpus-flow 1.9s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-  --animate-flow-2: corpus-flow 1.9s cubic-bezier(0.3, 0, 0.7, 1) 0.18s infinite;
-  --animate-flow-3: corpus-flow 1.9s cubic-bezier(0.6, 0, 0.4, 1) 0.32s infinite;
-  --animate-spectrum: corpus-spectrum-shift 3s linear infinite;
+  /* different speeds on purpose: blobs overtake each other and melt together, then pull apart */
+  --animate-flow-1: corpus-flow 1.7s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  --animate-flow-2: corpus-flow 2.3s cubic-bezier(0.3, 0, 0.7, 1) 0.15s infinite;
+  --animate-flow-3: corpus-flow 2.9s cubic-bezier(0.6, 0, 0.4, 1) 0.35s infinite;
+  --animate-flow-4: corpus-flow 2s cubic-bezier(0.5, 0.1, 0.5, 0.9) 0.9s infinite;
 }
 
 /*
@@ -386,13 +387,4 @@
   border: 1px solid color-mix(in oklab, var(--corpus-foreground) 10%, transparent);
   box-shadow: var(--corpus-shadow-overlay), inset 0 1px 0 color-mix(in oklab, white 22%, transparent);
   @media (prefers-reduced-transparency: reduce) { background-color: var(--corpus-raised); backdrop-filter: none; }
-}
-
-/* Liquid progress surfaces — the Thinking look on a bar: gloss on top, spectrum that drifts. */
-@utility liquid-shine {
-  background: linear-gradient(to bottom, color-mix(in oklab, oklch(1 0 0) 45%, transparent), transparent 70%);
-}
-@utility liquid-spectrum {
-  background-image: linear-gradient(90deg, var(--corpus-palette-blue-500), var(--corpus-palette-indigo-500), var(--corpus-palette-purple-500), var(--corpus-palette-pink-500), var(--corpus-palette-orange-500), var(--corpus-palette-blue-500));
-  background-size: 200% 100%;
 }

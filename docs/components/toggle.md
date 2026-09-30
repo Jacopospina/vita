@@ -19,3 +19,8 @@ related: [checkbox, content-switcher, forms]
 3. **Label on the left, switch on the right** in settings lists. `labelPosition="end"` for inline use.
 4. **"On" is green** (`success`) in Corpus. Don't recolor it with the brand.
 5. **Dangerous toggles** (disable security, delete data on schedule) need a confirmation. Consider a Button instead.
+
+## Choreography
+
+- **Press.** The knob stretches toward the side it will travel to.
+- **Release.** It springs across and back to a circle, and the track colour follows.

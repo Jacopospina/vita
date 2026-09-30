@@ -42,7 +42,7 @@ export function Toggle({ label, hideLabel, helperText, stateText, size = "md", l
             props.onCheckedChange?.(v)
           }}
           className={cn(
-            "peer inline-flex shrink-0 cursor-pointer items-center rounded-full p-0.5 duration-fast-02 ease-productive focus-ring",
+            "group/switch peer inline-flex shrink-0 cursor-pointer items-center rounded-full p-0.5 duration-fast-02 ease-productive focus-ring",
             "bg-border-strong data-[state=checked]:bg-success disabled:cursor-not-allowed disabled:bg-layer-3",
             size === "md" ? "h-6 w-11" : "h-4 w-7",
           )}
@@ -50,7 +50,10 @@ export function Toggle({ label, hideLabel, helperText, stateText, size = "md", l
           <SwitchPrimitive.Thumb
             className={cn(
               "pointer-events-none block rounded-full bg-background shadow-raised duration-moderate-01 ease-spring",
-              size === "md" ? "size-5 data-[state=checked]:translate-x-5" : "size-3 data-[state=checked]:translate-x-3",
+              // Press: the knob stretches toward where it will travel (anchored on its resting side); release: springs back.
+              size === "md"
+                ? "h-5 w-5 data-[state=checked]:translate-x-5 group-active/switch:w-6 group-active/switch:data-[state=checked]:translate-x-4"
+                : "h-3 w-3 data-[state=checked]:translate-x-3 group-active/switch:w-4 group-active/switch:data-[state=checked]:translate-x-2",
             )}
           />
         </SwitchPrimitive.Root>
