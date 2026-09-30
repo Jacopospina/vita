@@ -12,8 +12,10 @@ export function useExit(ms = 150) {
       if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return done()
       setLeaving(true)
       window.setTimeout(() => {
-        setLeaving(false)
+        // done() FIRST: the parent's removal and our reset commit in the same batch, so the element
+        // never renders one more visible frame (exit keyframes also hold their end state: fill "both").
         done()
+        setLeaving(false)
       }, ms)
     },
     [ms],

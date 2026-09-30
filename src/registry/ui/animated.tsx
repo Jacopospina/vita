@@ -111,7 +111,8 @@ export function AnimatedText({ children, className, enter = "change", direction 
   const [changed, setChanged] = React.useState(false)
   if (!changed && children !== first) setChanged(true)
   // Numbers are never letter-revealed: numeric values, or text whose only change is its digits, roll like a slot machine.
-  if (!leaving && enter === "change" && (isNumericValue(children) || (/\d/.test(children) && template(children) === template(first)))) {
+  // (Sentences that merely CONTAIN numbers — "order 4821 arrives in 3–5 days" — stay normal, wrapping text.)
+  if (!leaving && enter === "change" && (isNumericValue(children) || (changed && /\d/.test(children) && template(children) === template(first)))) {
     return <RollingText text={children} className={className} />
   }
   const motion = !reduced()

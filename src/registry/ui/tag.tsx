@@ -16,7 +16,8 @@ import { useExit } from "@/registry/hooks/use-exit"
  * Status (success/warning/error) must ALSO be conveyed by text; color is never the only signal.
  */
 const tagVariants = cva(
-  "inline-flex h-6 max-w-full shrink-0 items-center gap-1 rounded-full px-2 text-caption font-medium whitespace-nowrap duration-fast-02 ease-productive",
+  // Every tone carries a 1px border (transparent unless the tone shows it), so switching tone never resizes the tag.
+  "inline-flex h-6 max-w-full shrink-0 items-center gap-1 rounded-full border border-transparent px-2 text-caption font-medium whitespace-nowrap duration-fast-02 ease-productive",
   {
     variants: {
       tone: {
@@ -26,8 +27,8 @@ const tagVariants = cva(
         warning: "bg-warning-subtle text-warning-foreground",
         error: "bg-error-subtle text-error-foreground",
         info: "bg-info-subtle text-info-foreground",
-        outline: "border border-border-strong bg-transparent text-foreground",
-        inverse: "bg-inverse text-inverse-foreground",
+        outline: "border-border-strong bg-transparent text-foreground",
+        inverse: "border-inverse bg-inverse text-inverse-foreground",
       },
       size: { sm: "h-5 px-1.5", md: "h-6 px-2", lg: "h-control-sm px-3 text-footnote" },
     },

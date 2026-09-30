@@ -171,21 +171,21 @@
   --animate-enter-scale: corpus-scale-in var(--corpus-duration-moderate-01) var(--corpus-ease-productive-enter);
   --animate-focus-in: corpus-focus-in var(--corpus-duration-slow-01) var(--corpus-ease-expressive-enter);
   --animate-enter-dialog: corpus-dialog-in var(--corpus-duration-expressive) linear both;
-  --animate-exit-dialog: corpus-scale-out var(--corpus-duration-moderate-01) var(--corpus-ease-expressive-exit);
+  --animate-exit-dialog: corpus-scale-out var(--corpus-duration-moderate-01) var(--corpus-ease-expressive-exit) both;
   /* Exits are productive: the user has already moved on. */
   --animate-modal-fall: corpus-modal-fall var(--corpus-duration-moderate-02) var(--corpus-ease-productive-exit) both;
   --animate-modal-send: corpus-modal-send var(--corpus-duration-moderate-02) var(--corpus-ease-productive-exit) both;
-  --animate-exit-scale: corpus-scale-out var(--corpus-duration-fast-02) var(--corpus-ease-productive-exit);
+  --animate-exit-scale: corpus-scale-out var(--corpus-duration-fast-02) var(--corpus-ease-productive-exit) both;
   --animate-enter-fade: corpus-fade-in var(--corpus-duration-fast-02) var(--corpus-ease-productive-enter);
-  --animate-exit-fade: corpus-fade-out var(--corpus-duration-fast-02) var(--corpus-ease-productive-exit);
+  --animate-exit-fade: corpus-fade-out var(--corpus-duration-fast-02) var(--corpus-ease-productive-exit) both;
   --animate-enter-slide-up: corpus-slide-up-in var(--corpus-duration-expressive) var(--corpus-ease-expressive-enter);
-  --animate-exit-slide-down: corpus-slide-down-out var(--corpus-duration-moderate-01) var(--corpus-ease-productive-exit);
+  --animate-exit-slide-down: corpus-slide-down-out var(--corpus-duration-moderate-01) var(--corpus-ease-productive-exit) both;
   --animate-enter-panel-right: corpus-slide-left-in var(--corpus-duration-expressive) var(--corpus-ease-expressive-enter);
-  --animate-exit-panel-right: corpus-slide-right-out var(--corpus-duration-moderate-01) var(--corpus-ease-productive-exit);
+  --animate-exit-panel-right: corpus-slide-right-out var(--corpus-duration-moderate-01) var(--corpus-ease-productive-exit) both;
   --animate-enter-panel-left: corpus-slide-right-in var(--corpus-duration-expressive) var(--corpus-ease-expressive-enter);
-  --animate-exit-panel-left: corpus-slide-left-out var(--corpus-duration-moderate-01) var(--corpus-ease-productive-exit);
+  --animate-exit-panel-left: corpus-slide-left-out var(--corpus-duration-moderate-01) var(--corpus-ease-productive-exit) both;
   --animate-expand: corpus-collapse-down var(--corpus-duration-moderate-02) var(--corpus-ease-productive);
-  --animate-collapse: corpus-collapse-up var(--corpus-duration-moderate-01) var(--corpus-ease-productive);
+  --animate-collapse: corpus-collapse-up var(--corpus-duration-moderate-01) var(--corpus-ease-productive) both;
   --animate-spin: corpus-spin 690ms linear infinite;
   --animate-text-reveal: corpus-text-in var(--corpus-duration-expressive) var(--corpus-ease-expressive-enter) both;
   --animate-text-reveal-down: corpus-text-in-down var(--corpus-duration-expressive) var(--corpus-ease-expressive-enter) both;

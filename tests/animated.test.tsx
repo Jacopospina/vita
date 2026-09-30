@@ -22,6 +22,12 @@ describe("text choreography: numbers always roll", () => {
     expect(reels(container)).toBe(2)
   })
 
+  it("keeps sentences that contain numbers as normal wrapping text", () => {
+    const { container } = render(<AnimatedText>Your refund for order 4821 arrives in 3–5 working days.</AnimatedText>)
+    expect(reels(container)).toBe(0)
+    expect(container.querySelector(".whitespace-pre")).toBeNull()
+  })
+
   it("letter-reveals real text changes", () => {
     const { container, rerender } = render(<AnimatedText>Saving</AnimatedText>)
     rerender(<AnimatedText>Saved</AnimatedText>)
