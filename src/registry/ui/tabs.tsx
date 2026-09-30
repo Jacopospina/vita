@@ -2,6 +2,7 @@ import * as React from "react"
 import { Tabs as TabsPrimitive } from "radix-ui"
 import { cn } from "@/registry/lib/utils"
 import { useIndicator } from "@/registry/hooks/use-morph"
+import { useDragSelect } from "@/registry/hooks/use-drag-select"
 
 /**
  * Tabs — switch between related VIEWS of the same object/page at the same level (Overview · Activity · Settings).
@@ -9,13 +10,23 @@ import { useIndicator } from "@/registry/hooks/use-morph"
  *   line      → underline that glides; for dense toolbars or when a track would be too heavy
  *   contained → tabs attached to a panel/card (secondary level)
  * Switching filters or modes of ONE dataset → ContentSwitcher. Sequential steps → ProgressIndicator.
+ * Hold and nudge to browse: while pressed, each small sideways nudge snaps to the next/previous tab and shows its content.
  */
 export function Tabs({ className, ...props }: React.ComponentProps<typeof TabsPrimitive.Root>) {
   return <TabsPrimitive.Root className={cn("flex flex-col", className)} {...props} />
 }
 
-export function TabsList({ className, variant = "pill", fullWidth, children, ...props }: React.ComponentProps<typeof TabsPrimitive.List> & { variant?: "pill" | "line" | "contained"; fullWidth?: boolean }) {
+export function TabsList({ className, variant = "pill", fullWidth, children, onPointerDown, ...props }: React.ComponentProps<typeof TabsPrimitive.List> & { variant?: "pill" | "line" | "contained"; fullWidth?: boolean }) {
   const [ref, rect] = useIndicator<HTMLDivElement>('[role="tab"][data-state="active"]')
+  // Hold and nudge: each small sideways nudge snaps to the next/previous tab. A tab activates on a primary
+  // mousedown, so stepping = pressing the target tab (works even when the window isn't focused).
+  const drag = useDragSelect(
+    '[role="tab"]',
+    (el) => {
+      if (el.getAttribute("data-state") !== "active") el.dispatchEvent(new MouseEvent("mousedown", { bubbles: true, button: 0 }))
+    },
+    { activeSelector: '[data-state="active"]' },
+  )
   return (
     <TabsPrimitive.List
       ref={ref}
@@ -26,15 +37,20 @@ export function TabsList({ className, variant = "pill", fullWidth, children, ...
         variant === "line" && "gap-1 border-b border-border-subtle",
         variant === "contained" && "gap-px",
         fullWidth && "*:flex-1",
+        "select-none",
         className,
       )}
       {...props}
+      onPointerDown={(e) => {
+        drag.onPointerDown(e)
+        onPointerDown?.(e)
+      }}
     >
       {children}
       {variant === "pill" && rect && (
         <span
           aria-hidden
-          className="pointer-events-none absolute top-0 left-0 rounded-inner-0.5 bg-raised shadow-raised duration-expressive ease-spring"
+          className={cn("pointer-events-none absolute top-0 left-0 rounded-inner-0.5 bg-raised shadow-raised duration-expressive ease-spring", drag.dragging && "scale-95")}
           style={{ width: rect.w, height: rect.h, transform: `translate(${rect.x}px, ${rect.y}px)` }}
         />
       )}

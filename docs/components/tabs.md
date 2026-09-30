@@ -32,3 +32,8 @@ related: [content-switcher, progress-indicator, page-header]
 4. **Don't put forms that span several tabs under one Save.** Each tab saves independently, or use a multi-step form.
 5. **Content fades in** (`animate-enter-fade`), with no sliding.
 6. **Disabled tabs** are rare. Prefer hiding a tab the user can never use.
+
+## Hold and nudge
+
+- **Browse without aiming.** Press a tab and just hint a direction. Each small sideways nudge, about 48px, snaps to the next or previous tab and shows its content. Keep nudging to keep stepping.
+- **Click and keyboard unchanged.** A click selects a tab, and arrow keys move between tabs.

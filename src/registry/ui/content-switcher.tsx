@@ -5,12 +5,13 @@ import { cn } from "@/registry/lib/utils"
 import { Icon } from "@/registry/ui/icon"
 import { Tooltip } from "@/registry/ui/tooltip"
 import { useIndicator } from "@/registry/hooks/use-morph"
+import { useDragSelect } from "@/registry/hooks/use-drag-select"
 
 /**
  * ContentSwitcher — switch between alternate presentations of the SAME content (List | Grid, Day | Week | Month).
  * A segmented control. 2–5 segments, equal importance, one always selected.
  * Different content per option → Tabs.
- * Hold and drag across it to browse: the segment under the pointer is selected as you pass it — no aiming, no clicking.
+ * Hold and nudge to browse: while pressed, each small sideways nudge snaps to the next/previous segment — no aiming.
  */
 export interface ContentSwitcherItem {
   value: string
@@ -54,31 +55,8 @@ export function ContentSwitcher({
     setInner(v)
     onValueChange?.(v)
   }
-  // Hold-and-drag: while the pointer is down, whichever segment it's over becomes selected (live browse).
-  const [dragging, setDragging] = React.useState(false)
-  const pick = (root: HTMLElement, x: number) => {
-    const hit = Array.from(root.querySelectorAll<HTMLButtonElement>("button[data-value]")).find((b) => {
-      const r = b.getBoundingClientRect()
-      return x >= r.left && x <= r.right && !b.disabled
-    })
-    if (hit?.dataset.value) select(hit.dataset.value)
-  }
-  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (e.button !== 0 || e.pointerType === "touch") return // touch scrolls; tap still selects
-    const root = e.currentTarget
-    pick(root, e.clientX)
-    setDragging(true)
-    const move = (ev: PointerEvent) => pick(root, ev.clientX)
-    const up = () => {
-      setDragging(false)
-      window.removeEventListener("pointermove", move)
-      window.removeEventListener("pointerup", up)
-      window.removeEventListener("pointercancel", up)
-    }
-    window.addEventListener("pointermove", move)
-    window.addEventListener("pointerup", up)
-    window.addEventListener("pointercancel", up)
-  }
+  // Hold and nudge to browse (shared with Tabs): each small sideways nudge snaps to the next/previous segment.
+  const drag = useDragSelect("button[data-value]", (el) => el.dataset.value && select(el.dataset.value), { activeSelector: '[data-state="on"]' })
   return (
     <ToggleGroup.Root
       ref={ref}
@@ -88,7 +66,7 @@ export function ContentSwitcher({
       onValueChange={(v) => {
         if (v) select(v) // always one selected
       }}
-      onPointerDown={onPointerDown}
+      onPointerDown={drag.onPointerDown}
       className={cn(
         "relative inline-flex w-fit touch-none items-center gap-0.5 scope-md bg-layer-2 p-0.5 select-none",
         size === "sm" ? "h-control-sm" : size === "lg" ? "h-control-lg" : "h-control-md",
@@ -98,7 +76,7 @@ export function ContentSwitcher({
       {rect && (
         <span
           aria-hidden
-          className={cn("pointer-events-none absolute top-0 left-0 rounded-inner-0.5 bg-raised shadow-raised duration-moderate-02 ease-spring", dragging && "scale-95")}
+          className={cn("pointer-events-none absolute top-0 left-0 rounded-inner-0.5 bg-raised shadow-raised duration-moderate-02 ease-spring", drag.dragging && "scale-95")}
           style={{ width: rect.w, height: rect.h, transform: `translate(${rect.x}px, ${rect.y}px)` }}
         />
       )}
