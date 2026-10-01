@@ -27,6 +27,25 @@ export interface DataTableColumn<T> {
 }
 
 type SortState = { key: string; dir: "asc" | "desc" } | null
+/** True while a sticky element is pinned (its in-flow sentinel has scrolled above it), i.e. content runs beneath it. */
+function useStuck() {
+  const sentinel = React.useRef<HTMLDivElement>(null)
+  const sticky = React.useRef<HTMLDivElement>(null)
+  const [stuck, setStuck] = React.useState(false)
+  React.useEffect(() => {
+    // Two rect reads per scroll event; React skips the render when the answer hasn't changed.
+    const check = () => {
+      const a = sentinel.current?.getBoundingClientRect(), b = sticky.current?.getBoundingClientRect()
+      if (a && b) setStuck(a.top < b.top - 0.5)
+    }
+    check()
+    window.addEventListener("scroll", check, { capture: true, passive: true })
+    window.addEventListener("resize", check)
+    return () => { window.removeEventListener("scroll", check, { capture: true }); window.removeEventListener("resize", check) }
+  }, [])
+  return { sentinel, sticky, stuck }
+}
+
 const rowH = { xs: "h-control-xs", sm: "h-control-sm", md: "h-control-md", lg: "h-10", xl: "h-11" } as const
 
 export interface DataTableProps<T extends { id: string }> {
@@ -60,6 +79,7 @@ export function DataTable<T extends { id: string }>({
 }: DataTableProps<T>) {
   const [sort, setSort] = React.useState<SortState>(null)
   const mid = useMorphId()
+  const strip = useStuck()
   const [innerSel, setInnerSel] = React.useState<string[]>([])
   const [open, setOpen] = React.useState<Set<string>>(new Set())
   const selected = selectedProp ?? innerSel
@@ -98,11 +118,14 @@ export function DataTable<T extends { id: string }>({
         // ONE strip that MORPHS: toolbar ⇄ selection bar in the same place, with space before the table.
         // Same inset in both states (toolbar and selection bar), a notch tighter than the header.
         // STICKY: it stays in reach while the rows scroll (overflow-clip on the section keeps sticky working).
-        <div className="sticky top-0 z-20 bg-layer-1 p-2.5">
+        // The wrapper is transparent; once pinned, the bar itself frosts over the rows running beneath it.
+        <>
+        <div ref={strip.sentinel} aria-hidden className="h-0" />
+        <div ref={strip.sticky} className="sticky top-0 z-20 p-2.5">
           <div
             className={cn(
               "grid min-h-control-lg items-center rounded-outer-1 p-1 motion-expressive [grid-template-areas:'bar']",
-              selecting ? "bg-primary text-primary-foreground shadow-raised" : "bg-layer-2",
+              selecting ? "border border-transparent bg-primary text-primary-foreground shadow-raised" : strip.stuck ? "glass glass-4" : "border border-transparent bg-layer-2",
             )}
           >
             {toolbar && (
@@ -129,6 +152,7 @@ export function DataTable<T extends { id: string }>({
             )}
           </div>
         </div>
+        </>
       )}
       {/* Inset like the toolbar strip above; the header row is a rounded band (separate borders allow cell radius). */}
       <div className={cn("w-full overflow-x-auto px-2.5", stickyHeader && "max-h-120 overflow-y-auto")}>
