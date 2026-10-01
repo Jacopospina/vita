@@ -58,7 +58,7 @@ export const aboutDemos: DemoMap = {
       ),
     },
   ],
-  "getting-started/about": [
+  "identity/about": [
     {
       title: "Animus, anima, vita",
       render: () => (

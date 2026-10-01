@@ -222,7 +222,7 @@ function MaterialDemo() {
 
 export const foundationDemos: DemoMap = {
   "foundations/material": [{ title: "Five tiers, more frosted the higher they float", render: () => <MaterialDemo /> }],
-  "getting-started/brand": [
+  "identity/brand": [
     {
       title: "Give your ideas life",
       description: "Vita is the Creator. Every word it says aims to awaken the maker in the person reading it.",

@@ -21,7 +21,13 @@ import { GuidelinesPage } from "./home"
 type Route = Section | "guidelines"
 
 /** Renamed pages: old links keep working. */
-const moved: Record<string, string> = { "components/loading": "components/thinking" }
+const moved: Record<string, string> = {
+  "components/loading": "components/thinking",
+  "getting-started/interaction": "identity/principles",
+  "getting-started/about": "identity/about",
+  "getting-started/brand": "identity/brand",
+  "getting-started/principles": "identity/principles",
+}
 
 function useRoute() {
   const read = (): [Route, string] => {
@@ -61,6 +67,11 @@ export function App() {
   const [dark, setDark] = useSunTheme()
   const weather = useWeatherTint()
   const [filter, setFilter] = React.useState("")
+  // One section open at a time: the current page's section; opening another closes it (filtering shows all matches).
+  const here: Section = section === "guidelines" ? "identity" : section
+  const [openSection, setOpenSection] = React.useState<Section | null>(here)
+  const [prevHere, setPrevHere] = React.useState(here)
+  if (prevHere !== here) { setPrevHere(here); setOpenSection(here) }
 
   React.useEffect(() => {
     swapAppearance(() => document.documentElement.classList.toggle("dark", dark))
@@ -97,11 +108,11 @@ export function App() {
             </div>
             {(Object.keys(manifest) as Section[]).map((s) => {
               const entries = manifest[s].filter((e) => e.title.toLowerCase().includes(filter.toLowerCase()))
-              // Getting started opens with About Vita, the overview of everything.
-              const about = s === "getting-started" && "about vita".includes(filter.toLowerCase())
+              // Identity opens with About Vita, the overview of everything.
+              const about = s === "identity" && "about vita".includes(filter.toLowerCase())
               if (!entries.length && !about) return null
               return (
-                <SideNavSection key={s + (filter ? "-f" : "")} title={sectionTitles[s]} collapsible defaultOpen={!!filter || s === section || (s === "getting-started" && section === "guidelines")}>
+                <SideNavSection key={s} title={sectionTitles[s]} collapsible open={!!filter || openSection === s} onOpenChange={(o) => setOpenSection(o ? s : null)}>
                   {about && <SideNavItem href="#/guidelines" active={section === "guidelines"}>About Vita</SideNavItem>}
                   {entries.map((e) => (
                     <SideNavItem key={e.slug} href={`#/${s}/${e.slug}`} active={s === section && e.slug === slug}>

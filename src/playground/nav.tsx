@@ -49,7 +49,7 @@ export const MAKE_URL = import.meta.env.PROD ? "/make" : "./make.html"
 
 /** The global nav, ONE list, used by the docs header and the showcase header so they never drift apart. */
 export const globalNav = [
-  { label: "Start", path: "guidelines", sections: ["guidelines", "getting-started"] },
+  { label: "Start", path: "guidelines", sections: ["guidelines", "identity", "getting-started"] },
   { label: "Foundations", path: "foundations/accessibility", sections: ["foundations"] },
   { label: "Components", path: "components/choosing-components", sections: ["components"] },
   { label: "Patterns", path: "patterns/agent-conversation", sections: ["patterns"] },
@@ -63,7 +63,7 @@ export const navHref = (n: (typeof globalNav)[number], docs: string) => ("href" 
 
 /** Every page, for the header's global search (grouped by section). `base` prefixes links (the showcase lives elsewhere). */
 export function searchPages(go: (path: string) => void) {
-  const pages = [{ id: "guidelines", label: "About Vita", group: "Getting started", path: "guidelines", description: "The overview of Vita: what it is, how it's organised, and where to start." }]
+  const pages = [{ id: "guidelines", label: "About Vita", group: "Identity", path: "guidelines", description: "The overview of Vita: what it is, how it's organised, and where to start." }]
   for (const s of Object.keys(manifest) as Section[])
     for (const e of manifest[s]) pages.push({ id: `${s}/${e.slug}`, label: e.title, group: sectionTitles[s], path: `${s}/${e.slug}`, description: getDoc(s, e.slug)?.meta.summary ?? "" })
   return pages.map((p) => {

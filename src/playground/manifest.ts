@@ -1,4 +1,4 @@
-export type Section = "getting-started" | "foundations" | "components" | "patterns" | "decisions"
+export type Section = "getting-started" | "identity" | "foundations" | "components" | "patterns" | "decisions"
 
 export interface NavEntry {
   slug: string
@@ -11,11 +11,13 @@ export const manifest: Record<Section, NavEntry[]> = {
     { slug: "cli", title: "CLI" },
     { slug: "skills", title: "Skills" },
     { slug: "registry", title: "Registry" },
+    { slug: "changelog", title: "Changelog" },
+  ],
+  // Who Vita is: the idea, the voice and the principles. About Vita (the overview) opens the section.
+  identity: [
     { slug: "about", title: "Animus, anima, vita" },
     { slug: "brand", title: "Brand & voice" },
     { slug: "principles", title: "Design principles" },
-    { slug: "interaction", title: "Interaction" },
-    { slug: "changelog", title: "Changelog" },
   ],
   foundations: [
     { slug: "accessibility", title: "Accessibility" },
@@ -126,6 +128,7 @@ export const manifest: Record<Section, NavEntry[]> = {
 
 export const sectionTitles: Record<Section, string> = {
   "getting-started": "Getting started",
+  identity: "Identity",
   foundations: "Foundations",
   components: "Components",
   patterns: "Patterns",

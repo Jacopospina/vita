@@ -2,23 +2,23 @@
 
 > Vita is the body of the product: the only source of UI. Components are imported from @/components/vita/*, tokens are Tailwind utilities, patterns are documented flows. Never create local components or raw values.
 
-Start with: docs/components/choosing-components.md (decision guide) · docs/getting-started/principles.md · docs/decisions/ (system decisions, read before changing what they cover) · skills/vita-design-system/SKILL.md
+Start with: docs/components/choosing-components.md (decision guide) · docs/identity/principles.md · docs/decisions/ (system decisions, read before changing what they cover) · skills/vita-design-system/SKILL.md
 
 ## Getting started
 
-- [Animus, anima, vita](docs/getting-started/about.md): Every product has a mind and a soul. Vita is where they come alive. The AI-agent-first design system, born for humans and machines making together.
-- [Brand & voice](docs/getting-started/brand.md): The AI-agent-first design system, born for humans and machines making together. Its voice is the Creator's, and every word aims to awaken the maker in the reader.
-  - use: Writing in Vita's own voice: docs, the showcase, onboarding, release notes, first-use moments; Naming a feature, writing a headline or choosing a slogan
-  - avoid: Product UI microcopy (buttons, labels, errors) → Content, personas & taxonomy; plain and direct wins inside products
 - [Changelog](docs/getting-started/changelog.md): Every change to Vita, newest first, on one timeline. Breaking changes are marked and say how to migrate.
 - [CLI](docs/getting-started/cli.md): One command line to install Vita, add components, stay up to date and audit any repo.
 - [Installation](docs/getting-started/installation.md): Add Vita to a React + Tailwind v4 product in one command, components, styles, docs, agent skills, the audit and its hooks.
-- [Interaction](docs/getting-started/interaction.md): Built for products where AI carries the complexity. One hand per device, intent over input, nothing redundant, nothing that snaps.
-  - use: Designing any flow, interaction or shortcut; Deciding between a form and an intent-first flow
-  - avoid: Adding a control that repeats one that already exists (Cancel next to ×); Shortcuts that need the right hand
-- [Design principles](docs/getting-started/principles.md): Ten ranked rules every Vita screen obeys. When two conflict, the lower number wins.
 - [Registry](docs/getting-started/registry.md): Vita ships as source, a registry of components, hooks, blocks, icons and styles you install into your repo and own.
 - [Skills](docs/getting-started/skills.md): Six skills teach AI agents to design and build with Vita like a designer would, installed with Vita into every product.
+
+## Identity
+
+- [Animus, anima, vita](docs/identity/about.md): Every product has a mind and a soul. Vita is where they come alive. The AI-agent-first design system, born for humans and machines making together.
+- [Brand & voice](docs/identity/brand.md): The AI-agent-first design system, born for humans and machines making together. Its voice is the Creator's, and every word aims to awaken the maker in the reader.
+  - use: Writing in Vita's own voice: docs, the showcase, onboarding, release notes, first-use moments; Naming a feature, writing a headline or choosing a slogan
+  - avoid: Product UI microcopy (buttons, labels, errors) → Content, personas & taxonomy; plain and direct wins inside products
+- [Design principles](docs/identity/principles.md): Four principles every Vita screen is built on, then the timeless principles of interface design they stand on. When two conflict, the lower number wins.
 
 ## Foundations
 

@@ -4,7 +4,7 @@ summary: Nothing snaps, except page load, global appearance swaps and floating-s
 status: accepted
 date: 2026-10-01
 decided_by: Jacopo
-related: [motion, interaction]
+related: [motion, principles]
 ---
 
 ## Decision

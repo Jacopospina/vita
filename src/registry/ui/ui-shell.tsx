@@ -228,8 +228,22 @@ export function SideNavMenu({ icon, title, defaultOpen, children }: { icon?: Ico
  * SideNavSection, a Finder-style group: small muted header ("Favourites", "Locations") over its rows.
  * `collapsible`: a disclosure chevron appears on hover at the header's end; the rows fold away (reveal, not snap).
  */
-export function SideNavSection({ title, collapsible, defaultOpen = true, children }: { title?: string; collapsible?: boolean; defaultOpen?: boolean; children: React.ReactNode }) {
-  const [open, setOpen] = React.useState(defaultOpen)
+export function SideNavSection({ title, collapsible, defaultOpen = true, open: openProp, onOpenChange, children }: {
+  title?: string
+  collapsible?: boolean
+  defaultOpen?: boolean
+  /** Controlled: pass `open` + `onOpenChange` to keep one section open at a time (an accordion of sections). */
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
+  children: React.ReactNode
+}) {
+  const [own, setOwn] = React.useState(defaultOpen)
+  const open = openProp ?? own
+  const setOpen = (fn: (o: boolean) => boolean) => {
+    const next = fn(open)
+    if (openProp === undefined) setOwn(next)
+    onOpenChange?.(next)
+  }
   const header = "flex h-8 w-full items-end justify-between px-2.5 pb-1 text-footnote font-semibold text-muted-foreground group-data-[rail]/nav:lg:opacity-0 group-data-[rail]/nav:lg:group-hover/nav:opacity-100"
   if (!collapsible) {
     return (
@@ -243,7 +257,8 @@ export function SideNavSection({ title, collapsible, defaultOpen = true, childre
     <div className="group/sec flex flex-col pt-2 first:pt-0">
       <button type="button" aria-expanded={open} onClick={() => setOpen((o) => !o)} className={cn(header, "rounded-inner-2 text-left focus-ring-inset")}>
         <span className="truncate">{title}</span>
-        <Icon as={ChevronDown} size="sm" className={cn("opacity-0 duration-moderate-01 group-hover/sec:opacity-100 group-focus-within/sec:opacity-100 pointer-coarse:opacity-100", open && "rotate-180")} />
+        {/* Always visible: a collapsible section says so before anyone hovers it. */}
+        <Icon as={ChevronDown} size="sm" className={cn("duration-moderate-01", open && "rotate-180")} />
       </button>
       <div className={cn("reveal motion-productive", open && "reveal-open")} inert={!open || undefined}>
         <div className="flex flex-col gap-px">{children}</div>

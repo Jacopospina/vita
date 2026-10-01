@@ -31,5 +31,6 @@ related: [ui-shell-header, tree-view, breadcrumb]
 ## Look
 
 - **Floating glass.** The panel floats 8px from the window's edges, with frosted `glass` and rounded corners. Rows inside use the concentric radius.
-- **Sections like a file browser.** A `SideNavSection` shows a small muted header over its rows. With `collapsible`, a chevron appears on hover and the rows fold away.
+- **Sections like a file browser.** A `SideNavSection` shows a small muted header over its rows. With `collapsible`, a chevron is always shown (pointing down when closed, up when open) and the rows fold away.
+- **One section open at a time.** Pass `open` and `onOpenChange` to make the sections an accordion: the current page's section opens, opening another closes it. While filtering, every match shows.
 - **Rows.** Compact, with an accent icon and the label. The current page gets a soft grey highlight, not a coloured fill.

@@ -4,34 +4,6 @@
   "entries": [
     {
       "section": "getting-started",
-      "slug": "about",
-      "path": "docs/getting-started/about.md",
-      "title": "Animus, anima, vita",
-      "summary": "Every product has a mind and a soul. Vita is where they come alive. The AI-agent-first design system, born for humans and machines making together.",
-      "status": "stable"
-    },
-    {
-      "section": "getting-started",
-      "slug": "brand",
-      "path": "docs/getting-started/brand.md",
-      "title": "Brand & voice",
-      "summary": "The AI-agent-first design system, born for humans and machines making together. Its voice is the Creator's, and every word aims to awaken the maker in the reader.",
-      "status": "stable",
-      "use_when": [
-        "Writing in Vita's own voice: docs, the showcase, onboarding, release notes, first-use moments",
-        "Naming a feature, writing a headline or choosing a slogan"
-      ],
-      "avoid_when": [
-        "Product UI microcopy (buttons, labels, errors) → Content, personas & taxonomy; plain and direct wins inside products"
-      ],
-      "related": [
-        "content",
-        "about",
-        "principles"
-      ]
-    },
-    {
-      "section": "getting-started",
       "slug": "changelog",
       "path": "docs/getting-started/changelog.md",
       "title": "Changelog",
@@ -71,31 +43,6 @@
     },
     {
       "section": "getting-started",
-      "slug": "interaction",
-      "path": "docs/getting-started/interaction.md",
-      "title": "Interaction",
-      "summary": "Built for products where AI carries the complexity. One hand per device, intent over input, nothing redundant, nothing that snaps.",
-      "status": "stable",
-      "import": "import { useShortcut } from \"@/components/vita/hooks/use-shortcut\"\nimport { Kbd } from \"@/components/vita/kbd\"\nimport { Composer } from \"@/components/vita/composer\"",
-      "use_when": [
-        "Designing any flow, interaction or shortcut",
-        "Deciding between a form and an intent-first flow"
-      ],
-      "avoid_when": [
-        "Adding a control that repeats one that already exists (Cancel next to ×)",
-        "Shortcuts that need the right hand"
-      ]
-    },
-    {
-      "section": "getting-started",
-      "slug": "principles",
-      "path": "docs/getting-started/principles.md",
-      "title": "Design principles",
-      "summary": "Ten ranked rules every Vita screen obeys. When two conflict, the lower number wins.",
-      "status": "stable"
-    },
-    {
-      "section": "getting-started",
       "slug": "registry",
       "path": "docs/getting-started/registry.md",
       "title": "Registry",
@@ -118,6 +65,42 @@
         "installation",
         "content"
       ]
+    },
+    {
+      "section": "identity",
+      "slug": "about",
+      "path": "docs/identity/about.md",
+      "title": "Animus, anima, vita",
+      "summary": "Every product has a mind and a soul. Vita is where they come alive. The AI-agent-first design system, born for humans and machines making together.",
+      "status": "stable"
+    },
+    {
+      "section": "identity",
+      "slug": "brand",
+      "path": "docs/identity/brand.md",
+      "title": "Brand & voice",
+      "summary": "The AI-agent-first design system, born for humans and machines making together. Its voice is the Creator's, and every word aims to awaken the maker in the reader.",
+      "status": "stable",
+      "use_when": [
+        "Writing in Vita's own voice: docs, the showcase, onboarding, release notes, first-use moments",
+        "Naming a feature, writing a headline or choosing a slogan"
+      ],
+      "avoid_when": [
+        "Product UI microcopy (buttons, labels, errors) → Content, personas & taxonomy; plain and direct wins inside products"
+      ],
+      "related": [
+        "content",
+        "about",
+        "principles"
+      ]
+    },
+    {
+      "section": "identity",
+      "slug": "principles",
+      "path": "docs/identity/principles.md",
+      "title": "Design principles",
+      "summary": "Four principles every Vita screen is built on, then the timeless principles of interface design they stand on. When two conflict, the lower number wins.",
+      "status": "stable"
     },
     {
       "section": "foundations",
@@ -2116,7 +2099,7 @@
       "decided_by": "Jacopo",
       "related": [
         "motion",
-        "interaction"
+        "principles"
       ]
     },
     {

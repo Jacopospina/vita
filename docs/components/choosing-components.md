@@ -129,6 +129,9 @@ Are items uniform records with the same attributes?
 If you catch yourself doing any of these, stop and re-read this page:
 
 - Writing a `div` with `onClick`.
+- A placeholder used as the only label.
+- A shortcut that no tooltip shows.
+- Filters applied but not visible as tags.
 - A second primary button.
 - A modal that opens another modal.
 - A tooltip containing a link.
