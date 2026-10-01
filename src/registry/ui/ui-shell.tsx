@@ -17,25 +17,44 @@ import { IconButton, ActionBar } from "@/registry/ui/button"
  * Build every app screen inside <Shell>. Never build a custom header or nav.
  */
 
-const ShellCtx = React.createContext<{ navOpen: boolean; setNavOpen: (o: boolean) => void }>({ navOpen: false, setNavOpen: () => {} })
+type NavKind = "none" | "full" | "rail"
+const ShellCtx = React.createContext<{ navOpen: boolean; setNavOpen: (o: boolean) => void; nav: NavKind; setNav: (n: NavKind) => void }>({
+  navOpen: false, setNavOpen: () => {}, nav: "none", setNav: () => {},
+})
 
+/**
+ * Layering: the page scrolls UNDER the shell. ShellMain fills the window; the Header, LeftPanel and RightPanel float
+ * above it on their glass tiers, and ShellMain is padded so content starts below and beside them. Scrolled content
+ * passes beneath the frosted header — that's what makes the material visible.
+ */
 export function Shell({ children, className }: { children: React.ReactNode; className?: string }) {
   const [navOpen, setNavOpen] = React.useState(false)
+  const [nav, setNav] = React.useState<NavKind>("none")
   return (
-    <ShellCtx.Provider value={{ navOpen, setNavOpen }}>
-      <div className={cn("flex h-dvh flex-col bg-background text-foreground", className)}>{children}</div>
+    <ShellCtx.Provider value={{ navOpen, setNavOpen, nav, setNav }}>
+      <div className={cn("relative h-dvh overflow-hidden bg-background text-foreground", className)}>{children}</div>
     </ShellCtx.Provider>
   )
 }
 
 export function ShellBody({ children, className }: { children: React.ReactNode; className?: string }) {
-  return <div className={cn("relative flex min-h-0 flex-1", className)}>{children}</div>
+  return <div className={cn("absolute inset-0", className)}>{children}</div>
 }
 
 export function ShellMain({ children, className, ...props }: React.HTMLAttributes<HTMLElement>) {
-  // `relative`: main is the containing block for anything absolutely positioned inside it (sr-only text, badges…),
-  // so it scrolls and clips with the page instead of stretching the document with phantom whitespace.
-  return <main id="main-content" className={cn("relative min-w-0 flex-1 overflow-y-auto", className)} {...props}>{children}</main>
+  const { nav } = React.useContext(ShellCtx)
+  // Full-window scroller. Top padding clears the floating header (8 + 48 + 8); on large screens the left padding
+  // clears the floating side nav (8 + 240 + 8, or 8 + 48 + 8 for the rail). Also the containing block for anything
+  // absolutely positioned inside it, so nothing stretches the document.
+  return (
+    <main
+      id="main-content"
+      className={cn("absolute inset-0 overflow-y-auto pt-16 [--corpus-shell-top:4rem]", nav === "full" && "lg:pl-64", nav === "rail" && "lg:pl-16", className)}
+      {...props}
+    >
+      {children}
+    </main>
+  )
 }
 
 /* ---------------- Header ---------------- */
@@ -59,7 +78,7 @@ export function Header({ productName, prefix, logo, href = "/", children, action
   const { navOpen, setNavOpen } = React.useContext(ShellCtx)
   return (
     // Floating bar: same material as the LeftPanel (glass, 8px inset, concentric radius); rows inside are rounded-inner-2.
-    <header className={cn("sticky top-2 z-40 mx-2 mt-2 flex h-12 shrink-0 items-center gap-1 glass glass-2 scope-xl p-2", className)}>
+    <header className={cn("absolute inset-x-2 top-2 z-40 flex h-12 items-center gap-1 glass glass-2 scope-xl p-2", className)}>
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded-sm focus:bg-primary focus:px-3 focus:py-2 focus:text-primary-foreground">
         Skip to main content
       </a>
@@ -105,26 +124,31 @@ HeaderGlobalAction.displayName = "HeaderGlobalAction"
 /* ---------------- Left panel (side nav) ---------------- */
 
 export function LeftPanel({ children, rail, className, label = "Side navigation" }: { children: React.ReactNode; rail?: boolean; className?: string; label?: string }) {
-  const { navOpen, setNavOpen } = React.useContext(ShellCtx)
+  const { navOpen, setNavOpen, setNav } = React.useContext(ShellCtx)
+  // Tell the shell how much room to leave for us.
+  React.useEffect(() => {
+    setNav(rail ? "rail" : "full")
+    return () => setNav("none")
+  }, [rail, setNav])
   return (
     <>
-      {navOpen && <div className="fixed inset-0 top-16 z-30 animate-enter-fade bg-overlay lg:hidden" onClick={() => setNavOpen(false)} />}
+      {navOpen && <div className="absolute inset-0 top-16 z-30 animate-enter-fade bg-overlay lg:hidden" onClick={() => setNavOpen(false)} />}
       <nav
         aria-label={label}
         data-rail={rail || undefined}
         className={cn(
           // Floating sidebar: frosted glass, inset from the window, rounded; rows inside are concentric (rounded-inner-2).
           "group/nav z-30 flex shrink-0 flex-col overflow-y-auto glass glass-1 scope-xl p-2",
-          "fixed top-16 bottom-2 left-2 w-60 -translate-x-[calc(100%+1rem)] duration-moderate-02 ease-productive",
-          "lg:static lg:m-2 lg:mr-0 lg:translate-x-0",
+          // Floats over the scrolling page, below the header (top-16 = 8 + 48 + 8), inset 8px like the header.
+          "absolute top-16 bottom-2 left-2 w-60 -translate-x-[calc(100%+1rem)] duration-moderate-02 ease-productive",
+          "lg:translate-x-0",
           navOpen && "translate-x-0",
-          rail && "lg:absolute lg:inset-y-0 lg:w-12 lg:hover:w-60",
+          rail && "lg:w-12 lg:hover:w-60",
           className,
         )}
       >
         {children}
       </nav>
-      {rail && <div className="hidden w-14 shrink-0 lg:block" aria-hidden />}
     </>
   )
 }
@@ -251,7 +275,7 @@ export function RightPanel({ open, onOpenChange, title, children, footer, size =
         // Floating, like the left panel: the same 8px inset from the window, the same radius (scope-xl) and
         // 8px padding, so everything inside is concentric (rounded-inner-2 = 16 − 8). It sits on the TOP shell
         // layer (above the side nav and header), so it gets the matching, stronger glass tier.
-        "absolute inset-y-2 right-2 left-2 z-50 flex flex-col glass glass-3 scope-xl p-2 outline-none sm:left-auto",
+        "absolute top-16 right-2 bottom-2 left-2 z-50 flex flex-col glass glass-3 scope-xl p-2 outline-none sm:left-auto",
         size === "sm" ? "sm:w-80" : size === "lg" ? "sm:w-140" : "sm:w-100",
         open ? "animate-enter-panel-right" : "pointer-events-none animate-exit-panel-right",
         className,

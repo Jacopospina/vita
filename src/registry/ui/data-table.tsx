@@ -121,7 +121,8 @@ export function DataTable<T extends { id: string }>({
         // The wrapper is transparent; once pinned, the bar itself frosts over the rows running beneath it.
         <>
         <div ref={stripSentinel} aria-hidden className="h-0" />
-        <div ref={stripRef} className="sticky top-0 z-20 p-2.5">
+        {/* Sticks just below the shell's floating header (--corpus-shell-top), not behind it. */}
+        <div ref={stripRef} className="sticky top-[var(--corpus-shell-top,0px)] z-20 p-2.5">
           <div
             className={cn(
               "grid min-h-control-lg items-center rounded-outer-1 p-1 motion-expressive [grid-template-areas:'bar']",

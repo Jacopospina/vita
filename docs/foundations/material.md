@@ -26,6 +26,7 @@ avoid_when:
 
 - **Use the utility, never a recipe.** `glass glass-N` gives the fill, blur, saturation, hairline border, inner highlight and overlay shadow together.
 - **Pick the tier by layer.** The surface's z-index decides its tier; never choose one for looks.
+- **The page scrolls under the shell.** `ShellMain` fills the window and the header, side nav and right panel float above it, so scrolled content passes beneath the glass. Sticky content stops at `--corpus-shell-top`, just below the header.
 - **See through, frosted.** Content moving beneath stays faintly visible through the blur, so people keep their place.
 - **`elevated` surface.** Glass fills from `elevated`: `raised` plus the weather tint (see Theming). So only floating layers carry the tint.
 - **A whisper of lift.** In light mode the glass brightens its backdrop slightly (`glass-lift`, 1.03); more would bleach the page to flat white.
