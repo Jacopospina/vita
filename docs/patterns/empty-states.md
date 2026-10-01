@@ -7,7 +7,7 @@ use_when:
   - A table, list, dashboard widget or page has nothing to show
 avoid_when:
   - Showing a blank area or a lonely "No data"
-related: [data-table, search, filtering, loading]
+related: [data-table, search, filtering, thinking]
 ---
 
 ## Three kinds

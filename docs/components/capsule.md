@@ -10,7 +10,7 @@ avoid_when:
   - Anything that needs reading or an action → toast banner
   - Errors the user must fix → InlineNotification next to the cause
   - Long-running work the user should track → ProgressBar in the page
-related: [notification, notifications, progress-bar, loading]
+related: [notification, notifications, progress-bar, thinking]
 ---
 
 ## Anatomy — always three parts

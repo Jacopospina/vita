@@ -11,7 +11,7 @@ avoid_when:
   - Heterogeneous items with one action each → ContainedList
   - Visual browsing → Tile grid
   - One column → it's a list
-related: [pagination, structured-list, contained-list, filtering, search, empty-states, loading]
+related: [pagination, structured-list, contained-list, filtering, search, empty-states, thinking]
 ---
 
 ## Anatomy (top → bottom)

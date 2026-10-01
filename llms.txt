@@ -131,9 +131,6 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/gett
 - [List](docs/components/list.md): Typographic lists inside content — bullets and numbered steps. Not interactive.
   - use: Unordered — sets of related points in content; Ordered — sequential instructions where order matters
   - avoid: Interactive rows → ContainedList; Records → DataTable / StructuredList
-- [Loading](docs/components/loading.md): Corpus never spins — it thinks. Tiny particles that blend like liquid show what kind of work is happening. Skeletons whenever the layout is known.
-  - use: Skeleton — content with a known shape is on its way (cards, tables, profiles); Loading / Thinking — a region is working and its layout is unknown; Loading overlay — interaction must be blocked while a region recomputes
-  - avoid: A single action → Button loading / InlineLoading; Measurable progress → ProgressBar; Anything under 300ms → show nothing; Spinners → they belong to the old world (the audit rejects them)
 - [Menu buttons](docs/components/menu-buttons.md): Three buttons that open menus. MenuButton groups actions, ComboButton adds alternatives to a default action, OverflowMenu hides secondary actions.
   - use: MenuButton — several equally important related actions under one label ("Export ▾", "Create ▾"); ComboButton — one dominant action plus variations ("Save" | "Save as…", "Save as template"); OverflowMenu — secondary actions on a row, tile, card or page header (⋮)
   - avoid: Selecting a value → Dropdown; A single action → Button; Primary page actions hidden in an overflow → keep the primary visible
@@ -185,6 +182,9 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/gett
 - [Text input](docs/components/text-input.md): Single-line free text (plus TextArea and PasswordInput). Floating label inside, help below, errors that explain the fix.
   - use: Free text the system can't predict (names, titles, references); Numeric identifiers — phone, postcode, card (inputMode="numeric"); Long text — TextArea; secrets — PasswordInput
   - avoid: A known set of answers → RadioGroup / Dropdown / Combobox; Quantities → NumberInput; Dates → DatePicker; Searching a collection → Search
+- [Thinking](docs/components/thinking.md): Corpus never spins — it thinks. Tiny particles that blend like liquid show what kind of work is happening. Skeletons whenever the layout is known.
+  - use: Skeleton — content with a known shape is on its way (cards, tables, profiles); Loading / Thinking — a region is working and its layout is unknown; Loading overlay — interaction must be blocked while a region recomputes
+  - avoid: A single action → Button loading / InlineLoading; Measurable progress → ProgressBar; Anything under 300ms → show nothing; Spinners → they belong to the old world (the audit rejects them)
 - [Tile](docs/components/tile.md): A surface that groups related content. Base, clickable, selectable and expandable, and never nested.
   - use: Base — grouping related info on a page (a metric, a summary); Clickable — a card that is one destination (a project, a feature area); Selectable — choosing among rich options (plans, templates) — single or multi; Expandable — summary first, details on demand; TileSet — several cards that share one meaning, as one object
   - avoid: Tables of records → DataTable; Wrapping every section in a card "to make it look designed" → use whitespace; Tiles inside tiles → flatten the hierarchy

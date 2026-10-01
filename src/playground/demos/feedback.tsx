@@ -172,7 +172,7 @@ export function ShellDemo({ rail, right, edit }: { rail?: boolean; right?: boole
 }
 
 export const feedbackDemos: DemoMap = {
-  "components/loading": [
+  "components/thinking": [
     {
       title: "Thinking — four modes",
       description: "Particles that blend like liquid. Pick the mode by what is happening; agentic modes wear the AI spectrum.",

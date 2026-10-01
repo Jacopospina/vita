@@ -10,7 +10,7 @@ avoid_when:
   - Steps the user completes → ProgressIndicator
   - Short actions → Button loading / InlineLoading
   - Content loading with known layout → Skeleton
-related: [progress-indicator, loading, file-uploader]
+related: [progress-indicator, thinking, file-uploader]
 ---
 
 ## Rules

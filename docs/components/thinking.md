@@ -1,5 +1,5 @@
 ---
-title: Loading
+title: Thinking
 summary: Corpus never spins — it thinks. Tiny particles that blend like liquid show what kind of work is happening. Skeletons whenever the layout is known.
 status: stable
 import: "import { Loading, Skeleton, SkeletonText } from \"@/components/corpus/loading\"\nimport { Thinking } from \"@/components/corpus/thinking\""

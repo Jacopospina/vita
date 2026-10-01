@@ -6,7 +6,7 @@ use_when:
   - Any view that fetches data
 avoid_when:
   - Blocking the whole page for partial data
-related: [loading, inline-loading, progress-bar, empty-states]
+related: [thinking, inline-loading, progress-bar, empty-states]
 ---
 
 ## The timeline

@@ -9,7 +9,7 @@ use_when:
 avoid_when:
   - Blocking actions → Button loading
   - Page/region loads → Skeleton / Loading
-related: [loading, button, notification]
+related: [thinking, button, notification]
 ---
 
 ## Rules

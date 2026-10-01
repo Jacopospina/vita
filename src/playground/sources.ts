@@ -20,7 +20,7 @@ const map: Record<string, string[]> = {
   "components/dropdown": ["registry/ui/dropdown.tsx", "registry/ui/option.tsx"],
   "components/menu-buttons": ["registry/ui/menu-button.tsx"],
   "components/inline-loading": ["registry/ui/loading.tsx", "registry/ui/thinking.tsx"],
-  "components/loading": ["registry/ui/loading.tsx", "registry/ui/thinking.tsx"],
+  "components/thinking": ["registry/ui/loading.tsx", "registry/ui/thinking.tsx"],
   "components/ui-shell-header": ["registry/ui/ui-shell.tsx"],
   "components/ui-shell-left-panel": ["registry/ui/ui-shell.tsx"],
   "components/ui-shell-right-panel": ["registry/ui/ui-shell.tsx"],

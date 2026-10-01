@@ -19,9 +19,13 @@ import { GuidelinesPage } from "./home"
 /** Pseudo-sections for the two index pages. */
 type Route = Section | "guidelines"
 
+/** Renamed pages: old links keep working. */
+const moved: Record<string, string> = { "components/loading": "components/thinking" }
+
 function useRoute() {
   const read = (): [Route, string] => {
-    const [, section, slug] = window.location.hash.replace(/^#/, "").split("/")
+    const path = window.location.hash.replace(/^#\/?/, "")
+    const [section, slug] = (moved[path] ?? path).split("/")
     if (section === "guidelines") return ["guidelines", ""]
     if (section && slug && section in manifest) return [section as Section, slug]
     return ["guidelines", ""] // unknown or empty → About Corpus
