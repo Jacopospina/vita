@@ -388,7 +388,9 @@
     line-height: 1.45;
   }
   ::selection { background: var(--corpus-primary-subtle); }
-  :focus-visible { outline: 1px solid var(--corpus-ring); outline-offset: 1px; box-shadow: 0 0 0 5px color-mix(in oklab, var(--corpus-ring) 22%, transparent); animation: var(--animate-focus-in); }
+  /* Fallback ring for elements without their own — skipped by elements that opt out (outline-none), e.g. a
+     composer's inner textarea, so only the component's ring shows. */
+  :focus-visible:not(.outline-none) { outline: 1px solid var(--corpus-ring); outline-offset: 1px; box-shadow: 0 0 0 5px color-mix(in oklab, var(--corpus-ring) 22%, transparent); animation: var(--animate-focus-in); }
 }
 
 /**

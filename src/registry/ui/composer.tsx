@@ -115,14 +115,14 @@ export function Composer({ placeholder = "Describe what you need", onSubmit, sug
           )}
           <span className="flex-1" />
           {/* Send exists only when there's something to send — never a disabled button. It slides in from the
-              composer's own edge (clipped in its slot): expressive in, productive out. */}
-          <span className="flex overflow-hidden rounded-full">
+              composer's floor (its POSITION moves; nothing is clipped), fading in: expressive in, productive out. */}
+          <span className="flex">
             <span
               inert={!canSend || undefined}
               aria-hidden={!canSend || undefined}
               className={cn(
                 "flex",
-                canSend ? "translate-x-0 opacity-100 duration-moderate-02 ease-spring" : "translate-x-full opacity-0 duration-moderate-01 ease-productive",
+                canSend ? "translate-y-0 opacity-100 duration-moderate-02 ease-spring" : "translate-y-3 opacity-0 duration-moderate-01 ease-productive",
               )}
             >
               <IconButton icon={ArrowUp} label="Send" variant="primary" size="sm" loading={loading} onClick={submit} className="rounded-full [corner-shape:round]" />

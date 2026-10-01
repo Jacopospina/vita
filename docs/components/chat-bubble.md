@@ -28,4 +28,6 @@ related: [agent-conversation, ai-label, composer, thinking]
 2. **Belonging joins messages.** Consecutive messages from one author sit close, their inner corners tighten, and only the last shows the author and time.
 3. **Thinking, not dots.** While the agent works, show `ChatTyping` with what it's doing ("Searching the help center"), never bouncing dots.
 4. **Failures stay in place.** A message that didn't send stays in the thread with "Not sent" and a Retry; never a toast.
-5. **Motion.** New messages spring in from their author's side; the thread glides to make room.
+5. **Sending is one motion.** The text you typed becomes its bubble: the bubble forms around the words right in the composer, then travels to its place in the thread. It flies above everything, so it never appears from behind the input.
+6. **Pinned to now.** The conversation stays at the latest message without scrolling, unless the person scrolls up to read history.
+7. **Motion.** The agent's messages spring in from their side; the thread glides to make room.

@@ -22,8 +22,8 @@
   color-scheme: light;
 
   /* surfaces — grouped layering: white canvas, soft grey layers */
-  --corpus-background: oklch(1 0 0);
-  --corpus-layer-1: oklch(0.976 var(--_nc) var(--_nh)); /* a light lift off the white page */
+  --corpus-background: oklch(0.988 var(--_nc) var(--_nh)); /* the lightest grey — pure white glares */
+  --corpus-layer-1: oklch(0.972 var(--_nc) var(--_nh)); /* cards: a soft step off the page */
   --corpus-layer-2: oklch(0.923 var(--_nc) var(--_nh));
   --corpus-layer-3: oklch(0.862 var(--_nc) var(--_nh));
   --corpus-raised: oklch(1 0 0);
