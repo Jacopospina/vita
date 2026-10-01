@@ -244,40 +244,48 @@ export function MultiSelect({ items, value, defaultValue = [], onValueChange, si
   const toggle = (v: string) => setVal(val.includes(v) ? val.filter((x) => x !== v) : [...val, v])
   return (
     <FieldShell {...field} filled={val.length > 0} fadeLabel={val.length > 0} floatOnFocus={false} className={className}>
-      {(a11y) => (
+      {(field) => {
+        // A button can't carry aria-required; the field's other a11y (id, describedby, invalid) stays.
+        const a11y = Object.fromEntries(Object.entries(field).filter(([k]) => k !== "aria-required"))
+        return (
         <PopoverPrimitive.Root>
-          <PopoverPrimitive.Trigger {...a11y} disabled={disabled} className={cn(fieldClasses, fieldSize[size], "group/ms relative flex items-center gap-2 pr-10 text-left", val.length > 0 && "pt-0")}>
+          {/* The trigger holds only non-interactive content; clear-all is its own button beside it (never nested). */}
+          <div className="relative">
+          <PopoverPrimitive.Trigger {...a11y} disabled={disabled} className={cn(fieldClasses, fieldSize[size], "group/ms relative flex items-center gap-2 text-left", val.length > 0 ? "pt-0 pr-16" : "pr-10")}>
             <span
               aria-hidden={val.length === 0 || undefined}
               className={cn(
-                "inline-flex h-6 shrink-0 items-center gap-1 overflow-hidden rounded-full bg-inverse text-caption font-medium text-inverse-foreground duration-moderate-01 ease-spring",
-                val.length > 0 ? "max-w-16 pr-1 pl-2 opacity-100" : "pointer-events-none -mr-2 max-w-0 scale-75 px-0 opacity-0",
+                "inline-flex h-6 shrink-0 items-center overflow-hidden rounded-full bg-inverse text-caption font-medium text-inverse-foreground duration-moderate-01 ease-spring",
+                val.length > 0 ? "max-w-16 px-2 opacity-100" : "pointer-events-none -mr-2 max-w-0 scale-75 px-0 opacity-0",
               )}
             >
               <AnimatedNumber value={val.length} />
-              <span
-                role="button"
-                tabIndex={val.length > 0 ? 0 : -1}
-                aria-label="Clear all selected items"
-                onClick={(e) => { e.stopPropagation(); setVal([]) }}
-                onKeyDown={(e) => { if (e.key === "Enter") { e.stopPropagation(); setVal([]) } }}
-                className="flex size-4 items-center justify-center rounded-full hover:bg-hover focus-ring"
-              >
-                <Icon as={Close} size="sm" />
-              </span>
+              <span className="sr-only"> selected</span>
             </span>
             <span className="flex-1 truncate">
               <AnimatedText>{val.length === 0 ? " " : items.filter((i) => val.includes(i.value)).map((i) => i.label).join(", ")}</AnimatedText>
             </span>
             <Icon as={ChevronDown} className="absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground duration-moderate-01 ease-productive group-data-[state=open]/ms:rotate-180" />
           </PopoverPrimitive.Trigger>
+          <button
+            type="button"
+            aria-label="Clear all selected items"
+            tabIndex={val.length > 0 ? 0 : -1}
+            aria-hidden={val.length === 0 || undefined}
+            onClick={() => setVal([])}
+            className={cn("absolute top-1/2 right-8 flex size-6 -translate-y-1/2 items-center justify-center rounded-sm text-muted-foreground duration-moderate-01 ease-spring hover:text-foreground focus-ring", val.length > 0 ? "scale-100 opacity-100" : "pointer-events-none scale-75 opacity-0")}
+          >
+            <Icon as={Close} />
+          </button>
+          </div>
           <PopoverPrimitive.Portal>
             <PopoverPrimitive.Content align="start" sideOffset={4} className={cn(listClasses, "w-(--radix-popover-trigger-width) min-w-0 overflow-y-auto")}>
               <MultiOptions items={items} selected={val} onToggle={toggle} />
             </PopoverPrimitive.Content>
           </PopoverPrimitive.Portal>
         </PopoverPrimitive.Root>
-      )}
+        )
+      }}
     </FieldShell>
   )
 }

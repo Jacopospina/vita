@@ -80,7 +80,7 @@ function Block({ token: t, context }: { token: Token; context: string }) {
     case "code": {
       const code = (t as Tokens.Code).text
       // Decision trees and diagrams are read, not copied.
-      if (/[├└→]/.test(code)) return <Tile className="max-w-3xl overflow-x-auto"><pre className="font-mono text-footnote leading-relaxed text-foreground">{code}</pre></Tile>
+      if (/[├└→]/.test(code)) return <Tile className="max-w-3xl overflow-x-auto" tabIndex={0} role="region" aria-label="Decision tree"><pre className="font-mono text-footnote leading-relaxed text-foreground">{code}</pre></Tile>
       return <CodeSnippet type="multi">{code}</CodeSnippet>
     }
     default:

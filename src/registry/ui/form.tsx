@@ -162,7 +162,8 @@ export function FieldShell({ id: idProp, label, hideLabel, helperText, invalid, 
         <LabelPrimitive.Root
           htmlFor={id}
           className={cn(
-            "pointer-events-none absolute left-inset max-w-[calc(100%-4rem)] truncate text-body text-placeholder select-none motion-productive",
+            // The label is the field's name, so it needs text contrast (≥ 4.5:1) even at rest — muted, not placeholder grey.
+            "pointer-events-none absolute left-inset max-w-[calc(100%-4rem)] truncate text-body text-muted-foreground select-none motion-productive",
             "group-focus-within/field:text-muted-foreground group-data-[invalid]/field:text-error-foreground",
             multiline ? cn("top-3", floatedMultiline) : cn("top-1/2 -translate-y-1/2", floatWhenFilled, floatOnFocus && floatWhenFocused),
             hideLabel && "sr-only",

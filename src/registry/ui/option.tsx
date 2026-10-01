@@ -88,6 +88,6 @@ export const Option = React.forwardRef<HTMLDivElement, OptionProps>(({ label, de
 Option.displayName = "Option"
 
 /** OptionList — the list surface, for static/in-page use (dropdowns render their own floating one). */
-export function OptionList({ multiple, className, ...props }: React.HTMLAttributes<HTMLDivElement> & { multiple?: boolean }) {
-  return <div role="listbox" aria-multiselectable={multiple || undefined} className={cn("flex w-64 flex-col scope-lg glass glass-3 p-1.5 text-foreground", className)} {...props} />
+export function OptionList({ multiple, label = "Options", className, ...props }: React.HTMLAttributes<HTMLDivElement> & { multiple?: boolean; label?: string }) {
+  return <div role="listbox" aria-label={label} aria-multiselectable={multiple || undefined} className={cn("flex w-64 flex-col scope-lg glass glass-3 p-1.5 text-foreground", className)} {...props} />
 }

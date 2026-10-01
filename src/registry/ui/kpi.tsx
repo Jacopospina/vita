@@ -46,7 +46,7 @@ export function Kpi({ label, value, format, delta, deltaFormat = { style: "perce
       )}
       {(delta !== undefined || period) && !loading && (
         <span className={cn("inline-flex items-center gap-1 text-footnote", tone)}>
-          <Icon as={flat ? Subtract : delta! > 0 ? ArrowUp : ArrowDown} size="sm" label={flat ? "No change" : delta! > 0 ? "Up" : "Down"} />
+          <Icon as={flat ? Subtract : delta! > 0 ? ArrowUp : ArrowDown} size="sm" className="size-3" label={flat ? "No change" : delta! > 0 ? "Up" : "Down"} />
           {delta !== undefined && <AnimatedNumber value={Math.abs(delta)} format={deltaFormat} />}
           {period && <span className="text-muted-foreground">{period}</span>}
         </span>
