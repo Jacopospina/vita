@@ -49,7 +49,7 @@ export function RadioButton({ label, helperText, className, id: idProp, ...props
       <RadioPrimitive.Item
         id={id}
         className={cn(
-          "peer relative mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full border border-border-strong bg-field",
+          "peer relative tap mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full border border-border-strong bg-field",
           "duration-moderate-02 ease-productive focus-ring active:scale-90",
           "data-[state=checked]:border-primary data-[state=checked]:ease-expressive",
           "disabled:cursor-not-allowed disabled:border-disabled-foreground",

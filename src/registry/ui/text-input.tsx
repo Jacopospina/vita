@@ -55,7 +55,7 @@ export const PasswordInput = React.forwardRef<HTMLInputElement, Omit<TextInputPr
               type="button"
               onClick={() => setVisible((v) => !v)}
               aria-label={visible ? "Hide password" : "Show password"}
-              className="absolute inset-y-0 right-0 flex w-control-md items-center justify-center rounded-md text-muted-foreground hover:text-foreground focus-ring-inset"
+              className="tap absolute inset-y-0 right-0 flex w-control-md items-center justify-center rounded-md text-muted-foreground hover:text-foreground focus-ring-inset"
             >
               <SwapIcon as={visible ? ViewOff : View} />
             </button>

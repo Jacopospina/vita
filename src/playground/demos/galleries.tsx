@@ -11,22 +11,17 @@ import { EmptyState } from "@/registry/ui/empty-state"
 import { Button } from "@/registry/ui/button"
 import { toast } from "@/registry/ui/notification"
 import type { IconType } from "@/registry/icons"
+import { allIcons, allPictograms, type Glyph } from "@/registry/catalog"
 
-type Glyph = React.ComponentType<Record<string, unknown>>
 const PAGE = 240
 
-/** Every exported component in a glyph module, by name. */
+/** Every glyph in the system, by name — fetched only here, in its own chunk (registry/catalog). */
 function useGlyphs(kind: "icons" | "pictograms") {
   const [glyphs, setGlyphs] = React.useState<[string, Glyph][] | null>(null)
   React.useEffect(() => {
     let alive = true
-    const load = kind === "icons" ? import("@/registry/icons") : import("@/registry/pictograms")
-    load.then((mod) => {
-      if (!alive) return
-      const list = Object.entries(mod as Record<string, unknown>)
-        .filter(([name, v]) => /^[A-Z]/.test(name) && name !== "Icon" && (typeof v === "function" || (typeof v === "object" && v !== null && "render" in v)))
-        .sort(([a], [b]) => a.localeCompare(b)) as [string, Glyph][]
-      setGlyphs(list)
+    ;(kind === "icons" ? allIcons() : allPictograms()).then((list) => {
+      if (alive) setGlyphs(list)
     })
     return () => {
       alive = false
