@@ -179,13 +179,15 @@ export function MiniChat({ agent, status = "Online", messages, typing, onSend, o
     })
     document.body.appendChild(ghost)
     bubble.style.opacity = "0"
+    // Travel on Corpus's expressive curve: it leaves fast and settles slowly — a message SENT, not drifted.
+    const leaveFast = getComputedStyle(document.documentElement).getPropertyValue("--corpus-ease-expressive").trim() || "cubic-bezier(0.22, 1, 0.36, 1)"
     const flight = ghost.animate(
       [
-        { transform: from, backgroundColor: "transparent", color: "var(--corpus-foreground)", offset: 0 },
-        { transform: from, backgroundColor: bs.backgroundColor, color: bs.color, offset: 0.3 }, // 1) the bubble forms in place
-        { transform: "translate(0, 0)", backgroundColor: bs.backgroundColor, color: bs.color, offset: 1 }, // 2) it travels
+        { transform: from, backgroundColor: "transparent", color: "var(--corpus-foreground)", offset: 0, easing: "linear" },
+        { transform: from, backgroundColor: bs.backgroundColor, color: bs.color, offset: 0.18, easing: leaveFast }, // 1) the bubble forms in place
+        { transform: "translate(0, 0)", backgroundColor: bs.backgroundColor, color: bs.color, offset: 1 }, // 2) it shoots off, then settles
       ],
-      { duration: 520, easing: "cubic-bezier(0.2, 0, 0.38, 0.9)" },
+      { duration: 560 },
     )
     const land = () => {
       bubble.style.opacity = ""
