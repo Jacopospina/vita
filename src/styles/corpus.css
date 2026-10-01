@@ -122,11 +122,11 @@
   --text-title-1--letter-spacing: -0.015em;
   --text-large-title: var(--corpus-text-large-title);
   --text-large-title--line-height: 1.15;
-  --text-large-title--font-weight: 700;
+  --text-large-title--font-weight: 600;
   --text-large-title--letter-spacing: -0.02em;
   --text-display: var(--corpus-text-display);
   --text-display--line-height: 1.05;
-  --text-display--font-weight: 700;
+  --text-display--font-weight: 600;
   --text-display--letter-spacing: -0.025em;
 
   /* shape */
