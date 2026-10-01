@@ -70,7 +70,7 @@
   --corpus-selected-foreground: oklch(0.464 calc(var(--_bc) * 1.1) calc(var(--_bh) + 6));
   --corpus-skeleton: oklch(0.923 var(--_nc) var(--_nh));
   /* icon placeholder tile — translucent, so it reads on any layer */
-  --corpus-icon-surface: color-mix(in oklab, oklch(1 0 0) 72%, transparent);
+  --corpus-icon-surface: oklch(1 0 0); /* solid white tile */
 
   /* support — system green, orange, red, blue */
   --corpus-success: oklch(0.73 0.194 var(--_hs));
