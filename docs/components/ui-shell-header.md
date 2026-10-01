@@ -24,3 +24,8 @@ related: [ui-shell-left-panel, ui-shell-right-panel, global-header]
 4. **Active global action** (its panel is open) shows the pressed state. Panels open as `RightPanel`.
 5. **Translucent material** (backdrop blur over `background`) keeps the header light. Don't make the header brand-colored.
 6. **Skip link** ("Skip to main content") is built in. Keep `ShellMain` as the main landmark.
+
+## Look
+
+- **Floating glass, like the side panel.** The header floats 8px from the window's edges, with frosted `glass` and rounded corners. It's the same material as the LeftPanel, so the two read as one frame.
+- **Pills inside.** The product name, nav items and global actions are 32px pills with the concentric radius. The current nav item gets the same soft grey as the current sidebar row.

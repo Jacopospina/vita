@@ -8,7 +8,8 @@ import { IconButton, ActionBar } from "@/registry/ui/button"
 
 /**
  * UI Shell — the persistent frame of a product. Three parts:
- *   Header      → product name, global nav, global actions (search, notifications, help, user). 48px, always visible.
+ *   Header      → product name, global nav, global actions (search, notifications, help, user). A floating, frosted-glass
+ *                 bar inset 8px from the window, like the LeftPanel; items inside are concentric pills. Always visible.
  *   LeftPanel   → side navigation between the product's main areas: a floating, frosted-glass sidebar inset from the
  *                 window edges (concentric radius), with Finder-style sections (small header, collapses on hover chevron).
  *                 Rail (icons) or expanded.
@@ -37,6 +38,9 @@ export function ShellMain({ children, className, ...props }: React.HTMLAttribute
 
 /* ---------------- Header ---------------- */
 
+/** Header items: 32px concentric pills inside the floating bar (radius = bar radius − its 8px padding). */
+const pill = "h-8 rounded-inner-2 [corner-shape:round]"
+
 export function Header({ productName, prefix, href = "/", children, actions, className }: {
   productName: string
   /** Company/platform prefix, e.g. "Corpus" in "Corpus [Insights]". */
@@ -50,17 +54,18 @@ export function Header({ productName, prefix, href = "/", children, actions, cla
 }) {
   const { navOpen, setNavOpen } = React.useContext(ShellCtx)
   return (
-    <header className={cn("sticky top-0 z-40 flex h-12 shrink-0 items-center border-b border-border-subtle bg-background/85 backdrop-blur-xl backdrop-saturate-150", className)}>
+    // Floating bar: same material as the LeftPanel (glass, 8px inset, concentric radius); rows inside are rounded-inner-2.
+    <header className={cn("sticky top-2 z-40 mx-2 mt-2 flex h-12 shrink-0 items-center gap-1 glass scope-xl p-2", className)}>
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded-sm focus:bg-primary focus:px-3 focus:py-2 focus:text-primary-foreground">
         Skip to main content
       </a>
-      <IconButton icon={navOpen ? Close : MenuIcon} label={navOpen ? "Close menu" : "Open menu"} onClick={() => setNavOpen(!navOpen)} className="size-12 rounded-none lg:hidden" />
-      <a href={href} className="flex h-full items-center gap-1 px-3 text-body whitespace-nowrap focus-ring-inset">
+      <IconButton icon={navOpen ? Close : MenuIcon} label={navOpen ? "Close menu" : "Open menu"} onClick={() => setNavOpen(!navOpen)} className={cn(pill, "w-8 lg:hidden")} />
+      <a href={href} className="flex h-8 items-center gap-1 rounded-inner-2 px-3 text-body whitespace-nowrap duration-fast-02 hover:bg-hover focus-ring-inset">
         {prefix && <span className="font-normal text-muted-foreground">{prefix}</span>}
         <span className="font-semibold">{productName}</span>
       </a>
-      {children && <nav aria-label={productName} className="hidden h-full items-center lg:flex">{children}</nav>}
-      <div className="ml-auto flex h-full items-center">{actions}</div>
+      {children && <nav aria-label={productName} className="hidden items-center gap-1 lg:flex">{children}</nav>}
+      <div className="ml-auto flex items-center gap-1">{actions}</div>
     </header>
   )
 }
@@ -72,9 +77,9 @@ export function HeaderNavItem({ href, active, children, onClick }: { href?: stri
       onClick={onClick}
       aria-current={active ? "page" : undefined}
       className={cn(
-        "relative flex h-full items-center px-3 text-body text-muted-foreground duration-fast-02 hover:bg-hover hover:text-foreground focus-ring-inset",
-        "after:absolute after:inset-x-8 after:bottom-0 after:h-0.5 after:rounded-full after:bg-transparent after:motion-expressive",
-        active && "text-foreground after:inset-x-4 after:bg-primary",
+        // Same row treatment as the sidebar: a concentric pill, soft grey when current.
+        "relative flex h-8 items-center rounded-inner-2 px-3 text-body text-muted-foreground duration-fast-02 hover:bg-hover hover:text-foreground focus-ring-inset",
+        active && "bg-active font-medium text-foreground",
       )}
     >
       {children}
@@ -84,9 +89,9 @@ export function HeaderNavItem({ href, active, children, onClick }: { href?: stri
 
 export const HeaderGlobalAction = React.forwardRef<HTMLButtonElement, { icon: IconType; label: string; active?: boolean; badge?: boolean; onClick?: () => void } & React.ButtonHTMLAttributes<HTMLButtonElement>>(
   ({ icon, label, active, badge, className, ...props }, ref) => (
-    <span className="relative flex h-full">
-      <IconButton ref={ref} icon={icon} label={label} pressed={active} className={cn("h-12 w-12 rounded-none", className)} {...props} />
-      {badge && <span aria-hidden className="pointer-events-none absolute top-3 right-3 size-2 rounded-full bg-error ring-2 ring-background" />}
+    <span className="relative flex">
+      <IconButton ref={ref} icon={icon} label={label} pressed={active} className={cn(pill, "w-8", className)} {...props} />
+      {badge && <span aria-hidden className="pointer-events-none absolute top-1 right-1 size-2 rounded-full bg-error ring-2 ring-raised" />}
     </span>
   ),
 )
@@ -98,14 +103,14 @@ export function LeftPanel({ children, rail, className, label = "Side navigation"
   const { navOpen, setNavOpen } = React.useContext(ShellCtx)
   return (
     <>
-      {navOpen && <div className="fixed inset-0 top-12 z-30 animate-enter-fade bg-overlay lg:hidden" onClick={() => setNavOpen(false)} />}
+      {navOpen && <div className="fixed inset-0 top-16 z-30 animate-enter-fade bg-overlay lg:hidden" onClick={() => setNavOpen(false)} />}
       <nav
         aria-label={label}
         data-rail={rail || undefined}
         className={cn(
           // Floating sidebar: frosted glass, inset from the window, rounded; rows inside are concentric (rounded-inner-2).
           "group/nav z-30 flex shrink-0 flex-col overflow-y-auto glass scope-xl p-2",
-          "fixed top-14 bottom-2 left-2 w-60 -translate-x-[calc(100%+1rem)] duration-moderate-02 ease-productive",
+          "fixed top-16 bottom-2 left-2 w-60 -translate-x-[calc(100%+1rem)] duration-moderate-02 ease-productive",
           "lg:static lg:m-2 lg:mr-0 lg:translate-x-0",
           navOpen && "translate-x-0",
           rail && "lg:absolute lg:inset-y-0 lg:w-12 lg:hover:w-60",
