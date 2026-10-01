@@ -14,6 +14,7 @@ import { Link } from "@/registry/ui/link"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/registry/ui/tabs"
 import { ContentSwitcher } from "@/registry/ui/content-switcher"
 import { Tile, TileSet, TileSetItem } from "@/registry/ui/tile"
+import { ComponentCanvas } from "./canvas"
 import { CardsExample, AgentsExample, RunsExample, ConversationsExample, SettingsExample, SignInExample } from "./examples"
 
 /*
@@ -75,7 +76,7 @@ export function Showcase() {
           <HeaderNavItem href="#themes">Themes</HeaderNavItem>
         </Header>
         <ShellMain>
-          <Container className="py-16">
+          <Container className="pt-16 pb-8">
             <Stack gap="3xl" className="stagger">
               {/* Hero */}
               <Stack gap="md" align="center" className="text-center">
@@ -91,6 +92,14 @@ export function Showcase() {
                   <Button variant="secondary" onClick={() => document.getElementById("examples")?.scrollIntoView({ behavior: "smooth" })}>See what you can make</Button>
                 </Inline>
               </Stack>
+            </Stack>
+          </Container>
+
+          {/* The component canvas — full bleed, past both edges of the window */}
+          <ComponentCanvas />
+
+          <Container className="pt-8 pb-16">
+            <Stack gap="3xl" className="stagger">
 
               {/* Live examples */}
               <section id="examples" aria-label="Examples">

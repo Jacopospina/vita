@@ -193,6 +193,7 @@
   --animate-banner-in: corpus-banner-in var(--corpus-duration-expressive) var(--corpus-ease-expressive-enter) both, corpus-gravity var(--corpus-duration-expressive) linear both;
   --animate-enter-fall: corpus-fall-in var(--corpus-duration-expressive) linear both;
   --animate-chip-in: corpus-chip-in var(--corpus-duration-expressive) var(--corpus-ease-spring) both;
+  --animate-drift: corpus-drift 28s ease-in-out infinite alternate;
   --animate-banner-out: corpus-banner-out var(--corpus-duration-moderate-02) var(--corpus-ease-productive-exit) both;
   --animate-island-in: corpus-island-in var(--corpus-duration-expressive) var(--corpus-ease-expressive-enter) both, corpus-gravity var(--corpus-duration-expressive) linear both;
   --animate-island-out: corpus-island-out var(--corpus-duration-moderate-02) var(--corpus-ease-productive-exit) var(--corpus-duration-moderate-02) both;
@@ -393,4 +394,10 @@
   border: 1px solid color-mix(in oklab, var(--corpus-foreground) 10%, transparent);
   box-shadow: var(--corpus-shadow-overlay), inset 0 1px 0 color-mix(in oklab, white 22%, transparent);
   @media (prefers-reduced-transparency: reduce) { background-color: var(--corpus-raised); backdrop-filter: none; }
+}
+
+/* Canvas edges dissolve on all four sides, so content reads as continuing beyond the frame. */
+@utility canvas-fade {
+  mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent), linear-gradient(to bottom, transparent, black 10%, black 82%, transparent);
+  mask-composite: intersect;
 }
