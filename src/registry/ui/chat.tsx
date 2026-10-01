@@ -80,7 +80,7 @@ export function ChatBubble({ role, children, author, time, position = "single", 
         >
           {children}
         </div>
-        {showMeta && (author || time || status === "failed") && (
+        {showMeta && (time || status === "failed" || status === "sending") && (
           <div className="flex items-center gap-1.5 px-1 text-caption text-muted-foreground">
             {status === "failed" ? (
               <>
@@ -90,7 +90,8 @@ export function ChatBubble({ role, children, author, time, position = "single", 
               </>
             ) : (
               <>
-                {author && <span className="font-medium">{author}</span>}
+                {/* Who wrote it is clear from the side; only the time is shown. The author stays for screen readers. */}
+                {author && <span className="sr-only">{author}</span>}
                 {time && <span>{time}</span>}
                 {status === "sending" && <span>Sending…</span>}
               </>
@@ -134,7 +135,27 @@ export interface ChatMessage {
   text: React.ReactNode
   author?: string
   time?: string
+  /** When it was sent. Shows as the time, and starts a day separator when the day changes. */
+  at?: Date | string
   status?: ChatBubbleProps["status"]
+}
+
+const dayKey = (d: Date) => d.toDateString()
+/** "Today 09:12" · "Sunday 13:01" (this week) · "12 Sep 13:01" (older). */
+function dayLabel(d: Date) {
+  const now = new Date()
+  const time = d.toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" })
+  if (dayKey(d) === dayKey(now)) return `Today ${time}`
+  const days = (now.getTime() - d.getTime()) / 864e5
+  const day = days < 7 ? d.toLocaleDateString(undefined, { weekday: "long" }) : d.toLocaleDateString(undefined, { day: "numeric", month: "short" })
+  return `${day} ${time}`
+}
+
+/** Scroll a container to its end — smoothly unless motion is reduced (falls back where scrollTo is missing). */
+function scrollToEnd(el: HTMLElement, smooth = true) {
+  const reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+  if (typeof el.scrollTo === "function") el.scrollTo({ top: el.scrollHeight, behavior: smooth && !reduced ? "smooth" : "auto" })
+  else el.scrollTop = el.scrollHeight
 }
 
 /** ChatThread — bubbles in order; runs from the same author join; the column glides when messages arrive. */
@@ -144,12 +165,19 @@ export function ChatThread({ messages, typing, launchedId, className }: { messag
   return (
     <div ref={ref} role="log" aria-live="polite" className={cn("flex flex-col", className)}>
       {messages.map((m, i) => {
-        const prev = messages[i - 1]?.role === m.role
-        const next = messages[i + 1]?.role === m.role
+        const at = m.at ? new Date(m.at) : null
+        const prevAt = messages[i - 1]?.at ? new Date(messages[i - 1].at!) : null
+        // A new day starts a separator (centred, medium space above and below); it also breaks a run of bubbles.
+        const newDay = !!at && (!prevAt || dayKey(prevAt) !== dayKey(at)) && (i > 0 || dayKey(at) !== dayKey(new Date()))
+        const prev = !newDay && messages[i - 1]?.role === m.role
+        const nextAt = messages[i + 1]?.at ? new Date(messages[i + 1].at!) : null
+        const next = messages[i + 1]?.role === m.role && !(at && nextAt && dayKey(at) !== dayKey(nextAt))
         const position = prev && next ? "middle" : prev ? "last" : next ? "first" : "single"
+        const time = m.time ?? (at ? at.toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" }) : undefined)
         return (
-          <div key={m.id} data-message-id={m.id} className={prev ? "pt-0.5" : i === 0 ? "" : "pt-3"}>
-            <ChatBubble role={m.role} author={m.author} time={m.time} status={m.status} position={position} launched={m.id === launchedId}>{m.text}</ChatBubble>
+          <div key={m.id} data-message-id={m.id} className={prev ? "pt-0.5" : i === 0 || newDay ? "" : "pt-3"}>
+            {newDay && <p className="my-4 text-center text-caption text-muted-foreground">{dayLabel(at!)}</p>}
+            <ChatBubble role={m.role} author={m.author} time={time} status={m.status} position={position} launched={m.id === launchedId}>{m.text}</ChatBubble>
           </div>
         )
       })}
@@ -193,7 +221,8 @@ export function MiniChat({ agent, status = "Online", messages, typing, onSend, o
     launch.current = null
     setLaunchedId(last.id)
     const sc = scroller.current
-    if (sc) sc.scrollTop = sc.scrollHeight // land where it will be seen
+    // Land where it will be seen — the earlier messages glide up with the scroll instead of snapping.
+    if (sc) scrollToEnd(sc)
     const bubble = sc?.querySelector<HTMLElement>(`[data-message-id="${CSS.escape(last.id)}"] [data-bubble]`)
     if (!bubble || typeof bubble.animate !== "function") return
     // It arrives by flight, not by spring: stop the spring-in BEFORE measuring (its first frame is scaled to 60%),
@@ -282,11 +311,28 @@ export function MiniChat({ agent, status = "Online", messages, typing, onSend, o
   }, [])
   React.useLayoutEffect(() => {
     const sc = scroller.current
-    if (sc && pinned.current) sc.scrollTop = sc.scrollHeight
+    // New content glides the conversation up (smooth), never snaps it.
+    if (sc && pinned.current) scrollToEnd(sc)
   }, [messages.length, typing])
+  // Short threads sit at the bottom (mt-auto): when one grows, the whole thread glides up instead of jumping.
+  useFlip(scroller)
+  // The header and composer FLOAT over the thread (glass), so messages scroll beneath them; the thread is padded by
+  // their measured heights so nothing starts hidden.
+  const headerRef = React.useRef<HTMLElement>(null)
+  const [pad, setPad] = React.useState({ top: 64, bottom: 72 })
+  React.useEffect(() => {
+    const h = headerRef.current, c = composerBox.current
+    if (!h || !c) return
+    const ro = new ResizeObserver(() => setPad({ top: h.offsetHeight + 16, bottom: c.offsetHeight }))
+    ro.observe(h)
+    ro.observe(c)
+    return () => ro.disconnect()
+  }, [])
   return (
-    <section aria-label={`Chat with ${agent}`} className={cn("flex h-120 w-full max-w-sm flex-col overflow-hidden glass scope-xl", className)}>
-      <header className="flex items-center gap-3 border-b border-divider px-3 py-2.5">
+    <section aria-label={`Chat with ${agent}`} className={cn("relative h-120 w-full max-w-sm overflow-hidden glass scope-xl", className)}>
+      {/* Floating header, like the global nav: 8px inset, concentric radius (16 − 8). The panel is already glass, so
+          the header takes the LOWER tier (glass inside glass never stacks up). */}
+      <header ref={headerRef} className="absolute inset-x-2 top-2 z-10 flex items-center gap-3 glass glass-1 rounded-inner-2 p-2">
         <IconPlaceholder icon={Bot} tone="brand" size="md" />
         <div className="flex min-w-0 flex-1 flex-col">
           <span className="truncate text-body font-semibold">{agent}</span>
@@ -294,13 +340,14 @@ export function MiniChat({ agent, status = "Online", messages, typing, onSend, o
         </div>
         {onClose && <IconButton icon={Close} label="Close chat" size="sm" shortcut="escape" onClick={onClose} />}
       </header>
-      <div ref={scroller} className="flex min-h-0 flex-1 flex-col overflow-y-auto p-3">
+      <div ref={scroller} className="absolute inset-0 flex flex-col overflow-y-auto px-3 pt-(--chat-top) pb-(--chat-bottom)" style={{ "--chat-top": `${pad.top}px`, "--chat-bottom": `${pad.bottom}px` } as React.CSSProperties}>
         {/* short threads sit at the bottom, like a messaging app */}
         <div ref={threadRef} className="mt-auto">
           <ChatThread messages={messages} typing={working} launchedId={launchedId} />
         </div>
       </div>
-      <div ref={composerBox} className="border-t border-divider p-2">
+      {/* The composer floats at the bottom with no border or backing — the conversation flows beneath it. */}
+      <div ref={composerBox} className="absolute inset-x-0 bottom-0 z-10 p-2">
         <Composer size="md" voice={false} attachments={false} placeholder={`Message ${agent}`} suggestions={messages.length ? undefined : suggestions} onSubmit={(v) => send(v)} />
       </div>
     </section>

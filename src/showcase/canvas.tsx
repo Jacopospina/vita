@@ -80,7 +80,7 @@ const columns: { offset: string; cards: React.ReactNode[] }[] = [
   {
     offset: "pt-10",
     cards: [
-      <AISurface key="ai"><Stack gap="xs"><Inline justify="between"><Text weight="semibold">Suggested reply</Text><AILabel size="xs">Drafted from the help center.</AILabel></Inline><Text variant="footnote" tone="muted">Your refund was approved today and reaches your card in 3–5 days.</Text></Stack></AISurface>,
+      <AISurface key="ai"><Stack gap="xs"><Inline gap="xs"><AILabel size="xs">Drafted from the help center.</AILabel><Text weight="semibold">Suggested reply</Text></Inline><Text variant="footnote" tone="muted">Your refund was approved today and reaches your card in 3–5 days.</Text></Stack></AISurface>,
       <Tabs key="tb" defaultValue="o"><TabsList><TabsTrigger value="o">Overview</TabsTrigger><TabsTrigger value="r">Runs</TabsTrigger><TabsTrigger value="s">Settings</TabsTrigger></TabsList></Tabs>,
       <ProgressBar key="p" label="Indexing help center" value={64} helperText="64% · about a minute left" tone="spectrum" />,
     ],

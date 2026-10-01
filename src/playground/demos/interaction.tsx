@@ -120,7 +120,7 @@ export function IntentFlow() {
         </Stack>
       ) : (
         <AISurface className="flex flex-col gap-4 p-6">
-          <Inline justify="between"><Text variant="title-3">Review your agent</Text><AILabel size="sm" title="Drafted from your request">Built from: “{ask}”. Knowledge and tools were matched to your workspace.</AILabel></Inline>
+          <Inline gap="xs"><AILabel size="sm" title="Drafted from your request">Built from: “{ask}”. Knowledge and tools were matched to your workspace.</AILabel><Text variant="title-3">Review your agent</Text></Inline>
           <TextInput label="Name" defaultValue="Refund assistant" />
           <TextInput label="Instructions" defaultValue="Answer refund questions using the help center. Hand off to Support when the amount is over $200." />
           <Select label="Knowledge" defaultValue="help"><SelectOption value="help">Help center (412 articles)</SelectOption></Select>

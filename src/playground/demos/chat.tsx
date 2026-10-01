@@ -7,7 +7,6 @@ import { ChatBubble, ChatThread, ChatTyping, MiniChat, type ChatMessage } from "
 import { AISurface, AILabel } from "@/registry/ui/ai-label"
 import { InlineNotification } from "@/registry/ui/notification"
 
-const now = () => new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
 
 const replies = [
   "I've checked your order. The refund was approved today and reaches your card within 3–5 working days.",
@@ -17,19 +16,25 @@ const replies = [
 
 /** A live agent conversation: send a message, Sofia thinks, the agent answers. */
 function LiveMiniChat() {
-  const [messages, setMessages] = React.useState<ChatMessage[]>([
-    { id: "1", role: "agent", text: "Hi, I'm Support triage. What can I help you with?", author: "Support triage", time: "09:40" },
-  ])
+  // An earlier day's exchange, then today's — the day separators sit between them.
+  const [messages, setMessages] = React.useState<ChatMessage[]>(() => {
+    const d = (daysAgo: number, h: number, m: number) => { const x = new Date(); x.setDate(x.getDate() - daysAgo); x.setHours(h, m, 0, 0); return x }
+    return [
+      { id: "0a", role: "user", text: "Is my plan renewing this month?", author: "You", at: d(3, 13, 1) },
+      { id: "0b", role: "agent", text: "Yes — on the 28th, at the same price.", author: "Support triage", at: d(3, 13, 1) },
+      { id: "1", role: "agent", text: "Hi again. What can I help you with today?", author: "Support triage", at: d(0, 9, 40) },
+    ]
+  })
   const [typing, setTyping] = React.useState(false)
   const turn = React.useRef(0)
   const send = (text: string) => {
     const id = String(Date.now())
-    setMessages((m) => [...m, { id, role: "user", text, author: "You", time: now(), status: "sent" }])
+    setMessages((m) => [...m, { id, role: "user", text, author: "You", at: new Date(), status: "sent" }])
     setTyping(true)
     window.setTimeout(() => {
       const text = replies[turn.current++ % replies.length] // outside the updater: updaters may run twice
       setTyping(false)
-      setMessages((m) => [...m, { id: id + "a", role: "agent", text, author: "Support triage", time: now() }])
+      setMessages((m) => [...m, { id: id + "a", role: "agent", text, author: "Support triage", at: new Date() }])
     }, 1400)
   }
   return <MiniChat agent="Support triage" messages={messages} typing={typing} onSend={send} suggestions={["Where's my refund?", "Can I change plan?", "Talk to a person"]} />
@@ -77,7 +82,7 @@ export const chatDemos: DemoMap = {
       render: () => (
         <AISurface className="max-w-md">
           <Stack gap="sm">
-            <Inline justify="between"><Text weight="semibold">Suggested reply</Text><AILabel size="sm">Drafted by Support triage from the article "Refunds".</AILabel></Inline>
+            <Inline gap="xs"><AILabel size="sm">Drafted by Support triage from the article "Refunds".</AILabel><Text weight="semibold">Suggested reply</Text></Inline>
             <Text tone="muted">Hi Sam, your refund for order 4821 was approved today. It should reach your card within 3–5 working days.</Text>
             <Inline gap="sm"><Button size="sm">Use reply</Button><Button size="sm" variant="secondary">Regenerate</Button></Inline>
           </Stack>

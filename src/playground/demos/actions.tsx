@@ -70,7 +70,7 @@ function AIDemo() {
         />
       </div>
       <AISurface className="max-w-md">
-        <Inline justify="between"><Text variant="headline">Suggested reply</Text><AILabel size="sm" /></Inline>
+        <Inline gap="xs"><AILabel size="sm" /><Text variant="headline">Suggested reply</Text></Inline>
         <Text tone="muted" className="mt-2">Hi Sam, your refund for order 4821 was approved today. It should reach your card within 3–5 working days.</Text>
         <Inline className="mt-4"><Button size="sm">Use reply</Button><Button size="sm" variant="ghost">Regenerate</Button></Inline>
       </AISurface>
