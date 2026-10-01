@@ -104,9 +104,16 @@ export function Combobox({ items, value, defaultValue = "", onValueChange, size 
   const listId = React.useId()
   const selected = items.find((i) => i.value === val)
   const filtered = items.filter((i) => i.label.toLowerCase().includes(query.toLowerCase()))
-  // Filtering glides the remaining options into place (FLIP); re-armed each time the list opens.
+  // Filtering glides the remaining options into place (FLIP) — armed only once the list has finished opening, so
+  // the opening itself (positioning, width settling) never makes options glide.
   const options = React.useRef<HTMLUListElement>(null)
-  useFlip(options, open)
+  const [armed, setArmed] = React.useState(false)
+  React.useEffect(() => {
+    const t = window.setTimeout(() => setArmed(open), open ? 200 : 0)
+    return () => window.clearTimeout(t)
+  }, [open])
+  useFlip(options, open && armed)
+  const anchor = React.useRef<HTMLDivElement>(null)
   const commit = (it: DropdownItem) => {
     setVal(it.value)
     setQuery("")
@@ -117,7 +124,7 @@ export function Combobox({ items, value, defaultValue = "", onValueChange, size 
       {(a11y) => (
         <PopoverPrimitive.Root open={open} onOpenChange={setOpen}>
           <PopoverPrimitive.Anchor asChild>
-            <div className="relative">
+            <div ref={anchor} className="relative">
               <input
                 {...a11y}
                 role="combobox"
@@ -154,6 +161,9 @@ export function Combobox({ items, value, defaultValue = "", onValueChange, size 
           <PopoverPrimitive.Portal>
             <PopoverPrimitive.Content
               onOpenAutoFocus={(e) => e.preventDefault()}
+              // The field is the anchor, not a trigger: pressing it must not count as "outside" (that closed and
+              // instantly reopened the list — the blink).
+              onInteractOutside={(e) => { if (anchor.current?.contains(e.target as Node)) e.preventDefault() }}
               align="start"
               sideOffset={4}
               className={cn(listClasses, "w-(--radix-popover-trigger-width) min-w-0 overflow-y-auto")}
