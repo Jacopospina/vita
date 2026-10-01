@@ -5,7 +5,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/registry/ui/popover"
 /**
  * AILabel — marks content or controls GENERATED or AUTOFILLED by AI, and explains how.
  * Mandatory wherever AI produced a value the user may rely on. Clicking opens an explainability popover.
- * Tone: rainbow when standing alone; muted (white, low opacity) inside another component.
+ * A pill: rainbow edge with plain text when standing alone; muted (hairline, low-opacity text) inside another component.
  */
 export function AILabel({ size = "md", children, title = "AI explained", className, onRevert, tone = "auto" }: {
   size?: "xs" | "sm" | "md"
@@ -28,7 +28,7 @@ export function AILabel({ size = "md", children, title = "AI explained", classNa
         <PopoverTrigger
           aria-label="AI – Show information"
           className={cn(
-            "inline-flex items-center rounded-sm font-semibold tracking-wide focus-ring",
+            "inline-flex items-center rounded-full font-semibold tracking-wide text-foreground focus-ring",
             tone !== "muted" && "ai-gradient-border",
             tone === "auto" &&
               "in-data-[ai-context]:border in-data-[ai-context]:border-border-strong! in-data-[ai-context]:bg-none! in-data-[ai-context]:bg-transparent! in-data-[ai-context]:animate-none! in-data-[ai-context]:[&>span]:bg-none! in-data-[ai-context]:[&>span]:text-foreground/60!",
@@ -37,8 +37,8 @@ export function AILabel({ size = "md", children, title = "AI explained", classNa
             className,
           )}
         >
-          {/* Text gradient lives on its own span so it never overrides the rainbow border. */}
-          <span className="ai-gradient-text">AI</span>
+          {/* The rainbow lives on the border; the text stays plain and readable. */}
+          <span>AI</span>
         </PopoverTrigger>
         <PopoverContent className="w-80 ai-gradient-border" caret>
           <p className="text-caption font-semibold"><span className="ai-gradient-text">AI</span></p>
