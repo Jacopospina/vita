@@ -1,5 +1,6 @@
 import * as React from "react"
 import { cn } from "@/registry/lib/utils"
+import { createOrbGL, MAX_DROPS, type OrbGL } from "@/registry/lib/orb-gl"
 
 /**
  * Thinking — how Corpus shows that something is working. The spinner belongs to the old world.
@@ -312,6 +313,7 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
   const px = sizes[size]
   const ref = React.useRef<HTMLCanvasElement>(null)
   const glintRef = React.useRef<HTMLCanvasElement>(null)
+  const glRef = React.useRef<HTMLCanvasElement>(null)
   const fid = "corpus-goo-" + React.useId().replace(/[^a-zA-Z0-9]/g, "")
   const resolvedTone = tone ?? (mode === "basic" ? "current" : "spectrum")
   const field = React.useSyncExternalStore(subscribeLite, isLite, () => false)
@@ -401,7 +403,44 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
     // two-cell edge and the GPU's smooth upscale, the rim reads as the goo's own softness, never as pixels.
     const g = simple ? px * 2 : Math.min(128, Math.max(48, px))
     let fieldDraw: ((t: number) => void) | null = null
-    if (field) {
+    /* ---- gpu path: the desktop chain, evaluated per pixel by one shader at full resolution (phones) ---- */
+    let orb: OrbGL | null = null
+    if (field && glRef.current) {
+      const probe = document.createElement("canvas").getContext("2d", { willReadFrequently: true })
+      const precise = mode === "retrieving", defined = mode === "generating"
+      const blur = precise ? (px <= 24 ? px * 0.06 : px * 0.035) : defined ? (px <= 24 ? px * 0.06 : px * 0.045) : px <= 24 ? px * 0.085 : px * 0.065
+      const glDpr = Math.min(2, window.devicePixelRatio || 1)
+      orb = probe
+        ? createOrbGL(glRef.current, {
+            size: px, dpr: glDpr, lit,
+            s1: blur, ss: Math.hypot(blur, px * 0.035), sg: Math.hypot(blur, px * 0.16),
+            spectrum: spectrum.map((c) => rgbOf(c, probe)),
+            surface: px * 0.06, light: [px * 0.28, px * 0.2, px * 0.9],
+          })
+        : null
+      if (orb && probe) {
+        canvas.dataset.renderer = "gpu" // the 2D canvas now only carries the glints, above the liquid
+        const drops = new Float32Array(MAX_DROPS * 4)
+        let own = rgbOf(color, probe)
+        const o = orb
+        fieldDraw = (t: number) => {
+          if (resolvedTone !== "spectrum") own = rgbOf(color, probe)
+          let k = 0
+          for (const p of simple ? simpleParticles(mode, t) : particles(mode, n, t, seeds)) {
+            if (p.r < 0.005 || k >= MAX_DROPS) continue
+            drops[k * 4] = (px / 2 + p.x * R) * glDpr
+            drops[k * 4 + 1] = (px / 2 + p.y * R) * glDpr
+            drops[k * 4 + 2] = dropRadius(p) * glDpr
+            k++
+          }
+          o.draw(drops, k, { t, rot: t * 1.8, spectrum: resolvedTone === "spectrum", own })
+          // Glints stay crisp, on the 2D canvas above the liquid.
+          ctx.clearRect(0, 0, px, px)
+          if (glints) drawGlints(ctx, t)
+        }
+      }
+    }
+    if (field && !orb) {
       const off = document.createElement("canvas")
       off.width = off.height = g
       const octx = off.getContext("2d")
@@ -536,6 +575,7 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
     return () => {
       io.disconnect()
       setVisible(false)
+      orb?.dispose()
     }
   }, [mode, px, resolvedTone, field])
 
@@ -581,7 +621,8 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
           </defs>
         </svg>
       )}
-      <canvas ref={ref} aria-hidden data-renderer={field ? "field" : "filter"} className="motion-reduce:animate-[corpus-pulse_2s_ease-in-out_infinite]" style={{ width: px, height: px, filter: field ? undefined : `url(#${fid})` }} />
+      {field && <canvas ref={glRef} aria-hidden className="absolute inset-0" style={{ width: px, height: px }} />}
+      <canvas ref={ref} aria-hidden data-renderer={field ? "field" : "filter"} className="relative motion-reduce:animate-[corpus-pulse_2s_ease-in-out_infinite]" style={{ width: px, height: px, filter: field ? undefined : `url(#${fid})` }} />
       {!field && mode !== "basic" && lit && <canvas ref={glintRef} aria-hidden className="pointer-events-none absolute inset-0" style={{ width: px, height: px }} />}
       <span className="sr-only">{label}</span>
     </span>
