@@ -16,13 +16,14 @@ export interface DropdownItem {
   disabled?: boolean
 }
 
+// Menu-style list: 6px inset, 28px rows with 10px side padding, concentric 6px row radius (12 − 6), accent highlight.
 export const listClasses = cn(
-  "z-50 max-h-80 min-w-(--radix-select-trigger-width) overflow-hidden scope-md border border-border-subtle bg-raised p-1 text-foreground shadow-floating",
+  "z-50 max-h-80 min-w-(--radix-select-trigger-width) overflow-hidden scope-lg border border-border-subtle bg-raised p-1.5 text-foreground shadow-floating",
   "data-[state=open]:animate-enter-scale data-[state=closed]:animate-exit-scale",
 )
 export const itemClasses = cn(
-  "group/item relative flex min-h-control-sm w-full cursor-default items-center gap-2 rounded-inner-1 py-1.5 pr-8 pl-inset-sm text-body outline-none select-none",
-  "data-[highlighted]:bg-hover data-[disabled]:pointer-events-none data-[disabled]:text-disabled-foreground",
+  "group/item relative flex min-h-control-md w-full cursor-default items-center gap-2 rounded-inner-1.5 py-1 pr-8 pl-2.5 text-body outline-none select-none",
+  "data-[highlighted]:bg-primary data-[highlighted]:text-primary-foreground data-[highlighted]:[&_.text-muted-foreground]:text-primary-foreground/80 data-[highlighted]:[&_.text-helper]:text-primary-foreground/80 data-[disabled]:pointer-events-none data-[disabled]:text-disabled-foreground",
 )
 
 /**
@@ -158,7 +159,7 @@ export function Combobox({ items, value, defaultValue = "", onValueChange, size 
               className={cn(listClasses, "w-(--radix-popover-trigger-width) min-w-0 overflow-y-auto")}
             >
               <ul ref={options} id={listId} role="listbox">
-                {filtered.length === 0 && <li className="px-inset-sm py-2 text-body text-muted-foreground">No results</li>}
+                {filtered.length === 0 && <li className="px-2.5 py-2 text-body text-muted-foreground">No results</li>}
                 {filtered.map((it, i) => (
                   <li
                     key={it.value}
@@ -224,7 +225,7 @@ export function MultiSelect({ items, value, defaultValue = [], onValueChange, si
             <PopoverPrimitive.Content align="start" sideOffset={4} className={cn(listClasses, "w-(--radix-popover-trigger-width) min-w-0 overflow-y-auto")}>
               <div role="listbox" aria-multiselectable className="flex flex-col">
                 {items.map((it) => (
-                  <div key={it.value} className="rounded-inner-1 px-inset-sm py-2 hover:bg-hover">
+                  <div key={it.value} className="rounded-inner-1.5 px-2.5 py-1 hover:bg-hover">
                     <Checkbox label={it.label} checked={val.includes(it.value)} disabled={it.disabled} onCheckedChange={() => toggle(it.value)} />
                   </div>
                 ))}

@@ -46,6 +46,8 @@
  * their resting place, and settle back (decelerating). Lowest point at 60%. Productive UI (menus, tooltips,
  * page reflow) never bounces.
  */
+/* Dialogs arrive productively: a short rise with a slight scale-up — quick and straight, no gravity. */
+@keyframes corpus-dialog-rise { from { opacity: 0; transform: translateY(0.5rem) scale(0.98) } }
 @keyframes corpus-dialog-in {
   0% { opacity: 0; transform: translateY(-1.5rem) scale(0.96); filter: blur(12px); animation-timing-function: cubic-bezier(0.5, 0, 1, 0.6) }
   60% { opacity: 1; transform: translateY(0.3rem) scale(1); filter: blur(0); animation-timing-function: cubic-bezier(0.2, 0.7, 0.3, 1) }

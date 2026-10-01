@@ -71,3 +71,12 @@ Heights follow `--corpus-density`. Buttons in a `ButtonSet` share one size.
   <Button icon={Add}>Create agent</Button>
 </ButtonSet>
 ```
+
+## Sizes
+
+| Size | Height | Use for |
+|---|---|---|
+| `sm` | 24px | Dense toolbars, table rows |
+| `md` | 28px | Default |
+| `lg` | 32px | Prominent page actions |
+| `xl` | 48px | Dialog and panel actions (the full-bleed action bar) |

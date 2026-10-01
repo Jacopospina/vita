@@ -20,7 +20,8 @@ import { animateChildren } from "@/registry/ui/animated"
 const buttonVariants = cva(
   [
     "tilt relative inline-flex shrink-0 select-none items-center justify-center gap-2 whitespace-nowrap font-medium will-change-transform",
-    "squircle duration-fast-02 ease-productive",
+    // 240ms on the expressive curve: the hover lift and tilt ease in and out (110ms read as a snap).
+    "squircle duration-moderate-02 ease-expressive",
     "focus-ring active:scale-98 motion-reduce:active:scale-100",
     "disabled:pointer-events-none disabled:bg-layer-2 disabled:text-disabled-foreground disabled:border-transparent",
     "aria-disabled:pointer-events-none aria-disabled:opacity-60",
@@ -41,6 +42,8 @@ const buttonVariants = cva(
         sm: "h-control-sm px-2.5 text-body",
         md: "h-control-md px-3 text-body",
         lg: "h-control-lg px-4 text-body-lg",
+        /** Dialog and panel actions: the decisive, full-bleed buttons. */
+        xl: "h-12 px-5 text-body-lg",
       },
       fullWidth: { true: "w-full", false: "" },
     },
@@ -114,7 +117,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       : status === "error" ? <Icon as={ErrorFilled} size="sm" draw="in" />
       : icon ? <Icon as={icon} size="sm" /> : null
     // With an icon: label left, icon on the far right, a normal gap between.
-    const withIcon = { sm: "gap-2", md: "gap-2.5", lg: "gap-3" }[size ?? "md"]
+    const withIcon = { sm: "gap-2", md: "gap-2.5", lg: "gap-3", xl: "gap-3" }[size ?? "md"]
     return (
       <Comp
         ref={inner}
@@ -141,7 +144,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 )
 Button.displayName = "Button"
 
-const iconButtonSize = { sm: "size-control-sm", md: "size-control-md", lg: "size-control-lg" } as const
+const iconButtonSize = { sm: "size-control-sm", md: "size-control-md", lg: "size-control-lg", xl: "size-12" } as const
 
 export interface IconButtonProps extends Omit<ButtonProps, "icon" | "iconPosition" | "children" | "fullWidth"> {
   icon: IconType
@@ -192,7 +195,8 @@ export function ActionBar({ className, ...props }: React.HTMLAttributes<HTMLDivE
       role="group"
       className={cn(
         "flex shrink-0 gap-0 border-t border-border-subtle",
-        "*:h-control-xl *:flex-1 *:justify-start *:rounded-none *:px-inset-lg *:text-body *:active:scale-100 *:[--corpus-squircle-r:0px]",
+        // Extra-large actions (the xl button size): decisive, easy targets at the bottom of the surface.
+        "*:h-12 *:flex-1 *:justify-start *:rounded-none *:px-5 *:text-body-lg *:active:scale-100 *:[--corpus-squircle-r:0px]",
         className,
       )}
       {...props}

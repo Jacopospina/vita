@@ -75,7 +75,7 @@ export function SelectOption({ value, disabled, children }: { value: string; dis
 export function SelectGroup({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <SelectPrimitive.Group>
-      <SelectPrimitive.Label className="px-inset-sm pt-2 pb-1 text-caption font-medium text-helper">{label}</SelectPrimitive.Label>
+      <SelectPrimitive.Label className="px-2.5 pt-2 pb-1 text-caption font-medium text-helper">{label}</SelectPrimitive.Label>
       {children}
     </SelectPrimitive.Group>
   )

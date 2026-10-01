@@ -16,16 +16,17 @@ export const MenuSub = MenuPrimitive.Sub
 export const MenuRadioGroup = MenuPrimitive.RadioGroup
 
 const contentClasses = cn(
-  "z-50 min-w-48 overflow-hidden scope-md border border-border-subtle bg-raised p-1 text-foreground shadow-floating",
+  // Menu: 6px inset, 28px rows, 10px side padding, concentric 6px row radius (12 − 6), accent highlight.
+  "z-50 min-w-48 overflow-hidden scope-lg border border-border-subtle bg-raised p-1.5 text-foreground shadow-floating",
   "data-[state=open]:animate-enter-scale data-[state=closed]:animate-exit-scale origin-(--radix-dropdown-menu-content-transform-origin)",
 )
 const itemClasses = cn(
-  "relative flex h-control-sm cursor-default items-center gap-2 rounded-inner-1 px-inset-sm text-body outline-none select-none",
-  "data-[highlighted]:bg-hover data-[disabled]:pointer-events-none data-[disabled]:text-disabled-foreground",
+  "group/mi relative flex h-control-md cursor-default items-center gap-2 rounded-inner-1.5 px-2.5 text-body outline-none select-none",
+  "data-[highlighted]:bg-primary data-[highlighted]:text-primary-foreground data-[disabled]:pointer-events-none data-[disabled]:text-disabled-foreground",
 )
 
 // The mark is always drawn in the DOM; the item's data-state un-draws it (dashoffset 1) when unchecked.
-const indicatorClasses = "absolute left-2 flex [&[data-state=unchecked]_path]:[stroke-dashoffset:1]"
+const indicatorClasses = "absolute left-2.5 flex [&[data-state=unchecked]_path]:[stroke-dashoffset:1]"
 
 export function MenuContent({ className, sideOffset = 4, align = "start", ...props }: React.ComponentProps<typeof MenuPrimitive.Content>) {
   return (
@@ -46,7 +47,7 @@ export function MenuItem({ icon, shortcut, danger, className, children, ...props
     <MenuPrimitive.Item className={cn(itemClasses, danger && "text-error-foreground data-[highlighted]:bg-error data-[highlighted]:text-primary-foreground", className)} {...props}>
       {icon && <Icon as={icon} />}
       <span className="flex-1 truncate">{children}</span>
-      {shortcut && <kbd className="font-sans text-caption text-helper">{shortcut}</kbd>}
+      {shortcut && <kbd className="font-sans text-caption text-helper group-data-[highlighted]/mi:text-primary-foreground/80">{shortcut}</kbd>}
     </MenuPrimitive.Item>
   )
 }
@@ -70,11 +71,11 @@ export function MenuRadioItem({ className, children, ...props }: React.Component
 }
 
 export function MenuLabel({ className, ...props }: React.ComponentProps<typeof MenuPrimitive.Label>) {
-  return <MenuPrimitive.Label className={cn("px-inset-sm pt-2 pb-1 text-caption font-medium text-helper", className)} {...props} />
+  return <MenuPrimitive.Label className={cn("px-2.5 pt-2 pb-1 text-caption font-medium text-helper", className)} {...props} />
 }
 
 export function MenuSeparator({ className, ...props }: React.ComponentProps<typeof MenuPrimitive.Separator>) {
-  return <MenuPrimitive.Separator className={cn("-mx-1 my-1 h-px bg-border-subtle", className)} {...props} />
+  return <MenuPrimitive.Separator className={cn("mx-2.5 my-1.5 h-px bg-divider", className)} {...props} />
 }
 
 export function MenuSubTrigger({ className, children, ...props }: React.ComponentProps<typeof MenuPrimitive.SubTrigger>) {

@@ -78,11 +78,10 @@ The lowest point is at 60% of the enter. Exits never bounce; they are productive
 | Toast banner: slides in from the edge, with the gravity layer | `animate-banner-in` |
 | Capsule: the banner's character, falling in from the top | `animate-island-in` |
 | Inline notification | `animate-enter-fall` |
-| Modal | `animate-enter-dialog` |
 | Field message | `animate-drop-in` |
 
 - **Gravity layer.** `corpus-gravity` animates the independent `translate` property, so it stacks on any enter that moves with `transform`. Don't use it on elements positioned with `translate` utilities; build the fall into their keyframes instead.
-- **Productive UI never bounces.** Menus, tooltips, popovers, reflow and page transitions stay straight.
+- **Productive UI never bounces.** Dialogs, menus, tooltips, popovers, reflow and page transitions stay straight.
 
 ## Durations
 
