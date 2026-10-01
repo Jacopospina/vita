@@ -177,7 +177,7 @@
   --animate-exit-dialog: corpus-scale-out var(--corpus-duration-moderate-01) var(--corpus-ease-expressive-exit) both;
   /* Exits are productive: the user has already moved on. */
   --animate-modal-fall: corpus-modal-fall var(--corpus-duration-moderate-02) var(--corpus-ease-productive-exit) both;
-  --animate-modal-send: corpus-modal-send var(--corpus-duration-moderate-01) var(--corpus-ease-productive-exit) both;
+  --animate-modal-send: corpus-modal-send var(--corpus-duration-moderate-02) var(--corpus-ease-productive-exit) both;
   --animate-exit-scale: corpus-scale-out var(--corpus-duration-fast-02) var(--corpus-ease-productive-exit) both;
   --animate-enter-list: corpus-list-rise var(--corpus-duration-moderate-01) var(--corpus-ease-productive-enter);
   --animate-exit-list: corpus-list-sink var(--corpus-duration-fast-02) var(--corpus-ease-productive-exit) both;
