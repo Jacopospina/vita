@@ -117,8 +117,9 @@ export function ModalBody({ className, scroll = false, ...props }: React.HTMLAtt
 }
 
 /** ModalFooter — a full-bleed ActionBar. The primary action only (optionally one secondary alternative). Never Cancel. */
-export function ModalFooter(props: React.HTMLAttributes<HTMLDivElement>) {
-  return <ActionBar {...props} />
+/** ModalFooter — the blended actions, inset 8px from the dialog's edges in one rounded group (radius = dialog − 8px). */
+export function ModalFooter({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
+  return <ActionBar className={cn("m-2 overflow-hidden rounded-inner-2 border-t-0", className)} {...props} />
 }
 
 /**

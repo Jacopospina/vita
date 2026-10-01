@@ -47,11 +47,12 @@ export function PopoverContent({
  * Use instead of a tooltip whenever the content is interactive or longer than one sentence.
  */
 /**
- * PopoverFooter — the popover's action row, exactly like a dialog's: full-bleed to the popover's edges, joined
- * buttons, a hairline above; the popover owns the corners. Same rules: no Cancel (Esc / click-outside close it).
+ * PopoverFooter — the popover's action row, exactly like a dialog's: an inset rounded group of joined
+ * buttons; the group owns its corners (concentric). Same rules: no Cancel (Esc / click-outside close it).
  */
 export function PopoverFooter({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return <ActionBar className={cn("-mx-3 mt-3 -mb-3", className)} {...props} />
+  // Same as a dialog: blended actions in one rounded group, 8px from the popover's edges (radius = popover − 8px).
+  return <ActionBar className={cn("-mx-1 mt-3 -mb-1 overflow-hidden rounded-inner-2 border-t-0", className)} {...props} />
 }
 
 export function Toggletip({ label = "More information", children, align = "start" }: { label?: string; children: React.ReactNode; align?: "start" | "center" | "end" }) {

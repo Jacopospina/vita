@@ -59,3 +59,8 @@ related: [dialogs, ui-shell-right-panel, popover, notification]
    - Exit: faster than enter.
    - Reduced motion: fades only.
 6. **Esc and × always close** transactional and passive modals without losing typed data silently. Warn first if the user has edited something.
+
+## Actions
+
+- **Inset action group.** The blended buttons sit in one rounded group 8px from the dialog's edges. The group's radius follows the formula: the dialog's radius minus the 8px margin.
+- **Extra large.** Dialog actions use the `xl` button size.

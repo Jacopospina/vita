@@ -24,5 +24,5 @@ related: [tooltip, modal, menu, filtering]
 
 ## Actions
 
-- **Same as dialogs.** Put actions in a `PopoverFooter`: full-bleed to the popover's edges, joined buttons, a hairline above. The popover owns the corners.
+- **Same as dialogs.** Put actions in a `PopoverFooter`: an inset group of joined buttons, 8px from the popover's edges, with the concentric radius.
 - **No Cancel.** Escape and click-outside close a popover, exactly like a dialog's ×.
