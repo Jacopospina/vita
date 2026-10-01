@@ -403,7 +403,7 @@ export const foundationDemos: DemoMap = {
       render: () => (
         <Inline wrap gap="sm">
           <Tag tone="success" icon={Icons.CheckmarkFilled}>Healthy</Tag>
-          <Tag tone="warning" icon={Icons.WarningAltFilled}>Degraded</Tag>
+          <Tag tone="error" icon={Icons.WarningAltFilled}>Degraded</Tag>
           <Tag tone="error" icon={Icons.ErrorFilled}>Down</Tag>
         </Inline>
       ),

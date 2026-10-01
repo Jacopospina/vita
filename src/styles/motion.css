@@ -89,11 +89,15 @@
   15% { transform: translateY(0.25rem); opacity: 1 }
   100% { transform: translateY(-60vh) scale(0.97); opacity: 0 }
 }
-/* In-progress glyph: the pie fills around the ring, then empties from its start — the icon never spins. */
+/* In-progress glyph: the pie advances a slice at a time — it moves to the next quarter, holds, moves on — and once
+   full it empties from its start and begins again. The icon never spins. (Each interval eases on its own.) */
 @keyframes corpus-pie {
   0% { stroke-dasharray: 0 100; stroke-dashoffset: 0 }
-  50% { stroke-dasharray: 100 100; stroke-dashoffset: 0 }
-  100% { stroke-dasharray: 100 100; stroke-dashoffset: -100 }
+  8%, 20% { stroke-dasharray: 25 100; stroke-dashoffset: 0 }
+  28%, 40% { stroke-dasharray: 50 100; stroke-dashoffset: 0 }
+  48%, 60% { stroke-dasharray: 75 100; stroke-dashoffset: 0 }
+  68%, 80% { stroke-dasharray: 100 100; stroke-dashoffset: 0 }
+  92%, 100% { stroke-dasharray: 100 100; stroke-dashoffset: -100 }
 }
 @keyframes corpus-text-in-down { from { opacity: 0; transform: translateY(-0.55em); filter: blur(6px) } to { opacity: 1; transform: none; filter: blur(0) } }
 @keyframes corpus-text-out-down { from { opacity: 1; transform: none; filter: blur(0) } to { opacity: 0; transform: translateY(0.55em); filter: blur(6px) } }
@@ -119,7 +123,6 @@
 @keyframes corpus-rise-in { from { opacity: 0; transform: translateY(1.25rem); filter: blur(10px) } }
 @keyframes corpus-sink-out { to { opacity: 0; transform: translateY(-0.5rem); filter: blur(4px) } }
 @keyframes corpus-pulse { 50% { opacity: 0.55 } }
-@keyframes corpus-status-write { 0% { stroke-dashoffset: 100 } 45%, 60% { stroke-dashoffset: 0 } 100% { stroke-dashoffset: -100 } }
 @keyframes corpus-status-dot { 0%, 100% { opacity: 0.25 } 40% { opacity: 1 } }
 @keyframes corpus-status-turn { to { transform: rotate(360deg) } }
 @keyframes corpus-status-breathe { 0%, 100% { opacity: 1; transform: scale(1) } 50% { opacity: 0.35; transform: scale(0.72) } }
@@ -143,7 +146,6 @@
     --animate-expand: none;
     --animate-collapse: none;
     --animate-shimmer: corpus-pulse 2s linear infinite;
-    --animate-status-write: none;
     --animate-status-dot-1: none;
     --animate-status-dot-2: none;
     --animate-status-dot-3: none;

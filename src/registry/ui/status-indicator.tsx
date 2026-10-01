@@ -9,16 +9,16 @@ import { AnimatedText } from "@/registry/ui/animated"
  * Shape + color + text, always all three (WCAG 1.4.1). Pick the kind by MEANING, never by color preference.
  *
  * FINAL states hold still:
- *   success     done / healthy / paid            · error      failed / down / rejected
+ *   success     done / healthy / paid            · error      failed / down / degraded / rejected
  *   critical    severe, act now                  · warning    needs attention soon
- *   caution     degraded, non-blocking           · info       neutral fact
+ *   caution     minor, non-blocking              · info       neutral fact
  *   undefined   no state defined for this object · unknown    state can't be determined
+ *   draft       being written (a written stroke, still)
  *
  * NON-FINAL states are alive — an inner path animates, the frame never moves:
- *   in-progress running now (pie sweeps)          · pending     awaiting someone (dots take turns)
- *   draft       being written (a stroke writes)    · queued      waiting its turn (clock hand turns)
- *   not-started will run, hasn't (core breathes)   · incomplete  partly done (half fill breathes)
- *   paused      stopped on purpose (bars breathe)
+ *   in-progress running now (pie steps by slices) · pending     awaiting someone (dots take turns)
+ *   queued      waiting its turn (clock hand turns) · not-started will run, hasn't (core breathes)
+ *   incomplete  partly done (half fill breathes)   · paused      stopped — destructive colour (bars breathe)
  */
 const kinds = {
   success: { icon: CheckmarkFilled, color: "text-success", live: false },
@@ -31,11 +31,11 @@ const kinds = {
   unknown: { icon: UnknownFilled, color: "text-muted-foreground", live: false },
   "in-progress": { icon: null, color: "text-primary", live: true },
   pending: { icon: null, color: "text-muted-foreground", live: true },
-  draft: { icon: null, color: "text-muted-foreground", live: true },
+  draft: { icon: null, color: "text-muted-foreground", live: false },
   queued: { icon: null, color: "text-info", live: true },
   "not-started": { icon: null, color: "text-muted-foreground", live: true },
   incomplete: { icon: null, color: "text-info", live: true },
-  paused: { icon: null, color: "text-warning-foreground", live: true },
+  paused: { icon: null, color: "text-error", live: true },
 } as const
 
 export type StatusKind = keyof typeof kinds
@@ -55,7 +55,7 @@ export function StatusGlyph({ kind, className }: { kind: Exclude<StatusKind, "su
       {kind === "draft" && (
         <>
           <circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="1.5" strokeDasharray="2.6 2.5" />
-          <path d="M5 9.2c1-1.6 1.8-1.6 2.3-.4.5 1.2 1.3 1.2 2.2-.3.4-.6.8-.9 1.5-.7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" pathLength={100} strokeDasharray="100 100" className="motion-safe:animate-status-write" />
+          <path d="M5 9.2c1-1.6 1.8-1.6 2.3-.4.5 1.2 1.3 1.2 2.2-.3.4-.6.8-.9 1.5-.7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
         </>
       )}
       {kind === "pending" && (

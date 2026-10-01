@@ -90,7 +90,7 @@ export function Icon({ as: Glyph, size = "sm", label, className, draw, ...props 
 }
 
 /**
- * ProgressGlyph — "in progress", alive: the ring holds still while the pie inside sweeps around it.
+ * ProgressGlyph — "in progress", alive: the ring holds still while the pie inside advances slice by slice.
  * Use instead of spinning an icon. Reduced motion shows a still quarter.
  */
 export function ProgressGlyph({ size = "sm", className, label }: { size?: keyof typeof sizes; className?: string; label?: string }) {
@@ -107,7 +107,7 @@ export function ProgressGlyph({ size = "sm", className, label }: { size?: keyof 
         strokeWidth="5.5"
         transform="rotate(-90 8 8)"
         strokeDasharray="25 100"
-        className="motion-safe:animate-[corpus-pie_1.8s_var(--corpus-ease-productive)_infinite]"
+        className="motion-safe:animate-[corpus-pie_4.8s_var(--corpus-ease-productive)_infinite]"
       />
     </svg>
   )
