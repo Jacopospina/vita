@@ -129,7 +129,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
                 <button type="button" tabIndex={-1} aria-label="Decrement" disabled={disabled || (min !== undefined && (val ?? 0) <= min)} {...holdProps(-1)} className={stepBtn}>
                   <Icon as={Subtract} />
                 </button>
-                <span aria-hidden className="my-2 w-px bg-border-subtle" />
+                <span aria-hidden className="w-px self-stretch bg-border-subtle" />
                 <button type="button" tabIndex={-1} aria-label="Increment" disabled={disabled || (max !== undefined && (val ?? 0) >= max)} {...holdProps(1)} className={stepBtn}>
                   <Icon as={Add} />
                 </button>
