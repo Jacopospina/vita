@@ -28,23 +28,36 @@ export interface GlobalSearchItem {
   onSelect: () => void
 }
 
-/** Shrinks any content to fit the preview square (never enlarges), centred and inert — a tangible thumbnail. */
+/**
+ * Shrinks any content to fit the preview square (never enlarges), centred and inert — a tangible thumbnail.
+ * Content that sizes to its container (full-width layouts, shells) would collapse to nothing, so it gets a fixed
+ * 640px stage to lay out on, which is then scaled down like a screenshot.
+ */
 function PreviewFit({ children }: { children: React.ReactNode }) {
   const frame = React.useRef<HTMLDivElement>(null)
   const inner = React.useRef<HTMLDivElement>(null)
   const [scale, setScale] = React.useState(1)
+  const [stage, setStage] = React.useState(false)
   React.useLayoutEffect(() => {
     const f = frame.current, c = inner.current
     if (!f || !c) return
-    const fit = () => setScale(Math.min(1, f.clientWidth / Math.max(1, c.scrollWidth), f.clientHeight / Math.max(1, c.scrollHeight)))
+    const fit = () => {
+      if (!stage && c.offsetWidth < 8) return setStage(true)
+      setScale(Math.min(1, f.clientWidth / Math.max(1, c.offsetWidth), f.clientHeight / Math.max(1, c.offsetHeight)))
+    }
     fit()
     const ro = new ResizeObserver(fit)
     ro.observe(c)
     return () => ro.disconnect()
-  }, [])
+  }, [stage])
   return (
     <div ref={frame} aria-hidden className="relative flex size-full items-center justify-center overflow-hidden">
-      <div ref={inner} inert className="pointer-events-none w-max max-w-[40rem] shrink-0 animate-enter-fade" style={{ transform: `scale(${scale})` }}>
+      <div
+        ref={inner}
+        inert
+        className={cn("pointer-events-none shrink-0 animate-enter-fade", stage ? "w-160" : "w-max max-w-160")}
+        style={{ transform: `scale(${scale})` }}
+      >
         {children}
       </div>
     </div>
@@ -73,6 +86,8 @@ export function GlobalSearch({ items, placeholder = "Search", shortcut = "mod+k"
         .slice(0, limit)
     : []
   const close = () => { setOpen(false); setQuery("") }
+  const current = results[active]
+  const preview = current ? (typeof current.preview === "function" ? current.preview() : current.preview) : null
   const choose = (i: GlobalSearchItem) => { close(); i.onSelect() }
 
   return (
@@ -135,17 +150,18 @@ export function GlobalSearch({ items, placeholder = "Search", shortcut = "mod+k"
                 })}
               </div>
               {/* The preview square: what the highlighted result is, before you open it. */}
-              {results[active] && (
+              {current && (
                 <aside aria-live="polite" className="hidden w-60 shrink-0 p-1.5 sm:block">
                   <div className="flex aspect-square flex-col gap-2 overflow-hidden scope-lg bg-layer-1 p-4">
-                    {results[active].preview ? (
-                      <PreviewFit key={results[active].id}>{typeof results[active].preview === "function" ? (results[active].preview as () => React.ReactNode)() : results[active].preview}</PreviewFit>
+                    {preview != null && preview !== false ? (
+                      <PreviewFit key={current.id}>{preview}</PreviewFit>
                     ) : (
+                      // No tangible preview for this result: say what it is instead — never an empty square.
                       <>
-                        {results[active].icon && <IconPlaceholder icon={results[active].icon} tone="brand" size="lg" />}
-                        {results[active].group && <span className="text-caption text-muted-foreground">{results[active].group}</span>}
-                        <span className="text-headline text-foreground"><AnimatedText>{results[active].label}</AnimatedText></span>
-                        {results[active].description && <p className="line-clamp-6 text-body text-muted-foreground">{results[active].description}</p>}
+                        {current.icon && <IconPlaceholder icon={current.icon} tone="brand" size="lg" />}
+                        {current.group && <span className="text-caption text-muted-foreground">{current.group}</span>}
+                        <span className="text-headline text-foreground"><AnimatedText>{current.label}</AnimatedText></span>
+                        {current.description && <p className="line-clamp-6 text-body text-muted-foreground">{current.description}</p>}
                       </>
                     )}
                   </div>
