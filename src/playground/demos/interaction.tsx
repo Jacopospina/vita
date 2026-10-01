@@ -136,7 +136,7 @@ export function IntentFlow() {
 }
 
 export const interactionDemos: DemoMap = {
-  "foundations/interaction": [
+  "getting-started/interaction": [
     { title: "One hand per device", description: "Corpus shortcuts live on the left half of the keyboard; the right hand stays on the mouse.", render: () => <KeyboardMap /> },
     { title: "Shortcuts on real controls", description: "Buttons take a `shortcut` prop: it binds the key, announces it and shows it in tooltips.", render: () => <ShortcutsDemo /> },
     {

@@ -50,7 +50,7 @@ Return a table (`Current | Proposed | Rule`), then the patched code. Run the aud
 
 ## Corpus's own voice (brand)
 
-When writing **as Corpus** — docs, the showcase, onboarding into Corpus, release notes — use the Creator voice in `docs/foundations/brand.md`:
+When writing **as Corpus** — docs, the showcase, onboarding into Corpus, release notes — use the Creator voice in `docs/getting-started/brand.md`:
 - Speak to the maker ("you make", "you shape"), with verbs of making.
 - Lead with what they'll create; credit them, not Corpus.
 - One slogan per surface; the signature is "Give your ideas a body."

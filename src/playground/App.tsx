@@ -79,16 +79,14 @@ export function App() {
             <div className="pb-1">
               <Search size="md" variant="toolbar" label="Filter pages" placeholder="Filter" shortcut="mod+f" value={filter} onValueChange={setFilter} />
             </div>
-            {!filter && (
-              <SideNavSection>
-                <SideNavItem href="#/guidelines" active={section === "guidelines"}>Overview</SideNavItem>
-              </SideNavSection>
-            )}
             {(Object.keys(manifest) as Section[]).map((s) => {
               const entries = manifest[s].filter((e) => e.title.toLowerCase().includes(filter.toLowerCase()))
-              if (!entries.length) return null
+              // Getting started opens with About Corpus — the overview of everything.
+              const about = s === "getting-started" && "about corpus".includes(filter.toLowerCase())
+              if (!entries.length && !about) return null
               return (
-                <SideNavSection key={s + (filter ? "-f" : "")} title={sectionTitles[s]} collapsible defaultOpen={!!filter || s === section}>
+                <SideNavSection key={s + (filter ? "-f" : "")} title={sectionTitles[s]} collapsible defaultOpen={!!filter || s === section || (s === "getting-started" && section === "guidelines")}>
+                  {about && <SideNavItem href="#/guidelines" active={section === "guidelines"}>About Corpus</SideNavItem>}
                   {entries.map((e) => (
                     <SideNavItem key={e.slug} href={`#/${s}/${e.slug}`} active={s === section && e.slug === slug}>
                       {e.title}

@@ -2,32 +2,44 @@
 
 > Corpus is the body of the product: the only source of UI. Components are imported from @/components/corpus/*, tokens are Tailwind utilities, patterns are documented flows. Never create local components or raw values.
 
-Start with: docs/components/choosing-components.md (decision guide) · docs/foundations/principles.md · docs/decisions/ (system decisions — read before changing what they cover) · skills/corpus-design-system/SKILL.md
+Start with: docs/components/choosing-components.md (decision guide) · docs/getting-started/principles.md · docs/decisions/ (system decisions — read before changing what they cover) · skills/corpus-design-system/SKILL.md
+
+## Getting started
+
+- [Mind, soul, body](docs/getting-started/about.md): The AI-agent-first design system, born for humans and machines making together — the body of every product, through which its mind and soul reach the world.
+- [Brand & voice](docs/getting-started/brand.md): The AI-agent-first design system, born for humans and machines making together. Its voice is the Creator's, and every word aims to awaken the maker in the reader.
+  - use: Writing in Corpus's own voice — docs, the showcase, onboarding, release notes, first-use moments; Naming a feature, writing a headline or choosing a slogan
+  - avoid: Product UI microcopy (buttons, labels, errors) → Content, personas & taxonomy; plain and direct wins inside products
+- [Changelog](docs/getting-started/changelog.md): Every change to Corpus, newest first, on one timeline. Breaking changes are marked and say how to migrate.
+- [CLI](docs/getting-started/cli.md): One command line to install Corpus, add components, stay up to date and audit any repo.
+- [Installation](docs/getting-started/installation.md): Add Corpus to a React + Tailwind v4 product in one command — components, styles, docs, agent skills, the audit and its hooks.
+- [Interaction](docs/getting-started/interaction.md): Built for products where AI carries the complexity. One hand per device, intent over input, nothing redundant, nothing that snaps.
+  - use: Designing any flow, interaction or shortcut; Deciding between a form and an intent-first flow
+  - avoid: Adding a control that repeats one that already exists (Cancel next to ×); Shortcuts that need the right hand
+- [Design principles](docs/getting-started/principles.md): Ten ranked rules every Corpus screen obeys. When two conflict, the lower number wins.
+- [Registry](docs/getting-started/registry.md): Corpus ships as source — a registry of components, hooks, blocks, icons and styles you install into your repo and own.
+- [Skills](docs/getting-started/skills.md): Six skills teach AI agents to design and build with Corpus like a designer would — installed with Corpus into every product.
 
 ## Foundations
 
-- [Corpus](docs/foundations/about.md): The AI-agent-first design system, born for humans and machines making together — the body of every product, through which its mind and soul reach the world.
 - [Accessibility](docs/foundations/accessibility.md): WCAG 2.2 AA is the floor. Components are accessible by default; composition is where teams break it.
   - use: Always
   - avoid: Never "add accessibility later"
-- [Brand & voice](docs/foundations/brand.md): The AI-agent-first design system, born for humans and machines making together. Its voice is the Creator's, and every word aims to awaken the maker in the reader.
-  - use: Writing in Corpus's own voice — docs, the showcase, onboarding, release notes, first-use moments; Naming a feature, writing a headline or choosing a slogan
-  - avoid: Product UI microcopy (buttons, labels, errors) → Content, personas & taxonomy; plain and direct wins inside products
 - [Color](docs/foundations/color.md): Semantic tokens only. Color communicates interactivity, status and hierarchy; it never decorates.
   - use: Coloring anything, via semantic utilities (bg-layer-1, text-muted-foreground, border-border-subtle)
   - avoid: Palette colors in product code (bg-blue-500) → they don't exist as utilities; Hex/rgb/oklch literals → forbidden; Color as the only carrier of meaning → pair it with an icon and text
 - [Content, personas & taxonomy](docs/foundations/content.md): Words are part of the design system. Personas decide who we speak to, the taxonomy fixes the words, and skills enforce them.
   - use: Writing any user-visible string — labels, buttons, errors, empty states, emails, AI responses; Starting a new product or flow (create personas first)
   - avoid: Inventing a term that isn't in the taxonomy → add it to the taxonomy first; Writing copy before knowing the persona
+- [Corpus for AI](docs/foundations/corpus-for-ai.md): Corpus is built for agents as much as for people — machine-readable docs, skills, rules, decisions and an audit that answers on every edit.
+  - use: Setting up an agent to design or build with Corpus; Understanding how Corpus keeps agent-built screens consistent
+  - avoid: Looking for the AI label or AI surfaces in the product → AI label
 - [Grid & layout](docs/foundations/grid.md): A 16-column grid for page structure, stacks for everything inside it.
   - use: Laying out a page or region (Grid + Column); Arranging elements vertically (Stack) or horizontally (Inline)
   - avoid: Hand-written flex/grid divs with custom gaps → use Stack, Inline and Grid; Absolute positioning for layout → only for overlays, badges and icons in controls
 - [Icons](docs/foundations/icons.md): One icon set through one Icon component, at four sizes. An icon supports a label; it rarely replaces one.
   - use: Reinforcing an action or a status label; Icon-only controls with universal meaning (close, search, menu, overflow), always with a tooltip
   - avoid: Other icon libraries → forbidden; Decorating headings or list items; Large illustrative use → Pictogram
-- [Interaction](docs/foundations/interaction.md): Built for products where AI carries the complexity. One hand per device, intent over input, nothing redundant, nothing that snaps.
-  - use: Designing any flow, interaction or shortcut; Deciding between a form and an intent-first flow
-  - avoid: Adding a control that repeats one that already exists (Cancel next to ×); Shortcuts that need the right hand
 - [Material](docs/foundations/material.md): Everything that floats above the page is frosted glass. The higher it floats, the more it frosts and the more of what's behind shows through.
   - use: Any surface with a z-index — side nav, header, right panel, menus, popovers, dialogs, notifications, pinned toolbars
   - avoid: In-flow containers (cards, tiles, lists) → solid layers (layer-1..3); Tooltips → the solid inverse surface; Custom blur or translucency → use a glass tier
@@ -37,7 +49,6 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/foun
 - [Pictograms](docs/foundations/pictograms.md): Large pictograms for empty states, onboarding and feature tiles. Never as controls.
   - use: Empty states (first use, no results, error); Onboarding and feature explanations; Large clickable tiles that introduce a product area
   - avoid: Buttons, navigation, table cells, anything under 48px → Icon; Decorating every section of a page → one pictogram per view at most
-- [Design principles](docs/foundations/principles.md): Ten ranked rules every Corpus screen obeys. When two conflict, the lower number wins.
 - [Spacing](docs/foundations/spacing.md): One 2px-based scale, density-aware control sizes, and a hard ban on off-scale values.
   - use: Any padding, margin or gap
   - avoid: Arbitrary values like p-[13px] → forbidden; Off-scale steps (p-5, gap-7, m-9) → the audit rejects them
@@ -47,7 +58,6 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/foun
 - [Typography](docs/foundations/typography.md): Ten roles generated from one base size and one ratio. Google Sans Flex for words, Google Sans Code for code and numbers.
   - use: Any text — pick the ROLE (title-2, body, caption), not a size
   - avoid: Tailwind sizes (text-sm, text-2xl) → they don't exist in Corpus; Changing size to create emphasis inside a paragraph → use font-medium or font-semibold
-- [What's new](docs/foundations/whats-new.md): The latest changes to Corpus, newest first. Breaking changes say how to migrate. Generated from the changelog.
 
 ## Components
 
@@ -175,6 +185,9 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/foun
 - [Tile](docs/components/tile.md): A surface that groups related content. Base, clickable, selectable and expandable, and never nested.
   - use: Base — grouping related info on a page (a metric, a summary); Clickable — a card that is one destination (a project, a feature area); Selectable — choosing among rich options (plans, templates) — single or multi; Expandable — summary first, details on demand; TileSet — several cards that share one meaning, as one object
   - avoid: Tables of records → DataTable; Wrapping every section in a card "to make it look designed" → use whitespace; Tiles inside tiles → flatten the hierarchy
+- [Timeline](docs/components/timeline.md): Events in time order on one vertical line — changelogs, run history, an agent's steps, audit trails.
+  - use: A history people read top to bottom (changelog, activity, an agent's steps, an audit trail)
+  - avoid: Steps a user completes → ProgressIndicator; Records to sort and compare → DataTable; A single latest state → StatusIndicator
 - [Toggle](docs/components/toggle.md): A switch for binary settings that take effect immediately. The rule: no Save button after a toggle.
   - use: Turning a feature or preference on/off with immediate effect (settings pages, panels)
   - avoid: The change applies on form submit → Checkbox; More than two states → RadioGroup / ContentSwitcher; Selecting items in a list → Checkbox

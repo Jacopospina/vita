@@ -1,0 +1,485 @@
+{
+  "latest": "v0.2.0",
+  "entries": [
+    {
+      "id": "2bd2007",
+      "date": "2026-10-01",
+      "title": "Accessibility: field labels, multiselect structure, listbox names; smaller KPI arrow",
+      "text": "Floating field labels use muted-foreground (≥ 4.5:1) instead of placeholder grey (3.6:1): a label is the field's name.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "74605bb",
+      "date": "2026-10-01",
+      "title": "KPI component; PageHeader with KPIs on the right",
+      "text": "Kpi: label → value (AnimatedNumber, regular weight, any Intl format) → trend (arrow + change + period, coloured by whether it's good for the metric via better=up|down, muted when flat) → helper; sizes sm/md/lg; loading skeleton. KpiGroup: related KPIs on one surface with dividers (bare inside headers).",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "502086f",
+      "date": "2026-10-01",
+      "title": "pnpm visual: real-browser layout, accessibility and screenshot checks; first a11y fixes",
+      "text": "scripts/visual.mjs: every docs page plus home and showcase in your installed Chrome (playwright-core, nothing downloaded), reduced motion. Fails on phantom scroll, elements gliding after load, and axe WCAG A/AA serious/critical issues; screenshots diffed against a local baseline (--update accepts, tests/visual/ is git-ignored). AGENTS.md step 8.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "647fc6b",
+      "date": "2026-10-01",
+      "title": "Agent conversation: floating glass header and composer, time only, day separators, smooth arrivals; Sofia AI label",
+      "text": "MiniChat: the header floats like the global nav (8px inset, concentric radius) on glass-1 — the lower tier, since the panel is already glass — and the composer floats with no border or backing; the thread scrolls beneath both (padded by their measured heights).",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "eabcc52",
+      "date": "2026-10-01",
+      "title": "Nothing moves into place: no transitions before styles exist; layout glide is opt-in",
+      "text": "Root cause of elements flying in from the top left: the global 'everything transitions' rule applied while styles were being (re)applied — Vite injects CSS from JS and re-injects it on every hot update, so each element animated from its unstyled browser default (top-left, default sizes) to its styled place. Fixes:",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "144b1df",
+      "date": "2026-10-01",
+      "title": "Changelog for v0.2.0",
+      "text": "",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "347ef03",
+      "date": "2026-10-01",
+      "title": "Release v0.2.0",
+      "text": "",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "825d228",
+      "date": "2026-10-01",
+      "title": "Changelog, What's new and releases",
+      "text": "pnpm changelog: CHANGELOG.md (grouped by release tag, Unreleased since the last; breaking changes first, detected from 'Breaking' in the message) and docs/foundations/whats-new.md (the latest 30 changes as cards) from git history.",
+      "breaking": true,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "32b9e0d",
+      "date": "2026-10-01",
+      "title": "Progress bar: soft liquid edges",
+      "text": "The liquid's coverage gets a small sideways blur (two box passes, ~0.35 tube height), so the tip's meniscus and drops fade softly instead of looking cut out. The solid body is composited on top, so it and the tube's top and bottom stay crisp; the bar still ends exactly on its value.",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "51af409",
+      "date": "2026-10-01",
+      "title": "Dropdown page merges Option and Multiselect; trailing meta/symbol; single choice has no tick",
+      "text": "One Dropdown page covers Dropdown, Combobox, Multiselect and the Option row (anatomy, states, rules, keyboard, every demo). The separate Option and Multiselect pages are gone.",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "bb85e58",
+      "date": "2026-10-01",
+      "title": "Nothing flies in from the top left; Multiselect page and chosen-first order; deprecation warnings",
+      "text": "useFlip (Stack/Inline) never records positions while its container is hidden (inactive tab, closed panel): children measured 0,0 there glided in from the top-left corner when it appeared.",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "3c24e1f",
+      "date": "2026-10-01",
+      "title": "Tooltip: squircle corners, no arrow",
+      "text": "Breaking look: the pointer arrow is gone and the tooltip uses squircle corners (radius-md); proximity and the 6px offset tie it to its trigger.",
+      "breaking": true,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "4b04a3d",
+      "date": "2026-10-01",
+      "title": "Decision records, exception review, AI card hugs content",
+      "text": "docs/decisions: a new Decisions section (playground nav, llms.txt, index.json). How Corpus decides (records, supersede-don't-edit, three-team rule, exceptions, semver and deprecation) plus records for glass by elevation, status semantics, weather tint, buttons, motion, fields and options — each with the decision, why, rejected alternatives and when to revisit.",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "2994d97",
+      "date": "2026-10-01",
+      "title": "IconPlaceholder: tint and solid surfaces; showcase conversations use ChatThread",
+      "text": "IconPlaceholder surface: 'tint' (default, a faint dark wash for white surfaces like notifications) or 'solid' (a white tile). ListItem — and so ContainedListItem — use solid inside grey list groups. New token icon-surface-solid (white; a faint lift in dark), mapped and documented.",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "c405a4d",
+      "date": "2026-10-01",
+      "title": "Corpus mark adapts to dark mode",
+      "text": "In dark mode the mark's grey half uses deep greys (gray-700 → 500) instead of glaring light ones, and the navy points turn pale blue (blue-200) so they stay visible. The favicon follows the OS colour scheme the same way.",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "5d27620",
+      "date": "2026-10-01",
+      "title": "Option component; whole-row selection with a left tick",
+      "text": "New Option (+ OptionList): the one list-item anatomy for every dropdown list — reserved left tick slot, optional icon, label and description; default/highlighted/selected/disabled states. Owns listClasses/itemClasses/tickClasses (dropdown re-exports them).",
+      "breaking": true,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "02eb4a1",
+      "date": "2026-10-01",
+      "title": "Dropdown lists slide in from below; floating surfaces never grow from 0",
+      "text": "Dropdown/Select/Combobox lists enter with corpus-list-rise (opacity + 8px rise, productive, no scale) and leave with corpus-list-sink; reduced motion fades.",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "8482639",
+      "date": "2026-10-01",
+      "title": "Inputs: softer resting border",
+      "text": "border-field now matches border (light 0.827; dark 0.42) instead of the high-contrast 0.648. Hover still strengthens to border-strong and focus adds the ring; increased contrast keeps the ≥3:1 field border (0.45).",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "666e1cd",
+      "date": "2026-10-01",
+      "title": "Combobox: no blink on open",
+      "text": "Pressing the field no longer counts as an outside interaction (the field is the popover's anchor, not its trigger), which closed the list and instantly reopened it.",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "c442c2a",
+      "date": "2026-10-01",
+      "title": "Inline notifications on white; icon tiles are a faint dark wash",
+      "text": "Inline notifications and callouts sit on raised (white) instead of layer-1. icon-surface in light mode is 5% black (was solid white), so IconPlaceholder tiles read super-light grey on any surface, including the white notice.",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "9337511",
+      "date": "2026-10-01",
+      "title": "Shell layering: the page scrolls under the floating glass",
+      "text": "ShellMain fills the window and scrolls; Header, LeftPanel and RightPanel float above it (absolute, 8px inset) on their glass tiers, and ShellMain is padded to start below the header (64px) and beside the side nav on large screens (256px, or 64px for the rail — LeftPanel tells the shell which). Scrolled content now passes beneath the frosted header, so the material is actually visible. ShellMain publishes --corpus-shell-top; the data table's sticky strip stops just below the header.",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "0d0b4d5",
+      "date": "2026-10-01",
+      "title": "Colour semantics, enforced",
+      "text": "registry/lib/status: one map from status meaning to colour, glyph, text and tint. StatusIndicator and notifications read from it; in-progress is info (never brand); warning glyphs use the base warning colour like every other status icon.",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "985bc6a",
+      "date": "2026-10-01",
+      "title": "Warning is orange",
+      "text": "-corpus-hue-warning 62.6 → 50 and the palette's orange row moves with it (CSS + JSON), so warning reads orange rather than amber. warning-foreground keeps the same hue (darker) instead of drifting 27° toward red, which made warning text look like an error.",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "e1db444",
+      "date": "2026-10-01",
+      "title": "Material foundation page",
+      "text": "New foundations/material: the glass tiers (layer, blur, fill, use), the rules (utility not recipe, tier by layer, see-through frost, elevated surface, lift, no filtered ancestors, reduced transparency) and the nevers; live demo of the five tiers over a busy backdrop. Color links to it instead of carrying the glass section.",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "4d45d13",
+      "date": "2026-10-01",
+      "title": "Notifications stack, newest on top; Header documents logo",
+      "text": "Banners stack: the newest in front on the highest layer, each older one a layer lower, peeking out 10px beneath and 5% smaller (three show). Pointing at or tabbing into the stack fans it out into a list (FLIP glides between the two). Header doc covers the logo prop.",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "2063af0",
+      "date": "2026-10-01",
+      "title": "Glass: lower opacity, no bleaching",
+      "text": "Fills 24 · 20 · 16 · 12 · 8% (side nav → notifications) and the light-mode backdrop lift down from 1.12 to 1.03 — the strong lift was bleaching the near-white page behind the glass to flat white, so the frost and what's behind it were invisible.",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "12c43f8",
+      "date": "2026-10-01",
+      "title": "Corpus brand mark and favicon; Header logo slot",
+      "text": "src/brand/corpus-mark.tsx: the Corpus mark — a thick ring, half a violet→blue arc (purple-400 → blue-500) and half soft grey, with three navy points (blue-900); turned 180°. Palette tokens only.",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "d3ee555",
+      "date": "2026-10-01",
+      "title": "Glass: 30 points more transparent so content shows beneath",
+      "text": "Fills 36 · 32 · 28 · 22 · 16% (side nav → notifications); blur and the light-mode backdrop lift unchanged.",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "1f99b73",
+      "date": "2026-10-01",
+      "title": "Glass: see-through yet white",
+      "text": "Fills drop below the original values (66 · 62 · 58 · 52 · 46%) and blur softens (10 · 14 · 18 · 24 · 30px), so content moving beneath stays faintly visible; the higher the layer, the more frosted. New --corpus-glass-lift brightens the backdrop in light mode (1.12; 1 in dark), so glass still reads white instead of greying into the page. Color docs table lists blur and fill per tier.",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "298d5d1",
+      "date": "2026-10-01",
+      "title": "Glass: whiter floating layers",
+      "text": "Each glass tier is 12 points more opaque (side nav 86% · header 82% · right panel/menus 78% · dialogs 72% · notifications 66%), so floating layers stand off the page instead of blending into it. The ordering holds: higher layers are still more translucent and more frosted.",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "aa3628c",
+      "date": "2026-10-01",
+      "title": "Weather tint applies only to floating layers",
+      "text": "New semantic token --corpus-elevated (raised + weather tint; mapped as --color-elevated). Glass fills from it, so only z-indexed surfaces — side nav, header, right panel, menus, popovers, dialogs, notifications, pinned toolbars — lean warm/cold. The page, in-flow containers, fields, lines and text are back on the neutral knobs. Documented in Color (Glass by elevation) and Theming.",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "8983b9e",
+      "date": "2026-10-01",
+      "title": "Weather tint colours the layers, never the page background",
+      "text": "-corpus-background reads the neutral knobs directly; every layer above it (layer-1..3, raised, fields, glass, lines, text) takes the weather tint, so Corpus's layering reads by temperature.",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "93ebf18",
+      "date": "2026-10-01",
+      "title": "Weather tint: 'Dynamic' mode; neutral/cold/warm are fixed",
+      "text": "The automatic mode is 'dynamic' (label Dynamic): the greys change with the weather. Neutral never tints, Cold is cold only, Warm is warm only. Stored 'weather'/'on' values fall back to dynamic.",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "e711de9",
+      "date": "2026-10-01",
+      "title": "No phantom scroll; right panel on the top layer; weather tint has three states",
+      "text": "ShellMain is position: relative, so absolutely positioned content inside it (sr-only text, badges) scrolls and clips with the page instead of stretching the document (~400px of empty scroll).",
+      "breaking": true,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "61ee55b",
+      "date": "2026-10-01",
+      "title": "Buttons: one primary per surface; secondary is a primary wash; rounder xl",
+      "text": "Rule: exactly one primary per page, dialog or side panel; pair it with a secondary when an alternative is needed, never a second primary (Button doc, variants table).",
+      "breaking": true,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "65635af",
+      "date": "2026-10-01",
+      "title": "No layout glide on page load; Button docs list xl",
+      "text": "useFlip (built into Stack/Inline) only re-measures while the page boots or the tab is hidden, so children no longer glide in from pre-layout positions (the 'everything flies in from the top left' on load). Boot now ends after window load + fonts actually loaded (+250ms), capped at 3s.",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "c9bd4a8",
+      "date": "2026-10-01",
+      "title": "AnimatedNumber: old and new digits move together",
+      "text": "Leaving and arriving digits share one timing (440ms, same easing, same delay) and travel exactly one line apart, like a conveyor, instead of the old digit leaving first and the new one following.",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "1103f11",
+      "date": "2026-10-01",
+      "title": "Performance: no load-in glide, one cross-fade for theme changes; numbers never clipped",
+      "text": "Boot: global transitions stay off until fonts and layout settle (bootAppearance), so elements no longer glide in from their pre-layout position (the 'anchored top left' effect).",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "765e7a8",
+      "date": "2026-10-01",
+      "title": "Status: degraded and paused are destructive; draft holds still; in-progress steps by slices",
+      "text": "Degraded uses error (destructive) — tags and indicators — instead of warning; caution is now 'minor, still working'. Paused uses the error colour (indicator glyph and tag, with a pause glyph).",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "5108f7d",
+      "date": "2026-10-01",
+      "title": "Side nav rail: icons centred when collapsed",
+      "text": "Rail rows use a side padding of (48 − 16) / 2 − 8 − 1 = 7px, so each icon sits dead centre in the collapsed rail, and keeps it when the rail expands on hover (no jump). SideNavMenu's trigger now matches SideNavItem (28px, 10px padding, body-lg) so menus and links line up, and its title and chevron hide in the collapsed rail like item labels.",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "f968a7c",
+      "date": "2026-10-01",
+      "title": "InlineLoading: one indicator morphs error → retry → saving → saved",
+      "text": "The glyph slot keeps the thinking orb and the drawn check/error mounted and cross-fades them (scale + blur), SwapIcon redraws check ⇄ error, the text morphs and the colour fades between muted and error. New onRetry prop: a Retry action beside the error that blends out as the retry starts (its spacing collapses with it). The demo runs the whole story in one indicator instead of showing the states side by side.",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "f45d876",
+      "date": "2026-10-01",
+      "title": "Right panel pattern: floats like the left panel; frosted bars no longer lose their backdrop",
+      "text": "RightPanel (breaking):",
+      "breaking": true,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "f1c0160",
+      "date": "2026-10-01",
+      "title": "Data table: fix lint (refs read during render)",
+      "text": "",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "e8ab716",
+      "date": "2026-10-01",
+      "title": "Data table: pinned toolbar frosts over the rows",
+      "text": "The sticky strip wrapper has no background any more. While pinned (rows scrolling beneath it), the toolbar bar itself turns to dialog-tier glass (glass-4); at rest it keeps the soft layer-2 fill. A transparent 1px border in the other states keeps its size constant across the swap.",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "51c3185",
+      "date": "2026-10-01",
+      "title": "Calendar hugs its content",
+      "text": "The calendar root is w-fit, so inline calendars no longer stretch to their container (the month arrows used to drift to the far right, leaving empty space beside the grid).",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "5ba2dd1",
+      "date": "2026-10-01",
+      "title": "Number input: stepper divider runs the full height",
+      "text": "",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "345b036",
+      "date": "2026-10-01",
+      "title": "Search: shortcut inset equals top/bottom at every size; side panel uses md",
+      "text": "The shortcut hint's right inset is (field height − kbd height) / 2 for sm (24), md (28) and lg (32), so there's no extra space on the right. Docs list the three sizes; demos show each with a shortcut. The playground's side-panel filter moves from sm to md.",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "4227c3b",
+      "date": "2026-10-01",
+      "title": "Greys follow the weather (useWeatherTint, on by default)",
+      "text": "Greys lean a hair warm when it's warm outside and a hair cool when it's cold (neutral ~17 °C, max chroma 0.006 at 30 °C / 0 °C). Current temperature from Open-Meteo for the user's area (position rounded to ~10 km), cached 30 min; seasonal estimate offline. Registered custom properties so the tint cross-fades. Switchable in the theme panel and remembered per device; while on, it replaces the neutral hue/tint knobs. useSunTheme now exports readCoords.",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "59a12ba",
+      "date": "2026-10-01",
+      "title": "Progress bar: a real liquid tip; values in regular weight",
+      "text": "lib/liquid: viscoelastic SPH (double-density relaxation: pressure, near-pressure surface tension, viscosity), weightless, with wetting walls (ghost particles), capillary drag and sealed-tube suction.",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "5b25da8",
+      "date": "2026-10-01",
+      "title": "Neutrals are pure grey by default",
+      "text": "-corpus-neutral-chroma defaults to 0 (was 0.007 at hue 286, which gave every grey, surface and the page background a violet cast). The tint stays available as a theme knob.",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "0e92161",
+      "date": "2026-10-01",
+      "title": "Radius formula outward; rounded, roomier table rows",
+      "text": "rounded-outer-*: a wrapper derives its radius from the controls it holds (control radius + padding). The data table toolbar strip now uses it: 8px controls + 4px padding = 12px.",
+      "breaking": true,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "4acee9b",
+      "date": "2026-10-01",
+      "title": "Glass by elevation: frosting increases with z-index",
+      "text": "glass now reads --corpus-glass-blur / -fill / -sat; tiers glass-1..5 map to the layers (z-30 side panels → z-40 header → z-50 menus/lists/popovers → z-50 dialogs above the overlay → z-60 notifications/capsules), each more blurred and more translucent than the one below. Applied to LeftPanel, RightPanel, Header, Menu, Dropdown/Select lists, Popover, Modal, banners and capsules. Documented in Color.",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "96ecc2a",
+      "date": "2026-10-01",
+      "title": "Menu: submenu parent stays highlighted legibly while its submenu is open",
+      "text": "The open state used a light hover fill with the highlight's white text (illegible); it now keeps the brand highlight with white text, like the hovered row, so it's clear which row the submenu belongs to.",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "6b2d843",
+      "date": "2026-10-01",
+      "title": "Divider: lower contrast (5% light, 7% dark)",
+      "text": "",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "1d7231d",
+      "date": "2026-10-01",
+      "title": "Icon placeholder: solid white tile in light mode",
+      "text": "",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "801c261",
+      "date": "2026-10-01",
+      "title": "Composer grows to 2.5 lines, then scrolls",
+      "text": "Max height = 2.5 line-heights + top padding; the half line signals there's more to scroll to.",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "c1350c0",
+      "date": "2026-10-01",
+      "title": "Chat send flight homes on the bubble's live position (no landing blink)",
+      "text": "The thread can move mid-flight (thinking line appears, pinned scroll), so the copy no longer flies to the take-off position: each frame it interpolates toward the real bubble's CURRENT rect on the expressive curve (frame-driven), and the hand-off happens in the same frame at the same place. Colours still form in place first; the flight cleans up on unmount.",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "ebfc44a",
+      "date": "2026-10-01",
+      "title": "Docs: chat bubble example and making-word note",
+      "text": "",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "b7060c2",
+      "date": "2026-10-01",
+      "title": "Making words while agents work; seamless send hand-off",
+      "text": "187 one-word making words in the Creator's voice (registry/lib/making-words.ts, each traceable to the playful verb it was reworded from); ChatTyping and the MiniChat header rotate them every 2.4s with a letter reveal (useMakingWord). Documented in Brand & voice.",
+      "breaking": false,
+      "release": "v0.2.0"
+    },
+    {
+      "id": "66bc00d",
+      "date": "2026-10-01",
+      "title": "Chat send flight: leaves fast, settles slow (expressive curve)",
+      "text": "The 'bubble forms' beat is shorter (18%) and the travel uses --corpus-ease-expressive, so a sent message shoots off and glides into place.",
+      "breaking": false,
+      "release": "v0.2.0"
+    }
+  ]
+}

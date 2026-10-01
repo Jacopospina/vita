@@ -6,6 +6,27 @@ import { Button } from "@/registry/ui/button"
 import { TextInput } from "@/registry/ui/text-input"
 import { Tag } from "@/registry/ui/tag"
 import { StatusIndicator } from "@/registry/ui/status-indicator"
+import { Timeline } from "@/registry/ui/timeline"
+import changelog from "../../../docs/changelog.json"
+
+/** The changelog as one timeline, grouped by release: breaking changes carry a warning marker. */
+function ChangelogTimeline() {
+  const groups = new Map<string, typeof changelog.entries>()
+  for (const e of changelog.entries) groups.set(e.release, [...(groups.get(e.release) ?? []), e])
+  return (
+    <Stack gap="xl">
+      {[...groups].map(([release, entries]) => (
+        <Stack key={release} gap="md">
+          <Text variant="title-3" as="h3">{release}</Text>
+          <Timeline
+            label={`Changes in ${release}`}
+            events={entries.map((e) => ({ id: e.id, date: e.date, title: e.title, tone: e.breaking ? "warning" : undefined, children: e.text || undefined }))}
+          />
+        </Stack>
+      ))}
+    </Stack>
+  )
+}
 
 function Part({ name, role, line, active, children }: { name: string; role: string; line: string; active?: boolean; children?: React.ReactNode }) {
   return (
@@ -19,7 +40,25 @@ function Part({ name, role, line, active, children }: { name: string; role: stri
 }
 
 export const aboutDemos: DemoMap = {
-  "foundations/about": [
+  "getting-started/changelog": [{ title: "Every change, newest first", render: () => <ChangelogTimeline /> }],
+  "components/timeline": [
+    {
+      title: "Run history",
+      description: "Neutral markers for ordinary events; a status tone only for the ones that matter.",
+      render: () => (
+        <Timeline
+          label="Support triage — history"
+          events={[
+            { id: "1", date: "Today 09:40", title: "Deployed to production", tone: "success", children: "Version 14 · Vita Large" },
+            { id: "2", date: "Today 09:12", title: "Instructions updated", children: "Refunds now go to the Finance team." },
+            { id: "3", date: "Yesterday 17:05", title: "Evaluation failed", tone: "error", children: "3 of 40 test tickets answered wrongly." },
+            { id: "4", date: "Monday 11:30", title: "Created by Ada Lovelace" },
+          ]}
+        />
+      ),
+    },
+  ],
+  "getting-started/about": [
     {
       title: "Mind, soul, body",
       render: () => (

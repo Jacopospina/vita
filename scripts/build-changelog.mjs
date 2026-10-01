@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * pnpm changelog — CHANGELOG.md and docs/foundations/whats-new.md from git history.
+ * pnpm changelog — CHANGELOG.md and docs/getting-started/changelog.md + docs/changelog.json (its timeline) from git history.
  * Releases are git tags (v1.2.3); everything after the last tag is "Unreleased". A commit is breaking when its
  * message says "Breaking" (docs/decisions/how-we-decide.md). Commits are written for humans: subject = what
  * changed, body = why and how to migrate.
@@ -58,22 +58,25 @@ for (const [g, list] of groups) {
 }
 fs.writeFileSync(path.join(root, "CHANGELOG.md"), md.join("\n"))
 
-// What's new — the latest changes as cards (card-first docs).
-const recent = log.slice(0, 30)
+// Changelog page: a short doc, and the data its timeline renders (docs/changelog.json).
+const recent = log.slice(0, 60).map((c) => ({ id: c.hash, date: c.date, title: c.subject, text: firstLine(c.body), breaking: c.breaking, release: tagOf.get(c.hash) ?? "Unreleased" }))
+fs.writeFileSync(path.join(root, "docs/changelog.json"), JSON.stringify({ latest: tags[0] ?? null, entries: recent }, null, 2) + "\n")
 const page = [
   "---",
-  "title: What's new",
-  "summary: The latest changes to Corpus, newest first. Breaking changes say how to migrate. Generated from the changelog.",
+  "title: Changelog",
+  "summary: Every change to Corpus, newest first, on one timeline. Breaking changes are marked and say how to migrate.",
   "status: stable",
-  "related: [how-we-decide]",
+  "related: [how-we-decide, cli]",
   "---",
   "",
-  "> [!NOTE] Breaking changes are marked ⚠. The full history lives in `CHANGELOG.md`.",
+  "> [!NOTE] Generated from git history by `pnpm changelog`. The full list, grouped by release, lives in `CHANGELOG.md`.",
   "",
-  `## ${groups.has("Unreleased") ? "Unreleased" : tags[0]}`,
+  "## Reading it",
   "",
-  ...recent.map((c) => `- **${c.breaking ? "⚠ " : ""}${c.subject.replace(/\*/g, "")}.** ${c.date} · ${firstLine(c.body).replace(/\*/g, "") || "—"}`),
+  "- **Newest first.** Each change shows its date, what changed, and why.",
+  "- **Breaking changes are marked** with a warning marker and say how to migrate.",
+  `- **Releases.** ${tags.length ? `The latest release is ${tags[0]}; changes after it are Unreleased.` : "No release yet; everything is Unreleased."}`,
   "",
 ]
-fs.writeFileSync(path.join(root, "docs/foundations/whats-new.md"), page.join("\n"))
-console.log(`✓ ${log.length} commits → CHANGELOG.md (${[...groups.keys()].join(", ")}), docs/foundations/whats-new.md`)
+fs.writeFileSync(path.join(root, "docs/getting-started/changelog.md"), page.join("\n"))
+console.log(`✓ ${log.length} commits → CHANGELOG.md (${[...groups.keys()].join(", ")}), docs/getting-started/changelog.md`)

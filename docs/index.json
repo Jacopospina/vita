@@ -3,31 +3,17 @@
   "generated": "2026-10-01",
   "entries": [
     {
-      "section": "foundations",
+      "section": "getting-started",
       "slug": "about",
-      "path": "docs/foundations/about.md",
-      "title": "Corpus",
+      "path": "docs/getting-started/about.md",
+      "title": "Mind, soul, body",
       "summary": "The AI-agent-first design system, born for humans and machines making together — the body of every product, through which its mind and soul reach the world.",
       "status": "stable"
     },
     {
-      "section": "foundations",
-      "slug": "accessibility",
-      "path": "docs/foundations/accessibility.md",
-      "title": "Accessibility",
-      "summary": "WCAG 2.2 AA is the floor. Components are accessible by default; composition is where teams break it.",
-      "status": "stable",
-      "use_when": [
-        "Always"
-      ],
-      "avoid_when": [
-        "Never \"add accessibility later\""
-      ]
-    },
-    {
-      "section": "foundations",
+      "section": "getting-started",
       "slug": "brand",
-      "path": "docs/foundations/brand.md",
+      "path": "docs/getting-started/brand.md",
       "title": "Brand & voice",
       "summary": "The AI-agent-first design system, born for humans and machines making together. Its voice is the Creator's, and every word aims to awaken the maker in the reader.",
       "status": "stable",
@@ -42,6 +28,109 @@
         "content",
         "about",
         "principles"
+      ]
+    },
+    {
+      "section": "getting-started",
+      "slug": "changelog",
+      "path": "docs/getting-started/changelog.md",
+      "title": "Changelog",
+      "summary": "Every change to Corpus, newest first, on one timeline. Breaking changes are marked and say how to migrate.",
+      "status": "stable",
+      "related": [
+        "how-we-decide",
+        "cli"
+      ]
+    },
+    {
+      "section": "getting-started",
+      "slug": "cli",
+      "path": "docs/getting-started/cli.md",
+      "title": "CLI",
+      "summary": "One command line to install Corpus, add components, stay up to date and audit any repo.",
+      "status": "stable",
+      "related": [
+        "installation",
+        "registry",
+        "skills"
+      ]
+    },
+    {
+      "section": "getting-started",
+      "slug": "installation",
+      "path": "docs/getting-started/installation.md",
+      "title": "Installation",
+      "summary": "Add Corpus to a React + Tailwind v4 product in one command — components, styles, docs, agent skills, the audit and its hooks.",
+      "status": "stable",
+      "related": [
+        "cli",
+        "skills",
+        "registry",
+        "theming"
+      ]
+    },
+    {
+      "section": "getting-started",
+      "slug": "interaction",
+      "path": "docs/getting-started/interaction.md",
+      "title": "Interaction",
+      "summary": "Built for products where AI carries the complexity. One hand per device, intent over input, nothing redundant, nothing that snaps.",
+      "status": "stable",
+      "import": "import { useShortcut } from \"@/components/corpus/hooks/use-shortcut\"\nimport { Kbd } from \"@/components/corpus/kbd\"\nimport { Composer } from \"@/components/corpus/composer\"",
+      "use_when": [
+        "Designing any flow, interaction or shortcut",
+        "Deciding between a form and an intent-first flow"
+      ],
+      "avoid_when": [
+        "Adding a control that repeats one that already exists (Cancel next to ×)",
+        "Shortcuts that need the right hand"
+      ]
+    },
+    {
+      "section": "getting-started",
+      "slug": "principles",
+      "path": "docs/getting-started/principles.md",
+      "title": "Design principles",
+      "summary": "Ten ranked rules every Corpus screen obeys. When two conflict, the lower number wins.",
+      "status": "stable"
+    },
+    {
+      "section": "getting-started",
+      "slug": "registry",
+      "path": "docs/getting-started/registry.md",
+      "title": "Registry",
+      "summary": "Corpus ships as source — a registry of components, hooks, blocks, icons and styles you install into your repo and own.",
+      "status": "stable",
+      "related": [
+        "installation",
+        "cli"
+      ]
+    },
+    {
+      "section": "getting-started",
+      "slug": "skills",
+      "path": "docs/getting-started/skills.md",
+      "title": "Skills",
+      "summary": "Six skills teach AI agents to design and build with Corpus like a designer would — installed with Corpus into every product.",
+      "status": "stable",
+      "related": [
+        "corpus-for-ai",
+        "installation",
+        "content"
+      ]
+    },
+    {
+      "section": "foundations",
+      "slug": "accessibility",
+      "path": "docs/foundations/accessibility.md",
+      "title": "Accessibility",
+      "summary": "WCAG 2.2 AA is the floor. Components are accessible by default; composition is where teams break it.",
+      "status": "stable",
+      "use_when": [
+        "Always"
+      ],
+      "avoid_when": [
+        "Never \"add accessibility later\""
       ]
     },
     {
@@ -78,6 +167,26 @@
     },
     {
       "section": "foundations",
+      "slug": "corpus-for-ai",
+      "path": "docs/foundations/corpus-for-ai.md",
+      "title": "Corpus for AI",
+      "summary": "Corpus is built for agents as much as for people — machine-readable docs, skills, rules, decisions and an audit that answers on every edit.",
+      "status": "stable",
+      "use_when": [
+        "Setting up an agent to design or build with Corpus",
+        "Understanding how Corpus keeps agent-built screens consistent"
+      ],
+      "avoid_when": [
+        "Looking for the AI label or AI surfaces in the product → AI label"
+      ],
+      "related": [
+        "skills",
+        "cli",
+        "how-we-decide"
+      ]
+    },
+    {
+      "section": "foundations",
       "slug": "grid",
       "path": "docs/foundations/grid.md",
       "title": "Grid & layout",
@@ -109,23 +218,6 @@
         "Other icon libraries → forbidden",
         "Decorating headings or list items",
         "Large illustrative use → Pictogram"
-      ]
-    },
-    {
-      "section": "foundations",
-      "slug": "interaction",
-      "path": "docs/foundations/interaction.md",
-      "title": "Interaction",
-      "summary": "Built for products where AI carries the complexity. One hand per device, intent over input, nothing redundant, nothing that snaps.",
-      "status": "stable",
-      "import": "import { useShortcut } from \"@/components/corpus/hooks/use-shortcut\"\nimport { Kbd } from \"@/components/corpus/kbd\"\nimport { Composer } from \"@/components/corpus/composer\"",
-      "use_when": [
-        "Designing any flow, interaction or shortcut",
-        "Deciding between a form and an intent-first flow"
-      ],
-      "avoid_when": [
-        "Adding a control that repeats one that already exists (Cancel next to ×)",
-        "Shortcuts that need the right hand"
       ]
     },
     {
@@ -180,14 +272,6 @@
     },
     {
       "section": "foundations",
-      "slug": "principles",
-      "path": "docs/foundations/principles.md",
-      "title": "Design principles",
-      "summary": "Ten ranked rules every Corpus screen obeys. When two conflict, the lower number wins.",
-      "status": "stable"
-    },
-    {
-      "section": "foundations",
       "slug": "spacing",
       "path": "docs/foundations/spacing.md",
       "title": "Spacing",
@@ -232,17 +316,6 @@
       "avoid_when": [
         "Tailwind sizes (text-sm, text-2xl) → they don't exist in Corpus",
         "Changing size to create emphasis inside a paragraph → use font-medium or font-semibold"
-      ]
-    },
-    {
-      "section": "foundations",
-      "slug": "whats-new",
-      "path": "docs/foundations/whats-new.md",
-      "title": "What's new",
-      "summary": "The latest changes to Corpus, newest first. Breaking changes say how to migrate. Generated from the changelog.",
-      "status": "stable",
-      "related": [
-        "how-we-decide"
       ]
     },
     {
@@ -1236,6 +1309,28 @@
         "radio-button",
         "checkbox",
         "accordion"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "timeline",
+      "path": "docs/components/timeline.md",
+      "title": "Timeline",
+      "summary": "Events in time order on one vertical line — changelogs, run history, an agent's steps, audit trails.",
+      "status": "stable",
+      "import": "import { Timeline } from \"@/components/corpus/timeline\"",
+      "use_when": [
+        "A history people read top to bottom (changelog, activity, an agent's steps, an audit trail)"
+      ],
+      "avoid_when": [
+        "Steps a user completes → ProgressIndicator",
+        "Records to sort and compare → DataTable",
+        "A single latest state → StatusIndicator"
+      ],
+      "related": [
+        "progress-indicator",
+        "status-indicator",
+        "data-table"
       ]
     },
     {

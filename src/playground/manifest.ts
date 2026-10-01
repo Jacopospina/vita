@@ -1,4 +1,4 @@
-export type Section = "foundations" | "components" | "patterns" | "decisions"
+export type Section = "getting-started" | "foundations" | "components" | "patterns" | "decisions"
 
 export interface NavEntry {
   slug: string
@@ -6,23 +6,30 @@ export interface NavEntry {
 }
 
 export const manifest: Record<Section, NavEntry[]> = {
-  foundations: [
-    { slug: "about", title: "Corpus" },
-    { slug: "whats-new", title: "What's new" },
+  "getting-started": [
+    { slug: "installation", title: "Installation" },
+    { slug: "cli", title: "CLI" },
+    { slug: "skills", title: "Skills" },
+    { slug: "registry", title: "Registry" },
+    { slug: "about", title: "Mind, soul, body" },
     { slug: "brand", title: "Brand & voice" },
     { slug: "principles", title: "Design principles" },
     { slug: "interaction", title: "Interaction" },
-    { slug: "theming", title: "Theming & personalisation" },
-    { slug: "grid", title: "Grid & layout" },
-    { slug: "spacing", title: "Spacing" },
-    { slug: "color", title: "Color" },
-    { slug: "material", title: "Material" },
-    { slug: "typography", title: "Typography" },
-    { slug: "motion", title: "Motion" },
-    { slug: "icons", title: "Icons" },
-    { slug: "pictograms", title: "Pictograms" },
+    { slug: "changelog", title: "Changelog" },
+  ],
+  foundations: [
     { slug: "accessibility", title: "Accessibility" },
+    { slug: "color", title: "Color" },
     { slug: "content", title: "Content, personas & taxonomy" },
+    { slug: "corpus-for-ai", title: "Corpus for AI" },
+    { slug: "grid", title: "Grid & layout" },
+    { slug: "icons", title: "Icons" },
+    { slug: "material", title: "Material" },
+    { slug: "motion", title: "Motion" },
+    { slug: "pictograms", title: "Pictograms" },
+    { slug: "spacing", title: "Spacing" },
+    { slug: "theming", title: "Theming & personalisation" },
+    { slug: "typography", title: "Typography" },
   ],
   components: [
     { slug: "choosing-components", title: "Choosing a component" },
@@ -67,6 +74,7 @@ export const manifest: Record<Section, NavEntry[]> = {
     { slug: "tag", title: "Tag" },
     { slug: "text-input", title: "Text input" },
     { slug: "tile", title: "Tile" },
+    { slug: "timeline", title: "Timeline" },
     { slug: "toggle", title: "Toggle" },
     { slug: "tooltip", title: "Tooltip" },
     { slug: "tree-view", title: "Tree view" },
@@ -109,6 +117,7 @@ export const manifest: Record<Section, NavEntry[]> = {
 }
 
 export const sectionTitles: Record<Section, string> = {
+  "getting-started": "Getting started",
   foundations: "Foundations",
   components: "Components",
   patterns: "Patterns",

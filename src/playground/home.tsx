@@ -102,7 +102,7 @@ export function HomePage() {
           <Resource icon={ColorPalette} name="Theming" href="#/foundations/theming" action="Personalise Corpus">
             {summary("foundations", "theming")}
           </Resource>
-          <Resource icon={Terminal} name="Corpus CLI" href="#/foundations/about" action="Get started">
+          <Resource icon={Terminal} name="Corpus CLI" href="#/getting-started/cli" action="Get started">
             Install Corpus into any repository, then add, update and audit components from the command line.
           </Resource>
           <Resource icon={Pen} name="Design kit">Components, tokens and templates for design tools.</Resource>
@@ -138,7 +138,7 @@ export function HomePage() {
             <Text variant="title-2" as="h2">What will you make?</Text>
             <Text tone="muted" className="max-w-xl">Every product starts as an idea. Start with the principles, then let the decision guide hand you the right piece for every task.</Text>
             <Inline gap="lg" justify="center">
-              <Link href="#/foundations/principles">Read the principles</Link>
+              <Link href="#/getting-started/principles">Read the principles</Link>
               <Link href="#/components/choosing-components">Choose a component</Link>
             </Inline>
           </Stack>
@@ -161,17 +161,17 @@ const recentlyUpdated: [Section, string][] = [
 
 export function GuidelinesPage() {
   const topics: { name: string; text: string; href?: string; count?: number; icon: IconType }[] = [
-    { name: "Getting started", text: "What Corpus is, how it's installed, and the principles every screen follows.", href: "#/foundations/about", icon: Book },
-    { name: "Foundations", text: "The fundamentals every screen is built on: color, type, layout, motion and more.", href: "#/foundations/principles", count: manifest.foundations.length, icon: ColorPalette },
+    { name: "Getting started", text: "Install Corpus, meet the CLI, skills and registry, and the principles every screen follows.", href: "#/getting-started/installation", count: manifest["getting-started"].length + 1, icon: Book },
+    { name: "Foundations", text: "The fundamentals every screen is built on: color, type, layout, motion and more.", href: "#/foundations/color", count: manifest.foundations.length, icon: ColorPalette },
     { name: "Components", text: "The building blocks, what each is for, and when to use another.", href: "#/components/choosing-components", count: manifest.components.length, icon: Application },
     { name: "Patterns", text: "Guidance for common tasks: forms, search, filtering, notifications and more.", href: "#/patterns/forms", count: manifest.patterns.length, icon: GridIcon },
-    { name: "Agent skills", text: "How AI agents learn to design and build with Corpus.", icon: Bot },
+    { name: "Agent skills", text: "How AI agents learn to design and build with Corpus.", href: "#/getting-started/skills", icon: Bot },
   ]
   return (
     <Container className="py-10">
       <Stack gap="3xl" className="stagger">
         <Stack gap="xs">
-          <Text variant="large-title" as="h1">Corpus Guidelines</Text>
+          <Text variant="large-title" as="h1">About Corpus</Text>
           <Text variant="body-lg" tone="muted" className="max-w-2xl">The craft behind Corpus, handed to you: principles, foundations, components and patterns for giving your ideas a body.</Text>
         </Stack>
 

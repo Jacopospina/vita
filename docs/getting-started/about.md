@@ -1,5 +1,5 @@
 ---
-title: Corpus
+title: Mind, soul, body
 summary: The AI-agent-first design system, born for humans and machines making together — the body of every product, through which its mind and soul reach the world.
 status: stable
 ---

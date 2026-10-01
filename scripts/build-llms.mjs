@@ -8,7 +8,7 @@ import fs from "node:fs"
 import path from "node:path"
 
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..")
-const sections = ["foundations", "components", "patterns", "decisions"]
+const sections = ["getting-started", "foundations", "components", "patterns", "decisions"]
 
 function parse(src) {
   const m = /^---\n([\s\S]*?)\n---/.exec(src)
@@ -43,11 +43,11 @@ const lines = [
   "",
   "> Corpus is the body of the product: the only source of UI. Components are imported from @/components/corpus/*, tokens are Tailwind utilities, patterns are documented flows. Never create local components or raw values.",
   "",
-  "Start with: docs/components/choosing-components.md (decision guide) · docs/foundations/principles.md · docs/decisions/ (system decisions — read before changing what they cover) · skills/corpus-design-system/SKILL.md",
+  "Start with: docs/components/choosing-components.md (decision guide) · docs/getting-started/principles.md · docs/decisions/ (system decisions — read before changing what they cover) · skills/corpus-design-system/SKILL.md",
   "",
 ]
 for (const section of sections) {
-  lines.push(`## ${section[0].toUpperCase()}${section.slice(1)}`, "")
+  lines.push(`## ${section[0].toUpperCase()}${section.slice(1).replace("-", " ")}`, "")
   for (const e of entries.filter((x) => x.section === section)) {
     lines.push(`- [${e.title ?? e.slug}](${e.path}): ${e.summary ?? ""}`)
     if (e.use_when?.length) lines.push(`  - use: ${e.use_when.join("; ")}`)

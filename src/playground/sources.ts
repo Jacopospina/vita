@@ -13,7 +13,7 @@ const map: Record<string, string[]> = {
   "foundations/icons": ["registry/ui/icon.tsx", "registry/icons.ts"],
   "foundations/pictograms": ["registry/ui/pictogram.tsx", "registry/pictograms.ts"],
   "foundations/accessibility": ["styles/corpus.css"],
-  "foundations/interaction": ["registry/hooks/use-shortcut.ts", "registry/ui/kbd.tsx"],
+  "getting-started/interaction": ["registry/hooks/use-shortcut.ts", "registry/ui/kbd.tsx"],
   // components (default: registry/ui/<slug>.tsx)
   "components/capsule": ["registry/ui/notification.tsx", "registry/ui/progress-bar.tsx"],
   "components/chat-bubble": ["registry/ui/chat.tsx"],
