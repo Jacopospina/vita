@@ -28,7 +28,7 @@ import { OverflowMenu } from "@/registry/ui/menu-button"
 import { MenuItem, MenuSeparator } from "@/registry/ui/menu"
 import { InlineNotification, toast } from "@/registry/ui/notification"
 import { ConfirmModal } from "@/registry/ui/modal"
-import { Tabs, TabsList, TabsTrigger } from "@/registry/ui/tabs"
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/registry/ui/tabs"
 import { Skeleton, SkeletonText, InlineLoading } from "@/registry/ui/loading"
 import { Tooltip } from "@/registry/ui/tooltip"
 import { Icon } from "@/registry/ui/icon"
@@ -141,7 +141,7 @@ function CommonActionsDemo() {
         status={<StatusIndicator kind="success">Live</StatusIndicator>}
         description="Answers and routes support tickets · Vita Large · Production"
         actions={<><Button variant="secondary" icon={Copy}>Duplicate</Button><Button icon={Renew}>Redeploy</Button><OverflowMenu label="More actions"><MenuItem icon={Edit}>Edit</MenuItem><MenuItem icon={Download}>Export config</MenuItem><MenuSeparator /><MenuItem icon={TrashCan} danger onSelect={() => setDel(true)}>Delete agent</MenuItem></OverflowMenu></>}
-        tabs={<Tabs defaultValue="o"><TabsList><TabsTrigger value="o">Overview</TabsTrigger><TabsTrigger value="h">History</TabsTrigger></TabsList></Tabs>}
+        tabs={<Tabs defaultValue="o"><TabsList><TabsTrigger value="o">Overview</TabsTrigger><TabsTrigger value="h">History</TabsTrigger></TabsList><TabsContent value="o" /><TabsContent value="h" /></Tabs>}
       />
       <ConfirmModal danger open={del} onOpenChange={setDel} title="Delete Support triage?" description="It stops answering tickets and its run history is removed." confirmLabel="Delete agent" onConfirm={() => setDel(false)} />
     </Stack>

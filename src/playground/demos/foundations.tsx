@@ -201,7 +201,7 @@ function MaterialDemo() {
     <div className="relative h-80 overflow-hidden scope-lg bg-layer-1">
       <div aria-hidden className="absolute inset-0 grid grid-cols-5 place-items-center gap-3 p-6">
         {(["bg-primary", "bg-inverse", "bg-primary", "bg-inverse", "bg-primary"] as const).map((bg, i) => (
-          <div key={bg} className="flex flex-col items-center gap-3">
+          <div key={i} className="flex flex-col items-center gap-3">
             <span className={cn("size-20 rounded-full", bg)} />
             <Text variant="title-2">{["Give", "your", "ideas", "a", "body."][i]}</Text>
             <span className={cn("size-12 rounded-full", i % 2 ? "bg-primary" : "bg-inverse")} />

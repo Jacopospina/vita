@@ -107,7 +107,7 @@ export function Composer({ placeholder = "Describe what you need", onSubmit, sug
         <div className="flex items-center gap-1 px-1.5 pb-1.5">
           {attachments && (
             <>
-              <input ref={fileRef} type="file" multiple className="sr-only" tabIndex={-1} onChange={(e) => { setFiles((x) => [...x, ...Array.from(e.target.files ?? [])]); e.target.value = "" }} />
+              <input ref={fileRef} type="file" multiple aria-label="Attach files" className="sr-only" tabIndex={-1} onChange={(e) => { setFiles((x) => [...x, ...Array.from(e.target.files ?? [])]); e.target.value = "" }} />
               <IconButton icon={Attachment} label="Attach files" size="sm" className="rounded-inner-1.5 [corner-shape:round]" onClick={() => fileRef.current?.click()} />
             </>
           )}

@@ -47,8 +47,8 @@
 
   /* text */
   --corpus-foreground: oklch(0.232 var(--_nc) var(--_nh));
-  --corpus-muted-foreground: oklch(0.54 var(--_nc) var(--_nh));
-  --corpus-helper: oklch(0.54 var(--_nc) var(--_nh));
+  --corpus-muted-foreground: oklch(0.5 var(--_nc) var(--_nh)); /* ≥ 4.5:1 on layer-2 (grey pills, tabs), not only on white */
+  --corpus-helper: oklch(0.5 var(--_nc) var(--_nh));
   --corpus-placeholder: oklch(0.622 var(--_nc) var(--_nh));
   --corpus-disabled-foreground: oklch(0.752 var(--_nc) var(--_nh));
 

@@ -74,6 +74,8 @@ export function Slider({ label, hideLabel, helperText, formatValue = String, sho
         {current.map((v, i) => (
           <SliderPrimitive.Thumb
             key={i}
+            // The knob needs its own name: the slider's label for one knob, Minimum / Maximum for a range.
+            aria-labelledby={single ? id : undefined}
             aria-label={single ? undefined : i === 0 ? "Minimum" : "Maximum"}
             aria-valuetext={formatValue(v)}
             className={cn(
