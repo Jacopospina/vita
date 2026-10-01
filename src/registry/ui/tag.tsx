@@ -17,7 +17,7 @@ import { useExit } from "@/registry/hooks/use-exit"
  */
 const tagVariants = cva(
   // Every tone carries a 1px border (transparent unless the tone shows it), so switching tone never resizes the tag.
-  "inline-flex h-6 max-w-full shrink-0 items-center gap-1 rounded-full border border-transparent px-2 text-caption font-medium whitespace-nowrap duration-fast-02 ease-productive",
+  "inline-flex h-6 max-w-full shrink-0 items-center gap-1 rounded-pill border border-transparent px-2 text-caption font-medium whitespace-nowrap duration-fast-02 ease-productive",
   {
     variants: {
       tone: {
@@ -58,7 +58,7 @@ export function Tag({ tone, size, icon, onDismiss, dismissLabel, disabled, class
           disabled={disabled}
           onClick={() => exit(onDismiss)}
           aria-label={dismissLabel ?? `Remove ${typeof children === "string" ? children : "tag"}`}
-          className="flex size-5 items-center justify-center rounded-full hover:bg-hover focus-ring"
+          className="flex size-5 items-center justify-center rounded-pill hover:bg-hover focus-ring"
         >
           <Icon as={Close} size="sm" />
         </button>

@@ -11,6 +11,7 @@ import { Search } from "@/registry/ui/search"
 import { manifest, sectionTitles, type Section } from "./manifest"
 import { globalNav, navHref, searchPages, HOME_URL } from "./nav"
 import { GlobalSearch } from "@/registry/ui/global-search"
+import { Tag } from "@/registry/ui/tag"
 import { GithubAction } from "./github"
 import { DocPage } from "./doc-page"
 import { ThemePanel } from "./theme-panel"
@@ -71,6 +72,7 @@ export function App() {
         <Header
           productName="Vita"
           logo={<VitaMark size={24} className="-m-0.5" />}
+          badge={<Tag size="sm" tone="brand">Alpha</Tag>}
           href={HOME_URL} // the Vita homepage: the live showcase
           actions={
             <>

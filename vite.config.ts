@@ -10,5 +10,5 @@ export default defineConfig({
   server: { fs: { allow: ["."] } },
   // Three pages: the documentation (index.html), the showcase (showcase.html) and what you can make (make.html).
   build: { rollupOptions: { input: { docs: path.resolve(import.meta.dirname, "index.html"), showcase: path.resolve(import.meta.dirname, "showcase.html"), make: path.resolve(import.meta.dirname, "make.html") } } },
-  test: { environment: "jsdom", globals: false, setupFiles: ["tests/setup.ts"], include: ["tests/**/*.test.{ts,tsx}"] },
+  test: { environment: "jsdom", globals: false, testTimeout: 15000, setupFiles: ["tests/setup.ts"], include: ["tests/**/*.test.{ts,tsx}"] },
 } as never)

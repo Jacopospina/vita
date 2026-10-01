@@ -138,7 +138,7 @@ export function Composer({ placeholder = "Describe what you need", onSubmit, sug
               key={s}
               type="button"
               onClick={() => { setValue(s); inputRef.current?.focus() }}
-              className="inline-flex h-control-sm items-center rounded-full border border-border bg-background px-3 text-footnote text-foreground duration-fast-02 hover:bg-hover focus-ring"
+              className="inline-flex h-control-sm items-center rounded-pill border border-border bg-background px-3 text-footnote text-foreground duration-fast-02 hover:bg-hover focus-ring"
             >
               {s}
             </button>
@@ -152,7 +152,7 @@ export function Composer({ placeholder = "Describe what you need", onSubmit, sug
 function AttachmentChip({ file, onRemove }: { file: File; onRemove: () => void }) {
   const [leaving, exit] = useExit()
   return (
-    <li className={cn("inline-flex h-6 origin-left items-center gap-1 rounded-full bg-layer-2 pr-0.5 pl-2 text-caption", leaving ? "animate-exit-scale" : "animate-chip-in")}>
+    <li className={cn("inline-flex h-6 origin-left items-center gap-1 rounded-pill bg-layer-2 pr-0.5 pl-2 text-caption", leaving ? "animate-exit-scale" : "animate-chip-in")}>
       <Icon as={Attachment} size="sm" draw="in" />
       <span className="max-w-40 truncate">{file.name}</span>
       <button type="button" aria-label={`Remove ${file.name}`} onClick={() => exit(onRemove)} className="flex size-5 items-center justify-center rounded-full hover:bg-hover focus-ring">

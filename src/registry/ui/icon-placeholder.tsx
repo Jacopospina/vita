@@ -20,11 +20,12 @@ const tones = {
   error: "text-error",
 } as const
 
-// Tile size → glyph size. The radius is proportional (22% of the tile), so every size is the same shape.
+// Tile size → glyph size. The radius is proportional to the tile (22% at the default theme radius) AND follows the
+// theme's radius knob: square themes square the tile, soft themes round it more.
 const sizes = {
-  sm: { tile: "size-6", icon: "sm" },
-  md: { tile: "size-8", icon: "md" },
-  lg: { tile: "size-10", icon: "md" },
+  sm: { tile: "size-6 [--vita-squircle-r:calc(var(--vita-radius)*0.66)]", icon: "sm" },
+  md: { tile: "size-8 [--vita-squircle-r:calc(var(--vita-radius)*0.88)]", icon: "md" },
+  lg: { tile: "size-10 [--vita-squircle-r:calc(var(--vita-radius)*1.1)]", icon: "md" },
 } as const
 
 export type IconPlaceholderTone = keyof typeof tones
@@ -52,7 +53,7 @@ export function IconPlaceholder({ icon, tone = "neutral", size = "md", draw, sur
     <span
       aria-hidden
       className={cn(
-        "flex shrink-0 items-center justify-center squircle duration-moderate-01 [--vita-squircle-r:22%]",
+        "flex shrink-0 items-center justify-center squircle duration-moderate-01",
         surface === "solid" ? "bg-icon-surface-solid" : "bg-icon-surface",
         s.tile,
         tones[tone],

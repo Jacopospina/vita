@@ -24,7 +24,7 @@ export function Checkbox({ label, helperText, invalid, className, id: idProp, ..
       aria-invalid={invalid || undefined}
       aria-describedby={helperText ? `${id}-help` : undefined}
       className={cn(
-        "peer relative tap mt-0.5 flex size-4 shrink-0 items-center justify-center squircle border border-border-strong bg-field [--vita-squircle-r:22%]", // same proportional squircle as IconPlaceholder; `tap`: a 44px finger target
+        "peer relative tap mt-0.5 flex size-4 shrink-0 items-center justify-center squircle border border-border-strong bg-field [--vita-squircle-r:calc(var(--vita-radius)*0.44)]", // proportional like IconPlaceholder, and it follows the theme radius; `tap`: a 44px finger target
         " duration-fast-01 ease-productive focus-ring",
         "data-[state=checked]:border-primary data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground",
         "data-[state=indeterminate]:border-primary data-[state=indeterminate]:bg-primary data-[state=indeterminate]:text-primary-foreground",

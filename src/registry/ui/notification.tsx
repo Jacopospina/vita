@@ -299,7 +299,7 @@ export function Capsule({ o, leaving }: { o: CapsuleOptions; leaving?: boolean }
       ref={ref}
       role="status"
       className={cn(
-        "glass glass-5 pointer-events-auto flex items-center rounded-full p-1.5 text-foreground",
+        "glass glass-5 pointer-events-auto flex items-center rounded-pill p-1.5 text-foreground",
         leaving ? "animate-island-out" : "animate-island-in",
       )}
     >
@@ -307,7 +307,7 @@ export function Capsule({ o, leaving }: { o: CapsuleOptions; leaving?: boolean }
       <div className={cn("reveal-x duration-moderate-02 ease-productive", (open || !hasStory) && "reveal-x-open")}>
         <div>
           {/* Ends fill the capsule's full inner height, so the visible edge sits the same 6px from the rim on every side. */}
-          <span className="flex size-9 items-center justify-center rounded-full bg-icon-surface">{renderIcon(o.icon)}</span>
+          <span className="flex size-9 items-center justify-center rounded-pill bg-icon-surface">{renderIcon(o.icon)}</span>
         </div>
       </div>
       <div className={cn("reveal-x duration-moderate-02 ease-productive", open && "reveal-x-open")}>

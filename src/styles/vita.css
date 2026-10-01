@@ -267,6 +267,9 @@
 @utility scope-sm { border-radius: var(--vita-radius-sm); --vita-scope-r: var(--vita-radius-sm); }
 @utility scope-md { border-radius: var(--vita-radius-md); --vita-scope-r: var(--vita-radius-md); }
 @utility scope-lg { border-radius: var(--vita-radius-lg); --vita-scope-r: var(--vita-radius-lg); }
+/* A pill that follows the theme: fully round at any radius, square only when the theme is square (radius 0).
+   For tags, chips and capsules. True circles (dots, avatars, radios) stay rounded-full. */
+@utility rounded-pill { border-radius: calc(var(--vita-radius) * 9999); }
 @utility scope-xl { border-radius: var(--vita-radius-xl); --vita-scope-r: var(--vita-radius-xl); }
 @utility rounded-inner-* {
   border-radius: max(0px, calc(var(--vita-scope-r, var(--vita-radius-md)) - --value(number) * var(--spacing)));

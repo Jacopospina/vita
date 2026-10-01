@@ -17,6 +17,7 @@ related: [ui-shell-left-panel, ui-shell-right-panel, global-header]
 `[☰ on mobile] [Logo Prefix Product name] [Header nav (optional)] ········ [Global actions]`
 
 - **Logo.** Pass the product mark as `logo` (about 20px); it sits before the name inside the home link.
+- **Badge.** An optional `badge` sits right after the name, for a release stage: `<Tag size="sm" tone="brand">Alpha</Tag>`.
 
 ## Rules
 

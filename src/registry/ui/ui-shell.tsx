@@ -63,8 +63,10 @@ export function ShellMain({ children, className, ...props }: React.HTMLAttribute
 /** Header items: 32px concentric pills inside the floating bar (radius = bar radius − its 8px padding). */
 const pill = "h-8 rounded-inner-2 [corner-shape:round]"
 
-export function Header({ productName, prefix, logo, href = "/", children, actions, className }: {
+export function Header({ productName, prefix, logo, badge, href = "/", children, actions, className }: {
   productName: string
+  /** A small label right after the name, e.g. a release stage (<Tag size="sm">Alpha</Tag>). */
+  badge?: React.ReactNode
   /** The product's mark, shown before its name (about 20px). */
   logo?: React.ReactNode
   /** Company/platform prefix, e.g. "Vita" in "Vita [Insights]". */
@@ -89,6 +91,7 @@ export function Header({ productName, prefix, logo, href = "/", children, action
         {prefix && <span className="font-normal text-muted-foreground">{prefix}</span>}
         <span className="font-semibold">{productName}</span>
       </a>
+      {badge && <span className="-ml-2 mr-1 flex shrink-0 items-center">{badge}</span>}
       {children && <HeaderNav label={productName}>{children}</HeaderNav>}
       <div className="ml-auto flex items-center gap-1">{actions}</div>
     </header>
