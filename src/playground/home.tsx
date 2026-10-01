@@ -74,8 +74,9 @@ export function HomePage() {
         <Stack gap="sm" align="center" className="text-center">
           <Thinking mode="generating" size="2xl" label="Sofia" />
           <Text variant="large-title" as="h1">Corpus</Text>
+          <Text variant="title-2" as="p">Give your ideas a body.</Text>
           <Text variant="body-lg" tone="muted" className="max-w-xl">
-            Design effortless products that people and AI agents build the same way — one body of foundations, components and patterns.
+            You bring the vision. Corpus brings the form: the foundations, components and patterns that you and your AI agents shape the same way.
           </Text>
         </Stack>
 
@@ -84,8 +85,8 @@ export function HomePage() {
           <Stack gap="sm" className="max-w-2xl">
             <IconPlaceholder icon={Book} tone="brand" size="lg" />
             <Text variant="title-1" as="h2">Corpus Guidelines</Text>
-            <Text variant="body-lg" tone="muted">Guidance and best practices for every screen you build: the principles, foundations, components and patterns behind Corpus.</Text>
-            <Text tone="primary" weight="medium">Browse the guidelines</Text>
+            <Text variant="body-lg" tone="muted">Everything you need to give your ideas a body: the principles, foundations, components and patterns behind Corpus.</Text>
+            <Text tone="primary" weight="medium">Start making</Text>
           </Stack>
         </ClickableTile>
 
@@ -136,8 +137,8 @@ export function HomePage() {
             <Column md={4} lg={8}>
               <Tile className="h-full">
                 <Stack gap="sm">
-                  <Text variant="title-3">More stories</Text>
-                  <Text tone="muted">How teams ship with Corpus.</Text>
+                  <Text variant="title-3">Your story</Text>
+                  <Text tone="muted">What makers are bringing to life with Corpus.</Text>
                   <Inline><SoonTag /></Inline>
                 </Stack>
               </Tile>
@@ -149,8 +150,8 @@ export function HomePage() {
         <Tile className="p-8">
           <Stack gap="sm" align="center" className="text-center">
             <IconPlaceholder icon={Chart} tone="brand" size="lg" />
-            <Text variant="title-2" as="h2">New to Corpus?</Text>
-            <Text tone="muted" className="max-w-xl">Start with the principles, then let the decision guide pick the right component for every task.</Text>
+            <Text variant="title-2" as="h2">What will you make?</Text>
+            <Text tone="muted" className="max-w-xl">Every product starts as an idea. Start with the principles, then let the decision guide hand you the right piece for every task.</Text>
             <Inline gap="lg" justify="center">
               <Link href="#/foundations/principles">Read the principles</Link>
               <Link href="#/components/choosing-components">Choose a component</Link>
@@ -186,7 +187,7 @@ export function GuidelinesPage() {
       <Stack gap="3xl" className="stagger">
         <Stack gap="xs">
           <Text variant="large-title" as="h1">Corpus Guidelines</Text>
-          <Text variant="body-lg" tone="muted" className="max-w-2xl">Guidance and best practices that help you design a great experience with Corpus, for people and AI agents alike.</Text>
+          <Text variant="body-lg" tone="muted" className="max-w-2xl">The craft behind Corpus, handed to you: principles, foundations, components and patterns for giving your ideas a body.</Text>
         </Stack>
 
         <Stack gap="lg">

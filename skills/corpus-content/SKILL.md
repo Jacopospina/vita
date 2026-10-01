@@ -47,3 +47,12 @@ Every string passes through the **taxonomy** (`corpus/taxonomy.json`) and the **
 ## Review output
 
 Return a table (`Current | Proposed | Rule`), then the patched code. Run the audit: it flags banned taxonomy terms in JSX strings.
+
+## Corpus's own voice (brand)
+
+When writing **as Corpus** — docs, the showcase, onboarding into Corpus, release notes — use the Creator voice in `docs/foundations/brand.md`:
+- Speak to the maker ("you make", "you shape"), with verbs of making.
+- Lead with what they'll create; credit them, not Corpus.
+- One slogan per surface; the signature is "Give your ideas a body."
+
+Inside a product built with Corpus, the persona's plain voice and the rules above always win.

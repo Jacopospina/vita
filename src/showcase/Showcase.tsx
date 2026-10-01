@@ -62,7 +62,7 @@ export function Showcase() {
             </>
           }
         >
-          <HeaderNavItem href={`${DOCS}guidelines`}>Docs</HeaderNavItem>
+          <HeaderNavItem href={DOCS}>Docs</HeaderNavItem>
           <HeaderNavItem href={`${DOCS}components/choosing-components`}>Components</HeaderNavItem>
           <HeaderNavItem href="#examples">Examples</HeaderNavItem>
           <HeaderNavItem href="#themes">Themes</HeaderNavItem>
@@ -75,13 +75,13 @@ export function Showcase() {
                 <OperationalTag tone="brand" onClick={() => (window.location.href = `${DOCS}components/capsule`)}>
                   New: Capsule, liquid progress and hold-to-swing tabs <Icon as={ArrowRight} size="sm" />
                 </OperationalTag>
-                <Text variant="display" as="h1" className="max-w-3xl">The body of every product</Text>
+                <Text variant="display" as="h1" className="max-w-3xl">Give your ideas a body</Text>
                 <Text variant="body-lg" tone="muted" className="max-w-2xl">
-                  Beautifully choreographed components that people and AI agents build with the same way. Open, opinionated and yours: install it, theme it, and never hand-roll UI again.
+                  You bring the mind and the soul. Corpus brings the form: choreographed, accessible pieces that you and your AI agents shape the same way. Open, opinionated, and yours to make with.
                 </Text>
                 <Inline gap="md" justify="center">
-                  <Button onClick={() => (window.location.href = `${DOCS}guidelines`)}>Get started</Button>
-                  <Button variant="secondary" onClick={() => document.getElementById("examples")?.scrollIntoView({ behavior: "smooth" })}>Browse examples</Button>
+                  <Button onClick={() => (window.location.href = `${DOCS}guidelines`)}>Start making</Button>
+                  <Button variant="secondary" onClick={() => document.getElementById("examples")?.scrollIntoView({ behavior: "smooth" })}>See what you can make</Button>
                 </Inline>
               </Stack>
 
@@ -107,16 +107,16 @@ export function Showcase() {
               {/* Themes */}
               <section id="themes" aria-label="Themes">
                 <Stack gap="md" align="center" className="text-center">
-                  <Text variant="title-1" as="h2">One system, any brand</Text>
-                  <Text tone="muted" className="max-w-xl">About ten variables re-skin all of Corpus: colour, radius, density and type. Try a preset — the whole page follows.</Text>
+                  <Text variant="title-1" as="h2">Make it unmistakably yours</Text>
+                  <Text tone="muted" className="max-w-xl">About ten variables reshape all of Corpus: colour, radius, density and type. Try a preset, and the whole page follows your hand.</Text>
                   <ContentSwitcher label="Theme preset" items={presets} value={preset} onValueChange={setPreset} />
-                  <Link href={`${DOCS}foundations/theming`}>Make your own theme</Link>
+                  <Link href={`${DOCS}foundations/theming`}>Shape your own theme</Link>
                 </Stack>
               </section>
 
               {/* Footer */}
               <Text variant="footnote" tone="muted" className="text-center">
-                Built with Corpus. Source on <Link inline href="https://github.com/Jacopospina/corpus" external>GitHub</Link>.
+                Made with Corpus. From mind to matter. Source on <Link inline href="https://github.com/Jacopospina/corpus" external>GitHub</Link>.
               </Text>
             </Stack>
           </Container>

@@ -23,7 +23,7 @@
 
   /* surfaces — grouped layering: white canvas, soft grey layers */
   --corpus-background: oklch(1 0 0);
-  --corpus-layer-1: oklch(0.963 var(--_nc) var(--_nh));
+  --corpus-layer-1: oklch(0.976 var(--_nc) var(--_nh)); /* a light lift off the white page */
   --corpus-layer-2: oklch(0.923 var(--_nc) var(--_nh));
   --corpus-layer-3: oklch(0.862 var(--_nc) var(--_nh));
   --corpus-raised: oklch(1 0 0);

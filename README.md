@@ -1,6 +1,6 @@
 # Corpus
 
-**The body of every product we build.**
+**Give your ideas a body.**
 
 Every product has three parts. **Animus**, the mind, is the logic that reasons and decides. **Anima**, the soul, is its purpose, character and the experience it creates. **Corpus**, the body, is the visible form through which mind and soul reach the world. It is also a *body of work*: components, tokens and patterns that grow over time.
 

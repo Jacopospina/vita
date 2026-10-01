@@ -30,6 +30,7 @@ The docs renderer turns markdown into Corpus components. Write for it:
 
 - **Disclosure chevrons point down when closed and up when open.** Any chevron that reveals content below it (accordion, dropdown, section, expandable row, tree node) follows this rule, and it rotates with a transition. Chevrons pointing sideways only mean "go to" or "open to the side" (navigation rows, submenus, pagination).
 - **Docs never name external design systems or vendors.** Corpus speaks in its own voice.
+- **Corpus's own voice is the Creator** (`docs/foundations/brand.md`): docs, the showcase, onboarding and release notes speak to the maker and aim to awaken the creator in them; the primary slogan is "Give your ideas a body." Product microcopy inside Vita demos stays plain (content rules).
 - **Example product in demos and docs is "Vita".** No real company or client names.
 - **The playground is product code.** It must pass `pnpm audit:ds` with zero violations (dogfooding).
 - **Tokens:** new semantic tokens go in `src/styles/tokens.css` (light + dark), are mapped in `src/styles/corpus.css`, and are documented in `docs/foundations/color.md` (or the relevant foundation). Never add knobs lightly: the promise is "about 10 variables".

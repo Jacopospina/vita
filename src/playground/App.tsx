@@ -59,7 +59,7 @@ export function App() {
       <Shell>
         <Header
           productName="Corpus"
-          href="#/"
+          href="./showcase.html" // the Corpus homepage: the live showcase
           actions={
             <>
               <HeaderGlobalAction icon={dark ? Sun : Moon} label={dark ? "Light theme" : "Dark theme"} onClick={() => setDark((d) => !d)} />
