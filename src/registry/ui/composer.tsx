@@ -69,7 +69,7 @@ export function Composer({ placeholder = "Describe what you need", onSubmit, sug
         className={cn(
           // Styled exactly like a text input: field border and fill, no resting shadow, same radius, hover and focus.
           "flex flex-col scope-md border border-border-field bg-field duration-moderate-02 ease-productive",
-          "hover:border-border-strong hover:bg-layer-1",
+          "hover:border-border-strong hover:bg-layer-1 focus-within:bg-field",
           "focus-within:border-transparent focus-within:outline-1 focus-within:outline-(--corpus-ring) focus-within:focus-halo focus-within:animate-focus-in",
           listening && "border-transparent outline-1 outline-primary",
         )}

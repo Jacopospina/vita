@@ -15,6 +15,8 @@ export const fieldClasses = cn(
   // The floating label owns the empty state; placeholders (examples, formats) appear only while focused.
   "placeholder:text-transparent focus:placeholder:text-placeholder",
   "hover:border-border-strong hover:bg-layer-1",
+  // Focused (typing): always the white field, even under the pointer.
+  "focus:bg-field focus-within:bg-field",
   "focus-visible:outline-1 focus-visible:outline-offset-0 focus-visible:outline-(--corpus-ring) focus-visible:focus-halo focus-visible:border-transparent focus-visible:animate-focus-in",
   "disabled:cursor-not-allowed disabled:border-border-subtle disabled:bg-layer-1 disabled:text-disabled-foreground",
   "read-only:border-border-subtle read-only:bg-transparent read-only:hover:border-border-subtle",
