@@ -45,3 +45,4 @@ Toast banners can carry a `source` (who is speaking) and an `eyebrow` ("Time sen
 5. **Never use `error` for validation that the field already shows.**
 6. **Mount `<Toaster />` once** at the app root, and call `toast()` anywhere.
 7. **Roles:** errors use `role="alert"`; everything else uses `status`.
+8. **Banners stack.** The newest sits in front on the highest layer; each older one sits a layer lower, peeking out beneath it a little smaller (three at most show). Pointing at or tabbing into the stack fans it out into a list.

@@ -14,7 +14,9 @@ related: [ui-shell-left-panel, ui-shell-right-panel, global-header]
 
 ## Anatomy
 
-`[☰ on mobile] [Prefix Product name] [Header nav (optional)] ········ [Global actions]`
+`[☰ on mobile] [Logo Prefix Product name] [Header nav (optional)] ········ [Global actions]`
+
+- **Logo.** Pass the product mark as `logo` (about 20px); it sits before the name inside the home link.
 
 ## Rules
 

@@ -334,10 +334,35 @@ export function Toaster() {
   const capsules = React.useRef<HTMLDivElement>(null)
   useFlip(banners)
   useFlip(capsules)
+  // Banners STACK: the newest sits in front on the highest layer; each older one sits a layer lower, peeking out
+  // beneath it, a little smaller. Pointing at (or tabbing into) the stack fans it out into a list.
+  const stack = list.filter((t) => t.type === "banner").reverse()
+  const [open, setOpen] = React.useState(false)
+  const fanned = open || stack.length <= 1
   return (
     <>
-      <div ref={banners} aria-live="polite" className="pointer-events-none fixed top-3 right-3 z-60 flex w-90 max-w-[calc(100vw-1.5rem)] flex-col gap-2">
-        {list.map((t) => (t.type === "banner" ? <Banner key={t.id} o={t.o} leaving={t.leaving} onClose={() => dismiss(t.id)} /> : null))}
+      <div
+        ref={banners}
+        aria-live="polite"
+        onPointerEnter={() => setOpen(true)}
+        onPointerLeave={() => setOpen(false)}
+        onFocus={() => setOpen(true)}
+        onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setOpen(false) }}
+        className={cn("pointer-events-none fixed top-3 right-3 z-60 w-90 max-w-[calc(100vw-1.5rem)]", fanned ? "flex flex-col gap-2" : "grid *:[grid-area:1/1]")}
+      >
+        {stack.map((t, i) => (
+          <div
+            key={t.id}
+            className="origin-top motion-productive"
+            style={{
+              zIndex: stack.length - i,
+              transform: fanned ? undefined : `translateY(${i * 10}px) scale(${1 - i * 0.05})`,
+              opacity: fanned || i < 3 ? undefined : 0,
+            }}
+          >
+            {t.type === "banner" && <Banner o={t.o} leaving={t.leaving} onClose={() => dismiss(t.id)} />}
+          </div>
+        ))}
       </div>
       <div ref={capsules} aria-live="polite" className="pointer-events-none fixed top-3 left-1/2 z-60 flex -translate-x-1/2 flex-col items-center gap-2">
         {list.map((t) => (t.type === "capsule" ? <Capsule key={t.id} o={t.o} leaving={t.leaving} /> : null))}
