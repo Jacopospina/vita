@@ -7,8 +7,10 @@ related: [how-we-decide]
 
 > [!NOTE] Breaking changes are marked ⚠. The full history lives in `CHANGELOG.md`.
 
-## Unreleased
+## v0.2.0
 
+- **Release v0.2.0.** 2026-10-01 · —
+- **⚠ Changelog, What's new and releases.** 2026-10-01 · pnpm changelog: CHANGELOG.md (grouped by release tag, Unreleased since the last; breaking changes first, detected from 'Breaking' in the message) and docs/foundations/whats-new.md (the latest 30 changes as cards) from git history.
 - **Progress bar: soft liquid edges.** 2026-10-01 · The liquid's coverage gets a small sideways blur (two box passes, ~0.35 tube height), so the tip's meniscus and drops fade softly instead of looking cut out. The solid body is composited on top, so it and the tube's top and bottom stay crisp; the bar still ends exactly on its value.
 - **Dropdown page merges Option and Multiselect; trailing meta/symbol; single choice has no tick.** 2026-10-01 · One Dropdown page covers Dropdown, Combobox, Multiselect and the Option row (anatomy, states, rules, keyboard, every demo). The separate Option and Multiselect pages are gone.
 - **Nothing flies in from the top left; Multiselect page and chosen-first order; deprecation warnings.** 2026-10-01 · useFlip (Stack/Inline) never records positions while its container is hidden (inactive tab, closed panel): children measured 0,0 there glided in from the top-left corner when it appeared.
@@ -37,5 +39,3 @@ related: [how-we-decide]
 - **⚠ No phantom scroll; right panel on the top layer; weather tint has three states.** 2026-10-01 · ShellMain is position: relative, so absolutely positioned content inside it (sr-only text, badges) scrolls and clips with the page instead of stretching the document (~400px of empty scroll).
 - **⚠ Buttons: one primary per surface; secondary is a primary wash; rounder xl.** 2026-10-01 · Rule: exactly one primary per page, dialog or side panel; pair it with a secondary when an alternative is needed, never a second primary (Button doc, variants table).
 - **No layout glide on page load; Button docs list xl.** 2026-10-01 · useFlip (built into Stack/Inline) only re-measures while the page boots or the tab is hidden, so children no longer glide in from pre-layout positions (the 'everything flies in from the top left' on load). Boot now ends after window load + fonts actually loaded (+250ms), capped at 3s.
-- **AnimatedNumber: old and new digits move together.** 2026-10-01 · Leaving and arriving digits share one timing (440ms, same easing, same delay) and travel exactly one line apart, like a conveyor, instead of the old digit leaving first and the new one following.
-- **Performance: no load-in glide, one cross-fade for theme changes; numbers never clipped.** 2026-10-01 · Boot: global transitions stay off until fonts and layout settle (bootAppearance), so elements no longer glide in from their pre-layout position (the 'anchored top left' effect).
