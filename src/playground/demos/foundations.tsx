@@ -343,7 +343,7 @@ export const foundationDemos: DemoMap = {
     },
     {
       title: "Mono",
-      description: "Google Sans Code, for code, IDs and commands — every role in regular, medium and semibold, with `font-mono`. Numbers use the numeric face and stay regular.",
+      description: "Google Sans Code, for code, IDs and numbers — every role at each weight with `font-mono`. Numbers are regular unless a weight is asked for, as here.",
       render: () => (
         <Stack gap="md">
           <div className="grid grid-cols-4 gap-2 border-b border-border-subtle pb-2">
@@ -356,7 +356,7 @@ export const foundationDemos: DemoMap = {
             <div key={v} className="grid grid-cols-4 items-baseline gap-2 border-b border-border-subtle pb-3">
               <Text variant="footnote" tone="muted">{name}</Text>
               {(["regular", "medium", "semibold"] as const).map((w) => (
-                <Text key={w} variant={v} weight={w} className="font-mono" truncate>corpus add</Text>
+                <Text key={w} variant={v} weight={w} className="font-mono" truncate>12,840</Text>
               ))}
             </div>
           ))}

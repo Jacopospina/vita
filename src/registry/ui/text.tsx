@@ -60,10 +60,15 @@ export interface TextProps extends React.HTMLAttributes<HTMLElement>, VariantPro
   asChild?: boolean
 }
 
+/** A value that is only a number ("12,840", "94%", "€1,240", "3–5") — with digits and no words. */
+const isNumber = (c: React.ReactNode) => (typeof c === "string" || typeof c === "number") && /\d/.test(String(c)) && !/[a-z]{2,}/i.test(String(c))
+
 export function Text({ variant = "body", tone, weight, truncate, as, asChild, className, children, ...props }: TextProps) {
   const Comp: React.ElementType = asChild ? Slot.Root : (as ?? defaultElement[variant ?? "body"])
+  // Numbers are regular weight, always — even in a semibold role — unless a weight is asked for explicitly.
+  const numeric = !weight && isNumber(children)
   return (
-    <Comp className={cn(textVariants({ variant, tone, weight, truncate }), className)} {...props}>
+    <Comp className={cn(textVariants({ variant, tone, weight, truncate }), numeric && "font-normal", className)} {...props}>
       {asChild ? children : animateChildren(children)}
     </Comp>
   )

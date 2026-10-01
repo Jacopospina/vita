@@ -18,7 +18,7 @@ avoid_when:
 
 ## Values never snap
 
-- **Numbers are regular weight.** Always, whatever the weight of the text around them (`tabular-nums` enforces it).
+- **Numbers are regular weight.** Always, whatever the weight of the role or the text around them — `Text` sets numeric-only content regular and `tabular-nums` enforces it — unless a `weight` is asked for explicitly.
 - **Numbers swap.** Any number that changes uses `AnimatedNumber`: each digit blurs out and the new one sharpens in, staggered, never clipped.
 - **Text reveals.** Any label that changes uses `AnimatedText`: letters stagger in one after another, sliding up from blur to sharp.
 
