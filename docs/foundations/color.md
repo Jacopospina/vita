@@ -49,6 +49,9 @@ avoid_when:
 
 ## Glass by elevation
 
+- **`elevated` surface.** Glass fills from the `elevated` token: `raised` plus the weather tint (see Theming), so only floating layers carry it.
+
+
 Everything floating above the page is frosted glass. The higher it sits, the more frosted it is: more blur, and more of what's behind shows through.
 
 | Tier | Layer | Blur | Used by |

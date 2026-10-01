@@ -9,16 +9,19 @@
  *   support      success · warning · error · info (+ -subtle, -foreground)
  *   lines        border-subtle · border · border-strong · border-field
  */
-/* Weather tint (useWeatherTint): when on (--corpus-weather: 1) every layer ABOVE the page — layers, raised
-   surfaces, fields, glass, lines, text — leans warm or cold, replacing the neutral knobs. The page background
-   itself stays on the neutral knobs: the tint lives in Corpus's layers, so stacking reads by temperature too.
+/* Weather tint (useWeatherTint): when on (--corpus-weather: 1) only the FLOATING layers — surfaces with a z-index,
+   i.e. the glass (side nav, header, right panel, menus, popovers, dialogs, notifications, pinned toolbars) —
+   lean warm or cold. The page, in-flow containers, fields, lines and text keep the neutral knobs.
    Applied through swapAppearance, so it cross-fades once. */
 @property --corpus-weather { syntax: "<number>"; inherits: true; initial-value: 0; }
 @property --corpus-weather-hue { syntax: "<number>"; inherits: true; initial-value: 0; }
 @property --corpus-weather-chroma { syntax: "<number>"; inherits: true; initial-value: 0; }
 :root {
-  --_nh: calc(var(--corpus-neutral-hue) + (var(--corpus-weather-hue) - var(--corpus-neutral-hue)) * var(--corpus-weather));
-  --_nc: calc(var(--corpus-neutral-chroma) + (var(--corpus-weather-chroma) - var(--corpus-neutral-chroma)) * var(--corpus-weather));
+  --_nh: var(--corpus-neutral-hue);
+  --_nc: var(--corpus-neutral-chroma);
+  /* Elevated (floating-layer) neutrals: the weather tint when on, else the neutral knobs. */
+  --_eh: calc(var(--corpus-neutral-hue) + (var(--corpus-weather-hue) - var(--corpus-neutral-hue)) * var(--corpus-weather));
+  --_ec: calc(var(--corpus-neutral-chroma) + (var(--corpus-weather-chroma) - var(--corpus-neutral-chroma)) * var(--corpus-weather));
   --_bh: var(--corpus-brand-hue);
   --_bc: var(--corpus-brand-chroma);
   --_hs: var(--corpus-hue-success);
@@ -29,12 +32,13 @@
   color-scheme: light;
 
   /* surfaces — grouped layering: white canvas, soft grey layers */
-  /* The lightest grey — pure white glares. Never weather-tinted (neutral knobs only). */
-  --corpus-background: oklch(0.988 var(--corpus-neutral-chroma) var(--corpus-neutral-hue));
+  --corpus-background: oklch(0.988 var(--_nc) var(--_nh)); /* the lightest grey — pure white glares */
   --corpus-layer-1: oklch(0.972 var(--_nc) var(--_nh)); /* cards: a soft step off the page */
   --corpus-layer-2: oklch(0.923 var(--_nc) var(--_nh));
   --corpus-layer-3: oklch(0.862 var(--_nc) var(--_nh));
   --corpus-raised: oklch(1 0 0);
+  /* Floating layers (glass): raised, carrying the weather tint. */
+  --corpus-elevated: oklch(0.995 var(--_ec) var(--_eh));
   --corpus-field: oklch(1 0 0);
   --corpus-overlay: oklch(0 0 0 / 0.4);
   --corpus-inverse: oklch(0.232 var(--_nc) var(--_nh));
@@ -121,6 +125,7 @@
   --corpus-layer-2: oklch(0.294 var(--_nc) var(--_nh));
   --corpus-layer-3: oklch(0.349 var(--_nc) var(--_nh));
   --corpus-raised: oklch(0.227 var(--_nc) var(--_nh));
+  --corpus-elevated: oklch(0.227 var(--_ec) var(--_eh));
   --corpus-field: oklch(0.227 var(--_nc) var(--_nh));
   --corpus-overlay: oklch(0 0 0 / 0.6);
   --corpus-inverse: oklch(0.971 var(--_nc) var(--_nh));

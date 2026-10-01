@@ -38,6 +38,7 @@
   --color-layer-2: var(--corpus-layer-2);
   --color-layer-3: var(--corpus-layer-3);
   --color-raised: var(--corpus-raised);
+  --color-elevated: var(--corpus-elevated);
   --color-field: var(--corpus-field);
   --color-overlay: var(--corpus-overlay);
   --color-inverse: var(--corpus-inverse);
@@ -418,12 +419,12 @@
 @utility glass-5 { --corpus-glass-blur: 44px; --corpus-glass-fill: 54%; --corpus-glass-sat: 2; }
 
 @utility glass {
-  background-color: color-mix(in oklab, var(--corpus-raised) var(--corpus-glass-fill, 62%), transparent);
+  background-color: color-mix(in oklab, var(--corpus-elevated) var(--corpus-glass-fill, 62%), transparent);
   backdrop-filter: blur(var(--corpus-glass-blur, 28px)) saturate(var(--corpus-glass-sat, 1.8));
   -webkit-backdrop-filter: blur(var(--corpus-glass-blur, 28px)) saturate(var(--corpus-glass-sat, 1.8));
   border: 1px solid color-mix(in oklab, var(--corpus-foreground) 10%, transparent);
   box-shadow: var(--corpus-shadow-overlay), inset 0 1px 0 color-mix(in oklab, white 22%, transparent);
-  @media (prefers-reduced-transparency: reduce) { background-color: var(--corpus-raised); backdrop-filter: none; }
+  @media (prefers-reduced-transparency: reduce) { background-color: var(--corpus-elevated); backdrop-filter: none; }
 }
 
 /* Canvas edges dissolve on all four sides, so content reads as continuing beyond the frame. */

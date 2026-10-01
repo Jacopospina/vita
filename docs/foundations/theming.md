@@ -49,7 +49,7 @@ avoid_when:
 ## Greys follow the weather
 
 - **Three states.** With `useWeatherTint` (on by default) the greys are **cold** below 15 °C, **neutral** from 15 to 18 °C, and **warm** from 18 °C up.
-- **Layers only.** The tint colours every layer above the page — cards, tiles, panels, fields, glass, lines and text — but never the page background, so Corpus's layering reads in the temperature too.
+- **Floating layers only.** The tint colours only surfaces that float on a z-index — the glass of the side nav, header, right panel, menus, popovers, dialogs, notifications and pinned toolbars. The page, in-flow cards and tiles, fields, lines and text stay neutral.
 - **Noticeable, still grey.** A tint is chroma 0.014: you see the warmth or the cool, but greys stay greys.
 - **Where the reading comes from.** The current temperature for the user's area (position rounded to about 10 km), refreshed every 30 minutes. Offline, it falls back to a seasonal estimate.
 - **It fades.** A change of state cross-fades the page once.
