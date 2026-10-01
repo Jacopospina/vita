@@ -79,7 +79,7 @@ export function DataTable<T extends { id: string }>({
 }: DataTableProps<T>) {
   const [sort, setSort] = React.useState<SortState>(null)
   const mid = useMorphId()
-  const strip = useStuck()
+  const { sentinel: stripSentinel, sticky: stripRef, stuck } = useStuck()
   const [innerSel, setInnerSel] = React.useState<string[]>([])
   const [open, setOpen] = React.useState<Set<string>>(new Set())
   const selected = selectedProp ?? innerSel
@@ -120,12 +120,12 @@ export function DataTable<T extends { id: string }>({
         // STICKY: it stays in reach while the rows scroll (overflow-clip on the section keeps sticky working).
         // The wrapper is transparent; once pinned, the bar itself frosts over the rows running beneath it.
         <>
-        <div ref={strip.sentinel} aria-hidden className="h-0" />
-        <div ref={strip.sticky} className="sticky top-0 z-20 p-2.5">
+        <div ref={stripSentinel} aria-hidden className="h-0" />
+        <div ref={stripRef} className="sticky top-0 z-20 p-2.5">
           <div
             className={cn(
               "grid min-h-control-lg items-center rounded-outer-1 p-1 motion-expressive [grid-template-areas:'bar']",
-              selecting ? "border border-transparent bg-primary text-primary-foreground shadow-raised" : strip.stuck ? "glass glass-4" : "border border-transparent bg-layer-2",
+              selecting ? "border border-transparent bg-primary text-primary-foreground shadow-raised" : stuck ? "glass glass-4" : "border border-transparent bg-layer-2",
             )}
           >
             {toolbar && (
