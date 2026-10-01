@@ -17,7 +17,15 @@ const sizes = { sm: 16, md: 24, lg: 48, xl: 96, "2xl": 160 } as const
 type P = { x: number; y: number; r: number }
 
 const TAU = Math.PI * 2
-const smooth = (x: number) => x * x * (3 - 2 * x)
+/** Springy arrival: overshoots its target a little, then settles — shapes POP into place instead of easing in. */
+const pop = (x: number) => { const c = 2.2; return 1 + (c + 1) * (x - 1) ** 3 + c * (x - 1) ** 2 }
+/** Twist + squash for a figure: the whole orb sways and pulses as it changes shape. */
+const sway = (x: number, y: number, t: number, kick: number): [number, number] => {
+  const a = 0.22 * Math.sin(t * 1.1) + 0.35 * kick
+  const c = Math.cos(a), si = Math.sin(a)
+  const sq = 1 + 0.12 * kick // stretch on arrival, then relax
+  return [(x * c - y * si) * sq, (x * si + y * c) / sq]
+}
 
 /* Shapes for the generating orb: u ∈ [0,1) along the contour → point (unit radius ~0.7). Every one is smooth —
    lobes and curves, never points — so the liquid can pour from one into the next. */
@@ -26,7 +34,28 @@ const polar = (r: (a: number, t: number) => number) => (u: number, t: number): [
   const k = r(a, t)
   return [Math.cos(a) * k, Math.sin(a) * k]
 }
-const shapes: ((u: number, t: number) => [number, number])[] = [
+/* A shape may also be SEGMENTED: the third value is how present the line is at that point (0 = a gap). */
+type Shape = (u: number, t: number) => [number, number] | [number, number, number]
+/** Walk several straight strokes as one path: u picks the stroke, then the point along it. The strokes never stand
+    still — each sways on its own phase, sliding along itself and drifting sideways, so the figure stays alive. */
+const strokes = (lines: [number, number, number, number][]) => (u: number, t: number): [number, number] => {
+  const f = u * lines.length
+  const i = Math.min(lines.length - 1, Math.floor(f))
+  const p = f - i
+  const [x1, y1, x2, y2] = lines[i]
+  const len = Math.hypot(x2 - x1, y2 - y1) || 1
+  const tx = (x2 - x1) / len, ty = (y2 - y1) / len
+  const slide = 0.1 * Math.sin(t * 2.2 + i * 2.1)
+  const drift = 0.05 * Math.sin(t * 1.7 + i * 1.3 + p * 2)
+  return [x1 + (x2 - x1) * p + tx * slide - ty * drift, y1 + (y2 - y1) * p + ty * slide + tx * drift]
+}
+/** Turn a whole figure slowly, so segmented shapes are always in motion. */
+const spin = (shape: Shape, speed: number): Shape => (u, t) => {
+  const [x, y, v] = shape(u, t)
+  const c = Math.cos(t * speed), si = Math.sin(t * speed)
+  return v === undefined ? [x * c - y * si, x * si + y * c] : [x * c - y * si, x * si + y * c, v]
+}
+const shapes: Shape[] = [
   polar(() => 0.62), // circle
   polar((a) => 0.54 + 0.1 * Math.cos(5 * a)), // soft flower
   (u) => { const a = u * TAU; return [Math.cos(a) * 0.72, Math.sin(2 * a) * 0.4] }, // infinity
@@ -45,6 +74,17 @@ const shapes: ((u: number, t: number) => [number, number])[] = [
   (u) => { const a = u * TAU; const r = 0.46 + 0.14 * Math.cos(3 * a + Math.PI); return [Math.cos(a) * r, Math.sin(a) * r + 0.04] }, // rounded triangle
   (u) => { const a = u * TAU; return [Math.cos(a) * 0.62 + 0.14 * Math.cos(2 * a), Math.sin(a) * 0.46] }, // bean
   polar((a, t) => 0.5 + 0.13 * Math.sin(a * 2) * Math.sin(t * 0.9) + 0.08 * Math.cos(5 * a - t)), // breathing star-fish (soft)
+  // Segmented — minimal figures made of separate strokes.
+  (u, t) => { const a = u * TAU + t * 0.6; return [Math.cos(a) * 0.6, Math.sin(a) * 0.6, (u * 4) % 1 < 0.68 ? 1 : 0] }, // dashed ring, turning
+  spin((u) => { const a = u * TAU; const r = 0.5 + 0.12 * Math.cos(3 * a); return [Math.cos(a) * r, Math.sin(a) * r, (u * 3 + 0.5) % 1 < 0.72 ? 1 : 0] }, -0.9), // three arcs, turning
+  (u, t) => { const a = u * TAU; const r = 0.6 + 0.06 * Math.sin(t * 2.4); return [Math.cos(a) * r, Math.sin(a) * r, (u + 0.125) % 0.5 < 0.32 ? 1 : 0] }, // parentheses ( ), breathing
+  strokes([[-0.55, -0.3, 0.55, -0.3], [-0.55, 0.3, 0.55, 0.3]]), // equals =
+  spin(strokes([[-0.6, 0, 0.6, 0], [0, -0.6, 0, 0.6]]), 0.8), // plus +, turning
+  spin(strokes([[-0.48, -0.48, 0.48, 0.48], [-0.48, 0.48, 0.48, -0.48]]), -0.7), // cross ×, turning
+  strokes([[-0.6, -0.42, 0.6, -0.42], [-0.6, 0, 0.6, 0], [-0.6, 0.42, 0.6, 0.42]]), // three lines ≡
+  (u, t) => [(u * 2 - 1) * 0.65, Math.sin(u * TAU * 1.5 + t * 2) * 0.22], // wave
+  (u, t) => { const a = u * TAU * 0.78 + 0.35 + t * 1.4; return [Math.cos(a) * 0.58, Math.sin(a) * 0.58] }, // open C, chasing its gap
+  (u, t) => { const k = Math.floor(u * 3); const v = u * 3 - k; const a = v * TAU; return [(k - 1) * 0.42 + Math.cos(a) * 0.13, Math.sin(a) * 0.13 + 0.16 * Math.sin(t * 4 - k * 1.1)] }, // three dots ···, rippling
 ]
 /* Shuffled order: a fixed permutation that never repeats a shape back to back, so the orb keeps surprising. */
 const order = (() => {
@@ -57,7 +97,7 @@ const order = (() => {
   }
   return o
 })()
-const shapeAt = (i: number) => shapes[order[((i % order.length) + order.length) % order.length]]
+const shapeAt = (i: number): Shape => shapes[order[((i % order.length) + order.length) % order.length]]
 
 /**
  * Small orbs (≤ 24px) drop the detail and keep one bold, readable silhouette per mode:
@@ -78,17 +118,21 @@ function simpleParticles(mode: ThinkingMode, t: number): P[] {
   }
   if (mode === "generating") {
     // The same shape cycle as the big orb, drawn by a few plump drops that melt into one silhouette.
-    const period = 1.8
+    const period = 1.5
     const idx = Math.floor(t / period)
     const local = (t % period) / period
-    const k = smooth(Math.min(1, Math.max(0, (local - 0.6) / 0.4)))
+    const m = Math.min(1, Math.max(0, (local - 0.6) / 0.4))
+    const k = pop(m)
+    const kick = Math.sin(Math.PI * m) // peaks mid-morph
     const A = shapeAt(idx), B = shapeAt(idx + 1)
+    const breathe = 0.92 * (1 + 0.07 * Math.sin(t * 3.2))
     for (let i = 0; i < 16; i++) {
-      const u = (i / 16 + t * 0.04) % 1
-      const [ax, ay] = A(u, t), [bx, by] = B(u, t)
-      out.push({ x: (ax + (bx - ax) * k) * 0.92, y: (ay + (by - ay) * k) * 0.92, r: 0.15 })
+      const u = (i / 16 + t * 0.07) % 1
+      const [ax, ay, av = 1] = A(u, t), [bx, by, bv = 1] = B(u, t)
+      const [x, y] = sway((ax + (bx - ax) * k) * breathe, (ay + (by - ay) * k) * breathe, t, kick)
+      out.push({ x, y, r: 0.15 * Math.max(0, av + (bv - av) * Math.min(1, k)) })
     }
-    out.push({ x: 0, y: 0, r: 0.3 })
+    // Outline only, like the big orb: a liquid line tracing the shape.
     return out
   }
   if (mode === "searching") {
@@ -134,31 +178,25 @@ function particles(mode: ThinkingMode, n: number, t: number, seeds: number[]): P
   }
   // generating: tiny dots continuously re-forming the orb into shapes, with displacement
   // Each shape HOLDS (so you can see what it is), then pours into the next.
-  const period = 2
+  const period = 1.6
   const idx = Math.floor(t / period)
   const local = (t % period) / period
-  const k = smooth(Math.min(1, Math.max(0, (local - 0.62) / 0.38)))
+  const m = Math.min(1, Math.max(0, (local - 0.6) / 0.4))
+  const k = pop(m) // overshoots, then settles: the new shape pops into place
+  const kick = Math.sin(Math.PI * m)
   const A = shapeAt(idx)
   const B = shapeAt(idx + 1)
-  const breathe = 1 + 0.05 * Math.sin(t * 2.4)
+  const breathe = 1 + 0.08 * Math.sin(t * 3)
   for (let i = 0; i < n; i++) {
-    const u = (i / n + t * 0.04) % 1
-    const [ax, ay] = A(u, t)
-    const [bx, by] = B(u, t)
+    const u = (i / n + t * 0.07) % 1
+    const [ax, ay, av = 1] = A(u, t)
+    const [bx, by, bv = 1] = B(u, t)
     const dx = 0.025 * Math.sin(t * 3.1 + i * 1.7) + 0.015 * Math.sin(t * 5.3 + seeds[i] * 9)
     const dy = 0.025 * Math.cos(t * 2.3 + i * 1.3) + 0.015 * Math.cos(t * 4.7 + seeds[i] * 7)
-    out.push({ x: (ax + (bx - ax) * k) * breathe + dx, y: (ay + (by - ay) * k) * breathe + dy, r: 0.07 + 0.02 * Math.sin(t * 4 + i) })
+    const [x, y] = sway((ax + (bx - ax) * k) * breathe + dx, (ay + (by - ay) * k) * breathe + dy, t, kick)
+    out.push({ x, y, r: (0.07 + 0.02 * Math.sin(t * 4 + i)) * Math.max(0, av + (bv - av) * Math.min(1, k)) })
   }
-  // A solid body inside the outline (two inner rings + the core): the silhouette reads as ONE shape, never a hollow ring.
-  for (const [scale, count, r] of [[0.62, Math.round(n / 3), 0.13], [0.3, Math.round(n / 6), 0.13]] as const) {
-    for (let i = 0; i < count; i++) {
-      const u = (i / count + t * 0.04) % 1
-      const [ax, ay] = A(u, t)
-      const [bx, by] = B(u, t)
-      out.push({ x: (ax + (bx - ax) * k) * breathe * scale, y: (ay + (by - ay) * k) * breathe * scale, r })
-    }
-  }
-  out.push({ x: 0.04 * Math.sin(t * 1.7), y: 0.04 * Math.cos(t * 1.3), r: 0.18 + 0.04 * Math.sin(t * 2.1) })
+  // Outline only — the shape is drawn as a liquid LINE, so each one reads distinctly (a filled body all looks alike).
   return out
 }
 
@@ -230,19 +268,24 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
     const root = getComputedStyle(document.documentElement)
     const spectrum = ["blue", "indigo", "purple", "pink", "orange", "mint", "cyan"].map((h) => root.getPropertyValue(`--corpus-palette-${h}-500`).trim())
     let color = getComputedStyle(canvas).color
+    // Light mode = dark text. There the white glints vanish on the page, so they take the spectrum's colours instead.
+    const isLight = (c: string) => { const m = c.match(/[\d.]+/g); return !!m && (0.2126 * +m[0] + 0.7152 * +m[1] + 0.0722 * +m[2]) / 255 < 0.5 }
+    let light = isLight(color)
     let last = 0
     let drawn = -Infinity
     const start = performance.now()
     const R = px * 0.42
     const draw = (now: number) => {
-      const t = reduced ? 0.9 : (now - start) / 1000
+      // 1.25× tempo: thinking should feel alive and busy, never idle.
+      const t = reduced ? 0.9 : ((now - start) / 1000) * 1.25
       if (now - last > 2000) {
         color = getComputedStyle(canvas).color
+        light = isLight(color)
         last = now
       }
       ctx.clearRect(0, 0, px, px)
       if (resolvedTone === "spectrum" && "createConicGradient" in ctx) {
-        const g = ctx.createConicGradient(t * 1.2, px / 2, px / 2)
+        const g = ctx.createConicGradient(t * 1.8, px / 2, px / 2)
         spectrum.forEach((c, i) => g.addColorStop(i / spectrum.length, c))
         g.addColorStop(1, spectrum[0])
         ctx.fillStyle = g
@@ -250,6 +293,7 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
         ctx.fillStyle = color
       }
       for (const p of simple ? simpleParticles(mode, t) : particles(mode, n, t, seeds)) {
+        if (p.r < 0.005) continue // a gap in a segmented shape
         ctx.beginPath()
         // ×1.3: the wide goo blur eats into each drop — plumper drops keep the liquid full-bodied and its joins round.
         ctx.arc(px / 2 + p.x * R, px / 2 + p.y * R, simple ? p.r * R : Math.max(0.6, Math.min(0.34, p.r * grow) * R * 1.3), 0, TAU)
@@ -263,8 +307,8 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
             const a = seeds[i % seeds.length] * TAU + t * (0.35 + i * 0.07)
             const rad = R * (0.92 + 0.12 * Math.sin(t * 1.3 + i))
             const tw = Math.max(0, Math.sin(t * 2.2 + i * 1.9))
-            gctx.globalAlpha = tw * 0.9
-            gctx.fillStyle = "white"
+            gctx.globalAlpha = tw * (light ? 1 : 0.9)
+            gctx.fillStyle = light ? spectrum[i % spectrum.length] || color : "white"
             gctx.beginPath()
             gctx.arc(px / 2 + Math.cos(a) * rad, px / 2 + Math.sin(a) * rad, Math.max(0.6, px * 0.009) * (0.6 + tw), 0, TAU)
             gctx.fill()
