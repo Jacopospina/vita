@@ -29,10 +29,12 @@ related: [pagination, structured-list, contained-list, filtering, search, empty-
 ## Sizes (row height)
 
 - `xs` (24): dense monitoring views.
-- `sm` (32): power users.
-- `md` (40).
-- `lg` (48): the default.
-- `xl` (64): rows with two lines of text.
+- `sm` (28): power users.
+- `md` (32).
+- `lg` (40).
+- `xl` (44): the default.
+
+Rows are rounded bands with the same inset radius as the header row; dividers run between them.
 
 All follow density.
 

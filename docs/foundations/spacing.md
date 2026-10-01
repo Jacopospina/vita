@@ -50,6 +50,8 @@ avoid_when:
 - **Inner radius = outer radius − padding.** A 20px container with 8px padding gives its children a 12px radius; never below 0.
 - **Mark the container.** Use `scope-sm|md|lg|xl` instead of `rounded-*` on containers that hold rounded children.
 - **Derive the child.** Use `rounded-inner-{padding step}` (e.g. `rounded-inner-2` inside `p-2`); a second level uses `rounded-inner2-*`.
+- **Derive the wrapper.** A container that wraps controls takes its radius from them: `rounded-outer-{padding step}` = control radius + padding (e.g. `rounded-outer-1 p-1` around 8px controls gives 12px).
+- **Never sharp.** Every container, row and band is rounded unless a component doc says otherwise.
 - **Built in.** Segmented controls, toolbars, menus, lists, the composer, code snippets and modals already follow it.
 
 ## Elevation

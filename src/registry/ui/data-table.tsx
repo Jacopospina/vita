@@ -27,7 +27,7 @@ export interface DataTableColumn<T> {
 }
 
 type SortState = { key: string; dir: "asc" | "desc" } | null
-const rowH = { xs: "h-control-xs", sm: "h-control-sm", md: "h-control-md", lg: "h-control-lg", xl: "h-control-xl" } as const
+const rowH = { xs: "h-control-xs", sm: "h-control-sm", md: "h-control-md", lg: "h-10", xl: "h-11" } as const
 
 export interface DataTableProps<T extends { id: string }> {
   title?: React.ReactNode
@@ -101,7 +101,7 @@ export function DataTable<T extends { id: string }>({
         <div className="sticky top-0 z-20 bg-layer-1 p-2.5">
           <div
             className={cn(
-              "grid min-h-control-lg items-center rounded-inner-2.5 p-1 motion-expressive [grid-template-areas:'bar']",
+              "grid min-h-control-lg items-center rounded-outer-1 p-1 motion-expressive [grid-template-areas:'bar']",
               selecting ? "bg-primary text-primary-foreground shadow-raised" : "bg-layer-2",
             )}
           >
@@ -163,7 +163,7 @@ export function DataTable<T extends { id: string }>({
           <tbody>
             {loading &&
               Array.from({ length: 5 }).map((_, i) => (
-                <tr key={i} className={cn(rowH[size], "[&>td]:border-b [&>td]:border-divider")}>
+                <tr key={i} className={cn(rowH[size], "[&>td]:divider-b")}>
                   {Array.from({ length: colCount }).map((__, j) => (
                     <td key={j} className={cellPad}><Skeleton shape="text" className="w-3/4" /></td>
                   ))}
@@ -183,9 +183,10 @@ export function DataTable<T extends { id: string }>({
                       aria-selected={selectable ? isSel : undefined}
                       className={cn(
                         rowH[size],
-                        "animate-enter-fade duration-fast-02 hover:bg-hover [&>td]:border-b [&>td]:border-divider",
-                        zebra && idx % 2 === 1 && "bg-layer-2",
-                        isSel && "bg-selected hover:bg-selected",
+                        // Rows are rounded bands like the header: the fill lives on the cells so the end cells can carry the inset radius.
+                        "animate-enter-fade [&>td]:divider-b [&>td]:duration-fast-02 hover:[&>td]:bg-hover [&>td:first-child]:rounded-l-(--corpus-inset-r) [&>td:last-child]:rounded-r-(--corpus-inset-r)",
+                        zebra && idx % 2 === 1 && "[&>td]:bg-layer-2",
+                        isSel && "[&>td]:bg-selected hover:[&>td]:bg-selected",
                       )}
                     >
                       {renderExpanded && (
@@ -208,8 +209,8 @@ export function DataTable<T extends { id: string }>({
                       {rowActions && <td className="pr-2 text-right">{rowActions(row)}</td>}
                     </tr>
                     {renderExpanded && isOpen && (
-                      <tr className="bg-layer-2 [&>td]:border-b [&>td]:border-divider">
-                        <td colSpan={colCount} className="animate-enter-fade px-3 py-3 pl-12">{renderExpanded(row)}</td>
+                      <tr className="[&>td]:divider-b">
+                        <td colSpan={colCount} className="animate-enter-fade rounded-(--corpus-inset-r) bg-layer-2 px-3 py-3 pl-12">{renderExpanded(row)}</td>
                       </tr>
                     )}
                   </React.Fragment>

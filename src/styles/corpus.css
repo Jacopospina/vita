@@ -263,6 +263,8 @@
  *   Container:  scope-lg p-2            (sets its radius and exposes it to children)
  *   Child:      rounded-inner-2         (= radius-lg − spacing 2)
  *   Grandchild: rounded-inner2-1        (= child radius − spacing 1)
+ * The same formula run OUTWARD — a container wrapping controls derives its radius from them:
+ *   Wrapper:    rounded-outer-1 p-1     (= control radius-md + spacing 1)
  */
 @utility scope-sm { border-radius: var(--corpus-radius-sm); --corpus-scope-r: var(--corpus-radius-sm); }
 @utility scope-md { border-radius: var(--corpus-radius-md); --corpus-scope-r: var(--corpus-radius-md); }
@@ -271,6 +273,17 @@
 @utility rounded-inner-* {
   border-radius: max(0px, calc(var(--corpus-scope-r, var(--corpus-radius-md)) - --value(number) * var(--spacing)));
   --corpus-scope-r2: max(0px, calc(var(--corpus-scope-r, var(--corpus-radius-md)) - --value(number) * var(--spacing)));
+}
+@utility rounded-outer-* {
+  border-radius: calc(var(--corpus-radius-md) + --value(number) * var(--spacing));
+  --corpus-scope-r: calc(var(--corpus-radius-md) + --value(number) * var(--spacing));
+}
+/* A 1px divider painted as a background, so it follows a cell's rounded corners instead of curving up like a border. */
+@utility divider-b {
+  background-image: linear-gradient(var(--color-divider), var(--color-divider));
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: 100% 1px;
 }
 @utility rounded-inner2-* {
   border-radius: max(0px, calc(var(--corpus-scope-r2, var(--corpus-radius-sm)) - --value(number) * var(--spacing)));
