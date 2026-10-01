@@ -15,6 +15,10 @@ avoid_when:
 related: [popover, button, overflow-content]
 ---
 
+## Look
+
+- **A squircle with no pointer.** Inverse surface, squircle corners, 6px from its trigger. Proximity says what it belongs to — no arrow.
+
 ## Rules
 
 1. **One short line** (≤ ~80 characters), with no period for fragments.

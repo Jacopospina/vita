@@ -31,12 +31,12 @@ export function Tooltip({ content, children, side = "top", align = "center", dis
           sideOffset={6}
           collisionPadding={8}
           className={cn(
-            "z-50 max-w-72 rounded-sm bg-inverse px-2 py-1 text-footnote text-inverse-foreground shadow-floating",
+            // A squircle pill with no pointer: proximity and the 6px offset already say what it belongs to.
+            "z-50 max-w-72 squircle bg-inverse px-2 py-1 text-footnote text-inverse-foreground shadow-floating [--corpus-squircle-r:var(--corpus-radius-md)]",
             "data-[state=delayed-open]:animate-enter-fade data-[state=instant-open]:animate-enter-fade data-[state=closed]:animate-exit-fade",
           )}
         >
           {content}
-          <TooltipPrimitive.Arrow className="fill-inverse" width={10} height={5} />
         </TooltipPrimitive.Content>
       </TooltipPrimitive.Portal>
     </TooltipPrimitive.Root>
