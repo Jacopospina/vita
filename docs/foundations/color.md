@@ -46,3 +46,17 @@ avoid_when:
 - **Increased contrast is automatic.** When the OS asks for more contrast, Corpus switches to the high-contrast variants (blue 7.6:1).
 - **Force it per product.** Set `data-corpus-contrast="high"` on `<html>` for regulated or accessibility-critical products.
 - **Text on tints always passes.** Every `-foreground` token uses the high-contrast variant.
+
+## Glass by elevation
+
+Everything floating above the page is frosted glass. The higher it sits, the more frosted it is: more blur, and more of what's behind shows through.
+
+| Tier | Layer | Blur | Used by |
+|---|---|---|---|
+| `glass-1` | z-30 | 14px | Side panels |
+| `glass-2` | z-40 | 20px | Header |
+| `glass-3` | z-50 | 28px | Menus, dropdown lists, popovers |
+| `glass-4` | z-50, above an overlay | 36px | Dialogs |
+| `glass-5` | z-60 | 44px | Notifications, capsules |
+
+Tooltips stay solid: they're a deliberately inverse surface.

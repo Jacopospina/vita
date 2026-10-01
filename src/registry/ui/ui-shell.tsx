@@ -55,7 +55,7 @@ export function Header({ productName, prefix, href = "/", children, actions, cla
   const { navOpen, setNavOpen } = React.useContext(ShellCtx)
   return (
     // Floating bar: same material as the LeftPanel (glass, 8px inset, concentric radius); rows inside are rounded-inner-2.
-    <header className={cn("sticky top-2 z-40 mx-2 mt-2 flex h-12 shrink-0 items-center gap-1 glass scope-xl p-2", className)}>
+    <header className={cn("sticky top-2 z-40 mx-2 mt-2 flex h-12 shrink-0 items-center gap-1 glass glass-2 scope-xl p-2", className)}>
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded-sm focus:bg-primary focus:px-3 focus:py-2 focus:text-primary-foreground">
         Skip to main content
       </a>
@@ -109,7 +109,7 @@ export function LeftPanel({ children, rail, className, label = "Side navigation"
         data-rail={rail || undefined}
         className={cn(
           // Floating sidebar: frosted glass, inset from the window, rounded; rows inside are concentric (rounded-inner-2).
-          "group/nav z-30 flex shrink-0 flex-col overflow-y-auto glass scope-xl p-2",
+          "group/nav z-30 flex shrink-0 flex-col overflow-y-auto glass glass-1 scope-xl p-2",
           "fixed top-16 bottom-2 left-2 w-60 -translate-x-[calc(100%+1rem)] duration-moderate-02 ease-productive",
           "lg:static lg:m-2 lg:mr-0 lg:translate-x-0",
           navOpen && "translate-x-0",
@@ -217,7 +217,7 @@ export function RightPanel({ open, onOpenChange, title, children, footer, size =
     <aside
       aria-label={title}
       className={cn(
-        "absolute inset-y-0 right-0 z-30 flex w-full flex-col border-l border-border-subtle bg-raised shadow-overlay",
+        "absolute inset-y-0 right-0 z-30 flex w-full flex-col glass glass-1",
         size === "sm" ? "sm:w-80" : size === "lg" ? "sm:w-140" : "sm:w-100",
         open ? "animate-enter-panel-right" : "animate-exit-panel-right",
         className,

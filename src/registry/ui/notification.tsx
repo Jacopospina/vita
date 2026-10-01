@@ -50,7 +50,7 @@ function Notice({ icon, kind, eyebrow, source, title, subtitle, children, action
       role={role}
       className={cn(
         "group/notice pointer-events-auto relative flex w-full items-start gap-3 squircle p-3 text-body text-foreground [--corpus-squircle-r:var(--corpus-radius-lg)]",
-        surface === "glass" ? "glass" : "border border-border-subtle bg-layer-1",
+        surface === "glass" ? "glass glass-5" : "border border-border-subtle bg-layer-1",
         motion,
         className,
       )}
@@ -296,7 +296,7 @@ export function Capsule({ o, leaving }: { o: CapsuleOptions; leaving?: boolean }
       ref={ref}
       role="status"
       className={cn(
-        "glass pointer-events-auto flex items-center rounded-full p-1.5 text-foreground",
+        "glass glass-5 pointer-events-auto flex items-center rounded-full p-1.5 text-foreground",
         leaving ? "animate-island-out" : "animate-island-in",
       )}
     >

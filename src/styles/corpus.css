@@ -397,10 +397,23 @@
  * `glass` — the frosted material for floating surfaces (notification banners, overlays over content):
  * translucent raised fill + background blur + saturation, a hairline and the overlay shadow.
  */
+/*
+ * Glass tiers — the higher a surface sits (z-index), the more frosted it is: more blur, more of what's behind
+ * shows through. Pair `glass` with the tier of the surface's layer.
+ *   glass-1  z-30  side panels            glass-2  z-40  header
+ *   glass-3  z-50  menus, lists, popovers glass-4  z-50+ dialogs (above their overlay)
+ *   glass-5  z-60  notifications, capsules
+ */
+@utility glass-1 { --corpus-glass-blur: 14px; --corpus-glass-fill: 74%; --corpus-glass-sat: 1.4; }
+@utility glass-2 { --corpus-glass-blur: 20px; --corpus-glass-fill: 70%; --corpus-glass-sat: 1.5; }
+@utility glass-3 { --corpus-glass-blur: 28px; --corpus-glass-fill: 66%; --corpus-glass-sat: 1.7; }
+@utility glass-4 { --corpus-glass-blur: 36px; --corpus-glass-fill: 60%; --corpus-glass-sat: 1.8; }
+@utility glass-5 { --corpus-glass-blur: 44px; --corpus-glass-fill: 54%; --corpus-glass-sat: 2; }
+
 @utility glass {
-  background-color: color-mix(in oklab, var(--corpus-raised) 62%, transparent);
-  backdrop-filter: blur(28px) saturate(1.8);
-  -webkit-backdrop-filter: blur(28px) saturate(1.8);
+  background-color: color-mix(in oklab, var(--corpus-raised) var(--corpus-glass-fill, 62%), transparent);
+  backdrop-filter: blur(var(--corpus-glass-blur, 28px)) saturate(var(--corpus-glass-sat, 1.8));
+  -webkit-backdrop-filter: blur(var(--corpus-glass-blur, 28px)) saturate(var(--corpus-glass-sat, 1.8));
   border: 1px solid color-mix(in oklab, var(--corpus-foreground) 10%, transparent);
   box-shadow: var(--corpus-shadow-overlay), inset 0 1px 0 color-mix(in oklab, white 22%, transparent);
   @media (prefers-reduced-transparency: reduce) { background-color: var(--corpus-raised); backdrop-filter: none; }

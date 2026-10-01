@@ -18,7 +18,7 @@ export interface DropdownItem {
 
 // Menu-style list: 6px inset, 28px rows with 10px side padding, concentric 6px row radius (12 − 6), accent highlight.
 export const listClasses = cn(
-  "z-50 max-h-80 min-w-(--radix-select-trigger-width) overflow-hidden scope-lg border border-border-subtle bg-raised p-1.5 text-foreground shadow-floating",
+  "z-50 max-h-80 min-w-(--radix-select-trigger-width) overflow-hidden scope-lg glass glass-3 p-1.5 text-foreground",
   "data-[state=open]:animate-enter-scale data-[state=closed]:animate-exit-scale",
 )
 export const itemClasses = cn(

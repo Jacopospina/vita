@@ -17,7 +17,7 @@ export const MenuRadioGroup = MenuPrimitive.RadioGroup
 
 const contentClasses = cn(
   // Menu: 6px inset, 28px rows, 10px side padding, concentric 6px row radius (12 − 6), accent highlight.
-  "z-50 min-w-48 overflow-hidden scope-lg border border-border-subtle bg-raised p-1.5 text-foreground shadow-floating",
+  "z-50 min-w-48 overflow-hidden scope-lg glass glass-3 p-1.5 text-foreground",
   "data-[state=open]:animate-enter-scale data-[state=closed]:animate-exit-scale origin-(--radix-dropdown-menu-content-transform-origin)",
 )
 const itemClasses = cn(
