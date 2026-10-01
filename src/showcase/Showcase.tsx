@@ -1,10 +1,11 @@
 import * as React from "react"
-import { Moon, Sun, LogoGithub, ArrowRight } from "@/registry/icons"
+import { Moon, Sun, LogoGithub, ArrowRight, Book, Bot, Security, UserMultiple } from "@/registry/icons"
 import { Shell, ShellMain, Header, HeaderNavItem, HeaderGlobalAction } from "@/registry/ui/ui-shell"
 import { TooltipProvider } from "@/registry/ui/tooltip"
 import { useSunTheme } from "@/registry/hooks/use-sun-theme"
 import { Toaster } from "@/registry/ui/notification"
 import { Container, Stack, Inline } from "@/registry/ui/layout"
+import { IconPlaceholder } from "@/registry/ui/icon-placeholder"
 import { Text } from "@/registry/ui/text"
 import { Button } from "@/registry/ui/button"
 import { OperationalTag } from "@/registry/ui/tag"
@@ -12,7 +13,7 @@ import { Icon } from "@/registry/ui/icon"
 import { Link } from "@/registry/ui/link"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/registry/ui/tabs"
 import { ContentSwitcher } from "@/registry/ui/content-switcher"
-import { Tile } from "@/registry/ui/tile"
+import { Tile, TileSet, TileSetItem } from "@/registry/ui/tile"
 import { CardsExample, AgentsExample, RunsExample, ConversationsExample, SettingsExample, SignInExample } from "./examples"
 
 /*
@@ -29,6 +30,12 @@ const examples = [
   { value: "conversations", label: "Conversations", render: () => <ConversationsExample /> },
   { value: "settings", label: "Settings", render: () => <SettingsExample /> },
   { value: "sign-in", label: "Sign in", render: () => <SignInExample /> },
+]
+const pillars = [
+  { title: "Opinions, written down", text: "Every page says when to use a component, when not to, and what to use instead.", icon: Book },
+  { title: "Fluent for machines", text: "Docs as llms.txt and a JSON index, six agent skills and project rules agents follow.", icon: Bot },
+  { title: "Enforced, not suggested", text: "Thirteen audit rules fail the build on local components and raw values.", icon: Security },
+  { title: "One craft for both", text: "People and agents ship with the same tokens, components, motion and words.", icon: UserMultiple },
 ]
 const presets = [
   { value: "default", label: "Default" },
@@ -77,7 +84,7 @@ export function Showcase() {
                 </OperationalTag>
                 <Text variant="display" as="h1" className="max-w-3xl">Give your ideas a body</Text>
                 <Text variant="body-lg" tone="muted" className="max-w-2xl">
-                  You bring the mind and the soul. Corpus brings the form: choreographed, accessible pieces that you and your AI agents shape the same way. Open, opinionated, and yours to make with.
+                  The AI-agent-first design system, born for humans and machines making together. Documented and built so your agents design like designers — and you make what only you can make.
                 </Text>
                 <Inline gap="md" justify="center">
                   <Button onClick={() => (window.location.href = `${DOCS}guidelines`)}>Start making</Button>
@@ -102,6 +109,28 @@ export function Showcase() {
                     </Tile>
                   </Stack>
                 </Tabs>
+              </section>
+
+              {/* Positioning: why agents can design with Corpus */}
+              <section aria-label="Born for humans and agents">
+                <Stack gap="lg">
+                  <Stack gap="xs" align="center" className="text-center">
+                    <Text variant="title-1" as="h2">Designed for people. Fluent for agents.</Text>
+                    <Text tone="muted" className="max-w-2xl">Agents don't need more parts; they need judgment. Corpus writes every design decision down and enforces it, so an agent makes the choices a designer would.</Text>
+                  </Stack>
+                  {/* One idea, four pillars: one surface, no gaps (belonging). */}
+                  <TileSet columns={4}>
+                    {pillars.map((p) => (
+                      <TileSetItem key={p.title} className="p-5">
+                        <Stack gap="sm">
+                          <IconPlaceholder icon={p.icon} tone="brand" size="lg" />
+                          <Text variant="title-3">{p.title}</Text>
+                          <Text tone="muted">{p.text}</Text>
+                        </Stack>
+                      </TileSetItem>
+                    ))}
+                  </TileSet>
+                </Stack>
               </section>
 
               {/* Themes */}

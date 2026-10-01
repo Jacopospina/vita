@@ -1,6 +1,6 @@
 ---
 title: Corpus
-summary: The body of every product we build — the visible form through which its mind and soul reach the world.
+summary: The AI-agent-first design system, born for humans and machines making together — the body of every product, through which its mind and soul reach the world.
 status: stable
 ---
 

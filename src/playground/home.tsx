@@ -3,9 +3,9 @@ import * as icons from "@/registry/icons"
 import * as pictograms from "@/registry/pictograms"
 import { Book, Application, Grid as GridIcon, ColorPalette, Terminal, Bot, DataVis_1 as Chart, Pen } from "@/registry/icons"
 import type { IconType } from "@/registry/icons"
-import { Container, Stack, Inline, Grid, Column } from "@/registry/ui/layout"
+import { Container, Stack, Inline } from "@/registry/ui/layout"
 import { Text } from "@/registry/ui/text"
-import { ClickableTile, Tile } from "@/registry/ui/tile"
+import { ClickableTile, Tile, TileSet, TileSetItem } from "@/registry/ui/tile"
 import { Tag } from "@/registry/ui/tag"
 import { Link } from "@/registry/ui/link"
 import { IconPlaceholder } from "@/registry/ui/icon-placeholder"
@@ -28,28 +28,29 @@ function SoonTag() {
   return <Tag tone="neutral" size="sm">Coming soon</Tag>
 }
 
-/** A resource card: leading placeholder, title, one line, and either a link or "Coming soon". */
+/** A resource cell (inside a TileSet — same-meaning items share one surface): placeholder, title, line, link or "Coming soon". */
 function Resource({ icon, name, children, href, action }: { icon: IconType; name: string; children: React.ReactNode; href?: string; action?: string }) {
-  const body = (
-    <Stack gap="sm">
-      <IconPlaceholder icon={icon} tone={href ? "brand" : "neutral"} size="lg" />
-      <Text variant="title-3">{name}</Text>
-      <Text tone="muted">{children}</Text>
-      {href ? <Text tone="primary" weight="medium">{action}</Text> : <Inline><SoonTag /></Inline>}
-    </Stack>
+  return (
+    <TileSetItem href={href} className="p-5">
+      <Stack gap="sm">
+        <IconPlaceholder icon={icon} tone={href ? "brand" : "neutral"} size="lg" />
+        <Text variant="title-3">{name}</Text>
+        <Text tone="muted">{children}</Text>
+        {href ? <Text tone="primary" weight="medium">{action}</Text> : <Inline><SoonTag /></Inline>}
+      </Stack>
+    </TileSetItem>
   )
-  return href ? <ClickableTile href={href} className="h-full">{body}</ClickableTile> : <Tile className="h-full">{body}</Tile>
 }
 
-/** A page card for the Guidelines index: the page's own title and summary. */
+/** A page cell for the Guidelines index (inside a TileSet): the page's own title and summary. */
 function PageCard({ section, slug }: { section: Section; slug: string }) {
   return (
-    <ClickableTile href={`#/${section}/${slug}`} className="h-full">
+    <TileSetItem href={`#/${section}/${slug}`} className="p-4">
       <Stack gap="xs">
         <Text variant="headline">{title(section, slug)}</Text>
         <Text tone="muted" variant="footnote">{summary(section, slug)}</Text>
       </Stack>
-    </ClickableTile>
+    </TileSetItem>
   )
 }
 
@@ -76,7 +77,7 @@ export function HomePage() {
           <Text variant="large-title" as="h1">Corpus</Text>
           <Text variant="title-2" as="p">Give your ideas a body.</Text>
           <Text variant="body-lg" tone="muted" className="max-w-xl">
-            You bring the vision. Corpus brings the form: the foundations, components and patterns that you and your AI agents shape the same way.
+            The AI-agent-first design system, born for humans and machines making together. You bring the vision; Corpus gives you and your agents the same craft to give it form.
           </Text>
         </Stack>
 
@@ -90,60 +91,44 @@ export function HomePage() {
           </Stack>
         </ClickableTile>
 
-        {/* Resources */}
-        <Grid>
-          <Column md={4} lg={5}>
-            <Resource icon={GridIcon} name="Icons" href="#/foundations/icons" action="Browse icons">
-              A library of over {fmt(iconCount)} icons, drawn in and out with the rest of Corpus.
-            </Resource>
-          </Column>
-          <Column md={4} lg={5}>
-            <Resource icon={Application} name="Pictograms" href="#/foundations/pictograms" action="Browse pictograms">
-              Over {fmt(pictogramCount)} pictograms for empty states, onboarding and feature highlights.
-            </Resource>
-          </Column>
-          <Column md={4} lg={6}>
-            <Resource icon={ColorPalette} name="Theming" href="#/foundations/theming" action="Personalise Corpus">
-              {summary("foundations", "theming")}
-            </Resource>
-          </Column>
-          <Column md={4} lg={5}>
-            <Resource icon={Terminal} name="Corpus CLI" href="#/foundations/about" action="Get started">
-              Install Corpus into any repository, then add, update and audit components from the command line.
-            </Resource>
-          </Column>
-          <Column md={4} lg={5}>
-            <Resource icon={Pen} name="Design kit">Components, tokens and templates for design tools.</Resource>
-          </Column>
-          <Column md={4} lg={6}>
-            <Resource icon={Bot} name="Agent skills">Six skills that teach AI agents to design and build with Corpus.</Resource>
-          </Column>
-        </Grid>
+        {/* Resources — one group: same meaning, one surface */}
+        <TileSet columns={3}>
+          <Resource icon={GridIcon} name="Icons" href="#/foundations/icons" action="Browse icons">
+            A library of over {fmt(iconCount)} icons, drawn in and out with the rest of Corpus.
+          </Resource>
+          <Resource icon={Application} name="Pictograms" href="#/foundations/pictograms" action="Browse pictograms">
+            Over {fmt(pictogramCount)} pictograms for empty states, onboarding and feature highlights.
+          </Resource>
+          <Resource icon={ColorPalette} name="Theming" href="#/foundations/theming" action="Personalise Corpus">
+            {summary("foundations", "theming")}
+          </Resource>
+          <Resource icon={Terminal} name="Corpus CLI" href="#/foundations/about" action="Get started">
+            Install Corpus into any repository, then add, update and audit components from the command line.
+          </Resource>
+          <Resource icon={Pen} name="Design kit">Components, tokens and templates for design tools.</Resource>
+          <Resource icon={Bot} name="Agent skills">Six skills that teach AI agents to design and build with Corpus.</Resource>
+        </TileSet>
 
         {/* Built with Corpus */}
         <Stack gap="lg">
           <SectionHead name="Built with Corpus" />
-          <Grid>
-            <Column md={4} lg={8}>
-              <ClickableTile href="#/patterns/intent-first" className="h-full">
-                <Stack gap="sm">
-                  <Text variant="footnote" tone="muted">Vita</Text>
-                  <Text variant="title-3">From a request to a deployed agent</Text>
-                  <Text tone="muted">{summary("patterns", "intent-first")}</Text>
-                  <Text tone="primary" weight="medium">Read more</Text>
-                </Stack>
-              </ClickableTile>
-            </Column>
-            <Column md={4} lg={8}>
-              <Tile className="h-full">
-                <Stack gap="sm">
-                  <Text variant="title-3">Your story</Text>
-                  <Text tone="muted">What makers are bringing to life with Corpus.</Text>
-                  <Inline><SoonTag /></Inline>
-                </Stack>
-              </Tile>
-            </Column>
-          </Grid>
+          <TileSet columns={2}>
+            <TileSetItem href="#/patterns/intent-first" className="p-5">
+              <Stack gap="sm">
+                <Text variant="footnote" tone="muted">Vita</Text>
+                <Text variant="title-3">From a request to a deployed agent</Text>
+                <Text tone="muted">{summary("patterns", "intent-first")}</Text>
+                <Text tone="primary" weight="medium">Read more</Text>
+              </Stack>
+            </TileSetItem>
+            <TileSetItem className="p-5">
+              <Stack gap="sm">
+                <Text variant="title-3">Your story</Text>
+                <Text tone="muted">What makers are bringing to life with Corpus.</Text>
+                <Inline><SoonTag /></Inline>
+              </Stack>
+            </TileSetItem>
+          </TileSet>
         </Stack>
 
         {/* Pathway */}
@@ -192,40 +177,38 @@ export function GuidelinesPage() {
 
         <Stack gap="lg">
           <SectionHead name="Design fundamentals">Explore the principles that guide every Corpus screen.</SectionHead>
-          <Grid>
+          <TileSet columns={3}>
             {(["about", "principles", "interaction"] as const).map((s) => (
-              <Column key={s} md={4} lg={5}><PageCard section="foundations" slug={s} /></Column>
+              <PageCard key={s} section="foundations" slug={s} />
             ))}
-          </Grid>
+          </TileSet>
         </Stack>
 
         <Stack gap="lg">
           <SectionHead name="Foundations of design">Discover the key concepts that shape every Corpus experience.</SectionHead>
-          <Grid>
+          <TileSet columns={3}>
             {(["accessibility", "color", "grid", "motion", "typography", "icons"] as const).map((s) => (
-              <Column key={s} md={4} lg={5}><PageCard section="foundations" slug={s} /></Column>
+              <PageCard key={s} section="foundations" slug={s} />
             ))}
-          </Grid>
+          </TileSet>
         </Stack>
 
         <Stack gap="lg">
           <SectionHead name="New and updated">Recent additions and updates to the guidance.</SectionHead>
-          <Grid>
+          <TileSet columns={3}>
             {recentlyUpdated.map(([section, slug]) => (
-              <Column key={slug + section} md={4} lg={5}><PageCard section={section} slug={slug} /></Column>
+              <PageCard key={slug + section} section={section} slug={slug} />
             ))}
-          </Grid>
+          </TileSet>
         </Stack>
 
         <Stack gap="lg">
           <SectionHead name="Topics" />
-          <Grid>
+          <TileSet columns={3}>
             {topics.map((t) => (
-              <Column key={t.name} md={4} lg={8}>
-                <Resource icon={t.icon} name={t.count ? `${t.name} · ${t.count}` : t.name} href={t.href} action="Learn more">{t.text}</Resource>
-              </Column>
+              <Resource key={t.name} icon={t.icon} name={t.count ? `${t.name} · ${t.count}` : t.name} href={t.href} action="Learn more">{t.text}</Resource>
             ))}
-          </Grid>
+          </TileSet>
         </Stack>
       </Stack>
     </Container>

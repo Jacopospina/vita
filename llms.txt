@@ -6,11 +6,11 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/foun
 
 ## Foundations
 
-- [Corpus](docs/foundations/about.md): The body of every product we build — the visible form through which its mind and soul reach the world.
+- [Corpus](docs/foundations/about.md): The AI-agent-first design system, born for humans and machines making together — the body of every product, through which its mind and soul reach the world.
 - [Accessibility](docs/foundations/accessibility.md): WCAG 2.2 AA is the floor. Components are accessible by default; composition is where teams break it.
   - use: Always
   - avoid: Never "add accessibility later"
-- [Brand & voice](docs/foundations/brand.md): Corpus is the Creator. Everything it says exists to awaken the maker in the person using it.
+- [Brand & voice](docs/foundations/brand.md): The AI-agent-first design system, born for humans and machines making together. Its voice is the Creator's, and every word aims to awaken the maker in the reader.
   - use: Writing in Corpus's own voice — docs, the showcase, onboarding, release notes, first-use moments; Naming a feature, writing a headline or choosing a slogan
   - avoid: Product UI microcopy (buttons, labels, errors) → Content, personas & taxonomy; plain and direct wins inside products
 - [Color](docs/foundations/color.md): Semantic tokens only. Color communicates interactivity, status and hierarchy; it never decorates.

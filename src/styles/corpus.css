@@ -350,7 +350,8 @@
 @utility ai-gradient-border {
   border: 1.5px solid transparent;
   background:
-    linear-gradient(var(--corpus-ai-subtle), var(--corpus-ai-subtle)) padding-box,
+    /* a clean card surface (white in light) inside the rainbow edge */
+    linear-gradient(var(--corpus-raised), var(--corpus-raised)) padding-box,
     conic-gradient(from var(--corpus-ai-angle), var(--corpus-ai-spectrum)) border-box;
   animation: corpus-ai-spin 6s linear infinite;
   @media (prefers-reduced-motion: reduce) { animation: none; }

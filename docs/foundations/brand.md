@@ -1,6 +1,6 @@
 ---
 title: Brand & voice
-summary: Corpus is the Creator. Everything it says exists to awaken the maker in the person using it.
+summary: The AI-agent-first design system, born for humans and machines making together. Its voice is the Creator's, and every word aims to awaken the maker in the reader.
 status: stable
 use_when:
   - Writing in Corpus's own voice — docs, the showcase, onboarding, release notes, first-use moments
@@ -18,6 +18,26 @@ Every person is a creator; some have just never been handed the right material. 
 > **The goal of every word:** awaken the creator in the person reading it. Corpus never makes things for people; it makes them feel able to make.
 
 You bring the mind and the soul. Corpus gives them a body.
+
+## Identity and positioning
+
+**Corpus is the AI-agent-first design system, born for collaboration between humans and machines.** The machines are AI agents, building side by side with designers and engineers.
+
+> [!NOTE]
+> **Positioning.** For product teams where people and AI agents build together, Corpus is the design system that agents understand. Unlike systems written only for people, every decision is documented and enforced so an agent makes designer-quality choices on its own.
+
+| Pillar | What it means | How Corpus does it |
+|---|---|---|
+| **Opinions, written down** | Agents need judgment, not just parts. | Every page says when to use a component and when not to, and what to use instead. A decision guide picks the right piece. |
+| **Fluent for machines** | Agents read the same source of truth as people. | Docs ship as `llms.txt` and `docs/index.json`; six agent skills; project rules in `AGENTS.md`. |
+| **Enforced, not suggested** | Quality can't depend on remembering the rules. | An audit with 13 rules fails the build on local components or raw values; an editor plugin and an agent hook fix violations as they're written. |
+| **One craft for both** | People and agents ship the same quality. | One set of tokens, components, motion and words, whoever is making. |
+
+How it meets the brand: people bring the vision, agents bring the craft at scale, and Corpus gives both the same judgment.
+
+- **Category line:** The AI-agent-first design system.
+- **Descriptor:** Built for humans and machines making together.
+- **Proof line:** Documented so agents design like designers.
 
 ## The archetype: the Creator
 
@@ -78,6 +98,7 @@ How Corpus speaks across a person's journey, from first spark to a new identity.
 - **You bring the vision. Corpus brings the form.** For explaining what Corpus is.
 - **From mind to matter.** For short spaces and sign-offs.
 - **Built to be built with.** For the system and its openness.
+- **Designed for people. Fluent for agents.** For the human–machine positioning.
 - **Shape what's next.** For releases and calls to action.
 
 Use one slogan per surface. The primary slogan is the signature: hero, about, README.

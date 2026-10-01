@@ -1,5 +1,7 @@
 # Working on Corpus (the design system itself)
 
+**Positioning:** Corpus is the AI-agent-first design system, born for humans and machines making together. Every change must keep it documented and enforced well enough that an agent makes designer-quality decisions on its own.
+
 Corpus is consumed by humans and AI agents in product repos, so every change must keep the system **coherent, documented and enforceable**.
 
 ## When you add or change a component

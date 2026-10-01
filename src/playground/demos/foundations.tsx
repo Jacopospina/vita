@@ -185,9 +185,9 @@ export const foundationDemos: DemoMap = {
       render: () => (
         <Stack gap="xl">
           <Stack gap="xs" align="center" className="py-6 text-center">
-            <Text variant="caption" tone="muted" weight="semibold">THE SIGNATURE</Text>
+            <Text variant="caption" tone="muted" weight="semibold">THE AI-AGENT-FIRST DESIGN SYSTEM</Text>
             <Text variant="large-title">Give your ideas a body.</Text>
-            <Text tone="muted">You bring the vision. Corpus brings the form.</Text>
+            <Text tone="muted">Born for humans and machines making together. Documented so agents design like designers.</Text>
           </Stack>
           <Stack gap="sm">
             <Text variant="headline">The awakening arc</Text>

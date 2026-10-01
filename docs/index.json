@@ -7,7 +7,7 @@
       "slug": "about",
       "path": "docs/foundations/about.md",
       "title": "Corpus",
-      "summary": "The body of every product we build — the visible form through which its mind and soul reach the world.",
+      "summary": "The AI-agent-first design system, born for humans and machines making together — the body of every product, through which its mind and soul reach the world.",
       "status": "stable"
     },
     {
@@ -29,7 +29,7 @@
       "slug": "brand",
       "path": "docs/foundations/brand.md",
       "title": "Brand & voice",
-      "summary": "Corpus is the Creator. Everything it says exists to awaken the maker in the person using it.",
+      "summary": "The AI-agent-first design system, born for humans and machines making together. Its voice is the Creator's, and every word aims to awaken the maker in the reader.",
       "status": "stable",
       "use_when": [
         "Writing in Corpus's own voice — docs, the showcase, onboarding, release notes, first-use moments",

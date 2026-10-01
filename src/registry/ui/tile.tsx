@@ -106,14 +106,27 @@ export function TileGroup({ label, mode = "single", className, children }: { lab
  * The set owns the surface: background, radius, clipping. Items inside are flat — no background,
  * no radius — separated only by hairlines.
  */
-export function TileSet({ columns = 2, tone = "default", className, children }: { columns?: 1 | 2 | 3; tone?: "default" | "negative" | "positive"; className?: string; children: React.ReactNode }) {
+export function TileSet({ columns = 2, tone = "default", className, children }: { columns?: 1 | 2 | 3 | 4; tone?: "default" | "negative" | "positive"; className?: string; children: React.ReactNode }) {
   return (
     <div className={cn("overflow-hidden scope-lg", tone === "negative" ? "bg-error-subtle" : tone === "positive" ? "bg-success-subtle" : "bg-layer-1", className)}>
-      <div className={cn("-mr-px -mb-px grid", columns === 2 && "md:grid-cols-2", columns === 3 && "md:grid-cols-2 lg:grid-cols-3")}>{children}</div>
+      <div className={cn("-mr-px -mb-px grid", columns === 2 && "md:grid-cols-2", columns === 3 && "md:grid-cols-2 lg:grid-cols-3", columns === 4 && "md:grid-cols-2 lg:grid-cols-4")}>{children}</div>
     </div>
   )
 }
 
-export function TileSetItem({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div data-ai-context="" className={cn("flex flex-col gap-1.5 border-r border-b border-border-subtle p-3 text-foreground", className)} {...props} />
+/**
+ * TileSetItem — one cell of a TileSet: flat, sharing the set's surface and separators (belonging has no gaps).
+ * With `href` the cell is a link: soft hover wash inside the set and an arrow that nudges on hover.
+ */
+export function TileSetItem({ className, href, children, ...props }: React.HTMLAttributes<HTMLElement> & { href?: string }) {
+  const cell = "flex flex-col gap-1.5 border-r border-b border-border-subtle p-3 text-foreground"
+  if (href) {
+    return (
+      <a href={href} className={cn(cell, "group relative pb-10 duration-moderate-01 hover:bg-hover focus-ring-inset", className)} {...props}>
+        {children}
+        <Icon as={ArrowRight} size="md" className="absolute right-3 bottom-3 text-primary duration-moderate-01 ease-productive group-hover:translate-x-1" />
+      </a>
+    )
+  }
+  return <div data-ai-context="" className={cn(cell, className)} {...props}>{children}</div>
 }

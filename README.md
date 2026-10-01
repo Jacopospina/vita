@@ -4,7 +4,7 @@
 
 Every product has three parts. **Animus**, the mind, is the logic that reasons and decides. **Anima**, the soul, is its purpose, character and the experience it creates. **Corpus**, the body, is the visible form through which mind and soul reach the world. It is also a *body of work*: components, tokens and patterns that grow over time.
 
-Corpus is an opinionated, AI-agent-first design system for React + Tailwind v4. Designers, engineers, PMs and AI agents all ship the same quality of UI because the system decides for them:
+**The AI-agent-first design system, born for humans and machines making together.** Corpus is documented and built so AI agents make designer-quality design decisions on their own; designers, engineers, PMs and agents ship the same quality of UI because the system decides for them. It's for React + Tailwind v4:
 
 - **Which component** to use and when not to (decision guides for every component).
 - **How things move** (motion tokens and choreography rules).
