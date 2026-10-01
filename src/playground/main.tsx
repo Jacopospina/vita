@@ -6,9 +6,10 @@ import "@fontsource-variable/google-sans-code"
 import "@/styles/corpus.css"
 import "./prose.css"
 import { App } from "./App"
+import { HOME_URL } from "./nav"
 
 // The docs have no home of their own: the showcase is the homepage. A bare docs URL goes there.
-if (!window.location.hash || window.location.hash === "#/") window.location.replace("./showcase.html")
+if (!window.location.hash || window.location.hash === "#/") window.location.replace(HOME_URL)
 
 // Transitions stay off until fonts and layout settle, so nothing glides in from its pre-layout position.
 bootAppearance()

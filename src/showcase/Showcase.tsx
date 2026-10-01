@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Moon, Sun, ArrowRight, Book, Bot, Security, UserMultiple } from "@/registry/icons"
 import { Shell, ShellMain, Header, HeaderNavItem, HeaderGlobalAction, HeaderSeparator } from "@/registry/ui/ui-shell"
-import { globalNav, searchPages } from "@/playground/nav"
+import { globalNav, searchPages, HOME_URL, DOCS_URL } from "@/playground/nav"
 import { GlobalSearch } from "@/registry/ui/global-search"
 import { GithubAction } from "@/playground/github"
 import { TooltipProvider } from "@/registry/ui/tooltip"
@@ -29,7 +29,7 @@ import { CardsExample, AgentsExample, RunsExample, ConversationsExample, Setting
  * Everything on it is Corpus; the example product is Vita.
  */
 
-const DOCS = "./index.html#/"
+const DOCS = DOCS_URL
 const examples = [
   { value: "cards", label: "Cards", render: () => <CardsExample /> },
   { value: "agents", label: "Agents", render: () => <AgentsExample /> },
@@ -72,7 +72,7 @@ export function Showcase() {
         <Header
           productName="Corpus"
           logo={<CorpusMark size={24} className="-m-0.5" />}
-          href="./showcase.html"
+          href={HOME_URL}
           actions={
             <>
               <GlobalSearch items={searchPages((path) => window.location.assign(`${DOCS}${path}`))} placeholder="Search Corpus" className="size-8 rounded-inner-2" />

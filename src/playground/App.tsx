@@ -9,7 +9,7 @@ import { CorpusMark } from "@/brand/corpus-mark"
 import { Toaster } from "@/registry/ui/notification"
 import { Search } from "@/registry/ui/search"
 import { manifest, sectionTitles, type Section } from "./manifest"
-import { globalNav, searchPages } from "./nav"
+import { globalNav, searchPages, HOME_URL } from "./nav"
 import { GlobalSearch } from "@/registry/ui/global-search"
 import { GithubAction } from "./github"
 import { DocPage } from "./doc-page"
@@ -67,7 +67,7 @@ export function App() {
         <Header
           productName="Corpus"
           logo={<CorpusMark size={24} className="-m-0.5" />}
-          href="./showcase.html" // the Corpus homepage: the live showcase
+          href={HOME_URL} // the Corpus homepage: the live showcase
           actions={
             <>
               <GlobalSearch items={searchPages((path) => window.location.assign(`#/${path}`))} placeholder="Search Corpus" className="size-8 rounded-inner-2" />

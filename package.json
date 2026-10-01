@@ -10,6 +10,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:site": "pnpm build && mv dist/index.html dist/docs.html && mv dist/showcase.html dist/index.html",
     "preview": "vite preview",
     "typecheck": "tsc -b",
     "lint": "eslint .",
