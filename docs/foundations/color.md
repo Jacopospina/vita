@@ -53,11 +53,11 @@ Everything floating above the page is frosted glass. The higher it sits, the mor
 
 | Tier | Layer | Blur | Fill | Used by |
 |---|---|---|---|---|
-| `glass-1` | z-30 | 10px | 66% | Side navigation |
-| `glass-2` | z-40 | 14px | 62% | Header |
-| `glass-3` | z-50 | 18px | 58% | Right panel, menus, dropdown lists, popovers |
-| `glass-4` | z-50, above an overlay | 24px | 52% | Dialogs |
-| `glass-5` | z-60 | 30px | 46% | Notifications, capsules |
+| `glass-1` | z-30 | 10px | 36% | Side navigation |
+| `glass-2` | z-40 | 14px | 32% | Header |
+| `glass-3` | z-50 | 18px | 28% | Right panel, menus, dropdown lists, popovers |
+| `glass-4` | z-50, above an overlay | 24px | 22% | Dialogs |
+| `glass-5` | z-60 | 30px | 16% | Notifications, capsules |
 
 - **See through, read white.** Content moving beneath stays faintly visible. In light mode the glass brightens its backdrop (`glass-lift`), so it still reads white instead of greying into the page.
 - **`elevated` surface.** Glass fills from the `elevated` token: `raised` plus the weather tint (see Theming), so only floating layers carry it.
