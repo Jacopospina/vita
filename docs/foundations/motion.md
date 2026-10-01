@@ -42,7 +42,7 @@ avoid_when:
 
 ## Text choreography
 
-- **Numbers swap, never clipped.** `AnimatedNumber`: each changed digit lifts and blurs away as the new one rises and sharpens (downward when the value shrinks), staggered from the last digit, travelling most of a line so the slide reads. Digits travel a fraction of a line, so no box ever cuts them off.
+- **Numbers swap, never clipped.** `AnimatedNumber`: the old digit and the new one move together, one line apart, like a conveyor — up when the value grows, down when it shrinks — blurring and fading as they leave and arrive. Digit positions stagger from the last digit. No box ever cuts them off.
 - **Text reveals.** `AnimatedText`: letter by letter, each sliding up from below and de-blurring, 18ms apart (capped so long labels finish in ~0.6s).
 - **Where it's built in.** Every `Text`, `Button` and `Tag` label, toggle state text, dropdown values, counts, slider values, loading messages, validation messages and status labels. Icons that swap (menu ↔ close, show ↔ hide) scale in.
 

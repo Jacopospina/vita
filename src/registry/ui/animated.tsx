@@ -14,6 +14,8 @@ import { cn } from "@/registry/lib/utils"
  */
 const reduced = () => typeof window !== "undefined" && !!window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
 const STAGGER = 35 // ms between digits / words
+/** One timing for the leaving and the arriving digit, so they travel together. */
+const DIGIT_SWAP = "440ms cubic-bezier(0.22, 1, 0.36, 1)"
 
 /* ---------------- AnimatedNumber ---------------- */
 
@@ -26,6 +28,7 @@ function Digit({ value, index }: { value: number; index: number }) {
   const [state, setState] = React.useState({ cur: value, prev: null as number | null, dir: 1, n: 0 })
   if (value !== state.cur) setState({ cur: value, prev: reduced() ? null : state.cur, dir: value > state.cur ? 1 : -1, n: state.n + 1 })
   const delay = `${index * STAGGER}ms`
+  // Old and new share ONE timing (duration + easing + delay), so they move as a pair, one line apart.
   const up = state.dir > 0
   return (
     <span data-digit className="relative inline-block">
@@ -34,7 +37,7 @@ function Digit({ value, index }: { value: number; index: number }) {
         <span
           key={`p${state.n}`}
           className="absolute inset-0 text-center"
-          style={{ animation: `${up ? "corpus-digit-out-up" : "corpus-digit-out-down"} 380ms cubic-bezier(0.4, 0, 0.6, 1) ${delay} both` }}
+          style={{ animation: `${up ? "corpus-digit-out-up" : "corpus-digit-out-down"} ${DIGIT_SWAP} ${delay} both` }}
           onAnimationEnd={() => setState((s) => (s.n === state.n ? { ...s, prev: null } : s))}
         >
           {state.prev}
@@ -43,7 +46,7 @@ function Digit({ value, index }: { value: number; index: number }) {
       <span
         key={`c${state.n}`}
         className="absolute inset-0 text-center"
-        style={state.n && state.prev !== null ? { animation: `${up ? "corpus-digit-in-up" : "corpus-digit-in-down"} 520ms cubic-bezier(0.16, 1, 0.3, 1) ${delay} both` } : undefined}
+        style={state.n && state.prev !== null ? { animation: `${up ? "corpus-digit-in-up" : "corpus-digit-in-down"} ${DIGIT_SWAP} ${delay} both` } : undefined}
       >
         {state.cur}
       </span>
