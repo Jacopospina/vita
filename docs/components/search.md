@@ -19,6 +19,14 @@ related: [filtering, search-pattern, data-table]
 - **toolbar**: transparent until hover or focus. Use it inside `DataTable` toolbars and headers.
 - **expandable**: an icon button that grows into a field. Use it where space is scarce. It collapses when empty and blurred.
 
+## Sizes
+
+- **`sm` (24):** dense toolbars.
+- **`md` (28):** the default, and side panels.
+- **`lg` (32):** page-level search.
+
+The shortcut hint sits as far from the right edge as from the top and bottom, at every size.
+
 ## Rules
 
 1. **Placeholder states the scope:** "Search agents", not "Search…".

@@ -118,7 +118,9 @@ export const inputDemos: DemoMap = {
       render: () => (
         <Stack gap="lg" className="max-w-md">
           <Search placeholder="Search agents" />
-          <Search size="sm" variant="toolbar" placeholder="Search runs" />
+          <Search size="sm" variant="toolbar" placeholder="Small" shortcut="mod+shift+1" />
+          <Search size="md" variant="toolbar" placeholder="Medium" shortcut="mod+shift+2" />
+          <Search size="lg" variant="toolbar" placeholder="Large" shortcut="mod+shift+3" />
           <Inline><Search variant="expandable" /><Text tone="muted">← expandable</Text></Inline>
           <Search size="lg" placeholder="Large" />
         </Stack>

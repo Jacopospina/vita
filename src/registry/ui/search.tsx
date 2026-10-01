@@ -23,6 +23,12 @@ export interface SearchProps extends Omit<React.InputHTMLAttributes<HTMLInputEle
 }
 
 const heights = { sm: "h-control-sm", md: "h-control-md", lg: "h-control-lg" } as const
+// The shortcut hint sits as far from the right edge as from the top and bottom: (field height − kbd height) / 2.
+const kbdInset = {
+  sm: "right-[calc((var(--spacing-control-sm)-1.25rem)/2)]",
+  md: "right-[calc((var(--spacing-control-md)-1.25rem)/2)]",
+  lg: "right-[calc((var(--spacing-control-lg)-1.25rem)/2)]",
+} as const
 
 export const Search = React.forwardRef<HTMLInputElement, SearchProps>(
   ({ label = "Search", value, defaultValue = "", onValueChange, onSubmitSearch, size = "md", variant = "field", placeholder = "Search", shortcut, className, ...props }, ref) => {
@@ -97,7 +103,7 @@ export const Search = React.forwardRef<HTMLInputElement, SearchProps>(
             collapsed && "pointer-events-none opacity-0",
           )}
         />
-        {shortcut && <Kbd keys={shortcut} className={cn("pointer-events-none absolute right-2", !val && !focused && !collapsed ? "opacity-100" : "scale-90 opacity-0")} />}
+        {shortcut && <Kbd keys={shortcut} className={cn("pointer-events-none absolute", kbdInset[size], !val && !focused && !collapsed ? "opacity-100" : "scale-90 opacity-0")} />}
         {(
           <button
             type="button"

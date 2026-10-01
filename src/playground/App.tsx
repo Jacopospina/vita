@@ -74,7 +74,7 @@ export function App() {
           {section !== "home" && (
           <LeftPanel label="Documentation">
             <div className="pb-1">
-              <Search size="sm" variant="toolbar" label="Filter pages" placeholder="Filter" shortcut="mod+f" value={filter} onValueChange={setFilter} />
+              <Search size="md" variant="toolbar" label="Filter pages" placeholder="Filter" shortcut="mod+f" value={filter} onValueChange={setFilter} />
             </div>
             {!filter && (
               <SideNavSection>
