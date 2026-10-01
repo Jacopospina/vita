@@ -21,3 +21,9 @@ related: [text-input, form]
 4. **Ranges** show two months; start and end are separate labelled fields.
 5. **Presets beat calendars** for analytics: offer "Today · Last 7 days · Last 30 days · Custom…" first.
 6. **Errors say the rule:** "Go-live must be a weekday", not "Invalid date".
+
+## Months and presets
+
+- **One or two months.** `months={1}` suits single dates; ranges default to `months={2}` so start and end are visible together.
+- **Presets are blended actions.** `presets` puts common choices ("Last 7 days", "This month") beside the calendar as one joined group on a single surface. Picking one selects it and moves the calendar there; the current preset stays highlighted.
+- **Ready-made sets.** Use `datePresets` and `rangePresets`, or pass your product's own common choices.

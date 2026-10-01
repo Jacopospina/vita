@@ -1,6 +1,6 @@
 import * as React from "react"
 import { DayPicker, type DateRange } from "react-day-picker"
-import { format, isValid, parse } from "date-fns"
+import { format, isValid, parse, addDays, startOfMonth, endOfMonth, subMonths, nextMonday, isSameDay } from "date-fns"
 import { Calendar as CalendarIcon, ChevronLeft, ChevronRight } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { FieldShell, fieldClasses, fieldSize, type FieldBaseProps, type FieldSize } from "@/registry/ui/form"
@@ -13,6 +13,8 @@ import { Popover, PopoverAnchor, PopoverContent } from "@/registry/ui/popover"
  *   single  → typed OR picked from a calendar (near-future scheduling).
  *   range   → start–end (reporting periods, bookings).
  * Always accept typing. Show the format as placeholder. Validate on blur, not per keystroke.
+ * `months` shows one or two months side by side. `presets` add common choices ("Last 7 days") beside the calendar
+ * as ONE blended group of actions (joined rows, one surface) — picking one selects it and jumps the calendar there.
  */
 export function Calendar({ className, ...props }: React.ComponentProps<typeof DayPicker>) {
   return (
@@ -50,6 +52,43 @@ export function Calendar({ className, ...props }: React.ComponentProps<typeof Da
 }
 
 const FMT = "dd/MM/yyyy"
+
+export interface DatePreset { label: string; date: () => Date }
+export interface RangePreset { label: string; range: () => DateRange }
+
+/** Ready-made presets. Pass your own when the product has other common choices. */
+export const datePresets: DatePreset[] = [
+  { label: "Today", date: () => new Date() },
+  { label: "Tomorrow", date: () => addDays(new Date(), 1) },
+  { label: "In a week", date: () => addDays(new Date(), 7) },
+  { label: "Next Monday", date: () => nextMonday(new Date()) },
+]
+export const rangePresets: RangePreset[] = [
+  { label: "Today", range: () => ({ from: new Date(), to: new Date() }) },
+  { label: "Last 7 days", range: () => ({ from: addDays(new Date(), -6), to: new Date() }) },
+  { label: "Last 30 days", range: () => ({ from: addDays(new Date(), -29), to: new Date() }) },
+  { label: "This month", range: () => ({ from: startOfMonth(new Date()), to: endOfMonth(new Date()) }) },
+  { label: "Last month", range: () => ({ from: startOfMonth(subMonths(new Date(), 1)), to: endOfMonth(subMonths(new Date(), 1)) }) },
+]
+
+/** Presets as ONE blended group: joined rows on a single rounded surface (belonging), current one highlighted. */
+function PresetList({ items, activeIndex, onPick }: { items: { label: string }[]; activeIndex: number; onPick: (i: number) => void }) {
+  return (
+    <div role="group" aria-label="Presets" className="flex w-36 shrink-0 flex-col self-start scope-md bg-layer-2 p-1">
+      {items.map((p, i) => (
+        <button
+          key={p.label}
+          type="button"
+          aria-pressed={i === activeIndex}
+          onClick={() => onPick(i)}
+          className={cn("flex h-control-sm items-center rounded-inner-1 px-2.5 text-left text-body duration-fast-02 hover:bg-hover focus-ring-inset", i === activeIndex && "bg-raised font-medium shadow-raised hover:bg-raised")}
+        >
+          {p.label}
+        </button>
+      ))}
+    </div>
+  )
+}
 
 function DateField({ value, onValueChange, a11y, size, placeholder, onOpen, disabled, invalid }: {
   value?: Date
@@ -93,6 +132,10 @@ function DateField({ value, onValueChange, a11y, size, placeholder, onOpen, disa
 
 export interface DatePickerProps extends FieldBaseProps {
   mode?: "simple" | "single"
+  /** Months shown side by side in the calendar. */
+  months?: 1 | 2
+  /** Common choices beside the calendar, as one blended group. Pass `datePresets` or your own. */
+  presets?: DatePreset[]
   value?: Date
   onValueChange?: (d: Date | undefined) => void
   size?: FieldSize
@@ -102,10 +145,12 @@ export interface DatePickerProps extends FieldBaseProps {
   className?: string
 }
 
-export function DatePicker({ mode = "single", value, onValueChange, size = "md", disabled, minDate, maxDate, className, ...field }: DatePickerProps) {
+export function DatePicker({ mode = "single", months = 1, presets, value, onValueChange, size = "md", disabled, minDate, maxDate, className, ...field }: DatePickerProps) {
   const [inner, setInner] = React.useState<Date | undefined>(value)
   const [open, setOpen] = React.useState(false)
   const current = value ?? inner
+  const [month, setMonth] = React.useState<Date | undefined>(current)
+  const activePreset = presets ? presets.findIndex((p) => current && isSameDay(p.date(), current)) : -1
   const set = (d: Date | undefined) => { setInner(d); onValueChange?.(d) }
   return (
     <FieldShell {...field} className={cn("max-w-xs", className)}>
@@ -116,8 +161,9 @@ export function DatePicker({ mode = "single", value, onValueChange, size = "md",
               <DateField value={current} onValueChange={set} a11y={a11y} size={size} placeholder="dd/mm/yyyy" disabled={disabled} invalid={field.invalid} onOpen={mode === "single" ? () => setOpen(true) : undefined} />
             </div>
           </PopoverAnchor>
-          <PopoverContent className="w-auto p-3">
-            <Calendar mode="single" selected={current} defaultMonth={current} disabled={[...(minDate ? [{ before: minDate }] : []), ...(maxDate ? [{ after: maxDate }] : [])]} onSelect={(d) => { set(d); setOpen(false) }} autoFocus />
+          <PopoverContent className="flex w-auto gap-3 p-3">
+            {presets && <PresetList items={presets} activeIndex={activePreset} onPick={(i) => { const d = presets[i].date(); set(d); setMonth(d) }} />}
+            <Calendar mode="single" numberOfMonths={months} selected={current} month={month} onMonthChange={setMonth} disabled={[...(minDate ? [{ before: minDate }] : []), ...(maxDate ? [{ after: maxDate }] : [])]} onSelect={(d) => { set(d); setOpen(false) }} autoFocus />
           </PopoverContent>
         </Popover>
       )}
@@ -125,8 +171,10 @@ export function DatePicker({ mode = "single", value, onValueChange, size = "md",
   )
 }
 
-export function DateRangePicker({ value, onValueChange, size = "md", disabled, className, startLabel = "Start date", endLabel = "End date", ...field }: Omit<DatePickerProps, "mode" | "value" | "onValueChange" | "label"> & {
+export function DateRangePicker({ value, onValueChange, months = 2, presets, size = "md", disabled, className, startLabel = "Start date", endLabel = "End date", ...field }: Omit<DatePickerProps, "mode" | "value" | "onValueChange" | "label" | "presets"> & {
   label?: React.ReactNode
+  /** Common ranges beside the calendar, as one blended group. Pass `rangePresets` or your own. */
+  presets?: RangePreset[]
   value?: DateRange
   onValueChange?: (r: DateRange | undefined) => void
   startLabel?: string
@@ -136,6 +184,9 @@ export function DateRangePicker({ value, onValueChange, size = "md", disabled, c
   const [open, setOpen] = React.useState(false)
   const current = value ?? inner
   const set = (r: DateRange | undefined) => { setInner(r); onValueChange?.(r) }
+  const [month, setMonth] = React.useState<Date | undefined>(current?.from)
+  const same = (a?: Date, b?: Date) => (!a && !b) || (!!a && !!b && isSameDay(a, b))
+  const activePreset = presets ? presets.findIndex((p) => { const r = p.range(); return !!current?.from && same(r.from, current.from) && same(r.to, current.to) }) : -1
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverAnchor asChild>
@@ -148,8 +199,9 @@ export function DateRangePicker({ value, onValueChange, size = "md", disabled, c
           </FieldShell>
         </div>
       </PopoverAnchor>
-      <PopoverContent className="w-auto p-3">
-        <Calendar mode="range" numberOfMonths={2} selected={current} defaultMonth={current?.from} onSelect={set} autoFocus />
+      <PopoverContent className="flex w-auto gap-3 p-3">
+        {presets && <PresetList items={presets} activeIndex={activePreset} onPick={(i) => { const r = presets[i].range(); set(r); setMonth(months === 2 && r.to ? subMonths(r.to, 1) : r.from) }} />}
+        <Calendar mode="range" numberOfMonths={months} selected={current} month={month} onMonthChange={setMonth} onSelect={set} autoFocus />
       </PopoverContent>
     </Popover>
   )

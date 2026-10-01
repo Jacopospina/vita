@@ -10,7 +10,9 @@ import { NumberInput } from "@/registry/ui/number-input"
 import { Search } from "@/registry/ui/search"
 import { Select, SelectOption, SelectGroup } from "@/registry/ui/select"
 import { Dropdown, Combobox, MultiSelect } from "@/registry/ui/dropdown"
-import { DatePicker, DateRangePicker } from "@/registry/ui/date-picker"
+import { DatePicker, DateRangePicker, Calendar, datePresets, rangePresets } from "@/registry/ui/date-picker"
+import { Tile } from "@/registry/ui/tile"
+import type { DateRange } from "react-day-picker"
 import { Slider } from "@/registry/ui/slider"
 import { Toggle } from "@/registry/ui/toggle"
 import { FileUploader, type UploadFile } from "@/registry/ui/file-uploader"
@@ -20,6 +22,17 @@ import { Link } from "@/registry/ui/link"
 import { toast } from "@/registry/ui/notification"
 
 const countries = ["Austria", "Belgium", "Denmark", "France", "Germany", "Ireland", "Italy", "Netherlands", "Norway", "Poland", "Portugal", "Spain", "Sweden", "Switzerland", "United Kingdom"].map((c) => ({ value: c.toLowerCase(), label: c }))
+
+function InlineCalendars() {
+  const [day, setDay] = React.useState<Date | undefined>(() => new Date())
+  const [range, setRange] = React.useState<DateRange | undefined>(() => ({ from: new Date(), to: new Date(Date.now() + 5 * 864e5) }))
+  return (
+    <Inline gap="lg" align="start" wrap>
+      <Tile><Calendar mode="single" selected={day} onSelect={setDay} /></Tile>
+      <Tile><Calendar mode="range" numberOfMonths={2} selected={range} onSelect={setRange} /></Tile>
+    </Inline>
+  )
+}
 
 function UploaderDemo({ variant }: { variant: "button" | "dropzone" }) {
   const [files, setFiles] = React.useState<UploadFile[]>([
@@ -153,6 +166,30 @@ export const inputDemos: DemoMap = {
           <DatePicker label="Invalid" invalid invalidText="Go-live must be a weekday" />
         </Stack>
       ),
+    },
+    {
+      title: "One or two months",
+      description: "Single dates usually need one month; ranges read best across two.",
+      render: () => (
+        <Stack gap="lg">
+          <DatePicker label="Review date" months={2} />
+          <DateRangePicker startLabel="From" endLabel="To" months={1} />
+        </Stack>
+      ),
+    },
+    {
+      title: "With presets",
+      description: "Common choices sit beside the calendar as one blended group; picking one selects it and jumps there.",
+      render: () => (
+        <Stack gap="lg">
+          <DatePicker label="Go-live date" presets={datePresets} />
+          <DateRangePicker startLabel="From" endLabel="To" presets={rangePresets} />
+        </Stack>
+      ),
+    },
+    {
+      title: "Inline calendars",
+      render: () => <InlineCalendars />,
     },
   ],
   "components/checkbox": [
