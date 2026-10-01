@@ -30,7 +30,7 @@ Animus thinks. Anima speaks. Vita brings them to life, and the life is yours to 
 |---|---|---|
 | **Opinions, written down** | Agents need judgment, not just parts. | Every page says when to use a component and when not to, and what to use instead. A decision guide picks the right piece. |
 | **Fluent for machines** | Agents read the same source of truth as people. | Docs ship as `llms.txt` and `docs/index.json`; six agent skills; project rules in `AGENTS.md`. |
-| **Enforced, not suggested** | Quality can't depend on remembering the rules. | An audit with 13 rules fails the build on local components or raw values; an editor plugin and an agent hook fix violations as they're written. |
+| **Enforced, not suggested** | Quality can't depend on remembering the rules. | An audit with 17 rules fails the build on local components or raw values; an editor plugin and an agent hook fix violations as they're written. |
 | **One craft for both** | People and agents ship the same quality. | One set of tokens, components, motion and words, whoever is making. |
 
 How it meets the brand: people bring the vision, agents bring the craft at scale, and Vita gives both the same judgment.
