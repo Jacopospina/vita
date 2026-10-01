@@ -2,6 +2,9 @@
  * Shared Corpus lint rules — used by scripts/corpus-audit.mjs (CLI/CI/agent hooks)
  * and eslint/corpus-plugin.mjs (editor feedback). One source of truth.
  */
+import deprecations from "./deprecations.json" with { type: "json" }
+
+export { deprecations }
 export const ALLOWED_SPACING = new Set(["0", "0.5", "1", "1.5", "2", "2.5", "3", "4", "5", "6", "8", "10", "12", "16", "20", "24", "40", "px", "auto", "full"])
 
 export function createRules({ alias = "@/components/corpus" } = {}) {
@@ -87,6 +90,13 @@ export function createRules({ alias = "@/components/corpus" } = {}) {
     test: (line) => /from\s+["'](?:lucide-react|@heroicons\/[^"']+|react-icons\/[^"']*|@mui\/icons-material[^"']*|@tabler\/icons-react|@phosphor-icons\/react|@radix-ui\/react-icons|@carbon\/[^"']+)["']/.exec(line),
     msg: `Import icons/pictograms from "${ALIAS}/icons" / "${ALIAS}/pictograms" and render with <Icon>/<Pictogram>.`,
   },
+  // Deprecated props: a WARNING until the version that removes them (docs/decisions/how-we-decide.md).
+  ...deprecations.map((d) => ({
+    id: "deprecated",
+    severity: "warn",
+    test: (line) => new RegExp(`<${d.component}\\b[^<>]*\\b${d.prop}=`).exec(line),
+    msg: `${d.component} \`${d.prop}\` is deprecated since ${d.since} and will be removed in ${d.removeIn}. ${d.use}`,
+  })),
   {
     id: "foreign-ui",
     test: (line) => /from\s+["'](?:@radix-ui\/[^"']+|radix-ui|@headlessui\/react|@mui\/material|antd|@chakra-ui\/[^"']+|@mantine\/[^"']+|react-bootstrap)["']/.exec(line),

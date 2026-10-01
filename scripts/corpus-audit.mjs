@@ -53,6 +53,7 @@ function walk(p) {
 include.forEach((r) => walk(path.resolve(cwd, r)))
 
 const violations = []
+const warnings = []
 for (const file of files) {
   const ext = path.extname(file)
   const lines = fs.readFileSync(file, "utf8").split("\n")
@@ -74,7 +75,7 @@ for (const file of files) {
     for (const r of rules) {
       if (allowed.has(r.id)) continue
       const m = r.test(line, ext)
-      if (m) violations.push({ file, line: i + 1, col: (m.index ?? 0) + 1, rule: r.id, match: m[0], message: typeof r.msg === "function" ? r.msg(m) : r.msg })
+      if (m) (r.severity === "warn" ? warnings : violations).push({ file, line: i + 1, col: (m.index ?? 0) + 1, rule: r.id, match: m[0], message: typeof r.msg === "function" ? r.msg(m) : r.msg })
     }
     if (banned.length && (ext === ".tsx" || ext === ".jsx") && !allowed.has("taxonomy")) {
       const strings = [...line.matchAll(/>([^<>{}]+)</g), ...line.matchAll(/(?:label|title|placeholder|description|helperText|invalidText|subtitle|confirmLabel|aria-label)=["']([^"']+)["']/g)].map((x) => x[1])
@@ -84,7 +85,7 @@ for (const file of files) {
 }
 
 if (asJson) {
-  console.log(JSON.stringify({ files: files.length, violations: violations.map((v) => ({ ...v, file: path.relative(cwd, v.file) })) }, null, 2))
+  console.log(JSON.stringify({ files: files.length, violations: violations.map((v) => ({ ...v, file: path.relative(cwd, v.file) })), warnings: warnings.map((v) => ({ ...v, file: path.relative(cwd, v.file) })) }, null, 2))
 } else if (violations.length === 0) {
   console.log(`✓ corpus-audit: ${files.length} files, 0 violations`)
 } else {
@@ -94,5 +95,10 @@ if (asJson) {
     for (const v of vs) console.log(`  ${v.line}:${v.col ?? 1}  ${v.rule.padEnd(20)} ${v.match ? `"${v.match}"  ` : ""}${v.message}`)
   }
   console.log(`\n✗ corpus-audit: ${violations.length} violation(s) in ${Object.keys(byFile).length} file(s). The design system is the only source of UI.`)
+}
+// Warnings (deprecations) are reported but never fail the build — until the version that removes them.
+if (warnings.length && !asJson) {
+  console.log(`\n⚠ corpus-audit: ${warnings.length} deprecation warning(s)`)
+  for (const w of warnings) console.log(`  ${path.relative(cwd, w.file)}:${w.line}  ${w.message}`)
 }
 process.exit(violations.length ? 1 : 0)

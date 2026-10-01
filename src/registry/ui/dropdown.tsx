@@ -192,7 +192,10 @@ export function Combobox({ items, value, defaultValue = "", onValueChange, size 
  * MultiSelect — choose SEVERAL options from a list too long for a CheckboxGroup (> ~6). Selected count shows as a tag.
  */
 /** The MultiSelect's options: whole rows toggle (click, Enter or Space); a tick in the left slot shows what's chosen. */
-function MultiOptions({ items, selected, onToggle }: { items: DropdownItem[]; selected: string[]; onToggle: (v: string) => void }) {
+function MultiOptions({ items: all, selected, onToggle }: { items: DropdownItem[]; selected: string[]; onToggle: (v: string) => void }) {
+  // Chosen options open at the top (in their list order), the rest follow. The order is fixed for as long as the
+  // list stays open — toggling never makes rows jump; it's recomputed the next time the list opens.
+  const [items] = React.useState(() => [...all.filter((i) => selected.includes(i.value)), ...all.filter((i) => !selected.includes(i.value))])
   const [active, setActive] = React.useState(0)
   const rows = React.useRef<(HTMLDivElement | null)[]>([])
   const move = (i: number) => {

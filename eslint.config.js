@@ -17,6 +17,6 @@ export default tseslint.config(
   {
     files: ["src/playground/**/*.tsx", "src/examples/**/*.tsx"],
     plugins: { corpus },
-    rules: { "corpus/design-system": "error" },
+    rules: { "corpus/design-system": "error", "corpus/deprecated": "warn" },
   },
 )

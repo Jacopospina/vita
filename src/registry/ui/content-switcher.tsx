@@ -76,7 +76,7 @@ export function ContentSwitcher({
       {rect && (
         <span
           aria-hidden
-          className={cn("pointer-events-none absolute top-0 left-0 rounded-inner-0.5 bg-raised shadow-raised ease-spring", drag.dragging ? "duration-moderate-01" : "duration-moderate-02")}
+          className={cn(!rect.slide && !drag.dragging && "transition-none", "pointer-events-none absolute top-0 left-0 rounded-inner-0.5 bg-raised shadow-raised ease-spring", drag.dragging ? "duration-moderate-01" : "duration-moderate-02")}
           style={{ width: rect.w, height: rect.h, transform: `translate(${rect.x + drag.offset}px, ${rect.y}px)` }}
         />
       )}

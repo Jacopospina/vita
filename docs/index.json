@@ -842,6 +842,28 @@
     },
     {
       "section": "components",
+      "slug": "multiselect",
+      "path": "docs/components/multiselect.md",
+      "title": "Multiselect",
+      "summary": "Choose several options from a list too long for checkboxes. Chosen options open at the top; the field shows a count and their names.",
+      "status": "stable",
+      "import": "import { MultiSelect } from \"@/components/corpus/dropdown\"",
+      "use_when": [
+        "Several choices from more than ~6 options (markets, tags, assignees)"
+      ],
+      "avoid_when": [
+        "Up to ~6 options → CheckboxGroup (all visible, one click each)",
+        "Exactly one choice → Dropdown or Combobox",
+        "Free-form values → TextInput with tags"
+      ],
+      "related": [
+        "dropdown",
+        "option",
+        "checkbox"
+      ]
+    },
+    {
+      "section": "components",
       "slug": "notification",
       "path": "docs/components/notification.md",
       "title": "Notification",

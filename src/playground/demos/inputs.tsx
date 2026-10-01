@@ -134,13 +134,13 @@ export const inputDemos: DemoMap = {
       title: "Native select",
       render: () => (
         <Stack gap="lg" className="max-w-xs">
-          <Select label="Country" placeholder="Choose a country">{countries.map((c) => <SelectOption key={c.value} value={c.value}>{c.label}</SelectOption>)}</Select>
+          <Select label="Country">{countries.map((c) => <SelectOption key={c.value} value={c.value}>{c.label}</SelectOption>)}</Select>
           <Select label="Region" defaultValue="emea">
             <SelectGroup label="Europe"><SelectOption value="emea">EMEA</SelectOption><SelectOption value="uk">UK &amp; Ireland</SelectOption></SelectGroup>
             <SelectGroup label="Americas"><SelectOption value="na">North America</SelectOption><SelectOption value="latam">LATAM</SelectOption></SelectGroup>
           </Select>
-          <Select label="Model" invalid invalidText="Choose a model" placeholder="Choose"><SelectOption value="large">Vita Large</SelectOption></Select>
-          <Select label="Disabled" disabled placeholder="Unavailable" />
+          <Select label="Model" invalid invalidText="Choose a model"><SelectOption value="large">Vita Large</SelectOption></Select>
+          <Select label="Disabled" disabled />
         </Stack>
       ),
     },
@@ -197,6 +197,26 @@ export const inputDemos: DemoMap = {
         <Stack gap="md" className="max-w-xs">
           <Dropdown label="Model" defaultValue="l" items={[{ value: "l", label: "Vita Large" }, { value: "f", label: "Vita Fast" }]} />
           <MultiSelect label="Countries" defaultValue={["fr", "de"]} items={[{ value: "fr", label: "France" }, { value: "de", label: "Germany" }, { value: "it", label: "Italy" }, { value: "es", label: "Spain" }]} />
+        </Stack>
+      ),
+    },
+  ],
+  "components/multiselect": [
+    {
+      title: "Multiselect",
+      description: "Open it: what's chosen sits at the top, the rest follow. Click anywhere on a row to toggle it.",
+      render: () => <MultiSelect label="Data residency" items={countries.slice(0, 8)} defaultValue={["germany", "italy"]} className="max-w-xs" />,
+    },
+    {
+      title: "Empty, with helper text",
+      render: () => <MultiSelect label="Markets" items={countries.slice(0, 8)} helperText="Choose every market this agent answers for" className="max-w-xs" />,
+    },
+    {
+      title: "Invalid and disabled",
+      render: () => (
+        <Stack gap="md" className="max-w-xs">
+          <MultiSelect label="Teams" items={[{ value: "s", label: "Support" }, { value: "f", label: "Finance" }]} invalid invalidText="Choose at least one team" />
+          <MultiSelect label="Unavailable" items={[]} disabled />
         </Stack>
       ),
     },

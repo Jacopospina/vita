@@ -51,14 +51,14 @@ export function TabsList({ className, variant = "pill", fullWidth, children, onP
       {variant === "pill" && rect && (
         <span
           aria-hidden
-          className={cn("pointer-events-none absolute top-0 left-0 rounded-inner-0.5 bg-raised shadow-raised ease-spring", drag.dragging ? "duration-moderate-01" : "duration-expressive")}
+          className={cn(!rect.slide && !drag.dragging && "transition-none", "pointer-events-none absolute top-0 left-0 rounded-inner-0.5 bg-raised shadow-raised ease-spring", drag.dragging ? "duration-moderate-01" : "duration-expressive")}
           style={{ width: rect.w, height: rect.h, transform: `translate(${rect.x + drag.offset}px, ${rect.y}px)` }}
         />
       )}
       {variant === "line" && rect && (
         <span
           aria-hidden
-          className="pointer-events-none absolute bottom-0 left-0 h-0.5 rounded-full bg-primary motion-expressive"
+          className={cn("pointer-events-none absolute bottom-0 left-0 h-0.5 rounded-full bg-primary motion-expressive", !rect.slide && !drag.dragging && "transition-none")}
           style={{ width: rect.w, transform: `translateX(${rect.x + drag.offset}px)` }}
         />
       )}

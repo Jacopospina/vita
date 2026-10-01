@@ -22,7 +22,7 @@ related: [select, radio-button, checkbox, menu, filtering]
 | `Dropdown` default | Field in forms/panels, with label, helper and validation |
 | `Dropdown type="inline"` | Borderless, inside toolbars and sentences ("Sort by ▾") |
 | `Combobox` | Type-to-filter, keyboard-first, clearable |
-| `MultiSelect` | Checkbox list; the trigger shows a count tag plus selected labels; clear-all ✕ |
+| `MultiSelect` | Whole-row options with ticks, chosen ones first; the trigger shows a count tag plus selected labels; clear-all ✕. See [Multiselect](#/components/multiselect). |
 
 ## Rules
 

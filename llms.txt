@@ -126,6 +126,9 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/foun
 - [Modal](docs/components/modal.md): Interrupts to focus on one task or decision. Modality is a last resort.
   - use: Confirming a destructive or irreversible action (ConfirmModal danger); A short, self-contained task (≤ 5 fields) that shouldn't leave the page; Critical information that must be acknowledged
   - avoid: The user needs to see the page while working → RightPanel; A couple of options next to a control → Popover; Long forms or multi-step flows → a page; Success messages → toast; Opening a modal from a modal → never
+- [Multiselect](docs/components/multiselect.md): Choose several options from a list too long for checkboxes. Chosen options open at the top; the field shows a count and their names.
+  - use: Several choices from more than ~6 options (markets, tags, assignees)
+  - avoid: Up to ~6 options → CheckboxGroup (all visible, one click each); Exactly one choice → Dropdown or Combobox; Free-form values → TextInput with tags
 - [Notification](docs/components/notification.md): System messages with one anatomy — icon placeholder, title over subtitle, optional action. Inline for problems tied to a place, toast banner for confirmation, callout for static guidance.
   - use: Inline — errors/warnings about a section, form summary, account-level issues; Toast — brief confirmation of something the user just did (with optional Undo); Callout — permanent, non-dismissible contextual guidance
   - avoid: A decision is required before continuing → Modal; Field-level validation → the field's invalidText; Errors inside a toast that need action → InlineNotification near the cause; Marketing/announcements → not a system notification

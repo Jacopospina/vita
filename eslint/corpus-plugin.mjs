@@ -5,10 +5,11 @@
  */
 import { createRules } from "../scripts/corpus-rules.mjs"
 
-const rules = createRules()
+const all = createRules()
 
-const designSystem = {
-  meta: { type: "problem", docs: { description: "The design system is the only source of UI" }, schema: [] },
+/** One ESLint rule per severity: design-system (errors) and deprecated (warnings). */
+const fromRules = (rules, description) => ({
+  meta: { type: "problem", docs: { description }, schema: [] },
   create(context) {
     const ext = "." + context.filename.split(".").pop()
     return {
@@ -27,6 +28,12 @@ const designSystem = {
       },
     }
   },
-}
+})
 
-export default { meta: { name: "eslint-plugin-corpus" }, rules: { "design-system": designSystem } }
+export default {
+  meta: { name: "eslint-plugin-corpus" },
+  rules: {
+    "design-system": fromRules(all.filter((r) => r.severity !== "warn"), "The design system is the only source of UI"),
+    deprecated: fromRules(all.filter((r) => r.severity === "warn"), "Deprecated Corpus API — migrate before it's removed"),
+  },
+}

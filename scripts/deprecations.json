@@ -1,0 +1,5 @@
+[
+  { "component": "Button", "prop": "iconPosition", "since": "0.2.0", "removeIn": "1.0.0", "use": "Icons always sit on the far right — remove the prop." },
+  { "component": "ContainedList", "prop": "size", "since": "0.2.0", "removeIn": "1.0.0", "use": "Rows follow the list-item rhythm — remove the prop." },
+  { "component": "Select", "prop": "placeholder", "since": "0.2.0", "removeIn": "1.0.0", "use": "The floating label replaces placeholders — remove the prop." }
+]

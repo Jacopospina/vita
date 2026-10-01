@@ -50,6 +50,7 @@ export const manifest: Record<Section, NavEntry[]> = {
     { slug: "menu", title: "Menu" },
     { slug: "menu-buttons", title: "Menu buttons" },
     { slug: "modal", title: "Modal" },
+    { slug: "multiselect", title: "Multiselect" },
     { slug: "notification", title: "Notification" },
     { slug: "number-input", title: "Number input" },
     { slug: "option", title: "Option" },

@@ -30,18 +30,21 @@ export function useMorphId() {
  */
 export function useIndicator<T extends HTMLElement>(selector: string) {
   const ref = React.useRef<T>(null)
-  const [rect, setRect] = React.useState<{ x: number; y: number; w: number; h: number } | null>(null)
+  // `slide`: true only when the SELECTION moved. Layout changes (appearing, resizing, fonts) place the indicator
+  // instantly — otherwise it would fly in from a stale or hidden (0,0) measurement.
+  const [rect, setRect] = React.useState<{ x: number; y: number; w: number; h: number; slide: boolean } | null>(null)
   React.useEffect(() => {
     const el = ref.current
     if (!el) return
-    const measure = () => {
+    const measure = (slide: boolean) => {
       const a = el.querySelector<HTMLElement>(selector)
-      setRect(a ? { x: a.offsetLeft, y: a.offsetTop, w: a.offsetWidth, h: a.offsetHeight } : null)
+      // Hidden → no rect (the indicator unmounts) rather than a 0,0 one it would later glide from.
+      setRect(a && a.offsetParent !== null ? { x: a.offsetLeft, y: a.offsetTop, w: a.offsetWidth, h: a.offsetHeight, slide } : null)
     }
-    const raf = requestAnimationFrame(measure)
-    const mo = new MutationObserver(measure)
+    const raf = requestAnimationFrame(() => measure(false))
+    const mo = new MutationObserver(() => measure(true))
     mo.observe(el, { attributes: true, subtree: true, attributeFilter: ["data-state", "aria-selected"] })
-    const ro = new ResizeObserver(measure)
+    const ro = new ResizeObserver(() => measure(false))
     ro.observe(el)
     return () => {
       cancelAnimationFrame(raf)

@@ -13,13 +13,19 @@ export function useFlip<T extends HTMLElement>(ref: React.RefObject<T | null>, e
 
     const cache = new WeakMap<Element, { x: number; y: number }>()
     const kids = () => Array.from(el.children) as HTMLElement[]
-    const snap = () => kids().forEach((c) => cache.set(c, { x: c.offsetLeft, y: c.offsetTop }))
+    // Hidden (display:none, a closed panel, an inactive tab) → every child measures 0,0. Recording that would make
+    // children "fly in from the top left" when it appears, so positions are only kept while the container is laid out.
+    const visible = () => el.offsetParent !== null || getComputedStyle(el).position === "fixed"
+    const snap = () => {
+      if (!visible()) return kids().forEach((c) => cache.delete(c))
+      kids().forEach((c) => cache.set(c, { x: c.offsetLeft, y: c.offsetTop }))
+    }
 
     // Runs in observer callbacks: after layout, before paint — so the jump is never seen.
     const settle = () => {
       // While the page boots (fonts, layout settling) children only get re-measured — nothing glides into place
       // from a pre-layout position. Same when the tab is hidden.
-      if (document.documentElement.hasAttribute("data-corpus-booting") || document.visibilityState !== "visible") return snap()
+      if (document.documentElement.hasAttribute("data-corpus-booting") || document.visibilityState !== "visible" || !visible()) return snap()
       for (const c of kids()) {
         const prev = cache.get(c)
         if (!prev) continue
