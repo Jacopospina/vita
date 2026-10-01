@@ -121,6 +121,7 @@ export const actionDemos: DemoMap = {
           <Button size="sm">Small</Button>
           <Button size="md">Medium</Button>
           <Button size="lg">Large</Button>
+          <Button size="xl">Extra large</Button>
         </Inline>
       ),
     },

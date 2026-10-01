@@ -17,6 +17,9 @@ export function useFlip<T extends HTMLElement>(ref: React.RefObject<T | null>, e
 
     // Runs in observer callbacks: after layout, before paint — so the jump is never seen.
     const settle = () => {
+      // While the page boots (fonts, layout settling) children only get re-measured — nothing glides into place
+      // from a pre-layout position. Same when the tab is hidden.
+      if (document.documentElement.hasAttribute("data-corpus-booting") || document.visibilityState !== "visible") return snap()
       for (const c of kids()) {
         const prev = cache.get(c)
         if (!prev) continue

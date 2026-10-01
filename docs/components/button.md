@@ -30,14 +30,6 @@ related: [menu-buttons, link, modal, common-actions]
 - **Squircle corners.** Buttons (and button groups) use continuous-curvature squircle corners, not simple rounded corners.
 - **Symmetric padding.** Left and right padding are always equal. With an icon, the icon sits on the far right.
 
-## Sizes
-
-- `sm` (32): dense toolbars and tables.
-- `md` (40): the default everywhere.
-- `lg` (48): page-level CTAs, login, mobile.
-
-Heights follow `--corpus-density`. Buttons in a `ButtonSet` share one size.
-
 ## Rules
 
 1. **Label = verb + object.**
@@ -79,4 +71,6 @@ Heights follow `--corpus-density`. Buttons in a `ButtonSet` share one size.
 | `sm` | 24px | Dense toolbars, table rows |
 | `md` | 28px | Default |
 | `lg` | 32px | Prominent page actions |
-| `xl` | 48px | Dialog and panel actions (the full-bleed action bar) |
+| `xl` | 48px | Hero calls to action, and dialog and panel actions (the action bar) |
+
+Heights follow `--corpus-density`. Buttons in a `ButtonSet` share one size.

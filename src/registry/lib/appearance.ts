@@ -32,6 +32,9 @@ export function swapAppearance(apply: () => void) {
 export function bootAppearance() {
   const root = document.documentElement
   root.setAttribute(BOOT, "")
-  const settled = Promise.race([document.fonts?.ready ?? Promise.resolve(), new Promise((r) => setTimeout(r, 1500))])
-  settled.then(() => setTimeout(() => root.removeAttribute(BOOT), 150))
+  // Settled = the window has loaded AND the fonts it started loading are in (fonts.ready resolves early if checked
+  // before any font request), plus a beat for the last reflow. Capped, so a stuck font never blocks motion.
+  const loaded = document.readyState === "complete" ? Promise.resolve() : new Promise((r) => window.addEventListener("load", r, { once: true }))
+  const settled = loaded.then(() => document.fonts?.ready)
+  Promise.race([settled, new Promise((r) => setTimeout(r, 3000))]).then(() => setTimeout(() => root.removeAttribute(BOOT), 250))
 }
