@@ -5,6 +5,7 @@ import { Collapsible } from "radix-ui"
 import { cn } from "@/registry/lib/utils"
 import { Icon } from "@/registry/ui/icon"
 import { IconButton, ActionBar } from "@/registry/ui/button"
+import { useIndicator } from "@/registry/hooks/use-morph"
 
 /**
  * UI Shell — the persistent frame of a product. Three parts:
@@ -88,9 +89,26 @@ export function Header({ productName, prefix, logo, href = "/", children, action
         {prefix && <span className="font-normal text-muted-foreground">{prefix}</span>}
         <span className="font-semibold">{productName}</span>
       </a>
-      {children && <nav aria-label={productName} className="hidden items-center gap-1 lg:flex">{children}</nav>}
+      {children && <HeaderNav label={productName}>{children}</HeaderNav>}
       <div className="ml-auto flex items-center gap-1">{actions}</div>
     </header>
+  )
+}
+
+/** The header's nav: one highlight slides between links when the page changes (lava lamp), like the tabs pill. */
+function HeaderNav({ label, children }: { label: string; children: React.ReactNode }) {
+  const [ref, rect] = useIndicator<HTMLElement>('[aria-current="page"]')
+  return (
+    <nav ref={ref} aria-label={label} className="relative hidden items-center gap-1 lg:flex">
+      {rect && (
+        <span
+          aria-hidden
+          className={cn("pointer-events-none absolute top-0 left-0 rounded-inner-2 bg-active duration-expressive ease-spring", !rect.slide && "transition-none")}
+          style={{ width: rect.w, height: rect.h, transform: `translate(${rect.x}px, ${rect.y}px)` }}
+        />
+      )}
+      {children}
+    </nav>
   )
 }
 
@@ -103,7 +121,8 @@ export function HeaderNavItem({ href, active, children, onClick }: { href?: stri
       className={cn(
         // Same row treatment as the sidebar: a concentric pill, soft grey when current.
         "relative flex h-8 items-center rounded-inner-2 px-3 text-body text-muted-foreground duration-fast-02 hover:bg-hover hover:text-foreground focus-ring-inset",
-        active && "bg-active font-medium text-foreground",
+        // The current page's highlight is the sliding indicator in HeaderNav, not a fill of its own.
+        active && "font-medium text-foreground",
       )}
     >
       {children}

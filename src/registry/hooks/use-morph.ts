@@ -41,10 +41,13 @@ export function useIndicator<T extends HTMLElement>(selector: string) {
       // Hidden → no rect (the indicator unmounts) rather than a 0,0 one it would later glide from.
       setRect(a && a.offsetParent !== null ? { x: a.offsetLeft, y: a.offsetTop, w: a.offsetWidth, h: a.offsetHeight, slide } : null)
     }
+    // A selection change often resizes things too (the new item turns medium weight). A resize right after a
+    // selection belongs to it, so it still slides; only resizes on their own place the indicator instantly.
+    let selectedAt = 0
     const raf = requestAnimationFrame(() => measure(false))
-    const mo = new MutationObserver(() => measure(true))
-    mo.observe(el, { attributes: true, subtree: true, attributeFilter: ["data-state", "aria-selected"] })
-    const ro = new ResizeObserver(() => measure(false))
+    const mo = new MutationObserver(() => { selectedAt = performance.now(); measure(true) })
+    mo.observe(el, { attributes: true, subtree: true, attributeFilter: ["data-state", "aria-selected", "aria-current"] })
+    const ro = new ResizeObserver(() => measure(performance.now() - selectedAt < 500))
     ro.observe(el)
     return () => {
       cancelAnimationFrame(raf)
