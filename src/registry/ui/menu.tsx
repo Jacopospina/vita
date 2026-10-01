@@ -80,7 +80,7 @@ export function MenuSeparator({ className, ...props }: React.ComponentProps<type
 
 export function MenuSubTrigger({ className, children, ...props }: React.ComponentProps<typeof MenuPrimitive.SubTrigger>) {
   return (
-    <MenuPrimitive.SubTrigger className={cn(itemClasses, "data-[state=open]:bg-hover", className)} {...props}>
+    <MenuPrimitive.SubTrigger className={cn(itemClasses, "data-[state=open]:bg-primary data-[state=open]:text-primary-foreground", className)} {...props}>
       <span className="flex-1">{children}</span>
       <Icon as={ChevronRight} />
     </MenuPrimitive.SubTrigger>
