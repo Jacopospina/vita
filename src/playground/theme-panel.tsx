@@ -14,7 +14,7 @@ const knobs = [
   { key: "--corpus-brand-hue", label: "Brand hue", min: 0, max: 360, step: 0.1, def: 257.4, unit: "" },
   { key: "--corpus-brand-chroma", label: "Brand chroma", min: 0, max: 0.3, step: 0.001, def: 0.218, unit: "" },
   { key: "--corpus-neutral-hue", label: "Neutral hue", min: 0, max: 360, step: 1, def: 286, unit: "" },
-  { key: "--corpus-neutral-chroma", label: "Neutral tint", min: 0, max: 0.03, step: 0.001, def: 0.007, unit: "" },
+  { key: "--corpus-neutral-chroma", label: "Neutral tint", min: 0, max: 0.03, step: 0.001, def: 0, unit: "" },
   { key: "--corpus-radius", label: "Corner radius", min: 0, max: 1.25, step: 0.125, def: 0.5, unit: "rem" },
   { key: "--corpus-density", label: "Density", min: 0.8, max: 1.25, step: 0.01, def: 1.08, unit: "" },
   { key: "--corpus-type-base", label: "Body size", min: 0.75, max: 1.125, step: 0.0625, def: 0.8125, unit: "rem" },
