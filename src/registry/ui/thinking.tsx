@@ -36,9 +36,19 @@ const polar = (r: (a: number, t: number) => number) => (u: number, t: number): [
 }
 /* A shape may also be SEGMENTED: the third value is how present the line is at that point (0 = a gap). */
 type Shape = (u: number, t: number) => [number, number] | [number, number, number]
+/** Soft dash: 1 inside the first `on` part of each period, fading at both ends — gaps open and close, never blink. */
+const dash = (x: number, on: number, edge = 0.07) => {
+  const f = ((x % 1) + 1) % 1
+  const v = Math.min(1, Math.max(0, Math.min(f, on - f) / edge))
+  return v * v * (3 - 2 * v)
+}
+/** Open figures (strokes, a wave, a C, dots): their drops stay put along the path — drifting would wrap a drop from one
+    end to the other in a single frame (a visible jump). They move through their own animation instead. */
+const open = new Set<Shape>()
+const fixed = (s: Shape) => (open.add(s), s)
 /** Walk several straight strokes as one path: u picks the stroke, then the point along it. The strokes never stand
     still — each sways on its own phase, sliding along itself and drifting sideways, so the figure stays alive. */
-const strokes = (lines: [number, number, number, number][]) => (u: number, t: number): [number, number] => {
+const strokes = (lines: [number, number, number, number][]) => fixed((u: number, t: number): [number, number] => {
   const f = u * lines.length
   const i = Math.min(lines.length - 1, Math.floor(f))
   const p = f - i
@@ -48,12 +58,16 @@ const strokes = (lines: [number, number, number, number][]) => (u: number, t: nu
   const slide = 0.1 * Math.sin(t * 2.2 + i * 2.1)
   const drift = 0.05 * Math.sin(t * 1.7 + i * 1.3 + p * 2)
   return [x1 + (x2 - x1) * p + tx * slide - ty * drift, y1 + (y2 - y1) * p + ty * slide + tx * drift]
-}
+})
 /** Turn a whole figure slowly, so segmented shapes are always in motion. */
-const spin = (shape: Shape, speed: number): Shape => (u, t) => {
-  const [x, y, v] = shape(u, t)
-  const c = Math.cos(t * speed), si = Math.sin(t * speed)
-  return v === undefined ? [x * c - y * si, x * si + y * c] : [x * c - y * si, x * si + y * c, v]
+const spin = (shape: Shape, speed: number): Shape => {
+  const turned: Shape = (u, t) => {
+    const [x, y, v] = shape(u, t)
+    const c = Math.cos(t * speed), si = Math.sin(t * speed)
+    return v === undefined ? [x * c - y * si, x * si + y * c] : [x * c - y * si, x * si + y * c, v]
+  }
+  if (open.has(shape)) open.add(turned)
+  return turned
 }
 const shapes: Shape[] = [
   polar(() => 0.62), // circle
@@ -75,16 +89,16 @@ const shapes: Shape[] = [
   (u) => { const a = u * TAU; return [Math.cos(a) * 0.62 + 0.14 * Math.cos(2 * a), Math.sin(a) * 0.46] }, // bean
   polar((a, t) => 0.5 + 0.13 * Math.sin(a * 2) * Math.sin(t * 0.9) + 0.08 * Math.cos(5 * a - t)), // breathing star-fish (soft)
   // Segmented — minimal figures made of separate strokes.
-  (u, t) => { const a = u * TAU + t * 0.6; return [Math.cos(a) * 0.6, Math.sin(a) * 0.6, (u * 4) % 1 < 0.68 ? 1 : 0] }, // dashed ring, turning
-  spin((u) => { const a = u * TAU; const r = 0.5 + 0.12 * Math.cos(3 * a); return [Math.cos(a) * r, Math.sin(a) * r, (u * 3 + 0.5) % 1 < 0.72 ? 1 : 0] }, -0.9), // three arcs, turning
-  (u, t) => { const a = u * TAU; const r = 0.6 + 0.06 * Math.sin(t * 2.4); return [Math.cos(a) * r, Math.sin(a) * r, (u + 0.125) % 0.5 < 0.32 ? 1 : 0] }, // parentheses ( ), breathing
-  strokes([[-0.55, -0.3, 0.55, -0.3], [-0.55, 0.3, 0.55, 0.3]]), // equals =
+  (u, t) => { const a = u * TAU + t * 0.6; return [Math.cos(a) * 0.6, Math.sin(a) * 0.6, dash(u * 4, 0.68)] }, // dashed ring, turning
+  spin((u) => { const a = u * TAU; const r = 0.5 + 0.12 * Math.cos(3 * a); return [Math.cos(a) * r, Math.sin(a) * r, dash(u * 3 + 0.5, 0.72)] }, -0.9), // three arcs, turning
+  (u, t) => { const a = u * TAU; const r = 0.6 + 0.06 * Math.sin(t * 2.4); return [Math.cos(a) * r, Math.sin(a) * r, dash((u + 0.125) * 2, 0.64)] }, // parentheses ( ), breathing
+  spin(strokes([[-0.55, -0.3, 0.55, -0.3], [-0.55, 0.3, 0.55, 0.3]]), 0.5), // equals =, turning
   spin(strokes([[-0.6, 0, 0.6, 0], [0, -0.6, 0, 0.6]]), 0.8), // plus +, turning
   spin(strokes([[-0.48, -0.48, 0.48, 0.48], [-0.48, 0.48, 0.48, -0.48]]), -0.7), // cross ×, turning
-  strokes([[-0.6, -0.42, 0.6, -0.42], [-0.6, 0, 0.6, 0], [-0.6, 0.42, 0.6, 0.42]]), // three lines ≡
-  (u, t) => [(u * 2 - 1) * 0.65, Math.sin(u * TAU * 1.5 + t * 2) * 0.22], // wave
-  (u, t) => { const a = u * TAU * 0.78 + 0.35 + t * 1.4; return [Math.cos(a) * 0.58, Math.sin(a) * 0.58] }, // open C, chasing its gap
-  (u, t) => { const k = Math.floor(u * 3); const v = u * 3 - k; const a = v * TAU; return [(k - 1) * 0.42 + Math.cos(a) * 0.13, Math.sin(a) * 0.13 + 0.16 * Math.sin(t * 4 - k * 1.1)] }, // three dots ···, rippling
+  spin(strokes([[-0.6, -0.42, 0.6, -0.42], [-0.6, 0, 0.6, 0], [-0.6, 0.42, 0.6, 0.42]]), -0.45), // three lines ≡, turning
+  fixed((u, t) => [(u * 2 - 1) * 0.65, Math.sin(u * TAU * 1.5 + t * 3.2) * 0.26]), // wave, travelling
+  fixed((u, t) => { const a = u * TAU * 0.78 + 0.35 + t * 1.8; return [Math.cos(a) * 0.58, Math.sin(a) * 0.58] }), // open C, chasing its gap
+  fixed((u, t) => { const k = Math.floor(u * 3); const v = u * 3 - k; const a = v * TAU; return [(k - 1) * 0.42 + Math.cos(a) * 0.13, Math.sin(a) * 0.13 + 0.2 * Math.sin(t * 4.5 - k * 1.1)] }), // three dots ···, rippling
 ]
 /* Shuffled order: a fixed permutation that never repeats a shape back to back, so the orb keeps surprising. */
 const order = (() => {
@@ -128,7 +142,7 @@ function simpleParticles(mode: ThinkingMode, t: number): P[] {
     const breathe = 0.92 * (1 + 0.07 * Math.sin(t * 3.2))
     for (let i = 0; i < 16; i++) {
       const u = (i / 16 + t * 0.07) % 1
-      const [ax, ay, av = 1] = A(u, t), [bx, by, bv = 1] = B(u, t)
+      const [ax, ay, av = 1] = A(open.has(A) ? i / 16 : u, t), [bx, by, bv = 1] = B(open.has(B) ? i / 16 : u, t)
       const [x, y] = sway((ax + (bx - ax) * k) * breathe, (ay + (by - ay) * k) * breathe, t, kick)
       out.push({ x, y, r: 0.15 * Math.max(0, av + (bv - av) * Math.min(1, k)) })
     }
@@ -149,16 +163,18 @@ function particles(mode: ThinkingMode, n: number, t: number, seeds: number[]): P
   const out: P[] = []
   if (mode === "basic") {
     for (let k = 0; k < 3; k++) {
-      const a = t * 2.2 + (k * TAU) / 3
-      const rad = 0.36 + 0.16 * Math.sin(t * 2.6 + k * 1.3)
-      out.push({ x: Math.cos(a) * rad, y: Math.sin(a) * rad, r: 0.2 })
+      // Surges and eases (never a constant spin); the drops fling out and snap back together.
+      const a = t * 2.2 + 0.7 * Math.sin(t * 1.6) + (k * TAU) / 3
+      const rad = 0.34 + 0.24 * Math.sin(t * 2.6 + k * 1.3) ** 2
+      out.push({ x: Math.cos(a) * rad, y: Math.sin(a) * rad, r: 0.2 + 0.04 * Math.sin(t * 3.4 + k) })
     }
     return out
   }
   if (mode === "retrieving") {
-    out.push({ x: 0, y: 0, r: 0.24 + 0.04 * Math.sin(t * 3) })
+    // The core gulps: it swells each time recalled particles land.
+    out.push({ x: 0, y: 0, r: 0.24 + 0.07 * Math.max(0, Math.sin(t * 4.2)) ** 3 })
     for (let i = 0; i < n; i++) {
-      const p = (t * 0.45 + seeds[i]) % 1
+      const p = (t * 0.6 + seeds[i]) % 1
       const rad = 0.95 * (1 - p) ** 1.6
       const a = seeds[i] * TAU + p * 2.2
       out.push({ x: Math.cos(a) * rad, y: Math.sin(a) * rad, r: 0.045 + 0.08 * p })
@@ -166,8 +182,9 @@ function particles(mode: ThinkingMode, n: number, t: number, seeds: number[]): P
     return out
   }
   if (mode === "searching") {
-    const head = t * 2.6
-    const orbit = 0.55 + 0.1 * Math.sin(t * 1.3)
+    // Scans in bursts: dashes ahead, slows to look, dashes again; the orbit swells and tightens.
+    const head = t * 2.6 + 0.9 * Math.sin(t * 1.5)
+    const orbit = 0.52 + 0.16 * Math.sin(t * 1.3)
     out.push({ x: 0, y: 0, r: 0.09 + 0.02 * Math.sin(t * 4) })
     for (let j = 0; j < n; j++) {
       const a = head - j * 0.14
@@ -189,8 +206,8 @@ function particles(mode: ThinkingMode, n: number, t: number, seeds: number[]): P
   const breathe = 1 + 0.08 * Math.sin(t * 3)
   for (let i = 0; i < n; i++) {
     const u = (i / n + t * 0.07) % 1
-    const [ax, ay, av = 1] = A(u, t)
-    const [bx, by, bv = 1] = B(u, t)
+    const [ax, ay, av = 1] = A(open.has(A) ? i / n : u, t)
+    const [bx, by, bv = 1] = B(open.has(B) ? i / n : u, t)
     const dx = 0.025 * Math.sin(t * 3.1 + i * 1.7) + 0.015 * Math.sin(t * 5.3 + seeds[i] * 9)
     const dy = 0.025 * Math.cos(t * 2.3 + i * 1.3) + 0.015 * Math.cos(t * 4.7 + seeds[i] * 7)
     const [x, y] = sway((ax + (bx - ax) * k) * breathe + dx, (ay + (by - ay) * k) * breathe + dy, t, kick)
@@ -204,8 +221,7 @@ function particles(mode: ThinkingMode, n: number, t: number, seeds: number[]): P
  * Performance budget — loading must never cost the user's machine:
  *   · ONE shared animation loop for every orb on the page (not one per instance)
  *   · orbs off-screen or in a hidden tab don't draw at all
- *   · frame-capped: the liquid reads as smooth at 30fps (small) / 40fps (large); the goo filter only
- *     re-runs when a frame is actually drawn
+ *   · drawn every display frame (capped rates read as stepping), and only while visible
  *   · canvases at device resolution (max 2×), the lighting chain + glints only on big orbs (≥ 48px)
  *   · reduced motion / Save-Data → one still frame
  */
@@ -264,7 +280,7 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
     const seeds = Array.from({ length: n }, (_, i) => (Math.sin(i * 127.1) * 43758.5453) % 1).map((s) => Math.abs(s))
     const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData === true
     const reduced = saveData || window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
-    const interval = 1000 / (px >= 48 ? 40 : 30)
+    const interval = 0 // every display frame: capped rates made the liquid step instead of flow
     const root = getComputedStyle(document.documentElement)
     const spectrum = ["blue", "indigo", "purple", "pink", "orange", "mint", "cyan"].map((h) => root.getPropertyValue(`--corpus-palette-${h}-500`).trim())
     let color = getComputedStyle(canvas).color
