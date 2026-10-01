@@ -7,7 +7,8 @@ import { swapAppearance } from "@/registry/lib/appearance"
  *   cold   (below 15 °C)   a noticeable cool tint
  *   none   (15–18 °C)      pure grey
  *   warm   (18 °C and up)  a noticeable warm tint
- * Mode: "weather" (default — follows the reading) or a fixed "none" / "cold" / "warm" (remembered on this device).
+ * Mode: "dynamic" (default — changes with the reading) or a fixed "none" (neutral only) / "cold" (cold only) /
+ * "warm" (warm only). Remembered on this device.
  *
  * Temperature: the current reading for the user's area from Open-Meteo (no key; the position is rounded to
  * ~10 km before it leaves the device), cached for 30 minutes. Offline or blocked → a seasonal estimate.
@@ -24,7 +25,7 @@ const WARM_HUE = 70
 const COOL_HUE = 250
 
 export type WeatherTint = "none" | "cold" | "warm"
-export type WeatherTintMode = "weather" | WeatherTint
+export type WeatherTintMode = "dynamic" | WeatherTint
 
 /** Which of the three states a temperature puts the greys in. */
 export function weatherTint(celsius: number): WeatherTint {
@@ -78,7 +79,7 @@ async function currentTemperature({ lat, lon }: Coords, signal: AbortSignal): Pr
 export function useWeatherTint() {
   const [mode, setModeState] = React.useState<WeatherTintMode>(() => {
     const v = read<string>(PREF)
-    return v === "none" || v === "cold" || v === "warm" ? v : v === "off" ? "none" : "weather"
+    return v === "none" || v === "cold" || v === "warm" ? v : v === "off" ? "none" : "dynamic"
   })
   const [celsius, setCelsius] = React.useState<number | null>(null)
 
@@ -88,7 +89,7 @@ export function useWeatherTint() {
   }, [])
 
   React.useEffect(() => {
-    if (mode !== "weather") return
+    if (mode !== "dynamic") return
     const ctl = new AbortController()
     const update = () => currentTemperature(readCoords(), ctl.signal).then(setCelsius, () => {})
     update()
@@ -96,7 +97,7 @@ export function useWeatherTint() {
     return () => { ctl.abort(); window.clearInterval(t) }
   }, [mode])
 
-  const tint: WeatherTint | null = mode === "weather" ? (celsius === null ? null : weatherTint(celsius)) : mode
+  const tint: WeatherTint | null = mode === "dynamic" ? (celsius === null ? null : weatherTint(celsius)) : mode
 
   React.useEffect(() => {
     const root = document.documentElement.style

@@ -75,13 +75,13 @@ export function ThemePanel({ dark, onDarkChange, weather }: { dark: boolean; onD
           size="sm"
           value={weather.mode}
           onValueChange={(v) => weather.setMode(v as typeof weather.mode)}
-          items={[{ value: "weather", label: "Weather" }, { value: "none", label: "Neutral" }, { value: "cold", label: "Cold" }, { value: "warm", label: "Warm" }]}
+          items={[{ value: "dynamic", label: "Dynamic" }, { value: "none", label: "Neutral" }, { value: "cold", label: "Cold" }, { value: "warm", label: "Warm" }]}
           className="w-full"
         />
         <Text variant="caption" tone="muted">
-          {weather.mode === "weather"
+          {weather.mode === "dynamic"
             ? weather.celsius === null ? "Reading the temperature outside…" : `${Math.round(weather.celsius)} °C outside · ${weather.tint === "none" ? "neutral greys" : `${weather.tint} greys`}`
-            : "Fixed tint. While a tint is on, it replaces the neutral hue and tint below."}
+            : weather.mode === "none" ? "Neutral only: greys never tint." : `${weather.mode === "cold" ? "Cold" : "Warm"} only, whatever the weather. It replaces the neutral hue and tint below.`}
         </Text>
       </Stack>
       <Separator />

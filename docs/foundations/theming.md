@@ -52,4 +52,4 @@ avoid_when:
 - **Noticeable, still grey.** A tint is chroma 0.014: you see the warmth or the cool, but greys stay greys.
 - **Where the reading comes from.** The current temperature for the user's area (position rounded to about 10 km), refreshed every 30 minutes. Offline, it falls back to a seasonal estimate.
 - **It fades.** A change of state cross-fades the page once.
-- **Fixed modes.** `setMode("none" | "cold" | "warm")` pins a state; `"weather"` (the default) follows the reading. The choice is remembered on the device. While a tint is on, it replaces the neutral hue and tint knobs.
+- **Four modes.** **Dynamic** (`"dynamic"`, the default) changes with the weather. **Neutral** (`"none"`) never tints, **Cold** (`"cold"`) is always cold and **Warm** (`"warm"`) is always warm. The choice is remembered on the device. While a tint is on, it replaces the neutral hue and tint knobs.
