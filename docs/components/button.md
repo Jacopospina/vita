@@ -2,7 +2,7 @@
 title: Button
 summary: Triggers an action. Clear hierarchy, strict restraint. One primary per view, and every other button steps down.
 status: stable
-import: "import { Button, IconButton, ButtonSet } from \"@/components/corpus/button\""
+import: "import { Button, IconButton, ButtonSet } from \"@/components/vita/button\""
 use_when:
   - The user performs an action (save, create, send, delete, open a modal)
   - Grouping the actions that end a form, modal or flow (ButtonSet)
@@ -19,7 +19,7 @@ related: [menu-buttons, link, modal, common-actions]
 | Variant | Use for | Per view |
 |---|---|---|
 | `primary` | The single most important action | **Exactly 1 per page, dialog or side panel** (0 in read-only views) |
-| `secondary` | The primary's partner (Back, Save as draft) — never a dismissal. A faint primary wash with primary-coloured text | ≤ 2 |
+| `secondary` | The primary's partner (Back, Save as draft), never a dismissal. A faint primary wash with primary-coloured text | ≤ 2 |
 | `tertiary` | Independent actions that need visibility but not emphasis (Export, Add filter) | Few |
 | `ghost` | Low-emphasis, repeated or in-context actions (toolbar, table rows, "Clear") | Unlimited |
 | `danger` | Confirming a destructive action, usually inside a `ConfirmModal` | 1 |
@@ -32,7 +32,7 @@ related: [menu-buttons, link, modal, common-actions]
 
 ## Rules
 
-1. **One primary per surface.** A page, a dialog and a side panel each get exactly one primary button. When the choice needs an alternative, pair the primary with a secondary — never a second primary.
+1. **One primary per surface.** A page, a dialog and a side panel each get exactly one primary button. When the choice needs an alternative, pair the primary with a secondary, never a second primary.
 2. **Label = verb + object.**
    - Good: "Create agent", "Delete 3 runs", "Send invite".
    - Never: "OK", "Yes", "Submit", "Click here".
@@ -74,4 +74,4 @@ related: [menu-buttons, link, modal, common-actions]
 | `lg` | 32px | Prominent page actions |
 | `xl` | 48px | Hero calls to action, and dialog and panel actions (the action bar) |
 
-Heights follow `--corpus-density`. Buttons in a `ButtonSet` share one size.
+Heights follow `--vita-density`. Buttons in a `ButtonSet` share one size.

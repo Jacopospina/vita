@@ -1,6 +1,6 @@
 {
-  "$comment": "Corpus taxonomy — the ONE vocabulary of the product. Example values use the demo product 'Vita', a platform that deploys custom AI agents. Maintained with the corpus-personas skill; enforced by corpus-content + corpus-audit (avoid list).",
-  "product": "Vita",
+  "$comment": "Vita taxonomy, the ONE vocabulary of the product. Example values use the demo product 'Theo', a platform that deploys custom AI agents. Maintained with the vita-personas skill; enforced by vita-content + vita-audit (avoid list).",
+  "product": "Theo",
   "personas": ["agent-builder", "business-owner"],
   "objects": {
     "agent": {
@@ -71,7 +71,7 @@
   "avoid": {
     "Submit": "a verb + object, e.g. \"Deploy agent\"",
     "Oops": "say what happened and how to fix it",
-    "Successfully": "(remove — success is implied)",
+    "Successfully": "(remove, success is implied)",
     "Bot": "agent",
     "Robot": "agent",
     "Job": "run",

@@ -2,7 +2,7 @@
 title: Number input
 summary: Precise numeric entry with steppers, bounds and units.
 status: stable
-import: "import { NumberInput } from \"@/components/corpus/number-input\""
+import: "import { NumberInput } from \"@/components/vita/number-input\""
 use_when:
   - Exact quantities with small adjustments (concurrent runs, seats, timeout, percentage)
   - Values with min/max bounds the user must respect

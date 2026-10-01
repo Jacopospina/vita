@@ -1,8 +1,8 @@
-# Working on Corpus (the design system itself)
+# Working on Vita (the design system itself)
 
-**Positioning:** Corpus is the AI-agent-first design system, born for humans and machines making together. Every change must keep it documented and enforced well enough that an agent makes designer-quality decisions on its own.
+**Positioning:** Vita is the AI-agent-first design system, born for humans and machines making together. Every change must keep it documented and enforced well enough that an agent makes designer-quality decisions on its own.
 
-Corpus is consumed by humans and AI agents in product repos, so every change must keep the system **coherent, documented and enforceable**.
+Vita is consumed by humans and AI agents in product repos, so every change must keep the system **coherent, documented and enforceable**.
 
 ## When you add or change a component
 
@@ -18,11 +18,11 @@ Corpus is consumed by humans and AI agents in product repos, so every change mus
 6. **Choreography check:** expressive arrivals (notifications, dialogs, field messages) obey *Motion → Gravity*. Nothing may mount, unmount or swap on a state change without a transition (see *Motion → State changes never snap*): `forceMount` + data-state for indicators, `SwapIcon` for glyphs, `useExit`/`FieldMessage` for leaving content, `reveal` for expand/collapse.
 7. **Touch check** (`docs/decisions/touch.md`): anything hover reveals also shows under `pointer-coarse:`; a small *standalone* control gets `tap` (never rows, tabs or grouped buttons); a continuous animation must stop off-screen and cost nothing per frame on a phone (no per-frame filters, no `will-change` on many elements).
 8. Run `pnpm llms` (regenerates `docs/index.json` and `llms.txt`), then `pnpm check`.
-9. For visual changes, run `pnpm visual`: every page in real Chrome — no phantom scroll, nothing gliding after load, axe (WCAG A/AA) clean, and a screenshot diff against your local baseline (`--update` accepts).
+9. For visual changes, run `pnpm visual`: every page in real Chrome, no phantom scroll, nothing gliding after load, axe (WCAG A/AA) clean, and a screenshot diff against your local baseline (`--update` accepts).
 
-## Writing docs (card-first — pages must be scannable in seconds)
+## Writing docs (card-first, pages must be scannable in seconds)
 
-The docs renderer turns markdown into Corpus components. Write for it:
+The docs renderer turns markdown into Vita components. Write for it:
 
 - **Every rule is a card.** Use a list whose items start with `**Title.** one sentence.` Numbered lists become numbered cards.
 - **Alerts instead of paragraphs.** Use `> [!NOTE]`, `> [!TIP]`, `> [!IMPORTANT]`, `> [!WARNING]` or `> [!CAUTION]` for the one thing to remember. At most 2 per page.
@@ -32,13 +32,14 @@ The docs renderer turns markdown into Corpus components. Write for it:
 
 ## Rules
 
-- **Decisions are written down.** Before changing anything a record in `docs/decisions/` covers, read it. Changing a decided thing means superseding the record (`docs/decisions/how-we-decide.md`) in the same commit — never a silent reversal.
+- **Decisions are written down.** Before changing anything a record in `docs/decisions/` covers, read it. Changing a decided thing means superseding the record (`docs/decisions/how-we-decide.md`) in the same commit, never a silent reversal.
 
 - **Disclosure chevrons point down when closed and up when open.** Any chevron that reveals content below it (accordion, dropdown, section, expandable row, tree node) follows this rule, and it rotates with a transition. Chevrons pointing sideways only mean "go to" or "open to the side" (navigation rows, submenus, pagination).
-- **Docs never name external design systems or vendors.** Corpus speaks in its own voice.
-- **Corpus's own voice is the Creator** (`docs/getting-started/brand.md`): docs, the showcase, onboarding and release notes speak to the maker and aim to awaken the creator in them; the primary slogan is "Give your ideas a body." Product microcopy inside Vita demos stays plain (content rules).
-- **Example product in demos and docs is "Vita".** No real company or client names.
+- **Never write the em dash.** Not in docs, UI copy, comments, commit messages or generated files: use a comma, colon, full stop or parentheses. `pnpm check` fails on one.
+- **Docs never name external design systems or vendors.** Vita speaks in its own voice.
+- **Vita's own voice is the Creator** (`docs/getting-started/brand.md`): docs, the showcase, onboarding and release notes speak to the maker and aim to awaken the creator in them; the primary slogan is "Give your ideas life." The brand triad is Animus (backend logic), Anima (the AI layer) and Vita (the design system, where both come alive): see `docs/getting-started/about.md`. Product microcopy inside Theo demos stays plain (content rules).
+- **Example product in demos and docs is "Theo".** No real company or client names.
 - **The playground is product code.** It must pass `pnpm audit:ds` with zero violations (dogfooding).
-- **Tokens:** new semantic tokens go in `src/styles/tokens.css` (light + dark), are mapped in `src/styles/corpus.css`, and are documented in `docs/foundations/color.md` (or the relevant foundation). Never add knobs lightly: the promise is "about 10 variables".
+- **Tokens:** new semantic tokens go in `src/styles/tokens.css` (light + dark), are mapped in `src/styles/vita.css`, and are documented in `docs/foundations/color.md` (or the relevant foundation). Never add knobs lightly: the promise is "about 10 variables".
 - **Breaking changes** (renamed props, removed variants) need a note in the component doc and in the commit message.
 - Node 24 (`.nvmrc`), pnpm.

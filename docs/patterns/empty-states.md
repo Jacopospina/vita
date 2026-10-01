@@ -1,8 +1,8 @@
 ---
 title: Empty states
-summary: Every region that can be empty has a designed empty state — first use, no results, or error — each with a next step.
+summary: Every region that can be empty has a designed empty state, first use, no results, or error, each with a next step.
 status: stable
-import: "import { EmptyState } from \"@/components/corpus/empty-state\""
+import: "import { EmptyState } from \"@/components/vita/empty-state\""
 use_when:
   - A table, list, dashboard widget or page has nothing to show
 avoid_when:

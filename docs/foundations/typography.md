@@ -2,11 +2,11 @@
 title: Typography
 summary: Ten roles generated from one base size and one ratio. Google Sans Flex for words, Google Sans Code for code and numbers.
 status: stable
-import: "import { Text, Heading } from \"@/components/corpus/text\""
+import: "import { Text, Heading } from \"@/components/vita/text\""
 use_when:
-  - Any text — pick the ROLE (title-2, body, caption), not a size
+  - Any text, pick the ROLE (title-2, body, caption), not a size
 avoid_when:
-  - Tailwind sizes (text-sm, text-2xl) → they don't exist in Corpus
+  - Tailwind sizes (text-sm, text-2xl) → they don't exist in Vita
   - Changing size to create emphasis inside a paragraph → use font-medium or font-semibold
 ---
 
@@ -18,7 +18,7 @@ avoid_when:
 
 ## Values never snap
 
-- **Numbers are regular weight.** Always, whatever the weight of the role or the text around them — `Text` sets numeric-only content regular and `tabular-nums` enforces it — unless a `weight` is asked for explicitly.
+- **Numbers are regular weight.** Always, whatever the weight of the role or the text around them, `Text` sets numeric-only content regular and `tabular-nums` enforces it, unless a `weight` is asked for explicitly.
 - **Numbers swap.** Any number that changes uses `AnimatedNumber`: each digit blurs out and the new one sharpens in, staggered, never clipped.
 - **Text reveals.** Any label that changes uses `AnimatedText`: letters stagger in one after another, sliding up from blur to sharp.
 
@@ -46,4 +46,4 @@ avoid_when:
 5. **Numbers are values.** Mark them `tabular-nums` and right-align them when they're compared.
 6. **Never truncate** labels, errors or actions.
 
-> [!NOTE] Sizes are `base × ratio^n`. Change `--corpus-type-base` or `--corpus-type-ratio`, never individual sizes.
+> [!NOTE] Sizes are `base × ratio^n`. Change `--vita-type-base` or `--vita-type-ratio`, never individual sizes.

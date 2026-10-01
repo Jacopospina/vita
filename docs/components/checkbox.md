@@ -2,7 +2,7 @@
 title: Checkbox
 summary: Independent choices that take effect on submit, and multi-selection from a short list.
 status: stable
-import: "import { Checkbox, CheckboxGroup } from \"@/components/corpus/checkbox\""
+import: "import { Checkbox, CheckboxGroup } from \"@/components/vita/checkbox\""
 use_when:
   - Selecting any number of options from ≤ 6 (CheckboxGroup)
   - A single opt-in inside a form (agree to terms, subscribe)

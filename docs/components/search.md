@@ -2,7 +2,7 @@
 title: Search
 summary: Find items in a collection by query. Always labelled, instantly clearable, and scoped to what it searches.
 status: stable
-import: "import { Search } from \"@/components/corpus/search\""
+import: "import { Search } from \"@/components/vita/search\""
 use_when:
   - Filtering a table/list by text (toolbar variant)
   - Global or page-level search (field variant, lg)

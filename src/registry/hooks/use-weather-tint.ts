@@ -3,11 +3,11 @@ import { readCoords, type Coords } from "@/registry/hooks/use-sun-theme"
 import { swapAppearance } from "@/registry/lib/appearance"
 
 /**
- * useWeatherTint — Corpus's greys take one of THREE states from the weather where the user is:
+ * useWeatherTint, Vita's greys take one of THREE states from the weather where the user is:
  *   cold   (below 15 °C)   a noticeable cool tint
  *   none   (15–18 °C)      pure grey
  *   warm   (18 °C and up)  a noticeable warm tint
- * Mode: "dynamic" (default — changes with the reading) or a fixed "none" (neutral only) / "cold" (cold only) /
+ * Mode: "dynamic" (default, changes with the reading) or a fixed "none" (neutral only) / "cold" (cold only) /
  * "warm" (warm only). Remembered on this device.
  *
  * Temperature: the current reading for the user's area from Open-Meteo (no key; the position is rounded to
@@ -15,8 +15,8 @@ import { swapAppearance } from "@/registry/lib/appearance"
  *
  *   const { mode, setMode, celsius, tint } = useWeatherTint()
  */
-const PREF = "corpus-weather-tint"
-const CACHE = "corpus-weather"
+const PREF = "vita-weather-tint"
+const CACHE = "vita-weather"
 const TTL = 30 * 60 * 1000
 const COLD_BELOW = 15
 const WARM_FROM = 18
@@ -103,11 +103,11 @@ export function useWeatherTint() {
     const root = document.documentElement.style
     // One cross-fade for the whole page, not a transition on every element that uses a grey.
     swapAppearance(() => {
-      if (tint === null) return void root.setProperty("--corpus-weather", "0")
+      if (tint === null) return void root.setProperty("--vita-weather", "0")
       const { hue, chroma } = tintTokens[tint]
-      root.setProperty("--corpus-weather-hue", String(hue))
-      root.setProperty("--corpus-weather-chroma", String(chroma))
-      root.setProperty("--corpus-weather", "1")
+      root.setProperty("--vita-weather-hue", String(hue))
+      root.setProperty("--vita-weather-chroma", String(chroma))
+      root.setProperty("--vita-weather", "1")
     })
   }, [tint])
 

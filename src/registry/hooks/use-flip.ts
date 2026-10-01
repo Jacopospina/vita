@@ -1,10 +1,10 @@
 import * as React from "react"
 
 /**
- * useFlip — NOTHING JUMPS. When a container's children move because something appeared, disappeared
+ * useFlip, NOTHING JUMPS. When a container's children move because something appeared, disappeared
  * or changed size, each child glides from its old position to the new one (FLIP), productive motion.
  * Opt-in: lists that gain, lose or reorder items (Stack `flip`, chat, toasts, chips, filtered options). Static layout
- * never uses it — reflow from fonts or resizing must not move anything.
+ * never uses it, reflow from fonts or resizing must not move anything.
  */
 export function useFlip<T extends HTMLElement>(ref: React.RefObject<T | null>, enabled = true) {
   React.useEffect(() => {
@@ -18,7 +18,7 @@ export function useFlip<T extends HTMLElement>(ref: React.RefObject<T | null>, e
     // children "fly in from the top left" when it appears, so positions are only kept while the container is laid out.
     const visible = () => el.offsetParent !== null || getComputedStyle(el).position === "fixed"
     // Positions INSIDE the container. offsetTop is relative to the nearest positioned ancestor; when that isn't the
-    // container, the container's own move would count too — and a parent FLIP compensates for it already (double jump).
+    // container, the container's own move would count too, and a parent FLIP compensates for it already (double jump).
     const pos = (c: HTMLElement) =>
       c.offsetParent === el || c.offsetParent !== el.offsetParent
         ? { x: c.offsetLeft, y: c.offsetTop }
@@ -28,11 +28,11 @@ export function useFlip<T extends HTMLElement>(ref: React.RefObject<T | null>, e
       kids().forEach((c) => cache.set(c, pos(c)))
     }
 
-    // Runs in observer callbacks: after layout, before paint — so the jump is never seen.
+    // Runs in observer callbacks: after layout, before paint, so the jump is never seen.
     const settle = () => {
-      // While the page boots (fonts, layout settling) children only get re-measured — nothing glides into place
+      // While the page boots (fonts, layout settling) children only get re-measured, nothing glides into place
       // from a pre-layout position. Same when the tab is hidden.
-      if (document.documentElement.hasAttribute("data-corpus-booting") || document.visibilityState !== "visible" || !visible()) return snap()
+      if (document.documentElement.hasAttribute("data-vita-booting") || document.visibilityState !== "visible" || !visible()) return snap()
       for (const c of kids()) {
         const prev = cache.get(c)
         if (!prev) continue

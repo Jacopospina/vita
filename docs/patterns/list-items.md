@@ -2,7 +2,7 @@
 title: List items
 summary: The settings row. Icon placeholder on the left, title (and subtitle) in the middle, the control or chevron on the far right. Rows that belong together join into one card.
 status: stable
-import: "import { ListGroup, ListItem, ListSection } from \"@/components/corpus/list-item\"\n\n<ListGroup>\n  <ListItem icon={Bot} tone=\"brand\" title=\"Support triage\" subtitle=\"Zendesk · Live\" onClick={open} />\n</ListGroup>"
+import: "import { ListGroup, ListItem, ListSection } from \"@/components/vita/list-item\"\n\n<ListGroup>\n  <ListItem icon={Bot} tone=\"brand\" title=\"Support triage\" subtitle=\"Zendesk · Live\" onClick={open} />\n</ListGroup>"
 use_when:
   - Settings, preferences and account pages
   - Navigating into an object or sub-page (chevron rows)

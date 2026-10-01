@@ -3,7 +3,7 @@ import { Tooltip as TooltipPrimitive } from "radix-ui"
 import { cn } from "@/registry/lib/utils"
 
 /**
- * Tooltip — a short, plain-text NAME or HINT for something on hover/focus.
+ * Tooltip, a short, plain-text NAME or HINT for something on hover/focus.
  * Never put interactive content, critical info or long text in a tooltip → use Popover (toggletip).
  */
 export function TooltipProvider({ delayDuration = 400, ...props }: React.ComponentProps<typeof TooltipPrimitive.Provider>) {
@@ -32,7 +32,7 @@ export function Tooltip({ content, children, side = "top", align = "center", dis
           collisionPadding={8}
           className={cn(
             // A squircle pill with no pointer: proximity and the 6px offset already say what it belongs to.
-            "z-50 max-w-72 squircle bg-inverse px-2 py-1 text-footnote text-inverse-foreground shadow-floating [--corpus-squircle-r:var(--corpus-radius-md)]",
+            "z-50 max-w-72 squircle bg-inverse px-2 py-1 text-footnote text-inverse-foreground shadow-floating [--vita-squircle-r:var(--vita-radius-md)]",
             "data-[state=delayed-open]:animate-enter-fade data-[state=instant-open]:animate-enter-fade data-[state=closed]:animate-exit-fade",
           )}
         >
@@ -43,7 +43,7 @@ export function Tooltip({ content, children, side = "top", align = "center", dis
   )
 }
 
-/** DefinitionTooltip — dotted-underline term with a definition. For glossary terms in body copy. */
+/** DefinitionTooltip, dotted-underline term with a definition. For glossary terms in body copy. */
 export function DefinitionTooltip({ term, definition }: { term: React.ReactNode; definition: React.ReactNode }) {
   return (
     <Tooltip content={definition} side="bottom" align="start">

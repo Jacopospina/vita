@@ -8,7 +8,7 @@ import { InlineNotification } from "@/registry/ui/notification"
 import { Separator } from "@/registry/ui/separator"
 
 /**
- * LoginBlock — two-step login (identifier first, then password), calm and focused.
+ * LoginBlock, two-step login (identifier first, then password), calm and focused.
  * Step 1 asks only for the email so SSO users can be routed before seeing a password field.
  * Errors never reveal whether the account exists.
  */

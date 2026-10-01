@@ -16,7 +16,7 @@ avoid_when:
 
 - **13 system hues.** Red, orange, yellow, green, mint, teal, cyan, blue, indigo, purple, pink, brown, gray.
 - **11 steps each.** 50 → 950 on one shared lightness curve; step 500 is the exact system color.
-- **For charts and new tokens only.** Available as `--corpus-palette-{hue}-{step}` variables, never as utility classes.
+- **For charts and new tokens only.** Available as `--vita-palette-{hue}-{step}` variables, never as utility classes.
 
 ## Semantic families
 
@@ -42,7 +42,7 @@ One map from meaning to colour and glyph, used by every status surface (`registr
 | Warning | Orange `warning` | WarningAltFilled | `warning`, `caution` | Rate limited, Expires soon, Flaky |
 | Error | Red `error` | ErrorFilled | `error`, `critical`, `paused` | Failed, Down, Degraded, Paused, destructive actions |
 | Info | Blue `info` | InformationFilled | `info`, `in-progress`, `queued`, `incomplete` | Deploying, Queued, Evaluation finished |
-| Neutral | `muted-foreground` | — | `draft`, `pending`, `not-started`, `undefined`, `unknown` | Draft, Awaiting approval |
+| Neutral | `muted-foreground` |, | `draft`, `pending`, `not-started`, `undefined`, `unknown` | Draft, Awaiting approval |
 
 - **Icons use the base colour; words use `-foreground`.** A glyph is `text-error`; text on a tint is `text-error-foreground`.
 - **Brand never means a status.** In-progress is info blue, not the primary colour.
@@ -60,8 +60,8 @@ One map from meaning to colour and glyph, used by every status surface (`registr
 
 > [!WARNING] The standard system blue and red with white text reach about 4:1, which is fine for 16px+ and bold labels but short of AA 4.5:1 for small text.
 
-- **Increased contrast is automatic.** When the OS asks for more contrast, Corpus switches to the high-contrast variants (blue 7.6:1).
-- **Force it per product.** Set `data-corpus-contrast="high"` on `<html>` for regulated or accessibility-critical products.
+- **Increased contrast is automatic.** When the OS asks for more contrast, Vita switches to the high-contrast variants (blue 7.6:1).
+- **Force it per product.** Set `data-vita-contrast="high"` on `<html>` for regulated or accessibility-critical products.
 - **Text on tints always passes.** Every `-foreground` token uses the high-contrast variant.
 
 ## Material

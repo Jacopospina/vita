@@ -4,7 +4,7 @@ import { HeaderGlobalAction } from "@/registry/ui/ui-shell"
 import { Button } from "@/registry/ui/button"
 import { AnimatedNumber } from "@/registry/ui/animated"
 
-const REPO = "Jacopospina/corpus"
+const REPO = "Jacopospina/vita"
 
 /**
  * The GitHub action in the header, with the repository's fork count beside it. The count comes from GitHub's public
@@ -23,7 +23,7 @@ export function GithubAction() {
   const open = () => window.open(`https://github.com/${REPO}`, "_blank")
   if (forks === null) return <HeaderGlobalAction icon={LogoGithub} label="Repository" onClick={open} />
   return (
-    <Button variant="ghost" size="sm" icon={LogoGithub} aria-label={`Repository — ${forks} forks`} onClick={open} className="h-8 rounded-inner-2">
+    <Button variant="ghost" size="sm" icon={LogoGithub} aria-label={`Repository, ${forks} forks`} onClick={open} className="h-8 rounded-inner-2">
       <AnimatedNumber value={forks} />
     </Button>
   )

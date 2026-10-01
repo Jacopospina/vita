@@ -4,9 +4,9 @@ import { Tooltip } from "@/registry/ui/tooltip"
 import { AnimatedText } from "@/registry/ui/animated"
 
 /**
- * Truncate — the overflow-content rule in one component.
+ * Truncate, the overflow-content rule in one component.
  *   end (default) → "Very long project na…" + full text in a tooltip
- *   middle        → "invoice-2026-…-final.pdf" (file names, IDs — the ending matters)
+ *   middle        → "invoice-2026-…-final.pdf" (file names, IDs, the ending matters)
  *   lines         → clamp paragraphs to N lines with a "Show more" toggle
  * Never truncate: primary actions, error messages, form labels.
  */

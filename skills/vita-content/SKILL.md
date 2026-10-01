@@ -1,11 +1,11 @@
 ---
-name: corpus-content
-description: Write or review every user-visible word in a Corpus product — labels, buttons, headings, helper text, errors, empty states, toasts, confirmations, emails, AI messages — through the product taxonomy and persona voice. Use whenever UI text is created or changed, or when copy "feels off".
+name: vita-content
+description: Write or review every user-visible word in a Vita product, labels, buttons, headings, helper text, errors, empty states, toasts, confirmations, emails, AI messages, through the product taxonomy and persona voice. Use whenever UI text is created or changed, or when copy "feels off".
 ---
 
-# Corpus content
+# Vita content
 
-Every string passes through the **taxonomy** (`corpus/taxonomy.json`) and the **persona** (`corpus/personas/*.md`). If either file is missing, run `corpus-personas` first, or ask the user which persona the screen serves.
+Every string passes through the **taxonomy** (`vita/taxonomy.json`) and the **persona** (`vita/personas/*.md`). If either file is missing, run `vita-personas` first, or ask the user which persona the screen serves.
 
 ## Procedure for each string
 
@@ -48,11 +48,11 @@ Every string passes through the **taxonomy** (`corpus/taxonomy.json`) and the **
 
 Return a table (`Current | Proposed | Rule`), then the patched code. Run the audit: it flags banned taxonomy terms in JSX strings.
 
-## Corpus's own voice (brand)
+## Vita's own voice (brand)
 
-When writing **as Corpus** — docs, the showcase, onboarding into Corpus, release notes — use the Creator voice in `docs/getting-started/brand.md`:
+When writing **as Vita**, docs, the showcase, onboarding into Vita, release notes, use the Creator voice in `docs/getting-started/brand.md`:
 - Speak to the maker ("you make", "you shape"), with verbs of making.
-- Lead with what they'll create; credit them, not Corpus.
-- One slogan per surface; the signature is "Give your ideas a body."
+- Lead with what they'll create; credit them, not Vita.
+- One slogan per surface; the signature is "Give your ideas life."
 
-Inside a product built with Corpus, the persona's plain voice and the rules above always win.
+Inside a product built with Vita, the persona's plain voice and the rules above always win.

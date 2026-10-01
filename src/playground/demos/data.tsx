@@ -39,7 +39,7 @@ export const agents: Agent[] = Array.from({ length: 42 }, (_, i) => ({
   ref: `AGT-${String(1040 + i)}`,
   name: agentNames[i % agentNames.length] + (i >= agentNames.length ? ` ${Math.floor(i / agentNames.length) + 1}` : ""),
   team: ["Support", "Finance", "Sales", "People", "Legal", "Operations"][i % 6],
-  model: ["Vita Large", "Vita Fast", "Vita Vision", "Vita Voice"][i % 4],
+  model: ["Theo Large", "Theo Fast", "Theo Vision", "Theo Voice"][i % 4],
   status: (["Live", "Deploying", "Degraded", "Paused", "Live"] as const)[i % 5],
   runs: 120 + ((i * 7919) % 9000),
 }))
@@ -115,7 +115,7 @@ function TileDemo() {
         ))}
       </TileGroup>
       <ExpandableTile summary={<Stack gap="3xs"><Text variant="headline">Support triage</Text><Text tone="muted">Production · Live · 1,284 runs today</Text></Stack>}>
-        <Text tone="muted">Model: Vita Large · Tools: Zendesk, Slack · Knowledge: Help center (412 articles). Last deployed today at 09:12.</Text>
+        <Text tone="muted">Model: Theo Large · Tools: Zendesk, Slack · Knowledge: Help center (412 articles). Last deployed today at 09:12.</Text>
       </ExpandableTile>
     </Stack>
   )
@@ -187,8 +187,8 @@ export const dataDemos: DemoMap = {
     },
   ],
   "components/structured-list": [
-    { title: "Read-only", render: () => <StructuredList label="Plan details" columns={["Feature", "Team", "Enterprise"]} rows={[{ id: "1", cells: ["Seats", "50", "Unlimited"] }, { id: "2", cells: ["SSO", "—", "Included"] }, { id: "3", cells: ["Support", "Email", "Dedicated manager"] }]} /> },
-    { title: "Selectable", render: () => { const S = () => { const [v, setV] = React.useState("2"); return <StructuredList selectable value={v} onValueChange={setV} label="Choose a model" columns={["Model", "Latency", "Cost / 1k runs"]} rows={[{ id: "1", cells: ["Vita Large", "2.1 s", "$4.20"] }, { id: "2", cells: ["Vita Fast", "0.6 s", "$0.80"] }, { id: "3", cells: ["Vita Vision", "2.8 s", "$5.10"] }]} /> }; return <S /> } },
+    { title: "Read-only", render: () => <StructuredList label="Plan details" columns={["Feature", "Team", "Enterprise"]} rows={[{ id: "1", cells: ["Seats", "50", "Unlimited"] }, { id: "2", cells: ["SSO", "Not included", "Included"] }, { id: "3", cells: ["Support", "Email", "Dedicated manager"] }]} /> },
+    { title: "Selectable", render: () => { const S = () => { const [v, setV] = React.useState("2"); return <StructuredList selectable value={v} onValueChange={setV} label="Choose a model" columns={["Model", "Latency", "Cost / 1k runs"]} rows={[{ id: "1", cells: ["Theo Large", "2.1 s", "$4.20"] }, { id: "2", cells: ["Theo Fast", "0.6 s", "$0.80"] }, { id: "3", cells: ["Theo Vision", "2.8 s", "$5.10"] }]} /> }; return <S /> } },
     { title: "Condensed & flush", render: () => <StructuredList condensed flush label="Details" columns={["Field", "Value"]} rows={[{ id: "1", cells: ["Agent ID", "AGT-1042"] }, { id: "2", cells: ["Environment", "Production"] }]} /> },
   ],
   "components/contained-list": [
@@ -251,10 +251,10 @@ export const dataDemos: DemoMap = {
           <Accordion type="single" collapsible defaultValue="a">
             <AccordionItem value="a"><AccordionTrigger>What can an agent access?</AccordionTrigger><AccordionContent>Only the tools and knowledge sources you connect, with the permissions you grant. Every action is logged.</AccordionContent></AccordionItem>
             <AccordionItem value="b"><AccordionTrigger>How are runs billed?</AccordionTrigger><AccordionContent>Per run, by model. Test runs in staging are free.</AccordionContent></AccordionItem>
-            <AccordionItem value="c" disabled><AccordionTrigger>Can I bring my own model? (disabled)</AccordionTrigger><AccordionContent>—</AccordionContent></AccordionItem>
+            <AccordionItem value="c" disabled><AccordionTrigger>Can I bring my own model? (disabled)</AccordionTrigger><AccordionContent>Not available yet.</AccordionContent></AccordionItem>
           </Accordion>
           <Accordion type="multiple" align="start" size="sm">
-            <AccordionItem value="a"><AccordionTrigger>Start-aligned, small</AccordionTrigger><AccordionContent>Chevron leads — better for nested settings and filter panels.</AccordionContent></AccordionItem>
+            <AccordionItem value="a"><AccordionTrigger>Start-aligned, small</AccordionTrigger><AccordionContent>Chevron leads, better for nested settings and filter panels.</AccordionContent></AccordionItem>
             <AccordionItem value="b"><AccordionTrigger>Multiple can be open</AccordionTrigger><AccordionContent>type="multiple"</AccordionContent></AccordionItem>
           </Accordion>
         </Stack>

@@ -3,13 +3,13 @@ import { cn } from "@/registry/lib/utils"
 import { createOrbGL, MAX_DROPS, type OrbGL } from "@/registry/lib/orb-gl"
 
 /**
- * Thinking — how Corpus shows that something is working. The spinner belongs to the old world.
+ * Thinking, how Vita shows that something is working. The spinner belongs to the old world.
  * Tiny particles blend like liquid when they overlap (metaballs) and keep changing form:
  *
- *   basic       plain logic, no agent involved — three droplets orbit and merge, calm and steady
- *   retrieving  agent recalling from memory — particles stream in from the edges into the core
- *   generating  agent creating — the orb of tiny dots shape-shifts: circle, star, infinity, squircle, blob
- *   searching   agent looking things up — a comet with a fading trail scans a wobbling orbit
+ *   basic       plain logic, no agent involved, three droplets orbit and merge, calm and steady
+ *   retrieving  agent recalling from memory, particles stream in from the edges into the core
+ *   generating  agent creating, the orb of tiny dots shape-shifts: circle, star, infinity, squircle, blob
+ *   searching   agent looking things up, a comet with a fading trail scans a wobbling orbit
  *
  * Agentic modes wear the AI spectrum; basic follows the current text color.
  */
@@ -18,7 +18,7 @@ const sizes = { sm: 16, md: 24, lg: 48, xl: 96, "2xl": 160, "3xl": 280 } as cons
 type P = { x: number; y: number; r: number }
 
 const TAU = Math.PI * 2
-/** Springy arrival: overshoots its target a little, then settles — shapes POP into place instead of easing in. */
+/** Springy arrival: overshoots its target a little, then settles, shapes POP into place instead of easing in. */
 const pop = (x: number) => { const c = 2.2; return 1 + (c + 1) * (x - 1) ** 3 + c * (x - 1) ** 2 }
 /** Twist + squash for a figure: the whole orb sways and pulses as it changes shape. */
 const sway = (x: number, y: number, t: number, kick: number): [number, number] => {
@@ -28,8 +28,8 @@ const sway = (x: number, y: number, t: number, kick: number): [number, number] =
   return [(x * c - y * si) * sq, (x * si + y * c) / sq]
 }
 
-/* Shapes for the generating orb: u ∈ [0,1) along the contour → point (unit radius ~0.7). Every one is smooth —
-   lobes and curves, never points — so the liquid can pour from one into the next. */
+/* Shapes for the generating orb: u ∈ [0,1) along the contour → point (unit radius ~0.7). Every one is smooth,
+   lobes and curves, never points, so the liquid can pour from one into the next. */
 const polar = (r: (a: number, t: number) => number) => (u: number, t: number): [number, number] => {
   const a = u * TAU
   const k = r(a, t)
@@ -37,18 +37,18 @@ const polar = (r: (a: number, t: number) => number) => (u: number, t: number): [
 }
 /* A shape may also be SEGMENTED: the third value is how present the line is at that point (0 = a gap). */
 type Shape = (u: number, t: number) => [number, number] | [number, number, number]
-/** Soft dash: 1 inside the first `on` part of each period, fading at both ends — gaps open and close, never blink. */
+/** Soft dash: 1 inside the first `on` part of each period, fading at both ends, gaps open and close, never blink. */
 const dash = (x: number, on: number, edge = 0.07) => {
   const f = ((x % 1) + 1) % 1
   const v = Math.min(1, Math.max(0, Math.min(f, on - f) / edge))
   return v * v * (3 - 2 * v)
 }
-/** Open figures (strokes, a wave, a C, dots): their drops stay put along the path — drifting would wrap a drop from one
+/** Open figures (strokes, a wave, a C, dots): their drops stay put along the path, drifting would wrap a drop from one
     end to the other in a single frame (a visible jump). They move through their own animation instead. */
 const open = new Set<Shape>()
 const fixed = (s: Shape) => (open.add(s), s)
 /** Walk several straight strokes as one path: u picks the stroke, then the point along it. The strokes never stand
-    still — each sways on its own phase, sliding along itself and drifting sideways, so the figure stays alive. */
+    still, each sways on its own phase, sliding along itself and drifting sideways, so the figure stays alive. */
 const strokes = (lines: [number, number, number, number][]) => fixed((u: number, t: number): [number, number] => {
   const f = u * lines.length
   const i = Math.min(lines.length - 1, Math.floor(f))
@@ -89,7 +89,7 @@ const shapes: Shape[] = [
   (u) => { const a = u * TAU; const r = 0.46 + 0.14 * Math.cos(3 * a + Math.PI); return [Math.cos(a) * r, Math.sin(a) * r + 0.04] }, // rounded triangle
   (u) => { const a = u * TAU; return [Math.cos(a) * 0.62 + 0.14 * Math.cos(2 * a), Math.sin(a) * 0.46] }, // bean
   polar((a, t) => 0.5 + 0.13 * Math.sin(a * 2) * Math.sin(t * 0.9) + 0.08 * Math.cos(5 * a - t)), // breathing star-fish (soft)
-  // Segmented — minimal figures made of separate strokes.
+  // Segmented, minimal figures made of separate strokes.
   (u, t) => { const a = u * TAU + t * 0.6; return [Math.cos(a) * 0.6, Math.sin(a) * 0.6, dash(u * 4, 0.68)] }, // dashed ring, turning
   spin((u) => { const a = u * TAU; const r = 0.5 + 0.12 * Math.cos(3 * a); return [Math.cos(a) * r, Math.sin(a) * r, dash(u * 3 + 0.5, 0.72)] }, -0.9), // three arcs, turning
   (u, t) => { const a = u * TAU; const r = 0.6 + 0.06 * Math.sin(t * 2.4); return [Math.cos(a) * r, Math.sin(a) * r, dash((u + 0.125) * 2, 0.64)] }, // parentheses ( ), breathing
@@ -214,23 +214,23 @@ function particles(mode: ThinkingMode, n: number, t: number, seeds: number[]): P
     const [x, y] = sway((ax + (bx - ax) * k) * breathe + dx, (ay + (by - ay) * k) * breathe + dy, t, kick)
     out.push({ x, y, r: (0.07 + 0.02 * Math.sin(t * 4 + i)) * Math.max(0, av + (bv - av) * Math.min(1, k)) })
   }
-  // Outline only — the shape is drawn as a liquid LINE, so each one reads distinctly (a filled body all looks alike).
+  // Outline only, the shape is drawn as a liquid LINE, so each one reads distinctly (a filled body all looks alike).
   return out
 }
 
 /**
- * Performance budget — loading must never cost the user's machine:
+ * Performance budget, loading must never cost the user's machine:
  *   · ONE shared animation loop for every orb on the page (not one per instance)
  *   · orbs off-screen or in a hidden tab don't draw at all
  *   · two ways to draw the same liquid (below): the SVG goo chain for machines that can afford it, a filter-free
- *     metaball FIELD for everything else — and the chain hands over to the field as soon as frames arrive late
+ *     metaball FIELD for everything else, and the chain hands over to the field as soon as frames arrive late
  *   · the goo chain draws at most 60 times a second (120 Hz displays doubled its cost for nothing the eye can see)
  *     and at 1.5× resolution on big orbs: its blur hides the pixels anyway. Small orbs stay at full 2×.
  *   · reduced motion / Save-Data → one still frame
  *
  * Two renderers, one liquid:
  *   filter  crisp drops on a canvas, melted by an SVG filter chain (blur → threshold, twice → specular light →
- *           glow). The chain re-rasterises every frame — on a phone, on the CPU, at hundreds of pixels a side.
+ *           glow). The chain re-rasterises every frame, on a phone, on the CPU, at hundreds of pixels a side.
  *   field   the same drops summed into a metaball field on a small grid (≤ 72² cells), thresholded with a soft
  *           edge, coloured and lit per cell, then upscaled by the GPU. No filter anywhere; a frame costs a fraction
  *           of a millisecond. Phones, tablets and low-core devices take it from the start.
@@ -245,8 +245,8 @@ let frames = 0
 let late = 0
 function frame(now: number) {
   // Adaptive: frames that keep arriving late (< ~36 fps, net of the on-time ones, after a second of warm-up) mean
-  // this machine can't afford the filter chain — every orb switches to the field for the rest of the session.
-  if (heavy && !document.documentElement.hasAttribute("data-corpus-booting")) {
+  // this machine can't afford the filter chain, every orb switches to the field for the rest of the session.
+  if (heavy && !document.documentElement.hasAttribute("data-vita-booting")) {
     const dt = now - prevFrame
     if (prevFrame && ++frames > 60) {
       late = dt > 28 ? late + 1 : Math.max(0, late - 1)
@@ -314,7 +314,7 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
   const ref = React.useRef<HTMLCanvasElement>(null)
   const glintRef = React.useRef<HTMLCanvasElement>(null)
   const glRef = React.useRef<HTMLCanvasElement>(null)
-  const fid = "corpus-goo-" + React.useId().replace(/[^a-zA-Z0-9]/g, "")
+  const fid = "vita-goo-" + React.useId().replace(/[^a-zA-Z0-9]/g, "")
   const resolvedTone = tone ?? (mode === "basic" ? "current" : "spectrum")
   const field = React.useSyncExternalStore(subscribeLite, isLite, () => false)
   // The liquid keeps its time across a renderer switch, so a hand-over mid-session never restarts the shapes.
@@ -348,7 +348,7 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
     // The filter chain draws at most ~60 times a second; the field is cheap enough for every display frame.
     const interval = field ? 0 : 1000 / 70
     const root = getComputedStyle(document.documentElement)
-    const spectrum = ["blue", "indigo", "purple", "pink", "orange", "mint", "cyan"].map((h) => root.getPropertyValue(`--corpus-palette-${h}-500`).trim())
+    const spectrum = ["blue", "indigo", "purple", "pink", "orange", "mint", "cyan"].map((h) => root.getPropertyValue(`--vita-palette-${h}-500`).trim())
     let color = getComputedStyle(canvas).color
     // Light mode = dark text. There the white glints vanish on the page, so they take the spectrum's colours instead.
     const isLight = (c: string) => { const m = c.match(/[\d.]+/g); return !!m && (0.2126 * +m[0] + 0.7152 * +m[1] + 0.0722 * +m[2]) / 255 < 0.5 }
@@ -357,7 +357,7 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
     let drawn = -Infinity
     const start = (started.current ||= performance.now())
     const R = px * 0.42
-    /** A drop's radius on the canvas: ×1.3 on big orbs — the wide goo eats into each drop, so plumper drops keep the
+    /** A drop's radius on the canvas: ×1.3 on big orbs, the wide goo eats into each drop, so plumper drops keep the
         liquid full-bodied and its joins round. */
     const dropRadius = (p: P) => (simple ? p.r * R : Math.max(0.6, Math.min(0.34, p.r * grow) * R * 1.3))
     const drawGlints = (c: CanvasRenderingContext2D, t: number) => {
@@ -399,7 +399,7 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
     }
 
     /* ---- field path: the liquid as a metaball field on a small grid, no filter anywhere ---- */
-    // Grid: 2 cells per CSS px on small orbs (they must stay crisp), one per px up to 128 on big ones — with a
+    // Grid: 2 cells per CSS px on small orbs (they must stay crisp), one per px up to 128 on big ones, with a
     // two-cell edge and the GPU's smooth upscale, the rim reads as the goo's own softness, never as pixels.
     const g = simple ? px * 2 : Math.min(128, Math.max(48, px))
     let fieldDraw: ((t: number) => void) | null = null
@@ -505,7 +505,7 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
               }
               if (lit && x > 0 && y > 0 && x < g - 1 && y < g - 1) {
                 // Specular light from the top left: the field's slope is the surface normal, so the rim facing the
-                // light catches a white highlight — the lit look of the filter path, at a fraction of the cost.
+                // light catches a white highlight, the lit look of the filter path, at a fraction of the cost.
                 const gx = fld[k + 1] - fld[k - 1], gy = fld[k + g] - fld[k - g]
                 const m = Math.hypot(gx, gy)
                 if (m > 0.03) {
@@ -522,7 +522,7 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
           octx.putImageData(img, 0, 0)
           ctx.clearRect(0, 0, px, px)
           if (glow && glowCtx) {
-            // Glow behind: a pastel halo — the orb shrunk to 10 cells (inside a clear 1-cell border, so the stretched
+            // Glow behind: a pastel halo, the orb shrunk to 10 cells (inside a clear 1-cell border, so the stretched
             // copy fades to nothing before its own edge) and drawn back large, a third as strong.
             glowCtx.clearRect(0, 0, 12, 12)
             glowCtx.drawImage(off, 1, 1, 10, 10)
@@ -608,7 +608,7 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
                   </feSpecularLighting>
                   <feComposite in="spec" in2="goo" operator="in" result="specIn" />
                   <feComposite in="goo" in2="specIn" operator="arithmetic" k1="0" k2="1" k3="0.65" k4="0" result="shaded" />
-                  {/* Glow behind: emitted, reflected light — wide, washed ~60% toward white (super-light pastel), low alpha. */}
+                  {/* Glow behind: emitted, reflected light, wide, washed ~60% toward white (super-light pastel), low alpha. */}
                   <feGaussianBlur in="goo" stdDeviation={px * 0.16} result="glowBlur" />
                   <feColorMatrix in="glowBlur" values="0.4 0 0 0 0.6  0 0.4 0 0 0.6  0 0 0.4 0 0.6  0 0 0 0.32 0" result="glow" />
                   <feMerge>
@@ -622,7 +622,7 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
         </svg>
       )}
       {field && <canvas ref={glRef} aria-hidden className="absolute inset-0" style={{ width: px, height: px }} />}
-      <canvas ref={ref} aria-hidden data-renderer={field ? "field" : "filter"} className="relative motion-reduce:animate-[corpus-pulse_2s_ease-in-out_infinite]" style={{ width: px, height: px, filter: field ? undefined : `url(#${fid})` }} />
+      <canvas ref={ref} aria-hidden data-renderer={field ? "field" : "filter"} className="relative motion-reduce:animate-[vita-pulse_2s_ease-in-out_infinite]" style={{ width: px, height: px, filter: field ? undefined : `url(#${fid})` }} />
       {!field && mode !== "basic" && lit && <canvas ref={glintRef} aria-hidden className="pointer-events-none absolute inset-0" style={{ width: px, height: px }} />}
       <span className="sr-only">{label}</span>
     </span>

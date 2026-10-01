@@ -2,9 +2,9 @@
 title: KPI
 summary: A key number with its label and trend. Group related KPIs in one surface; put a page's headline numbers on the right of its header.
 status: stable
-import: "import { Kpi, KpiGroup } from \"@/components/corpus/kpi\""
+import: "import { Kpi, KpiGroup } from \"@/components/vita/kpi\""
 use_when:
-  - Dashboards and overview pages — the handful of numbers that summarise a thing
+  - Dashboards and overview pages, the handful of numbers that summarise a thing
   - A page header's summary (PageHeader kpis)
 avoid_when:
   - Many numbers to compare row by row → DataTable

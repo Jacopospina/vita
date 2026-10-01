@@ -2,7 +2,7 @@
 title: Grid & layout
 summary: A 16-column grid for page structure, stacks for everything inside it.
 status: stable
-import: "import { Grid, Column, Stack, Inline, Spacer, Container } from \"@/components/corpus/layout\""
+import: "import { Grid, Column, Stack, Inline, Spacer, Container } from \"@/components/vita/layout\""
 use_when:
   - Laying out a page or region (Grid + Column)
   - Arranging elements vertically (Stack) or horizontally (Inline)
@@ -34,8 +34,8 @@ avoid_when:
 ## Stacks
 
 - **`Stack`.** Vertical, 16px gap by default.
-- **`Inline`.** Horizontal, vertically centred, 12px gap by default — for different components side by side.
-- **`Group`.** Zero gap, joined edges, only outer corners rounded — for things that belong together.
+- **`Inline`.** Horizontal, vertically centred, 12px gap by default, for different components side by side.
+- **`Group`.** Zero gap, joined edges, only outer corners rounded, for things that belong together.
 - **Gap names.** `2xs` 4 · `xs` 8 · `sm` 12 · `md` 16 · `lg` 24 · `xl` 32 · `2xl` 48.
 
 > [!IMPORTANT] Gaps between groups are always larger than gaps within a group. Proximity creates hierarchy without borders.

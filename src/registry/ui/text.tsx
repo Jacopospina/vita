@@ -5,7 +5,7 @@ import { cn } from "@/registry/lib/utils"
 import { animateChildren } from "@/registry/ui/animated"
 
 /**
- * Text & Heading — typography roles.
+ * Text & Heading, typography roles.
  * Pick by ROLE, not by size: a page title is `title-1` even if you "want it bigger".
  */
 const textVariants = cva("", {
@@ -60,12 +60,12 @@ export interface TextProps extends React.HTMLAttributes<HTMLElement>, VariantPro
   asChild?: boolean
 }
 
-/** A value that is only a number ("12,840", "94%", "€1,240", "3–5") — with digits and no words. */
+/** A value that is only a number ("12,840", "94%", "€1,240", "3–5"), with digits and no words. */
 const isNumber = (c: React.ReactNode) => (typeof c === "string" || typeof c === "number") && /\d/.test(String(c)) && !/[a-z]{2,}/i.test(String(c))
 
 export function Text({ variant = "body", tone, weight, truncate, as, asChild, className, children, ...props }: TextProps) {
   const Comp: React.ElementType = asChild ? Slot.Root : (as ?? defaultElement[variant ?? "body"])
-  // Numbers are regular weight, always — even in a semibold role — unless a weight is asked for explicitly.
+  // Numbers are regular weight, always, even in a semibold role, unless a weight is asked for explicitly.
   const numeric = !weight && isNumber(children)
   return (
     <Comp className={cn(textVariants({ variant, tone, weight, truncate }), numeric && "font-normal", className)} {...props}>
@@ -78,7 +78,7 @@ export interface HeadingProps extends Omit<TextProps, "variant"> {
   level?: 1 | 2 | 3 | 4
 }
 
-/** Heading — semantic level decides the role. Level 1 = page title, 2 = section, 3 = subsection, 4 = group label. */
+/** Heading, semantic level decides the role. Level 1 = page title, 2 = section, 3 = subsection, 4 = group label. */
 export function Heading({ level = 2, as, ...props }: HeadingProps) {
   const variant = ({ 1: "title-1", 2: "title-2", 3: "title-3", 4: "headline" } as const)[level]
   return <Text variant={variant} as={as ?? (`h${level}` as React.ElementType)} {...props} />

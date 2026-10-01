@@ -2,7 +2,7 @@ import { clsx, type ClassValue } from "clsx"
 import { extendTailwindMerge } from "tailwind-merge"
 
 /**
- * tailwind-merge must know Corpus's custom scales, otherwise `text-body`
+ * tailwind-merge must know Vita's custom scales, otherwise `text-body`
  * (font size) and `text-foreground` (color) would be treated as conflicts.
  */
 const twMerge = extendTailwindMerge({

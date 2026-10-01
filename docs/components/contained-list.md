@@ -2,7 +2,7 @@
 title: Contained list
 summary: A titled list of similar items, each a row with an optional action.
 status: stable
-import: "import { ContainedList, ContainedListItem } from \"@/components/corpus/contained-list\""
+import: "import { ContainedList, ContainedListItem } from \"@/components/vita/contained-list\""
 use_when:
   - Members, connected apps, recent files, settings groups
   - Rows that each open something or have one trailing action

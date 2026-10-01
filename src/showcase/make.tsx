@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client"
 import { bootAppearance, guardHotStyleUpdates } from "@/registry/lib/appearance"
 import "@fontsource-variable/google-sans-flex"
 import "@fontsource-variable/google-sans-code"
-import "@/styles/corpus.css"
+import "@/styles/vita.css"
 import { Showcase } from "./Showcase"
 
 // Transitions stay off until fonts and layout settle, so nothing glides in from its pre-layout position.

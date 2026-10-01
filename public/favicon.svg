@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
-  <!-- The Corpus mark (src/brand/corpus-mark.tsx) with the palette resolved to hex. -->
+  <!-- The Vita mark (src/brand/vita-mark.tsx) with the palette resolved to hex. -->
   <style>
     .rest-a { stop-color: #ededee } .rest-b { stop-color: #c6c6c9 } .dots { fill: #002968 }
     @media (prefers-color-scheme: dark) { .rest-a { stop-color: #5a5a5f } .rest-b { stop-color: #8e8e93 } .dots { fill: #b8d4ff } }

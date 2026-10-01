@@ -9,7 +9,7 @@ avoid_when:
   - Off-scale steps (p-5, gap-7, m-9) → the audit rejects them
 ---
 
-> [!IMPORTANT] Belonging has no gaps. Items that belong together (button sets, action bars, swatches, segments) touch at 0px — use `Group`, `ButtonSet` or `ActionBar`. Spacing is for separating things that don't belong together.
+> [!IMPORTANT] Belonging has no gaps. Items that belong together (button sets, action bars, swatches, segments) touch at 0px, use `Group`, `ButtonSet` or `ActionBar`. Spacing is for separating things that don't belong together.
 
 ## Touch or space?
 
@@ -32,10 +32,10 @@ avoid_when:
 
 ## Sizes follow density
 
-- **Control heights.** `h-control-xs` 20 · `sm` 24 · `md` 28 · `lg` 32 · `xl` 36 — desktop-native density (mini · small · regular · large · extra large).
-- **Field heights.** `h-field-sm` 36 · `md` 40 · `lg` 44 — a step taller to hold the floating label.
+- **Control heights.** `h-control-xs` 20 · `sm` 24 · `md` 28 · `lg` 32 · `xl` 36, desktop-native density (mini · small · regular · large · extra large).
+- **Field heights.** `h-field-sm` 36 · `md` 40 · `lg` 44, a step taller to hold the floating label.
 - **Control insets.** `px-inset-sm` 6 · `px-inset` 8 · `px-inset-lg` 12.
-- **One knob.** `--corpus-density` scales control sizes fully, and the spacing scale (padding, margin, gap) at half strength with a 90% floor — so small gaps stay comfortable at low density.
+- **One knob.** `--vita-density` scales control sizes fully, and the spacing scale (padding, margin, gap) at half strength with a 90% floor, so small gaps stay comfortable at low density.
 - **Touch floors it at 1.1.** Under a finger (`pointer: coarse`) every size above reads as if density were at least 1.1: `h-control-md` 31 · `h-field-md` 44. Small standalone controls add a 44px hit area with `tap`.
 
 ## Radius

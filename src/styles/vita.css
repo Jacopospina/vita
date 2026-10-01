@@ -1,0 +1,482 @@
+/*
+ * VITA, entry stylesheet. Import once at the app root.
+ * Tailwind's default palette, font sizes, radii, shadows and easings are REMOVED:
+ * only Vita tokens exist as utilities, so off-system values cannot compile.
+ */
+@import "tailwindcss";
+@import "./theme.css";
+@import "./presets.css";
+@import "./palette.css";
+@import "./tokens.css";
+@import "./motion.css";
+
+@custom-variant dark (&:where(.dark, .dark *, [data-theme="dark"], [data-theme="dark"] *));
+/* Touch: use the built-in `pointer-coarse:` variant for what hover would otherwise reveal (a × , a sort arrow). */
+
+@theme inline {
+  /* wipe Tailwind defaults */
+  --color-*: initial;
+  --text-*: initial;
+  --radius-*: initial;
+  --shadow-*: initial;
+  --inset-shadow-*: initial;
+  --drop-shadow-*: initial;
+  --ease-*: initial;
+  --font-*: initial;
+  --blur-*: initial;
+  /* choreography blurs only (enter/exit, cross-blur morphs), not a decorative scale */
+  --blur-xs: 2px;
+  --blur-sm: 4px;
+  --blur-md: 8px;
+  --tracking-*: initial;
+  --leading-*: initial;
+
+  /* colors */
+  --color-transparent: transparent;
+  --color-current: currentColor;
+  --color-background: var(--vita-background);
+  --color-layer-1: var(--vita-layer-1);
+  --color-layer-2: var(--vita-layer-2);
+  --color-layer-3: var(--vita-layer-3);
+  --color-raised: var(--vita-raised);
+  --color-elevated: var(--vita-elevated);
+  --color-field: var(--vita-field);
+  --color-overlay: var(--vita-overlay);
+  --color-inverse: var(--vita-inverse);
+  --color-inverse-foreground: var(--vita-inverse-foreground);
+  --color-foreground: var(--vita-foreground);
+  --color-muted-foreground: var(--vita-muted-foreground);
+  --color-helper: var(--vita-helper);
+  --color-placeholder: var(--vita-placeholder);
+  --color-disabled-foreground: var(--vita-disabled-foreground);
+  --color-border-subtle: var(--vita-border-subtle);
+  --color-border: var(--vita-border);
+  --color-border-strong: var(--vita-border-strong);
+  --color-border-field: var(--vita-border-field);
+  --color-divider: var(--vita-divider);
+  --color-primary: var(--vita-primary);
+  --color-primary-hover: var(--vita-primary-hover);
+  --color-primary-active: var(--vita-primary-active);
+  --color-primary-foreground: var(--vita-primary-foreground);
+  --color-primary-subtle: var(--vita-primary-subtle);
+  --color-secondary: var(--vita-secondary);
+  --color-secondary-hover: var(--vita-secondary-hover);
+  --color-secondary-foreground: var(--vita-secondary-foreground);
+  --color-link: var(--vita-link);
+  --color-link-visited: var(--vita-link-visited);
+  --color-focus: var(--vita-focus);
+  --color-focus-inset: var(--vita-focus-inset);
+  --color-hover: var(--vita-hover);
+  --color-active: var(--vita-active);
+  --color-selected: var(--vita-selected);
+  --color-selected-foreground: var(--vita-selected-foreground);
+  --color-skeleton: var(--vita-skeleton);
+  --color-icon-surface: var(--vita-icon-surface);
+  --color-icon-surface-solid: var(--vita-icon-surface-solid);
+  --color-success: var(--vita-success);
+  --color-success-subtle: var(--vita-success-subtle);
+  --color-success-foreground: var(--vita-success-foreground);
+  --color-warning: var(--vita-warning);
+  --color-warning-subtle: var(--vita-warning-subtle);
+  --color-warning-foreground: var(--vita-warning-foreground);
+  --color-error: var(--vita-error);
+  --color-error-subtle: var(--vita-error-subtle);
+  --color-error-foreground: var(--vita-error-foreground);
+  --color-error-hover: var(--vita-error-hover);
+  --color-info: var(--vita-info);
+  --color-info-subtle: var(--vita-info-subtle);
+  --color-info-foreground: var(--vita-info-foreground);
+  --color-ai-from: var(--vita-ai-from);
+  --color-ai-to: var(--vita-ai-to);
+  --color-ai-subtle: var(--vita-ai-subtle);
+
+  /* typography roles */
+  --font-sans: var(--vita-font-sans);
+  --font-display: var(--vita-font-display);
+  --font-mono: var(--vita-font-mono);
+  --font-numeric: var(--vita-font-numeric);
+
+  --text-caption: var(--vita-text-caption);
+  --text-caption--line-height: 1.4;
+  --text-caption--letter-spacing: 0.01em;
+  --text-footnote: var(--vita-text-footnote);
+  --text-footnote--line-height: 1.4;
+  --text-footnote--letter-spacing: 0.005em;
+  --text-body: var(--vita-text-body);
+  --text-body--line-height: 1.45;
+  --text-body-lg: var(--vita-text-body-lg);
+  --text-body-lg--line-height: 1.5;
+  --text-headline: var(--vita-text-headline);
+  --text-headline--line-height: 1.35;
+  --text-headline--font-weight: 600;
+  --text-title-3: var(--vita-text-title-3);
+  --text-title-3--line-height: 1.3;
+  --text-title-3--font-weight: 600;
+  --text-title-3--letter-spacing: -0.005em;
+  --text-title-2: var(--vita-text-title-2);
+  --text-title-2--line-height: 1.25;
+  --text-title-2--font-weight: 600;
+  --text-title-2--letter-spacing: -0.01em;
+  --text-title-1: var(--vita-text-title-1);
+  --text-title-1--line-height: 1.2;
+  --text-title-1--font-weight: 650;
+  --text-title-1--letter-spacing: -0.015em;
+  --text-large-title: var(--vita-text-large-title);
+  --text-large-title--line-height: 1.15;
+  --text-large-title--font-weight: 600;
+  --text-large-title--letter-spacing: -0.02em;
+  --text-display: var(--vita-text-display);
+  --text-display--line-height: 1.05;
+  --text-display--font-weight: 600;
+  --text-display--letter-spacing: -0.025em;
+
+  /* shape */
+  --radius-sm: var(--vita-radius-sm);
+  --radius-md: var(--vita-radius-md);
+  --radius-lg: var(--vita-radius-lg);
+  --radius-xl: var(--vita-radius-xl);
+
+  /* elevation */
+  --shadow-raised: var(--vita-shadow-raised);
+  --shadow-floating: var(--vita-shadow-floating);
+  --shadow-overlay: var(--vita-shadow-overlay);
+
+  /* DENSITY drives the whole spacing scale: every p-*, m-*, gap-*, space-* (and spacing-based sizes) */
+  /* spacing follows density at half strength, never below 90%, small gaps (4·8·16) stay comfortable */
+  --spacing: calc(0.25rem * max(0.9, 1 + (var(--_d) - 1) * 0.5));
+
+  /* density-driven sizes: h-control-md, px-inset, … */
+  --spacing-control-xs: var(--vita-control-xs);
+  --spacing-control-sm: var(--vita-control-sm);
+  --spacing-control-md: var(--vita-control-md);
+  --spacing-control-lg: var(--vita-control-lg);
+  --spacing-control-xl: var(--vita-control-xl);
+  --spacing-field-sm: var(--vita-field-sm);
+  --spacing-field-md: var(--vita-field-md);
+  --spacing-field-lg: var(--vita-field-lg);
+  --spacing-inset-sm: var(--vita-inset-sm);
+  --spacing-inset: var(--vita-inset);
+  --spacing-inset-lg: var(--vita-inset-lg);
+
+  /* motion */
+  --ease-productive: var(--vita-ease-productive);
+  --ease-productive-enter: var(--vita-ease-productive-enter);
+  --ease-productive-exit: var(--vita-ease-productive-exit);
+  --ease-expressive: var(--vita-ease-expressive);
+  --ease-expressive-enter: var(--vita-ease-expressive-enter);
+  --ease-expressive-exit: var(--vita-ease-expressive-exit);
+  --ease-spring: var(--vita-ease-spring);
+  --default-transition-duration: var(--vita-duration-fast-02);
+  --default-transition-timing-function: var(--vita-ease-productive);
+}
+
+/* Animations are NOT inline so reduced-motion can swap them at runtime. */
+@theme {
+  --animate-enter-scale: vita-scale-in var(--vita-duration-moderate-01) var(--vita-ease-productive-enter);
+  --animate-focus-in: vita-focus-in var(--vita-duration-slow-01) var(--vita-ease-expressive-enter);
+  --animate-enter-dialog: vita-dialog-rise var(--vita-duration-moderate-02) var(--vita-ease-productive-enter) both;
+  --animate-exit-dialog: vita-scale-out var(--vita-duration-moderate-01) var(--vita-ease-expressive-exit) both;
+  /* Exits are productive: the user has already moved on. */
+  --animate-modal-fall: vita-modal-fall var(--vita-duration-moderate-02) var(--vita-ease-productive-exit) both;
+  --animate-modal-send: vita-modal-send var(--vita-duration-moderate-02) var(--vita-ease-productive-exit) both;
+  --animate-exit-scale: vita-scale-out var(--vita-duration-fast-02) var(--vita-ease-productive-exit) both;
+  --animate-enter-list: vita-list-rise var(--vita-duration-moderate-01) var(--vita-ease-productive-enter);
+  --animate-exit-list: vita-list-sink var(--vita-duration-fast-02) var(--vita-ease-productive-exit) both;
+  --animate-enter-fade: vita-fade-in var(--vita-duration-fast-02) var(--vita-ease-productive-enter);
+  --animate-exit-fade: vita-fade-out var(--vita-duration-fast-02) var(--vita-ease-productive-exit) both;
+  --animate-enter-slide-up: vita-slide-up-in var(--vita-duration-expressive) var(--vita-ease-expressive-enter);
+  --animate-exit-slide-down: vita-slide-down-out var(--vita-duration-moderate-01) var(--vita-ease-productive-exit) both;
+  --animate-enter-panel-right: vita-float-in-right var(--vita-duration-moderate-02) var(--vita-ease-productive-enter) both;
+  --animate-exit-panel-right: vita-float-out-right var(--vita-duration-moderate-01) var(--vita-ease-productive-exit) both;
+  --animate-enter-panel-left: vita-slide-right-in var(--vita-duration-expressive) var(--vita-ease-expressive-enter);
+  --animate-exit-panel-left: vita-slide-left-out var(--vita-duration-moderate-01) var(--vita-ease-productive-exit) both;
+  --animate-expand: vita-collapse-down var(--vita-duration-moderate-02) var(--vita-ease-productive);
+  --animate-collapse: vita-collapse-up var(--vita-duration-moderate-01) var(--vita-ease-productive) both;
+  --animate-spin: vita-spin 690ms linear infinite;
+  --animate-text-reveal: vita-text-in var(--vita-duration-expressive) var(--vita-ease-expressive-enter) both;
+  --animate-text-reveal-down: vita-text-in-down var(--vita-duration-expressive) var(--vita-ease-expressive-enter) both;
+  --animate-text-leave-down: vita-text-out-down var(--vita-duration-moderate-02) var(--vita-ease-productive-exit) both;
+  --animate-banner-in: vita-banner-in var(--vita-duration-expressive) var(--vita-ease-expressive-enter) both, vita-gravity var(--vita-duration-expressive) linear both;
+  --animate-enter-fall: vita-fall-in var(--vita-duration-expressive) linear both;
+  --animate-chip-in: vita-chip-in var(--vita-duration-expressive) var(--vita-ease-spring) both;
+  --animate-drift: vita-drift 28s ease-in-out infinite alternate;
+  /* calendar months: same duration for every part (the picker cleans up when the caption finishes) */
+  --animate-month-in-next: vita-month-in-right var(--vita-duration-moderate-02) var(--vita-ease-productive-enter) both;
+  --animate-month-out-next: vita-month-out-left var(--vita-duration-moderate-02) var(--vita-ease-productive-exit) both;
+  --animate-month-in-prev: vita-month-in-left var(--vita-duration-moderate-02) var(--vita-ease-productive-enter) both;
+  --animate-month-out-prev: vita-month-out-right var(--vita-duration-moderate-02) var(--vita-ease-productive-exit) both;
+  --animate-month-caption-in: vita-fade-in var(--vita-duration-moderate-02) var(--vita-ease-productive-enter) both;
+  --animate-month-caption-out: vita-fade-out var(--vita-duration-moderate-02) var(--vita-ease-productive-exit) both;
+  --animate-banner-out: vita-banner-out var(--vita-duration-moderate-02) var(--vita-ease-productive-exit) both;
+  --animate-island-in: vita-island-in var(--vita-duration-expressive) var(--vita-ease-expressive-enter) both, vita-gravity var(--vita-duration-expressive) linear both;
+  --animate-island-out: vita-island-out var(--vita-duration-moderate-02) var(--vita-ease-productive-exit) var(--vita-duration-moderate-02) both;
+  --animate-drop-in: vita-drop-in var(--vita-duration-expressive) linear both;
+  --animate-shimmer: vita-shimmer 1.6s linear infinite;
+  /* status glyphs: non-final states stay alive by animating an INNER path; the frame never moves */
+  --animate-status-dot-1: vita-status-dot 1.4s var(--vita-ease-productive) infinite;
+  --animate-status-dot-2: vita-status-dot 1.4s var(--vita-ease-productive) 0.2s infinite;
+  --animate-status-dot-3: vita-status-dot 1.4s var(--vita-ease-productive) 0.4s infinite;
+  --animate-status-turn: vita-status-turn 3s linear infinite;
+  --animate-status-breathe: vita-status-breathe 2s var(--vita-ease-productive) infinite;
+  --animate-status-breathe-late: vita-status-breathe 2s var(--vita-ease-productive) 1s infinite;
+  --animate-status-fill: vita-status-fill 2.4s var(--vita-ease-productive) infinite;
+  --animate-indeterminate: vita-indeterminate 1.4s var(--vita-ease-productive) infinite;
+  /* different speeds on purpose: blobs overtake each other and melt together, then pull apart */
+}
+
+/*
+ * CHOREOGRAPHY, every region enters and leaves in sequence.
+ * `stagger`: direct children (or the children of a single wrapper) rise from blur, 60ms apart.
+ * Inside an element with data-leaving, the same children sink out, 20ms apart, faster than they came.
+ */
+@utility stagger {
+  & > *, & > :only-child > * {
+    animation: vita-rise-in var(--vita-duration-expressive) var(--vita-ease-expressive-enter) backwards; /* no fill after: a lingering filter would cut glass inside off from its backdrop */
+    animation-delay: calc(var(--vita-i, 12) * 70ms * var(--vita-motion-scale));
+  }
+  & > :only-child:has(> *) { animation: none; }
+  & > :nth-child(1), & > :only-child > :nth-child(1) { --vita-i: 0; }
+  & > :nth-child(2), & > :only-child > :nth-child(2) { --vita-i: 1; }
+  & > :nth-child(3), & > :only-child > :nth-child(3) { --vita-i: 2; }
+  & > :nth-child(4), & > :only-child > :nth-child(4) { --vita-i: 3; }
+  & > :nth-child(5), & > :only-child > :nth-child(5) { --vita-i: 4; }
+  & > :nth-child(6), & > :only-child > :nth-child(6) { --vita-i: 5; }
+  & > :nth-child(7), & > :only-child > :nth-child(7) { --vita-i: 6; }
+  & > :nth-child(8), & > :only-child > :nth-child(8) { --vita-i: 7; }
+  & > :nth-child(9), & > :only-child > :nth-child(9) { --vita-i: 8; }
+  & > :nth-child(10), & > :only-child > :nth-child(10) { --vita-i: 9; }
+  & > :nth-child(11), & > :only-child > :nth-child(11) { --vita-i: 10; }
+  & > :nth-child(12), & > :only-child > :nth-child(12) { --vita-i: 11; }
+  [data-leaving] & > *, [data-leaving] & > :only-child > * {
+    animation: vita-sink-out var(--vita-duration-fast-02) var(--vita-ease-productive-exit) both;
+    animation-delay: calc(var(--vita-i, 12) * 20ms * var(--vita-motion-scale));
+  }
+  @media (prefers-reduced-motion: reduce) {
+    & > *, & > :only-child > * { animation: vita-fade-in var(--vita-duration-fast-02) linear both; animation-delay: 0ms; }
+  }
+}
+
+/*
+ * CONCENTRIC RADIUS, inner radius = outer radius − padding (never below 0).
+ *   Container:  scope-lg p-2            (sets its radius and exposes it to children)
+ *   Child:      rounded-inner-2         (= radius-lg − spacing 2)
+ *   Grandchild: rounded-inner2-1        (= child radius − spacing 1)
+ * The same formula run OUTWARD, a container wrapping controls derives its radius from them:
+ *   Wrapper:    rounded-outer-1 p-1     (= control radius-md + spacing 1)
+ */
+@utility scope-sm { border-radius: var(--vita-radius-sm); --vita-scope-r: var(--vita-radius-sm); }
+@utility scope-md { border-radius: var(--vita-radius-md); --vita-scope-r: var(--vita-radius-md); }
+@utility scope-lg { border-radius: var(--vita-radius-lg); --vita-scope-r: var(--vita-radius-lg); }
+@utility scope-xl { border-radius: var(--vita-radius-xl); --vita-scope-r: var(--vita-radius-xl); }
+@utility rounded-inner-* {
+  border-radius: max(0px, calc(var(--vita-scope-r, var(--vita-radius-md)) - --value(number) * var(--spacing)));
+  --vita-scope-r2: max(0px, calc(var(--vita-scope-r, var(--vita-radius-md)) - --value(number) * var(--spacing)));
+}
+@utility rounded-outer-* {
+  border-radius: calc(var(--vita-radius-md) + --value(number) * var(--spacing));
+  --vita-scope-r: calc(var(--vita-radius-md) + --value(number) * var(--spacing));
+}
+/* A 1px divider painted as a background, so it follows a cell's rounded corners instead of curving up like a border. */
+@utility divider-b {
+  background-image: linear-gradient(var(--color-divider), var(--color-divider));
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: 100% 1px;
+}
+@utility rounded-inner2-* {
+  border-radius: max(0px, calc(var(--vita-scope-r2, var(--vita-radius-sm)) - --value(number) * var(--spacing)));
+}
+
+/* The two motion characters, as one class each (duration + easing). */
+@utility motion-productive { transition-duration: var(--vita-duration-moderate-01); transition-timing-function: var(--vita-ease-productive); }
+@utility motion-expressive { transition-duration: var(--vita-duration-expressive); transition-timing-function: var(--vita-ease-expressive); }
+
+/* Motion duration utilities */
+@utility duration-fast-01 { transition-duration: var(--vita-duration-fast-01); }
+@utility duration-fast-02 { transition-duration: var(--vita-duration-fast-02); }
+@utility duration-moderate-01 { transition-duration: var(--vita-duration-moderate-01); }
+@utility duration-moderate-02 { transition-duration: var(--vita-duration-moderate-02); }
+@utility duration-slow-01 { transition-duration: var(--vita-duration-slow-01); }
+@utility duration-slow-02 { transition-duration: var(--vita-duration-slow-02); }
+@utility duration-expressive { transition-duration: var(--vita-duration-expressive); }
+
+/* The one focus treatment. Use `focus-ring` on anything focusable that isn't an Vita component. */
+/* Focus rings fade and settle in (outline exists transparently, so it can transition). */
+/* Focus: a crisp 1px outline plus a thick flat halo (solid spread, no blur). It settles in slowly. */
+@utility focus-ring {
+  outline: 1px solid transparent;
+  outline-offset: 4px;
+  &:focus-visible { outline-color: var(--vita-ring); outline-offset: 1px; box-shadow: 0 0 0 5px color-mix(in oklab, var(--vita-ring) 22%, transparent); animation: var(--animate-focus-in); }
+}
+@utility focus-ring-inset {
+  outline: 1px solid transparent;
+  outline-offset: 0px;
+  &:focus-visible { outline-color: var(--vita-ring); outline-offset: -1px; box-shadow: inset 0 0 0 4px color-mix(in oklab, var(--vita-ring) 22%, transparent); animation: var(--animate-focus-in); }
+}
+/* The flat halo on its own, for components that draw their own outline (fields, composer). Uses the element's ring colour. */
+@utility focus-halo { box-shadow: 0 0 0 5px color-mix(in oklab, var(--vita-ring) 22%, transparent); }
+@utility focus-halo-inset { box-shadow: inset 0 0 0 4px color-mix(in oklab, var(--vita-ring) 22%, transparent); }
+
+/* Collapsible regions without measuring: grid rows 0fr ↔ 1fr, child overflow-hidden. */
+@utility reveal { display: grid; grid-template-rows: 0fr; & > * { overflow: hidden; min-height: 0; } }
+@utility reveal-open { grid-template-rows: 1fr; }
+/* Horizontal reveal: width grows from 0 to its content (capsule expanding sideways).
+   The direct child must NOT have a fixed width (wrap sized content in a plain div), or the column can't collapse. */
+@utility reveal-x { display: grid; grid-template-columns: 0fr; & > * { overflow: hidden; min-width: 0; } }
+@utility reveal-x-open { grid-template-columns: 1fr; }
+
+/* Numbers & numeric values: tabular figures in the numeric face. `tabular-nums` alone is enough. */
+@layer utilities {
+  /* Numbers are always regular weight, whatever the surrounding text's weight. */
+  .tabular-nums { font-family: var(--vita-font-numeric); font-weight: 400 !important; }
+}
+
+/* SQUIRCLE, continuous-curvature corners (not a circular arc). Needs a larger radius to read the same size.
+   Browsers without corner-shape keep ordinary rounded corners. */
+@utility squircle {
+  border-radius: var(--vita-squircle-r, var(--vita-radius-md));
+  @supports (corner-shape: squircle) {
+    corner-shape: squircle;
+    border-radius: calc(var(--vita-squircle-r, var(--vita-radius-md)) * 1.9);
+  }
+}
+
+/* LIFT HOVER, perspective tilt toward the pointer + a following glare (driven by useTilt). */
+@utility tilt {
+  transform: perspective(28rem) rotateX(var(--vita-tilt-x, 0deg)) rotateY(var(--vita-tilt-y, 0deg)) scale(var(--vita-tilt-s, 1));
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    /* Same silhouette as its owner: radius AND corner shape (corner-shape isn't inherited by default, without it the
+       glare was a plain rounded rectangle peeking past the squircle on hover). */
+    border-radius: inherit;
+    corner-shape: inherit;
+    pointer-events: none;
+    background: radial-gradient(circle at var(--vita-glare-x, 50%) var(--vita-glare-y, 50%), oklch(1 0 0 / 0.28), transparent 65%);
+    opacity: var(--vita-glare-o, 0);
+    mix-blend-mode: soft-light;
+  }
+  /* Nothing hovers on a touch screen: no perspective (a 3D transform gives every button its own GPU layer, a page of
+     buttons is a page of textures on a phone) and no glare box. The press (scale) still plays. */
+  @media (hover: none) {
+    transform: none;
+    &::after { content: none; }
+  }
+}
+
+/*
+ * TAP, a 44px hit area around a small STANDALONE control, only under a finger (pointer: coarse). The element must be
+ * positioned (`relative` or `absolute`). The visual stays the same size; the invisible target grows to the finger.
+ * Standalone means no interactive neighbour within ~12px on either axis: checkboxes, radios, switches, slider knobs,
+ * a lone × or ⓘ. Never on rows, tabs, button sets or table cells, their targets would overlap their neighbours' boxes.
+ */
+@utility tap {
+  @media (pointer: coarse) {
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: max(100%, 44px);
+      height: max(100%, 44px);
+      translate: -50% -50%;
+    }
+  }
+}
+
+/* DRAW, icons trace their outline, then fill (enter); fill fades, outline un-traces (exit). Paths get pathLength=1 from <Icon draw>. */
+@utility icon-draw {
+  & :is(path, circle, rect, polygon, ellipse):not([fill="none"]):not([data-name*="Transparent"]) {
+    stroke: currentColor; stroke-width: 1.25; stroke-linejoin: round; stroke-dasharray: 1;
+    animation: vita-draw-in var(--vita-duration-expressive) var(--vita-ease-expressive-enter) both;
+  }
+  @media (prefers-reduced-motion: reduce) { & * { animation: none !important; stroke: none; } }
+}
+@utility icon-undraw {
+  & :is(path, circle, rect, polygon, ellipse):not([fill="none"]):not([data-name*="Transparent"]) {
+    stroke: currentColor; stroke-width: 1.25; stroke-linejoin: round; stroke-dasharray: 1;
+    animation: vita-draw-out var(--vita-duration-moderate-02) var(--vita-ease-productive-exit) both;
+  }
+}
+
+/* AI outline: the rainbow spectrum, slowly rotating (still under reduced motion). */
+@property --vita-ai-angle { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+@utility ai-gradient-border {
+  border: 1.5px solid transparent;
+  background:
+    /* a clean card surface (white in light) inside the rainbow edge */
+    linear-gradient(var(--vita-raised), var(--vita-raised)) padding-box,
+    conic-gradient(from var(--vita-ai-angle), var(--vita-ai-spectrum)) border-box;
+  animation: vita-ai-spin 6s linear infinite;
+  /* Each step of the angle repaints the gradient. On a phone, 15 steps a second (4° each) look the same and cost a quarter. */
+  @media (pointer: coarse) { animation-timing-function: steps(90); }
+  @media (prefers-reduced-motion: reduce) { animation: none; }
+}
+@utility ai-gradient-text {
+  background: linear-gradient(90deg, var(--vita-palette-blue-500), var(--vita-palette-purple-500), var(--vita-palette-pink-500), var(--vita-palette-orange-500));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@layer base {
+  *, ::before, ::after { border-color: var(--vita-border); }
+  html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+  body {
+    background: var(--vita-background);
+    color: var(--vita-foreground);
+    font-family: var(--vita-font-sans);
+    font-size: var(--vita-text-body);
+    line-height: 1.45;
+  }
+  ::selection { background: var(--vita-primary-subtle); }
+  /* TAPS, every control answers a finger at once: no double-tap-to-zoom wait (a stepper tapped twice must step twice,
+     never zoom), no grey tap flash over the system's own press state, no long-press callout on buttons. Scrolling and
+     pinching inside stay as they are; the slider's touch-none still wins. */
+  :where(button, [role="button"], [role="checkbox"], [role="radio"], [role="switch"], [role="tab"], [role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"], [role="option"], [role="slider"], [role="combobox"], a[href], label, input, select, textarea, summary) {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+  :where(button, [role="button"], [role="checkbox"], [role="radio"], [role="switch"], [role="tab"], [role="slider"]) { -webkit-touch-callout: none; }
+  /* Fallback ring for elements without their own, skipped by elements that opt out (outline-none), e.g. a
+     composer's inner textarea, so only the component's ring shows. */
+  :focus-visible:not(.outline-none) { outline: 1px solid var(--vita-ring); outline-offset: 1px; box-shadow: 0 0 0 5px color-mix(in oklab, var(--vita-ring) 22%, transparent); animation: var(--animate-focus-in); }
+}
+
+/**
+ * `glass`, the frosted material for floating surfaces (notification banners, overlays over content):
+ * translucent raised fill + background blur + saturation, a hairline and the overlay shadow.
+ */
+/*
+ * Glass tiers, the higher a surface sits (z-index), the more frosted it is: more blur, more of what's behind
+ * shows through. Pair `glass` with the tier of the surface's layer.
+ *   glass-1  z-30  side panels            glass-2  z-40  header
+ *   glass-3  z-50  menus, lists, popovers glass-4  z-50+ dialogs (above their overlay)
+ *   glass-5  z-60  notifications, capsules
+ */
+@utility glass-1 { --vita-glass-blur: calc(10px * var(--vita-glass-scale, 1)); --vita-glass-fill: 24%; --vita-glass-sat: 1.4; }
+@utility glass-2 { --vita-glass-blur: calc(14px * var(--vita-glass-scale, 1)); --vita-glass-fill: 20%; --vita-glass-sat: 1.5; }
+@utility glass-3 { --vita-glass-blur: calc(18px * var(--vita-glass-scale, 1)); --vita-glass-fill: 16%; --vita-glass-sat: 1.6; }
+@utility glass-4 { --vita-glass-blur: calc(24px * var(--vita-glass-scale, 1)); --vita-glass-fill: 80%; --vita-glass-sat: 1.7; }
+@utility glass-5 { --vita-glass-blur: calc(30px * var(--vita-glass-scale, 1)); --vita-glass-fill: 8%; --vita-glass-sat: 1.8; }
+/* A backdrop blur is re-rendered under every scrolled frame, and its cost grows with the radius squared. On touch
+   devices the tiers keep their order at six tenths of the radius: frost still rises with the layer, the scroll stays smooth. */
+@media (pointer: coarse) { :root { --vita-glass-scale: 0.6; } }
+
+@utility glass {
+  background-color: color-mix(in oklab, var(--vita-elevated) var(--vita-glass-fill, 16%), transparent);
+  /* Translucent enough to see content moving beneath; the backdrop is brightened (light mode) so the glass still reads white. */
+  /* Unprefixed only: the build adds -webkit- for Safari. Writing both made the minifier keep just the prefixed one,
+     which Chrome ignores, production glass lost its blur. */
+  backdrop-filter: blur(var(--vita-glass-blur, 18px)) saturate(var(--vita-glass-sat, 1.6)) brightness(var(--vita-glass-lift));
+  border: 1px solid color-mix(in oklab, var(--vita-foreground) 10%, transparent);
+  box-shadow: var(--vita-shadow-overlay), inset 0 1px 0 color-mix(in oklab, white 22%, transparent);
+  @media (prefers-reduced-transparency: reduce) { background-color: var(--vita-elevated); backdrop-filter: none; }
+}
+
+/* Canvas edges dissolve on all four sides, so content reads as continuing beyond the frame. */
+@utility canvas-fade {
+  mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent), linear-gradient(to bottom, transparent, black 10%, black 82%, transparent);
+  mask-composite: intersect;
+}

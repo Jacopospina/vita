@@ -5,7 +5,7 @@ import { Label } from "@/registry/ui/form"
 import { AnimatedNumber, AnimatedText } from "@/registry/ui/animated"
 
 /**
- * Slider — choose a value (or range) where relative position matters more than precision: volume, opacity, price range.
+ * Slider, choose a value (or range) where relative position matters more than precision: volume, opacity, price range.
  * Always pair with a visible value; for exact entry add `withInput`.
  * Single value → the value lives IN the knob (the eye is already there). Range → both values beside the label.
  */

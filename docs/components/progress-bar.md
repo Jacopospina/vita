@@ -1,8 +1,8 @@
 ---
 title: Progress bar
-summary: Progress of a system process with a measurable end — or indeterminate when the end is unknown. Also quota and usage.
+summary: Progress of a system process with a measurable end, or indeterminate when the end is unknown. Also quota and usage.
 status: stable
-import: "import { ProgressBar } from \"@/components/corpus/progress-bar\""
+import: "import { ProgressBar } from \"@/components/vita/progress-bar\""
 use_when:
   - Uploads, imports, exports, setup jobs longer than ~2 seconds
   - Usage vs limit (seats, storage) with helper text

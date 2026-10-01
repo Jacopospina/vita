@@ -1,6 +1,6 @@
 ---
 title: Dialogs
-summary: Choosing between Modal, RightPanel, Popover, Toggletip and toast — and writing dialogs people understand in one glance.
+summary: Choosing between Modal, RightPanel, Popover, Toggletip and toast, and writing dialogs people understand in one glance.
 status: stable
 use_when:
   - Any time UI needs to appear on top of the current page

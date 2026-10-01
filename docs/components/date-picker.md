@@ -2,11 +2,11 @@
 title: Date picker
 summary: Dates by typing first, with a calendar when it helps. Simple, single and range.
 status: stable
-import: "import { DatePicker, DateRangePicker, Calendar } from \"@/components/corpus/date-picker\""
+import: "import { DatePicker, DateRangePicker, Calendar } from \"@/components/vita/date-picker\""
 use_when:
-  - simple — known dates far from today (birthday, contract start years ago): typing is fastest
-  - single — near-future scheduling where weekday context matters (go-live, deadline)
-  - range — periods (reporting range, booking)
+  - simple, known dates far from today (birthday, contract start years ago): typing is fastest
+  - single, near-future scheduling where weekday context matters (go-live, deadline)
+  - range, periods (reporting range, booking)
 avoid_when:
   - Relative ranges ("Last 7 days") → Dropdown of presets (optionally + custom range)
   - Time only → TextInput with time type

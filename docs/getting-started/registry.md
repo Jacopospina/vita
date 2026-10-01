@@ -1,6 +1,6 @@
 ---
 title: Registry
-summary: Corpus ships as source — a registry of components, hooks, blocks, icons and styles you install into your repo and own.
+summary: Vita ships as source, a registry of components, hooks, blocks, icons and styles you install into your repo and own.
 status: stable
 related: [installation, cli]
 ---
@@ -18,6 +18,6 @@ related: [installation, cli]
 
 ## Rules
 
-- **Import through the alias.** `@/components/corpus/<name>` — never copy a component's insides into product code.
-- **Source you own, not a black box.** You can read every line; changes that help everyone go back into Corpus.
-- **Add what you use.** `corpus add <name>` brings a component and its internal dependencies.
+- **Import through the alias.** `@/components/vita/<name>`, never copy a component's insides into product code.
+- **Source you own, not a black box.** You can read every line; changes that help everyone go back into Vita.
+- **Add what you use.** `vita add <name>` brings a component and its internal dependencies.

@@ -5,7 +5,7 @@ import { DrawnMark } from "@/registry/ui/icon"
 import { Label, FieldMessage } from "@/registry/ui/form"
 
 /**
- * Checkbox — independent on/off choices that take effect on SUBMIT, or multi-select from a list.
+ * Checkbox, independent on/off choices that take effect on SUBMIT, or multi-select from a list.
  * Instant effect (a setting) → Toggle. Exactly one of many → Radio.
  */
 export interface CheckboxProps extends React.ComponentProps<typeof CheckboxPrimitive.Root> {
@@ -24,12 +24,12 @@ export function Checkbox({ label, helperText, invalid, className, id: idProp, ..
       aria-invalid={invalid || undefined}
       aria-describedby={helperText ? `${id}-help` : undefined}
       className={cn(
-        "peer relative tap mt-0.5 flex size-4 shrink-0 items-center justify-center squircle border border-border-strong bg-field [--corpus-squircle-r:22%]", // same proportional squircle as IconPlaceholder; `tap`: a 44px finger target
+        "peer relative tap mt-0.5 flex size-4 shrink-0 items-center justify-center squircle border border-border-strong bg-field [--vita-squircle-r:22%]", // same proportional squircle as IconPlaceholder; `tap`: a 44px finger target
         " duration-fast-01 ease-productive focus-ring",
         "data-[state=checked]:border-primary data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground",
         "data-[state=indeterminate]:border-primary data-[state=indeterminate]:bg-primary data-[state=indeterminate]:text-primary-foreground",
         "disabled:cursor-not-allowed disabled:border-disabled-foreground disabled:data-[state=checked]:bg-disabled-foreground",
-        "aria-invalid:border-error aria-invalid:[--corpus-ring:var(--corpus-error)]",
+        "aria-invalid:border-error aria-invalid:[--vita-ring:var(--vita-error)]",
         !label && className,
       )}
       {...props}
@@ -64,7 +64,7 @@ export function Checkbox({ label, helperText, invalid, className, id: idProp, ..
   )
 }
 
-/** CheckboxGroup — a labelled set. Use a FormGroup-like legend so screen readers announce the question. */
+/** CheckboxGroup, a labelled set. Use a FormGroup-like legend so screen readers announce the question. */
 export function CheckboxGroup({ legend, helperText, invalid, invalidText, orientation = "vertical", className, children }: {
   legend: React.ReactNode
   helperText?: React.ReactNode

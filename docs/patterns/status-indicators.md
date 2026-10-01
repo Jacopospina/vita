@@ -1,8 +1,8 @@
 ---
 title: Status indicators
-summary: One vocabulary of states across the product — shape, color and word together, mapped in the taxonomy.
+summary: One vocabulary of states across the product, shape, color and word together, mapped in the taxonomy.
 status: stable
-import: "import { StatusIndicator } from \"@/components/corpus/status-indicator\""
+import: "import { StatusIndicator } from \"@/components/vita/status-indicator\""
 use_when:
   - Showing the state of an object (agent, run, deployment, integration)
 avoid_when:
@@ -35,7 +35,7 @@ related: [tag, notification, data-table]
 |---|---|---|
 | `in-progress` | Running now | The pie advances slice by slice, holding at each quarter |
 | `pending` | Waiting on someone | Three dots take turns |
-| `draft` | Being written | A written stroke — still, no animation |
+| `draft` | Being written | A written stroke, still, no animation |
 | `queued` | Waiting its turn | A clock hand turns |
 | `not-started` | Will run, hasn't yet | The core breathes |
 | `incomplete` | Partly done | The half-fill breathes |

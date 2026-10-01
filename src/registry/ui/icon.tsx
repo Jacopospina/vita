@@ -3,7 +3,7 @@ import type { IconType } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 
 /**
- * Icon — the only way to render an icon. Renders glyphs from @/registry/icons at Corpus sizes.
+ * Icon, the only way to render an icon. Renders glyphs from @/registry/icons at Vita sizes.
  * sm 16 (inline with body text, inside controls) · md 20 (standalone, toolbars, header) · lg 24 (empty states in dense UI) · xl 32 (tiles)
  */
 const sizes = { sm: 16, md: 20, lg: 24, xl: 32 } as const
@@ -25,7 +25,7 @@ const glyphId = (icon: object) => {
 }
 
 /**
- * SwapIcon — use whenever the glyph depends on state (status, sort direction, step, menu/close).
+ * SwapIcon, use whenever the glyph depends on state (status, sort direction, step, menu/close).
  * The first glyph renders still. On every change the old glyph un-draws while the new one draws in.
  */
 export function SwapIcon({ as, className, ...props }: IconProps) {
@@ -49,7 +49,7 @@ export function SwapIcon({ as, className, ...props }: IconProps) {
 }
 
 /**
- * DrawnMark — the check / dash used by selection controls. It is a stroke, so it DRAWS in when
+ * DrawnMark, the check / dash used by selection controls. It is a stroke, so it DRAWS in when
  * selected and un-draws when cleared (checkbox, menu and list checkmarks).
  */
 export function DrawnMark({ kind = "check", on, className }: { kind?: "check" | "dash"; on: boolean; className?: string }) {
@@ -90,7 +90,7 @@ export function Icon({ as: Glyph, size = "sm", label, className, draw, ...props 
 }
 
 /**
- * ProgressGlyph — "in progress", alive: the ring holds still while the pie inside advances slice by slice.
+ * ProgressGlyph, "in progress", alive: the ring holds still while the pie inside advances slice by slice.
  * Use instead of spinning an icon. Reduced motion shows a still quarter.
  */
 export function ProgressGlyph({ size = "sm", className, label }: { size?: keyof typeof sizes; className?: string; label?: string }) {
@@ -107,7 +107,7 @@ export function ProgressGlyph({ size = "sm", className, label }: { size?: keyof 
         strokeWidth="5.5"
         transform="rotate(-90 8 8)"
         strokeDasharray="25 100"
-        className="motion-safe:animate-[corpus-pie_4.8s_var(--corpus-ease-productive)_infinite]"
+        className="motion-safe:animate-[vita-pie_4.8s_var(--vita-ease-productive)_infinite]"
       />
     </svg>
   )

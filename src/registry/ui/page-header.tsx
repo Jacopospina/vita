@@ -3,9 +3,9 @@ import { cn } from "@/registry/lib/utils"
 import { Breadcrumb, type BreadcrumbItem } from "@/registry/ui/breadcrumb"
 
 /**
- * PageHeader — the top of every page inside the shell: breadcrumb → title (+ status) → description → page actions → tabs.
+ * PageHeader, the top of every page inside the shell: breadcrumb → title (+ status) → description → page actions → tabs.
  * Exactly one per page. Page actions: max 1 primary + 2 secondary; the rest go in an OverflowMenu.
- * Variant: key numbers on the right (`kpis`) — for overview pages where a few figures ARE the summary.
+ * Variant: key numbers on the right (`kpis`), for overview pages where a few figures ARE the summary.
  */
 export function PageHeader({ breadcrumb, title, status, description, actions, kpis, tabs, className }: {
   breadcrumb?: BreadcrumbItem[]
@@ -14,7 +14,7 @@ export function PageHeader({ breadcrumb, title, status, description, actions, kp
   status?: React.ReactNode
   description?: React.ReactNode
   actions?: React.ReactNode
-  /** Key numbers on the right of the title — a bare KpiGroup of 2–4 small Kpis. Sits before any actions. */
+  /** Key numbers on the right of the title, a bare KpiGroup of 2–4 small Kpis. Sits before any actions. */
   kpis?: React.ReactNode
   /** TabsList for page-level tabs; renders flush at the bottom. */
   tabs?: React.ReactNode

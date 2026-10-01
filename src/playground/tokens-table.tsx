@@ -17,7 +17,7 @@ const kindLabel: Record<TokenKind, string> = {
   animation: "Animation",
 }
 
-/** Live preview of a token — reads the resolved value so it follows the theme panel. */
+/** Live preview of a token, reads the resolved value so it follows the theme panel. */
 function Preview({ t }: { t: TokenRef }) {
   const v = `var(${t.cssVar})`
   switch (t.kind) {
@@ -58,13 +58,13 @@ export function TokensTable({ tokens }: { tokens: TokenRef[] }) {
   // Re-resolve when the theme panel or dark mode changes <html> attributes.
   React.useEffect(() => {
     const mo = new MutationObserver(() => force())
-    mo.observe(document.documentElement, { attributes: true, attributeFilter: ["style", "class", "data-corpus-preset"] })
+    mo.observe(document.documentElement, { attributes: true, attributeFilter: ["style", "class", "data-vita-preset"] })
     return () => mo.disconnect()
   }, [])
   const cs = getComputedStyle(document.documentElement)
   const groups = tokens.reduce<Record<string, TokenRef[]>>((a, t) => ((a[t.kind] ??= []).push(t), a), {})
 
-  if (!tokens.length) return <Text tone="muted">This page uses no tokens directly. It composes other Corpus components.</Text>
+  if (!tokens.length) return <Text tone="muted">This page uses no tokens directly. It composes other Vita components.</Text>
 
   return (
     <Stack gap="xl" className="stagger">
@@ -87,7 +87,7 @@ export function TokensTable({ tokens }: { tokens: TokenRef[] }) {
                 <code className="col-span-3 font-mono text-footnote">{t.utility}</code>
                 <code className="col-span-4 font-mono text-footnote text-muted-foreground">{t.cssVar}</code>
                 <code className={cn("col-span-4 truncate font-mono text-caption text-helper")} title={resolve(t, cs)}>
-                  {resolve(t, cs) || "—"}
+                  {resolve(t, cs) || "None"}
                 </code>
               </div>
             ))}

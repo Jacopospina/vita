@@ -2,7 +2,7 @@
 title: Code snippet
 summary: Code, commands and identifiers the user will copy. Copying is one click, with instant feedback.
 status: stable
-import: "import { CodeSnippet } from \"@/components/corpus/code-snippet\""
+import: "import { CodeSnippet } from \"@/components/vita/code-snippet\""
 use_when:
   - Showing commands, API keys, IDs, config the user must copy
   - Displaying code samples in docs/onboarding

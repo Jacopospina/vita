@@ -2,7 +2,7 @@
 title: Pagination
 summary: Split large datasets into pages, with page-size control and an honest item count.
 status: stable
-import: "import { Pagination } from \"@/components/corpus/pagination\""
+import: "import { Pagination } from \"@/components/vita/pagination\""
 use_when:
   - Tables and lists with more items than fit comfortably (> 25–50)
   - Users need to reference positions ("it was on page 3") or know the total

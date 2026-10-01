@@ -1,11 +1,11 @@
 /**
- * Liquid — a real particle fluid for ProgressBar's tip, not a look-alike.
+ * Liquid, a real particle fluid for ProgressBar's tip, not a look-alike.
  *
  * Viscoelastic SPH by double-density relaxation (pressure + near-pressure, which gives surface tension), with
  * pairwise viscosity, wall friction and wetting walls (ghost particles), weightless so it always fills the tube.
  *
  *   fill   The bar's body is solid: a piston that springs toward the value. In front of it rides a small, fixed
- *          volume of liquid — the tip. The piston pushes it; when the piston slows, the liquid's own inertia makes
+ *          volume of liquid, the tip. The piston pushes it; when the piston slows, the liquid's own inertia makes
  *          it surge, slosh and fall back against the body, which it wets so the two never separate.
  *   flow   (indeterminate) a slug of liquid is pushed round a looping tube by a pulsing pump, stretching, tearing
  *          into drops and fusing again.
@@ -18,7 +18,7 @@ const H = 1
 const SPACING = 1 / 3 // particle spacing: three rows of liquid across the tube
 const LIN = H / (SPACING * SPACING) // particles per unit of tube length, at rest
 const RADIUS = 0.6 // interaction radius
-const REST = 1.0 // rest density — what a SPACING lattice measures with this kernel
+const REST = 1.0 // rest density, what a SPACING lattice measures with this kernel
 const STIFF = 0.08 // pressure displacement per substep (tube heights)
 const NEAR = 0.12 // near-pressure: surface tension, and no clumping
 const VISC_L = 0.6 // linear viscosity
@@ -30,12 +30,12 @@ const SUBSTEPS = 4
 const MAX_V = 1.1 * RADIUS * SUBSTEPS * 60 // CFL-ish clamp
 const TIP = 2.4 // length of the liquid tip, in tube heights
 const SPRING = 7 // piston: natural frequency (rad/s)…
-const DAMP = 0.85 // …and damping ratio — it arrives with a whisper of overshoot, the liquid adds the rest
+const DAMP = 0.85 // …and damping ratio, it arrives with a whisper of overshoot, the liquid adds the rest
 
 export class LiquidSim {
   L: number
   mode: LiquidMode
-  /** 0..1 — fill mode. */
+  /** 0..1, fill mode. */
   target = 0
   /** The solid body's leading edge (piston), in tube heights. Fill mode. */
   p = 0
@@ -306,7 +306,7 @@ export function liquidCoverage(sim: LiquidSim, w: number, h: number, out?: Float
     field[k] = v <= 0 ? 0 : v >= 1 ? 1 : v * v * (3 - 2 * v)
   }
   // Soft liquid: blur the liquid's edges sideways (two box passes ≈ a small gaussian, ~0.35 tube height) so the
-  // meniscus and drops feel soft rather than cut out. Sideways only — the tube's top and bottom stay crisp.
+  // meniscus and drops feel soft rather than cut out. Sideways only, the tube's top and bottom stay crisp.
   const r = Math.max(1, Math.round(h * 0.18))
   const row = new Float32Array(w)
   for (let pass = 0; pass < 2; pass++)

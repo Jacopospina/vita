@@ -2,12 +2,12 @@ import * as React from "react"
 import { cn } from "@/registry/lib/utils"
 
 /**
- * Text choreography — values never snap.
- *   AnimatedNumber: each changed digit swaps quickly — the old one lifts and blurs away, the new one rises
+ * Text choreography, values never snap.
+ *   AnimatedNumber: each changed digit swaps quickly, the old one lifts and blurs away, the new one rises
  *                   and sharpens (downward when decreasing), staggered from the last digit. Never clipped.
  *                   Numbers are always regular weight.
  *   RollingText:    the same digits for ANY value string ("$1,200", "40%", "20 – 80").
- *   AnimatedText:   when text CHANGES, letters reveal in a stagger, sliding up and de-blurring —
+ *   AnimatedText:   when text CHANGES, letters reveal in a stagger, sliding up and de-blurring,
  *                   unless the change is a number, which always rolls.
  *                   First render is static, so pages don't shimmer on load.
  * Screen readers get the plain value; the animated glyphs are hidden from them.
@@ -22,7 +22,7 @@ const DIGIT_SWAP = "440ms cubic-bezier(0.22, 1, 0.36, 1)"
 /**
  * One digit. On change the old digit lifts a little and blurs away while the new one rises from just below,
  * blurred, and sharpens (reversed when the value drops). It travels a fraction of a line, so nothing needs
- * clipping — no digit is ever cut off by its box. The invisible "0" holds width and baseline.
+ * clipping, no digit is ever cut off by its box. The invisible "0" holds width and baseline.
  */
 function Digit({ value, index }: { value: number; index: number }) {
   const [state, setState] = React.useState({ cur: value, prev: null as number | null, dir: 1, n: 0 })
@@ -37,7 +37,7 @@ function Digit({ value, index }: { value: number; index: number }) {
         <span
           key={`p${state.n}`}
           className="absolute inset-0 text-center"
-          style={{ animation: `${up ? "corpus-digit-out-up" : "corpus-digit-out-down"} ${DIGIT_SWAP} ${delay} both` }}
+          style={{ animation: `${up ? "vita-digit-out-up" : "vita-digit-out-down"} ${DIGIT_SWAP} ${delay} both` }}
           onAnimationEnd={() => setState((s) => (s.n === state.n ? { ...s, prev: null } : s))}
         >
           {state.prev}
@@ -46,7 +46,7 @@ function Digit({ value, index }: { value: number; index: number }) {
       <span
         key={`c${state.n}`}
         className="absolute inset-0 text-center"
-        style={state.n && state.prev !== null ? { animation: `${up ? "corpus-digit-in-up" : "corpus-digit-in-down"} ${DIGIT_SWAP} ${delay} both` } : undefined}
+        style={state.n && state.prev !== null ? { animation: `${up ? "vita-digit-in-up" : "vita-digit-in-down"} ${DIGIT_SWAP} ${delay} both` } : undefined}
       >
         {state.cur}
       </span>
@@ -68,7 +68,7 @@ export function AnimatedNumber({ value, format, locale, className }: AnimatedNum
 }
 
 /**
- * RollingText — ANY value string animates per digit: every digit swaps on its own, everything else
+ * RollingText, ANY value string animates per digit: every digit swaps on its own, everything else
  * ($, %, commas, units, "–") stays put. Reels are keyed from the right, so 99 → 100 adds a reel on the left.
  */
 export function RollingText({ text, className }: { text: string; className?: string }) {
@@ -115,7 +115,7 @@ export function AnimatedText({ children, className, enter = "change", direction 
   const [changed, setChanged] = React.useState(false)
   if (!changed && children !== first) setChanged(true)
   // Numbers are never letter-revealed: numeric values, or text whose only change is its digits, swap digit by digit.
-  // (Sentences that merely CONTAIN numbers — "order 4821 arrives in 3–5 days" — stay normal, wrapping text.)
+  // (Sentences that merely CONTAIN numbers, "order 4821 arrives in 3–5 days", stay normal, wrapping text.)
   if (!leaving && enter === "change" && (isNumericValue(children) || (changed && /\d/.test(children) && template(children) === template(first)))) {
     return <RollingText text={children} className={className} />
   }

@@ -3,7 +3,7 @@ title: Content, personas & taxonomy
 summary: Words are part of the design system. Personas decide who we speak to, the taxonomy fixes the words, and skills enforce them.
 status: stable
 use_when:
-  - Writing any user-visible string — labels, buttons, errors, empty states, emails, AI responses
+  - Writing any user-visible string, labels, buttons, errors, empty states, emails, AI responses
   - Starting a new product or flow (create personas first)
 avoid_when:
   - Inventing a term that isn't in the taxonomy → add it to the taxonomy first
@@ -12,10 +12,10 @@ avoid_when:
 
 ## The chain
 
-1. **`corpus/product.md`.** What the product is, for whom, and the job it does.
-2. **`corpus/personas/*.md`.** 2–4 personas, created with the `corpus-personas` skill.
-3. **`corpus/taxonomy.json`.** The one vocabulary: objects, actions, statuses, banned words, tone.
-4. **Every string.** Written with the `corpus-content` skill; banned words fail the audit.
+1. **`vita/product.md`.** What the product is, for whom, and the job it does.
+2. **`vita/personas/*.md`.** 2–4 personas, created with the `vita-personas` skill.
+3. **`vita/taxonomy.json`.** The one vocabulary: objects, actions, statuses, banned words, tone.
+4. **Every string.** Written with the `vita-content` skill; banned words fail the audit.
 
 ## A persona is
 
@@ -40,6 +40,7 @@ avoid_when:
 - **Buttons say what happens.** The confirm button repeats the title's verb.
 - **Errors fix things.** What happened, why, how to fix it. No blame, no "oops".
 - **No filler.** Drop "please", "simply", "just", "successfully".
+- **No em dashes.** Use a comma, colon, full stop or parentheses. The build fails on one.
 - **AI copy is honest.** Say what the AI did and how sure it is; never "I think".
 
 ## Length budgets

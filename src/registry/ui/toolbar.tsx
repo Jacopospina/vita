@@ -6,7 +6,7 @@ import { Icon } from "@/registry/ui/icon"
 import { Tooltip } from "@/registry/ui/tooltip"
 
 /**
- * Toolbar — a row of related controls with roving focus (one Tab stop, arrows move within). Used by the Text toolbar pattern,
+ * Toolbar, a row of related controls with roving focus (one Tab stop, arrows move within). Used by the Text toolbar pattern,
  * table toolbars and canvas tools. Group with separators; icons need labels (tooltips).
  */
 export function Toolbar({ className, label, ...props }: React.ComponentProps<typeof ToolbarPrimitive.Root> & { label: string }) {

@@ -1,7 +1,7 @@
 import type * as React from "react"
 
 /**
- * useTilt — the "lift" hover: the element tilts toward the pointer in perspective, lifts slightly,
+ * useTilt, the "lift" hover: the element tilts toward the pointer in perspective, lifts slightly,
  * and a specular glare follows the cursor. Mouse only; disabled under reduced motion.
  * Pair with the `tilt` utility on the element. Returns handlers to spread (they chain yours).
  */
@@ -18,17 +18,17 @@ export function useTilt<T extends HTMLElement>(
       const r = el.getBoundingClientRect()
       const px = (e.clientX - r.left) / r.width
       const py = (e.clientY - r.top) / r.height
-      el.style.setProperty("--corpus-tilt-x", `${((0.5 - py) * max).toFixed(2)}deg`)
-      el.style.setProperty("--corpus-tilt-y", `${((px - 0.5) * max).toFixed(2)}deg`)
-      el.style.setProperty("--corpus-tilt-s", String(lift))
-      el.style.setProperty("--corpus-glare-x", `${(px * 100).toFixed(1)}%`)
-      el.style.setProperty("--corpus-glare-y", `${(py * 100).toFixed(1)}%`)
-      el.style.setProperty("--corpus-glare-o", "1")
+      el.style.setProperty("--vita-tilt-x", `${((0.5 - py) * max).toFixed(2)}deg`)
+      el.style.setProperty("--vita-tilt-y", `${((px - 0.5) * max).toFixed(2)}deg`)
+      el.style.setProperty("--vita-tilt-s", String(lift))
+      el.style.setProperty("--vita-glare-x", `${(px * 100).toFixed(1)}%`)
+      el.style.setProperty("--vita-glare-y", `${(py * 100).toFixed(1)}%`)
+      el.style.setProperty("--vita-glare-o", "1")
     },
     onPointerLeave: (e: React.PointerEvent<T>) => {
       handlers.onPointerLeave?.(e)
       const el = e.currentTarget
-      for (const p of ["--corpus-tilt-x", "--corpus-tilt-y", "--corpus-tilt-s", "--corpus-glare-o"]) el.style.removeProperty(p)
+      for (const p of ["--vita-tilt-x", "--vita-tilt-y", "--vita-tilt-s", "--vita-glare-o"]) el.style.removeProperty(p)
     },
   }
 }

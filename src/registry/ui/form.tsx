@@ -17,11 +17,11 @@ export const fieldClasses = cn(
   "hover:border-border-strong hover:bg-layer-1",
   // Focused (typing): always the white field, even under the pointer.
   "focus:bg-field focus-within:bg-field",
-  "focus-visible:outline-1 focus-visible:outline-offset-0 focus-visible:outline-(--corpus-ring) focus-visible:focus-halo focus-visible:border-transparent focus-visible:animate-focus-in",
+  "focus-visible:outline-1 focus-visible:outline-offset-0 focus-visible:outline-(--vita-ring) focus-visible:focus-halo focus-visible:border-transparent focus-visible:animate-focus-in",
   "disabled:cursor-not-allowed disabled:border-border-subtle disabled:bg-layer-1 disabled:text-disabled-foreground",
   "read-only:border-border-subtle read-only:bg-transparent read-only:hover:border-border-subtle",
   // the ring follows the field's meaning: red when invalid, amber on a warning
-  "aria-invalid:border-error aria-invalid:[--corpus-ring:var(--corpus-error)] group-data-[invalid]/field:[--corpus-ring:var(--corpus-error)] group-data-[warn]/field:[--corpus-ring:var(--corpus-warning)]",
+  "aria-invalid:border-error aria-invalid:[--vita-ring:var(--vita-error)] group-data-[invalid]/field:[--vita-ring:var(--vita-error)] group-data-[warn]/field:[--vita-ring:var(--vita-warning)]",
 )
 
 /* Fields are tall enough to hold their floating label inside. Values sit below the floated label. */
@@ -49,12 +49,12 @@ export interface FieldBaseProps {
   warnText?: React.ReactNode
   /** Fields are REQUIRED by default. Mark the exceptions deliberately: the label reads "(optional)". */
   optional?: boolean
-  /** Extra help control (e.g. a Toggletip), shown at the start of the helper row — never above the field. */
+  /** Extra help control (e.g. a Toggletip), shown at the start of the helper row, never above the field. */
   labelAddon?: React.ReactNode
 }
 
 /* ------------------------------------------------------------------ */
-/* FieldMessage — helper / warning / error text that ENTERS and EXITS. */
+/* FieldMessage, helper / warning / error text that ENTERS and EXITS. */
 /* ------------------------------------------------------------------ */
 type MessageKind = "help" | "warn" | "error"
 interface Message { kind: MessageKind; text: React.ReactNode }
@@ -81,7 +81,7 @@ function useLinger(msg: Message | null, ms = 420) {
 }
 
 /**
- * FieldMessage — the one place validation text lives. When an error or warning is resolved,
+ * FieldMessage, the one place validation text lives. When an error or warning is resolved,
  * its text and icon collapse, blur and fade out; switching kinds cross-fades. Nothing vanishes.
  */
 export function FieldMessage({ id, kind, children, className }: { id?: string; kind: MessageKind; children?: React.ReactNode; className?: string }) {
@@ -123,7 +123,7 @@ export interface FieldShellProps extends FieldBaseProps {
   filled?: boolean
   /** Multi-line control: the label rests at the top instead of the vertical centre. */
   multiline?: boolean
-  /** Exception: the value speaks for itself (e.g. MultiSelect chips) — the label fades out, still announced. */
+  /** Exception: the value speaks for itself (e.g. MultiSelect chips), the label fades out, still announced. */
   fadeLabel?: boolean
   /** Inline controls (toolbars, pagination): no reserved message line, so they align with their row. */
   bare?: boolean
@@ -134,7 +134,7 @@ export interface FieldShellProps extends FieldBaseProps {
 }
 
 /* The label floats (moves up, shrinks) when the field is focused or holds a value. */
-/* Straight up + smaller type — no scaling, so it never looks like it tilts. */
+/* Straight up + smaller type, no scaling, so it never looks like it tilts. */
 const floatWhenFocused = "group-focus-within/field:-translate-y-[calc(50%+0.55rem)] group-focus-within/field:text-caption"
 const floatWhenFilled = [
   "group-has-[:is(input,textarea):not(:placeholder-shown)]/field:-translate-y-[calc(50%+0.55rem)] group-has-[:is(input,textarea):not(:placeholder-shown)]/field:text-caption",
@@ -146,7 +146,7 @@ const floatedMultiline = [
 ].join(" ")
 
 /**
- * FieldShell — the anatomy of every field: a FLOATING LABEL inside the control → the control → helper/validation.
+ * FieldShell, the anatomy of every field: a FLOATING LABEL inside the control → the control → helper/validation.
  * The label rests inside the field like a placeholder; on focus or once filled it glides up and shrinks,
  * still inside the field. Labels are never placed above fields. Fields are required unless marked optional.
  */
@@ -164,7 +164,7 @@ export function FieldShell({ id: idProp, label, hideLabel, helperText, invalid, 
         <LabelPrimitive.Root
           htmlFor={id}
           className={cn(
-            // The label is the field's name, so it needs text contrast (≥ 4.5:1) even at rest — muted, not placeholder grey.
+            // The label is the field's name, so it needs text contrast (≥ 4.5:1) even at rest, muted, not placeholder grey.
             "pointer-events-none absolute left-inset max-w-[calc(100%-4rem)] truncate text-body text-muted-foreground select-none motion-productive",
             "group-focus-within/field:text-muted-foreground group-data-[invalid]/field:text-error-foreground",
             multiline ? cn("top-3", floatedMultiline) : cn("top-1/2 -translate-y-1/2", floatWhenFilled, floatOnFocus && floatWhenFocused),
@@ -189,13 +189,13 @@ export function FieldShell({ id: idProp, label, hideLabel, helperText, invalid, 
 
 /* ------------------------------------------------------------------ */
 
-/** Form — vertical stack with the system's form rhythm (message line + 8px between fields). */
+/** Form, vertical stack with the system's form rhythm (message line + 8px between fields). */
 export function Form({ className, ...props }: React.FormHTMLAttributes<HTMLFormElement>) {
   // Each field already reserves a line for its message, so the gap between fields is small.
   return <form noValidate className={cn("flex w-full max-w-xl flex-col gap-2", className)} {...props} />
 }
 
-/** FormGroup — a fieldset with a legend for related fields (address, radio group, checkbox group). */
+/** FormGroup, a fieldset with a legend for related fields (address, radio group, checkbox group). */
 export function FormGroup({ legend, helperText, className, children, ...props }: React.FieldsetHTMLAttributes<HTMLFieldSetElement> & { legend: React.ReactNode; helperText?: React.ReactNode }) {
   return (
     <fieldset className={cn("flex min-w-0 flex-col gap-3", className)} {...props}>
@@ -207,13 +207,13 @@ export function FormGroup({ legend, helperText, className, children, ...props }:
 }
 
 /*
- * JOIN — fields that belong together TOUCH, but every field stays exactly the Corpus field
+ * JOIN, fields that belong together TOUCH, but every field stays exactly the Vita field
  * (its own border, radius, hover, focus, floating label). Joining only squares the inner corners,
  * collapses the shared border into one, and lifts the hovered/focused field so its outline is whole.
  */
 
 /**
- * FormRow — the ONLY way to put fields side by side, and only when they are ONE data point for the user
+ * FormRow, the ONLY way to put fields side by side, and only when they are ONE data point for the user
  * (first + last name, card expiry month + year, a range). Forms are otherwise one column:
  * people scan forms top-left in an F pattern and miss a second column.
  */
@@ -232,15 +232,15 @@ export function FormRow({ className, ...props }: React.HTMLAttributes<HTMLDivEle
   )
 }
 
-/** FormActions — the submit row of a page form. Actions belong together: joined, zero gap. Primary first (reading order). */
+/** FormActions, the submit row of a page form. Actions belong together: joined, zero gap. Primary first (reading order). */
 export function FormActions({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   return <div className="pt-2"><Group className={className} {...props} /></div>
 }
 
 /**
- * FluidForm — dense, expert data entry: every field joins the next into one continuous column.
+ * FluidForm, dense, expert data entry: every field joins the next into one continuous column.
  * Always ONE column (F-pattern rule). Pairs that are one data point go in a FormRow inside it.
- * BREAKING (0.2): the `columns` prop was removed — multi-column forms are not allowed.
+ * BREAKING (0.2): the `columns` prop was removed, multi-column forms are not allowed.
  */
 export function FluidForm({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   return (

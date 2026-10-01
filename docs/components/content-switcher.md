@@ -2,7 +2,7 @@
 title: Content switcher
 summary: A segmented control. Switch between alternate presentations of the same content. One segment is always selected.
 status: stable
-import: "import { ContentSwitcher } from \"@/components/corpus/content-switcher\""
+import: "import { ContentSwitcher } from \"@/components/vita/content-switcher\""
 use_when:
   - Changing how the same data is shown (List | Grid, Chart | Table)
   - Changing the granularity of one dataset (Day | Week | Month)

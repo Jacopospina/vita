@@ -2,7 +2,7 @@
 title: Radio button
 summary: Exactly one choice from 2–6 visible options. Showing all options makes decisions faster.
 status: stable
-import: "import { RadioGroup, RadioButton } from \"@/components/corpus/radio-button\""
+import: "import { RadioGroup, RadioButton } from \"@/components/vita/radio-button\""
 use_when:
   - One choice from 2–6 options the user should compare
   - Options need helper text explaining consequences (price, speed)

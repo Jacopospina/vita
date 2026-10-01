@@ -113,7 +113,7 @@ function ModalDemo() {
       </Modal>
       <Modal>
         <ModalTrigger asChild><Button variant="tertiary">Large, scrolling</Button></ModalTrigger>
-        <ModalContent size="lg"><ModalHeader title="Acceptable use policy" /><ModalBody scroll className="max-h-80 border-b-0">{Array.from({ length: 12 }).map((_, i) => <Text key={i} className="mb-4">Clause {i + 1}. Agents deployed on Vita must act only within the permissions granted by the workspace owner and must disclose that they are automated when interacting with people.</Text>)}</ModalBody></ModalContent>
+        <ModalContent size="lg"><ModalHeader title="Acceptable use policy" /><ModalBody scroll className="max-h-80 border-b-0">{Array.from({ length: 12 }).map((_, i) => <Text key={i} className="mb-4">Clause {i + 1}. Agents deployed on Theo must act only within the permissions granted by the workspace owner and must disclose that they are automated when interacting with people.</Text>)}</ModalBody></ModalContent>
       </Modal>
       <Button variant="secondary" onClick={() => setConfirm(true)}>Confirm</Button>
       <Button variant="danger-tertiary" onClick={() => setDanger(true)}>Danger modal</Button>
@@ -128,7 +128,7 @@ export function ShellDemo({ rail, right, edit }: { rail?: boolean; right?: boole
   return (
     <div className="h-120 overflow-hidden rounded-lg border border-border-subtle [&>div]:h-full">
       <Shell>
-        <Header productName="Vita" actions={<><HeaderGlobalAction icon={SearchIcon} label="Search" /><HeaderGlobalAction icon={Notification} label="Notifications" badge active={open && !edit} onClick={() => setOpen((o) => !o)} /><HeaderGlobalAction icon={Help} label="Help" /><HeaderGlobalAction icon={UserAvatar} label="Account" /></>}>
+        <Header productName="Theo" actions={<><HeaderGlobalAction icon={SearchIcon} label="Search" /><HeaderGlobalAction icon={Notification} label="Notifications" badge active={open && !edit} onClick={() => setOpen((o) => !o)} /><HeaderGlobalAction icon={Help} label="Help" /><HeaderGlobalAction icon={UserAvatar} label="Account" /></>}>
           <HeaderNavItem href="#" active>Agents</HeaderNavItem>
           <HeaderNavItem href="#">Runs</HeaderNavItem>
           <HeaderNavItem href="#">Reports</HeaderNavItem>
@@ -152,7 +152,7 @@ export function ShellDemo({ rail, right, edit }: { rail?: boolean; right?: boole
             >
               <Stack gap="md">
                 <TextInput label="Agent name" defaultValue="Support triage" />
-                <Dropdown label="Model" defaultValue="l" items={[{ value: "l", label: "Vita Large" }, { value: "f", label: "Vita Fast" }]} />
+                <Dropdown label="Model" defaultValue="l" items={[{ value: "l", label: "Theo Large" }, { value: "f", label: "Theo Fast" }]} />
                 <Checkbox label="Hand off to a person when unsure" defaultChecked />
               </Stack>
             </RightPanel>
@@ -174,14 +174,14 @@ export function ShellDemo({ rail, right, edit }: { rail?: boolean; right?: boole
 export const feedbackDemos: DemoMap = {
   "components/thinking": [
     {
-      title: "Thinking — four modes",
+      title: "Thinking, four modes",
       description: "Particles that blend like liquid. Pick the mode by what is happening; agentic modes wear the AI spectrum.",
       render: () => (
         <div className="grid grid-cols-2 gap-5 md:grid-cols-4">
           {([
             ["basic", "Basic logic", "No agent involved"],
             ["retrieving", "Retrieving", "Recalling from memory"],
-            ["generating", "Generating", "Creating — the orb shape-shifts"],
+            ["generating", "Generating", "Creating, the orb shape-shifts"],
             ["searching", "Searching", "Looking things up"],
           ] as const).map(([mode, title, sub]) => (
             <Stack key={mode} gap="sm" align="center" className="text-center">
@@ -199,7 +199,7 @@ export const feedbackDemos: DemoMap = {
   "components/inline-loading": [{ title: "Save lifecycle", render: () => <InlineLoadingDemo /> }],
   "components/notification": [
     {
-      title: "Inline — four kinds",
+      title: "Inline, four kinds",
       render: () => (
         <Stack gap="sm">
           <InlineNotification kind="info" title="Scheduled maintenance" subtitle="Sunday 02:00–03:00 CET" onClose={() => {}} />
@@ -214,7 +214,7 @@ export const feedbackDemos: DemoMap = {
       description: "Top-right, frosted glass. With an icon tile, without one, or time-sensitive.",
       render: () => (
         <Inline wrap>
-          <Button variant="secondary" onClick={() => toast({ icon: Bot, source: "Vita", title: "Agent deployed", subtitle: "Support triage is live and answering tickets." })}>With icon</Button>
+          <Button variant="secondary" onClick={() => toast({ icon: Bot, source: "Theo", title: "Agent deployed", subtitle: "Support triage is live and answering tickets." })}>With icon</Button>
           <Button variant="secondary" onClick={() => toast({ icon: false, title: "Link copied", subtitle: "Anyone in the workspace can open it." })}>Without icon</Button>
           <Button variant="secondary" onClick={() => toast({ icon: Time, eyebrow: "Time sensitive", source: "Approvals", title: "Refund over $200 waiting", subtitle: "Refund assistant needs your approval within 10 minutes.", action: { label: "Review", onClick: () => {} }, duration: 8000 })}>Time sensitive</Button>
           <Button variant="secondary" onClick={() => toast({ kind: "success", title: "Agent paused", subtitle: "It stops taking new conversations.", action: { label: "Undo", onClick: () => toast({ kind: "info", title: "Restored" }) }, duration: 8000 })}>With undo</Button>
@@ -225,7 +225,7 @@ export const feedbackDemos: DemoMap = {
   ],
   "components/capsule": [
     {
-      title: "Capsule — quick feedback, top centre",
+      title: "Capsule, quick feedback, top centre",
       description: "Always: icon left · title and subtitle centre · the semantic story right.",
       render: () => <CapsuleDemo />,
     },

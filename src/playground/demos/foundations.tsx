@@ -16,7 +16,7 @@ import { GlyphGallery } from "./galleries"
 function PaletteGrid() {
   const steps = palette.steps as number[]
   const colors = Object.entries(palette.colors)
-  // Belonging: all swatches are one block — flat cells, the block owns the radius (no per-row rounding).
+  // Belonging: all swatches are one block, flat cells, the block owns the radius (no per-row rounding).
   return (
     // No scroll container (overflow-x would also make it scroll vertically): it fits the width and hugs its height.
     <div>
@@ -36,9 +36,9 @@ function PaletteGrid() {
               steps.map((st) => (
                 <div
                   key={name + st}
-                  title={`--corpus-palette-${name}-${st}\n${(c.steps as Record<string, string>)[st]}`}
+                  title={`--vita-palette-${name}-${st}\n${(c.steps as Record<string, string>)[st]}`}
                   className="relative flex h-12 items-end justify-center pb-1"
-                  style={{ ["--p" as string]: `var(--corpus-palette-${name}-${st})`, background: "var(--p)" }}
+                  style={{ ["--p" as string]: `var(--vita-palette-${name}-${st})`, background: "var(--p)" }}
                 >
                   {st === 500 && <span className={cn("text-caption font-semibold", name === "yellow" || name === "mint" ? "text-foreground" : "text-primary-foreground")}>●</span>}
                 </div>
@@ -90,13 +90,13 @@ const colorGroups: { title: string; tokens: { name: string; cls: string; fg?: st
   {
     title: "Support",
     tokens: [
-      { name: "success", cls: "bg-success", fg: "text-primary-foreground" }, // corpus-allow status-decoration: swatch documenting the token itself — approved by @jacopo
+      { name: "success", cls: "bg-success", fg: "text-primary-foreground" }, // vita-allow status-decoration: swatch documenting the token itself, approved by @jacopo
       { name: "success-subtle", cls: "bg-success-subtle", fg: "text-success-foreground" },
-      { name: "warning", cls: "bg-warning", fg: "text-foreground" }, // corpus-allow status-decoration: swatch documenting the token itself — approved by @jacopo
+      { name: "warning", cls: "bg-warning", fg: "text-foreground" }, // vita-allow status-decoration: swatch documenting the token itself, approved by @jacopo
       { name: "warning-subtle", cls: "bg-warning-subtle", fg: "text-warning-foreground" },
-      { name: "error", cls: "bg-error", fg: "text-primary-foreground" }, // corpus-allow status-decoration: swatch documenting the token itself — approved by @jacopo
+      { name: "error", cls: "bg-error", fg: "text-primary-foreground" }, // vita-allow status-decoration: swatch documenting the token itself, approved by @jacopo
       { name: "error-subtle", cls: "bg-error-subtle", fg: "text-error-foreground" },
-      { name: "info", cls: "bg-info", fg: "text-primary-foreground" }, // corpus-allow status-decoration: swatch documenting the token itself — approved by @jacopo
+      { name: "info", cls: "bg-info", fg: "text-primary-foreground" }, // vita-allow status-decoration: swatch documenting the token itself, approved by @jacopo
       { name: "info-subtle", cls: "bg-info-subtle", fg: "text-info-foreground" },
     ],
   },
@@ -145,8 +145,8 @@ function CharacterDemo() {
     <Stack gap="md">
       <Inline><Button onClick={() => setOn((o) => !o)}>{on ? "Collapse" : "Expand"}</Button><Text tone="muted">Same change, two characters.</Text></Inline>
       <Inline gap="lg" align="start" wrap>
-        {lane("Productive", "Efficient, subtle — states, menus, reveals, tables", "motion-productive")}
-        {lane("Expressive", "Vibrant, visible — pages, primary actions, alerts", "motion-expressive")}
+        {lane("Productive", "Efficient, subtle, states, menus, reveals, tables", "motion-productive")}
+        {lane("Expressive", "Vibrant, visible, pages, primary actions, alerts", "motion-expressive")}
       </Inline>
     </Stack>
   )
@@ -224,13 +224,13 @@ export const foundationDemos: DemoMap = {
   "foundations/material": [{ title: "Five tiers, more frosted the higher they float", render: () => <MaterialDemo /> }],
   "getting-started/brand": [
     {
-      title: "Give your ideas a body",
-      description: "Corpus is the Creator. Every word it says aims to awaken the maker in the person reading it.",
+      title: "Give your ideas life",
+      description: "Vita is the Creator. Every word it says aims to awaken the maker in the person reading it.",
       render: () => (
         <Stack gap="xl">
           <Stack gap="xs" align="center" className="py-6 text-center">
             <Text variant="caption" tone="muted" weight="semibold">THE AI-AGENT-FIRST DESIGN SYSTEM</Text>
-            <Text variant="large-title">Give your ideas a body.</Text>
+            <Text variant="large-title">Give your ideas life.</Text>
             <Text tone="muted">Born for humans and machines making together. Documented so agents design like designers.</Text>
           </Stack>
           <Stack gap="sm">
@@ -238,7 +238,7 @@ export const foundationDemos: DemoMap = {
             <TileSet columns={2}>
               {[
                 ["1 · Spark", "What do you want to bring to life?"],
-                ["2 · Shape", "Shape it freely. Corpus keeps every detail consistent."],
+                ["2 · Shape", "Shape it freely. Vita keeps every detail consistent."],
                 ["3 · Release", "It's live."],
                 ["4 · Recognise", "You made that."],
               ].map(([step, line]) => (
@@ -261,7 +261,7 @@ export const foundationDemos: DemoMap = {
           <Stack gap="sm">
             <Text variant="headline">Supporting slogans</Text>
             <Inline gap="sm" wrap>
-              {["Make what only you can make.", "From mind to matter.", "Built to be built with.", "Shape what's next."].map((x) => (
+              {["Make what only you can make.", "Mind, soul, life.", "Built to be built with.", "Shape what's next."].map((x) => (
                 <Tile key={x} className="px-4 py-3"><Text weight="medium">{x}</Text></Tile>
               ))}
             </Inline>
@@ -284,8 +284,8 @@ export const foundationDemos: DemoMap = {
   ],
   "foundations/color": [
     {
-      title: "Palette — every hue, every step",
-      description: "13 hues × 11 steps. The dotted swatch (500) is the exact system color; hover any swatch for its variable and value. Primitives feed charts and new semantic tokens — product code uses the semantic tokens below.",
+      title: "Palette, every hue, every step",
+      description: "13 hues × 11 steps. The dotted swatch (500) is the exact system color; hover any swatch for its variable and value. Primitives feed charts and new semantic tokens, product code uses the semantic tokens below.",
       render: () => <PaletteGrid />,
     },
     ...colorGroups.map((g) => ({
@@ -321,7 +321,7 @@ export const foundationDemos: DemoMap = {
     },
     {
       title: "Weights",
-      description: "Every role comes in regular, medium and semibold — set with Text's `weight`.",
+      description: "Every role comes in regular, medium and semibold, set with Text's `weight`.",
       render: () => (
         <Stack gap="md">
           <div className="grid grid-cols-4 gap-2 border-b border-border-subtle pb-2">
@@ -343,7 +343,7 @@ export const foundationDemos: DemoMap = {
     },
     {
       title: "Mono",
-      description: "Google Sans Code, for code, IDs and numbers — every role at each weight with `font-mono`. Numbers are regular unless a weight is asked for, as here.",
+      description: "Google Sans Code, for code, IDs and numbers, every role at each weight with `font-mono`. Numbers are regular unless a weight is asked for, as here.",
       render: () => (
         <Stack gap="md">
           <div className="grid grid-cols-4 gap-2 border-b border-border-subtle pb-2">
@@ -419,7 +419,7 @@ export const foundationDemos: DemoMap = {
   ],
   "foundations/grid": [
     {
-      title: "2x Grid — 16 columns",
+      title: "2x Grid, 16 columns",
       description: "16 columns at lg, 8 at md, 4 at sm. Resize the window.",
       render: () => (
         <Stack gap="md">
@@ -440,7 +440,7 @@ export const foundationDemos: DemoMap = {
     },
   ],
   "foundations/motion": [
-    { title: "Productive and expressive", description: "Every motion in Corpus has one of two characters. Press the button to compare them on the same change.", render: () => <CharacterDemo /> },
+    { title: "Productive and expressive", description: "Every motion in Vita has one of two characters. Press the button to compare them on the same change.", render: () => <CharacterDemo /> },
     { title: "Easing & duration tokens", render: () => <MotionDemo /> },
   ],
   "foundations/icons": [{ title: "Every icon", description: "The full set, searchable. Click any icon to copy its import.", render: () => <GlyphGallery kind="icons" /> }],

@@ -1,8 +1,8 @@
 ---
 title: Timeline
-summary: Events in time order on one vertical line — changelogs, run history, an agent's steps, audit trails.
+summary: Events in time order on one vertical line, changelogs, run history, an agent's steps, audit trails.
 status: stable
-import: "import { Timeline } from \"@/components/corpus/timeline\""
+import: "import { Timeline } from \"@/components/vita/timeline\""
 use_when:
   - A history people read top to bottom (changelog, activity, an agent's steps, an audit trail)
 avoid_when:
@@ -16,7 +16,7 @@ related: [progress-indicator, status-indicator, data-table]
 
 `marker ─ date / title / detail?`, one event per row, joined by a hairline.
 
-- **Marker.** A neutral dot, or — for events that matter — the status glyph in its colour (Color → Status semantics).
+- **Marker.** A neutral dot, or, for events that matter, the status glyph in its colour (Color → Status semantics).
 - **Date.** Relative when recent ("Today 09:40"), absolute when older.
 - **Title.** What happened, in a few words.
 - **Detail (optional).** One or two lines of why or what changed.

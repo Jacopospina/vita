@@ -2,7 +2,7 @@ import js from "@eslint/js"
 import tseslint from "typescript-eslint"
 import reactHooks from "eslint-plugin-react-hooks"
 import globals from "globals"
-import corpus from "./eslint/corpus-plugin.mjs"
+import vita from "./eslint/vita-plugin.mjs"
 
 export default tseslint.config(
   { ignores: ["dist", "node_modules", "tests/fixtures", "public"] },
@@ -16,7 +16,7 @@ export default tseslint.config(
   // Product code (everything outside the registry) must obey the design system.
   {
     files: ["src/playground/**/*.tsx", "src/examples/**/*.tsx"],
-    plugins: { corpus },
-    rules: { "corpus/design-system": "error", "corpus/deprecated": "warn" },
+    plugins: { vita },
+    rules: { "vita/design-system": "error", "vita/deprecated": "warn" },
   },
 )

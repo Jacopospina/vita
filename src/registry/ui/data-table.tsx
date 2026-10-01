@@ -9,7 +9,7 @@ import { AnimatedNumber, AnimatedText } from "@/registry/ui/animated"
 import { morph, useMorphId } from "@/registry/hooks/use-morph"
 
 /**
- * DataTable — view, compare, sort, select and act on MANY records with the same attributes.
+ * DataTable, view, compare, sort, select and act on MANY records with the same attributes.
  * < ~5 rows & no actions → StructuredList. Non-uniform items → ContainedList or Tiles.
  *
  * Anatomy: title/description → toolbar (search · filter · primary action) → batch actions (on selection) → header → rows → pagination.
@@ -107,7 +107,7 @@ export function DataTable<T extends { id: string }>({
   const cellPad = "px-3"
 
   return (
-    <section className={cn("flex w-full flex-col overflow-clip scope-xl bg-layer-1 [--corpus-inset-r:max(0px,calc(var(--corpus-scope-r)-var(--spacing)*2.5))]", className)} aria-label={typeof title === "string" ? title : label}>
+    <section className={cn("flex w-full flex-col overflow-clip scope-xl bg-layer-1 [--vita-inset-r:max(0px,calc(var(--vita-scope-r)-var(--spacing)*2.5))]", className)} aria-label={typeof title === "string" ? title : label}>
       {(title || description) && (
         <header className={cn("flex flex-col gap-1 px-3 pt-3", toolbar || batchActions ? "pb-0" : "pb-3")}>
           {title && <h3 className="text-title-3">{title}</h3>}
@@ -121,8 +121,8 @@ export function DataTable<T extends { id: string }>({
         // The wrapper is transparent; once pinned, the bar itself frosts over the rows running beneath it.
         <>
         <div ref={stripSentinel} aria-hidden className="h-0" />
-        {/* Sticks just below the shell's floating header (--corpus-shell-top), not behind it. */}
-        <div ref={stripRef} className="sticky top-[var(--corpus-shell-top,0px)] z-20 p-2.5">
+        {/* Sticks just below the shell's floating header (--vita-shell-top), not behind it. */}
+        <div ref={stripRef} className="sticky top-[var(--vita-shell-top,0px)] z-20 p-2.5">
           <div
             className={cn(
               "grid min-h-control-lg items-center rounded-outer-1 p-1 motion-expressive [grid-template-areas:'bar']",
@@ -159,7 +159,7 @@ export function DataTable<T extends { id: string }>({
       <div className={cn("w-full overflow-x-auto px-2.5", stickyHeader && "max-h-120 overflow-y-auto")}>
         <table className="w-full border-separate border-spacing-0 text-body" aria-label={typeof title === "string" ? title : label}>
           <thead className={cn(stickyHeader && "sticky top-0 z-10")}>
-            <tr className={cn(rowH[size === "xl" ? "lg" : size], "[&>th]:bg-layer-3 [&>th:first-child]:rounded-l-(--corpus-inset-r) [&>th:last-child]:rounded-r-(--corpus-inset-r)")}>
+            <tr className={cn(rowH[size === "xl" ? "lg" : size], "[&>th]:bg-layer-3 [&>th:first-child]:rounded-l-(--vita-inset-r) [&>th:last-child]:rounded-r-(--vita-inset-r)")}>
               {renderExpanded && <th className="w-control-md"><span className="sr-only">Expand</span></th>}
               {selectable && (
                 <th className="w-control-md pl-3">
@@ -172,7 +172,7 @@ export function DataTable<T extends { id: string }>({
                 return (
                   <th key={c.key} scope="col" aria-sort={aria} className={cn("text-footnote font-semibold text-foreground", c.align === "end" ? "text-right" : "text-left", !c.sortable && cellPad)}>
                     {c.sortable ? (
-                      <button type="button" onClick={() => cycleSort(c.key)} className={cn("group flex h-full w-full items-center gap-2 rounded-(--corpus-inset-r) px-3 py-1.5 duration-fast-02 hover:bg-layer-2 focus-ring-inset", c.align === "end" && "flex-row-reverse")}>
+                      <button type="button" onClick={() => cycleSort(c.key)} className={cn("group flex h-full w-full items-center gap-2 rounded-(--vita-inset-r) px-3 py-1.5 duration-fast-02 hover:bg-layer-2 focus-ring-inset", c.align === "end" && "flex-row-reverse")}>
                         {c.header}
                         <SwapIcon as={active ? (sort!.dir === "asc" ? ArrowUp : ArrowDown) : ArrowsVertical} className={cn(!active && "opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 pointer-coarse:opacity-60")} />
                       </button>
@@ -209,7 +209,7 @@ export function DataTable<T extends { id: string }>({
                       className={cn(
                         rowH[size],
                         // Rows are rounded bands like the header: the fill lives on the cells so the end cells can carry the inset radius.
-                        "animate-enter-fade [&>td]:divider-b [&>td]:duration-fast-02 hover:[&>td]:bg-hover [&>td:first-child]:rounded-l-(--corpus-inset-r) [&>td:last-child]:rounded-r-(--corpus-inset-r)",
+                        "animate-enter-fade [&>td]:divider-b [&>td]:duration-fast-02 hover:[&>td]:bg-hover [&>td:first-child]:rounded-l-(--vita-inset-r) [&>td:last-child]:rounded-r-(--vita-inset-r)",
                         zebra && idx % 2 === 1 && "[&>td]:bg-layer-2",
                         isSel && "[&>td]:bg-selected hover:[&>td]:bg-selected",
                       )}
@@ -235,7 +235,7 @@ export function DataTable<T extends { id: string }>({
                     </tr>
                     {renderExpanded && isOpen && (
                       <tr className="[&>td]:divider-b">
-                        <td colSpan={colCount} className="animate-enter-fade rounded-(--corpus-inset-r) bg-layer-2 px-3 py-3 pl-12">{renderExpanded(row)}</td>
+                        <td colSpan={colCount} className="animate-enter-fade rounded-(--vita-inset-r) bg-layer-2 px-3 py-3 pl-12">{renderExpanded(row)}</td>
                       </tr>
                     )}
                   </React.Fragment>

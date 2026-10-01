@@ -1,24 +1,24 @@
 ---
-name: corpus-motion
-description: Decide whether and how anything should animate in a Corpus product — durations, easings, choreography, reduced motion. Use when adding transitions, animations, micro-interactions, entrance/exit effects, loading motion, or when someone asks to "make it feel smoother/alive".
+name: vita-motion
+description: Decide whether and how anything should animate in a Vita product, durations, easings, choreography, reduced motion. Use when adding transitions, animations, micro-interactions, entrance/exit effects, loading motion, or when someone asks to "make it feel smoother/alive".
 ---
 
-# Corpus motion
+# Vita motion
 
-Motion explains change. It never decorates. Read `.corpus/docs/foundations/motion.md` for the full rules.
+Motion explains change. It never decorates. Read `.vita/docs/foundations/motion.md` for the full rules.
 
 ## Step 1: nothing snaps
 
-Corpus transitions every property change by default and morphs variants. Your job is to never break that and to use the right character:
+Vita transitions every property change by default and morphs variants. Your job is to never break that and to use the right character:
 
-- **Productive** (default): task-focused changes — states, dropdowns, reveals, tables.
-- **Expressive**: significant moments — page changes, the primary action, alerts and notifications appearing, movement that carries meaning.
+- **Productive** (default): task-focused changes, states, dropdowns, reveals, tables.
+- **Expressive**: significant moments, page changes, the primary action, alerts and notifications appearing, movement that carries meaning.
 - **Values**: numbers use `AnimatedNumber` (slot-machine roll, staggered, blur→sharp); changing text uses `AnimatedText` (letter-by-letter stagger, slide up, blur→sharp).
 - **Reorders and layout jumps**: wrap the state change in `morph()` and give moving items a `view-transition-name`.
 
 ## Step 2: prefer what the component already does
 
-Corpus components ship with correct motion: Modal, Popover, Menu, Tooltip, Toast, Accordion, RightPanel, Toggle, Button press, Skeleton. **Don't add or override their animation.**
+Vita components ship with correct motion: Modal, Popover, Menu, Tooltip, Toast, Accordion, RightPanel, Toggle, Button press, Skeleton. **Don't add or override their animation.**
 
 ## Step 3: pick tokens (never raw values)
 
@@ -45,7 +45,7 @@ Corpus components ship with correct motion: Modal, Popover, Menu, Tooltip, Toast
 
 ## Reduced motion
 
-Corpus automatically turns movement into fades under `prefers-reduced-motion`. Your job:
+Vita automatically turns movement into fades under `prefers-reduced-motion`. Your job:
 
 - Never hide essential information behind animation.
 - Never use JS-driven animation without checking `matchMedia("(prefers-reduced-motion: reduce)")`.

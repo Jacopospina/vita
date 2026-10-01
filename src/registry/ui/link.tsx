@@ -5,7 +5,7 @@ import { Launch } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { Icon } from "@/registry/ui/icon"
 
-/** Link — navigation. If it changes data, it's a Button, not a Link. */
+/** Link, navigation. If it changes data, it's a Button, not a Link. */
 const linkVariants = cva(
   "inline-flex items-center gap-1 rounded-sm text-link underline-offset-4 duration-fast-02 ease-productive focus-ring underline decoration-transparent hover:decoration-current visited:text-link-visited",
   {

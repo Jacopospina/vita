@@ -7,7 +7,7 @@ import { Icon } from "@/registry/ui/icon"
 import { AnimatedNumber } from "@/registry/ui/animated"
 
 /**
- * NumberInput — precise numeric entry with steppers. For a range where precision matters less than feel, use Slider.
+ * NumberInput, precise numeric entry with steppers. For a range where precision matters less than feel, use Slider.
  * For IDs, phone numbers, card numbers → TextInput with inputMode="numeric" (they are not quantities).
  */
 export interface NumberInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size" | "value" | "defaultValue" | "onChange" | "type">, FieldBaseProps {
@@ -30,7 +30,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
     const [val, setVal] = useControllable<number | null>(value, defaultValue, onValueChange)
     const clamp = (n: number) => Math.min(max ?? Infinity, Math.max(min ?? -Infinity, n))
     // Values swap digit by digit: stepper/arrow changes show a rolling overlay over the (transparent) input text.
-    // While the user TYPES, the raw input shows — typing is never delayed or animated.
+    // While the user TYPES, the raw input shows, typing is never delayed or animated.
     const [typing, setTyping] = React.useState(false)
     // Latest value for press-and-hold repeats (the interval must not read a stale closure).
     const latest = React.useRef(val)

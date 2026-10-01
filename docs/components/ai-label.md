@@ -2,7 +2,7 @@
 title: AI label
 summary: Marks anything generated, suggested or autofilled by AI, and explains how, in one click.
 status: stable
-import: "import { AILabel, AISurface } from \"@/components/corpus/ai-label\""
+import: "import { AILabel, AISurface } from \"@/components/vita/ai-label\""
 use_when:
   - A field value, cell, tile or message was produced or changed by AI
   - An AI-powered feature needs a visible, explainable marker

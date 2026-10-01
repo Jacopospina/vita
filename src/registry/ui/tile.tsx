@@ -6,7 +6,7 @@ import { Icon } from "@/registry/ui/icon"
 import { useTilt } from "@/registry/hooks/use-tilt"
 
 /**
- * Tile — a surface that groups related content (a card that defers to its content).
+ * Tile, a surface that groups related content (a card that defers to its content).
  *   base        → static container. Don't nest tiles.
  *   clickable   → the WHOLE tile navigates somewhere (one destination, no inner buttons).
  *   selectable  → choosing among rich options (plans, templates). Single = radio semantics, multi = checkbox.
@@ -92,7 +92,7 @@ export function ExpandableTile({ summary, children, defaultOpen, className }: { 
   )
 }
 
-/** TileGroup — selectable tiles in a grid. single → radiogroup semantics. */
+/** TileGroup, selectable tiles in a grid. single → radiogroup semantics. */
 export function TileGroup({ label, mode = "single", className, children }: { label: string; mode?: "single" | "multi"; className?: string; children: React.ReactNode }) {
   return (
     <div role={mode === "single" ? "radiogroup" : "group"} aria-label={label} className={cn("grid gap-3 sm:grid-cols-2 lg:grid-cols-3", className)}>
@@ -102,9 +102,9 @@ export function TileGroup({ label, mode = "single", className, children }: { lab
 }
 
 /**
- * TileSet — cards that share one meaning are ONE object (belonging has no gaps).
- * The set owns the surface: background, radius, clipping. Items inside are flat — no background,
- * no radius — separated only by hairlines.
+ * TileSet, cards that share one meaning are ONE object (belonging has no gaps).
+ * The set owns the surface: background, radius, clipping. Items inside are flat, no background,
+ * no radius, separated only by hairlines.
  */
 export function TileSet({ columns = 2, tone = "default", className, children }: { columns?: 1 | 2 | 3 | 4; tone?: "default" | "negative" | "positive"; className?: string; children: React.ReactNode }) {
   return (
@@ -115,7 +115,7 @@ export function TileSet({ columns = 2, tone = "default", className, children }: 
 }
 
 /**
- * TileSetItem — one cell of a TileSet: flat, sharing the set's surface and separators (belonging has no gaps).
+ * TileSetItem, one cell of a TileSet: flat, sharing the set's surface and separators (belonging has no gaps).
  * With `href` the cell is a link: soft hover wash inside the set and an arrow that nudges on hover.
  */
 export function TileSetItem({ className, href, children, ...props }: React.HTMLAttributes<HTMLElement> & { href?: string }) {

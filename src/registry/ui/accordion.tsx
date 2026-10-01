@@ -5,7 +5,7 @@ import { cn } from "@/registry/lib/utils"
 import { Icon } from "@/registry/ui/icon"
 
 /**
- * Accordion — progressive disclosure for a LIST of sections the user scans by heading (FAQs, settings groups, filters).
+ * Accordion, progressive disclosure for a LIST of sections the user scans by heading (FAQs, settings groups, filters).
  * Don't hide content most users need; don't nest accordions. One section → use an ExpandableTile or a Disclosure (Collapsible).
  * Sections belong together: one rounded surface, concentric rounded rows, inset separators (like ListGroup).
  */
@@ -54,7 +54,7 @@ export function AccordionContent({ className, children, ...props }: React.Compon
   )
 }
 
-/** Disclosure — a single show/hide ("Show advanced options"). Trigger is usually a ghost Button via asChild. */
+/** Disclosure, a single show/hide ("Show advanced options"). Trigger is usually a ghost Button via asChild. */
 export const Disclosure = Collapsible.Root
 export const DisclosureTrigger = Collapsible.Trigger
 export function DisclosureContent({ className, children, ...props }: React.ComponentProps<typeof Collapsible.Content>) {

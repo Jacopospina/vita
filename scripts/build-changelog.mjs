@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * pnpm changelog — CHANGELOG.md and docs/getting-started/changelog.md + docs/changelog.json (its timeline) from git history.
+ * pnpm changelog, CHANGELOG.md and docs/getting-started/changelog.md + docs/changelog.json (its timeline) from git history.
  * Releases are git tags (v1.2.3); everything after the last tag is "Unreleased". A commit is breaking when its
  * message says "Breaking" (docs/decisions/how-we-decide.md). Commits are written for humans: subject = what
  * changed, body = why and how to migrate.
@@ -49,7 +49,7 @@ for (const [g, list] of groups) {
   const breaking = list.filter((c) => c.breaking)
   if (breaking.length) {
     md.push("### ⚠ Breaking", "")
-    for (const c of breaking) md.push(`- **${c.subject}** (${c.date}, ${c.hash})${firstLine(c.body) ? ` — ${firstLine(c.body)}` : ""}`)
+    for (const c of breaking) md.push(`- **${c.subject}** (${c.date}, ${c.hash})${firstLine(c.body) ? `, ${firstLine(c.body)}` : ""}`)
     md.push("")
   }
   md.push("### Changes", "")
@@ -64,7 +64,7 @@ fs.writeFileSync(path.join(root, "docs/changelog.json"), JSON.stringify({ latest
 const page = [
   "---",
   "title: Changelog",
-  "summary: Every change to Corpus, newest first, on one timeline. Breaking changes are marked and say how to migrate.",
+  "summary: Every change to Vita, newest first, on one timeline. Breaking changes are marked and say how to migrate.",
   "status: stable",
   "related: [how-we-decide, cli]",
   "---",

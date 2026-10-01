@@ -28,8 +28,8 @@ import { Icon } from "@/registry/ui/icon"
 import { agents, agentColumns } from "@/playground/demos/data"
 
 /*
- * Live example screens for the showcase. Everything is real Corpus — the same components a product ships.
- * The product in every example is Vita, a platform that deploys custom AI agents.
+ * Live example screens for the showcase. Everything is real Vita, the same components a product ships.
+ * The product in every example is Theo, a platform that deploys custom AI agents.
  */
 
 /* ---------------- Cards ---------------- */
@@ -61,7 +61,7 @@ export function CardsExample() {
           <Stack gap="md">
             <Stack gap="2xs">
               <Text variant="title-3">Create an agent</Text>
-              <Text tone="muted">Describe what it should do. Vita drafts the rest for you to review.</Text>
+              <Text tone="muted">Describe what it should do. Theo drafts the rest for you to review.</Text>
             </Stack>
             <Composer suggestions={["Triage support tickets", "Summarise sales calls", "Answer HR policy questions"]} onSubmit={() => capsule({ icon: <Icon as={Bot} size="md" />, title: "Drafting your agent", subtitle: "Support triage", story: { status: "success" } })} />
           </Stack>
@@ -89,9 +89,9 @@ export function CardsExample() {
           <Stack gap="sm">
             <Text variant="title-3">Team</Text>
             <ListGroup>
-              <ListItem icon={UserAvatar} tone="brand" title="Ada Lovelace" subtitle="ada@vita.ai" trailing={<Tag size="sm">Owner</Tag>} />
-              <ListItem icon={UserAvatar} tone="brand" title="Grace Hopper" subtitle="grace@vita.ai" trailing={<Tag size="sm">Editor</Tag>} />
-              <ListItem icon={UserAvatar} tone="brand" title="Alan Turing" subtitle="alan@vita.ai" trailing={<Tag size="sm">Viewer</Tag>} />
+              <ListItem icon={UserAvatar} tone="brand" title="Ada Lovelace" subtitle="ada@theo.ai" trailing={<Tag size="sm">Owner</Tag>} />
+              <ListItem icon={UserAvatar} tone="brand" title="Grace Hopper" subtitle="grace@theo.ai" trailing={<Tag size="sm">Editor</Tag>} />
+              <ListItem icon={UserAvatar} tone="brand" title="Alan Turing" subtitle="alan@theo.ai" trailing={<Tag size="sm">Viewer</Tag>} />
             </ListGroup>
           </Stack>
         </Tile>
@@ -141,7 +141,7 @@ export function AgentsExample() {
   const filtered = agents.filter((s) => (s.name + s.team + s.model).toLowerCase().includes(q.toLowerCase()))
   return (
     <Stack gap="lg">
-      <PageHeader title="Agents" description="Every agent deployed in the Vita workspace." actions={<Button icon={Add} onClick={() => toast({ icon: Bot, source: "Vita", title: "Agent created", subtitle: "Untitled agent is ready to configure." })}>Create agent</Button>} />
+      <PageHeader title="Agents" description="Every agent deployed in the Theo workspace." actions={<Button icon={Add} onClick={() => toast({ icon: Bot, source: "Theo", title: "Agent created", subtitle: "Untitled agent is ready to configure." })}>Create agent</Button>} />
       <Grid>
         <Column md={4} lg={4}><Metric label="Live agents" value={agents.filter((a) => a.status === "Live").length} delta="2 deployed this week" /></Column>
         <Column md={4} lg={4}><Metric label="Runs (24h)" value={agents.reduce((n, a) => n + a.runs, 0)} delta="+8% from last week" /></Column>
@@ -230,10 +230,10 @@ export function ConversationsExample() {
   const [open, setOpen] = React.useState("c1")
   const c = conversations.find((x) => x.id === open) ?? conversations[0]
   const first = c.who.split(" ")[0]
-  // Operator's view: the customer on the left; your side (the Vita agent, then you) on the right.
+  // Operator's view: the customer on the left; your side (the Theo agent, then you) on the right.
   const [sent, setSent] = React.useState<Record<string, ChatMessage[]>>({})
   const messages: ChatMessage[] = [
-    { id: `${c.id}-1`, role: "agent", author: c.who, text: "Hi, I'm waiting on this — can you help?", time: "09:12" },
+    { id: `${c.id}-1`, role: "agent", author: c.who, text: "Hi, I'm waiting on this, can you help?", time: "09:12" },
     {
       id: `${c.id}-2`,
       role: "user",
@@ -241,8 +241,8 @@ export function ConversationsExample() {
       time: "09:12",
       text: (
         <Stack gap="xs">
-          <span>I've checked your account. Everything is in order — you'll get an update by email within one working day.</span>
-          <AILabel size="xs">Answered from the Vita help center.</AILabel>
+          <span>I've checked your account. Everything is in order, you'll get an update by email within one working day.</span>
+          <AILabel size="xs">Answered from the Theo help center.</AILabel>
         </Stack>
       ),
     },
@@ -289,8 +289,8 @@ export function SettingsExample() {
     <Stack gap="lg" className="mx-auto w-full max-w-xl">
       <ListSection title="Workspace">
         <ListGroup>
-          <ListItem icon={Information} title="Name" value="Vita" onClick={() => {}} />
-          <ListItem icon={Bot} tone="brand" title="Default model" value="Vita Large" onClick={() => {}} />
+          <ListItem icon={Information} title="Name" value="Theo" onClick={() => {}} />
+          <ListItem icon={Bot} tone="brand" title="Default model" value="Theo Large" onClick={() => {}} />
           <ListItem icon={Security} tone="brand" title="Security & access" onClick={() => {}} />
         </ListGroup>
       </ListSection>
@@ -310,7 +310,7 @@ export function SettingsExample() {
 export function SignInExample() {
   return (
     <div className="mx-auto w-full max-w-md py-8">
-      <LoginBlock productName="Vita" onSubmit={() => new Promise((r) => setTimeout(r, 900))} onSso={() => {}} />
+      <LoginBlock productName="Theo" onSubmit={() => new Promise((r) => setTimeout(r, 900))} onSso={() => {}} />
     </div>
   )
 }

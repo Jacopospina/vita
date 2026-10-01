@@ -2,9 +2,9 @@
 title: Progress indicator
 summary: The steps of a multi-step task, with where the user is and what's left. Completed steps stay reachable.
 status: stable
-import: "import { ProgressIndicator } from \"@/components/corpus/progress-indicator\""
+import: "import { ProgressIndicator } from \"@/components/vita/progress-indicator\""
 use_when:
-  - Wizards, onboarding, checkout — 3–6 sequential steps the user completes
+  - Wizards, onboarding, checkout, 3–6 sequential steps the user completes
 avoid_when:
   - System progress → ProgressBar
   - Non-sequential sections → Tabs

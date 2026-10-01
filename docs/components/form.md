@@ -2,7 +2,7 @@
 title: Form
 summary: The structural pieces of every form. Form, FormGroup, FormRow, FormActions, FluidForm and the FieldShell wiring every input uses.
 status: stable
-import: "import { Form, FormGroup, FormRow, FormActions, FluidForm, Label, FieldShell } from \"@/components/corpus/form\""
+import: "import { Form, FormGroup, FormRow, FormActions, FluidForm, Label, FieldShell } from \"@/components/vita/form\""
 use_when:
   - Any time the user enters data that is submitted together
 avoid_when:
@@ -13,12 +13,12 @@ related: [forms, text-input, fluid-styles, read-only-states]
 
 ## Pieces
 
-- **Form**: a vertical stack with 24px between fields, capped at `max-w-xl`, `noValidate` (Corpus validates, not the browser).
+- **Form**: a vertical stack with 24px between fields, capped at `max-w-xl`, `noValidate` (Vita validates, not the browser).
 - **FormGroup**: a `fieldset` + `legend` for related fields (address, notification preferences).
 - **FormRow**: the only way to place fields side by side, and only when they are ONE data point (first + last name, expiry month + year, a range). The pair blends: one container owns border, radius and background; the fields inside are flat, labels inside, a hairline between.
 - **FormActions**: the submit row at the end. Joined, zero gap; primary first in page forms (reading order).
-- **FluidForm**: dense expert entry, every field blended into one tall container (see *Fluid styles*). One column only — the `columns` prop was removed (breaking change in 0.2).
-- **FieldShell**: the label → control → helper/validation wrapper. Use it only to build a new Corpus input upstream, never in product code.
+- **FluidForm**: dense expert entry, every field blended into one tall container (see *Fluid styles*). One column only, the `columns` prop was removed (breaking change in 0.2).
+- **FieldShell**: the label → control → helper/validation wrapper. Use it only to build a new Vita input upstream, never in product code.
 
 ## Anatomy of a field
 

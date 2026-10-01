@@ -2,7 +2,7 @@
 title: Global header
 summary: What goes in the product-wide header, in which order, and what each global action opens.
 status: stable
-import: "import { Header, HeaderGlobalAction } from \"@/components/corpus/ui-shell\""
+import: "import { Header, HeaderGlobalAction } from \"@/components/vita/ui-shell\""
 use_when:
   - Every authenticated product
 avoid_when:
@@ -15,7 +15,7 @@ related: [ui-shell-header, ui-shell-right-panel, search]
 1. Menu toggle (mobile only)
 2. **Prefix + product name** → home
 3. Header nav (only without a side nav)
-4. ——— spacer ———
+4. (spacer)
 5. **Search** → the [GlobalSearch](#/components/global-search) capsule, ⌘K from anywhere
 6. **Notifications** → `RightPanel` "Notifications", with a badge dot for unread items
 7. **Help** → `RightPanel` with docs, shortcuts and contact

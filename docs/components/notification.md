@@ -1,12 +1,12 @@
 ---
 title: Notification
-summary: System messages with one anatomy — icon placeholder, title over subtitle, optional action. Inline for problems tied to a place, toast banner for confirmation, callout for static guidance.
+summary: System messages with one anatomy, icon placeholder, title over subtitle, optional action. Inline for problems tied to a place, toast banner for confirmation, callout for static guidance.
 status: stable
-import: "import { InlineNotification, Callout, Toaster, toast } from \"@/components/corpus/notification\"\n\ntoast({ icon: Bot, source: \"Vita\", title: \"Agent deployed\", subtitle: \"Support triage is live\" })"
+import: "import { InlineNotification, Callout, Toaster, toast } from \"@/components/vita/notification\"\n\ntoast({ icon: Bot, source: \"Theo\", title: \"Agent deployed\", subtitle: \"Support triage is live\" })"
 use_when:
-  - Inline — errors/warnings about a section, form summary, account-level issues
-  - Toast — brief confirmation of something the user just did (with optional Undo)
-  - Callout — permanent, non-dismissible contextual guidance
+  - Inline, errors/warnings about a section, form summary, account-level issues
+  - Toast, brief confirmation of something the user just did (with optional Undo)
+  - Callout, permanent, non-dismissible contextual guidance
 avoid_when:
   - A decision is required before continuing → Modal
   - Field-level validation → the field's invalidText

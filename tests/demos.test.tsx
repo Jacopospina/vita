@@ -7,7 +7,7 @@ import { TooltipProvider } from "@/registry/ui/tooltip"
 
 afterEach(cleanup)
 
-describe("every Corpus page is documented", () => {
+describe("every Vita page is documented", () => {
   for (const [section, entries] of Object.entries(manifest))
     for (const e of entries)
       it(`${section}/${e.slug} has docs with a summary`, () => {
@@ -20,7 +20,7 @@ describe("every Corpus page is documented", () => {
 describe("every demo renders", () => {
   for (const [key, list] of Object.entries(demos))
     for (const d of list)
-      it(`${key} — ${d.title}`, () => {
+      it(`${key}, ${d.title}`, () => {
         const { container } = render(<TooltipProvider>{d.render()}</TooltipProvider>)
         expect(container.innerHTML.length).toBeGreaterThan(0)
       })

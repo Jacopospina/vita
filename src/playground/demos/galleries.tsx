@@ -15,7 +15,7 @@ import { allIcons, allPictograms, type Glyph } from "@/registry/catalog"
 
 const PAGE = 240
 
-/** Every glyph in the system, by name — fetched only here, in its own chunk (registry/catalog). */
+/** Every glyph in the system, by name, fetched only here, in its own chunk (registry/catalog). */
 function useGlyphs(kind: "icons" | "pictograms") {
   const [glyphs, setGlyphs] = React.useState<[string, Glyph][] | null>(null)
   React.useEffect(() => {
@@ -59,7 +59,7 @@ export function GlyphGallery({ kind }: { kind: "icons" | "pictograms" }) {
     return glyphs.filter(([name]) => terms.every((t) => name.toLowerCase().includes(t)))
   }, [glyphs, q])
   const [shown, sentinel] = useProgressive(filtered.length, q)
-  const importFrom = kind === "icons" ? "@/components/corpus/icons" : "@/components/corpus/pictograms"
+  const importFrom = kind === "icons" ? "@/components/vita/icons" : "@/components/vita/pictograms"
 
   const copy = async (name: string) => {
     const snippet = `import { ${name} } from "${importFrom}"`
@@ -99,7 +99,7 @@ export function GlyphGallery({ kind }: { kind: "icons" | "pictograms" }) {
             <button
               key={name}
               type="button"
-              title={`${name} — click to copy the import`}
+              title={`${name}, click to copy the import`}
               onClick={() => copy(name)}
               className="group flex min-w-0 animate-enter-fade flex-col items-center justify-center gap-2 border-r border-b border-border-subtle bg-background px-2 py-6 text-foreground hover:bg-hover focus-ring-inset"
             >

@@ -7,7 +7,7 @@ import { Button, ActionBar, type ButtonProps } from "@/registry/ui/button"
 import { Icon } from "@/registry/ui/icon"
 
 /**
- * Modal — interrupts the user for a FOCUSED task or a decision that must be made before continuing.
+ * Modal, interrupts the user for a FOCUSED task or a decision that must be made before continuing.
  * RULE: a modal never has a Cancel/Dismiss button. The × , Escape and (non-danger) click-outside close it.
  * Modality is a last resort. Prefer inline editing, a Popover, or a Side panel when the user benefits from seeing the page.
  *
@@ -54,7 +54,7 @@ export function ModalContent({ size = "md", danger, className, children, ...prop
       <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-overlay data-[state=open]:animate-enter-fade data-[state=closed]:animate-exit-fade" />
       <DialogPrimitive.Content
         {...props}
-        // Every dismissal (click outside, Escape, ×) falls; only a successful action flies up — reset on each open and dismissal.
+        // Every dismissal (click outside, Escape, ×) falls; only a successful action flies up, reset on each open and dismissal.
         onPointerDownOutside={(e) => { if (danger) e.preventDefault(); else setExit("fall"); props.onPointerDownOutside?.(e) }}
         onEscapeKeyDown={(e) => { setExit("fall"); props.onEscapeKeyDown?.(e) }}
         onOpenAutoFocus={(e) => { setExit("fall"); if (danger) { e.preventDefault(); closeRef.current?.focus() } props.onOpenAutoFocus?.(e) }}
@@ -80,7 +80,7 @@ export function ModalContent({ size = "md", danger, className, children, ...prop
 }
 
 /**
- * ModalAction — the modal's primary action. Runs `onAction` (sync or async) with a loading state;
+ * ModalAction, the modal's primary action. Runs `onAction` (sync or async) with a loading state;
  * on success the modal leaves with the "sent" exit, on failure it stays open for the user to fix.
  */
 export function ModalAction({ onAction, children, ...props }: Omit<ButtonProps, "onClick" | "onAction"> & { onAction: () => unknown | Promise<unknown> }) {
@@ -118,15 +118,15 @@ export function ModalBody({ className, scroll = false, ...props }: React.HTMLAtt
   return <div className={cn("min-h-0 flex-1 px-5 pb-5 text-body", scroll && "overflow-y-auto border-y border-border-subtle pt-3", className)} {...props} />
 }
 
-/** ModalFooter — a full-bleed ActionBar. The primary action only (optionally one secondary alternative). Never Cancel. */
-/** ModalFooter — the blended actions, inset 8px from the dialog's edges in one rounded group (radius = dialog − 8px). */
+/** ModalFooter, a full-bleed ActionBar. The primary action only (optionally one secondary alternative). Never Cancel. */
+/** ModalFooter, the blended actions, inset 8px from the dialog's edges in one rounded group (radius = dialog − 8px). */
 export function ModalFooter({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   return <ActionBar className={cn("m-2 overflow-hidden rounded-inner-2 border-t-0", className)} {...props} />
 }
 
 /**
- * ConfirmModal — the canonical confirmation. Title asks the question, the ONE button repeats the verb.
- *   title="Delete 3 agents?"  confirmLabel="Delete agents"  (never "OK"/"Yes"; no Cancel — × closes)
+ * ConfirmModal, the canonical confirmation. Title asks the question, the ONE button repeats the verb.
+ *   title="Delete 3 agents?"  confirmLabel="Delete agents"  (never "OK"/"Yes"; no Cancel, × closes)
  */
 export function ConfirmModal({
   open,

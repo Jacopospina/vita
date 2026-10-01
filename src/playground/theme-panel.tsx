@@ -13,15 +13,15 @@ import type { useWeatherTint } from "@/registry/hooks/use-weather-tint"
 
 /** Live editor for the theme.css knobs. Writes CSS custom properties on <html>. */
 const knobs = [
-  { key: "--corpus-brand-hue", label: "Brand hue", min: 0, max: 360, step: 0.1, def: 257.4, unit: "" },
-  { key: "--corpus-brand-chroma", label: "Brand chroma", min: 0, max: 0.3, step: 0.001, def: 0.218, unit: "" },
-  { key: "--corpus-neutral-hue", label: "Neutral hue", min: 0, max: 360, step: 1, def: 286, unit: "" },
-  { key: "--corpus-neutral-chroma", label: "Neutral tint", min: 0, max: 0.03, step: 0.001, def: 0, unit: "" },
-  { key: "--corpus-radius", label: "Corner radius", min: 0, max: 1.25, step: 0.125, def: 0.5, unit: "rem" },
-  { key: "--corpus-density", label: "Density", min: 0.8, max: 1.25, step: 0.01, def: 1.08, unit: "" },
-  { key: "--corpus-type-base", label: "Body size", min: 0.75, max: 1.125, step: 0.0625, def: 0.8125, unit: "rem" },
-  { key: "--corpus-type-ratio", label: "Type scale ratio", min: 1.1, max: 1.333, step: 0.01, def: 1.2, unit: "" },
-  { key: "--corpus-motion-scale", label: "Motion speed", min: 0, max: 2, step: 0.25, def: 1, unit: "" },
+  { key: "--vita-brand-hue", label: "Brand hue", min: 0, max: 360, step: 0.1, def: 257.4, unit: "" },
+  { key: "--vita-brand-chroma", label: "Brand chroma", min: 0, max: 0.3, step: 0.001, def: 0.218, unit: "" },
+  { key: "--vita-neutral-hue", label: "Neutral hue", min: 0, max: 360, step: 1, def: 286, unit: "" },
+  { key: "--vita-neutral-chroma", label: "Neutral tint", min: 0, max: 0.03, step: 0.001, def: 0, unit: "" },
+  { key: "--vita-radius", label: "Corner radius", min: 0, max: 1.25, step: 0.125, def: 0.5, unit: "rem" },
+  { key: "--vita-density", label: "Density", min: 0.8, max: 1.25, step: 0.01, def: 1.08, unit: "" },
+  { key: "--vita-type-base", label: "Body size", min: 0.75, max: 1.125, step: 0.0625, def: 0.8125, unit: "rem" },
+  { key: "--vita-type-ratio", label: "Type scale ratio", min: 1.1, max: 1.333, step: 0.01, def: 1.2, unit: "" },
+  { key: "--vita-motion-scale", label: "Motion speed", min: 0, max: 2, step: 0.25, def: 1, unit: "" },
 ] as const
 
 const fonts = [
@@ -41,7 +41,7 @@ export function ThemePanel({ dark, onDarkChange, weather }: { dark: boolean; onD
     // Knobs move continuously (sliders): apply instantly rather than transitioning every element on the page.
     withoutTransitions(() => {
       knobs.forEach((k) => root.style.setProperty(k.key, `${values[k.key]}${k.unit}`))
-      root.style.setProperty("--corpus-font-sans", fonts.find((f) => f.value === font)!.css)
+      root.style.setProperty("--vita-font-sans", fonts.find((f) => f.value === font)!.css)
     })
   }, [values, font])
 
@@ -50,24 +50,24 @@ export function ThemePanel({ dark, onDarkChange, weather }: { dark: boolean; onD
     const root = document.documentElement
     swapAppearance(() => {
       knobs.forEach((k) => root.style.removeProperty(k.key))
-      root.style.removeProperty("--corpus-font-sans")
-      if (p === "default") root.removeAttribute("data-corpus-preset")
-      else root.setAttribute("data-corpus-preset", p)
+      root.style.removeProperty("--vita-font-sans")
+      if (p === "default") root.removeAttribute("data-vita-preset")
+      else root.setAttribute("data-vita-preset", p)
     })
     requestAnimationFrame(() => {
       const cs = getComputedStyle(root)
       setValues(Object.fromEntries(knobs.map((k) => [k.key, parseFloat(cs.getPropertyValue(k.key)) || k.def])))
-      const f = cs.getPropertyValue("--corpus-font-sans")
+      const f = cs.getPropertyValue("--vita-font-sans")
       setFont(f.includes("Helvetica") ? "grotesk" : f.trim().startsWith("system-ui") ? "system" : "flex")
     })
   }
 
-  const css = `:root {\n${knobs.map((k) => `  ${k.key}: ${values[k.key]}${k.unit};`).join("\n")}\n  --corpus-font-sans: ${fonts.find((f) => f.value === font)!.css};\n}`
+  const css = `:root {\n${knobs.map((k) => `  ${k.key}: ${values[k.key]}${k.unit};`).join("\n")}\n  --vita-font-sans: ${fonts.find((f) => f.value === font)!.css};\n}`
 
   return (
     <Stack gap="lg">
-      <Text tone="muted">Every token in Corpus derives from these knobs. Tune them here, then paste the result into <code className="font-mono">src/styles/theme.css</code>.</Text>
-      <ContentSwitcher label="Preset" value={preset} onValueChange={applyPreset} size="sm" items={[{ value: "default", label: "Corpus" }, { value: "square", label: "Square" }, { value: "soft", label: "Soft" }, { value: "mono", label: "Mono" }]} className="w-full" />
+      <Text tone="muted">Every token in Vita derives from these knobs. Tune them here, then paste the result into <code className="font-mono">src/styles/theme.css</code>.</Text>
+      <ContentSwitcher label="Preset" value={preset} onValueChange={applyPreset} size="sm" items={[{ value: "default", label: "Vita" }, { value: "square", label: "Square" }, { value: "soft", label: "Soft" }, { value: "mono", label: "Mono" }]} className="w-full" />
       <Toggle label="Dark theme" checked={dark} onCheckedChange={onDarkChange} />
       <Stack gap="xs">
         <ContentSwitcher

@@ -11,7 +11,7 @@ export const manifest: Record<Section, NavEntry[]> = {
     { slug: "cli", title: "CLI" },
     { slug: "skills", title: "Skills" },
     { slug: "registry", title: "Registry" },
-    { slug: "about", title: "Mind, soul, body" },
+    { slug: "about", title: "Animus, anima, vita" },
     { slug: "brand", title: "Brand & voice" },
     { slug: "principles", title: "Design principles" },
     { slug: "interaction", title: "Interaction" },
@@ -21,7 +21,7 @@ export const manifest: Record<Section, NavEntry[]> = {
     { slug: "accessibility", title: "Accessibility" },
     { slug: "color", title: "Color" },
     { slug: "content", title: "Content, personas & taxonomy" },
-    { slug: "corpus-for-ai", title: "Corpus for AI" },
+    { slug: "vita-for-ai", title: "Vita for AI" },
     { slug: "grid", title: "Grid & layout" },
     { slug: "icons", title: "Icons" },
     { slug: "material", title: "Material" },
@@ -108,7 +108,7 @@ export const manifest: Record<Section, NavEntry[]> = {
     { slug: "text-toolbar", title: "Text toolbar" },
   ],
   decisions: [
-    { slug: "how-we-decide", title: "How Corpus decides" },
+    { slug: "how-we-decide", title: "How Vita decides" },
     { slug: "glass-by-elevation", title: "Glass by elevation" },
     { slug: "status-semantics", title: "Status semantics" },
     { slug: "weather-tint", title: "Weather tint" },
@@ -116,6 +116,7 @@ export const manifest: Record<Section, NavEntry[]> = {
     { slug: "motion", title: "Motion" },
     { slug: "fields-and-options", title: "Fields and options" },
     { slug: "touch", title: "Touch adapts by itself" },
+    { slug: "the-name", title: "The name is Vita" },
   ],
 }
 

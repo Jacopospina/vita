@@ -21,7 +21,7 @@ related: [material, color, ui-shell-header]
 - **Glass needs something behind it.** With content beside the header instead of under it, no opacity could show the material.
 - **Stronger lift bleached the page** to flat white, hiding the frost.
 
-## Rejected — avoid
+## Rejected, avoid
 
 - **Opaque or near-opaque fills** (66–86%). They read as plain white panels.
 - **A 12% backdrop lift.** It flattened everything behind the glass to white.
@@ -31,18 +31,18 @@ related: [material, color, ui-shell-header]
 
 - **Readability suffers** over busy content (raise the fill for that tier only).
 
-## Revision — 2026-10-01: dialogs are denser
+## Revision, 2026-10-01: dialogs are denser
 
 - **glass-4 fill 12% → 44%.** Modals and Spotlight blended into the page behind them; a dialog is where people read and decide, so it must read first.
 - **Only this tier.** Every other tier keeps its fill; blur still rises with the layer.
 - **Still glass.** 44% stays below the rejected near-opaque range (66–86%), so the frost still shows.
 
-## Revision — 2026-10-01 (later): dialogs are near-opaque
+## Revision, 2026-10-01 (later): dialogs are near-opaque
 
 - **glass-4 fill 44% → 80%.** 44% still let the page blend through; a dialog must read as a solid sheet. The blur stays, so only a hint of the page shows at the edges of colour.
 - **The "near-opaque" rejection no longer applies to dialogs.** It still holds for every other tier: shell, menus and notifications stay thin glass.
 
-## Revision — 2026-10-01: lighter blur on touch
+## Revision, 2026-10-01: lighter blur on touch
 
 - **Blur radii × 0.6 under `pointer: coarse`** (6 · 8 · 11 · 14 · 18px). A backdrop blur is redrawn under every scrolled frame and costs the square of its radius; on phones the header's glass alone made scrolling stutter.
 - **Fills and the order of tiers are unchanged.** Frost still rises with the layer; only its radius shrinks. See *Touch adapts by itself*.

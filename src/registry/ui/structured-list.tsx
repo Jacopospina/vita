@@ -3,7 +3,7 @@ import { cn } from "@/registry/lib/utils"
 import { DrawnMark } from "@/registry/ui/icon"
 
 /**
- * StructuredList — a small, read-mostly set of rows with a few columns: key/value details, plan comparison, spec sheets.
+ * StructuredList, a small, read-mostly set of rows with a few columns: key/value details, plan comparison, spec sheets.
  * No sorting, pagination, bulk actions → that's a DataTable. Selectable variant = choose one row (radio semantics).
  */
 export function StructuredList({ columns, rows, selectable, value, onValueChange, condensed, flush, label, className }: {

@@ -6,7 +6,7 @@ import { AnimatedText } from "@/registry/ui/animated"
 import { Thinking, type ThinkingMode } from "@/registry/ui/thinking"
 
 /**
- * Loading family. Corpus never spins — it THINKS (see Thinking). Choose by SCOPE and DURATION:
+ * Loading family. Vita never spins, it THINKS (see Thinking). Choose by SCOPE and DURATION:
  *   < 300ms           → show nothing (avoid flashes)
  *   known layout      → Skeleton (preferred: preserves layout, feels faster)
  *   a single action   → InlineLoading next to its trigger, or Button `loading`
@@ -21,8 +21,8 @@ export function Loading({ size = "md", mode = "basic", label = "Loading", overla
 }
 
 /**
- * InlineLoading — status of a single operation, in place: "Saving…" → "Saved" → (fades). Also covers error.
- * ONE indicator that morphs between states — never several side by side: error → (Retry) → saving → saved,
+ * InlineLoading, status of a single operation, in place: "Saving…" → "Saved" → (fades). Also covers error.
+ * ONE indicator that morphs between states, never several side by side: error → (Retry) → saving → saved,
  * or back to error. The glyph cross-fades (thinking ⇄ drawn check/error), the text morphs, the colour fades.
  *   onRetry  shown with an error: a "Retry" action that blends out as the retry starts.
  */
@@ -89,7 +89,7 @@ export function InlineLoading({ status = "active", description, mode = "basic", 
   )
 }
 
-/** Skeleton — placeholder shaped like the content that's coming. Match real dimensions. */
+/** Skeleton, placeholder shaped like the content that's coming. Match real dimensions. */
 export function Skeleton({ className, shape = "rect", ...props }: React.HTMLAttributes<HTMLDivElement> & { shape?: "rect" | "text" | "circle" }) {
   return (
     <div
@@ -106,7 +106,7 @@ export function Skeleton({ className, shape = "rect", ...props }: React.HTMLAttr
   )
 }
 
-/** SkeletonText — n lines, last one shorter. */
+/** SkeletonText, n lines, last one shorter. */
 export function SkeletonText({ lines = 3, className }: { lines?: number; className?: string }) {
   return (
     <div className={cn("flex flex-col gap-2", className)} aria-hidden>

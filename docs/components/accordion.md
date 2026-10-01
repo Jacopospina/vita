@@ -2,7 +2,7 @@
 title: Accordion
 summary: A vertical stack of headers that each reveal a section. Progressive disclosure for content users scan by title.
 status: stable
-import: "import { Accordion, AccordionItem, AccordionTrigger, AccordionContent, Disclosure } from \"@/components/corpus/accordion\""
+import: "import { Accordion, AccordionItem, AccordionTrigger, AccordionContent, Disclosure } from \"@/components/vita/accordion\""
 use_when:
   - FAQs, help content, long settings grouped by topic
   - Filter panels with many facets

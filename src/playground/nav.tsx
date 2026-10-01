@@ -4,7 +4,7 @@ import { demos } from "./demos"
 import * as React from "react"
 import { Text } from "@/registry/ui/text"
 
-/** A layout wrapper around several variants (Stack, Inline, a demo grid) — never a component's own root. */
+/** A layout wrapper around several variants (Stack, Inline, a demo grid), never a component's own root. */
 const isLayout = (el: Element) =>
   el.children.length > 1 && !el.getAttribute("role") && (el.getAttribute("data-layout") === "stack" || (el instanceof HTMLDivElement && /(^|\s)grid(\s|$)/.test(el.className)))
 
@@ -15,7 +15,7 @@ function OneInstance({ children }: { children: React.ReactNode }) {
     let el = ref.current?.firstElementChild
     while (el && isLayout(el)) {
       const kids = [...el.children] as HTMLElement[]
-      // Skip captions and headings that label a group of variants — the instance is the first thing that isn't just text.
+      // Skip captions and headings that label a group of variants, the instance is the first thing that isn't just text.
       const keep = kids.find((k) => k.children.length > 0 || /^(BUTTON|INPUT|SELECT|TEXTAREA|SVG|IMG)$/i.test(k.tagName)) ?? kids[0]
       for (const k of kids) if (k !== keep) k.style.display = "none"
       // Centre what's left: full-width components still fill, small ones sit in the middle.
@@ -47,7 +47,7 @@ export const HOME_URL = import.meta.env.PROD ? "/" : "./showcase.html"
 export const DOCS_URL = import.meta.env.PROD ? "/docs#/" : "./index.html#/"
 export const MAKE_URL = import.meta.env.PROD ? "/make" : "./make.html"
 
-/** The global nav — ONE list, used by the docs header and the showcase header so they never drift apart. */
+/** The global nav, ONE list, used by the docs header and the showcase header so they never drift apart. */
 export const globalNav = [
   { label: "Start", path: "guidelines", sections: ["guidelines", "getting-started"] },
   { label: "Foundations", path: "foundations/accessibility", sections: ["foundations"] },
@@ -58,7 +58,7 @@ export const globalNav = [
 
 /** Every page, for the header's global search (grouped by section). `base` prefixes links (the showcase lives elsewhere). */
 export function searchPages(go: (path: string) => void) {
-  const pages = [{ id: "guidelines", label: "About Corpus", group: "Getting started", path: "guidelines", description: "The overview of Corpus: what it is, how it's organised, and where to start." }]
+  const pages = [{ id: "guidelines", label: "About Vita", group: "Getting started", path: "guidelines", description: "The overview of Vita: what it is, how it's organised, and where to start." }]
   for (const s of Object.keys(manifest) as Section[])
     for (const e of manifest[s]) pages.push({ id: `${s}/${e.slug}`, label: e.title, group: sectionTitles[s], path: `${s}/${e.slug}`, description: getDoc(s, e.slug)?.meta.summary ?? "" })
   return pages.map((p) => {

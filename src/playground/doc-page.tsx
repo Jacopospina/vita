@@ -20,7 +20,7 @@ import { sourcesFor, tokensIn } from "./sources"
 import { TokensTable } from "./tokens-table"
 import { cn } from "@/registry/lib/utils"
 
-const REPO = "github:Jacopospina/corpus"
+const REPO = "github:Jacopospina/vita"
 
 function Stage({ demo, hero }: { demo: Demo; hero?: boolean }) {
   return (
@@ -54,7 +54,7 @@ export function DocPage({ section, slug }: { section: Section; slug: string }) {
       <Stack gap="xl" className="stagger">
         {/* Header */}
         <Stack gap="sm">
-          <Breadcrumb items={[{ label: "Corpus", href: "#/guidelines" }, { label: sectionTitles[section], href: `#/${section}/${manifest[section][0].slug}` }, { label: title }]} />
+          <Breadcrumb items={[{ label: "Vita", href: "#/guidelines" }, { label: sectionTitles[section], href: `#/${section}/${manifest[section][0].slug}` }, { label: title }]} />
           <Inline gap="sm" align="center" wrap>
             <Text variant="large-title">{title}</Text>
             {doc?.meta.status && <Tag tone={statusTone}>{doc.meta.status}</Tag>}

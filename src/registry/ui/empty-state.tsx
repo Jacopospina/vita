@@ -3,7 +3,7 @@ import { cn } from "@/registry/lib/utils"
 import { Pictogram, type PictogramProps } from "@/registry/ui/pictogram"
 
 /**
- * EmptyState — what a region shows when it has nothing to show. Three causes, three messages:
+ * EmptyState, what a region shows when it has nothing to show. Three causes, three messages:
  *   first-use   → explain the value + ONE primary action to create the first item
  *   no-results  → say nothing matched + offer to clear filters/search
  *   error       → say what failed + how to recover (retry), never blame the user

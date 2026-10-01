@@ -1,6 +1,6 @@
 ---
 title: Changelog
-summary: Every change to Corpus, newest first, on one timeline. Breaking changes are marked and say how to migrate.
+summary: Every change to Vita, newest first, on one timeline. Breaking changes are marked and say how to migrate.
 status: stable
 related: [how-we-decide, cli]
 ---

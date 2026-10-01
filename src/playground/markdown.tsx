@@ -13,7 +13,7 @@ import { StructuredList } from "@/registry/ui/structured-list"
 marked.setOptions({ gfm: true })
 
 /**
- * Renders Corpus docs as Corpus components, so every page reads as cards and short alerts:
+ * Renders Vita docs as Vita components, so every page reads as cards and short alerts:
  *   ## heading                 → section
  *   list of "**Title.** body"  → grid of rule cards (numbered if ordered)
  *   list under "Don't/Never"   → red ✕ card · under "Do/Use when" → green ✓ card
@@ -111,7 +111,7 @@ function Alert({ token }: { token: Tokens.Blockquote }) {
 
 /* ---------------- lists → cards ---------------- */
 
-const LEAD = /^\*\*(.+?)\*\*\s*[:.—-]?\s*/
+const LEAD = /^\*\*(.+?)\*\*\s*[:.\u2014-]?\s*/
 
 function itemParts(item: Tokens.ListItem) {
   const first = item.tokens.find((x) => x.type === "text" || x.type === "paragraph") as Tokens.Text | undefined
@@ -199,5 +199,5 @@ function Table({ table }: { table: Tokens.Table }) {
 /* ---------------- inline ---------------- */
 
 function inline(md: string) {
-  return <span className="corpus-inline" dangerouslySetInnerHTML={{ __html: marked.parseInline(md, { async: false }) as string }} />
+  return <span className="vita-inline" dangerouslySetInnerHTML={{ __html: marked.parseInline(md, { async: false }) as string }} />
 }

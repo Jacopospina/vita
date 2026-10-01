@@ -2,7 +2,7 @@
 title: Tooltip
 summary: A short plain-text name or hint on hover/focus. Includes DefinitionTooltip for glossary terms.
 status: stable
-import: "import { Tooltip, TooltipProvider, DefinitionTooltip } from \"@/components/corpus/tooltip\""
+import: "import { Tooltip, TooltipProvider, DefinitionTooltip } from \"@/components/vita/tooltip\""
 use_when:
   - Naming icon-only buttons (automatic with IconButton)
   - Revealing the full text of truncated content
@@ -17,7 +17,7 @@ related: [popover, button, overflow-content]
 
 ## Look
 
-- **A squircle with no pointer.** Inverse surface, squircle corners, 6px from its trigger. Proximity says what it belongs to — no arrow.
+- **A squircle with no pointer.** Inverse surface, squircle corners, 6px from its trigger. Proximity says what it belongs to, no arrow.
 
 ## Rules
 

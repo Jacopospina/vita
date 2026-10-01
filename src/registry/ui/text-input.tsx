@@ -4,7 +4,7 @@ import { cn } from "@/registry/lib/utils"
 import { FieldShell, fieldClasses, fieldSize, type FieldBaseProps, type FieldSize } from "@/registry/ui/form"
 import { SwapIcon } from "@/registry/ui/icon"
 
-/** TextInput — single-line free text. If the answer set is known and ≤ ~7, use Radio/Select instead. */
+/** TextInput, single-line free text. If the answer set is known and ≤ ~7, use Radio/Select instead. */
 export interface TextInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size">, FieldBaseProps {
   size?: FieldSize
   /** Character counter (shows when maxLength is set). */
@@ -42,7 +42,7 @@ export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
 )
 TextInput.displayName = "TextInput"
 
-/** PasswordInput — TextInput with a show/hide toggle. */
+/** PasswordInput, TextInput with a show/hide toggle. */
 export const PasswordInput = React.forwardRef<HTMLInputElement, Omit<TextInputProps, "type" | "showCount">>(
   ({ label, hideLabel, helperText, invalid, invalidText, warn, warnText, optional, labelAddon, size = "md", className, id, ...props }, ref) => {
     const [visible, setVisible] = React.useState(false)
@@ -67,7 +67,7 @@ export const PasswordInput = React.forwardRef<HTMLInputElement, Omit<TextInputPr
 )
 PasswordInput.displayName = "PasswordInput"
 
-/** TextArea — multi-line text (comments, descriptions). Grows to fit up to `rows` then scrolls. */
+/** TextArea, multi-line text (comments, descriptions). Grows to fit up to `rows` then scrolls. */
 export interface TextAreaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement>, FieldBaseProps {
   showCount?: boolean
 }

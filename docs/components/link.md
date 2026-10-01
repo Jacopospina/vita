@@ -2,7 +2,7 @@
 title: Link
 summary: Navigation to another page, section or resource. If it changes data, it's a Button.
 status: stable
-import: "import { Link } from \"@/components/corpus/link\""
+import: "import { Link } from \"@/components/vita/link\""
 use_when:
   - Navigating to another page or anchor
   - Referencing a resource inside running text

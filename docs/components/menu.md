@@ -2,7 +2,7 @@
 title: Menu
 summary: A temporary list of actions, opened from a trigger or right-click. Menus hold verbs, not values and not destinations.
 status: stable
-import: "import { Menu, MenuTrigger, MenuContent, MenuItem, MenuSeparator, MenuLabel, MenuCheckboxItem, MenuRadioGroup, MenuRadioItem, MenuSub, MenuSubTrigger, MenuSubContent, ContextMenu, ContextMenuTrigger, ContextMenuContent, ContextMenuItem } from \"@/components/corpus/menu\""
+import: "import { Menu, MenuTrigger, MenuContent, MenuItem, MenuSeparator, MenuLabel, MenuCheckboxItem, MenuRadioGroup, MenuRadioItem, MenuSub, MenuSubTrigger, MenuSubContent, ContextMenu, ContextMenuTrigger, ContextMenuContent, ContextMenuItem } from \"@/components/vita/menu\""
 use_when:
   - Offering 3–10 actions without taking permanent space
   - View options that toggle (show grid, compact rows) via MenuCheckboxItem

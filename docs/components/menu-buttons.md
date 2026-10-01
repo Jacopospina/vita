@@ -2,11 +2,11 @@
 title: Menu buttons
 summary: Three buttons that open menus. MenuButton groups actions, ComboButton adds alternatives to a default action, OverflowMenu hides secondary actions.
 status: stable
-import: "import { MenuButton, ComboButton, OverflowMenu } from \"@/components/corpus/menu-button\""
+import: "import { MenuButton, ComboButton, OverflowMenu } from \"@/components/vita/menu-button\""
 use_when:
-  - MenuButton — several equally important related actions under one label ("Export ▾", "Create ▾")
-  - ComboButton — one dominant action plus variations ("Save" | "Save as…", "Save as template")
-  - OverflowMenu — secondary actions on a row, tile, card or page header (⋮)
+  - MenuButton, several equally important related actions under one label ("Export ▾", "Create ▾")
+  - ComboButton, one dominant action plus variations ("Save" | "Save as…", "Save as template")
+  - OverflowMenu, secondary actions on a row, tile, card or page header (⋮)
 avoid_when:
   - Selecting a value → Dropdown
   - A single action → Button

@@ -9,8 +9,8 @@ import { listClasses, itemClasses } from "@/registry/ui/option"
 import { AnimatedText } from "@/registry/ui/animated"
 
 /**
- * Select — pick ONE value, composed with <SelectOption>/<SelectGroup> children.
- * Corpus NEVER uses the operating system's dropdown: this is the same custom listbox as Dropdown
+ * Select, pick ONE value, composed with <SelectOption>/<SelectGroup> children.
+ * Vita NEVER uses the operating system's dropdown: this is the same custom listbox as Dropdown
  * (floating label, drawn checkmark, choreography). Use Dropdown when your options are data (`items`).
  */
 export interface SelectProps extends FieldBaseProps {

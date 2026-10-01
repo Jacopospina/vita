@@ -1,6 +1,6 @@
 import * as React from "react"
 
-/** Controlled/uncontrolled state helper used by Corpus components. */
+/** Controlled/uncontrolled state helper used by Vita components. */
 export function useControllable<T>(value: T | undefined, defaultValue: T, onChange?: (v: T) => void) {
   const [inner, setInner] = React.useState(defaultValue)
   const isControlled = value !== undefined

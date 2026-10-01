@@ -1,8 +1,8 @@
 ---
 title: Login
-summary: Two-step, calm, secure login — identifier first, then password or SSO. Errors never leak whether an account exists.
+summary: Two-step, calm, secure login, identifier first, then password or SSO. Errors never leak whether an account exists.
 status: stable
-import: "import { LoginBlock } from \"@/components/corpus/blocks/login\""
+import: "import { LoginBlock } from \"@/components/vita/blocks/login\""
 use_when:
   - Any sign-in screen
 avoid_when:

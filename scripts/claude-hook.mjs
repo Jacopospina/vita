@@ -19,12 +19,12 @@ process.stdin.on("end", () => {
   }
   if (!file || !/\.(tsx|jsx|ts|js|css)$/.test(file) || !fs.existsSync(file)) process.exit(0)
   const here = path.dirname(new URL(import.meta.url).pathname)
-  const r = spawnSync(process.execPath, [path.join(here, "corpus-audit.mjs"), path.relative(process.cwd(), file)], { encoding: "utf8" })
+  const r = spawnSync(process.execPath, [path.join(here, "vita-audit.mjs"), path.relative(process.cwd(), file)], { encoding: "utf8" })
   if (r.status === 0) process.exit(0)
   process.stderr.write(
-    `${r.stdout}\nCorpus design-system violations in ${file}. Fix them by reusing Corpus components and tokens ` +
-      `(read .corpus/docs/components/choosing-components.md). Do not add local components or raw values. ` +
-      `If a designer explicitly approved an exception, add: // corpus-allow <rule>: <reason> — approved by @name\n`,
+    `${r.stdout}\nVita design-system violations in ${file}. Fix them by reusing Vita components and tokens ` +
+      `(read .vita/docs/components/choosing-components.md). Do not add local components or raw values. ` +
+      `If a designer explicitly approved an exception, add: // vita-allow <rule>: <reason>, approved by @name\n`,
   )
   process.exit(2)
 })

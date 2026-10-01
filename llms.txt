@@ -1,24 +1,24 @@
-# Corpus design system
+# Vita design system
 
-> Corpus is the body of the product: the only source of UI. Components are imported from @/components/corpus/*, tokens are Tailwind utilities, patterns are documented flows. Never create local components or raw values.
+> Vita is the body of the product: the only source of UI. Components are imported from @/components/vita/*, tokens are Tailwind utilities, patterns are documented flows. Never create local components or raw values.
 
-Start with: docs/components/choosing-components.md (decision guide) · docs/getting-started/principles.md · docs/decisions/ (system decisions — read before changing what they cover) · skills/corpus-design-system/SKILL.md
+Start with: docs/components/choosing-components.md (decision guide) · docs/getting-started/principles.md · docs/decisions/ (system decisions, read before changing what they cover) · skills/vita-design-system/SKILL.md
 
 ## Getting started
 
-- [Mind, soul, body](docs/getting-started/about.md): The AI-agent-first design system, born for humans and machines making together — the body of every product, through which its mind and soul reach the world.
+- [Animus, anima, vita](docs/getting-started/about.md): Every product has a mind and a soul. Vita is where they come alive. The AI-agent-first design system, born for humans and machines making together.
 - [Brand & voice](docs/getting-started/brand.md): The AI-agent-first design system, born for humans and machines making together. Its voice is the Creator's, and every word aims to awaken the maker in the reader.
-  - use: Writing in Corpus's own voice — docs, the showcase, onboarding, release notes, first-use moments; Naming a feature, writing a headline or choosing a slogan
+  - use: Writing in Vita's own voice: docs, the showcase, onboarding, release notes, first-use moments; Naming a feature, writing a headline or choosing a slogan
   - avoid: Product UI microcopy (buttons, labels, errors) → Content, personas & taxonomy; plain and direct wins inside products
-- [Changelog](docs/getting-started/changelog.md): Every change to Corpus, newest first, on one timeline. Breaking changes are marked and say how to migrate.
-- [CLI](docs/getting-started/cli.md): One command line to install Corpus, add components, stay up to date and audit any repo.
-- [Installation](docs/getting-started/installation.md): Add Corpus to a React + Tailwind v4 product in one command — components, styles, docs, agent skills, the audit and its hooks.
+- [Changelog](docs/getting-started/changelog.md): Every change to Vita, newest first, on one timeline. Breaking changes are marked and say how to migrate.
+- [CLI](docs/getting-started/cli.md): One command line to install Vita, add components, stay up to date and audit any repo.
+- [Installation](docs/getting-started/installation.md): Add Vita to a React + Tailwind v4 product in one command, components, styles, docs, agent skills, the audit and its hooks.
 - [Interaction](docs/getting-started/interaction.md): Built for products where AI carries the complexity. One hand per device, intent over input, nothing redundant, nothing that snaps.
   - use: Designing any flow, interaction or shortcut; Deciding between a form and an intent-first flow
   - avoid: Adding a control that repeats one that already exists (Cancel next to ×); Shortcuts that need the right hand
-- [Design principles](docs/getting-started/principles.md): Ten ranked rules every Corpus screen obeys. When two conflict, the lower number wins.
-- [Registry](docs/getting-started/registry.md): Corpus ships as source — a registry of components, hooks, blocks, icons and styles you install into your repo and own.
-- [Skills](docs/getting-started/skills.md): Six skills teach AI agents to design and build with Corpus like a designer would — installed with Corpus into every product.
+- [Design principles](docs/getting-started/principles.md): Ten ranked rules every Vita screen obeys. When two conflict, the lower number wins.
+- [Registry](docs/getting-started/registry.md): Vita ships as source, a registry of components, hooks, blocks, icons and styles you install into your repo and own.
+- [Skills](docs/getting-started/skills.md): Six skills teach AI agents to design and build with Vita like a designer would, installed with Vita into every product.
 
 ## Foundations
 
@@ -29,11 +29,8 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/gett
   - use: Coloring anything, via semantic utilities (bg-layer-1, text-muted-foreground, border-border-subtle)
   - avoid: Palette colors in product code (bg-blue-500) → they don't exist as utilities; Hex/rgb/oklch literals → forbidden; Color as the only carrier of meaning → pair it with an icon and text
 - [Content, personas & taxonomy](docs/foundations/content.md): Words are part of the design system. Personas decide who we speak to, the taxonomy fixes the words, and skills enforce them.
-  - use: Writing any user-visible string — labels, buttons, errors, empty states, emails, AI responses; Starting a new product or flow (create personas first)
+  - use: Writing any user-visible string, labels, buttons, errors, empty states, emails, AI responses; Starting a new product or flow (create personas first)
   - avoid: Inventing a term that isn't in the taxonomy → add it to the taxonomy first; Writing copy before knowing the persona
-- [Corpus for AI](docs/foundations/corpus-for-ai.md): Corpus is built for agents as much as for people — machine-readable docs, skills, rules, decisions and an audit that answers on every edit.
-  - use: Setting up an agent to design or build with Corpus; Understanding how Corpus keeps agent-built screens consistent
-  - avoid: Looking for the AI label or AI surfaces in the product → AI label
 - [Grid & layout](docs/foundations/grid.md): A 16-column grid for page structure, stacks for everything inside it.
   - use: Laying out a page or region (Grid + Column); Arranging elements vertically (Stack) or horizontally (Inline)
   - avoid: Hand-written flex/grid divs with custom gaps → use Stack, Inline and Grid; Absolute positioning for layout → only for overlays, badges and icons in controls
@@ -41,10 +38,10 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/gett
   - use: Reinforcing an action or a status label; Icon-only controls with universal meaning (close, search, menu, overflow), always with a tooltip
   - avoid: Other icon libraries → forbidden; Decorating headings or list items; Large illustrative use → Pictogram
 - [Material](docs/foundations/material.md): Everything that floats above the page is frosted glass. The higher it floats, the more it frosts and the more of what's behind shows through.
-  - use: Any surface with a z-index — side nav, header, right panel, menus, popovers, dialogs, notifications, pinned toolbars
+  - use: Any surface with a z-index, side nav, header, right panel, menus, popovers, dialogs, notifications, pinned toolbars
   - avoid: In-flow containers (cards, tiles, lists) → solid layers (layer-1..3); Tooltips → the solid inverse surface; Custom blur or translucency → use a glass tier
-- [Motion](docs/foundations/motion.md): Choreography is everything. Nothing snaps — every change transitions, variants morph like liquid, numbers roll and text reveals.
-  - use: Always — motion is on by default for every property change
+- [Motion](docs/foundations/motion.md): Choreography is everything. Nothing snaps, every change transitions, variants morph like liquid, numbers roll and text reveals.
+  - use: Always, motion is on by default for every property change
   - avoid: Switching transitions off on a component → tune duration or easing instead; Raw durations or cubic-beziers (duration-300, ease-[...]) → use tokens; Decorative loops, parallax, attention-seeking bounces
 - [Pictograms](docs/foundations/pictograms.md): Large pictograms for empty states, onboarding and feature tiles. Never as controls.
   - use: Empty states (first use, no results, error); Onboarding and feature explanations; Large clickable tiles that introduce a product area
@@ -52,12 +49,15 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/gett
 - [Spacing](docs/foundations/spacing.md): One 2px-based scale, density-aware control sizes, and a hard ban on off-scale values.
   - use: Any padding, margin or gap
   - avoid: Arbitrary values like p-[13px] → forbidden; Off-scale steps (p-5, gap-7, m-9) → the audit rejects them
-- [Theming & personalisation](docs/foundations/theming.md): Change about ten variables in one file and the whole system re-skins — color, shape, density, type and motion.
-  - use: Adapting Corpus to a new brand or product; Making a denser admin tool or a calmer consumer app
+- [Theming & personalisation](docs/foundations/theming.md): Change about ten variables in one file and the whole system re-skins, color, shape, density, type and motion.
+  - use: Adapting Vita to a new brand or product; Making a denser admin tool or a calmer consumer app
   - avoid: Tweaking a single component → change the knob, or propose a variant upstream; Adding a one-off color → add a semantic token through a design-system change
 - [Typography](docs/foundations/typography.md): Ten roles generated from one base size and one ratio. Google Sans Flex for words, Google Sans Code for code and numbers.
-  - use: Any text — pick the ROLE (title-2, body, caption), not a size
-  - avoid: Tailwind sizes (text-sm, text-2xl) → they don't exist in Corpus; Changing size to create emphasis inside a paragraph → use font-medium or font-semibold
+  - use: Any text, pick the ROLE (title-2, body, caption), not a size
+  - avoid: Tailwind sizes (text-sm, text-2xl) → they don't exist in Vita; Changing size to create emphasis inside a paragraph → use font-medium or font-semibold
+- [Vita for AI](docs/foundations/vita-for-ai.md): Vita is built for agents as much as for people, machine-readable docs, skills, rules, decisions and an audit that answers on every edit.
+  - use: Setting up an agent to design or build with Vita; Understanding how Vita keeps agent-built screens consistent
+  - avoid: Looking for the AI label or AI surfaces in the product → AI label
 
 ## Components
 
@@ -99,28 +99,28 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/gett
   - use: Many records with the same attributes (> ~5 rows or any sorting/selecting need); Users compare values across rows or act on several rows at once
   - avoid: Few rows of key/value details → StructuredList; Heterogeneous items with one action each → ContainedList; Visual browsing → Tile grid; One column → it's a list
 - [Date picker](docs/components/date-picker.md): Dates by typing first, with a calendar when it helps. Simple, single and range.
-  - use: simple — known dates far from today (birthday, contract start years ago): typing is fastest; single — near-future scheduling where weekday context matters (go-live, deadline); range — periods (reporting range, booking)
+  - use: simple, known dates far from today (birthday, contract start years ago): typing is fastest; single, near-future scheduling where weekday context matters (go-live, deadline); range, periods (reporting range, booking)
   - avoid: Relative ranges ("Last 7 days") → Dropdown of presets (optionally + custom range); Time only → TextInput with time type
-- [Dropdown](docs/components/dropdown.md): Choosing values from a list — Dropdown (one), Combobox (one, filterable) and Multiselect (many), all built from the same Option rows.
-  - use: Dropdown — one of 7–20 options, options need descriptions/icons, or consistent styling in app chrome; Combobox — one of 20+ options where users know what to type (tool, country, team member); Multiselect — several of more than 6 options (markets, tags, assignees); Inline type — compact "Sort by: Newest ▾" in toolbars
+- [Dropdown](docs/components/dropdown.md): Choosing values from a list, Dropdown (one), Combobox (one, filterable) and Multiselect (many), all built from the same Option rows.
+  - use: Dropdown, one of 7–20 options, options need descriptions/icons, or consistent styling in app chrome; Combobox, one of 20+ options where users know what to type (tool, country, team member); Multiselect, several of more than 6 options (markets, tags, assignees); Inline type, compact "Sort by: Newest ▾" in toolbars
   - avoid: 2–6 options → RadioGroup (or ContentSwitcher for views); Actions → Menu / MenuButton (dropdowns choose values; menus do things); Options written inline as children → Select (same control)
 - [File uploader](docs/components/file-uploader.md): Attach files by browsing or dropping, with per-file status and errors that explain the fix.
-  - use: dropzone — uploading is the main task of the view (import, document collection); button — attaching as one field among others in a form
+  - use: dropzone, uploading is the main task of the view (import, document collection); button, attaching as one field among others in a form
   - avoid: Importing structured data with mapping → a dedicated import flow (pattern), with FileUploader as step 1
 - [Form](docs/components/form.md): The structural pieces of every form. Form, FormGroup, FormRow, FormActions, FluidForm and the FieldShell wiring every input uses.
   - use: Any time the user enters data that is submitted together
   - avoid: Single instant settings → Toggle rows, no form wrapper needed; Inline edits of one value → read-only-states pattern (view → edit)
-- [Global search](docs/components/global-search.md): Spotlight for the product — a liquid-glass capsule in the header that summons a floating search panel with ⌘K from anywhere.
+- [Global search](docs/components/global-search.md): Spotlight for the product, a liquid-glass capsule in the header that summons a floating search panel with ⌘K from anywhere.
   - use: Product-wide search from the global header (pages, records, settings)
   - avoid: Searching a list or a page's content → Search; Filtering a table → the table's toolbar Search
-- [Icon placeholder](docs/components/icon-placeholder.md): The leading visual slot — a colored glyph on a neutral squircle tile, in small, medium and large. One look for list items, notifications and toast banners.
+- [Icon placeholder](docs/components/icon-placeholder.md): The leading visual slot, a colored glyph on a neutral squircle tile, in small, medium and large. One look for list items, notifications and toast banners.
   - use: Leading visual of a list row (settings, objects); The left side of a notification or toast banner; An agent or app mark next to its name
   - avoid: An icon inline with text or inside a button → Icon; Large illustrative marks → Pictogram; A person → avatar media
-- [Inline loading](docs/components/inline-loading.md): The status of one operation, in place — "Saving…" → "Saved" → gone.
+- [Inline loading](docs/components/inline-loading.md): The status of one operation, in place, "Saving…" → "Saved" → gone.
   - use: Auto-save and background save feedback next to the thing being saved; An action whose result appears in place (toggle persisted, row updated)
   - avoid: Blocking actions → Button loading; Page/region loads → Skeleton / Loading
 - [KPI](docs/components/kpi.md): A key number with its label and trend. Group related KPIs in one surface; put a page's headline numbers on the right of its header.
-  - use: Dashboards and overview pages — the handful of numbers that summarise a thing; A page header's summary (PageHeader kpis)
+  - use: Dashboards and overview pages, the handful of numbers that summarise a thing; A page header's summary (PageHeader kpis)
   - avoid: Many numbers to compare row by row → DataTable; A state rather than a number → StatusIndicator; Progress toward a limit → ProgressBar
 - [Link](docs/components/link.md): Navigation to another page, section or resource. If it changes data, it's a Button.
   - use: Navigating to another page or anchor; Referencing a resource inside running text; Opening external documentation (external)
@@ -128,11 +128,11 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/gett
 - [List item](docs/components/list-item.md): The settings row. Icon placeholder on the left, title over an optional subtitle, and the control or chevron on the far right. Group related rows into one card.
   - use: Settings, preferences and account pages; Navigating into an object or a sub-page; A short list of objects, each with one control
   - avoid: Sorting, many attributes or bulk actions → DataTable; Pure text bullets → List; A titled list with a list-level action → ContainedList
-- [List](docs/components/list.md): Typographic lists inside content — bullets and numbered steps. Not interactive.
-  - use: Unordered — sets of related points in content; Ordered — sequential instructions where order matters
+- [List](docs/components/list.md): Typographic lists inside content, bullets and numbered steps. Not interactive.
+  - use: Unordered, sets of related points in content; Ordered, sequential instructions where order matters
   - avoid: Interactive rows → ContainedList; Records → DataTable / StructuredList
 - [Menu buttons](docs/components/menu-buttons.md): Three buttons that open menus. MenuButton groups actions, ComboButton adds alternatives to a default action, OverflowMenu hides secondary actions.
-  - use: MenuButton — several equally important related actions under one label ("Export ▾", "Create ▾"); ComboButton — one dominant action plus variations ("Save" | "Save as…", "Save as template"); OverflowMenu — secondary actions on a row, tile, card or page header (⋮)
+  - use: MenuButton, several equally important related actions under one label ("Export ▾", "Create ▾"); ComboButton, one dominant action plus variations ("Save" | "Save as…", "Save as template"); OverflowMenu, secondary actions on a row, tile, card or page header (⋮)
   - avoid: Selecting a value → Dropdown; A single action → Button; Primary page actions hidden in an overflow → keep the primary visible
 - [Menu](docs/components/menu.md): A temporary list of actions, opened from a trigger or right-click. Menus hold verbs, not values and not destinations.
   - use: Offering 3–10 actions without taking permanent space; View options that toggle (show grid, compact rows) via MenuCheckboxItem; Power-user shortcuts via right-click (ContextMenu), always duplicated elsewhere
@@ -140,8 +140,8 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/gett
 - [Modal](docs/components/modal.md): Interrupts to focus on one task or decision. Modality is a last resort.
   - use: Confirming a destructive or irreversible action (ConfirmModal danger); A short, self-contained task (≤ 5 fields) that shouldn't leave the page; Critical information that must be acknowledged
   - avoid: The user needs to see the page while working → RightPanel; A couple of options next to a control → Popover; Long forms or multi-step flows → a page; Success messages → toast; Opening a modal from a modal → never
-- [Notification](docs/components/notification.md): System messages with one anatomy — icon placeholder, title over subtitle, optional action. Inline for problems tied to a place, toast banner for confirmation, callout for static guidance.
-  - use: Inline — errors/warnings about a section, form summary, account-level issues; Toast — brief confirmation of something the user just did (with optional Undo); Callout — permanent, non-dismissible contextual guidance
+- [Notification](docs/components/notification.md): System messages with one anatomy, icon placeholder, title over subtitle, optional action. Inline for problems tied to a place, toast banner for confirmation, callout for static guidance.
+  - use: Inline, errors/warnings about a section, form summary, account-level issues; Toast, brief confirmation of something the user just did (with optional Undo); Callout, permanent, non-dismissible contextual guidance
   - avoid: A decision is required before continuing → Modal; Field-level validation → the field's invalidText; Errors inside a toast that need action → InlineNotification near the cause; Marketing/announcements → not a system notification
 - [Number input](docs/components/number-input.md): Precise numeric entry with steppers, bounds and units.
   - use: Exact quantities with small adjustments (concurrent runs, seats, timeout, percentage); Values with min/max bounds the user must respect
@@ -150,13 +150,13 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/gett
   - use: Tables and lists with more items than fit comfortably (> 25–50); Users need to reference positions ("it was on page 3") or know the total
   - avoid: Feeds or activity streams users scroll through → "Load more" / infinite loading; Fewer items than one page → no pagination
 - [Popover](docs/components/popover.md): A non-modal layer anchored to a trigger, opened by click, for rich or interactive content. Includes Toggletip.
-  - use: Small interactive content next to a control (column picker, quick assign, filter panel); Toggletip — an explanation with a link or more than one sentence, opened by an ⓘ button
+  - use: Small interactive content next to a control (column picker, quick assign, filter panel); Toggletip, an explanation with a link or more than one sentence, opened by an ⓘ button
   - avoid: Plain text hint on hover → Tooltip; Blocking decisions or long forms → Modal; Large contextual work areas → RightPanel; A list of actions → Menu
-- [Progress bar](docs/components/progress-bar.md): Progress of a system process with a measurable end — or indeterminate when the end is unknown. Also quota and usage.
+- [Progress bar](docs/components/progress-bar.md): Progress of a system process with a measurable end, or indeterminate when the end is unknown. Also quota and usage.
   - use: Uploads, imports, exports, setup jobs longer than ~2 seconds; Usage vs limit (seats, storage) with helper text
   - avoid: Steps the user completes → ProgressIndicator; Short actions → Button loading / InlineLoading; Content loading with known layout → Skeleton
 - [Progress indicator](docs/components/progress-indicator.md): The steps of a multi-step task, with where the user is and what's left. Completed steps stay reachable.
-  - use: Wizards, onboarding, checkout — 3–6 sequential steps the user completes
+  - use: Wizards, onboarding, checkout, 3–6 sequential steps the user completes
   - avoid: System progress → ProgressBar; Non-sequential sections → Tabs; 2 steps → a single page with a clear continue; 7+ steps → split the flow or group steps
 - [Radio button](docs/components/radio-button.md): Exactly one choice from 2–6 visible options. Showing all options makes decisions faster.
   - use: One choice from 2–6 options the user should compare; Options need helper text explaining consequences (price, speed)
@@ -164,31 +164,31 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/gett
 - [Search](docs/components/search.md): Find items in a collection by query. Always labelled, instantly clearable, and scoped to what it searches.
   - use: Filtering a table/list by text (toolbar variant); Global or page-level search (field variant, lg); Space-constrained headers/toolbars (expandable)
   - avoid: Picking one value from a known list → Combobox; Entering a value that will be saved → TextInput
-- [Select](docs/components/select.md): Pick one value, written with SelectOption/SelectGroup children. The same Corpus listbox as Dropdown — never the operating system's menu.
+- [Select](docs/components/select.md): Pick one value, written with SelectOption/SelectGroup children. The same Vita listbox as Dropdown, never the operating system's menu.
   - use: One value from a list you write inline (a handful of known options, grouped options); Forms where the options live in the markup rather than in data
   - avoid: Options come from data → Dropdown (items prop); 2–6 options → RadioGroup (show them); Users need to type to find → Combobox; Several values → MultiSelect / CheckboxGroup
 - [Slider](docs/components/slider.md): Choose a value or range where relative position matters more than precision. The value is always visible.
   - use: Adjusting a continuous value with immediate feedback (volume, opacity, zoom); Filtering by a numeric range (price, weight) with two thumbs
   - avoid: Exact values matter → NumberInput; Few discrete options → RadioGroup / ContentSwitcher; The range is huge (0–1,000,000) → NumberInput(s)
-- [Structured list](docs/components/structured-list.md): A small, read-mostly set of rows and columns — details, specs and comparisons. Selectable when choosing one row.
+- [Structured list](docs/components/structured-list.md): A small, read-mostly set of rows and columns, details, specs and comparisons. Selectable when choosing one row.
   - use: Key/value details of one object (condensed + flush); Comparing a few options across attributes (plans, models); Choosing one of a few rows with multiple attributes (selectable)
   - avoid: Many rows, sorting, pagination, bulk actions → DataTable; Items with individual actions → ContainedList
-- [Tabs](docs/components/tabs.md): Switch between peer views of the same context — Overview · Activity · Settings.
-  - use: pill (default) — page-level views of one object; a raised pill slides between tabs; line — dense toolbars or where a track would be too heavy; contained — tabs attached to a panel/tile (secondary level)
+- [Tabs](docs/components/tabs.md): Switch between peer views of the same context, Overview · Activity · Settings.
+  - use: pill (default), page-level views of one object; a raised pill slides between tabs; line, dense toolbars or where a track would be too heavy; contained, tabs attached to a panel/tile (secondary level)
   - avoid: Same data in different presentations → ContentSwitcher; Steps the user must complete in order → ProgressIndicator; Navigation between different objects/areas → Side nav; Content users need to compare side by side → show both; A single tab → no tabs
 - [Tag](docs/components/tag.md): Short labels that categorise, show status in dense rows, or represent applied filters.
-  - use: Read-only — categories/metadata on items (region, type); Status in dense table rows (with icon); Dismissible — applied filters / chosen values the user can remove; Selectable — quick filter chips (toggle on/off); Operational — "+3" that reveals more in a popover
+  - use: Read-only, categories/metadata on items (region, type); Status in dense table rows (with icon); Dismissible, applied filters / chosen values the user can remove; Selectable, quick filter chips (toggle on/off); Operational, "+3" that reveals more in a popover
   - avoid: Actions → Button; Status on detail pages or with more nuance → StatusIndicator; Long text (> 3 words) → it's not a tag
 - [Text input](docs/components/text-input.md): Single-line free text (plus TextArea and PasswordInput). Floating label inside, help below, errors that explain the fix.
-  - use: Free text the system can't predict (names, titles, references); Numeric identifiers — phone, postcode, card (inputMode="numeric"); Long text — TextArea; secrets — PasswordInput
+  - use: Free text the system can't predict (names, titles, references); Numeric identifiers, phone, postcode, card (inputMode="numeric"); Long text, TextArea; secrets, PasswordInput
   - avoid: A known set of answers → RadioGroup / Dropdown / Combobox; Quantities → NumberInput; Dates → DatePicker; Searching a collection → Search
-- [Thinking](docs/components/thinking.md): Corpus never spins — it thinks. Tiny particles that blend like liquid show what kind of work is happening. Skeletons whenever the layout is known.
-  - use: Skeleton — content with a known shape is on its way (cards, tables, profiles); Loading / Thinking — a region is working and its layout is unknown; Loading overlay — interaction must be blocked while a region recomputes
+- [Thinking](docs/components/thinking.md): Vita never spins, it thinks. Tiny particles that blend like liquid show what kind of work is happening. Skeletons whenever the layout is known.
+  - use: Skeleton, content with a known shape is on its way (cards, tables, profiles); Loading / Thinking, a region is working and its layout is unknown; Loading overlay, interaction must be blocked while a region recomputes
   - avoid: A single action → Button loading / InlineLoading; Measurable progress → ProgressBar; Anything under 300ms → show nothing; Spinners → they belong to the old world (the audit rejects them)
 - [Tile](docs/components/tile.md): A surface that groups related content. Base, clickable, selectable and expandable, and never nested.
-  - use: Base — grouping related info on a page (a metric, a summary); Clickable — a card that is one destination (a project, a feature area); Selectable — choosing among rich options (plans, templates) — single or multi; Expandable — summary first, details on demand; TileSet — several cards that share one meaning, as one object
+  - use: Base, grouping related info on a page (a metric, a summary); Clickable, a card that is one destination (a project, a feature area); Selectable, choosing among rich options (plans, templates), single or multi; Expandable, summary first, details on demand; TileSet, several cards that share one meaning, as one object
   - avoid: Tables of records → DataTable; Wrapping every section in a card "to make it look designed" → use whitespace; Tiles inside tiles → flatten the hierarchy
-- [Timeline](docs/components/timeline.md): Events in time order on one vertical line — changelogs, run history, an agent's steps, audit trails.
+- [Timeline](docs/components/timeline.md): Events in time order on one vertical line, changelogs, run history, an agent's steps, audit trails.
   - use: A history people read top to bottom (changelog, activity, an agent's steps, an audit trail)
   - avoid: Steps a user completes → ProgressIndicator; Records to sort and compare → DataTable; A single latest state → StatusIndicator
 - [Toggle](docs/components/toggle.md): A switch for binary settings that take effect immediately. The rule: no Save button after a toggle.
@@ -200,80 +200,80 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/gett
 - [Tree view](docs/components/tree-view.md): Navigate or select within a hierarchy of unknown depth, with full keyboard support.
   - use: File/folder structures, org charts, category taxonomies, nested workspaces; The user needs to see siblings and ancestors while choosing
   - avoid: ≤ 2 fixed levels of navigation → Side nav (SideNavMenu); Collapsible content sections → Accordion; Nested records with attributes → DataTable with expandable rows
-- [UI shell header](docs/components/ui-shell-header.md): The product's persistent top bar — name, global navigation and global actions. 48px, on every screen.
+- [UI shell header](docs/components/ui-shell-header.md): The product's persistent top bar, name, global navigation and global actions. 48px, on every screen.
   - use: Every authenticated product screen (inside Shell)
   - avoid: Building a custom top bar → forbidden; Page-level titles and actions → PageHeader (inside the main area); Marketing sites → a marketing header block
 - [UI shell left panel](docs/components/ui-shell-left-panel.md): Side navigation between the product's main areas. Expanded (default) or rail; an overlay drawer on small screens.
   - use: Products with 5+ top-level areas or two-level navigation; Settings/admin areas with many sections
   - avoid: 2–4 areas → HeaderNavItem in the Header; Views of one object → Tabs; Deep hierarchies → TreeView inside the panel
-- [UI shell right panel](docs/components/ui-shell-right-panel.md): A non-modal panel that slides over the content from the right — notifications, help, AI assistant, details, edit-in-context.
+- [UI shell right panel](docs/components/ui-shell-right-panel.md): A non-modal panel that slides over the content from the right, notifications, help, AI assistant, details, edit-in-context.
   - use: Global panels opened from header actions (notifications, help, assistant); Viewing or editing an item's details while keeping the list visible; Filters for large tables (lg)
   - avoid: Blocking decisions → Modal; Tiny content near a control → Popover; Primary page content → it belongs in the page
 
 ## Patterns
 
-- [Agent conversation](docs/patterns/agent-conversation.md): How people and agents talk in Corpus — the mini chat, thinking states, suggested replies and hand-offs to a person.
+- [Agent conversation](docs/patterns/agent-conversation.md): How people and agents talk in Vita, the mini chat, thinking states, suggested replies and hand-offs to a person.
   - use: A product lets people talk to an agent (support, onboarding, internal assistants); An agent drafts something a person reviews and sends
   - avoid: The agent's answer is a page section, not a conversation → AISurface; A one-shot request that produces a result → Intent-first input
-- [Common actions](docs/patterns/common-actions.md): Where actions live, how many are visible, and how create, edit, delete, save and export behave everywhere — with left-hand shortcuts.
+- [Common actions](docs/patterns/common-actions.md): Where actions live, how many are visible, and how create, edit, delete, save and export behave everywhere, with left-hand shortcuts.
   - use: Any page, table, card or panel that exposes actions
   - avoid: Inventing a new placement or verb for an action that already has one here
-- [Dialogs](docs/patterns/dialogs.md): Choosing between Modal, RightPanel, Popover, Toggletip and toast — and writing dialogs people understand in one glance.
+- [Dialogs](docs/patterns/dialogs.md): Choosing between Modal, RightPanel, Popover, Toggletip and toast, and writing dialogs people understand in one glance.
   - use: Any time UI needs to appear on top of the current page
   - avoid: Content that could simply live on the page
 - [Disabled states](docs/patterns/disabled-states.md): When to disable, hide, or keep enabled and explain. Disabled without a reason is a dead end.
   - use: A control exists but is temporarily not actionable
   - avoid: Signalling form validity (keep submit enabled, validate on click); Permanently unavailable features (hide them)
-- [Disclosures](docs/patterns/disclosures.md): Progressive disclosure — show what most people need, reveal the rest on demand.
+- [Disclosures](docs/patterns/disclosures.md): Progressive disclosure, show what most people need, reveal the rest on demand.
   - use: Advanced options most users don't touch; Secondary details that would clutter a summary
   - avoid: Hiding required fields; Hiding errors or critical information
-- [Empty states](docs/patterns/empty-states.md): Every region that can be empty has a designed empty state — first use, no results, or error — each with a next step.
+- [Empty states](docs/patterns/empty-states.md): Every region that can be empty has a designed empty state, first use, no results, or error, each with a next step.
   - use: A table, list, dashboard widget or page has nothing to show
   - avoid: Showing a blank area or a lonely "No data"
 - [Filtering](docs/patterns/filtering.md): Narrowing a collection by attributes. Search + filters + visible applied state + an instant result count.
   - use: Collections large enough that users look for subsets (tables, catalogs, logs)
   - avoid: < ~20 items → sorting and scanning are enough
-- [Fluid styles](docs/patterns/fluid-styles.md): Fluid inputs — fields tile edge to edge with labels inside. For dense expert data entry.
+- [Fluid styles](docs/patterns/fluid-styles.md): Fluid inputs, fields tile edge to edge with labels inside. For dense expert data entry.
   - use: Expert users entering lots of structured data (configurations, admin records, bookings); Forms inside dense tools where vertical space is precious
   - avoid: Consumer/first-time flows → default form style (more whitespace, calmer); Mixing with default fields in the same form
-- [Forms](docs/patterns/forms.md): How forms are structured end to end — single page vs multi-step, layout, validation, submission and recovery.
+- [Forms](docs/patterns/forms.md): How forms are structured end to end, single page vs multi-step, layout, validation, submission and recovery.
   - use: Collecting data from the user
   - avoid: Instant settings → Toggle rows; Editing one value → inline read-only → edit
 - [Global header](docs/patterns/global-header.md): What goes in the product-wide header, in which order, and what each global action opens.
   - use: Every authenticated product
   - avoid: Page-specific actions in the global header → PageHeader
-- [Global search](docs/patterns/global-search.md): How people find anything from anywhere — summon a Spotlight-style panel with ⌘K, type, open with Enter.
+- [Global search](docs/patterns/global-search.md): How people find anything from anywhere, summon a Spotlight-style panel with ⌘K, type, open with Enter.
 - [Intent-first input](docs/patterns/intent-first.md): Describe, review, approve. The AI turns intent into a prepared result; the user corrects and ships it instead of filling in a form.
   - use: Creating or configuring something with more than ~4 fields; Tasks users describe more easily than they fill in (an agent, a report, a rule)
   - avoid: Tiny edits of one value → inline edit; Regulated data entry that must be typed exactly → Form
 - [List items](docs/patterns/list-items.md): The settings row. Icon placeholder on the left, title (and subtitle) in the middle, the control or chevron on the far right. Rows that belong together join into one card.
   - use: Settings, preferences and account pages; Navigating into an object or sub-page (chevron rows); A short list of objects, each with one control (toggle, button, status)
   - avoid: Comparing many attributes, sorting or bulk actions → DataTable; Pure text bullets → List; Lists with a titled header and a list-level action → ContainedList
-- [Loading](docs/patterns/loading.md): Orchestrating loading across a page — progressive, region by region, without layout shift and without loaders everywhere.
+- [Loading](docs/patterns/loading.md): Orchestrating loading across a page, progressive, region by region, without layout shift and without loaders everywhere.
   - use: Any view that fetches data
   - avoid: Blocking the whole page for partial data
-- [Login](docs/patterns/login.md): Two-step, calm, secure login — identifier first, then password or SSO. Errors never leak whether an account exists.
+- [Login](docs/patterns/login.md): Two-step, calm, secure login, identifier first, then password or SSO. Errors never leak whether an account exists.
   - use: Any sign-in screen
   - avoid: Custom login layouts per product → use LoginBlock and theme it
-- [Notifications](docs/patterns/notifications.md): Matching the message to the right channel — toast, inline, modal, callout, or the notification panel.
+- [Notifications](docs/patterns/notifications.md): Matching the message to the right channel, toast, inline, modal, callout, or the notification panel.
   - use: The system needs to tell the user something
   - avoid: Messages the user doesn't need to act on or know about → don't send them
-- [Overflow content](docs/patterns/overflow-content.md): What to do when content doesn't fit — truncate, wrap, clamp, scroll, or collapse — and what must never be cut.
+- [Overflow content](docs/patterns/overflow-content.md): What to do when content doesn't fit, truncate, wrap, clamp, scroll, or collapse, and what must never be cut.
   - use: Long names in tables, cards, nav, breadcrumbs; Long descriptions in constrained layouts; Too many tags/actions/items for the space
   - avoid: Truncating labels, errors, buttons, or anything the user must read to act
-- [Read-only states](docs/patterns/read-only-states.md): Showing values the user can see but not change — and switching between viewing and editing.
+- [Read-only states](docs/patterns/read-only-states.md): Showing values the user can see but not change, and switching between viewing and editing.
   - use: Detail pages where viewing is more common than editing; Values set by the system or by someone with more permissions
   - avoid: Using disabled fields to display data (low contrast, not selectable)
 - [Right panel](docs/patterns/right-panel.md): A floating panel on the right for global tools and editing in context, built with the same rules as the left navigation.
   - use: Global tools opened from the header (notifications, help, assistant, theme); Viewing or editing an item while keeping the page in view; Filters for a large table
   - avoid: A decision that must block the page → Modal; A few options next to a control → Popover; Long multi-step flows → a page
-- [Search](docs/patterns/search.md): Global and scoped search — where it lives, how results appear, and how to handle nothing found.
+- [Search](docs/patterns/search.md): Global and scoped search, where it lives, how results appear, and how to handle nothing found.
   - use: Users know what they're looking for by name/ID
   - avoid: Browsing by attributes → Filtering
-- [Status indicators](docs/patterns/status-indicators.md): One vocabulary of states across the product — shape, color and word together, mapped in the taxonomy.
+- [Status indicators](docs/patterns/status-indicators.md): One vocabulary of states across the product, shape, color and word together, mapped in the taxonomy.
   - use: Showing the state of an object (agent, run, deployment, integration)
   - avoid: Categorising (not a state) → Tag neutral; Transient feedback about a user action → toast / InlineLoading
-- [Text toolbar](docs/patterns/text-toolbar.md): Formatting controls for rich-text editing — grouped, labelled, keyboard-friendly, with shortcuts.
+- [Text toolbar](docs/patterns/text-toolbar.md): Formatting controls for rich-text editing, grouped, labelled, keyboard-friendly, with shortcuts.
   - use: Rich text editors (comments, descriptions, email drafts, notes)
   - avoid: Plain text fields → TextArea; Page-level actions → PageHeader / ButtonSet
 
@@ -282,8 +282,9 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/gett
 - [Buttons](docs/decisions/buttons.md): One primary per page, dialog or side panel; the secondary is a faint primary wash with primary text; xl is rounder.
 - [Fields and options](docs/decisions/fields-and-options.md): Soft field borders at rest; dropdown options are whole-row targets with a reserved left tick slot.
 - [Glass by elevation](docs/decisions/glass-by-elevation.md): Every floating surface is frosted glass, more frosted the higher it floats; the page scrolls beneath the shell so the material is visible.
-- [How Corpus decides](docs/decisions/how-we-decide.md): Every system choice is a written record. Agents and people read the record before changing anything it covers; changing it means superseding it.
-- [Motion](docs/decisions/motion.md): Nothing snaps — except page load, global appearance swaps and floating-surface sizing, which never animate per element.
+- [How Vita decides](docs/decisions/how-we-decide.md): Every system choice is a written record. Agents and people read the record before changing anything it covers; changing it means superseding it.
+- [Motion](docs/decisions/motion.md): Nothing snaps, except page load, global appearance swaps and floating-surface sizing, which never animate per element.
 - [Status semantics](docs/decisions/status-semantics.md): One map from meaning to colour and glyph, used by every status surface; status colours never decorate.
-- [Touch adapts by itself](docs/decisions/touch.md): When a finger is the pointer, Corpus grows its targets, its type and its hit areas, lightens its glass and switches the thinking orb to a filter-free renderer — without a knob and without a product doing anything.
-- [Weather tint](docs/decisions/weather-tint.md): Floating layers lean cold or warm with the weather outside — Dynamic by default, or fixed Neutral, Cold or Warm.
+- [The name is Vita](docs/decisions/the-name.md): The design system was called Corpus. It is now Vita, life, the third of a triad with Animus (the logic) and Anima (the AI).
+- [Touch adapts by itself](docs/decisions/touch.md): When a finger is the pointer, Vita grows its targets, its type and its hit areas, lightens its glass and switches the thinking orb to a filter-free renderer, without a knob and without a product doing anything.
+- [Weather tint](docs/decisions/weather-tint.md): Floating layers lean cold or warm with the weather outside, Dynamic by default, or fixed Neutral, Cold or Warm.

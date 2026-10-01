@@ -1,8 +1,8 @@
 ---
 title: UI shell header
-summary: The product's persistent top bar — name, global navigation and global actions. 48px, on every screen.
+summary: The product's persistent top bar, name, global navigation and global actions. 48px, on every screen.
 status: stable
-import: "import { Shell, ShellBody, ShellMain, Header, HeaderNavItem, HeaderGlobalAction } from \"@/components/corpus/ui-shell\""
+import: "import { Shell, ShellBody, ShellMain, Header, HeaderNavItem, HeaderGlobalAction } from \"@/components/vita/ui-shell\""
 use_when:
   - Every authenticated product screen (inside Shell)
 avoid_when:

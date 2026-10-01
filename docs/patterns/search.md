@@ -1,6 +1,6 @@
 ---
 title: Search
-summary: Global and scoped search — where it lives, how results appear, and how to handle nothing found.
+summary: Global and scoped search, where it lives, how results appear, and how to handle nothing found.
 status: stable
 use_when:
   - Users know what they're looking for by name/ID

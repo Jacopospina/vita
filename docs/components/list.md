@@ -1,11 +1,11 @@
 ---
 title: List
-summary: Typographic lists inside content — bullets and numbered steps. Not interactive.
+summary: Typographic lists inside content, bullets and numbered steps. Not interactive.
 status: stable
-import: "import { UnorderedList, OrderedList, ListItem } from \"@/components/corpus/list\""
+import: "import { UnorderedList, OrderedList, ListItem } from \"@/components/vita/list\""
 use_when:
-  - Unordered — sets of related points in content
-  - Ordered — sequential instructions where order matters
+  - Unordered, sets of related points in content
+  - Ordered, sequential instructions where order matters
 avoid_when:
   - Interactive rows → ContainedList
   - Records → DataTable / StructuredList

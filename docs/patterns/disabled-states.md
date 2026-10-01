@@ -23,6 +23,6 @@ related: [read-only-states, button, tooltip]
 ## Rules
 
 1. **Disabled elements are hard to perceive,** by design (reduced contrast), so never put important information in them.
-2. **Tooltips on disabled buttons** need a focusable wrapper, because disabled buttons don't receive focus. The Corpus demo shows the pattern.
+2. **Tooltips on disabled buttons** need a focusable wrapper, because disabled buttons don't receive focus. The Vita demo shows the pattern.
 3. **Disable a group, not every child:** set `disabled` on the `fieldset` (FormGroup) when a whole section is unavailable, and explain once.
 4. **Admin-locked settings** say who controls them: "Your admin has turned this off".

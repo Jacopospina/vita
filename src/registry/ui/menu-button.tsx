@@ -6,7 +6,7 @@ import { Icon } from "@/registry/ui/icon"
 import { Menu, MenuContent, MenuTrigger } from "@/registry/ui/menu"
 
 /**
- * MenuButton — a button whose only job is to open a menu of related actions ("Export ▾", "Create ▾").
+ * MenuButton, a button whose only job is to open a menu of related actions ("Export ▾", "Create ▾").
  * No default action. If one action dominates → ComboButton. Row-level secondary actions → OverflowMenu.
  */
 export function MenuButton({ label, variant = "tertiary", size, children, align = "start" }: { label: string; variant?: ButtonProps["variant"]; size?: ButtonProps["size"]; children: React.ReactNode; align?: "start" | "end" }) {
@@ -24,7 +24,7 @@ export function MenuButton({ label, variant = "tertiary", size, children, align 
 }
 
 /**
- * ComboButton — a primary action + a chevron for alternatives ("Save" | ▾ "Save as…", "Save as template").
+ * ComboButton, a primary action + a chevron for alternatives ("Save" | ▾ "Save as…", "Save as template").
  */
 export function ComboButton({ label, onClick, variant = "tertiary", size = "md", children, disabled }: { label: string; onClick?: () => void; variant?: "primary" | "tertiary"; size?: ButtonProps["size"]; children: React.ReactNode; disabled?: boolean }) {
   return (
@@ -51,7 +51,7 @@ export function ComboButton({ label, onClick, variant = "tertiary", size = "md",
 }
 
 /**
- * OverflowMenu — the "⋮" for secondary actions on a row, card or tile. Max ~7 items.
+ * OverflowMenu, the "⋮" for secondary actions on a row, card or tile. Max ~7 items.
  */
 export function OverflowMenu({ label = "Options", orientation = "vertical", size = "sm", children, align = "end" }: { label?: string; orientation?: "vertical" | "horizontal"; size?: ButtonProps["size"]; children: React.ReactNode; align?: "start" | "end" }) {
   return (

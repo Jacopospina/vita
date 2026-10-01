@@ -2,7 +2,7 @@
 title: Interaction
 summary: Built for products where AI carries the complexity. One hand per device, intent over input, nothing redundant, nothing that snaps.
 status: stable
-import: "import { useShortcut } from \"@/components/corpus/hooks/use-shortcut\"\nimport { Kbd } from \"@/components/corpus/kbd\"\nimport { Composer } from \"@/components/corpus/composer\""
+import: "import { useShortcut } from \"@/components/vita/hooks/use-shortcut\"\nimport { Kbd } from \"@/components/vita/kbd\"\nimport { Composer } from \"@/components/vita/composer\""
 use_when:
   - Designing any flow, interaction or shortcut
   - Deciding between a form and an intent-first flow

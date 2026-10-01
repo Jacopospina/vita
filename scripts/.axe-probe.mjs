@@ -1,7 +1,7 @@
 import fs from "node:fs"
 import { createServer } from "vite"
 import { chromium } from "playwright-core"
-const root = "/Users/jacopospina/Projects/corpus"
+const root = "/Users/jacopospina/Projects/vita"
 const server = await createServer({ root, logLevel: "error", server: { port: 0 } }); await server.listen()
 const base = server.resolvedUrls.local[0].replace(/\/$/, "")
 const browser = await chromium.launch({ channel: "chrome", headless: true })

@@ -1,8 +1,8 @@
 import * as React from "react"
 
 /**
- * useDragSelect — hold and SWING to browse. Press on a segmented control (Tabs, ContentSwitcher), then give a gentle
- * swing left or right: each swing moves exactly ONE item in that direction — effortless, no aiming, no distance to
+ * useDragSelect, hold and SWING to browse. Press on a segmented control (Tabs, ContentSwitcher), then give a gentle
+ * swing left or right: each swing moves exactly ONE item in that direction, effortless, no aiming, no distance to
  * cover. The next step needs a new swing: a brief pause or a swing the other way. Slow drift doesn't count
  * (unless it travels far). The indicator leans into the swing, then snaps. Mouse/pen only (touch scrolls; tap selects).
  *
@@ -11,7 +11,7 @@ import * as React from "react"
  */
 /** A swing: this much movement… */
 const SWING_PX = 12
-/** …at at least this speed (px/ms ≈ 150px/s — gentle). */
+/** …at at least this speed (px/ms ≈ 150px/s, gentle). */
 const SWING_SPEED = 0.15
 /** Slow drift still steps once it has travelled this far. */
 const DRIFT_PX = 60

@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
  * Builds the agent-facing catalog from docs frontmatter:
- *   docs/index.json  — machine-readable (slug, section, title, summary, import, use_when, avoid_when, related)
- *   llms.txt         — compact overview agents load first
+ *   docs/index.json  : machine-readable (slug, section, title, summary, import, use_when, avoid_when, related)
+ *   llms.txt         : compact overview agents load first
  */
 import fs from "node:fs"
 import path from "node:path"
@@ -36,14 +36,14 @@ for (const section of sections) {
     entries.push({ section, slug: f.replace(/\.md$/, ""), path: `docs/${section}/${f}`, ...meta })
   }
 }
-fs.writeFileSync(path.join(root, "docs/index.json"), JSON.stringify({ name: "Corpus", generated: new Date().toISOString().slice(0, 10), entries }, null, 2) + "\n")
+fs.writeFileSync(path.join(root, "docs/index.json"), JSON.stringify({ name: "Vita", generated: new Date().toISOString().slice(0, 10), entries }, null, 2) + "\n")
 
 const lines = [
-  "# Corpus design system",
+  "# Vita design system",
   "",
-  "> Corpus is the body of the product: the only source of UI. Components are imported from @/components/corpus/*, tokens are Tailwind utilities, patterns are documented flows. Never create local components or raw values.",
+  "> Vita is the body of the product: the only source of UI. Components are imported from @/components/vita/*, tokens are Tailwind utilities, patterns are documented flows. Never create local components or raw values.",
   "",
-  "Start with: docs/components/choosing-components.md (decision guide) · docs/getting-started/principles.md · docs/decisions/ (system decisions — read before changing what they cover) · skills/corpus-design-system/SKILL.md",
+  "Start with: docs/components/choosing-components.md (decision guide) · docs/getting-started/principles.md · docs/decisions/ (system decisions, read before changing what they cover) · skills/vita-design-system/SKILL.md",
   "",
 ]
 for (const section of sections) {

@@ -1,14 +1,14 @@
 ---
 title: Design principles
-summary: Ten ranked rules every Corpus screen obeys. When two conflict, the lower number wins.
+summary: Ten ranked rules every Vita screen obeys. When two conflict, the lower number wins.
 status: stable
 ---
 
-> [!IMPORTANT] Corpus is built for products where AI carries the complexity. The interface stays light, alive and quick to leave.
+> [!IMPORTANT] Vita is built for products where AI carries the complexity. The interface stays light, alive and quick to leave.
 
 ## The ten principles
 
-1. **The system is the only source of UI.** Every pixel is a Corpus component, pattern or token. A gap becomes a design-system change, never a local workaround.
+1. **The system is the only source of UI.** Every pixel is a Vita component, pattern or token. A gap becomes a design-system change, never a local workaround.
 2. **Intent over input.** Users say what they want and review what the AI prepared. Forms are the fallback.
 3. **One hand per device.** Right hand on the mouse, left on the keyboard. Everything works by pointer; shortcuts use left-hand keys only.
 4. **Never repeat a way out.** Dialogs and panels close with ×, Escape or a click outside. No Cancel, Close or Dismiss buttons.
@@ -32,4 +32,4 @@ status: stable
 2. **Pattern.** Start from *Intent-first input* when the task can be described.
 3. **Components.** Choose them with *Choosing a component*.
 4. **Words.** Write every string through the taxonomy.
-5. **Audit.** Run `corpus-audit` until it reports 0 violations.
+5. **Audit.** Run `vita-audit` until it reports 0 violations.

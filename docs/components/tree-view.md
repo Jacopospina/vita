@@ -2,7 +2,7 @@
 title: Tree view
 summary: Navigate or select within a hierarchy of unknown depth, with full keyboard support.
 status: stable
-import: "import { TreeView, type TreeNode } from \"@/components/corpus/tree-view\""
+import: "import { TreeView, type TreeNode } from \"@/components/vita/tree-view\""
 use_when:
   - File/folder structures, org charts, category taxonomies, nested workspaces
   - The user needs to see siblings and ancestors while choosing

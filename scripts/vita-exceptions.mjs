@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * pnpm exceptions — every approved deviation (`// corpus-allow <rule>: <why> — approved by @<owner>`) in one list,
+ * pnpm exceptions, every approved deviation (`// vita-allow <rule>: <why>, approved by @<owner>`) in one list,
  * with its age from git blame, for regular review (docs/decisions/how-we-decide.md). The same rule allowed in
  * three or more places is flagged as a system gap to promote.
  *   pnpm exceptions [--json] [dir…]   (default: src)
@@ -37,7 +37,7 @@ const blameDate = (file, line) => {
 const found = []
 for (const file of files) {
   fs.readFileSync(file, "utf8").split("\n").forEach((l, i) => {
-    const m = /corpus-allow\s+([\w-]+)\s*:\s*(.+?)(?:\s+—\s+approved by\s+(@\S+))?\s*(?:\*\/)?$/.exec(l)
+    const m = /vita-allow\s+([\w-]+)\s*:\s*(.+?)(?:\s*(?:,|\u2014)\s*approved by\s+(@\S+))?\s*(?:\*\/)?$/.exec(l)
     if (!m) return
     const date = blameDate(file, i + 1)
     found.push({ rule: m[1], reason: m[2].trim(), approver: m[3] ?? null, file: path.relative(cwd, file), line: i + 1, date: date?.toISOString().slice(0, 10) ?? "uncommitted", ageDays: date ? Math.floor((Date.now() - date) / 864e5) : 0 })
@@ -49,12 +49,12 @@ const gaps = Object.entries(byRule).filter(([, list]) => new Set(list.map((e) =>
 if (asJson) {
   console.log(JSON.stringify({ exceptions: found, promote: gaps }, null, 2))
 } else if (!found.length) {
-  console.log("✓ corpus-exceptions: no approved deviations")
+  console.log("✓ vita-exceptions: no approved deviations")
 } else {
-  console.log(`corpus-exceptions: ${found.length} approved deviation(s)\n`)
+  console.log(`vita-exceptions: ${found.length} approved deviation(s)\n`)
   for (const [rule, list] of Object.entries(byRule)) {
     console.log(`${rule} (${list.length})`)
     for (const e of list) console.log(`  ${e.file}:${e.line}  ${e.date} (${e.ageDays}d)  ${e.approver ?? "⚠ no approver"}  ${e.reason}`)
   }
-  for (const g of gaps) console.log(`\n▲ Promote? "${g.rule}" is allowed in ${g.count} places across 3+ files — likely a system gap.`)
+  for (const g of gaps) console.log(`\n▲ Promote? "${g.rule}" is allowed in ${g.count} places across 3+ files, likely a system gap.`)
 }

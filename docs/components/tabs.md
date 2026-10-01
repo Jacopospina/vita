@@ -1,12 +1,12 @@
 ---
 title: Tabs
-summary: Switch between peer views of the same context — Overview · Activity · Settings.
+summary: Switch between peer views of the same context, Overview · Activity · Settings.
 status: stable
-import: "import { Tabs, TabsList, TabsTrigger, TabsContent } from \"@/components/corpus/tabs\""
+import: "import { Tabs, TabsList, TabsTrigger, TabsContent } from \"@/components/vita/tabs\""
 use_when:
-  - pill (default) — page-level views of one object; a raised pill slides between tabs
-  - line — dense toolbars or where a track would be too heavy
-  - contained — tabs attached to a panel/tile (secondary level)
+  - pill (default), page-level views of one object; a raised pill slides between tabs
+  - line, dense toolbars or where a track would be too heavy
+  - contained, tabs attached to a panel/tile (secondary level)
 avoid_when:
   - Same data in different presentations → ContentSwitcher
   - Steps the user must complete in order → ProgressIndicator

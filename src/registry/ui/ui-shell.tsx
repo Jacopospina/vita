@@ -8,7 +8,7 @@ import { IconButton, ActionBar } from "@/registry/ui/button"
 import { useIndicator } from "@/registry/hooks/use-morph"
 
 /**
- * UI Shell — the persistent frame of a product. Three parts:
+ * UI Shell, the persistent frame of a product. Three parts:
  *   Header      → product name, global nav, global actions (search, notifications, help, user). A floating, frosted-glass
  *                 bar inset 8px from the window, like the LeftPanel; items inside are concentric pills. Always visible.
  *   LeftPanel   → side navigation between the product's main areas: a floating, frosted-glass sidebar inset from the
@@ -26,7 +26,7 @@ const ShellCtx = React.createContext<{ navOpen: boolean; setNavOpen: (o: boolean
 /**
  * Layering: the page scrolls UNDER the shell. ShellMain fills the window; the Header, LeftPanel and RightPanel float
  * above it on their glass tiers, and ShellMain is padded so content starts below and beside them. Scrolled content
- * passes beneath the frosted header — that's what makes the material visible.
+ * passes beneath the frosted header, that's what makes the material visible.
  */
 export function Shell({ children, className }: { children: React.ReactNode; className?: string }) {
   const [navOpen, setNavOpen] = React.useState(false)
@@ -50,7 +50,7 @@ export function ShellMain({ children, className, ...props }: React.HTMLAttribute
   return (
     <main
       id="main-content"
-      className={cn("absolute inset-0 overflow-y-auto pt-16 [--corpus-shell-top:4rem]", nav === "full" && "lg:pl-64", nav === "rail" && "lg:pl-16", className)}
+      className={cn("absolute inset-0 overflow-y-auto pt-16 [--vita-shell-top:4rem]", nav === "full" && "lg:pl-64", nav === "rail" && "lg:pl-16", className)}
       {...props}
     >
       {children}
@@ -67,7 +67,7 @@ export function Header({ productName, prefix, logo, href = "/", children, action
   productName: string
   /** The product's mark, shown before its name (about 20px). */
   logo?: React.ReactNode
-  /** Company/platform prefix, e.g. "Corpus" in "Corpus [Insights]". */
+  /** Company/platform prefix, e.g. "Vita" in "Vita [Insights]". */
   prefix?: string
   href?: string
   /** HeaderNav */
@@ -130,7 +130,7 @@ export function HeaderNavItem({ href, active, children, onClick }: { href?: stri
   )
 }
 
-/** HeaderSeparator — a small dot between groups of global actions (search · theme and links). */
+/** HeaderSeparator, a small dot between groups of global actions (search · theme and links). */
 export function HeaderSeparator() {
   return <span aria-hidden className="mx-1.5 size-1 shrink-0 rounded-full bg-border-strong" />
 }
@@ -208,7 +208,7 @@ export function SideNavItem({ href, icon, active, children, onClick }: { href?: 
 export function SideNavMenu({ icon, title, defaultOpen, children }: { icon?: IconType; title: string; defaultOpen?: boolean; children: React.ReactNode }) {
   return (
     <Collapsible.Root defaultOpen={defaultOpen}>
-      {/* Same row as SideNavItem (height, padding, type), so a menu and a link line up — and centre in the rail. */}
+      {/* Same row as SideNavItem (height, padding, type), so a menu and a link line up, and centre in the rail. */}
       <Collapsible.Trigger className={cn("group flex h-control-md w-full items-center gap-2 rounded-inner-2 px-2.5 text-body-lg whitespace-nowrap text-foreground duration-fast-02 hover:bg-hover focus-ring-inset", railRow)}>
         {icon && <Icon as={icon} className="text-primary" />}
         <span className={cn("flex-1 truncate text-left", railHidden)}>{title}</span>
@@ -222,7 +222,7 @@ export function SideNavMenu({ icon, title, defaultOpen, children }: { icon?: Ico
 }
 
 /**
- * SideNavSection — a Finder-style group: small muted header ("Favourites", "Locations") over its rows.
+ * SideNavSection, a Finder-style group: small muted header ("Favourites", "Locations") over its rows.
  * `collapsible`: a disclosure chevron appears on hover at the header's end; the rows fold away (reveal, not snap).
  */
 export function SideNavSection({ title, collapsible, defaultOpen = true, children }: { title?: string; collapsible?: boolean; defaultOpen?: boolean; children: React.ReactNode }) {
@@ -251,13 +251,13 @@ export function SideNavSection({ title, collapsible, defaultOpen = true, childre
 
 /* ---------------- Right panel ---------------- */
 
-/** RightPanel — slides over content from the right. Non-modal: the page stays usable. Width 320 (sm) · 400 (md) · 560 (lg). */
+/** RightPanel, slides over content from the right. Non-modal: the page stays usable. Width 320 (sm) · 400 (md) · 560 (lg). */
 export function RightPanel({ open, onOpenChange, title, children, footer, size = "md", className }: {
   open: boolean
   onOpenChange: (o: boolean) => void
   title: string
   children: React.ReactNode
-  /** Primary action(s) only — rendered as an inset ActionBar. Never a Cancel: × and Escape close the panel. */
+  /** Primary action(s) only, rendered as an inset ActionBar. Never a Cancel: × and Escape close the panel. */
   footer?: React.ReactNode
   size?: "sm" | "md" | "lg"
   className?: string
@@ -305,7 +305,7 @@ export function RightPanel({ open, onOpenChange, title, children, footer, size =
         className,
       )}
     >
-      {/* Header row: 32px, like the global header's pills — the title's centre sits on the header bar's centre. */}
+      {/* Header row: 32px, like the global header's pills, the title's centre sits on the header bar's centre. */}
       <div className="flex h-8 shrink-0 items-center justify-between gap-2 pl-2.5">
         <h2 className="truncate text-headline">{title}</h2>
         <IconButton icon={Close} label="Close panel" shortcut="escape" tooltipSide="left" onClick={() => onOpenChange(false)} className="size-8 rounded-inner-2 px-0" />

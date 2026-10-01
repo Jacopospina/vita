@@ -1,9 +1,9 @@
 # Product
 
-> Fill this in first. The `corpus-personas` skill reads it to create personas, journeys and the taxonomy.
+> Fill this in first. The `vita-personas` skill reads it to create personas, journeys and the taxonomy.
 
 ## In one sentence
-<!-- What the product does, for whom. e.g. "Vita lets teams build and deploy custom AI agents that work inside their own tools." -->
+<!-- What the product does, for whom. e.g. "Theo lets teams build and deploy custom AI agents that work inside their own tools." -->
 
 ## Who uses it
 <!-- Roles, rough numbers, internal vs external, how often they use it. -->
@@ -21,4 +21,4 @@
 <!-- Links to support tickets, interview notes, sales calls, domain glossaries. Words come from users. -->
 
 ## Brand
-<!-- Brand color(s), typeface, personality words (calm, precise, warm…). Used by the corpus-theme skill. -->
+<!-- Brand color(s), typeface, personality words (calm, precise, warm…). Used by the vita-theme skill. -->

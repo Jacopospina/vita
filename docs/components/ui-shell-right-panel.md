@@ -1,8 +1,8 @@
 ---
 title: UI shell right panel
-summary: A non-modal panel that slides over the content from the right — notifications, help, AI assistant, details, edit-in-context.
+summary: A non-modal panel that slides over the content from the right, notifications, help, AI assistant, details, edit-in-context.
 status: stable
-import: "import { RightPanel } from \"@/components/corpus/ui-shell\""
+import: "import { RightPanel } from \"@/components/vita/ui-shell\""
 use_when:
   - Global panels opened from header actions (notifications, help, assistant)
   - Viewing or editing an item's details while keeping the list visible

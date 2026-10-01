@@ -4,8 +4,8 @@ import { cn } from "@/registry/lib/utils"
 import { ListGroup, ListItem, type ListItemProps } from "@/registry/ui/list-item"
 
 /**
- * ContainedList — a titled list of similar items, each a row that may hold an action (members, connected apps, recent files).
- * Built from the same pieces as every Corpus list: a ListGroup (one rounded surface, inset separators) of ListItems
+ * ContainedList, a titled list of similar items, each a row that may hold an action (members, connected apps, recent files).
+ * Built from the same pieces as every Vita list: a ListGroup (one rounded surface, inset separators) of ListItems
  * (comfortable rows, icon placeholder, title + subtitle, trailing control). The header adds the list's label and a
  * list-level action. Needs sorting/columns → DataTable. Pure text bullets → List. Settings rows → ListSection.
  */

@@ -6,7 +6,7 @@ import { cn } from "@/registry/lib/utils"
 import { Icon, DrawnMark } from "@/registry/ui/icon"
 
 /**
- * Menu — a temporary list of ACTIONS (verbs). Not for choosing a value (→ Dropdown) and not for navigation (→ links/Side nav).
+ * Menu, a temporary list of ACTIONS (verbs). Not for choosing a value (→ Dropdown) and not for navigation (→ links/Side nav).
  * Order: most frequent first · group with separators · destructive last, in danger color.
  */
 export const Menu = MenuPrimitive.Root

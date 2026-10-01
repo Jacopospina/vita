@@ -2,10 +2,10 @@
 title: File uploader
 summary: Attach files by browsing or dropping, with per-file status and errors that explain the fix.
 status: stable
-import: "import { FileUploader } from \"@/components/corpus/file-uploader\""
+import: "import { FileUploader } from \"@/components/vita/file-uploader\""
 use_when:
-  - dropzone — uploading is the main task of the view (import, document collection)
-  - button — attaching as one field among others in a form
+  - dropzone, uploading is the main task of the view (import, document collection)
+  - button, attaching as one field among others in a form
 avoid_when:
   - Importing structured data with mapping → a dedicated import flow (pattern), with FileUploader as step 1
 related: [form, progress-bar, inline-loading]

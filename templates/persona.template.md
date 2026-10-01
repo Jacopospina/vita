@@ -1,8 +1,8 @@
 ---
-name: <Persona name — a role, e.g. "Pricing specialist">
+name: <Persona name, a role, e.g. "Pricing specialist">
 slug: <kebab-case>
 primary: false
-density: 1        # recommended --corpus-density for screens mainly used by this persona
+density: 1        # recommended --vita-density for screens mainly used by this persona
 ---
 
 # <Persona name>
@@ -31,9 +31,9 @@ density: 1        # recommended --corpus-density for screens mainly used by this
 
 ## Journeys
 ### <Top job 1>
-Trigger → Steps (screen by screen, each mapped to a Corpus pattern) → Moments of anxiety → Success signal → After
+Trigger → Steps (screen by screen, each mapped to a Vita pattern) → Moments of anxiety → Success signal → After
 
-| Step | Screen | Corpus pattern | Components |
+| Step | Screen | Vita pattern | Components |
 |---|---|---|---|
 | 1 | | | |
 

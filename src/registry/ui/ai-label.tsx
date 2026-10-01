@@ -3,14 +3,14 @@ import { cn } from "@/registry/lib/utils"
 import { Popover, PopoverContent, PopoverTrigger } from "@/registry/ui/popover"
 import { Thinking } from "@/registry/ui/thinking"
 
-/** Inside an AISurface the label becomes Sofia (the Corpus thinking orb), placed before the title. */
+/** Inside an AISurface the label becomes Sofia (the Vita thinking orb), placed before the title. */
 const InSurface = React.createContext(false)
 
 /**
- * AILabel — marks content or controls GENERATED or AUTOFILLED by AI, and explains how.
+ * AILabel, marks content or controls GENERATED or AUTOFILLED by AI, and explains how.
  * Mandatory wherever AI produced a value the user may rely on. Clicking opens an explainability popover.
  * A pill: rainbow edge with plain text when standing alone; muted (hairline, low-opacity text) inside another component.
- * Inside an AISurface it is Sofia — the small thinking orb — and sits BEFORE the title.
+ * Inside an AISurface it is Sofia, the small thinking orb, and sits BEFORE the title.
  */
 export function AILabel({ size = "md", children, title = "AI explained", className, onRevert, tone = "auto" }: {
   size?: "xs" | "sm" | "md"
@@ -22,7 +22,7 @@ export function AILabel({ size = "md", children, title = "AI explained", classNa
   onRevert?: () => void
   /**
    * auto (default): rainbow when standing alone; muted inside another component
-   * (field, notification, tile, AI surface — anything marked data-ai-context). Force with spectrum | muted.
+   * (field, notification, tile, AI surface, anything marked data-ai-context). Force with spectrum | muted.
    */
   tone?: "auto" | "spectrum" | "muted"
 }) {
@@ -75,7 +75,7 @@ export function AILabel({ size = "md", children, title = "AI explained", classNa
   )
 }
 
-/** AISurface — container treatment for AI-generated regions (tiles, table cells, fields). Labels inside go muted. */
+/** AISurface, container treatment for AI-generated regions (tiles, table cells, fields). Labels inside go muted. */
 export function AISurface({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <InSurface.Provider value={true}>

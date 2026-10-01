@@ -1,9 +1,9 @@
 /**
- * eslint-plugin-corpus — surfaces corpus-audit rules in the editor.
- *   import corpus from "./eslint/corpus-plugin.mjs"
- *   export default [{ plugins: { corpus }, rules: { "corpus/design-system": "error" } }]
+ * eslint-plugin-vita, surfaces vita-audit rules in the editor.
+ *   import vita from "./eslint/vita-plugin.mjs"
+ *   export default [{ plugins: { vita }, rules: { "vita/design-system": "error" } }]
  */
-import { createRules } from "../scripts/corpus-rules.mjs"
+import { createRules } from "../scripts/vita-rules.mjs"
 
 const all = createRules()
 
@@ -18,7 +18,7 @@ const fromRules = (rules, description) => ({
         lines.forEach((line, i) => {
           const t = line.trim()
           if (t.startsWith("//") || t.startsWith("*") || t.startsWith("/*")) return
-          const allowed = new Set([lines[i - 1] ?? "", line].flatMap((l) => [.../corpus-allow\s+([\w-]+)\s*:\s*\S.{5,}/.exec(l) ?? []].slice(1)))
+          const allowed = new Set([lines[i - 1] ?? "", line].flatMap((l) => [.../vita-allow\s+([\w-]+)\s*:\s*\S.{5,}/.exec(l) ?? []].slice(1)))
           for (const r of rules) {
             if (allowed.has(r.id)) continue
             const m = r.test(line, ext)
@@ -31,9 +31,9 @@ const fromRules = (rules, description) => ({
 })
 
 export default {
-  meta: { name: "eslint-plugin-corpus" },
+  meta: { name: "eslint-plugin-vita" },
   rules: {
     "design-system": fromRules(all.filter((r) => r.severity !== "warn"), "The design system is the only source of UI"),
-    deprecated: fromRules(all.filter((r) => r.severity === "warn"), "Deprecated Corpus API — migrate before it's removed"),
+    deprecated: fromRules(all.filter((r) => r.severity === "warn"), "Deprecated Vita API, migrate before it's removed"),
   },
 }

@@ -1,100 +1,100 @@
 /*
- * CORPUS MOTION
+ * VITA MOTION
  * Productive vs expressive durations & easings, plus a physical spring.
- * Every duration is multiplied by --corpus-motion-scale. Reduced motion swaps
+ * Every duration is multiplied by --vita-motion-scale. Reduced motion swaps
  * movement for opacity (cross-fade instead of movement), never removes feedback.
  */
 :root {
-  --_m: var(--corpus-motion-scale);
-  --corpus-duration-fast-01: calc(70ms * var(--_m));     /* micro: toggle, checkbox, button press */
-  --corpus-duration-fast-02: calc(110ms * var(--_m));    /* fades, hover, color changes */
-  --corpus-duration-moderate-01: calc(150ms * var(--_m));/* small expand: dropdown, tooltip, popover */
-  --corpus-duration-moderate-02: calc(240ms * var(--_m));/* expand: accordion, toast, side panel */
-  --corpus-duration-slow-01: calc(400ms * var(--_m));    /* large: modal, page-level transition */
-  --corpus-duration-slow-02: calc(700ms * var(--_m));    /* background dim, expressive hero */
-  --corpus-duration-expressive: calc(480ms * var(--_m)); /* the expressive character: gentle, long settle */
+  --_m: var(--vita-motion-scale);
+  --vita-duration-fast-01: calc(70ms * var(--_m));     /* micro: toggle, checkbox, button press */
+  --vita-duration-fast-02: calc(110ms * var(--_m));    /* fades, hover, color changes */
+  --vita-duration-moderate-01: calc(150ms * var(--_m));/* small expand: dropdown, tooltip, popover */
+  --vita-duration-moderate-02: calc(240ms * var(--_m));/* expand: accordion, toast, side panel */
+  --vita-duration-slow-01: calc(400ms * var(--_m));    /* large: modal, page-level transition */
+  --vita-duration-slow-02: calc(700ms * var(--_m));    /* background dim, expressive hero */
+  --vita-duration-expressive: calc(480ms * var(--_m)); /* the expressive character: gentle, long settle */
 
-  --corpus-ease-productive: cubic-bezier(0.2, 0, 0.38, 0.9);
-  --corpus-ease-productive-enter: cubic-bezier(0, 0, 0.38, 0.9);
-  --corpus-ease-productive-exit: cubic-bezier(0.2, 0, 1, 0.9);
-  /* expressive: soft start, long graceful settle — gentle but unmistakable */
-  --corpus-ease-expressive: cubic-bezier(0.22, 1, 0.36, 1);
-  --corpus-ease-expressive-enter: cubic-bezier(0.16, 1, 0.3, 1);
-  --corpus-ease-expressive-exit: cubic-bezier(0.55, 0, 0.75, 0.2);
+  --vita-ease-productive: cubic-bezier(0.2, 0, 0.38, 0.9);
+  --vita-ease-productive-enter: cubic-bezier(0, 0, 0.38, 0.9);
+  --vita-ease-productive-exit: cubic-bezier(0.2, 0, 1, 0.9);
+  /* expressive: soft start, long graceful settle, gentle but unmistakable */
+  --vita-ease-expressive: cubic-bezier(0.22, 1, 0.36, 1);
+  --vita-ease-expressive-enter: cubic-bezier(0.16, 1, 0.3, 1);
+  --vita-ease-expressive-exit: cubic-bezier(0.55, 0, 0.75, 0.2);
   /* critically damped spring (no visible bounce) */
-  --corpus-ease-spring: linear(0, 0.18 4%, 0.5 11%, 0.76 19%, 0.9 27%, 0.97 37%, 1.005 50%, 1.008 62%, 1.002 80%, 1);
+  --vita-ease-spring: linear(0, 0.18 4%, 0.5 11%, 0.76 19%, 0.9 27%, 0.97 37%, 1.005 50%, 1.008 62%, 1.002 80%, 1);
 }
 
-@keyframes corpus-fade-in { from { opacity: 0 } }
-@keyframes corpus-fade-out { to { opacity: 0 } }
-@keyframes corpus-scale-in { from { opacity: 0; transform: scale(0.96) } }
-@keyframes corpus-scale-out { to { opacity: 0; transform: scale(0.96) } }
-@keyframes corpus-slide-up-in { from { opacity: 0; transform: translateY(1rem) scale(0.98); filter: blur(8px) } }
-@keyframes corpus-slide-down-out { to { opacity: 0; transform: translateY(0.5rem) } }
+@keyframes vita-fade-in { from { opacity: 0 } }
+@keyframes vita-fade-out { to { opacity: 0 } }
+@keyframes vita-scale-in { from { opacity: 0; transform: scale(0.96) } }
+@keyframes vita-scale-out { to { opacity: 0; transform: scale(0.96) } }
+@keyframes vita-slide-up-in { from { opacity: 0; transform: translateY(1rem) scale(0.98); filter: blur(8px) } }
+@keyframes vita-slide-down-out { to { opacity: 0; transform: translateY(0.5rem) } }
 /* Dropdown lists: slide in from below (productive, no scale, no width growth) and sink back out. */
-@keyframes corpus-list-rise { from { opacity: 0; transform: translateY(0.5rem) } }
-@keyframes corpus-list-sink { to { opacity: 0; transform: translateY(0.25rem) } }
-@keyframes corpus-slide-left-in { from { transform: translateX(100%) } }
-@keyframes corpus-slide-right-out { to { transform: translateX(100%) } }
+@keyframes vita-list-rise { from { opacity: 0; transform: translateY(0.5rem) } }
+@keyframes vita-list-sink { to { opacity: 0; transform: translateY(0.25rem) } }
+@keyframes vita-slide-left-in { from { transform: translateX(100%) } }
+@keyframes vita-slide-right-out { to { transform: translateX(100%) } }
 /* Floating right panel: travels its width plus its inset and shadow, so it starts and ends fully off-screen. */
-@keyframes corpus-float-in-right { from { transform: translateX(calc(100% + 2rem)) } }
-@keyframes corpus-float-out-right { to { transform: translateX(calc(100% + 2rem)) } }
-@keyframes corpus-slide-right-in { from { transform: translateX(-100%) } }
-@keyframes corpus-slide-left-out { to { transform: translateX(-100%) } }
-@keyframes corpus-collapse-down { from { height: 0 } to { height: var(--radix-accordion-content-height, var(--radix-collapsible-content-height)) } }
-@keyframes corpus-collapse-up { from { height: var(--radix-accordion-content-height, var(--radix-collapsible-content-height)) } to { height: 0 } }
-@keyframes corpus-spin { to { transform: rotate(360deg) } }
-@keyframes corpus-shimmer { from { background-position: 150% 0 } to { background-position: -50% 0 } }
-@keyframes corpus-indeterminate { from { transform: translateX(-100%) } to { transform: translateX(250%) } }
-@keyframes corpus-text-in { from { opacity: 0; transform: translateY(0.6em); filter: blur(8px) } to { opacity: 1; transform: none; filter: blur(0) } }
+@keyframes vita-float-in-right { from { transform: translateX(calc(100% + 2rem)) } }
+@keyframes vita-float-out-right { to { transform: translateX(calc(100% + 2rem)) } }
+@keyframes vita-slide-right-in { from { transform: translateX(-100%) } }
+@keyframes vita-slide-left-out { to { transform: translateX(-100%) } }
+@keyframes vita-collapse-down { from { height: 0 } to { height: var(--radix-accordion-content-height, var(--radix-collapsible-content-height)) } }
+@keyframes vita-collapse-up { from { height: var(--radix-accordion-content-height, var(--radix-collapsible-content-height)) } to { height: 0 } }
+@keyframes vita-spin { to { transform: rotate(360deg) } }
+@keyframes vita-shimmer { from { background-position: 150% 0 } to { background-position: -50% 0 } }
+@keyframes vita-indeterminate { from { transform: translateX(-100%) } to { transform: translateX(250%) } }
+@keyframes vita-text-in { from { opacity: 0; transform: translateY(0.6em); filter: blur(8px) } to { opacity: 1; transform: none; filter: blur(0) } }
 /*
- * GRAVITY — expressive arrivals are briefly subject to gravity: they FALL in (accelerating), dip a hair below
+ * GRAVITY, expressive arrivals are briefly subject to gravity: they FALL in (accelerating), dip a hair below
  * their resting place, and settle back (decelerating). Lowest point at 60%. Productive UI (menus, tooltips,
  * page reflow) never bounces.
  */
-/* Dialogs arrive productively: a short rise with a slight scale-up — quick and straight, no gravity. */
-@keyframes corpus-dialog-rise { from { opacity: 0; transform: translateY(0.5rem) scale(0.98) } }
-@keyframes corpus-dialog-in {
+/* Dialogs arrive productively: a short rise with a slight scale-up, quick and straight, no gravity. */
+@keyframes vita-dialog-rise { from { opacity: 0; transform: translateY(0.5rem) scale(0.98) } }
+@keyframes vita-dialog-in {
   0% { opacity: 0; transform: translateY(-1.5rem) scale(0.96); filter: blur(12px); animation-timing-function: cubic-bezier(0.5, 0, 1, 0.6) }
   60% { opacity: 1; transform: translateY(0.3rem) scale(1); filter: blur(0); animation-timing-function: cubic-bezier(0.2, 0.7, 0.3, 1) }
   100% { opacity: 1; transform: none; filter: none }
 }
-@keyframes corpus-fall-in {
+@keyframes vita-fall-in {
   0% { opacity: 0; transform: translateY(-0.75rem) scale(0.98); filter: blur(8px); animation-timing-function: cubic-bezier(0.5, 0, 1, 0.6) }
   60% { opacity: 1; transform: translateY(0.2rem); filter: blur(0); animation-timing-function: cubic-bezier(0.2, 0.7, 0.3, 1) }
   100% { opacity: 1; transform: none; filter: none }
 }
-/* Gravity as a LAYER on the independent `translate` property — stacks on any enter that moves via transform. */
-@keyframes corpus-gravity {
+/* Gravity as a LAYER on the independent `translate` property, stacks on any enter that moves via transform. */
+@keyframes vita-gravity {
   0% { translate: 0 -0.75rem; animation-timing-function: cubic-bezier(0.5, 0, 1, 0.6) }
   60% { translate: 0 0.2rem; animation-timing-function: cubic-bezier(0.2, 0.7, 0.3, 1) }
   100% { translate: 0 0 }
 }
-@keyframes corpus-ai-spin { to { --corpus-ai-angle: 360deg } }
-@keyframes corpus-focus-in { from { outline-color: transparent; outline-offset: 6px } }
-@keyframes corpus-draw-in {
+@keyframes vita-ai-spin { to { --vita-ai-angle: 360deg } }
+@keyframes vita-focus-in { from { outline-color: transparent; outline-offset: 6px } }
+@keyframes vita-draw-in {
   0% { stroke-dashoffset: 1; stroke-opacity: 1; fill-opacity: 0 }
   60% { stroke-dashoffset: 0; stroke-opacity: 1; fill-opacity: 0 }
   100% { stroke-dashoffset: 0; stroke-opacity: 0; fill-opacity: 1 }
 }
-@keyframes corpus-draw-out {
+@keyframes vita-draw-out {
   0% { stroke-dashoffset: 0; stroke-opacity: 1; fill-opacity: 1 }
   35% { stroke-dashoffset: 0; stroke-opacity: 1; fill-opacity: 0 }
   100% { stroke-dashoffset: -1; stroke-opacity: 1; fill-opacity: 0 }
 }
 /* Modal exits (productive: quick, quiet): dismissed → falls with gravity and tilts; sent → slight dip, then out the top. */
-@keyframes corpus-modal-fall {
+@keyframes vita-modal-fall {
   0% { transform: none; opacity: 1 }
   100% { transform: translateY(40vh) rotate(6deg); opacity: 0 }
 }
-@keyframes corpus-modal-send {
+@keyframes vita-modal-send {
   0% { transform: none; opacity: 1 }
   10% { transform: translateY(0.25rem); opacity: 1 }
   100% { transform: translateY(-100vh) scale(0.97); opacity: 1 } /* no fade: it stays solid until it has left the viewport */
 }
-/* In-progress glyph: the pie advances a slice at a time — it moves to the next quarter, holds, moves on — and once
+/* In-progress glyph: the pie advances a slice at a time, it moves to the next quarter, holds, moves on, and once
    full it empties from its start and begins again. The icon never spins. (Each interval eases on its own.) */
-@keyframes corpus-pie {
+@keyframes vita-pie {
   0% { stroke-dasharray: 0 100; stroke-dashoffset: 0 }
   8%, 20% { stroke-dasharray: 25 100; stroke-dashoffset: 0 }
   28%, 40% { stroke-dasharray: 50 100; stroke-dashoffset: 0 }
@@ -102,61 +102,61 @@
   68%, 80% { stroke-dasharray: 100 100; stroke-dashoffset: 0 }
   92%, 100% { stroke-dasharray: 100 100; stroke-dashoffset: -100 }
 }
-@keyframes corpus-text-in-down { from { opacity: 0; transform: translateY(-0.55em); filter: blur(6px) } to { opacity: 1; transform: none; filter: blur(0) } }
-@keyframes corpus-text-out-down { from { opacity: 1; transform: none; filter: blur(0) } to { opacity: 0; transform: translateY(0.55em); filter: blur(6px) } }
+@keyframes vita-text-in-down { from { opacity: 0; transform: translateY(-0.55em); filter: blur(6px) } to { opacity: 1; transform: none; filter: blur(0) } }
+@keyframes vita-text-out-down { from { opacity: 1; transform: none; filter: blur(0) } to { opacity: 0; transform: translateY(0.55em); filter: blur(6px) } }
 /* A chip arriving (attachments, tokens): springs in from small and blurred. */
-/* A digit swapping (AnimatedNumber): old and new travel together, one line apart, like a conveyor — blurring
+/* A digit swapping (AnimatedNumber): old and new travel together, one line apart, like a conveyor, blurring
    and fading as they leave/arrive, so no clipping window is needed. */
-@keyframes corpus-digit-in-up { from { opacity: 0; transform: translateY(1em); filter: blur(3px) } }
-@keyframes corpus-digit-out-up { to { opacity: 0; transform: translateY(-1em); filter: blur(3px) } }
-@keyframes corpus-digit-in-down { from { opacity: 0; transform: translateY(-1em); filter: blur(3px) } }
-@keyframes corpus-digit-out-down { to { opacity: 0; transform: translateY(1em); filter: blur(3px) } }
-@keyframes corpus-chip-in { from { opacity: 0; transform: scale(0.6) translateY(0.25rem); filter: blur(4px) } }
+@keyframes vita-digit-in-up { from { opacity: 0; transform: translateY(1em); filter: blur(3px) } }
+@keyframes vita-digit-out-up { to { opacity: 0; transform: translateY(-1em); filter: blur(3px) } }
+@keyframes vita-digit-in-down { from { opacity: 0; transform: translateY(-1em); filter: blur(3px) } }
+@keyframes vita-digit-out-down { to { opacity: 0; transform: translateY(1em); filter: blur(3px) } }
+@keyframes vita-chip-in { from { opacity: 0; transform: scale(0.6) translateY(0.25rem); filter: blur(4px) } }
 /* Canvas drift: a slow sideways sway that suggests the canvas goes on beyond the edges. */
-@keyframes corpus-drift { from { translate: -3rem 0 } to { translate: 3rem 0 } }
+@keyframes vita-drift { from { translate: -3rem 0 } to { translate: 3rem 0 } }
 /* Calendar month change: the new month slides in, the old one slides out (direction follows navigation). */
-@keyframes corpus-month-in-right { from { opacity: 0; transform: translateX(60%); filter: blur(4px) } }
-@keyframes corpus-month-in-left { from { opacity: 0; transform: translateX(-60%); filter: blur(4px) } }
-@keyframes corpus-month-out-left { to { opacity: 0; transform: translateX(-60%); filter: blur(4px) } }
-@keyframes corpus-month-out-right { to { opacity: 0; transform: translateX(60%); filter: blur(4px) } }
-@keyframes corpus-drop-in {
+@keyframes vita-month-in-right { from { opacity: 0; transform: translateX(60%); filter: blur(4px) } }
+@keyframes vita-month-in-left { from { opacity: 0; transform: translateX(-60%); filter: blur(4px) } }
+@keyframes vita-month-out-left { to { opacity: 0; transform: translateX(-60%); filter: blur(4px) } }
+@keyframes vita-month-out-right { to { opacity: 0; transform: translateX(60%); filter: blur(4px) } }
+@keyframes vita-drop-in {
   0% { opacity: 0; transform: translateY(-0.35rem); animation-timing-function: cubic-bezier(0.5, 0, 1, 0.6) }
   60% { opacity: 1; transform: translateY(0.1rem); animation-timing-function: cubic-bezier(0.2, 0.7, 0.3, 1) }
   100% { opacity: 1; transform: none }
 }
-@keyframes corpus-banner-in { from { opacity: 0; transform: translateX(110%) scale(0.96); filter: blur(8px) } }
-@keyframes corpus-banner-out { to { opacity: 0; transform: translateX(110%) scale(0.96); filter: blur(6px) } }
-/* Capsule: productive — a straight slide down from outside the viewport with a fade. No bounce. */
-@keyframes corpus-island-in { from { opacity: 0; transform: translateY(calc(-100% - 2rem)) scale(0.96); filter: blur(8px) } }
-@keyframes corpus-island-out { to { opacity: 0; transform: translateY(calc(-100% - 2rem)) scale(0.96); filter: blur(6px) } }
-@keyframes corpus-rise-in { from { opacity: 0; transform: translateY(1.25rem); filter: blur(10px) } }
-@keyframes corpus-sink-out { to { opacity: 0; transform: translateY(-0.5rem); filter: blur(4px) } }
-@keyframes corpus-pulse { 50% { opacity: 0.55 } }
-@keyframes corpus-status-dot { 0%, 100% { opacity: 0.25 } 40% { opacity: 1 } }
-@keyframes corpus-status-turn { to { transform: rotate(360deg) } }
-@keyframes corpus-status-breathe { 0%, 100% { opacity: 1; transform: scale(1) } 50% { opacity: 0.35; transform: scale(0.72) } }
-@keyframes corpus-status-fill { 0%, 100% { opacity: 1 } 50% { opacity: 0.35 } }
+@keyframes vita-banner-in { from { opacity: 0; transform: translateX(110%) scale(0.96); filter: blur(8px) } }
+@keyframes vita-banner-out { to { opacity: 0; transform: translateX(110%) scale(0.96); filter: blur(6px) } }
+/* Capsule: productive, a straight slide down from outside the viewport with a fade. No bounce. */
+@keyframes vita-island-in { from { opacity: 0; transform: translateY(calc(-100% - 2rem)) scale(0.96); filter: blur(8px) } }
+@keyframes vita-island-out { to { opacity: 0; transform: translateY(calc(-100% - 2rem)) scale(0.96); filter: blur(6px) } }
+@keyframes vita-rise-in { from { opacity: 0; transform: translateY(1.25rem); filter: blur(10px) } }
+@keyframes vita-sink-out { to { opacity: 0; transform: translateY(-0.5rem); filter: blur(4px) } }
+@keyframes vita-pulse { 50% { opacity: 0.55 } }
+@keyframes vita-status-dot { 0%, 100% { opacity: 0.25 } 40% { opacity: 1 } }
+@keyframes vita-status-turn { to { transform: rotate(360deg) } }
+@keyframes vita-status-breathe { 0%, 100% { opacity: 1; transform: scale(1) } 50% { opacity: 0.35; transform: scale(0.72) } }
+@keyframes vita-status-fill { 0%, 100% { opacity: 1 } 50% { opacity: 0.35 } }
 
 @media (prefers-reduced-motion: reduce) {
   :root {
-    --animate-enter-scale: corpus-fade-in var(--corpus-duration-fast-02) linear;
-    --animate-enter-dialog: corpus-fade-in var(--corpus-duration-fast-02) linear;
+    --animate-enter-scale: vita-fade-in var(--vita-duration-fast-02) linear;
+    --animate-enter-dialog: vita-fade-in var(--vita-duration-fast-02) linear;
     --animate-focus-in: none;
-    --animate-exit-dialog: corpus-fade-out var(--corpus-duration-fast-02) linear both;
-    --animate-modal-fall: corpus-fade-out var(--corpus-duration-fast-02) linear;
-    --animate-modal-send: corpus-fade-out var(--corpus-duration-fast-02) linear;
-    --animate-exit-scale: corpus-fade-out var(--corpus-duration-fast-02) linear both;
-    --animate-enter-slide-up: corpus-fade-in var(--corpus-duration-fast-02) linear;
-    --animate-exit-slide-down: corpus-fade-out var(--corpus-duration-fast-02) linear both;
-    --animate-enter-panel-right: corpus-fade-in var(--corpus-duration-fast-02) linear;
-    --animate-enter-list: corpus-fade-in var(--corpus-duration-fast-02) linear;
-    --animate-exit-list: corpus-fade-out var(--corpus-duration-fast-02) linear both;
-    --animate-exit-panel-right: corpus-fade-out var(--corpus-duration-fast-02) linear both;
-    --animate-enter-panel-left: corpus-fade-in var(--corpus-duration-fast-02) linear;
-    --animate-exit-panel-left: corpus-fade-out var(--corpus-duration-fast-02) linear both;
+    --animate-exit-dialog: vita-fade-out var(--vita-duration-fast-02) linear both;
+    --animate-modal-fall: vita-fade-out var(--vita-duration-fast-02) linear;
+    --animate-modal-send: vita-fade-out var(--vita-duration-fast-02) linear;
+    --animate-exit-scale: vita-fade-out var(--vita-duration-fast-02) linear both;
+    --animate-enter-slide-up: vita-fade-in var(--vita-duration-fast-02) linear;
+    --animate-exit-slide-down: vita-fade-out var(--vita-duration-fast-02) linear both;
+    --animate-enter-panel-right: vita-fade-in var(--vita-duration-fast-02) linear;
+    --animate-enter-list: vita-fade-in var(--vita-duration-fast-02) linear;
+    --animate-exit-list: vita-fade-out var(--vita-duration-fast-02) linear both;
+    --animate-exit-panel-right: vita-fade-out var(--vita-duration-fast-02) linear both;
+    --animate-enter-panel-left: vita-fade-in var(--vita-duration-fast-02) linear;
+    --animate-exit-panel-left: vita-fade-out var(--vita-duration-fast-02) linear both;
     --animate-expand: none;
     --animate-collapse: none;
-    --animate-shimmer: corpus-pulse 2s linear infinite;
+    --animate-shimmer: vita-pulse 2s linear infinite;
     --animate-status-dot-1: none;
     --animate-status-dot-2: none;
     --animate-status-dot-3: none;
@@ -164,30 +164,30 @@
     --animate-status-breathe: none;
     --animate-status-breathe-late: none;
     --animate-status-fill: none;
-    --animate-text-reveal: corpus-fade-in var(--corpus-duration-fast-02) linear both;
-    --animate-text-reveal-down: corpus-fade-in var(--corpus-duration-fast-02) linear both;
-    --animate-text-leave-down: corpus-fade-out var(--corpus-duration-fast-02) linear both;
-    --animate-drop-in: corpus-fade-in var(--corpus-duration-fast-02) linear;
-    --animate-enter-fall: corpus-fade-in var(--corpus-duration-fast-02) linear both;
-    --animate-chip-in: corpus-fade-in var(--corpus-duration-fast-02) linear both;
+    --animate-text-reveal: vita-fade-in var(--vita-duration-fast-02) linear both;
+    --animate-text-reveal-down: vita-fade-in var(--vita-duration-fast-02) linear both;
+    --animate-text-leave-down: vita-fade-out var(--vita-duration-fast-02) linear both;
+    --animate-drop-in: vita-fade-in var(--vita-duration-fast-02) linear;
+    --animate-enter-fall: vita-fade-in var(--vita-duration-fast-02) linear both;
+    --animate-chip-in: vita-fade-in var(--vita-duration-fast-02) linear both;
     --animate-drift: none;
-    --animate-month-in-next: corpus-fade-in var(--corpus-duration-fast-02) linear both;
-    --animate-month-out-next: corpus-fade-out var(--corpus-duration-fast-02) linear both;
-    --animate-month-in-prev: corpus-fade-in var(--corpus-duration-fast-02) linear both;
-    --animate-month-out-prev: corpus-fade-out var(--corpus-duration-fast-02) linear both;
-    --animate-month-caption-in: corpus-fade-in var(--corpus-duration-fast-02) linear both;
-    --animate-month-caption-out: corpus-fade-out var(--corpus-duration-fast-02) linear both;
-    --animate-banner-in: corpus-fade-in var(--corpus-duration-fast-02) linear both;
-    --animate-banner-out: corpus-fade-out var(--corpus-duration-fast-02) linear both;
-    --animate-island-in: corpus-fade-in var(--corpus-duration-fast-02) linear both;
-    --animate-island-out: corpus-fade-out var(--corpus-duration-fast-02) linear both;
-    --animate-indeterminate: corpus-pulse 1.5s linear infinite;
+    --animate-month-in-next: vita-fade-in var(--vita-duration-fast-02) linear both;
+    --animate-month-out-next: vita-fade-out var(--vita-duration-fast-02) linear both;
+    --animate-month-in-prev: vita-fade-in var(--vita-duration-fast-02) linear both;
+    --animate-month-out-prev: vita-fade-out var(--vita-duration-fast-02) linear both;
+    --animate-month-caption-in: vita-fade-in var(--vita-duration-fast-02) linear both;
+    --animate-month-caption-out: vita-fade-out var(--vita-duration-fast-02) linear both;
+    --animate-banner-in: vita-fade-in var(--vita-duration-fast-02) linear both;
+    --animate-banner-out: vita-fade-out var(--vita-duration-fast-02) linear both;
+    --animate-island-in: vita-fade-in var(--vita-duration-fast-02) linear both;
+    --animate-island-out: vita-fade-out var(--vita-duration-fast-02) linear both;
+    --animate-indeterminate: vita-pulse 1.5s linear infinite;
   }
 }
 
 /* ------------------------------------------------------------------
  * NOTHING SNAPS. Every visual property change transitions by default
- * (productive), and sizes can animate to/from auto — so a component
+ * (productive), and sizes can animate to/from auto, so a component
  * switching variant, size, state or theme MORPHS instead of jumping.
  * Components only tune duration/easing; they never switch transitions off.
  * ------------------------------------------------------------------ */
@@ -200,10 +200,10 @@
       padding, margin, gap, font-size, line-height, letter-spacing, font-weight, outline-offset, outline-width,
       grid-template-rows, grid-template-columns, filter, backdrop-filter, visibility, stroke-dashoffset, fill-opacity, stroke-opacity;
     transition-behavior: allow-discrete;
-    transition-duration: var(--corpus-duration-moderate-01);
-    transition-timing-function: var(--corpus-ease-productive);
+    transition-duration: var(--vita-duration-moderate-01);
+    transition-timing-function: var(--vita-ease-productive);
   }
-  /* Positioning layers are measured, not animated — the WRAPPER only. Everything inside a popover, menu or
+  /* Positioning layers are measured, not animated, the WRAPPER only. Everything inside a popover, menu or
      listbox keeps full choreography (checkbox draws, toggles slide, icons swap). */
   :where([data-radix-popper-content-wrapper], [data-radix-scroll-area-viewport]) {
     transition-property: color, background-color, border-color, opacity, box-shadow;
@@ -217,23 +217,23 @@
 
 /* Booting (until fonts/layout settle) and global appearance swaps: no per-element transitions. */
 @layer base {
-  :root:is([data-corpus-booting], [data-corpus-swapping]),
-  :root:is([data-corpus-booting], [data-corpus-swapping]) :where(*, *::before, *::after) { transition: none !important; }
+  :root:is([data-vita-booting], [data-vita-swapping]),
+  :root:is([data-vita-booting], [data-vita-swapping]) :where(*, *::before, *::after) { transition: none !important; }
 }
-/* An appearance swap (theme, preset, tint) is ONE cross-fade of the page — the exception to the rule below. */
-:root[data-corpus-swapping]::view-transition-old(root) { display: block; animation: corpus-fade-out var(--corpus-duration-moderate-02) var(--corpus-ease-productive) both; }
-:root[data-corpus-swapping]::view-transition-new(root) { animation: corpus-fade-in var(--corpus-duration-moderate-02) var(--corpus-ease-productive) both; }
+/* An appearance swap (theme, preset, tint) is ONE cross-fade of the page, the exception to the rule below. */
+:root[data-vita-swapping]::view-transition-old(root) { display: block; animation: vita-fade-out var(--vita-duration-moderate-02) var(--vita-ease-productive) both; }
+:root[data-vita-swapping]::view-transition-new(root) { animation: vita-fade-in var(--vita-duration-moderate-02) var(--vita-ease-productive) both; }
 
 /* View transitions: element morphs only (named elements glide); the page itself never cross-fades as a whole. */
 ::view-transition-old(root) { display: none; }
 ::view-transition-new(root) { animation: none; }
-::view-transition-group(*) { animation-duration: var(--corpus-duration-moderate-02); animation-timing-function: var(--corpus-ease-expressive); }
+::view-transition-group(*) { animation-duration: var(--vita-duration-moderate-02); animation-timing-function: var(--vita-ease-expressive); }
 
 @media (prefers-reduced-motion: reduce) {
   @layer base {
     :where(*, *::before, *::after) {
       transition-property: color, background-color, border-color, outline-color, opacity, box-shadow;
-      transition-duration: var(--corpus-duration-fast-02);
+      transition-duration: var(--vita-duration-fast-02);
     }
   }
   ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation-duration: 1ms; }

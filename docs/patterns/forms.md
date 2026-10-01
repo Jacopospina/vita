@@ -1,6 +1,6 @@
 ---
 title: Forms
-summary: How forms are structured end to end — single page vs multi-step, layout, validation, submission and recovery.
+summary: How forms are structured end to end, single page vs multi-step, layout, validation, submission and recovery.
 status: stable
 use_when:
   - Collecting data from the user
@@ -10,7 +10,7 @@ avoid_when:
 related: [form, text-input, fluid-styles, progress-indicator, read-only-states]
 ---
 
-> [!IMPORTANT] Rule one: forms are one column. People scan top-left down in an F pattern and miss a second column. Only fields that are one data point (first + last name, a range) sit side by side — blended in a `FormRow`.
+> [!IMPORTANT] Rule one: forms are one column. People scan top-left down in an F pattern and miss a second column. Only fields that are one data point (first + last name, a range) sit side by side, blended in a `FormRow`.
 
 ## Choose the shape
 
@@ -26,7 +26,7 @@ related: [form, text-input, fluid-styles, progress-indicator, read-only-states]
 
 - One column, left-aligned, `max-w-xl`.
 - Labels above fields.
-- `FormRow` only for fields that are one data point — they blend into one container (border and radius on the parent, flat fields inside).
+- `FormRow` only for fields that are one data point, they blend into one container (border and radius on the parent, flat fields inside).
 - Section headings (`FormGroup` legend) every 3–6 fields.
 - Actions at the end: primary first in page forms, last in modals and panels.
 

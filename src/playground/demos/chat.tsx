@@ -16,12 +16,12 @@ const replies = [
 
 /** A live agent conversation: send a message, Sofia thinks, the agent answers. */
 function LiveMiniChat() {
-  // An earlier day's exchange, then today's — the day separators sit between them.
+  // An earlier day's exchange, then today's, the day separators sit between them.
   const [messages, setMessages] = React.useState<ChatMessage[]>(() => {
     const d = (daysAgo: number, h: number, m: number) => { const x = new Date(); x.setDate(x.getDate() - daysAgo); x.setHours(h, m, 0, 0); return x }
     return [
       { id: "0a", role: "user", text: "Is my plan renewing this month?", author: "You", at: d(3, 13, 1) },
-      { id: "0b", role: "agent", text: "Yes — on the 28th, at the same price.", author: "Support triage", at: d(3, 13, 1) },
+      { id: "0b", role: "agent", text: "Yes, on the 28th, at the same price.", author: "Support triage", at: d(3, 13, 1) },
       { id: "1", role: "agent", text: "Hi again. What can I help you with today?", author: "Support triage", at: d(0, 9, 40) },
     ]
   })
@@ -78,7 +78,7 @@ export const chatDemos: DemoMap = {
     },
     {
       title: "Suggested reply, reviewed by a person",
-      description: "When an agent drafts for a person to send, show it on an AI surface with its source — the person stays the author.",
+      description: "When an agent drafts for a person to send, show it on an AI surface with its source, the person stays the author.",
       render: () => (
         <AISurface className="max-w-md">
           <Stack gap="sm">

@@ -4,7 +4,7 @@ import { cn } from "@/registry/lib/utils"
 import { Label, FieldMessage } from "@/registry/ui/form"
 
 /**
- * RadioGroup — exactly ONE choice from 2–6 visible options. All options visible = faster decisions (Hick's law).
+ * RadioGroup, exactly ONE choice from 2–6 visible options. All options visible = faster decisions (Hick's law).
  * >6 options → Dropdown/Select. Binary on/off → Toggle or Checkbox.
  */
 export interface RadioGroupProps extends React.ComponentProps<typeof RadioPrimitive.Root> {
@@ -53,7 +53,7 @@ export function RadioButton({ label, helperText, className, id: idProp, ...props
           "duration-moderate-02 ease-productive focus-ring active:scale-90",
           "data-[state=checked]:border-primary data-[state=checked]:ease-expressive",
           "disabled:cursor-not-allowed disabled:border-disabled-foreground",
-          "aria-invalid:border-error aria-invalid:[--corpus-ring:var(--corpus-error)]",
+          "aria-invalid:border-error aria-invalid:[--vita-ring:var(--vita-error)]",
         )}
         {...props}
       >

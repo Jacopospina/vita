@@ -1,7 +1,7 @@
 /*
- * CORPUS THEME KNOBS
+ * VITA THEME KNOBS
  * ------------------------------------------------------------------
- * This is the ONLY file a team edits to personalise Corpus end to end.
+ * This is the ONLY file a team edits to personalise Vita end to end.
  * Every semantic token (colors, radii, control heights, type ramp,
  * motion) is derived from these variables in tokens.css.
  *
@@ -12,29 +12,29 @@
  */
 :root {
   /* 1. COLOR ------------------------------------------------------ */
-  --corpus-brand-hue: 257.4;        /* primary/interactive hue          */
-  --corpus-brand-chroma: 0.218;    /* 0 = monochrome brand, 0.25 = vivid */
-  --corpus-neutral-hue: 286;       /* tint of greys (use brand hue for harmony) */
-  --corpus-neutral-chroma: 0;     /* 0 = pure grey (default), 0.02 = clearly tinted */
-  --corpus-hue-success: 147.4;
-  --corpus-hue-warning: 50;   
-  --corpus-hue-error: 28.7;
-  --corpus-hue-info: 257.4;
+  --vita-brand-hue: 257.4;        /* primary/interactive hue          */
+  --vita-brand-chroma: 0.218;    /* 0 = monochrome brand, 0.25 = vivid */
+  --vita-neutral-hue: 286;       /* tint of greys (use brand hue for harmony) */
+  --vita-neutral-chroma: 0;     /* 0 = pure grey (default), 0.02 = clearly tinted */
+  --vita-hue-success: 147.4;
+  --vita-hue-warning: 50;   
+  --vita-hue-error: 28.7;
+  --vita-hue-info: 257.4;
 
   /* 2. SHAPE ------------------------------------------------------ */
-  --corpus-radius: 0.5rem;        /* 0 = square · 0.5rem = default · 0.75rem = soft */
+  --vita-radius: 0.5rem;        /* 0 = square · 0.5rem = default · 0.75rem = soft */
 
   /* 3. DENSITY ---------------------------------------------------- */
-  --corpus-density: 1;            /* desktop-settings density: 0.8 compact · 1 default · 1.2 comfortable/touch — scales controls AND every padding/gap */
+  --vita-density: 1;            /* desktop-settings density: 0.8 compact · 1 default · 1.2 comfortable/touch, scales controls AND every padding/gap */
 
   /* 4. TYPOGRAPHY ------------------------------------------------- */
-  --corpus-font-sans: "Google Sans Flex Variable", "Google Sans Flex", system-ui, sans-serif;  /* everything */
-  --corpus-font-display: var(--corpus-font-sans);
-  --corpus-font-mono: "Google Sans Code Variable", "Google Sans Code", ui-monospace, monospace; /* code */
-  --corpus-font-numeric: var(--corpus-font-mono);  /* numbers & numeric values (tables, metrics, counters) */
-  --corpus-type-base: 0.8125rem;  /* body size. 0.8125rem (13px) desktop product UI · 1rem (16px) content/marketing */
-  --corpus-type-ratio: 1.2;       /* modular scale. 1.125 tight · 1.2 default (balanced) · 1.25 expressive */
+  --vita-font-sans: "Google Sans Flex Variable", "Google Sans Flex", system-ui, sans-serif;  /* everything */
+  --vita-font-display: var(--vita-font-sans);
+  --vita-font-mono: "Google Sans Code Variable", "Google Sans Code", ui-monospace, monospace; /* code */
+  --vita-font-numeric: var(--vita-font-mono);  /* numbers & numeric values (tables, metrics, counters) */
+  --vita-type-base: 0.8125rem;  /* body size. 0.8125rem (13px) desktop product UI · 1rem (16px) content/marketing */
+  --vita-type-ratio: 1.2;       /* modular scale. 1.125 tight · 1.2 default (balanced) · 1.25 expressive */
 
   /* 5. MOTION ----------------------------------------------------- */
-  --corpus-motion-scale: 1;       /* multiplies every duration. 0 disables motion, 1.25 calmer */
+  --vita-motion-scale: 1;       /* multiplies every duration. 0 disables motion, 1.25 calmer */
 }

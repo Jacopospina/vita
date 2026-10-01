@@ -1,5 +1,5 @@
 /*
- * CORPUS SEMANTIC TOKENS — derived from theme.css knobs. Do not hand-edit per product.
+ * VITA SEMANTIC TOKENS, derived from theme.css knobs. Do not hand-edit per product.
  * Naming: background/foreground pairs + layers, support and focus families.
  *
  *   surfaces     background · layer-1..3 · raised · field · overlay
@@ -9,259 +9,259 @@
  *   support      success · warning · error · info (+ -subtle, -foreground)
  *   lines        border-subtle · border · border-strong · border-field
  */
-/* Weather tint (useWeatherTint): when on (--corpus-weather: 1) only the FLOATING layers — surfaces with a z-index,
-   i.e. the glass (side nav, header, right panel, menus, popovers, dialogs, notifications, pinned toolbars) —
+/* Weather tint (useWeatherTint): when on (--vita-weather: 1) only the FLOATING layers, surfaces with a z-index,
+   i.e. the glass (side nav, header, right panel, menus, popovers, dialogs, notifications, pinned toolbars),
    lean warm or cold. The page, in-flow containers, fields, lines and text keep the neutral knobs.
    Applied through swapAppearance, so it cross-fades once. */
-@property --corpus-weather { syntax: "<number>"; inherits: true; initial-value: 0; }
-@property --corpus-weather-hue { syntax: "<number>"; inherits: true; initial-value: 0; }
-@property --corpus-weather-chroma { syntax: "<number>"; inherits: true; initial-value: 0; }
+@property --vita-weather { syntax: "<number>"; inherits: true; initial-value: 0; }
+@property --vita-weather-hue { syntax: "<number>"; inherits: true; initial-value: 0; }
+@property --vita-weather-chroma { syntax: "<number>"; inherits: true; initial-value: 0; }
 :root {
-  --_nh: var(--corpus-neutral-hue);
-  --_nc: var(--corpus-neutral-chroma);
+  --_nh: var(--vita-neutral-hue);
+  --_nc: var(--vita-neutral-chroma);
   /* Elevated (floating-layer) neutrals: the weather tint when on, else the neutral knobs. */
-  --_eh: calc(var(--corpus-neutral-hue) + (var(--corpus-weather-hue) - var(--corpus-neutral-hue)) * var(--corpus-weather));
-  --_ec: calc(var(--corpus-neutral-chroma) + (var(--corpus-weather-chroma) - var(--corpus-neutral-chroma)) * var(--corpus-weather));
-  --_bh: var(--corpus-brand-hue);
-  --_bc: var(--corpus-brand-chroma);
-  --_hs: var(--corpus-hue-success);
-  --_hw: var(--corpus-hue-warning);
-  --_he: var(--corpus-hue-error);
-  --_hi: var(--corpus-hue-info);
+  --_eh: calc(var(--vita-neutral-hue) + (var(--vita-weather-hue) - var(--vita-neutral-hue)) * var(--vita-weather));
+  --_ec: calc(var(--vita-neutral-chroma) + (var(--vita-weather-chroma) - var(--vita-neutral-chroma)) * var(--vita-weather));
+  --_bh: var(--vita-brand-hue);
+  --_bc: var(--vita-brand-chroma);
+  --_hs: var(--vita-hue-success);
+  --_hw: var(--vita-hue-warning);
+  --_he: var(--vita-hue-error);
+  --_hi: var(--vita-hue-info);
 
   color-scheme: light;
 
-  /* surfaces — grouped layering: white canvas, soft grey layers */
-  --corpus-background: oklch(0.988 var(--_nc) var(--_nh)); /* the lightest grey — pure white glares */
-  --corpus-layer-1: oklch(0.972 var(--_nc) var(--_nh)); /* cards: a soft step off the page */
-  --corpus-layer-2: oklch(0.923 var(--_nc) var(--_nh));
-  --corpus-layer-3: oklch(0.862 var(--_nc) var(--_nh));
-  --corpus-raised: oklch(1 0 0);
+  /* surfaces, grouped layering: white canvas, soft grey layers */
+  --vita-background: oklch(0.988 var(--_nc) var(--_nh)); /* the lightest grey, pure white glares */
+  --vita-layer-1: oklch(0.972 var(--_nc) var(--_nh)); /* cards: a soft step off the page */
+  --vita-layer-2: oklch(0.923 var(--_nc) var(--_nh));
+  --vita-layer-3: oklch(0.862 var(--_nc) var(--_nh));
+  --vita-raised: oklch(1 0 0);
   /* Floating layers (glass): raised, carrying the weather tint. */
-  --corpus-elevated: oklch(0.995 var(--_ec) var(--_eh));
-  --corpus-glass-lift: 1.03; /* a whisper of brightening — more would bleach the page behind to flat white */
-  --corpus-field: oklch(1 0 0);
-  --corpus-overlay: oklch(0 0 0 / 0.4);
-  --corpus-inverse: oklch(0.232 var(--_nc) var(--_nh));
-  --corpus-inverse-foreground: oklch(0.971 var(--_nc) var(--_nh));
+  --vita-elevated: oklch(0.995 var(--_ec) var(--_eh));
+  --vita-glass-lift: 1.03; /* a whisper of brightening, more would bleach the page behind to flat white */
+  --vita-field: oklch(1 0 0);
+  --vita-overlay: oklch(0 0 0 / 0.4);
+  --vita-inverse: oklch(0.232 var(--_nc) var(--_nh));
+  --vita-inverse-foreground: oklch(0.971 var(--_nc) var(--_nh));
 
   /* text */
-  --corpus-foreground: oklch(0.232 var(--_nc) var(--_nh));
-  --corpus-muted-foreground: oklch(0.5 var(--_nc) var(--_nh)); /* ≥ 4.5:1 on layer-2 (grey pills, tabs), not only on white */
-  --corpus-helper: oklch(0.5 var(--_nc) var(--_nh));
-  --corpus-placeholder: oklch(0.622 var(--_nc) var(--_nh));
-  --corpus-disabled-foreground: oklch(0.752 var(--_nc) var(--_nh));
+  --vita-foreground: oklch(0.232 var(--_nc) var(--_nh));
+  --vita-muted-foreground: oklch(0.5 var(--_nc) var(--_nh)); /* ≥ 4.5:1 on layer-2 (grey pills, tabs), not only on white */
+  --vita-helper: oklch(0.5 var(--_nc) var(--_nh));
+  --vita-placeholder: oklch(0.622 var(--_nc) var(--_nh));
+  --vita-disabled-foreground: oklch(0.752 var(--_nc) var(--_nh));
 
   /* lines */
-  --corpus-border-subtle: oklch(0.923 var(--_nc) var(--_nh));
-  --corpus-border: oklch(0.827 var(--_nc) var(--_nh));
-  --corpus-border-strong: oklch(0.648 var(--_nc) var(--_nh));
-  --corpus-border-field: var(--corpus-border); /* soft at rest; hover strengthens to border-strong, focus adds the ring; increased contrast keeps a ≥3:1 field border */
+  --vita-border-subtle: oklch(0.923 var(--_nc) var(--_nh));
+  --vita-border: oklch(0.827 var(--_nc) var(--_nh));
+  --vita-border-strong: oklch(0.648 var(--_nc) var(--_nh));
+  --vita-border-field: var(--vita-border); /* soft at rest; hover strengthens to border-strong, focus adds the ring; increased contrast keeps a ≥3:1 field border */
   /* divider: the alt border for lines INSIDE a container (row separators). Translucent, so it stays soft on any layer. */
-  --corpus-divider: color-mix(in oklab, var(--corpus-foreground) 5%, transparent);
+  --vita-divider: color-mix(in oklab, var(--vita-foreground) 5%, transparent);
 
   /* interactive */
-  --corpus-primary: oklch(0.603 var(--_bc) var(--_bh));
-  --corpus-primary-hover: oklch(0.55 var(--_bc) var(--_bh));
-  --corpus-primary-active: oklch(0.5 var(--_bc) var(--_bh));
-  --corpus-primary-foreground: oklch(1 0 0);
-  --corpus-primary-subtle: color-mix(in oklab, var(--corpus-primary) 12%, var(--corpus-background));
-  /* Secondary button: the primary colour at its lowest strength — a faint primary wash with primary text
+  --vita-primary: oklch(0.603 var(--_bc) var(--_bh));
+  --vita-primary-hover: oklch(0.55 var(--_bc) var(--_bh));
+  --vita-primary-active: oklch(0.5 var(--_bc) var(--_bh));
+  --vita-primary-foreground: oklch(1 0 0);
+  --vita-primary-subtle: color-mix(in oklab, var(--vita-primary) 12%, var(--vita-background));
+  /* Secondary button: the primary colour at its lowest strength, a faint primary wash with primary text
      (the link tone of the primary hue: the same blue, tuned to pass AA on the wash). */
-  --corpus-secondary: color-mix(in oklab, var(--corpus-primary) 10%, transparent);
-  --corpus-secondary-hover: color-mix(in oklab, var(--corpus-primary) 16%, transparent);
-  --corpus-secondary-foreground: var(--corpus-link);
-  --corpus-link: oklch(0.522 calc(var(--_bc) * 0.81) var(--_bh));
-  --corpus-link-visited: oklch(0.529 0.191 calc(var(--_bh) + 21));
-  --corpus-focus: oklch(0.603 var(--_bc) var(--_bh));
-  /* focus ring colour — follows the element's meaning: components set it to error/warning when invalid/danger */
-  --corpus-ring: var(--corpus-focus);
-  --corpus-focus-inset: oklch(1 0 0);
+  --vita-secondary: color-mix(in oklab, var(--vita-primary) 10%, transparent);
+  --vita-secondary-hover: color-mix(in oklab, var(--vita-primary) 16%, transparent);
+  --vita-secondary-foreground: var(--vita-link);
+  --vita-link: oklch(0.522 calc(var(--_bc) * 0.81) var(--_bh));
+  --vita-link-visited: oklch(0.529 0.191 calc(var(--_bh) + 21));
+  --vita-focus: oklch(0.603 var(--_bc) var(--_bh));
+  /* focus ring colour, follows the element's meaning: components set it to error/warning when invalid/danger */
+  --vita-ring: var(--vita-focus);
+  --vita-focus-inset: oklch(1 0 0);
 
-  /* state washes — work on any layer */
-  --corpus-hover: color-mix(in oklab, oklch(0.55 0.02 var(--_nh)) 10%, transparent);
-  --corpus-active: color-mix(in oklab, oklch(0.55 0.02 var(--_nh)) 18%, transparent);
-  --corpus-selected: var(--corpus-primary-subtle);
-  --corpus-selected-foreground: oklch(0.464 calc(var(--_bc) * 1.1) calc(var(--_bh) + 6));
-  --corpus-skeleton: oklch(0.923 var(--_nc) var(--_nh));
-  /* icon placeholder tile — translucent, so it reads on any layer */
-  --corpus-icon-surface: color-mix(in oklab, oklch(0 0 0) 5%, transparent); /* tint: a faint dark wash, super-light grey on white */
-  --corpus-icon-surface-solid: oklch(1 0 0); /* solid: a white tile, for icons inside grey list groups */
+  /* state washes, work on any layer */
+  --vita-hover: color-mix(in oklab, oklch(0.55 0.02 var(--_nh)) 10%, transparent);
+  --vita-active: color-mix(in oklab, oklch(0.55 0.02 var(--_nh)) 18%, transparent);
+  --vita-selected: var(--vita-primary-subtle);
+  --vita-selected-foreground: oklch(0.464 calc(var(--_bc) * 1.1) calc(var(--_bh) + 6));
+  --vita-skeleton: oklch(0.923 var(--_nc) var(--_nh));
+  /* icon placeholder tile, translucent, so it reads on any layer */
+  --vita-icon-surface: color-mix(in oklab, oklch(0 0 0) 5%, transparent); /* tint: a faint dark wash, super-light grey on white */
+  --vita-icon-surface-solid: oklch(1 0 0); /* solid: a white tile, for icons inside grey list groups */
 
-  /* support — system green, orange, red, blue */
-  --corpus-success: oklch(0.73 0.194 var(--_hs));
-  --corpus-success-subtle: color-mix(in oklab, var(--corpus-success) 14%, var(--corpus-background));
-  --corpus-success-foreground: oklch(0.558 0.146 var(--_hs));
-  --corpus-warning: oklch(0.72 0.19 var(--_hw)); /* orange */
-  --corpus-warning-subtle: color-mix(in oklab, var(--corpus-warning) 16%, var(--corpus-background));
-  --corpus-warning-foreground: oklch(0.55 0.16 var(--_hw)); /* burnt orange text — never drifts to red */
-  --corpus-error: oklch(0.654 0.232 var(--_he));
-  --corpus-error-subtle: color-mix(in oklab, var(--corpus-error) 12%, var(--corpus-background));
-  --corpus-error-foreground: oklch(0.553 0.225 var(--_he));
-  --corpus-error-hover: oklch(0.6 0.232 var(--_he));
-  --corpus-info: oklch(0.603 0.218 var(--_hi));
-  --corpus-info-subtle: color-mix(in oklab, var(--corpus-info) 12%, var(--corpus-background));
-  --corpus-info-foreground: oklch(0.464 0.242 calc(var(--_hi) + 6));
+  /* support, system green, orange, red, blue */
+  --vita-success: oklch(0.73 0.194 var(--_hs));
+  --vita-success-subtle: color-mix(in oklab, var(--vita-success) 14%, var(--vita-background));
+  --vita-success-foreground: oklch(0.558 0.146 var(--_hs));
+  --vita-warning: oklch(0.72 0.19 var(--_hw)); /* orange */
+  --vita-warning-subtle: color-mix(in oklab, var(--vita-warning) 16%, var(--vita-background));
+  --vita-warning-foreground: oklch(0.55 0.16 var(--_hw)); /* burnt orange text, never drifts to red */
+  --vita-error: oklch(0.654 0.232 var(--_he));
+  --vita-error-subtle: color-mix(in oklab, var(--vita-error) 12%, var(--vita-background));
+  --vita-error-foreground: oklch(0.553 0.225 var(--_he));
+  --vita-error-hover: oklch(0.6 0.232 var(--_he));
+  --vita-info: oklch(0.603 0.218 var(--_hi));
+  --vita-info-subtle: color-mix(in oklab, var(--vita-info) 12%, var(--vita-background));
+  --vita-info-foreground: oklch(0.464 0.242 calc(var(--_hi) + 6));
 
-  /* AI — the only sanctioned gradient in the system: the full system spectrum */
-  --corpus-ai-from: var(--corpus-palette-blue-500);
-  --corpus-ai-to: var(--corpus-palette-orange-500);
-  --corpus-ai-spectrum: var(--corpus-palette-blue-500), var(--corpus-palette-indigo-500), var(--corpus-palette-purple-500),
-    var(--corpus-palette-pink-500), var(--corpus-palette-red-500), var(--corpus-palette-orange-500),
-    var(--corpus-palette-yellow-500), var(--corpus-palette-mint-500), var(--corpus-palette-cyan-500), var(--corpus-palette-blue-500);
-  --corpus-ai-subtle: color-mix(in oklab, var(--corpus-palette-purple-500) 5%, var(--corpus-background));
+  /* AI, the only sanctioned gradient in the system: the full system spectrum */
+  --vita-ai-from: var(--vita-palette-blue-500);
+  --vita-ai-to: var(--vita-palette-orange-500);
+  --vita-ai-spectrum: var(--vita-palette-blue-500), var(--vita-palette-indigo-500), var(--vita-palette-purple-500),
+    var(--vita-palette-pink-500), var(--vita-palette-red-500), var(--vita-palette-orange-500),
+    var(--vita-palette-yellow-500), var(--vita-palette-mint-500), var(--vita-palette-cyan-500), var(--vita-palette-blue-500);
+  --vita-ai-subtle: color-mix(in oklab, var(--vita-palette-purple-500) 5%, var(--vita-background));
 
   /* elevation: soft, layered, never harsh */
-  --corpus-shadow-raised: 0 1px 2px oklch(0 0 0 / 0.05), 0 1px 3px oklch(0 0 0 / 0.07);
-  /* Large shadows are LAYERED (blur doubles, opacity tapers) so the falloff melts away — no visible edge where it ends. */
-  --corpus-shadow-floating: 0 1px 2px oklch(0 0 0 / 0.040), 0 2px 4px oklch(0 0 0 / 0.040), 0 4px 8px oklch(0 0 0 / 0.040), 0 8px 16px oklch(0 0 0 / 0.040), 0 16px 32px oklch(0 0 0 / 0.035), 0 24px 64px oklch(0 0 0 / 0.030), 0 32px 96px oklch(0 0 0 / 0.020);
-  --corpus-shadow-overlay: 0 1px 2px oklch(0 0 0 / 0.030), 0 2px 4px oklch(0 0 0 / 0.030), 0 4px 8px oklch(0 0 0 / 0.035), 0 8px 16px oklch(0 0 0 / 0.040), 0 16px 32px oklch(0 0 0 / 0.045), 0 32px 64px oklch(0 0 0 / 0.050), 0 48px 120px oklch(0 0 0 / 0.050);
+  --vita-shadow-raised: 0 1px 2px oklch(0 0 0 / 0.05), 0 1px 3px oklch(0 0 0 / 0.07);
+  /* Large shadows are LAYERED (blur doubles, opacity tapers) so the falloff melts away, no visible edge where it ends. */
+  --vita-shadow-floating: 0 1px 2px oklch(0 0 0 / 0.040), 0 2px 4px oklch(0 0 0 / 0.040), 0 4px 8px oklch(0 0 0 / 0.040), 0 8px 16px oklch(0 0 0 / 0.040), 0 16px 32px oklch(0 0 0 / 0.035), 0 24px 64px oklch(0 0 0 / 0.030), 0 32px 96px oklch(0 0 0 / 0.020);
+  --vita-shadow-overlay: 0 1px 2px oklch(0 0 0 / 0.030), 0 2px 4px oklch(0 0 0 / 0.030), 0 4px 8px oklch(0 0 0 / 0.035), 0 8px 16px oklch(0 0 0 / 0.040), 0 16px 32px oklch(0 0 0 / 0.045), 0 32px 64px oklch(0 0 0 / 0.050), 0 48px 120px oklch(0 0 0 / 0.050);
 }
 
 :root.dark,
 [data-theme="dark"] {
   color-scheme: dark;
 
-  --corpus-background: oklch(0 0 0);
-  --corpus-layer-1: oklch(0.227 var(--_nc) var(--_nh));
-  --corpus-layer-2: oklch(0.294 var(--_nc) var(--_nh));
-  --corpus-layer-3: oklch(0.349 var(--_nc) var(--_nh));
-  --corpus-raised: oklch(0.227 var(--_nc) var(--_nh));
-  --corpus-elevated: oklch(0.227 var(--_ec) var(--_eh));
-  --corpus-glass-lift: 1;
-  --corpus-field: oklch(0.227 var(--_nc) var(--_nh));
-  --corpus-overlay: oklch(0 0 0 / 0.6);
-  --corpus-inverse: oklch(0.971 var(--_nc) var(--_nh));
-  --corpus-inverse-foreground: oklch(0.232 var(--_nc) var(--_nh));
+  --vita-background: oklch(0 0 0);
+  --vita-layer-1: oklch(0.227 var(--_nc) var(--_nh));
+  --vita-layer-2: oklch(0.294 var(--_nc) var(--_nh));
+  --vita-layer-3: oklch(0.349 var(--_nc) var(--_nh));
+  --vita-raised: oklch(0.227 var(--_nc) var(--_nh));
+  --vita-elevated: oklch(0.227 var(--_ec) var(--_eh));
+  --vita-glass-lift: 1;
+  --vita-field: oklch(0.227 var(--_nc) var(--_nh));
+  --vita-overlay: oklch(0 0 0 / 0.6);
+  --vita-inverse: oklch(0.971 var(--_nc) var(--_nh));
+  --vita-inverse-foreground: oklch(0.232 var(--_nc) var(--_nh));
 
-  --corpus-foreground: oklch(0.971 var(--_nc) var(--_nh));
-  --corpus-muted-foreground: oklch(0.681 var(--_nc) var(--_nh));
-  --corpus-helper: oklch(0.681 var(--_nc) var(--_nh));
-  --corpus-placeholder: oklch(0.501 var(--_nc) var(--_nh));
-  --corpus-disabled-foreground: oklch(0.402 var(--_nc) var(--_nh));
+  --vita-foreground: oklch(0.971 var(--_nc) var(--_nh));
+  --vita-muted-foreground: oklch(0.681 var(--_nc) var(--_nh));
+  --vita-helper: oklch(0.681 var(--_nc) var(--_nh));
+  --vita-placeholder: oklch(0.501 var(--_nc) var(--_nh));
+  --vita-disabled-foreground: oklch(0.402 var(--_nc) var(--_nh));
 
-  --corpus-border-subtle: oklch(0.294 var(--_nc) var(--_nh));
-  --corpus-border: oklch(0.341 var(--_nc) var(--_nh));
-  --corpus-border-strong: oklch(0.648 var(--_nc) var(--_nh));
-  --corpus-border-field: oklch(0.42 var(--_nc) var(--_nh));
-  --corpus-divider: color-mix(in oklab, var(--corpus-foreground) 7%, transparent);
+  --vita-border-subtle: oklch(0.294 var(--_nc) var(--_nh));
+  --vita-border: oklch(0.341 var(--_nc) var(--_nh));
+  --vita-border-strong: oklch(0.648 var(--_nc) var(--_nh));
+  --vita-border-field: oklch(0.42 var(--_nc) var(--_nh));
+  --vita-divider: color-mix(in oklab, var(--vita-foreground) 7%, transparent);
 
-  --corpus-primary: oklch(0.624 calc(var(--_bc) * 0.945) calc(var(--_bh) - 2));
-  --corpus-primary-hover: oklch(0.685 calc(var(--_bc) * 0.78) calc(var(--_bh) - 4));
-  --corpus-primary-active: oklch(0.56 var(--_bc) var(--_bh));
-  --corpus-primary-subtle: color-mix(in oklab, var(--corpus-primary) 22%, var(--corpus-background));
-  --corpus-secondary: color-mix(in oklab, var(--corpus-primary) 16%, transparent);
-  --corpus-secondary-hover: color-mix(in oklab, var(--corpus-primary) 22%, transparent);
-  --corpus-link: oklch(0.669 calc(var(--_bc) * 0.83) calc(var(--_bh) - 6));
-  --corpus-link-visited: oklch(0.6 0.19 calc(var(--_bh) + 21));
-  --corpus-focus: oklch(0.624 calc(var(--_bc) * 0.945) calc(var(--_bh) - 2));
-  --corpus-focus-inset: oklch(0 0 0);
+  --vita-primary: oklch(0.624 calc(var(--_bc) * 0.945) calc(var(--_bh) - 2));
+  --vita-primary-hover: oklch(0.685 calc(var(--_bc) * 0.78) calc(var(--_bh) - 4));
+  --vita-primary-active: oklch(0.56 var(--_bc) var(--_bh));
+  --vita-primary-subtle: color-mix(in oklab, var(--vita-primary) 22%, var(--vita-background));
+  --vita-secondary: color-mix(in oklab, var(--vita-primary) 16%, transparent);
+  --vita-secondary-hover: color-mix(in oklab, var(--vita-primary) 22%, transparent);
+  --vita-link: oklch(0.669 calc(var(--_bc) * 0.83) calc(var(--_bh) - 6));
+  --vita-link-visited: oklch(0.6 0.19 calc(var(--_bh) + 21));
+  --vita-focus: oklch(0.624 calc(var(--_bc) * 0.945) calc(var(--_bh) - 2));
+  --vita-focus-inset: oklch(0 0 0);
 
-  --corpus-hover: color-mix(in oklab, oklch(0.75 0.02 var(--_nh)) 14%, transparent);
-  --corpus-active: color-mix(in oklab, oklch(0.75 0.02 var(--_nh)) 22%, transparent);
-  --corpus-selected-foreground: oklch(0.685 calc(var(--_bc) * 0.78) calc(var(--_bh) - 4));
-  --corpus-skeleton: oklch(0.294 var(--_nc) var(--_nh));
-  --corpus-icon-surface: color-mix(in oklab, oklch(1 0 0) 10%, transparent);
-  --corpus-icon-surface-solid: color-mix(in oklab, oklch(1 0 0) 14%, transparent);
+  --vita-hover: color-mix(in oklab, oklch(0.75 0.02 var(--_nh)) 14%, transparent);
+  --vita-active: color-mix(in oklab, oklch(0.75 0.02 var(--_nh)) 22%, transparent);
+  --vita-selected-foreground: oklch(0.685 calc(var(--_bc) * 0.78) calc(var(--_bh) - 4));
+  --vita-skeleton: oklch(0.294 var(--_nc) var(--_nh));
+  --vita-icon-surface: color-mix(in oklab, oklch(1 0 0) 10%, transparent);
+  --vita-icon-surface-solid: color-mix(in oklab, oklch(1 0 0) 14%, transparent);
 
-  --corpus-success: oklch(0.756 0.208 var(--_hs));
-  --corpus-success-subtle: color-mix(in oklab, var(--corpus-success) 18%, var(--corpus-background));
-  --corpus-success-foreground: oklch(0.782 0.218 var(--_hs));
-  --corpus-warning: oklch(0.76 0.18 var(--_hw));
-  --corpus-warning-subtle: color-mix(in oklab, var(--corpus-warning) 18%, var(--corpus-background));
-  --corpus-warning-foreground: oklch(0.8 0.15 var(--_hw));
-  --corpus-error: oklch(0.663 0.224 var(--_he));
-  --corpus-error-subtle: color-mix(in oklab, var(--corpus-error) 18%, var(--corpus-background));
-  --corpus-error-foreground: oklch(0.707 0.185 calc(var(--_he) - 3));
-  --corpus-error-hover: oklch(0.707 0.2 var(--_he));
-  --corpus-info: oklch(0.624 0.206 calc(var(--_hi) - 2));
-  --corpus-info-subtle: color-mix(in oklab, var(--corpus-info) 18%, var(--corpus-background));
-  --corpus-info-foreground: oklch(0.685 0.17 calc(var(--_hi) - 4));
+  --vita-success: oklch(0.756 0.208 var(--_hs));
+  --vita-success-subtle: color-mix(in oklab, var(--vita-success) 18%, var(--vita-background));
+  --vita-success-foreground: oklch(0.782 0.218 var(--_hs));
+  --vita-warning: oklch(0.76 0.18 var(--_hw));
+  --vita-warning-subtle: color-mix(in oklab, var(--vita-warning) 18%, var(--vita-background));
+  --vita-warning-foreground: oklch(0.8 0.15 var(--_hw));
+  --vita-error: oklch(0.663 0.224 var(--_he));
+  --vita-error-subtle: color-mix(in oklab, var(--vita-error) 18%, var(--vita-background));
+  --vita-error-foreground: oklch(0.707 0.185 calc(var(--_he) - 3));
+  --vita-error-hover: oklch(0.707 0.2 var(--_he));
+  --vita-info: oklch(0.624 0.206 calc(var(--_hi) - 2));
+  --vita-info-subtle: color-mix(in oklab, var(--vita-info) 18%, var(--vita-background));
+  --vita-info-foreground: oklch(0.685 0.17 calc(var(--_hi) - 4));
 
-  --corpus-shadow-raised: 0 1px 2px oklch(0 0 0 / 0.5);
-  --corpus-shadow-floating: 0 1px 2px oklch(0 0 0 / 0.160), 0 2px 4px oklch(0 0 0 / 0.160), 0 4px 8px oklch(0 0 0 / 0.160), 0 8px 16px oklch(0 0 0 / 0.160), 0 16px 32px oklch(0 0 0 / 0.140), 0 24px 64px oklch(0 0 0 / 0.120), 0 32px 96px oklch(0 0 0 / 0.080), 0 0 0 1px oklch(1 0 0 / 0.08);
-  --corpus-shadow-overlay: 0 1px 2px oklch(0 0 0 / 0.108), 0 2px 4px oklch(0 0 0 / 0.108), 0 4px 8px oklch(0 0 0 / 0.126), 0 8px 16px oklch(0 0 0 / 0.144), 0 16px 32px oklch(0 0 0 / 0.162), 0 32px 64px oklch(0 0 0 / 0.180), 0 48px 120px oklch(0 0 0 / 0.180), 0 0 0 1px oklch(1 0 0 / 0.1);
+  --vita-shadow-raised: 0 1px 2px oklch(0 0 0 / 0.5);
+  --vita-shadow-floating: 0 1px 2px oklch(0 0 0 / 0.160), 0 2px 4px oklch(0 0 0 / 0.160), 0 4px 8px oklch(0 0 0 / 0.160), 0 8px 16px oklch(0 0 0 / 0.160), 0 16px 32px oklch(0 0 0 / 0.140), 0 24px 64px oklch(0 0 0 / 0.120), 0 32px 96px oklch(0 0 0 / 0.080), 0 0 0 1px oklch(1 0 0 / 0.08);
+  --vita-shadow-overlay: 0 1px 2px oklch(0 0 0 / 0.108), 0 2px 4px oklch(0 0 0 / 0.108), 0 4px 8px oklch(0 0 0 / 0.126), 0 8px 16px oklch(0 0 0 / 0.144), 0 16px 32px oklch(0 0 0 / 0.162), 0 32px 64px oklch(0 0 0 / 0.180), 0 48px 120px oklch(0 0 0 / 0.180), 0 0 0 1px oklch(1 0 0 / 0.1);
 }
 
-/* Increased contrast — follows the OS setting, or force it with data-corpus-contrast="high". */
+/* Increased contrast, follows the OS setting, or force it with data-vita-contrast="high". */
 @media (prefers-contrast: more) {
-  :root:not([data-corpus-contrast="standard"]) {
-    --corpus-primary: oklch(0.464 calc(var(--_bc) * 1.1) calc(var(--_bh) + 6));
-    --corpus-primary-hover: oklch(0.42 calc(var(--_bc) * 1.1) calc(var(--_bh) + 6));
-    --corpus-link: oklch(0.464 calc(var(--_bc) * 1.1) calc(var(--_bh) + 6));
-    --corpus-focus: oklch(0.464 calc(var(--_bc) * 1.1) calc(var(--_bh) + 6));
-    --corpus-error: oklch(0.553 0.225 var(--_he));
-    --corpus-success: oklch(0.558 0.146 var(--_hs));
-    --corpus-muted-foreground: oklch(0.45 var(--_nc) var(--_nh));
-    --corpus-helper: oklch(0.45 var(--_nc) var(--_nh));
-    --corpus-border: oklch(0.648 var(--_nc) var(--_nh));
-    --corpus-border-field: oklch(0.45 var(--_nc) var(--_nh));
-  --corpus-divider: color-mix(in oklab, var(--corpus-foreground) 28%, transparent);
-    --corpus-divider: color-mix(in oklab, var(--corpus-foreground) 28%, transparent);
+  :root:not([data-vita-contrast="standard"]) {
+    --vita-primary: oklch(0.464 calc(var(--_bc) * 1.1) calc(var(--_bh) + 6));
+    --vita-primary-hover: oklch(0.42 calc(var(--_bc) * 1.1) calc(var(--_bh) + 6));
+    --vita-link: oklch(0.464 calc(var(--_bc) * 1.1) calc(var(--_bh) + 6));
+    --vita-focus: oklch(0.464 calc(var(--_bc) * 1.1) calc(var(--_bh) + 6));
+    --vita-error: oklch(0.553 0.225 var(--_he));
+    --vita-success: oklch(0.558 0.146 var(--_hs));
+    --vita-muted-foreground: oklch(0.45 var(--_nc) var(--_nh));
+    --vita-helper: oklch(0.45 var(--_nc) var(--_nh));
+    --vita-border: oklch(0.648 var(--_nc) var(--_nh));
+    --vita-border-field: oklch(0.45 var(--_nc) var(--_nh));
+  --vita-divider: color-mix(in oklab, var(--vita-foreground) 28%, transparent);
+    --vita-divider: color-mix(in oklab, var(--vita-foreground) 28%, transparent);
   }
 }
-:root[data-corpus-contrast="high"] {
-  --corpus-primary: oklch(0.464 calc(var(--_bc) * 1.1) calc(var(--_bh) + 6));
-  --corpus-primary-hover: oklch(0.42 calc(var(--_bc) * 1.1) calc(var(--_bh) + 6));
-  --corpus-link: oklch(0.464 calc(var(--_bc) * 1.1) calc(var(--_bh) + 6));
-  --corpus-focus: oklch(0.464 calc(var(--_bc) * 1.1) calc(var(--_bh) + 6));
-  --corpus-error: oklch(0.553 0.225 var(--_he));
-  --corpus-success: oklch(0.558 0.146 var(--_hs));
-  --corpus-muted-foreground: oklch(0.45 var(--_nc) var(--_nh));
-  --corpus-helper: oklch(0.45 var(--_nc) var(--_nh));
-  --corpus-border: oklch(0.648 var(--_nc) var(--_nh));
-  --corpus-border-field: oklch(0.45 var(--_nc) var(--_nh));
+:root[data-vita-contrast="high"] {
+  --vita-primary: oklch(0.464 calc(var(--_bc) * 1.1) calc(var(--_bh) + 6));
+  --vita-primary-hover: oklch(0.42 calc(var(--_bc) * 1.1) calc(var(--_bh) + 6));
+  --vita-link: oklch(0.464 calc(var(--_bc) * 1.1) calc(var(--_bh) + 6));
+  --vita-focus: oklch(0.464 calc(var(--_bc) * 1.1) calc(var(--_bh) + 6));
+  --vita-error: oklch(0.553 0.225 var(--_he));
+  --vita-success: oklch(0.558 0.146 var(--_hs));
+  --vita-muted-foreground: oklch(0.45 var(--_nc) var(--_nh));
+  --vita-helper: oklch(0.45 var(--_nc) var(--_nh));
+  --vita-border: oklch(0.648 var(--_nc) var(--_nh));
+  --vita-border-field: oklch(0.45 var(--_nc) var(--_nh));
 }
 
 /* Derived scales ------------------------------------------------------------ */
 :root {
   /* The EFFECTIVE density and type base: the knobs, floored on touch (below). Everything derived reads these. */
-  --_d: var(--corpus-density);
-  --_t: var(--corpus-type-base);
+  --_d: var(--vita-density);
+  --_t: var(--vita-type-base);
 
   /* radius */
-  --corpus-radius-sm: calc(var(--corpus-radius) * 0.5);
-  --corpus-radius-md: var(--corpus-radius);
-  --corpus-radius-lg: calc(var(--corpus-radius) * 1.5);
-  --corpus-radius-xl: calc(var(--corpus-radius) * 2);
+  --vita-radius-sm: calc(var(--vita-radius) * 0.5);
+  --vita-radius-md: var(--vita-radius);
+  --vita-radius-lg: calc(var(--vita-radius) * 1.5);
+  --vita-radius-xl: calc(var(--vita-radius) * 2);
 
-  /* density-driven control sizes — desktop-native density (xs 20 · sm 24 · md 28 · lg 32 · xl 36) */
-  --corpus-control-xs: calc(1.25rem * var(--_d));
-  --corpus-control-sm: calc(1.5rem * var(--_d));
-  --corpus-control-md: calc(1.75rem * var(--_d));
-  --corpus-control-lg: calc(2rem * var(--_d));
-  --corpus-control-xl: calc(2.25rem * var(--_d));
-  --corpus-inset-sm: calc(0.375rem * var(--_d));
-  --corpus-inset: calc(0.5rem * var(--_d));
-  --corpus-inset-lg: calc(0.75rem * var(--_d));
+  /* density-driven control sizes, desktop-native density (xs 20 · sm 24 · md 28 · lg 32 · xl 36) */
+  --vita-control-xs: calc(1.25rem * var(--_d));
+  --vita-control-sm: calc(1.5rem * var(--_d));
+  --vita-control-md: calc(1.75rem * var(--_d));
+  --vita-control-lg: calc(2rem * var(--_d));
+  --vita-control-xl: calc(2.25rem * var(--_d));
+  --vita-inset-sm: calc(0.375rem * var(--_d));
+  --vita-inset: calc(0.5rem * var(--_d));
+  --vita-inset-lg: calc(0.75rem * var(--_d));
   /* fields hold a floating label, so they are a step taller (sm 36 · md 40 · lg 44) */
-  --corpus-field-sm: calc(2.25rem * var(--_d));
-  --corpus-field-md: calc(2.5rem * var(--_d));
-  --corpus-field-lg: calc(2.75rem * var(--_d));
+  --vita-field-sm: calc(2.25rem * var(--_d));
+  --vita-field-md: calc(2.5rem * var(--_d));
+  --vita-field-lg: calc(2.75rem * var(--_d));
 
-  /* type ramp: base × ratio^n — ratio 1.2 on 13px gives 11 · 13 · 16 · 19 · 22 · 27 · 32 */
-  --_r: var(--corpus-type-ratio);
-  --corpus-text-caption: calc(var(--_t) * pow(var(--_r), -1));
-  --corpus-text-footnote: calc(var(--_t) * pow(var(--_r), -0.5));
-  --corpus-text-body: var(--_t);
-  --corpus-text-body-lg: calc(var(--_t) * pow(var(--_r), 0.75));
-  --corpus-text-headline: calc(var(--_t) * var(--_r));
-  --corpus-text-title-3: calc(var(--_t) * pow(var(--_r), 2));
-  --corpus-text-title-2: calc(var(--_t) * pow(var(--_r), 3));
-  --corpus-text-title-1: calc(var(--_t) * pow(var(--_r), 4));
-  --corpus-text-large-title: calc(var(--_t) * pow(var(--_r), 5));
-  --corpus-text-display: calc(var(--_t) * pow(var(--_r), 7));
+  /* type ramp: base × ratio^n, ratio 1.2 on 13px gives 11 · 13 · 16 · 19 · 22 · 27 · 32 */
+  --_r: var(--vita-type-ratio);
+  --vita-text-caption: calc(var(--_t) * pow(var(--_r), -1));
+  --vita-text-footnote: calc(var(--_t) * pow(var(--_r), -0.5));
+  --vita-text-body: var(--_t);
+  --vita-text-body-lg: calc(var(--_t) * pow(var(--_r), 0.75));
+  --vita-text-headline: calc(var(--_t) * var(--_r));
+  --vita-text-title-3: calc(var(--_t) * pow(var(--_r), 2));
+  --vita-text-title-2: calc(var(--_t) * pow(var(--_r), 3));
+  --vita-text-title-1: calc(var(--_t) * pow(var(--_r), 4));
+  --vita-text-large-title: calc(var(--_t) * pow(var(--_r), 5));
+  --vita-text-display: calc(var(--_t) * pow(var(--_r), 7));
 }
 
 /*
- * TOUCH — a finger, not a pointer (phones, tablets). The knobs stay the team's, but two of them gain a floor:
- *   density ≥ 1.1   controls, fields and insets grow a tenth (field md lands on 44px — the finger's size)
+ * TOUCH, a finger, not a pointer (phones, tablets). The knobs stay the team's, but two of them gain a floor:
+ *   density ≥ 1.1   controls, fields and insets grow a tenth (field md lands on 44px, the finger's size)
  *   type ≥ 16px     body text a phone can read, and iOS stops zooming into fields set below 16px
  * Teams asking for more (a 1.2 density, a larger base) keep it; max() only ever raises.
  */
 @media (pointer: coarse) {
   :root {
-    --_d: max(var(--corpus-density), 1.1);
-    --_t: max(var(--corpus-type-base), 1rem);
+    --_d: max(var(--vita-density), 1.1);
+    --_t: max(var(--vita-type-base), 1rem);
   }
 }

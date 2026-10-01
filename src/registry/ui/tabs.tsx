@@ -5,7 +5,7 @@ import { useIndicator } from "@/registry/hooks/use-morph"
 import { useDragSelect } from "@/registry/hooks/use-drag-select"
 
 /**
- * Tabs — switch between related VIEWS of the same object/page at the same level (Overview · Activity · Settings).
+ * Tabs, switch between related VIEWS of the same object/page at the same level (Overview · Activity · Settings).
  *   pill      → DEFAULT. Segmented track; a raised pill slides between tabs (lava-lamp) on a spring.
  *   line      → underline that glides; for dense toolbars or when a track would be too heavy
  *   contained → tabs attached to a panel/card (secondary level)
@@ -82,7 +82,7 @@ export function TabsTrigger({ className, ...props }: React.ComponentProps<typeof
         "group-data-[variant=contained]/tabs:bg-layer-2 group-data-[variant=contained]/tabs:hover:bg-layer-3",
         "group-data-[variant=contained]/tabs:first:rounded-tl-md group-data-[variant=contained]/tabs:last:rounded-tr-md",
         "group-data-[variant=contained]/tabs:data-[state=active]:bg-layer-1 group-data-[variant=contained]/tabs:data-[state=active]:font-medium group-data-[variant=contained]/tabs:data-[state=active]:text-foreground",
-        "group-data-[variant=contained]/tabs:data-[state=active]:shadow-[inset_0_2px_0_var(--corpus-primary)]",
+        "group-data-[variant=contained]/tabs:data-[state=active]:shadow-[inset_0_2px_0_var(--vita-primary)]",
         className,
       )}
       {...props}

@@ -1,6 +1,6 @@
 /**
  * Appearance changes that touch every token at once (theme, preset, weather tint, theme knobs) must not run as
- * thousands of per-element transitions — that's what made switching theme lag. Two tools:
+ * thousands of per-element transitions, that's what made switching theme lag. Two tools:
  *
  *   swapAppearance(apply)       one GPU cross-fade of the whole page (View Transitions), per-element transitions off
  *   withoutTransitions(apply)   apply instantly (continuous input like a slider being dragged)
@@ -8,8 +8,8 @@
  * Page load: `bootAppearance()` keeps transitions off until fonts and layout have settled, so nothing glides into
  * place from its pre-layout position. Call it before the first render.
  */
-const SWAP = "data-corpus-swapping"
-const BOOT = "data-corpus-booting"
+const SWAP = "data-vita-swapping"
+const BOOT = "data-vita-booting"
 
 const reducedMotion = () => window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false
 
@@ -31,7 +31,7 @@ export function swapAppearance(apply: () => void) {
 
 /**
  * Dev only: Vite re-injects CSS on every hot update. Without this, each style edit makes every element transition
- * from its momentarily-unstyled state — things "fly in from the top left" while you work.
+ * from its momentarily-unstyled state, things "fly in from the top left" while you work.
  */
 export function guardHotStyleUpdates(hot: { on: (event: string, cb: () => void) => void } | undefined) {
   if (!hot) return

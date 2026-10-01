@@ -2,7 +2,7 @@
 title: Right panel
 summary: A floating panel on the right for global tools and editing in context, built with the same rules as the left navigation.
 status: stable
-import: "import { RightPanel } from \"@/components/corpus/ui-shell\""
+import: "import { RightPanel } from \"@/components/vita/ui-shell\""
 use_when:
   - Global tools opened from the header (notifications, help, assistant, theme)
   - Viewing or editing an item while keeping the page in view

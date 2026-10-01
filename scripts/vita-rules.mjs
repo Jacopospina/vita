@@ -1,24 +1,24 @@
 /**
- * Shared Corpus lint rules — used by scripts/corpus-audit.mjs (CLI/CI/agent hooks)
- * and eslint/corpus-plugin.mjs (editor feedback). One source of truth.
+ * Shared Vita lint rules, used by scripts/vita-audit.mjs (CLI/CI/agent hooks)
+ * and eslint/vita-plugin.mjs (editor feedback). One source of truth.
  */
 import deprecations from "./deprecations.json" with { type: "json" }
 
 export { deprecations }
 export const ALLOWED_SPACING = new Set(["0", "0.5", "1", "1.5", "2", "2.5", "3", "4", "5", "6", "8", "10", "12", "16", "20", "24", "40", "px", "auto", "full"])
 
-export function createRules({ alias = "@/components/corpus" } = {}) {
+export function createRules({ alias = "@/components/vita" } = {}) {
   const ALIAS = alias
   return [
   {
     id: "raw-color",
-    test: (line, ext) => ext !== ".css" || !/--corpus-/.test(line) ? /(#[0-9a-fA-F]{3,8}\b(?![\w-]*[:=]\s*['"]?\w))|\b(rgba?|hsla?|oklch|oklab|lab|lch|color-mix)\(/.exec(stripImports(line)) : null,
+    test: (line, ext) => ext !== ".css" || !/--vita-/.test(line) ? /(#[0-9a-fA-F]{3,8}\b(?![\w-]*[:=]\s*['"]?\w))|\b(rgba?|hsla?|oklch|oklab|lab|lch|color-mix)\(/.exec(stripImports(line)) : null,
     msg: "Raw color value. Use a semantic token utility (bg-layer-1, text-muted-foreground, border-border-subtle…).",
   },
   {
     id: "palette-color",
     test: (line) => /\b(?:bg|text|border|ring|fill|stroke|from|via|to|outline|decoration|divide|shadow|accent|caret|placeholder)-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose|white|black)(?:-\d{2,3})?(?:\/\d+)?\b/.exec(line),
-    msg: "Tailwind palette color. Corpus only has semantic colors — see docs/foundations/color.md.",
+    msg: "Tailwind palette color. Vita only has semantic colors, see docs/foundations/color.md.",
   },
   {
     id: "arbitrary-value",
@@ -28,7 +28,7 @@ export function createRules({ alias = "@/components/corpus" } = {}) {
   {
     id: "status-decoration",
     test: (line) => /\bbg-(?:success|warning|error|info)(?![-\w])/.exec(line),
-    msg: "Support colours carry status only (Color → Status semantics). Show a status through StatusIndicator, Tag, a notification or a -subtle tint — never as decoration.",
+    msg: "Support colours carry status only (Color → Status semantics). Show a status through StatusIndicator, Tag, a notification or a -subtle tint, never as decoration.",
   },
   {
     id: "status-tone-decoration",
@@ -73,7 +73,7 @@ export function createRules({ alias = "@/components/corpus" } = {}) {
   {
     id: "dark-variant",
     test: (line) => /(?<![\w-])dark:(?=[\w[-])/.exec(line),
-    msg: "`dark:` override. Tokens already flip in dark mode — fix the token, not the component.",
+    msg: "`dark:` override. Tokens already flip in dark mode, fix the token, not the component.",
   },
   {
     id: "inline-style",
@@ -83,7 +83,7 @@ export function createRules({ alias = "@/components/corpus" } = {}) {
   {
     id: "raw-element",
     test: (line, ext) => (ext === ".tsx" || ext === ".jsx") && /<(button|input|select|textarea|a|table|dialog|progress|details|h[1-6])(?=[\s>])/.exec(line),
-    msg: (m) => `Raw <${m[1]}>. Use the Corpus component (${suggest[m[1]]}).`,
+    msg: (m) => `Raw <${m[1]}>. Use the Vita component (${suggest[m[1]]}).`,
   },
   {
     id: "foreign-icons",
@@ -100,7 +100,7 @@ export function createRules({ alias = "@/components/corpus" } = {}) {
   {
     id: "foreign-ui",
     test: (line) => /from\s+["'](?:@radix-ui\/[^"']+|radix-ui|@headlessui\/react|@mui\/material|antd|@chakra-ui\/[^"']+|@mantine\/[^"']+|react-bootstrap)["']/.exec(line),
-    msg: `UI primitives are wrapped by Corpus. Import from "${ALIAS}/…" instead.`,
+    msg: `UI primitives are wrapped by Vita. Import from "${ALIAS}/…" instead.`,
   },
   ]
 }

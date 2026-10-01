@@ -22,7 +22,7 @@ avoid_when:
 2. **Never color alone.** Status is icon + color + text.
 3. **Keep focus logical.** No positive `tabIndex`; closing a layer returns focus to its trigger.
 4. **Announce changes.** Use `InlineLoading`, `toast` and live result counts.
-5. **Size targets.** ≥ 24px everywhere. On touch, Corpus floors density at 1.1 by itself (fields land on 44px) and small standalone controls carry a 44px hit area (`tap`); keep actions people tap often at `lg` or `xl`.
+5. **Size targets.** ≥ 24px everywhere. On touch, Vita floors density at 1.1 by itself (fields land on 44px) and small standalone controls carry a 44px hit area (`tap`); keep actions people tap often at `lg` or `xl`.
 6. **Errors explain the fix.** "Enter a date like 31/12/2026", not "Invalid input".
 7. **Don't disable silently.** Say why, or keep it enabled and validate.
 8. **Headings are the outline.** Don't skip levels.
@@ -37,7 +37,7 @@ avoid_when:
 | Escape | Close the topmost layer |
 | Home / End | First / last item |
 
-> [!TIP] Before calling UI done: keyboard-only pass, 200% zoom, dark mode, reduced motion, and `corpus-audit` at 0.
+> [!TIP] Before calling UI done: keyboard-only pass, 200% zoom, dark mode, reduced motion, and `vita-audit` at 0.
 
 ## Touch
 
@@ -49,4 +49,4 @@ avoid_when:
 ## Focus ring
 
 - **A crisp line and a flat halo.** Focus is a 1px outline plus a thick halo of solid colour (no blur), easing in. Never remove it; style it only through `focus-ring` / `focus-ring-inset`.
-- **It carries meaning.** The ring takes the element's semantic colour through `--corpus-ring`: blue by default, red on invalid fields and danger buttons, amber on warnings.
+- **It carries meaning.** The ring takes the element's semantic colour through `--vita-ring`: blue by default, red on invalid fields and danger buttons, amber on warnings.

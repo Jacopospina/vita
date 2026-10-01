@@ -2,10 +2,10 @@
 title: Popover
 summary: A non-modal layer anchored to a trigger, opened by click, for rich or interactive content. Includes Toggletip.
 status: stable
-import: "import { Popover, PopoverTrigger, PopoverContent, PopoverFooter, PopoverClose, Toggletip } from \"@/components/corpus/popover\""
+import: "import { Popover, PopoverTrigger, PopoverContent, PopoverFooter, PopoverClose, Toggletip } from \"@/components/vita/popover\""
 use_when:
   - Small interactive content next to a control (column picker, quick assign, filter panel)
-  - Toggletip — an explanation with a link or more than one sentence, opened by an ⓘ button
+  - Toggletip, an explanation with a link or more than one sentence, opened by an ⓘ button
 avoid_when:
   - Plain text hint on hover → Tooltip
   - Blocking decisions or long forms → Modal

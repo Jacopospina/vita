@@ -1,11 +1,11 @@
 {
-  "name": "@corpus/design-system",
+  "name": "@vita/design-system",
   "version": "0.2.0",
   "private": true,
   "type": "module",
-  "description": "Corpus — an opinionated, AI-agent-first design system: tokens, components, patterns, skills and enforcement.",
+  "description": "Vita, an opinionated, AI-agent-first design system: tokens, components, patterns, skills and enforcement.",
   "bin": {
-    "corpus": "./bin/corpus.mjs"
+    "vita": "./bin/vita.mjs"
   },
   "scripts": {
     "dev": "vite",
@@ -14,8 +14,8 @@
     "preview": "vite preview",
     "typecheck": "tsc -b",
     "lint": "eslint .",
-    "audit:ds": "node scripts/corpus-audit.mjs",
-    "exceptions": "node scripts/corpus-exceptions.mjs",
+    "audit:ds": "node scripts/vita-audit.mjs",
+    "exceptions": "node scripts/vita-exceptions.mjs",
     "changelog": "node scripts/build-changelog.mjs",
     "release": "node scripts/release.mjs",
     "visual": "node scripts/visual.mjs",

@@ -2,7 +2,7 @@
 title: Pictograms
 summary: Large pictograms for empty states, onboarding and feature tiles. Never as controls.
 status: stable
-import: "import { Pictogram } from \"@/components/corpus/pictogram\"\nimport { Rocket } from \"@/components/corpus/pictograms\""
+import: "import { Pictogram } from \"@/components/vita/pictogram\"\nimport { Rocket } from \"@/components/vita/pictograms\""
 use_when:
   - Empty states (first use, no results, error)
   - Onboarding and feature explanations
@@ -26,4 +26,4 @@ avoid_when:
    - `neutral` for no-results and errors. Don't make an error feel celebratory.
 3. **Meaning over decoration.** The pictogram illustrates the concept of the empty region (`Report` for an empty report list, `Magnify` for no results).
 4. **Decorative by default.** Pass `label` only if the pictogram conveys information not present in the text.
-5. **Don't mix illustration styles.** Only pictograms exported from `@/components/corpus/pictograms` are allowed.
+5. **Don't mix illustration styles.** Only pictograms exported from `@/components/vita/pictograms` are allowed.

@@ -5,7 +5,7 @@ import { AnimatedNumber } from "@/registry/ui/animated"
 import { Dropdown } from "@/registry/ui/dropdown"
 
 /**
- * Pagination — split LARGE datasets (tables, lists) into pages the user can jump between, with page-size control.
+ * Pagination, split LARGE datasets (tables, lists) into pages the user can jump between, with page-size control.
  * Feeds/streams users scroll through → infinite loading ("Load more"). < 1 page → no pagination.
  */
 export function Pagination({ page, pageSize, total, onPageChange, onPageSizeChange, pageSizes = [10, 25, 50, 100], itemLabel = "items", size = "md", className }: {
@@ -23,12 +23,12 @@ export function Pagination({ page, pageSize, total, onPageChange, onPageSizeChan
   const start = total === 0 ? 0 : (page - 1) * pageSize + 1
   const end = Math.min(total, page * pageSize)
   const h = size === "sm" ? "h-control-sm" : size === "lg" ? "h-control-lg" : "h-control-md"
-  // A band like the table toolbar: rounded (concentric with the table card via --corpus-inset-r, else the field
+  // A band like the table toolbar: rounded (concentric with the table card via --vita-inset-r, else the field
   // radius), small inset; pills inside follow the formula (band radius − 4px inset); dividers are inset too.
-  const pill = "rounded-[max(0px,calc(var(--corpus-inset-r,var(--corpus-radius-md))-var(--spacing)))] [corner-shape:round]"
+  const pill = "rounded-[max(0px,calc(var(--vita-inset-r,var(--vita-radius-md))-var(--spacing)))] [corner-shape:round]"
   const divider = <span aria-hidden className="my-1.5 w-px self-stretch bg-divider" />
   return (
-    <div className={cn("flex w-full items-center justify-between gap-2 rounded-(--corpus-inset-r,var(--corpus-radius-md)) bg-layer-2 p-1 text-body text-muted-foreground", className)}>
+    <div className={cn("flex w-full items-center justify-between gap-2 rounded-(--vita-inset-r,var(--vita-radius-md)) bg-layer-2 p-1 text-body text-muted-foreground", className)}>
       <div className={cn("flex items-center gap-2 pl-3", h)}>
         {onPageSizeChange && (
           <>

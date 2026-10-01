@@ -9,7 +9,7 @@ import { useExit } from "@/registry/hooks/use-exit"
 import { useFlip } from "@/registry/hooks/use-flip"
 
 /**
- * FileUploader — attach files. Two entry points, one list:
+ * FileUploader, attach files. Two entry points, one list:
  *   button   → compact, in forms
  *   dropzone → primary task is uploading (imports, document collection)
  * Always state accepted types and max size up front; validate per file and explain the fix.

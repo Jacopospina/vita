@@ -6,7 +6,7 @@ import { Tooltip } from "@/registry/ui/tooltip"
 import { AnimatedText } from "@/registry/ui/animated"
 
 /**
- * CodeSnippet — code or commands users will COPY.
+ * CodeSnippet, code or commands users will COPY.
  *   inline     → a token within a sentence (`npm install`)
  *   single     → one command
  *   multi      → blocks; collapses beyond `maxCollapsedLines`

@@ -1,5 +1,5 @@
 ---
-title: How Corpus decides
+title: How Vita decides
 summary: Every system choice is a written record. Agents and people read the record before changing anything it covers; changing it means superseding it.
 status: accepted
 date: 2026-10-01
@@ -7,7 +7,7 @@ decided_by: Jacopo
 related: [glass-by-elevation, status-semantics]
 ---
 
-> [!IMPORTANT] "The design system says no" beats "I think". If a request contradicts a record, the record wins until it's superseded — on purpose, in writing.
+> [!IMPORTANT] "The design system says no" beats "I think". If a request contradicts a record, the record wins until it's superseded, on purpose, in writing.
 
 ## The record
 
@@ -24,9 +24,9 @@ related: [glass-by-elevation, status-semantics]
 
 ## Contributions and exceptions
 
-- **The three-team rule.** If three or more products need it, it belongs in Corpus. If one does, it's an exception. Unsure → prototype with one team, then decide.
-- **Exceptions are visible.** A deviation needs `// corpus-allow <rule>: <why> — approved by @<owner>`. `pnpm exceptions` lists every one with its age, for regular review.
-- **Repeated exceptions are a signal.** The same exception in three places is a system gap — promote it.
+- **The three-team rule.** If three or more products need it, it belongs in Vita. If one does, it's an exception. Unsure → prototype with one team, then decide.
+- **Exceptions are visible.** A deviation needs `// vita-allow <rule>: <why>, approved by @<owner>`. `pnpm exceptions` lists every one with its age, for regular review.
+- **Repeated exceptions are a signal.** The same exception in three places is a system gap, promote it.
 
 ## Versions and deprecation
 

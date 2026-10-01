@@ -10,9 +10,9 @@ import { IconPlaceholder } from "@/registry/ui/icon-placeholder"
 import { Option } from "@/registry/ui/option"
 
 /**
- * GlobalSearch — Spotlight for the product. A search button among the header's global actions; clicking it (or ⌘K
+ * GlobalSearch, Spotlight for the product. A search button among the header's global actions; clicking it (or ⌘K
  * from anywhere) summons a floating glass panel near the top of the screen: one big field, and results that grow
- * beneath it, grouped by section, the top hit already highlighted. Arrows move, Enter opens, Esc clears — and a second
+ * beneath it, grouped by section, the top hit already highlighted. Arrows move, Enter opens, Esc clears, and a second
  * Esc (or a click away) dismisses. No scrim: the page stays visible behind the glass.
  * Searching a list on a page → Search. Filtering a table → the table's toolbar.
  */
@@ -29,7 +29,7 @@ export interface GlobalSearchItem {
 }
 
 /**
- * Shrinks any content to fit the preview square (never enlarges), centred and inert — a tangible thumbnail.
+ * Shrinks any content to fit the preview square (never enlarges), centred and inert, a tangible thumbnail.
  * Content that sizes to its container (full-width layouts, shells) would collapse to nothing, so it gets a fixed
  * 640px stage to lay out on, which is then scaled down like a screenshot.
  */
@@ -97,7 +97,7 @@ export function GlobalSearch({ items, placeholder = "Search", shortcut = "mod+k"
         <IconButton icon={SearchIcon} label="Search" shortcut={shortcut} className={className} />
       </DialogPrimitive.Trigger>
       <DialogPrimitive.Portal>
-        {/* No scrim, like Spotlight — the overlay only catches the click that dismisses. */}
+        {/* No scrim, like Spotlight, the overlay only catches the click that dismisses. */}
         <DialogPrimitive.Overlay className="fixed inset-0 z-50" />
         <DialogPrimitive.Content
           aria-describedby={undefined}
@@ -156,7 +156,7 @@ export function GlobalSearch({ items, placeholder = "Search", shortcut = "mod+k"
                     {preview != null && preview !== false ? (
                       <PreviewFit key={current.id}>{preview}</PreviewFit>
                     ) : (
-                      // No tangible preview for this result: say what it is instead — never an empty square.
+                      // No tangible preview for this result: say what it is instead, never an empty square.
                       <>
                         {current.icon && <IconPlaceholder icon={current.icon} tone="brand" size="lg" />}
                         {current.group && <span className="text-caption text-muted-foreground">{current.group}</span>}

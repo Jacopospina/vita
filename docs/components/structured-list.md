@@ -1,8 +1,8 @@
 ---
 title: Structured list
-summary: A small, read-mostly set of rows and columns — details, specs and comparisons. Selectable when choosing one row.
+summary: A small, read-mostly set of rows and columns, details, specs and comparisons. Selectable when choosing one row.
 status: stable
-import: "import { StructuredList } from \"@/components/corpus/structured-list\""
+import: "import { StructuredList } from \"@/components/vita/structured-list\""
 use_when:
   - Key/value details of one object (condensed + flush)
   - Comparing a few options across attributes (plans, models)

@@ -1,6 +1,6 @@
 ---
 title: Global search
-summary: How people find anything from anywhere — summon a Spotlight-style panel with ⌘K, type, open with Enter.
+summary: How people find anything from anywhere, summon a Spotlight-style panel with ⌘K, type, open with Enter.
 status: stable
 related: [global-search, global-header, search]
 ---

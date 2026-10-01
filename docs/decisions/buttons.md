@@ -19,7 +19,7 @@ related: [button, dialogs]
 - **Hierarchy collapses with two primaries.**
 - **Raw primary text on its own wash is ~3.8:1**; the link tone keeps AA.
 
-## Rejected — avoid
+## Rejected, avoid
 
 - **Neutral grey secondary.** It looked disabled.
 - **Raw primary text on the wash** (fails contrast).

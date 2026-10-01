@@ -20,7 +20,7 @@ related: [color, status-indicators, tag]
 - **The same meaning must look the same everywhere.** Errors had three different glyphs; Deploying was blue in one place and brand in another.
 - **Brand means "you can act here"**, so it can't also mean a state.
 
-## Rejected — avoid
+## Rejected, avoid
 
 - **Status tones as category colours** (Settings-style coloured rows).
 - **Warning text drifting toward red.** It made warnings read as errors.

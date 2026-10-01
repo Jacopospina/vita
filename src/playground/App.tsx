@@ -5,7 +5,7 @@ import { TooltipProvider } from "@/registry/ui/tooltip"
 import { useSunTheme } from "@/registry/hooks/use-sun-theme"
 import { useWeatherTint } from "@/registry/hooks/use-weather-tint"
 import { swapAppearance } from "@/registry/lib/appearance"
-import { CorpusMark } from "@/brand/corpus-mark"
+import { VitaMark } from "@/brand/vita-mark"
 import { Toaster } from "@/registry/ui/notification"
 import { Search } from "@/registry/ui/search"
 import { manifest, sectionTitles, type Section } from "./manifest"
@@ -28,7 +28,7 @@ function useRoute() {
     const [section, slug] = (moved[path] ?? path).split("/")
     if (section === "guidelines") return ["guidelines", ""]
     if (section && slug && section in manifest) return [section as Section, slug]
-    return ["guidelines", ""] // unknown or empty → About Corpus
+    return ["guidelines", ""] // unknown or empty → About Vita
   }
   const [route, setRoute] = React.useState(read)
   const [leaving, setLeaving] = React.useState(false)
@@ -69,12 +69,12 @@ export function App() {
     <TooltipProvider>
       <Shell>
         <Header
-          productName="Corpus"
-          logo={<CorpusMark size={24} className="-m-0.5" />}
-          href={HOME_URL} // the Corpus homepage: the live showcase
+          productName="Vita"
+          logo={<VitaMark size={24} className="-m-0.5" />}
+          href={HOME_URL} // the Vita homepage: the live showcase
           actions={
             <>
-              <GlobalSearch items={searchPages((path) => window.location.assign(`#/${path}`))} placeholder="Search Corpus" className="size-8 rounded-inner-2" />
+              <GlobalSearch items={searchPages((path) => window.location.assign(`#/${path}`))} placeholder="Search Vita" className="size-8 rounded-inner-2" />
               <HeaderSeparator />
               <HeaderGlobalAction icon={dark ? Sun : Moon} label={dark ? "Light theme" : "Dark theme"} onClick={() => setDark((d) => !d)} />
               <HeaderGlobalAction icon={ColorPalette} label="Theme" active={themeOpen} onClick={() => setThemeOpen((o) => !o)} />
@@ -82,7 +82,7 @@ export function App() {
             </>
           }
         >
-          {/* The five doors into the docs — the same list as the showcase header. */}
+          {/* The five doors into the docs, the same list as the showcase header. */}
           {globalNav.map((n) => (
             <HeaderNavItem key={n.path} href={`#/${n.path}`} active={(n.sections as readonly string[]).includes(section)}>{n.label}</HeaderNavItem>
           ))}
@@ -95,12 +95,12 @@ export function App() {
             </div>
             {(Object.keys(manifest) as Section[]).map((s) => {
               const entries = manifest[s].filter((e) => e.title.toLowerCase().includes(filter.toLowerCase()))
-              // Getting started opens with About Corpus — the overview of everything.
-              const about = s === "getting-started" && "about corpus".includes(filter.toLowerCase())
+              // Getting started opens with About Vita, the overview of everything.
+              const about = s === "getting-started" && "about vita".includes(filter.toLowerCase())
               if (!entries.length && !about) return null
               return (
                 <SideNavSection key={s + (filter ? "-f" : "")} title={sectionTitles[s]} collapsible defaultOpen={!!filter || s === section || (s === "getting-started" && section === "guidelines")}>
-                  {about && <SideNavItem href="#/guidelines" active={section === "guidelines"}>About Corpus</SideNavItem>}
+                  {about && <SideNavItem href="#/guidelines" active={section === "guidelines"}>About Vita</SideNavItem>}
                   {entries.map((e) => (
                     <SideNavItem key={e.slug} href={`#/${s}/${e.slug}`} active={s === section && e.slug === slug}>
                       {e.title}

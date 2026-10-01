@@ -12,7 +12,7 @@ import { animateChildren } from "@/registry/ui/animated"
 import type { IconType } from "@/registry/icons"
 
 /**
- * Notifications — tell users about system status.
+ * Notifications, tell users about system status.
  *   InlineNotification  → tied to a section/task, stays until resolved (form errors summary, permission issues).
  *   Callout             → static, non-dismissible contextual info that is part of the page content.
  *   Toast               → brief confirmation of something the user just did; auto-dismisses. NEVER for errors that need action.
@@ -26,8 +26,8 @@ const icons = { info: status.info.icon, success: status.success.icon, warning: s
 const iconTone = { info: status.info.iconColor, success: status.success.iconColor, warning: status.warning.iconColor, error: status.error.iconColor } as const
 
 /**
- * Notice — the ONE notification anatomy, shared by inline notifications, callouts and toast banners:
- * squircle card on a NEUTRAL surface · IconPlaceholder (soft) on the left (the icon + its semantic color carry the kind —
+ * Notice, the ONE notification anatomy, shared by inline notifications, callouts and toast banners:
+ * squircle card on a NEUTRAL surface · IconPlaceholder (soft) on the left (the icon + its semantic color carry the kind,
  * never a colored bar or tinted fill) · title over subtitle · optional action · × appears on hover/focus.
  *   surface solid → in page content (inline, callout) · glass → floating over content (toast banner)
  */
@@ -51,7 +51,7 @@ function Notice({ icon, kind, eyebrow, source, title, subtitle, children, action
       data-ai-context=""
       role={role}
       className={cn(
-        "group/notice pointer-events-auto relative flex w-full items-start gap-3 squircle p-3 text-body text-foreground [--corpus-squircle-r:var(--corpus-radius-lg)]",
+        "group/notice pointer-events-auto relative flex w-full items-start gap-3 squircle p-3 text-body text-foreground [--vita-squircle-r:var(--vita-radius-lg)]",
         surface === "glass" ? "glass glass-5" : "border border-border-subtle bg-raised",
         motion,
         className,
@@ -117,7 +117,7 @@ export function InlineNotification({ kind = "info", title, subtitle, action, onC
   )
 }
 
-/** Callout — permanent, non-dismissible guidance inside page content. Same anatomy, no close. */
+/** Callout, permanent, non-dismissible guidance inside page content. Same anatomy, no close. */
 export function Callout({ kind = "info", title, children, className }: { kind?: Kind; title?: React.ReactNode; children: React.ReactNode; className?: string }) {
   return <Notice kind={kind} icon={icons[kind]} title={title} role="note" className={className}>{children}</Notice>
 }
@@ -152,7 +152,7 @@ export interface CapsuleOptions {
   icon: ToastIcon
   title: string
   subtitle?: string
-  /** The semantic story on the right — progress, status, or a custom node. Include it whenever there is one:
+  /** The semantic story on the right, progress, status, or a custom node. Include it whenever there is one:
    *  it's what the compact capsule shows first. Without it, the compact capsule shows the icon. */
   story?: CapsuleStory
   /** ms. Default 3000. 0 = stays until dismissed/updated. */
@@ -165,8 +165,8 @@ type Rec = { id: number; leaving?: boolean } & ({ type: "banner"; o: ToastOption
 // mounted <Toaster /> always hears every toast() / capsule() call.
 type CapsuleRec = Extract<Rec, { type: "capsule" }>
 type Store = { seq: number; items: Rec[]; listeners: Set<(t: Rec[]) => void>; timers: Map<number, number>; next?: CapsuleRec }
-const g = globalThis as typeof globalThis & { __corpusNotifications?: Store }
-const store: Store = (g.__corpusNotifications ??= { seq: 0, items: [], listeners: new Set(), timers: new Map() })
+const g = globalThis as typeof globalThis & { __vitaNotifications?: Store }
+const store: Store = (g.__vitaNotifications ??= { seq: 0, items: [], listeners: new Set(), timers: new Map() })
 const emit = () => store.listeners.forEach((l) => l([...store.items]))
 
 // Capsules rewind (collapse, then slide out) so they need longer before removal.
@@ -187,7 +187,7 @@ function schedule(id: number, ms: number) {
   if (ms > 0) store.timers.set(id, window.setTimeout(() => dismiss(id), ms))
 }
 
-/** toast({ source: "Vita", title: "Agent deployed", subtitle: "Support triage is live" }) — a notification banner, top-right. Max 3. */
+/** toast({ source: "Theo", title: "Agent deployed", subtitle: "Support triage is live" }), a notification banner, top-right. Max 3. */
 export function toast(opts: ToastOptions) {
   const id = ++store.seq
   const banners = store.items.filter((t) => t.type === "banner")
@@ -199,7 +199,7 @@ export function toast(opts: ToastOptions) {
 }
 toast.dismiss = dismiss
 
-/** capsule({ icon: Headphones, title: "Entheos", subtitle: "Connected", story: { progress: 100 } }) — quick feedback capsule, top-center. */
+/** capsule({ icon: Headphones, title: "Entheos", subtitle: "Connected", story: { progress: 100 } }), quick feedback capsule, top-center. */
 export function capsule(opts: CapsuleOptions) {
   const rec: CapsuleRec = { id: ++store.seq, type: "capsule", o: opts }
   const current = store.items.filter((t) => t.type === "capsule")
@@ -240,7 +240,7 @@ function renderIcon(icon: ToastIcon, className?: string) {
   return icon as React.ReactNode
 }
 
-/** Banner — the toast surface: the Notice anatomy on frosted glass. Icon placeholder optional (no-icon variant). */
+/** Banner, the toast surface: the Notice anatomy on frosted glass. Icon placeholder optional (no-icon variant). */
 export function Banner({ o, leaving, onClose }: { o: ToastOptions; leaving?: boolean; onClose: () => void }) {
   const icon = o.icon === false ? null : (o.icon ?? (o.kind ? kindIcon[o.kind] : null))
   return (
@@ -272,8 +272,8 @@ function Story({ story }: { story?: CapsuleStory }) {
 }
 
 /**
- * Capsule — the quick-feedback capsule. ALWAYS: icon left · title/subtitle centre · semantic story right.
- * Choreography — the same character as the toast banner, from the top instead of the edge: a compact pill showing
+ * Capsule, the quick-feedback capsule. ALWAYS: icon left · title/subtitle centre · semantic story right.
+ * Choreography, the same character as the toast banner, from the top instead of the edge: a compact pill showing
  * ONLY the story (or the icon, when there is no story) falls in from above the viewport (scale, blur → sharp, gravity); ~400ms in it widens: the icon slides in on the left, the title
  * opens, the story travels to the right. Exit is the same film rewound: it narrows back, then slides up and out.
  */
@@ -285,7 +285,7 @@ export function Capsule({ o, leaving }: { o: CapsuleOptions; leaving?: boolean }
   const ref = React.useRef<HTMLDivElement>(null)
   React.useEffect(() => {
     const el = ref.current
-    const enter = el?.getAnimations().find((a) => (a as CSSAnimation).animationName === "corpus-island-in")
+    const enter = el?.getAnimations().find((a) => (a as CSSAnimation).animationName === "vita-island-in")
     const reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
     // Measured on the enter animation's own clock, so the compact moment is always ~400ms.
     const wait = reduced ? 0 : Math.max(0, COMPACT_MS - Number(enter?.currentTime ?? 0))
@@ -329,10 +329,10 @@ const subscribe = (cb: () => void) => {
 }
 const snapshot = () => store.items
 
-/** Toaster — mount once at the app root. Banners top-right (slide in from the edge); capsules top-centre. */
+/** Toaster, mount once at the app root. Banners top-right (slide in from the edge); capsules top-centre. */
 export function Toaster() {
   const list = React.useSyncExternalStore(subscribe, snapshot, snapshot)
-  // When a banner leaves or arrives, the others GLIDE to their new place — the stack never snaps.
+  // When a banner leaves or arrives, the others GLIDE to their new place, the stack never snaps.
   const banners = React.useRef<HTMLDivElement>(null)
   const capsules = React.useRef<HTMLDivElement>(null)
   useFlip(banners)

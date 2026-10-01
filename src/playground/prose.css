@@ -1,13 +1,13 @@
-/* Inline markdown inside Corpus components (docs renderer). Tokens only. */
-.corpus-inline strong { font-weight: 600; color: var(--corpus-foreground); }
-.corpus-inline em { font-style: italic; }
-.corpus-inline a { color: var(--corpus-link); text-underline-offset: 4px; }
-.corpus-inline a:hover { text-decoration: underline; }
-.corpus-inline code {
-  font-family: var(--corpus-font-mono);
+/* Inline markdown inside Vita components (docs renderer). Tokens only. */
+.vita-inline strong { font-weight: 600; color: var(--vita-foreground); }
+.vita-inline em { font-style: italic; }
+.vita-inline a { color: var(--vita-link); text-underline-offset: 4px; }
+.vita-inline a:hover { text-decoration: underline; }
+.vita-inline code {
+  font-family: var(--vita-font-mono);
   font-size: 0.88em;
-  background: var(--corpus-layer-2);
+  background: var(--vita-layer-2);
   padding: 0.1em 0.35em;
-  border-radius: var(--corpus-radius-sm);
-  color: var(--corpus-foreground);
+  border-radius: var(--vita-radius-sm);
+  color: var(--vita-foreground);
 }

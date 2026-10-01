@@ -1,18 +1,18 @@
 /**
- * orb-gl — Sofia's liquid on the GPU, at full device resolution.
+ * orb-gl, Sofia's liquid on the GPU, at full device resolution.
  *
  * The desktop look comes from an SVG filter chain over crisp drops: blur → threshold → blur → threshold (the goo),
  * a specular light on a softened copy, and a wide pastel glow behind. On phones that chain re-rasterises on the CPU
  * every frame. Here ONE fragment shader evaluates the same chain analytically per pixel:
  *
  *   · each drop's blurred disk is a closed form (a Gaussian-blurred disk ≈ its peak × a normal CDF of the distance
- *     to its rim); blurring is linear, so separate drops simply ADD — that sum is what grows the gooey bridges
+ *     to its rim); blurring is linear, so separate drops simply ADD, that sum is what grows the gooey bridges
  *   · the goo is that field thresholded at the same level as the filter chain, antialiased to ~1.5 device pixels
  *   · the light: the same field at the soft blur's radius is the height map; its slope is the normal; a point light
  *     top-left gives the specular rim (exponent 26, like feSpecularLighting)
  *   · the glow: the field at the glow's radius, washed 60% toward white, a third as strong, behind
  *
- * Cost: one quad, ~100 drops looped per pixel with early-outs — a fraction of a millisecond on a phone GPU.
+ * Cost: one quad, ~100 drops looped per pixel with early-outs, a fraction of a millisecond on a phone GPU.
  * Returns null where WebGL2 (or enough uniforms) isn't available; callers fall back to the CPU field.
  */
 export const MAX_DROPS = 128
@@ -45,7 +45,7 @@ float cov(float d, float r, float s) {
   float peak = 1.0 - exp(-r * r / (2.0 * s * s));
   return peak * Phi((r - d) / s) / max(Phi(r / s), 0.5);
 }
-// Its slope along the distance (exact, so the light reads as a smooth line — never per-pixel speckle).
+// Its slope along the distance (exact, so the light reads as a smooth line, never per-pixel speckle).
 float covSlope(float d, float r, float s) {
   float x = clamp((r - d) / s, -6.0, 6.0);
   float peak = 1.0 - exp(-r * r / (2.0 * s * s));
@@ -85,7 +85,7 @@ void main() {
 
   // The goo: threshold where the filter chain does (≈ 0.43), with an edge no wider than ~1.5 device px.
   float w = max(fwidth(U) * 1.5, 0.004);
-  // 0.5: the second melt of the chain erodes the first threshold a little — lines as slim as on desktop.
+  // 0.5: the second melt of the chain erodes the first threshold a little, lines as slim as on desktop.
   float A = smoothstep(0.5 - w, 0.5 + w, U);
 
   vec3 rgb = c;
@@ -93,7 +93,7 @@ void main() {
   if (uLit == 1) {
     // Specular rim from the top left, on the softened surface.
     // Specular on the RIM only: where the soft surface slopes (its edge), facing the light top-left. The flat body
-    // stays its colour — the highlight is a glint on the edge of the drop, as on desktop.
+    // stays its colour, the highlight is a glint on the edge of the drop, as on desktop.
     // Specular from a point light top-left on the soft surface (height = soft field × surface scale), like
     // feSpecularLighting: the rim facing the light shines as a smooth line, the body keeps its colour.
     // The chain lights the melted SHAPE (flat on top, sloped only at its rim), not the raw drops: squash the soft
@@ -103,7 +103,7 @@ void main() {
     vec2 grad = gS * (6.0 * k * (1.0 - k) / 0.5) * uSurface;
     vec3 n = normalize(vec3(-grad, 1.0));
     // A low light from the top left (30° above the surface): flat tops stay their colour, only rims tilted toward
-    // the light catch it — the glint along the edge that the desktop chain shows.
+    // the light catch it, the glint along the edge that the desktop chain shows.
     vec3 l = normalize(vec3(-0.61, -0.61, 0.5));
     vec3 hv = normalize(l + vec3(0.0, 0.0, 1.0));
     float spec = 1.1 * pow(max(dot(n, hv), 0.0), 26.0) * A;

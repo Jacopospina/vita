@@ -5,7 +5,7 @@ import { cn } from "@/registry/lib/utils"
 import { Icon } from "@/registry/ui/icon"
 
 /**
- * TreeView — navigate or select within a HIERARCHY of unknown depth (file systems, org units, taxonomies).
+ * TreeView, navigate or select within a HIERARCHY of unknown depth (file systems, org units, taxonomies).
  * ≤ 2 levels → Side nav or Accordion. Needs columns → DataTable with expandable rows.
  * Keyboard: ↑/↓ move, → expand/enter child, ← collapse/go to parent, Enter/Space select.
  */
@@ -80,7 +80,7 @@ export function TreeView({ nodes, label, selected, onSelect, defaultExpanded = [
           aria-disabled={n.disabled || undefined}
           tabIndex={focused === n.id ? 0 : -1}
           onKeyDown={(e) => { e.stopPropagation(); onKeyDown(e, i) }}
-          className="outline-none focus-visible:[&>div]:outline-1 focus-visible:[&>div]:-outline-offset-1 focus-visible:[&>div]:focus-halo-inset focus-visible:[&>div]:outline-(--corpus-ring)"
+          className="outline-none focus-visible:[&>div]:outline-1 focus-visible:[&>div]:-outline-offset-1 focus-visible:[&>div]:focus-halo-inset focus-visible:[&>div]:outline-(--vita-ring)"
         >
           <div
             onClick={() => { setFocused(n.id); if (!n.disabled) onSelect?.(n.id); if (has) toggle(n.id) }}

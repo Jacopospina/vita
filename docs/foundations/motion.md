@@ -1,16 +1,16 @@
 ---
 title: Motion
-summary: Choreography is everything. Nothing snaps — every change transitions, variants morph like liquid, numbers roll and text reveals.
+summary: Choreography is everything. Nothing snaps, every change transitions, variants morph like liquid, numbers roll and text reveals.
 status: stable
 use_when:
-  - Always — motion is on by default for every property change
+  - Always, motion is on by default for every property change
 avoid_when:
   - Switching transitions off on a component → tune duration or easing instead
   - Raw durations or cubic-beziers (duration-300, ease-[...]) → use tokens
   - Decorative loops, parallax, attention-seeking bounces
 ---
 
-> [!IMPORTANT] Corpus reflects the life of the product behind it. If a position, size, color, value or variant changes, it moves there — it never jumps.
+> [!IMPORTANT] Vita reflects the life of the product behind it. If a position, size, color, value or variant changes, it moves there, it never jumps.
 
 ## Two characters
 
@@ -38,11 +38,11 @@ avoid_when:
 3. **Indicators slide.** The tab underline and the segmented-control pill travel between options.
 4. **Lists re-flow.** Re-sorting a table glides each row to its new place (View Transitions via `morph()`).
 5. **Pages choreograph, never fade as a whole.** On navigation the page's major containers sink out in sequence (fast), then the new page's containers rise in from blur, 60ms apart.
-6. **Everything enters and leaves.** Components mount with an entrance (rise, scale or slide) and play an exit before they disappear — dismissed notifications, removed tags, deleted files.
+6. **Everything enters and leaves.** Components mount with an entrance (rise, scale or slide) and play an exit before they disappear, dismissed notifications, removed tags, deleted files.
 
 ## Text choreography
 
-- **Numbers swap, never clipped.** `AnimatedNumber`: the old digit and the new one move together, one line apart, like a conveyor — up when the value grows, down when it shrinks — blurring and fading as they leave and arrive. Digit positions stagger from the last digit. No box ever cuts them off.
+- **Numbers swap, never clipped.** `AnimatedNumber`: the old digit and the new one move together, one line apart, like a conveyor, up when the value grows, down when it shrinks, blurring and fading as they leave and arrive. Digit positions stagger from the last digit. No box ever cuts them off.
 - **Text reveals.** `AnimatedText`: letter by letter, each sliding up from below and de-blurring, 18ms apart (capped so long labels finish in ~0.6s).
 - **Where it's built in.** Every `Text`, `Button` and `Tag` label, toggle state text, dropdown values, counts, slider values, loading messages, validation messages and status labels. Icons that swap (menu ↔ close, show ↔ hide) scale in.
 
@@ -52,7 +52,7 @@ avoid_when:
 2. **Icons draw their path.** `SwapIcon` un-draws the old glyph while the new one traces its outline and fills in; `<Icon draw="in">` for icons that appear. Checkmarks (`DrawnMark`) draw on select and un-draw on clear.
 3. **Static layout never moves.** Nothing glides into place on load or reflow. Lists that gain, lose or reorder items glide them instead (`Stack flip`, chat threads, toast stacks, chips, filtered options).
 4. **Controls that come and go keep their slot.** Clear buttons, shortcut hints, counts and batch bars fade and scale, then give their space back smoothly.
-5. **Messages drop in and drop out.** Every field reserves one line for its message; the message slides down, its letters cascade in one after another (blur → sharp) and its icon draws its path — the exit reverses it, letters staggering downward and the icon un-drawing.
+5. **Messages drop in and drop out.** Every field reserves one line for its message; the message slides down, its letters cascade in one after another (blur → sharp) and its icon draws its path, the exit reverses it, letters staggering downward and the icon un-drawing.
 6. **Branches expand.** Tree and disclosure content open and close with `reveal` / `reveal-open`.
 7. **Focus settles in.** Focus rings arrive over 400ms, from wide and transparent to tight and solid.
 
@@ -80,7 +80,7 @@ The lowest point is at 60% of the enter. Exits never bounce; they are productive
 | Inline notification | `animate-enter-fall` |
 | Field message | `animate-drop-in` |
 
-- **Gravity layer.** `corpus-gravity` animates the independent `translate` property, so it stacks on any enter that moves with `transform`. Don't use it on elements positioned with `translate` utilities; build the fall into their keyframes instead.
+- **Gravity layer.** `vita-gravity` animates the independent `translate` property, so it stacks on any enter that moves with `transform`. Don't use it on elements positioned with `translate` utilities; build the fall into their keyframes instead.
 - **Productive UI never bounces.** Dialogs, menus, tooltips, popovers, reflow and page transitions stay straight.
 
 ## Durations
@@ -113,8 +113,8 @@ The lowest point is at 60% of the enter. Exits never bounce; they are productive
 ## Using it
 
 ```tsx
-import { morph } from "@/components/corpus/hooks/use-morph"
-import { AnimatedNumber, AnimatedText } from "@/components/corpus/animated"
+import { morph } from "@/components/vita/hooks/use-morph"
+import { AnimatedNumber, AnimatedText } from "@/components/vita/animated"
 
 morph(() => setSort(next))            // rows with view-transition-name glide
 <AnimatedNumber value={runs} />       // 1,284 → 1,302 rolls

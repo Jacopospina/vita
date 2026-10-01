@@ -1,7 +1,7 @@
 import * as React from "react"
 
 /**
- * useExit — play an exit before something disappears. Nothing in Corpus vanishes instantly.
+ * useExit, play an exit before something disappears. Nothing in Vita vanishes instantly.
  *   const [leaving, exit] = useExit()
  *   <div className={leaving ? "animate-exit-scale" : undefined}> … onClick={() => exit(onDismiss)}
  */

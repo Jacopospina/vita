@@ -1,6 +1,6 @@
 ---
 title: Loading
-summary: Orchestrating loading across a page — progressive, region by region, without layout shift and without loaders everywhere.
+summary: Orchestrating loading across a page, progressive, region by region, without layout shift and without loaders everywhere.
 status: stable
 use_when:
   - Any view that fetches data

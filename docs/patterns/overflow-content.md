@@ -1,8 +1,8 @@
 ---
 title: Overflow content
-summary: What to do when content doesn't fit — truncate, wrap, clamp, scroll, or collapse — and what must never be cut.
+summary: What to do when content doesn't fit, truncate, wrap, clamp, scroll, or collapse, and what must never be cut.
 status: stable
-import: "import { Truncate } from \"@/components/corpus/truncate\""
+import: "import { Truncate } from \"@/components/vita/truncate\""
 use_when:
   - Long names in tables, cards, nav, breadcrumbs
   - Long descriptions in constrained layouts

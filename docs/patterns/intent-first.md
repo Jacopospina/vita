@@ -2,7 +2,7 @@
 title: Intent-first input
 summary: Describe, review, approve. The AI turns intent into a prepared result; the user corrects and ships it instead of filling in a form.
 status: experimental
-import: "import { Composer } from \"@/components/corpus/composer\"\nimport { AISurface, AILabel } from \"@/components/corpus/ai-label\""
+import: "import { Composer } from \"@/components/vita/composer\"\nimport { AISurface, AILabel } from \"@/components/vita/ai-label\""
 use_when:
   - Creating or configuring something with more than ~4 fields
   - Tasks users describe more easily than they fill in (an agent, a report, a rule)

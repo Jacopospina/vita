@@ -27,8 +27,8 @@ import { AnimatedNumber } from "@/registry/ui/animated"
 import { Kbd } from "@/registry/ui/kbd"
 
 /*
- * The component canvas: a wide field of live Corpus cards that runs past both edges of the window and dissolves at
- * every edge, drifting slowly sideways — "there's far more where this came from". Clipped, never scrollable.
+ * The component canvas: a wide field of live Vita cards that runs past both edges of the window and dissolves at
+ * every edge, drifting slowly sideways, "there's far more where this came from". Clipped, never scrollable.
  * Every card is a real, working component.
  */
 
@@ -66,7 +66,7 @@ const columns: { offset: string; cards: React.ReactNode[] }[] = [
     cards: [
       <Stack key="t" gap="sm" align="center"><Thinking mode="generating" size="xl" label="Sofia" /><Text variant="footnote" tone="muted">Sofia is drafting your agent</Text></Stack>,
       <TextInput key="ti" label="Agent name" defaultValue="Support triage" />,
-      <Inline key="tg" gap="xs" wrap><Tag tone="success">Live</Tag><Tag>Zendesk</Tag><Tag tone="warning">Rate limited</Tag><Tag>Vita Large</Tag></Inline>,
+      <Inline key="tg" gap="xs" wrap><Tag tone="success">Live</Tag><Tag>Zendesk</Tag><Tag tone="warning">Rate limited</Tag><Tag>Theo Large</Tag></Inline>,
     ],
   },
   {
@@ -98,7 +98,7 @@ const columns: { offset: string; cards: React.ReactNode[] }[] = [
     cards: [
       <InlineNotification key="n" kind="success" title="Agent deployed" subtitle="Support triage is live." />,
       <NumberInput key="ni" label="Max runs per hour" defaultValue={120} min={0} step={10} />,
-      <RadioGroup key="r" legend="Model" defaultValue="l"><RadioButton value="l" label="Vita Large" /><RadioButton value="f" label="Vita Fast" /></RadioGroup>,
+      <RadioGroup key="r" legend="Model" defaultValue="l"><RadioButton value="l" label="Theo Large" /><RadioButton value="f" label="Theo Fast" /></RadioGroup>,
     ],
   },
   {
@@ -126,7 +126,7 @@ export function ComponentCanvas() {
     // Clipped on both axes (never scrolls); the canvas is wider than the window and centred, so cards run off both sides.
     // The edge fade (a mask) sits on this STATIC frame; the drifting field below is its own GPU layer, so each frame
     // is a cheap translate instead of re-masking the whole field.
-    <section ref={ref} aria-label="Corpus components" className="relative flex h-160 justify-center overflow-clip canvas-fade">
+    <section ref={ref} aria-label="Vita components" className="relative flex h-160 justify-center overflow-clip canvas-fade">
       <div
         aria-hidden
         inert

@@ -1,6 +1,6 @@
 ---
 title: Notifications
-summary: Matching the message to the right channel — toast, inline, modal, callout, or the notification panel.
+summary: Matching the message to the right channel, toast, inline, modal, callout, or the notification panel.
 status: stable
 use_when:
   - The system needs to tell the user something

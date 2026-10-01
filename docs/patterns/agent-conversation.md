@@ -1,6 +1,6 @@
 ---
 title: Agent conversation
-summary: How people and agents talk in Corpus — the mini chat, thinking states, suggested replies and hand-offs to a person.
+summary: How people and agents talk in Vita, the mini chat, thinking states, suggested replies and hand-offs to a person.
 status: stable
 use_when:
   - A product lets people talk to an agent (support, onboarding, internal assistants)

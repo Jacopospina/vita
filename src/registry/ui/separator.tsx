@@ -1,7 +1,7 @@
 import { Separator as SeparatorPrimitive } from "radix-ui"
 import { cn } from "@/registry/lib/utils"
 
-/** Separator — prefer whitespace first. Use a rule only when spacing alone can't separate groups. */
+/** Separator, prefer whitespace first. Use a rule only when spacing alone can't separate groups. */
 export function Separator({ className, orientation = "horizontal", decorative = true, ...props }: React.ComponentProps<typeof SeparatorPrimitive.Root>) {
   return (
     <SeparatorPrimitive.Root

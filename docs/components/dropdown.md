@@ -1,13 +1,13 @@
 ---
 title: Dropdown
-summary: Choosing values from a list — Dropdown (one), Combobox (one, filterable) and Multiselect (many), all built from the same Option rows.
+summary: Choosing values from a list, Dropdown (one), Combobox (one, filterable) and Multiselect (many), all built from the same Option rows.
 status: stable
-import: "import { Dropdown, Combobox, MultiSelect } from \"@/components/corpus/dropdown\""
+import: "import { Dropdown, Combobox, MultiSelect } from \"@/components/vita/dropdown\""
 use_when:
-  - Dropdown — one of 7–20 options, options need descriptions/icons, or consistent styling in app chrome
-  - Combobox — one of 20+ options where users know what to type (tool, country, team member)
-  - Multiselect — several of more than 6 options (markets, tags, assignees)
-  - Inline type — compact "Sort by: Newest ▾" in toolbars
+  - Dropdown, one of 7–20 options, options need descriptions/icons, or consistent styling in app chrome
+  - Combobox, one of 20+ options where users know what to type (tool, country, team member)
+  - Multiselect, several of more than 6 options (markets, tags, assignees)
+  - Inline type, compact "Sort by: Newest ▾" in toolbars
 avoid_when:
   - 2–6 options → RadioGroup (or ContentSwitcher for views)
   - Actions → Menu / MenuButton (dropdowns choose values; menus do things)
@@ -24,15 +24,15 @@ related: [select, radio-button, checkbox, menu, filtering]
 | `Combobox` | Type-to-filter, keyboard-first, clearable |
 | `MultiSelect` | Several choices; chosen options open first; the field shows a count tag plus the chosen labels, with clear-all × |
 
-## Option — the row inside every list
+## Option, the row inside every list
 
-`[tick slot — Multiselect only] [icon?] Label / description? ········ [meta?] [symbol?]`
+`[tick slot, Multiselect only] [icon?] Label / description? ········ [meta?] [symbol?]`
 
-- **One choice: a selected row.** Dropdown, Combobox and Select show the chosen option as a selected row (soft selected fill, medium weight) — no tick, since only one can be on.
+- **One choice: a selected row.** Dropdown, Combobox and Select show the chosen option as a selected row (soft selected fill, medium weight), no tick, since only one can be on.
 - **Several choices: ticks.** Multiselect reserves a 16px slot on the left; ticks draw in and out without moving labels.
-- **Leading icon** (`icon`). Muted, before the label — only when every option has one.
+- **Leading icon** (`icon`). Muted, before the label, only when every option has one.
 - **Meta** (`meta`). A small label on the right: "Default", "Recommended", a count.
-- **Trailing symbol** (`trailingIcon`). A symbol on the right — alone, or after the meta.
+- **Trailing symbol** (`trailingIcon`). A symbol on the right, alone, or after the meta.
 - **Description.** One caption line under the label, only when options are hard to tell apart.
 - **States.** Default · highlighted (accent row, everything inverts) · selected (selected row, or a tick in Multiselect) · disabled.
 - **Static use.** `Option` and `OptionList` render the same rows outside a dropdown.

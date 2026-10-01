@@ -5,7 +5,7 @@ export function Bad({ dark }: { dark: boolean }) {
     <div className="bg-blue-500 p-7 text-sm rounded-2xl shadow-lg duration-300 dark:bg-black w-[317px]" style={{ color: "#ff0000" }}>
       <button onClick={() => {}}>OK</button>
       <h2>Title</h2>
-      {/* corpus-allow raw-element: native anchor for download attr — approved by @jacopo */}
+      {/* vita-allow raw-element: native anchor for download attr, approved by @jacopo */}
       <a href="/file.csv" download>Download</a>
     </div>
   )

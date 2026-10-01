@@ -1,8 +1,8 @@
 ---
 title: Common actions
-summary: Where actions live, how many are visible, and how create, edit, delete, save and export behave everywhere — with left-hand shortcuts.
+summary: Where actions live, how many are visible, and how create, edit, delete, save and export behave everywhere, with left-hand shortcuts.
 status: stable
-import: "import { PageHeader } from \"@/components/corpus/page-header\""
+import: "import { PageHeader } from \"@/components/vita/page-header\""
 use_when:
   - Any page, table, card or panel that exposes actions
 avoid_when:
@@ -32,7 +32,7 @@ related: [button, menu-buttons, dialogs, notifications]
 | Create | "Create {object}" | primary + `Add` icon | none | Navigate to the new object, or toast "Agent created" |
 | Edit (⌘E) | "Edit" | ghost/secondary + `Edit` | none | Read-only → edit (see *Read-only states*) |
 | Save (⌘S) | "Save" / "Save changes" | primary | none | Inline "Saved" or toast; stay on the page |
-| Leave / discard | none — ×, Esc or navigation | — | Only with unsaved changes: "Discard changes?" | Return to the previous state |
+| Leave / discard | none, ×, Esc or navigation |, | Only with unsaved changes: "Discard changes?" | Return to the previous state |
 | Delete (reversible) | "Delete" | menu item, danger | **none**; toast with **Undo** (8s) | Item removed, toast |
 | Delete (irreversible) | "Delete {object}" | danger in `ConfirmModal` | Yes, stating the consequence | Toast "3 agents deleted" |
 | Duplicate (⌘D) | "Duplicate" | menu item | none | New item opens as "Copy of …" |

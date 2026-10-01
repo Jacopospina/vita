@@ -8,10 +8,10 @@ import { useIndicator } from "@/registry/hooks/use-morph"
 import { useDragSelect } from "@/registry/hooks/use-drag-select"
 
 /**
- * ContentSwitcher — switch between alternate presentations of the SAME content (List | Grid, Day | Week | Month).
+ * ContentSwitcher, switch between alternate presentations of the SAME content (List | Grid, Day | Week | Month).
  * A segmented control. 2–5 segments, equal importance, one always selected.
  * Different content per option → Tabs.
- * Hold and nudge to browse: while pressed, each small sideways nudge snaps to the next/previous segment — no aiming.
+ * Hold and nudge to browse: while pressed, each small sideways nudge snaps to the next/previous segment, no aiming.
  */
 export interface ContentSwitcherItem {
   value: string

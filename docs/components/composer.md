@@ -2,7 +2,7 @@
 title: Composer
 summary: The intent-first input. Users type, dictate or attach what they want; the AI does the work and hands back something to review.
 status: experimental
-import: "import { Composer } from \"@/components/corpus/composer\""
+import: "import { Composer } from \"@/components/vita/composer\""
 use_when:
   - Starting any task an agent can do (create, find, change, summarise)
   - Replacing a long form with "describe it, then review it"

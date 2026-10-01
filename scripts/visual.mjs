@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 /**
- * pnpm visual — every docs page in a real browser (your installed Chrome; nothing is downloaded):
- *   1. Layout invariants — the page fits the window (no phantom scroll) and nothing glides into place after load.
- *   2. Accessibility — axe-core (WCAG 2 A/AA); serious and critical issues fail the run.
- *   3. Screenshots — saved to tests/visual/latest; compared with tests/visual/baseline (pnpm visual --update
+ * pnpm visual, every docs page in a real browser (your installed Chrome; nothing is downloaded):
+ *   1. Layout invariants, the page fits the window (no phantom scroll) and nothing glides into place after load.
+ *   2. Accessibility, axe-core (WCAG 2 A/AA); serious and critical issues fail the run.
+ *   3. Screenshots, saved to tests/visual/latest; compared with tests/visual/baseline (pnpm visual --update
  *      accepts them). Changes are listed for review, not failed: live components make pixels noisy.
  * Runs with reduced motion so pages settle. Flags: --update · --only <section/slug>
  */

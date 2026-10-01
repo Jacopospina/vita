@@ -19,7 +19,7 @@ related: [text-input, dropdown]
 - **The 3:1 field border felt heavy** across dense forms.
 - **Checkboxes inside rows** made the row a smaller, worse target.
 
-## Rejected — avoid
+## Rejected, avoid
 
 - **A right-aligned tick that shifts labels.**
 
@@ -27,7 +27,7 @@ related: [text-input, dropdown]
 
 - **Accessibility testing shows fields are hard to find** at rest (raise the border back toward 3:1).
 
-## Revision — 2026-10-01
+## Revision, 2026-10-01
 
 - **Single choice drops the tick.** With only one option on at a time, a tick is noise. Dropdown, Combobox and Select mark the chosen option as a selected row (fill + medium weight); only Multiselect keeps ticks.
 

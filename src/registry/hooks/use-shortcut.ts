@@ -1,7 +1,7 @@
 import * as React from "react"
 
 /**
- * useShortcut — bind a LEFT-HAND keyboard shortcut. Corpus assumes one hand per device:
+ * useShortcut, bind a LEFT-HAND keyboard shortcut. Vita assumes one hand per device:
  * the right hand stays on the pointer, the left hand on the keyboard. Shortcuts must be reachable with the left hand.
  *
  *   useShortcut("mod+s", save)        ⌘S / Ctrl+S
@@ -35,7 +35,7 @@ export function useShortcut(combo: string | undefined, handler: (e: KeyboardEven
   })
   React.useEffect(() => {
     if (!combo || !enabled) return
-    if (import.meta.env?.DEV && !isLeftHand(combo)) console.warn(`[corpus] Shortcut "${combo}" needs the right hand. Corpus shortcuts must use left-hand keys.`)
+    if (import.meta.env?.DEV && !isLeftHand(combo)) console.warn(`[vita] Shortcut "${combo}" needs the right hand. Vita shortcuts must use left-hand keys.`)
     const { key, mod, shift, alt } = parseCombo(combo)
     const onKey = (e: KeyboardEvent) => {
       const pressed = e.key === " " ? "space" : e.key.toLowerCase()

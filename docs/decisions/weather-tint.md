@@ -1,6 +1,6 @@
 ---
 title: Weather tint
-summary: Floating layers lean cold or warm with the weather outside — Dynamic by default, or fixed Neutral, Cold or Warm.
+summary: Floating layers lean cold or warm with the weather outside, Dynamic by default, or fixed Neutral, Cold or Warm.
 status: accepted
 date: 2026-10-01
 decided_by: Jacopo
@@ -19,7 +19,7 @@ related: [theming, material]
 - **A continuous, barely-there tint read as nothing.** Three clear states read as intent.
 - **Tinting every surface muddied the hierarchy**; on the floating layers it reinforces it.
 
-## Rejected — avoid
+## Rejected, avoid
 
 - **Tinting the page background or in-flow containers.**
 - **An on/off toggle.** People wanted to pin a state, not just disable it.

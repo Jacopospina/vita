@@ -14,16 +14,16 @@ related: [search, data-table, tag, dropdown, ui-shell-right-panel]
 | Number of facets | Surface |
 |---|---|
 | 1–3 frequently used | Inline dropdowns / SelectableTags in the toolbar |
-| 4–8 | **Filter popover** from a "Filter (n)" button (Corpus default) |
+| 4–8 | **Filter popover** from a "Filter (n)" button (Vita default) |
 | 9+ or complex (ranges, dates) | `RightPanel` (lg) with Accordion sections and Apply/Reset |
 | Always visible, exploratory (catalogs) | Left filter column (Grid 4 + 12) |
 
 ## Anatomy
 
-`[Search ··········· Deploying × · Degraded × · Clear filters · Filter (2) ▾]` — ONE row, the data table's own toolbar.
+`[Search ··········· Deploying × · Degraded × · Clear filters · Filter (2) ▾]`, ONE row, the data table's own toolbar.
 
 - **One row.** Search fills the space; applied filters (dismissible outline Tags) and "Clear filters" sit beside it, then the trigger.
-- **Reuse the table's toolbar.** Pass it as `toolbar` on DataTable — never a separate bar above the table.
+- **Reuse the table's toolbar.** Pass it as `toolbar` on DataTable, never a separate bar above the table.
 - **Count in the header.** The result count is the table's description, announced (`aria-live`).
 
 ## Rules

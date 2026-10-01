@@ -25,7 +25,7 @@ export interface DropdownItem {
 export { listClasses, itemClasses, tickClasses } from "@/registry/ui/option"
 
 /**
- * Dropdown — pick ONE option from a custom-rendered list (icons, descriptions, consistent styling across OSs).
+ * Dropdown, pick ONE option from a custom-rendered list (icons, descriptions, consistent styling across OSs).
  * 2–6 options visible at once → RadioGroup. >20 options → Combobox (filterable). Mobile-heavy/long lists → native Select.
  */
 export interface DropdownProps extends FieldBaseProps {
@@ -88,7 +88,7 @@ interface ListboxPopoverProps extends FieldBaseProps {
 }
 
 /**
- * Combobox — Dropdown + type-to-filter. Use for long lists (>20) where users know what they're looking for.
+ * Combobox, Dropdown + type-to-filter. Use for long lists (>20) where users know what they're looking for.
  */
 export function Combobox({ items, value, defaultValue = "", onValueChange, size = "md", disabled, className, placeholder = "Type to filter", ...field }: ListboxPopoverProps & { value?: string; defaultValue?: string; onValueChange?: (v: string) => void }) {
   const [val, setVal] = useControllable(value, defaultValue, onValueChange)
@@ -98,7 +98,7 @@ export function Combobox({ items, value, defaultValue = "", onValueChange, size 
   const listId = React.useId()
   const selected = items.find((i) => i.value === val)
   const filtered = items.filter((i) => i.label.toLowerCase().includes(query.toLowerCase()))
-  // Filtering glides the remaining options into place (FLIP) — armed only once the list has finished opening, so
+  // Filtering glides the remaining options into place (FLIP), armed only once the list has finished opening, so
   // the opening itself (positioning, width settling) never makes options glide.
   const options = React.useRef<HTMLUListElement>(null)
   const [armed, setArmed] = React.useState(false)
@@ -156,7 +156,7 @@ export function Combobox({ items, value, defaultValue = "", onValueChange, size 
             <PopoverPrimitive.Content
               onOpenAutoFocus={(e) => e.preventDefault()}
               // The field is the anchor, not a trigger: pressing it must not count as "outside" (that closed and
-              // instantly reopened the list — the blink).
+              // instantly reopened the list, the blink).
               onInteractOutside={(e) => { if (anchor.current?.contains(e.target as Node)) e.preventDefault() }}
               align="start"
               sideOffset={4}
@@ -190,12 +190,12 @@ export function Combobox({ items, value, defaultValue = "", onValueChange, size 
 }
 
 /**
- * MultiSelect — choose SEVERAL options from a list too long for a CheckboxGroup (> ~6). Selected count shows as a tag.
+ * MultiSelect, choose SEVERAL options from a list too long for a CheckboxGroup (> ~6). Selected count shows as a tag.
  */
 /** The MultiSelect's options: whole rows toggle (click, Enter or Space); a tick in the left slot shows what's chosen. */
 function MultiOptions({ items: all, selected, onToggle }: { items: DropdownItem[]; selected: string[]; onToggle: (v: string) => void }) {
   // Chosen options open at the top (in their list order), the rest follow. The order is fixed for as long as the
-  // list stays open — toggling never makes rows jump; it's recomputed the next time the list opens.
+  // list stays open, toggling never makes rows jump; it's recomputed the next time the list opens.
   const [items] = React.useState(() => [...all.filter((i) => selected.includes(i.value)), ...all.filter((i) => !selected.includes(i.value))])
   const [active, setActive] = React.useState(0)
   const rows = React.useRef<(HTMLDivElement | null)[]>([])

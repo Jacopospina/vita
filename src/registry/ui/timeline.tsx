@@ -4,7 +4,7 @@ import { status, type StatusTone } from "@/registry/lib/status"
 import { Icon } from "@/registry/ui/icon"
 
 /**
- * Timeline — events in time order on one vertical line: changelogs, run history, an agent's steps, audit trails.
+ * Timeline, events in time order on one vertical line: changelogs, run history, an agent's steps, audit trails.
  * Newest first unless the story reads better forward. Each event: a marker on the line, a date, a title, optional detail.
  * A status tone marks the events that matter (a breaking change, a failure); everything else stays neutral.
  * Steps a USER completes → ProgressIndicator. A table of records → DataTable.

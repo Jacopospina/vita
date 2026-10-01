@@ -29,7 +29,7 @@
       "id": "647fc6b",
       "date": "2026-10-01",
       "title": "Agent conversation: floating glass header and composer, time only, day separators, smooth arrivals; Sofia AI label",
-      "text": "MiniChat: the header floats like the global nav (8px inset, concentric radius) on glass-1 — the lower tier, since the panel is already glass — and the composer floats with no border or backing; the thread scrolls beneath both (padded by their measured heights).",
+      "text": "MiniChat: the header floats like the global nav (8px inset, concentric radius) on glass-1, the lower tier, since the panel is already glass, and the composer floats with no border or backing; the thread scrolls beneath both (padded by their measured heights).",
       "breaking": false,
       "release": "Unreleased"
     },
@@ -37,7 +37,7 @@
       "id": "eabcc52",
       "date": "2026-10-01",
       "title": "Nothing moves into place: no transitions before styles exist; layout glide is opt-in",
-      "text": "Root cause of elements flying in from the top left: the global 'everything transitions' rule applied while styles were being (re)applied — Vite injects CSS from JS and re-injects it on every hot update, so each element animated from its unstyled browser default (top-left, default sizes) to its styled place. Fixes:",
+      "text": "Root cause of elements flying in from the top left: the global 'everything transitions' rule applied while styles were being (re)applied, Vite injects CSS from JS and re-injects it on every hot update, so each element animated from its unstyled browser default (top-left, default sizes) to its styled place. Fixes:",
       "breaking": false,
       "release": "Unreleased"
     },
@@ -101,7 +101,7 @@
       "id": "4b04a3d",
       "date": "2026-10-01",
       "title": "Decision records, exception review, AI card hugs content",
-      "text": "docs/decisions: a new Decisions section (playground nav, llms.txt, index.json). How Corpus decides (records, supersede-don't-edit, three-team rule, exceptions, semver and deprecation) plus records for glass by elevation, status semantics, weather tint, buttons, motion, fields and options — each with the decision, why, rejected alternatives and when to revisit.",
+      "text": "docs/decisions: a new Decisions section (playground nav, llms.txt, index.json). How Vita decides (records, supersede-don't-edit, three-team rule, exceptions, semver and deprecation) plus records for glass by elevation, status semantics, weather tint, buttons, motion, fields and options, each with the decision, why, rejected alternatives and when to revisit.",
       "breaking": false,
       "release": "v0.2.0"
     },
@@ -109,14 +109,14 @@
       "id": "2994d97",
       "date": "2026-10-01",
       "title": "IconPlaceholder: tint and solid surfaces; showcase conversations use ChatThread",
-      "text": "IconPlaceholder surface: 'tint' (default, a faint dark wash for white surfaces like notifications) or 'solid' (a white tile). ListItem — and so ContainedListItem — use solid inside grey list groups. New token icon-surface-solid (white; a faint lift in dark), mapped and documented.",
+      "text": "IconPlaceholder surface: 'tint' (default, a faint dark wash for white surfaces like notifications) or 'solid' (a white tile). ListItem, and so ContainedListItem, use solid inside grey list groups. New token icon-surface-solid (white; a faint lift in dark), mapped and documented.",
       "breaking": false,
       "release": "v0.2.0"
     },
     {
       "id": "c405a4d",
       "date": "2026-10-01",
-      "title": "Corpus mark adapts to dark mode",
+      "title": "Vita mark adapts to dark mode",
       "text": "In dark mode the mark's grey half uses deep greys (gray-700 → 500) instead of glaring light ones, and the navy points turn pale blue (blue-200) so they stay visible. The favicon follows the OS colour scheme the same way.",
       "breaking": false,
       "release": "v0.2.0"
@@ -125,7 +125,7 @@
       "id": "5d27620",
       "date": "2026-10-01",
       "title": "Option component; whole-row selection with a left tick",
-      "text": "New Option (+ OptionList): the one list-item anatomy for every dropdown list — reserved left tick slot, optional icon, label and description; default/highlighted/selected/disabled states. Owns listClasses/itemClasses/tickClasses (dropdown re-exports them).",
+      "text": "New Option (+ OptionList): the one list-item anatomy for every dropdown list, reserved left tick slot, optional icon, label and description; default/highlighted/selected/disabled states. Owns listClasses/itemClasses/tickClasses (dropdown re-exports them).",
       "breaking": true,
       "release": "v0.2.0"
     },
@@ -133,7 +133,7 @@
       "id": "02eb4a1",
       "date": "2026-10-01",
       "title": "Dropdown lists slide in from below; floating surfaces never grow from 0",
-      "text": "Dropdown/Select/Combobox lists enter with corpus-list-rise (opacity + 8px rise, productive, no scale) and leave with corpus-list-sink; reduced motion fades.",
+      "text": "Dropdown/Select/Combobox lists enter with vita-list-rise (opacity + 8px rise, productive, no scale) and leave with vita-list-sink; reduced motion fades.",
       "breaking": false,
       "release": "v0.2.0"
     },
@@ -165,7 +165,7 @@
       "id": "9337511",
       "date": "2026-10-01",
       "title": "Shell layering: the page scrolls under the floating glass",
-      "text": "ShellMain fills the window and scrolls; Header, LeftPanel and RightPanel float above it (absolute, 8px inset) on their glass tiers, and ShellMain is padded to start below the header (64px) and beside the side nav on large screens (256px, or 64px for the rail — LeftPanel tells the shell which). Scrolled content now passes beneath the frosted header, so the material is actually visible. ShellMain publishes --corpus-shell-top; the data table's sticky strip stops just below the header.",
+      "text": "ShellMain fills the window and scrolls; Header, LeftPanel and RightPanel float above it (absolute, 8px inset) on their glass tiers, and ShellMain is padded to start below the header (64px) and beside the side nav on large screens (256px, or 64px for the rail, LeftPanel tells the shell which). Scrolled content now passes beneath the frosted header, so the material is actually visible. ShellMain publishes --vita-shell-top; the data table's sticky strip stops just below the header.",
       "breaking": false,
       "release": "v0.2.0"
     },
@@ -181,7 +181,7 @@
       "id": "985bc6a",
       "date": "2026-10-01",
       "title": "Warning is orange",
-      "text": "-corpus-hue-warning 62.6 → 50 and the palette's orange row moves with it (CSS + JSON), so warning reads orange rather than amber. warning-foreground keeps the same hue (darker) instead of drifting 27° toward red, which made warning text look like an error.",
+      "text": "-vita-hue-warning 62.6 → 50 and the palette's orange row moves with it (CSS + JSON), so warning reads orange rather than amber. warning-foreground keeps the same hue (darker) instead of drifting 27° toward red, which made warning text look like an error.",
       "breaking": false,
       "release": "v0.2.0"
     },
@@ -205,15 +205,15 @@
       "id": "2063af0",
       "date": "2026-10-01",
       "title": "Glass: lower opacity, no bleaching",
-      "text": "Fills 24 · 20 · 16 · 12 · 8% (side nav → notifications) and the light-mode backdrop lift down from 1.12 to 1.03 — the strong lift was bleaching the near-white page behind the glass to flat white, so the frost and what's behind it were invisible.",
+      "text": "Fills 24 · 20 · 16 · 12 · 8% (side nav → notifications) and the light-mode backdrop lift down from 1.12 to 1.03, the strong lift was bleaching the near-white page behind the glass to flat white, so the frost and what's behind it were invisible.",
       "breaking": false,
       "release": "v0.2.0"
     },
     {
       "id": "12c43f8",
       "date": "2026-10-01",
-      "title": "Corpus brand mark and favicon; Header logo slot",
-      "text": "src/brand/corpus-mark.tsx: the Corpus mark — a thick ring, half a violet→blue arc (purple-400 → blue-500) and half soft grey, with three navy points (blue-900); turned 180°. Palette tokens only.",
+      "title": "Vita brand mark and favicon; Header logo slot",
+      "text": "src/brand/vita-mark.tsx: the Vita mark, a thick ring, half a violet→blue arc (purple-400 → blue-500) and half soft grey, with three navy points (blue-900); turned 180°. Palette tokens only.",
       "breaking": false,
       "release": "v0.2.0"
     },
@@ -229,7 +229,7 @@
       "id": "1f99b73",
       "date": "2026-10-01",
       "title": "Glass: see-through yet white",
-      "text": "Fills drop below the original values (66 · 62 · 58 · 52 · 46%) and blur softens (10 · 14 · 18 · 24 · 30px), so content moving beneath stays faintly visible; the higher the layer, the more frosted. New --corpus-glass-lift brightens the backdrop in light mode (1.12; 1 in dark), so glass still reads white instead of greying into the page. Color docs table lists blur and fill per tier.",
+      "text": "Fills drop below the original values (66 · 62 · 58 · 52 · 46%) and blur softens (10 · 14 · 18 · 24 · 30px), so content moving beneath stays faintly visible; the higher the layer, the more frosted. New --vita-glass-lift brightens the backdrop in light mode (1.12; 1 in dark), so glass still reads white instead of greying into the page. Color docs table lists blur and fill per tier.",
       "breaking": false,
       "release": "v0.2.0"
     },
@@ -245,7 +245,7 @@
       "id": "aa3628c",
       "date": "2026-10-01",
       "title": "Weather tint applies only to floating layers",
-      "text": "New semantic token --corpus-elevated (raised + weather tint; mapped as --color-elevated). Glass fills from it, so only z-indexed surfaces — side nav, header, right panel, menus, popovers, dialogs, notifications, pinned toolbars — lean warm/cold. The page, in-flow containers, fields, lines and text are back on the neutral knobs. Documented in Color (Glass by elevation) and Theming.",
+      "text": "New semantic token --vita-elevated (raised + weather tint; mapped as --color-elevated). Glass fills from it, so only z-indexed surfaces, side nav, header, right panel, menus, popovers, dialogs, notifications, pinned toolbars, lean warm/cold. The page, in-flow containers, fields, lines and text are back on the neutral knobs. Documented in Color (Glass by elevation) and Theming.",
       "breaking": false,
       "release": "v0.2.0"
     },
@@ -253,7 +253,7 @@
       "id": "8983b9e",
       "date": "2026-10-01",
       "title": "Weather tint colours the layers, never the page background",
-      "text": "-corpus-background reads the neutral knobs directly; every layer above it (layer-1..3, raised, fields, glass, lines, text) takes the weather tint, so Corpus's layering reads by temperature.",
+      "text": "-vita-background reads the neutral knobs directly; every layer above it (layer-1..3, raised, fields, glass, lines, text) takes the weather tint, so Vita's layering reads by temperature.",
       "breaking": false,
       "release": "v0.2.0"
     },
@@ -309,7 +309,7 @@
       "id": "765e7a8",
       "date": "2026-10-01",
       "title": "Status: degraded and paused are destructive; draft holds still; in-progress steps by slices",
-      "text": "Degraded uses error (destructive) — tags and indicators — instead of warning; caution is now 'minor, still working'. Paused uses the error colour (indicator glyph and tag, with a pause glyph).",
+      "text": "Degraded uses error (destructive), tags and indicators, instead of warning; caution is now 'minor, still working'. Paused uses the error colour (indicator glyph and tag, with a pause glyph).",
       "breaking": false,
       "release": "v0.2.0"
     },
@@ -397,7 +397,7 @@
       "id": "5b25da8",
       "date": "2026-10-01",
       "title": "Neutrals are pure grey by default",
-      "text": "-corpus-neutral-chroma defaults to 0 (was 0.007 at hue 286, which gave every grey, surface and the page background a violet cast). The tint stays available as a theme knob.",
+      "text": "-vita-neutral-chroma defaults to 0 (was 0.007 at hue 286, which gave every grey, surface and the page background a violet cast). The tint stays available as a theme knob.",
       "breaking": false,
       "release": "v0.2.0"
     },
@@ -413,7 +413,7 @@
       "id": "4acee9b",
       "date": "2026-10-01",
       "title": "Glass by elevation: frosting increases with z-index",
-      "text": "glass now reads --corpus-glass-blur / -fill / -sat; tiers glass-1..5 map to the layers (z-30 side panels → z-40 header → z-50 menus/lists/popovers → z-50 dialogs above the overlay → z-60 notifications/capsules), each more blurred and more translucent than the one below. Applied to LeftPanel, RightPanel, Header, Menu, Dropdown/Select lists, Popover, Modal, banners and capsules. Documented in Color.",
+      "text": "glass now reads --vita-glass-blur / -fill / -sat; tiers glass-1..5 map to the layers (z-30 side panels → z-40 header → z-50 menus/lists/popovers → z-50 dialogs above the overlay → z-60 notifications/capsules), each more blurred and more translucent than the one below. Applied to LeftPanel, RightPanel, Header, Menu, Dropdown/Select lists, Popover, Modal, banners and capsules. Documented in Color.",
       "breaking": false,
       "release": "v0.2.0"
     },
@@ -477,7 +477,7 @@
       "id": "66bc00d",
       "date": "2026-10-01",
       "title": "Chat send flight: leaves fast, settles slow (expressive curve)",
-      "text": "The 'bubble forms' beat is shorter (18%) and the travel uses --corpus-ease-expressive, so a sent message shoots off and glides into place.",
+      "text": "The 'bubble forms' beat is shorter (18%) and the travel uses --vita-ease-expressive, so a sent message shoots off and glides into place.",
       "breaking": false,
       "release": "v0.2.0"
     }

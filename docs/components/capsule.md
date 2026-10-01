@@ -2,7 +2,7 @@
 title: Capsule
 summary: Quick feedback at the top centre. Icon on the left, title over subtitle in the middle, the semantic story on the right.
 status: stable
-import: "import { capsule } from \"@/components/corpus/notification\"\n\nconst id = capsule({ icon: <Icon as={CloudUpload} size=\"md\" />, title: \"Syncing knowledge\", subtitle: \"Help center\", story: { progress: 40 }, duration: 0 })\ncapsule.update(id, { story: { progress: 100 }, duration: 1800 })"
+import: "import { capsule } from \"@/components/vita/notification\"\n\nconst id = capsule({ icon: <Icon as={CloudUpload} size=\"md\" />, title: \"Syncing knowledge\", subtitle: \"Help center\", story: { progress: 40 }, duration: 0 })\ncapsule.update(id, { story: { progress: 100 }, duration: 1800 })"
 use_when:
   - Glanceable feedback that something connected, finished or is progressing
   - A live value worth watching for a few seconds (sync progress, a connection)
@@ -13,7 +13,7 @@ avoid_when:
 related: [notification, notifications, progress-bar, thinking]
 ---
 
-## Anatomy — always three parts
+## Anatomy, always three parts
 
 | Left | Centre | Right |
 |---|---|---|

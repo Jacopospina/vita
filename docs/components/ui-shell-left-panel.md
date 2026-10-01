@@ -2,7 +2,7 @@
 title: UI shell left panel
 summary: Side navigation between the product's main areas. Expanded (default) or rail; an overlay drawer on small screens.
 status: stable
-import: "import { LeftPanel, SideNavItem, SideNavMenu, SideNavSection } from \"@/components/corpus/ui-shell\""
+import: "import { LeftPanel, SideNavItem, SideNavMenu, SideNavSection } from \"@/components/vita/ui-shell\""
 use_when:
   - Products with 5+ top-level areas or two-level navigation
   - Settings/admin areas with many sections

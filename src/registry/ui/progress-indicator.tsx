@@ -3,7 +3,7 @@ import { cn } from "@/registry/lib/utils"
 import { SwapIcon } from "@/registry/ui/icon"
 
 /**
- * ProgressIndicator — the steps of a multi-step task the USER works through (wizard, onboarding, checkout).
+ * ProgressIndicator, the steps of a multi-step task the USER works through (wizard, onboarding, checkout).
  * 3–6 steps. Fewer → one page. More → split the flow. Always allow going back to completed steps.
  */
 export interface Step {

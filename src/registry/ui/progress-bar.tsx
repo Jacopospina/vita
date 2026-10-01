@@ -7,14 +7,14 @@ import { animateChildren } from "@/registry/ui/animated"
 import { LiquidSim, liquidCoverage, type LiquidMode } from "@/registry/lib/liquid"
 
 /**
- * ProgressBar — progress of a process with a measurable end (upload, import, setup). Omit `value` for indeterminate.
+ * ProgressBar, progress of a process with a measurable end (upload, import, setup). Omit `value` for indeterminate.
  * Steps a USER completes → ProgressIndicator. Quota/usage ("7 of 10 seats") → ProgressBar with status.
  *
  * The tip is REAL liquid (lib/liquid: a particle fluid with pressure, surface tension, viscosity, wetting walls):
- *   determinate    the body is solid and springs to the value; a small volume of liquid rides its tip — when the
+ *   determinate    the body is solid and springs to the value; a small volume of liquid rides its tip, when the
  *                  body slows, the liquid's own inertia surges, sloshes and settles back against it
  *   indeterminate  a slug of liquid is pushed round the tube by a pulsing pump, stretching, tearing and fusing
- *   tone           brand (default) · spectrum (agent work) — finished/error switch to success/error
+ *   tone           brand (default) · spectrum (agent work), finished/error switch to success/error
  * Glow only in dark mode; light mode keeps a faint halo.
  */
 export function ProgressBar({
@@ -105,7 +105,7 @@ function useLiquid(ref: React.RefObject<HTMLCanvasElement | null>, opts: { mode:
     let palette: [number, number, number][] = []
     const readColors = () => {
       const cs = getComputedStyle(el)
-      palette = spectrum ? HUES.map((c) => toRGB(cs.getPropertyValue(`--corpus-palette-${c}-500`).trim(), probe)) : [toRGB(cs.color, probe)]
+      palette = spectrum ? HUES.map((c) => toRGB(cs.getPropertyValue(`--vita-palette-${c}-500`).trim(), probe)) : [toRGB(cs.color, probe)]
     }
 
     const s = (sim.current = new LiquidSim(1, mode, 7))
@@ -198,7 +198,7 @@ function useLiquid(ref: React.RefObject<HTMLCanvasElement | null>, opts: { mode:
 }
 
 /**
- * ProgressRing — compact circular progress with its value inside (rolling number). For capsules,
+ * ProgressRing, compact circular progress with its value inside (rolling number). For capsules,
  * device/battery-like readouts and tight spaces. Tone follows meaning: success when complete.
  */
 export function ProgressRing({ value, max = 100, size = 32, showValue = true, tone, label, className }: { value: number; max?: number; size?: number; showValue?: boolean; tone?: "primary" | "success" | "warning" | "error"; label?: string; className?: string }) {

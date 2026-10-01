@@ -64,7 +64,7 @@ function AIDemo() {
           onChange={(e) => setValue(e.target.value)}
           labelAddon={
             <AILabel size="xs" title="Suggested from your tickets" onRevert={() => setValue("")}>
-              Inferred from the 200 most recent tickets with 92% confidence. Model: Vita Large.
+              Inferred from the 200 most recent tickets with 92% confidence. Model: Theo Large.
             </AILabel>
           }
         />
@@ -82,7 +82,7 @@ export const actionDemos: DemoMap = {
   "components/button": [
     {
       title: "Consequence in the button",
-      description: "Loading, success and failure play inside the button — the user never looks elsewhere.",
+      description: "Loading, success and failure play inside the button, the user never looks elsewhere.",
       render: () => (
         <Inline wrap>
           <Button feedback={{ loading: "Deploying", success: "Deployed" }} onAction={() => new Promise((r) => setTimeout(r, 1400))}>Deploy agent</Button>
@@ -139,8 +139,8 @@ export const actionDemos: DemoMap = {
       ),
     },
     {
-      title: "Button set — belonging has no gaps",
-      description: "Related actions touch: zero gap, joined edges, primary last. Never a Cancel — surfaces close with × or Esc.",
+      title: "Button set, belonging has no gaps",
+      description: "Related actions touch: zero gap, joined edges, primary last. Never a Cancel, surfaces close with × or Esc.",
       render: () => (
         <Stack gap="lg">
           <ButtonSet><Button variant="secondary">Save as draft</Button><Button>Deploy agent</Button></ButtonSet>
@@ -157,7 +157,7 @@ export const actionDemos: DemoMap = {
         <Stack gap="md">
           <Inline gap="lg" wrap>
             <Link href="#/components/link">Standalone link</Link>
-            <Link href="https://github.com/Jacopospina/corpus" external>Corpus repository</Link>
+            <Link href="https://github.com/Jacopospina/vita" external>Vita repository</Link>
             <Link disabled>Disabled</Link>
             <Link size="sm" href="#/components/link">Small</Link>
             <Link size="lg" href="#/components/link">Large</Link>
@@ -210,8 +210,8 @@ export const actionDemos: DemoMap = {
       render: () => (
         <Stack gap="md">
           <Text>Install with <CodeSnippet type="inline">pnpm add radix-ui</CodeSnippet> then import.</Text>
-          <CodeSnippet>npx github:Jacopospina/corpus init</CodeSnippet>
-          <CodeSnippet type="multi">{`import { Button } from "@/components/corpus/button"\n\nexport function Save() {\n  return <Button>Save changes</Button>\n}`}</CodeSnippet>
+          <CodeSnippet>npx github:Jacopospina/vita init</CodeSnippet>
+          <CodeSnippet type="multi">{`import { Button } from "@/components/vita/button"\n\nexport function Save() {\n  return <Button>Save changes</Button>\n}`}</CodeSnippet>
         </Stack>
       ),
     },

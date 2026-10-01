@@ -47,9 +47,9 @@ export const aboutDemos: DemoMap = {
       description: "Neutral markers for ordinary events; a status tone only for the ones that matter.",
       render: () => (
         <Timeline
-          label="Support triage — history"
+          label="Support triage, history"
           events={[
-            { id: "1", date: "Today 09:40", title: "Deployed to production", tone: "success", children: "Version 14 · Vita Large" },
+            { id: "1", date: "Today 09:40", title: "Deployed to production", tone: "success", children: "Version 14 · Theo Large" },
             { id: "2", date: "Today 09:12", title: "Instructions updated", children: "Refunds now go to the Finance team." },
             { id: "3", date: "Yesterday 17:05", title: "Evaluation failed", tone: "error", children: "3 of 40 test tickets answered wrongly." },
             { id: "4", date: "Monday 11:30", title: "Created by Ada Lovelace" },
@@ -60,13 +60,13 @@ export const aboutDemos: DemoMap = {
   ],
   "getting-started/about": [
     {
-      title: "Mind, soul, body",
+      title: "Animus, anima, vita",
       render: () => (
         <Grid gutter="narrow">
-          <Column sm={4} md={8} lg={5}><Part name="Animus" role="Mind" line="Backend logic that reasons and decides." /></Column>
-          <Column sm={4} md={8} lg={5}><Part name="Anima" role="Soul" line="Purpose, character and the human experience." /></Column>
+          <Column sm={4} md={8} lg={5}><Part name="Animus" role="Mind" line="Backend logic: rules, data and structure." /></Column>
+          <Column sm={4} md={8} lg={5}><Part name="Anima" role="Soul" line="The AI layer: perception, language, intuition." /></Column>
           <Column sm={4} md={8} lg={6}>
-            <Part name="Corpus" role="Body" line="The visible form people touch, read and trust." active>
+            <Part name="Vita" role="Life" line="The design system, where mind and soul come alive." active>
               <Stack gap="sm" className="pt-2">
                 <TextInput label="Agent name" size="sm" defaultValue="Support triage" />
                 <Inline justify="between"><StatusIndicator kind="success" size="sm">Live</StatusIndicator><Button size="sm">Deploy agent</Button></Inline>

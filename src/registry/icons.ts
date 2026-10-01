@@ -1,6 +1,6 @@
 /**
- * Corpus icon set. The ONLY module product code imports glyphs from:
- *   import { Add, TrashCan } from "@/components/corpus/icons"
+ * Vita icon set. The ONLY module product code imports glyphs from:
+ *   import { Add, TrashCan } from "@/components/vita/icons"
  * Render them through <Icon as={Add} />. The upstream package is an implementation
  * detail and may be swapped without touching product code.
  */

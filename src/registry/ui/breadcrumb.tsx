@@ -2,7 +2,7 @@ import * as React from "react"
 import { Menu, MenuContent, MenuItem, MenuTrigger } from "@/registry/ui/menu"
 
 /**
- * Breadcrumb — shows WHERE the user is in a hierarchy ≥ 3 levels deep and lets them go up.
+ * Breadcrumb, shows WHERE the user is in a hierarchy ≥ 3 levels deep and lets them go up.
  * Not a history trail. Not for flat sites. Current page is the last item, not a link.
  * > 4 levels → collapse the middle into an overflow "…" menu.
  */

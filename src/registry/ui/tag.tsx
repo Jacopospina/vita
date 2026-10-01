@@ -8,7 +8,7 @@ import { animateChildren } from "@/registry/ui/animated"
 import { useExit } from "@/registry/hooks/use-exit"
 
 /**
- * Tag — label, categorise or filter. Four types:
+ * Tag, label, categorise or filter. Four types:
  *   read-only   → metadata/status label. Not interactive.
  *   dismissible → an applied filter/selection the user can remove.
  *   selectable  → toggle a filter on/off (use a group).
@@ -64,7 +64,7 @@ export function Tag({ tone, size, icon, onDismiss, dismissLabel, disabled, class
   )
 }
 
-/** SelectableTag — on/off filter chip. Group them with role="group" and a label. */
+/** SelectableTag, on/off filter chip. Group them with role="group" and a label. */
 export function SelectableTag({ selected, onSelectedChange, disabled, children, className }: { selected: boolean; onSelectedChange: (s: boolean) => void; disabled?: boolean; children: React.ReactNode; className?: string }) {
   return (
     <button
@@ -84,7 +84,7 @@ export function SelectableTag({ selected, onSelectedChange, disabled, children, 
   )
 }
 
-/** OperationalTag — a tag that opens something (e.g. a popover listing more items: "+3"). */
+/** OperationalTag, a tag that opens something (e.g. a popover listing more items: "+3"). */
 export const OperationalTag = React.forwardRef<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement> & { tone?: TagProps["tone"] }>(
   ({ tone = "neutral", className, ...props }, ref) => (
     <button ref={ref} type="button" className={cn(tagVariants({ tone }), "cursor-pointer underline-offset-2 underline decoration-transparent hover:decoration-current focus-ring", className)} {...props} />

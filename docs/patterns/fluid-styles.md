@@ -1,8 +1,8 @@
 ---
 title: Fluid styles
-summary: Fluid inputs — fields tile edge to edge with labels inside. For dense expert data entry.
+summary: Fluid inputs, fields tile edge to edge with labels inside. For dense expert data entry.
 status: stable
-import: "import { FluidForm } from \"@/components/corpus/form\""
+import: "import { FluidForm } from \"@/components/vita/form\""
 use_when:
   - Expert users entering lots of structured data (configurations, admin records, bookings)
   - Forms inside dense tools where vertical space is precious
@@ -14,7 +14,7 @@ related: [form, forms, text-input]
 
 ## How it works
 
-Wrap standard Corpus inputs in `FluidForm`. Nothing else changes: same props and same validation.
+Wrap standard Vita inputs in `FluidForm`. Nothing else changes: same props and same validation.
 
 ```tsx
 <FluidForm>

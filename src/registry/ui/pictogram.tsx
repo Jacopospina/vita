@@ -2,7 +2,7 @@ import * as React from "react"
 import { cn } from "@/registry/lib/utils"
 
 /**
- * Pictogram — large illustrative symbols (from @/registry/pictograms) for empty states, onboarding and tiles.
+ * Pictogram, large illustrative symbols (from @/registry/pictograms) for empty states, onboarding and tiles.
  * Never use a pictogram as a button or at less than 48px; use Icon instead.
  */
 /** md 48 · lg 64 · xl 80 */

@@ -12,13 +12,13 @@ import { AnimatedText } from "@/registry/ui/animated"
 import { nextMakingWord } from "@/registry/lib/making-words"
 
 /**
- * Chat — the conversation pieces for agents and people.
+ * Chat, the conversation pieces for agents and people.
  *   ChatBubble   one message. Agent on the left on a neutral surface; the person on the right in brand colour.
  *                Never an avatar beside a bubble: the side and the author line say who wrote it.
  *                Consecutive messages from the same author JOIN (belonging): inner corners tighten, gap shrinks,
  *                only the last one shows the author mark.
  *   ChatThread   the column of bubbles; new messages enter from their author's side and the rest glide (FLIP).
- *   ChatTyping   the agent is thinking — Sofia and what it's doing, as a plain line (never a bubble, never bouncing dots).
+ *   ChatTyping   the agent is thinking, Sofia and what it's doing, as a plain line (never a bubble, never bouncing dots).
  *   MiniChat     a compact agent panel: header (agent + status), thread, composer.
  * A long-form AI answer inside a page → AISurface. A system notice → InlineNotification.
  */
@@ -47,7 +47,7 @@ export interface ChatBubbleProps {
   author?: string
   /** Shown next to the author, e.g. "09:41". */
   time?: string
-  /** First / middle / last / single bubble in a run from the same author — shapes the joined corners. */
+  /** First / middle / last / single bubble in a run from the same author, shapes the joined corners. */
   position?: "single" | "first" | "middle" | "last"
   /** Delivery state for the person's messages. Failed offers a retry. */
   status?: "sending" | "sent" | "failed"
@@ -60,7 +60,7 @@ export interface ChatBubbleProps {
 export function ChatBubble({ role, children, author, time, position = "single", status, onRetry, launched, className }: ChatBubbleProps) {
   const agent = role === "agent"
   // The spring-in plays ONCE, when the bubble first appears. A bubble that arrived by flight (launched) never plays it,
-  // and losing `launched` later (the next message takes it) must not replay it — that made the whole column jump.
+  // and losing `launched` later (the next message takes it) must not replay it, that made the whole column jump.
   const [fresh, setFresh] = React.useState(true)
   if (launched && fresh) setFresh(false)
   const showMeta = position === "single" || position === "last"
@@ -109,7 +109,7 @@ export function ChatBubble({ role, children, author, time, position = "single", 
 }
 
 /**
- * useMakingWord — while an agent works, a different making word every couple of seconds ("Sketching", "Glazing"…),
+ * useMakingWord, while an agent works, a different making word every couple of seconds ("Sketching", "Glazing"…),
  * in the Creator's voice. Never "Loading" or "Thinking".
  */
 export function useMakingWord(active = true, everyMs = 2400) {
@@ -122,7 +122,7 @@ export function useMakingWord(active = true, everyMs = 2400) {
   return word
 }
 
-/** ChatTyping — the agent is working: Sofia and a rotating making word, as a plain line on the agent's side (not a bubble). */
+/** ChatTyping, the agent is working: Sofia and a rotating making word, as a plain line on the agent's side (not a bubble). */
 export function ChatTyping({ label }: { label?: string }) {
   const rotating = useMakingWord(!label)
   const text = label ?? rotating
@@ -156,14 +156,14 @@ function dayLabel(d: Date) {
   return `${day} ${time}`
 }
 
-/** Scroll a container to its end — smoothly unless motion is reduced (falls back where scrollTo is missing). */
+/** Scroll a container to its end, smoothly unless motion is reduced (falls back where scrollTo is missing). */
 function scrollToEnd(el: HTMLElement, smooth = true) {
   const reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
   if (typeof el.scrollTo === "function") el.scrollTo({ top: el.scrollHeight, behavior: smooth && !reduced ? "smooth" : "auto" })
   else el.scrollTop = el.scrollHeight
 }
 
-/** ChatThread — bubbles in order; runs from the same author join; the column glides when messages arrive. */
+/** ChatThread, bubbles in order; runs from the same author join; the column glides when messages arrive. */
 export function ChatThread({ messages, typing, launchedId, className }: { messages: ChatMessage[]; typing?: boolean | string; launchedId?: string; className?: string }) {
   const ref = React.useRef<HTMLDivElement>(null)
   useFlip(ref)
@@ -191,7 +191,7 @@ export function ChatThread({ messages, typing, launchedId, className }: { messag
   )
 }
 
-/** MiniChat — a compact agent conversation panel. Close with ×, Esc or by clicking away; never a Cancel button. */
+/** MiniChat, a compact agent conversation panel. Close with ×, Esc or by clicking away; never a Cancel button. */
 export function MiniChat({ agent, status = "Online", messages, typing, onSend, onClose, suggestions, className }: {
   agent: string
   status?: string
@@ -226,12 +226,12 @@ export function MiniChat({ agent, status = "Online", messages, typing, onSend, o
     launch.current = null
     setLaunchedId(last.id)
     const sc = scroller.current
-    // Land where it will be seen — the earlier messages glide up with the scroll instead of snapping.
+    // Land where it will be seen, the earlier messages glide up with the scroll instead of snapping.
     if (sc) scrollToEnd(sc)
     const bubble = sc?.querySelector<HTMLElement>(`[data-message-id="${CSS.escape(last.id)}"] [data-bubble]`)
     if (!bubble || typeof bubble.animate !== "function") return
     // It arrives by flight, not by spring: stop the spring-in BEFORE measuring (its first frame is scaled to 60%),
-    // so the flying bubble is exactly the real one — same size, same shape.
+    // so the flying bubble is exactly the real one, same size, same shape.
     bubble.getAnimations().forEach((a) => a.cancel())
     const end = bubble.getBoundingClientRect()
     const bs = getComputedStyle(bubble)
@@ -255,13 +255,13 @@ export function MiniChat({ agent, status = "Online", messages, typing, onSend, o
     const DURATION = 560
     ghost.animate(
       [
-        { backgroundColor: "transparent", color: "var(--corpus-foreground)" },
+        { backgroundColor: "transparent", color: "var(--vita-foreground)" },
         { backgroundColor: bs.backgroundColor, color: bs.color },
       ],
       { duration: DURATION * FORM, fill: "forwards" },
     )
-    // 2) it shoots off and settles slowly (Corpus's expressive curve), HOMING on the real bubble's live position every
-    //    frame — the thread may scroll or reflow mid-flight (thinking appears, pinning), and the copy follows, so the
+    // 2) it shoots off and settles slowly (Vita's expressive curve), HOMING on the real bubble's live position every
+    //    frame, the thread may scroll or reflow mid-flight (thinking appears, pinning), and the copy follows, so the
     //    hand-off happens where the bubble actually is: no jump, no blink.
     const ease = cubicBezier(0.22, 1, 0.36, 1)
     const start = performance.now()
@@ -290,7 +290,7 @@ export function MiniChat({ agent, status = "Online", messages, typing, onSend, o
     }
   }, [messages])
   // The conversation stays pinned to the latest message: anything that grows the thread (new message, thinking,
-  // a reply landing) keeps it at the bottom — unless the person scrolled up to read history.
+  // a reply landing) keeps it at the bottom, unless the person scrolled up to read history.
   const word = useMakingWord(!!typing && typeof typing !== "string")
   const working = typing ? (typeof typing === "string" ? typing : word) : false
   const pinned = React.useRef(true)
@@ -307,7 +307,7 @@ export function MiniChat({ agent, status = "Online", messages, typing, onSend, o
       if (atEnd) pinned.current = true
       else if (performance.now() - userAt < 800) pinned.current = false
     }
-    // Growth (a reply replacing the thinking line, a bubble landing) GLIDES the conversation up — never a jump.
+    // Growth (a reply replacing the thinking line, a bubble landing) GLIDES the conversation up, never a jump.
     const stick = () => {
       if (pinned.current) scrollToEnd(sc)
     }
@@ -360,7 +360,7 @@ export function MiniChat({ agent, status = "Online", messages, typing, onSend, o
           <ChatThread messages={messages} typing={working} launchedId={launchedId} />
         </div>
       </div>
-      {/* The composer floats at the bottom with no border or backing — the conversation flows beneath it. */}
+      {/* The composer floats at the bottom with no border or backing, the conversation flows beneath it. */}
       <div ref={composerBox} className="absolute inset-x-0 bottom-0 z-10 p-2">
         <Composer size="md" voice={false} attachments={false} placeholder={`Message ${agent}`} suggestions={messages.length ? undefined : suggestions} onSubmit={(v) => send(v)} />
       </div>

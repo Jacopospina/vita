@@ -1,7 +1,7 @@
 import { CheckmarkFilled, ErrorFilled, InformationFilled, WarningAltFilled, type IconType } from "@/registry/icons"
 
 /**
- * Status semantics — the ONE map from a status meaning to its colour and glyph (docs/foundations/color.md →
+ * Status semantics, the ONE map from a status meaning to its colour and glyph (docs/foundations/color.md →
  * Status semantics). Every status surface (StatusIndicator, Tag statuses, notifications, IconPlaceholder kinds,
  * inline errors) reads from here, so "error" looks the same everywhere.
  *   success  done, healthy, live            green  · CheckmarkFilled

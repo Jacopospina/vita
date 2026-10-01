@@ -91,7 +91,7 @@ export const inputDemos: DemoMap = {
           <TextInput label="Agent name" placeholder="e.g. Support triage" helperText="Visible to everyone in the workspace" />
           <TextInput label="Cost centre" optional labelAddon={<Toggletip>Used to split run costs on your invoice.</Toggletip>} />
           <TextInput label="Email" defaultValue="jacopo@" invalid invalidText="Enter a complete email address" />
-          <TextInput label="Webhook URL" defaultValue="http://hooks.vita.dev/in" warn warnText="Use https in production" />
+          <TextInput label="Webhook URL" defaultValue="http://hooks.theo.dev/in" warn warnText="Use https in production" />
           <TextInput label="Workspace ID" defaultValue="ws_83hf72" readOnly helperText="Read-only" />
           <TextInput label="Disabled" disabled placeholder="Not available" />
           <TextInput label="Greeting" maxLength={60} showCount defaultValue="Hi! How can I help?" />
@@ -139,7 +139,7 @@ export const inputDemos: DemoMap = {
             <SelectGroup label="Europe"><SelectOption value="emea">EMEA</SelectOption><SelectOption value="uk">UK &amp; Ireland</SelectOption></SelectGroup>
             <SelectGroup label="Americas"><SelectOption value="na">North America</SelectOption><SelectOption value="latam">LATAM</SelectOption></SelectGroup>
           </Select>
-          <Select label="Model" invalid invalidText="Choose a model"><SelectOption value="large">Vita Large</SelectOption></Select>
+          <Select label="Model" invalid invalidText="Choose a model"><SelectOption value="large">Theo Large</SelectOption></Select>
           <Select label="Disabled" disabled />
         </Stack>
       ),
@@ -150,7 +150,7 @@ export const inputDemos: DemoMap = {
       title: "Dropdown · Combobox · Multiselect",
       render: () => (
         <Stack gap="lg" className="max-w-xs">
-          <Dropdown label="Model" items={[{ value: "fast", label: "Vita Fast", description: "Lowest latency and cost" }, { value: "large", label: "Vita Large" }, { value: "vision", label: "Vita Vision", description: "Reads images and PDFs" }]} defaultValue="large" />
+          <Dropdown label="Model" items={[{ value: "fast", label: "Theo Fast", description: "Lowest latency and cost" }, { value: "large", label: "Theo Large" }, { value: "vision", label: "Theo Vision", description: "Reads images and PDFs" }]} defaultValue="large" />
           <Combobox label="Country" items={countries} helperText="Type to filter" />
           <MultiSelect label="Data residency" items={countries.slice(0, 8)} defaultValue={["france", "germany"]} />
           <Dropdown label="Disabled" items={[]} disabled />
@@ -178,14 +178,14 @@ export const inputDemos: DemoMap = {
     },
     {
       title: "States",
-      description: "Default · highlighted (pointer or keyboard) · selected · selected and highlighted · disabled. One choice: the chosen option is a selected row — no tick.",
+      description: "Default · highlighted (pointer or keyboard) · selected · selected and highlighted · disabled. One choice: the chosen option is a selected row, no tick.",
       render: () => (
         <OptionList>
-          <Option label="Vita Large" />
-          <Option label="Vita Fast" highlighted />
-          <Option label="Vita Vision" selected />
-          <Option label="Vita Voice" selected highlighted />
-          <Option label="Vita Legacy" disabled />
+          <Option label="Theo Large" />
+          <Option label="Theo Fast" highlighted />
+          <Option label="Theo Vision" selected />
+          <Option label="Theo Voice" selected highlighted />
+          <Option label="Theo Legacy" disabled />
         </OptionList>
       ),
     },
@@ -193,9 +193,9 @@ export const inputDemos: DemoMap = {
       title: "With description",
       render: () => (
         <OptionList>
-          <Option label="Vita Large" description="Most capable, slower" selected />
-          <Option label="Vita Fast" description="Quick answers, lower cost" highlighted />
-          <Option label="Vita Vision" description="Reads images and documents" />
+          <Option label="Theo Large" description="Most capable, slower" selected />
+          <Option label="Theo Fast" description="Quick answers, lower cost" highlighted />
+          <Option label="Theo Vision" description="Reads images and documents" />
         </OptionList>
       ),
     },
@@ -214,10 +214,10 @@ export const inputDemos: DemoMap = {
       description: "A small label on the right, a label followed by a symbol, or a symbol alone.",
       render: () => (
         <OptionList>
-          <Option label="Vita Large" meta="Default" selected />
-          <Option label="Vita Fast" meta="2× faster" trailingIcon={Flash} highlighted />
-          <Option label="Vita Vision" trailingIcon={Image} />
-          <Option label="Vita Voice" meta="Beta" />
+          <Option label="Theo Large" meta="Default" selected />
+          <Option label="Theo Fast" meta="2× faster" trailingIcon={Flash} highlighted />
+          <Option label="Theo Vision" trailingIcon={Image} />
+          <Option label="Theo Voice" meta="Beta" />
         </OptionList>
       ),
     },
@@ -229,9 +229,9 @@ export const inputDemos: DemoMap = {
           defaultValue="l"
           className="max-w-xs"
           items={[
-            { value: "l", label: "Vita Large", meta: "Default" },
-            { value: "f", label: "Vita Fast", meta: "2× faster", trailingIcon: Flash },
-            { value: "v", label: "Vita Vision", trailingIcon: Image },
+            { value: "l", label: "Theo Large", meta: "Default" },
+            { value: "f", label: "Theo Fast", meta: "2× faster", trailingIcon: Flash },
+            { value: "v", label: "Theo Vision", trailingIcon: Image },
           ]}
         />
       ),
@@ -252,7 +252,7 @@ export const inputDemos: DemoMap = {
       title: "Live, in each dropdown",
       render: () => (
         <Stack gap="md" className="max-w-xs">
-          <Dropdown label="Model" defaultValue="l" items={[{ value: "l", label: "Vita Large" }, { value: "f", label: "Vita Fast" }]} />
+          <Dropdown label="Model" defaultValue="l" items={[{ value: "l", label: "Theo Large" }, { value: "f", label: "Theo Fast" }]} />
           <MultiSelect label="Countries" defaultValue={["fr", "de"]} items={[{ value: "fr", label: "France" }, { value: "de", label: "Germany" }, { value: "it", label: "Italy" }, { value: "es", label: "Spain" }]} />
         </Stack>
       ),
@@ -263,7 +263,7 @@ export const inputDemos: DemoMap = {
       title: "Simple · Single · Range",
       render: () => (
         <Stack gap="lg">
-          <DatePicker mode="simple" label="Contract start" helperText="Type the date — no calendar needed" />
+          <DatePicker mode="simple" label="Contract start" helperText="Type the date, no calendar needed" />
           <DatePicker label="Go-live date" minDate={new Date()} />
           <DateRangePicker startLabel="From" endLabel="To" />
           <DatePicker label="Invalid" invalid invalidText="Go-live must be a weekday" />
@@ -326,7 +326,7 @@ export const inputDemos: DemoMap = {
           <CheckboxGroup legend="Channels" helperText="Select all that apply">
             <Checkbox label="Web chat" defaultChecked />
             <Checkbox label="Email" />
-            <Checkbox label="Voice" helperText="Uses Vita Voice, billed per minute" />
+            <Checkbox label="Voice" helperText="Uses Theo Voice, billed per minute" />
             <Checkbox label="WhatsApp" disabled />
           </CheckboxGroup>
           <Checkbox label="Select all (indeterminate)" checked="indeterminate" />
@@ -385,13 +385,13 @@ export const inputDemos: DemoMap = {
   "components/form": [
     { title: "Default form", description: "Submit empty to see validation.", render: () => <FormDemo /> },
     {
-      title: "Fluid form — one column, pairs blend",
+      title: "Fluid form, one column, pairs blend",
       description: "Every field in one container. The budget range is one data point, so its two ends share a row.",
       render: () => (
         <FluidForm className="max-w-xl">
           <TextInput label="Agent name" defaultValue="Support triage" />
           <TextInput label="Owner" />
-          <Select label="Model" defaultValue="large"><SelectOption value="large">Vita Large</SelectOption><SelectOption value="fast">Vita Fast</SelectOption></Select>
+          <Select label="Model" defaultValue="large"><SelectOption value="large">Theo Large</SelectOption><SelectOption value="fast">Theo Fast</SelectOption></Select>
           <FormRow><TextInput label="Monthly budget from" defaultValue="$200" /><TextInput label="to" defaultValue="$1,200" /></FormRow>
           <TextInput label="Max tokens" invalid invalidText="Enter a number from 256 to 32,000" defaultValue="abc" />
         </FluidForm>

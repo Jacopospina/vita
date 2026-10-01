@@ -6,12 +6,12 @@ import { Icon } from "@/registry/ui/icon"
 import { IconPlaceholder, type IconPlaceholderTone } from "@/registry/ui/icon-placeholder"
 
 /**
- * ListItem — the settings-style row: leading icon placeholder · title (+ subtitle) · trailing control on the far right.
+ * ListItem, the settings-style row: leading icon placeholder · title (+ subtitle) · trailing control on the far right.
  * ListGroup joins rows that BELONG together into one card (zero gap, the card owns fill + radius, rows are flat,
  * separators are inset). Different groups stand apart. ListSection gives a run of groups a heading.
  *
  *   navigation row   onClick / href, no trailing → chevron on the far right, whole row is the target
- *   control row      trailing = Toggle / Button / Dropdown / value text — the row itself is not clickable
+ *   control row      trailing = Toggle / Button / Dropdown / value text, the row itself is not clickable
  */
 
 export interface ListItemProps {
@@ -19,7 +19,7 @@ export interface ListItemProps {
   icon?: IconType
   /** Colors the glyph on the neutral placeholder. */
   tone?: IconPlaceholderTone
-  /** Leading media instead of an icon placeholder — avatar, device image, app mark. */
+  /** Leading media instead of an icon placeholder, avatar, device image, app mark. */
   media?: React.ReactNode
   title: React.ReactNode
   /** Second line, only when it adds information (model, owner, state). */
@@ -74,10 +74,10 @@ export function ListItem({ icon, tone = "neutral", media, title, subtitle, value
   )
 }
 
-/** ListGroup — rows that belong together, joined into one card. A single row on its own is a group of one. */
+/** ListGroup, rows that belong together, joined into one card. A single row on its own is a group of one. */
 export function ListGroup({ className, children, ...props }: React.HTMLAttributes<HTMLUListElement>) {
   return (
-    // Concentric: the group's radius (lg) minus its 4px padding is the rows' radius (rounded-inner-1) — plain rounding on
+    // Concentric: the group's radius (lg) minus its 4px padding is the rows' radius (rounded-inner-1), plain rounding on
     // both, so the curves stay parallel (a squircle outside would read rounder than the formula).
     <ul role="list" className={cn("flex flex-col scope-lg border border-border-subtle bg-layer-2 p-1", className)} {...props}>
       {children}
@@ -86,7 +86,7 @@ export function ListGroup({ className, children, ...props }: React.HTMLAttribute
 }
 
 /**
- * ListSection — one or more ListGroups, with an optional heading and note. It OWNS the gap between groups
+ * ListSection, one or more ListGroups, with an optional heading and note. It OWNS the gap between groups
  * (different topics stand apart); never space groups with a loose Stack.
  */
 export function ListSection({ title, description, className, children }: { title?: React.ReactNode; description?: React.ReactNode; className?: string; children: React.ReactNode }) {

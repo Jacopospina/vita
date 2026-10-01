@@ -1,6 +1,6 @@
 ---
 title: Touch adapts by itself
-summary: When a finger is the pointer, Corpus grows its targets, its type and its hit areas, lightens its glass and switches the thinking orb to a filter-free renderer — without a knob and without a product doing anything.
+summary: When a finger is the pointer, Vita grows its targets, its type and its hit areas, lightens its glass and switches the thinking orb to a filter-free renderer, without a knob and without a product doing anything.
 status: accepted
 date: 2026-10-01
 decided_by: Jacopo
@@ -10,7 +10,7 @@ related: [accessibility, spacing, theming, material, thinking, glass-by-elevatio
 ## Decision
 
 - **Touch is detected, never configured.** `pointer: coarse` (phones, tablets) is the one signal. There is no touch preset and no touch knob.
-- **Density floors at 1.1.** Controls, fields and insets read as if `--corpus-density` were at least 1.1; `h-field-md` lands on 44px. A team's larger value still wins (`max()` only raises).
+- **Density floors at 1.1.** Controls, fields and insets read as if `--vita-density` were at least 1.1; `h-field-md` lands on 44px. A team's larger value still wins (`max()` only raises).
 - **Type floors at 16px.** The whole ramp grows from a 16px body: readable at arm's length, and iOS stops zooming into fields set below 16px.
 - **Small standalone controls carry a 44px hit area** through the `tap` utility: checkboxes, radios, switches, slider knobs, lone × and ⓘ buttons. The visual stays; the invisible target grows.
 - **Every control answers at once.** `touch-action: manipulation` on buttons, links, fields and ARIA widgets; the grey tap highlight and the long-press callout are off. The press state is the feedback.
@@ -27,9 +27,9 @@ related: [accessibility, spacing, theming, material, thinking, glass-by-elevatio
 - **Backdrop blur under a scrolling page** is the classic mobile stutter; halving the radius quarters the cost.
 - **Agents build for phones too.** The system has to make the right call so nobody has to remember it.
 
-## Rejected — avoid
+## Rejected, avoid
 
-- **A touch preset or `--corpus-touch` knob.** It would be forgotten; the promise is "about ten variables".
+- **A touch preset or `--vita-touch` knob.** It would be forgotten; the promise is "about ten variables".
 - **Extended hit areas on every button.** In dense groups (button sets, header actions, table rows) a 44px target overlaps the neighbour's visible box, so taps land on the wrong control. Hence `tap` is explicit and only for standalone controls.
 - **`maximum-scale=1` to stop the iOS zoom.** It disables pinch-zoom for everyone; the 16px floor fixes the cause.
 - **Capping the orb at 30 fps.** Capped rates read as stepping; a cheaper renderer at full rate is the answer.

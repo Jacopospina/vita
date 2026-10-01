@@ -7,7 +7,7 @@ import { Kbd } from "@/registry/ui/kbd"
 import { useShortcut } from "@/registry/hooks/use-shortcut"
 
 /**
- * Search — find content by query. Label is visually hidden but always present.
+ * Search, find content by query. Label is visually hidden but always present.
  * variant "field" = in forms/pages · "toolbar" = inside toolbars, headers and sidebars (no border, soft fill) · "expandable" = icon that grows.
  */
 export interface SearchProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size" | "value" | "defaultValue" | "onChange"> {
@@ -84,7 +84,7 @@ export const Search = React.forwardRef<HTMLInputElement, SearchProps>(
           }}
           onKeyDown={(e) => {
             if (e.key === "Enter") onSubmitSearch?.(val)
-            // Escape: clear and let go — the left hand never needs to reach for the mouse to leave search.
+            // Escape: clear and let go, the left hand never needs to reach for the mouse to leave search.
             if (e.key === "Escape") {
               e.preventDefault()
               setVal("")
@@ -97,7 +97,7 @@ export const Search = React.forwardRef<HTMLInputElement, SearchProps>(
           className={cn(
             "h-full w-full min-w-0 rounded-md pr-control-md pl-control-md text-body text-foreground placeholder:text-placeholder",
             " duration-fast-02 ease-productive [&::-webkit-search-cancel-button]:appearance-none",
-            "focus-visible:outline-1 focus-visible:outline-offset-0 focus-visible:outline-(--corpus-ring) focus-visible:focus-halo focus-visible:animate-focus-in",
+            "focus-visible:outline-1 focus-visible:outline-offset-0 focus-visible:outline-(--vita-ring) focus-visible:focus-halo focus-visible:animate-focus-in",
             variant === "field" && "border border-border-field bg-field hover:border-border-strong",
             variant !== "field" && "border border-transparent bg-hover hover:bg-active focus:bg-field",
             collapsed && "pointer-events-none opacity-0",

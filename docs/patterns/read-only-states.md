@@ -1,6 +1,6 @@
 ---
 title: Read-only states
-summary: Showing values the user can see but not change — and switching between viewing and editing.
+summary: Showing values the user can see but not change, and switching between viewing and editing.
 status: stable
 use_when:
   - Detail pages where viewing is more common than editing

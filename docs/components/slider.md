@@ -2,7 +2,7 @@
 title: Slider
 summary: Choose a value or range where relative position matters more than precision. The value is always visible.
 status: stable
-import: "import { Slider } from \"@/components/corpus/slider\""
+import: "import { Slider } from \"@/components/vita/slider\""
 use_when:
   - Adjusting a continuous value with immediate feedback (volume, opacity, zoom)
   - Filtering by a numeric range (price, weight) with two thumbs

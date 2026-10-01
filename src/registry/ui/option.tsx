@@ -4,10 +4,10 @@ import { cn } from "@/registry/lib/utils"
 import { Icon, DrawnMark } from "@/registry/ui/icon"
 
 /**
- * Option — the list item inside every dropdown list (Dropdown, Select, Combobox, MultiSelect). One row anatomy:
+ * Option, the list item inside every dropdown list (Dropdown, Select, Combobox, MultiSelect). One row anatomy:
  *   [tick slot] [icon?] label / description?
  * The tick has a reserved left slot, so labels never move as it draws in or out. Highlighted = the accent row
- * (pointer or keyboard), text and tick invert. The WHOLE row is the target — never a checkbox inside it.
+ * (pointer or keyboard), text and tick invert. The WHOLE row is the target, never a checkbox inside it.
  * Actions (verbs) belong in a Menu item, not an Option.
  */
 
@@ -22,7 +22,7 @@ export const listClasses = cn(
 export const tickClasses = "absolute left-2.5 text-primary group-data-[highlighted]/item:text-primary-foreground"
 
 /**
- * Option rows. SINGLE choice (Dropdown, Combobox, Select): no tick — the chosen row is a selected row (soft selected
+ * Option rows. SINGLE choice (Dropdown, Combobox, Select): no tick, the chosen row is a selected row (soft selected
  * fill + medium weight). MULTIPLE choice (Multiselect): a tick in a reserved left slot (pl-8), so labels never move.
  */
 export const itemClasses = cn(
@@ -44,7 +44,7 @@ export interface OptionContentProps {
   multiple?: boolean
 }
 
-/** The inside of every option row — shared by Option and the Radix-based lists, so all dropdowns look the same. */
+/** The inside of every option row, shared by Option and the Radix-based lists, so all dropdowns look the same. */
 /** Multiple-choice rows reserve the left tick slot. */
 export const multiItemClasses = "pl-8 aria-selected:not-data-[highlighted]:bg-transparent aria-selected:font-normal"
 
@@ -88,7 +88,7 @@ export const Option = React.forwardRef<HTMLDivElement, OptionProps>(({ label, de
 ))
 Option.displayName = "Option"
 
-/** OptionList — the list surface, for static/in-page use (dropdowns render their own floating one). */
+/** OptionList, the list surface, for static/in-page use (dropdowns render their own floating one). */
 export function OptionList({ multiple, label = "Options", className, ...props }: React.HTMLAttributes<HTMLDivElement> & { multiple?: boolean; label?: string }) {
   return <div role="listbox" aria-label={label} aria-multiselectable={multiple || undefined} className={cn("flex w-64 flex-col scope-lg glass glass-3 p-1.5 text-foreground", className)} {...props} />
 }

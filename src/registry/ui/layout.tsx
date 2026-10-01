@@ -36,12 +36,12 @@ export interface StackProps extends React.HTMLAttributes<HTMLDivElement>, Varian
   asChild?: boolean
   /**
    * Opt in to layout glide (FLIP): children glide when items are added, removed or reordered (lists, threads,
-   * stacks of chips). Off by default — static layout never moves; reflow (fonts, resizing) is instant.
+   * stacks of chips). Off by default, static layout never moves; reflow (fonts, resizing) is instant.
    */
   flip?: boolean
 }
 
-/** Stack — vertical rhythm . The default container for anything laid out top-to-bottom. */
+/** Stack, vertical rhythm . The default container for anything laid out top-to-bottom. */
 export function Stack({ className, direction, gap, align, justify, wrap, asChild, flip = false, ...props }: StackProps) {
   const Comp = asChild ? Slot.Root : "div"
   const ref = React.useRef<HTMLDivElement>(null)
@@ -50,15 +50,15 @@ export function Stack({ className, direction, gap, align, justify, wrap, asChild
 }
 
 /**
- * Inline — horizontal row of DIFFERENT components (a button and a status, a field and a toggletip):
- * vertically centred, 12px apart by default. Things that belong together touch instead — use Group.
+ * Inline, horizontal row of DIFFERENT components (a button and a status, a field and a toggletip):
+ * vertically centred, 12px apart by default. Things that belong together touch instead, use Group.
  */
 export function Inline({ gap = "md", align = "center", ...props }: Omit<StackProps, "direction">) {
   return <Stack direction="row" gap={gap} align={align} {...props} />
 }
 
 /**
- * Group — BELONGING HAS NO GAPS. Items that belong together touch: zero gap, shared edges,
+ * Group, BELONGING HAS NO GAPS. Items that belong together touch: zero gap, shared edges,
  * only the outer corners rounded. Use for button sets, segmented actions, swatch strips, input + button.
  */
 export function Group({ orientation = "horizontal", fill, className, ...props }: React.HTMLAttributes<HTMLDivElement> & { orientation?: "horizontal" | "vertical"; fill?: boolean }) {
@@ -69,7 +69,7 @@ export function Group({ orientation = "horizontal", fill, className, ...props }:
         // The GROUP owns the shape: radius, clipping and the single outer outline.
         "flex w-fit gap-0 overflow-hidden squircle",
         // Children lose their own corners, borders and individual tilt; focus draws inside.
-        "*:rounded-none *:[--corpus-squircle-r:0px] *:border-0 *:transform-none *:focus-visible:-outline-offset-2",
+        "*:rounded-none *:[--vita-squircle-r:0px] *:border-0 *:transform-none *:focus-visible:-outline-offset-2",
         // Outline-style members (tertiary, danger-tertiary) → one outline around the whole group.
         "has-[>.border-primary]:border has-[>.border-primary]:border-primary has-[>.border-error]:border has-[>.border-error]:border-error",
         orientation === "horizontal" ? "flex-row" : "flex-col",
@@ -81,7 +81,7 @@ export function Group({ orientation = "horizontal", fill, className, ...props }:
   )
 }
 
-/** Spacer — pushes siblings apart inside an Inline/Stack. */
+/** Spacer, pushes siblings apart inside an Inline/Stack. */
 export function Spacer() {
   return <div aria-hidden className="flex-1" />
 }
@@ -100,7 +100,7 @@ const gridVariants = cva("grid grid-cols-4 md:grid-cols-8 lg:grid-cols-16", {
 
 export interface GridProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof gridVariants> {}
 
-/** Grid — 16 columns (lg) · 8 (md) · 4 (sm). Gutter (both directions): wide 20px for content, narrow 12px for dense data, condensed 1px for tiles. */
+/** Grid, 16 columns (lg) · 8 (md) · 4 (sm). Gutter (both directions): wide 20px for content, narrow 12px for dense data, condensed 1px for tiles. */
 export function Grid({ className, gutter, rowGap, ...props }: GridProps) {
   return <div className={cn(gridVariants({ gutter, rowGap }), className)} {...props} />
 }
@@ -123,7 +123,7 @@ export function Column({ sm = "full", md, lg, className, ...props }: ColumnProps
   return <div className={cn(smSpan[String(sm)] ?? "col-span-full", md && mdSpan[String(md)], lg && lgSpan[String(lg)], className)} {...props} />
 }
 
-/** Container — page content width. `readable` caps line length (~70ch) for long-form content. */
+/** Container, page content width. `readable` caps line length (~70ch) for long-form content. */
 export function Container({ width = "wide", className, ...props }: React.HTMLAttributes<HTMLDivElement> & { width?: "wide" | "readable" | "full" }) {
   return (
     <div

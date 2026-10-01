@@ -6,7 +6,7 @@ import { SwapIcon, ProgressGlyph } from "@/registry/ui/icon"
 import { AnimatedText } from "@/registry/ui/animated"
 
 /**
- * StatusIndicator — the ONE way to show the state of an object (a job, a server, an invoice).
+ * StatusIndicator, the ONE way to show the state of an object (a job, a server, an invoice).
  * Shape + color + text, always all three (WCAG 1.4.1). Pick the kind by MEANING, never by color preference.
  *
  * FINAL states hold still:
@@ -16,10 +16,10 @@ import { AnimatedText } from "@/registry/ui/animated"
  *   undefined   no state defined for this object · unknown    state can't be determined
  *   draft       being written (a written stroke, still)
  *
- * NON-FINAL states are alive — an inner path animates, the frame never moves:
+ * NON-FINAL states are alive, an inner path animates, the frame never moves:
  *   in-progress running now (pie steps by slices) · pending     awaiting someone (dots take turns)
  *   queued      waiting its turn (clock hand turns) · not-started will run, hasn't (core breathes)
- *   incomplete  partly done (half fill breathes)   · paused      stopped — destructive colour (bars breathe)
+ *   incomplete  partly done (half fill breathes)   · paused      stopped, destructive colour (bars breathe)
  */
 const kinds = {
   success: { icon: status.success.icon, color: status.success.iconColor, live: false },
@@ -30,7 +30,7 @@ const kinds = {
   info: { icon: status.info.icon, color: status.info.iconColor, live: false },
   undefined: { icon: UndefinedFilled, color: "text-muted-foreground", live: false },
   unknown: { icon: UnknownFilled, color: "text-muted-foreground", live: false },
-  "in-progress": { icon: null, color: status.info.iconColor, live: true }, // a status, so info — never brand
+  "in-progress": { icon: null, color: status.info.iconColor, live: true }, // a status, so info, never brand
   pending: { icon: null, color: "text-muted-foreground", live: true },
   draft: { icon: null, color: "text-muted-foreground", live: false },
   queued: { icon: null, color: "text-info", live: true },
@@ -47,7 +47,7 @@ export const isFinalStatus = (k: StatusKind) => !kinds[k].live
 /** Rotate/scale an inner path around its own centre (in SVG user units). */
 const origin = (v: string) => ({ style: { transformOrigin: v } })
 
-/** StatusGlyph — the animated glyphs for non-final states. 16-unit grid; ring still, inside alive. */
+/** StatusGlyph, the animated glyphs for non-final states. 16-unit grid; ring still, inside alive. */
 export function StatusGlyph({ kind, className }: { kind: Exclude<StatusKind, "success" | "error" | "critical" | "warning" | "caution" | "info" | "undefined" | "unknown">; className?: string }) {
   if (kind === "in-progress") return <ProgressGlyph className={className} />
   const ring = <circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="1.5" />

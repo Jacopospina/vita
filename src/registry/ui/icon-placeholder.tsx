@@ -4,7 +4,7 @@ import { cn } from "@/registry/lib/utils"
 import { Icon } from "@/registry/ui/icon"
 
 /**
- * IconPlaceholder — the leading visual slot: a colored glyph on a neutral squircle tile.
+ * IconPlaceholder, the leading visual slot: a colored glyph on a neutral squircle tile.
  * ONE look everywhere; only the size changes:
  *   sm 24 → dense rows, inline marks · md 32 → list items · lg 40 → notifications, toast banners
  * The glyph's tone carries the category or the kind. Never hand-roll an icon-on-a-square.
@@ -52,7 +52,7 @@ export function IconPlaceholder({ icon, tone = "neutral", size = "md", draw, sur
     <span
       aria-hidden
       className={cn(
-        "flex shrink-0 items-center justify-center squircle duration-moderate-01 [--corpus-squircle-r:22%]",
+        "flex shrink-0 items-center justify-center squircle duration-moderate-01 [--vita-squircle-r:22%]",
         surface === "solid" ? "bg-icon-surface-solid" : "bg-icon-surface",
         s.tile,
         tones[tone],

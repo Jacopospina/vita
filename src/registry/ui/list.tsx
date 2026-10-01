@@ -2,7 +2,7 @@ import * as React from "react"
 import { cn } from "@/registry/lib/utils"
 
 /**
- * List — typographic lists inside content (instructions, feature bullets). Not interactive.
+ * List, typographic lists inside content (instructions, feature bullets). Not interactive.
  * Interactive/selectable rows → ContainedList. Comparing attributes across rows → StructuredList / DataTable.
  */
 export function UnorderedList({ className, nested, ...props }: React.HTMLAttributes<HTMLUListElement> & { nested?: boolean }) {

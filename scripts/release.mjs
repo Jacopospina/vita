@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * pnpm release <major|minor|patch> — bump package.json, regenerate the changelog, commit and tag vX.Y.Z locally.
+ * pnpm release <major|minor|patch>, bump package.json, regenerate the changelog, commit and tag vX.Y.Z locally.
  * Pushing (and publishing) stays a deliberate, separate step.
  */
 import fs from "node:fs"
@@ -21,7 +21,7 @@ pkg.version = next
 fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + "\n")
 run("git", ["add", "package.json"])
 run("git", ["commit", "-q", "-m", `Release v${next}`])
-run("git", ["tag", "-a", `v${next}`, "-m", `Corpus v${next}`])
+run("git", ["tag", "-a", `v${next}`, "-m", `Vita v${next}`])
 run("node", ["scripts/build-changelog.mjs"])
 run("git", ["add", "CHANGELOG.md", "docs/getting-started/changelog.md", "docs/changelog.json"])
 run("git", ["commit", "-q", "-m", `Changelog for v${next}`])

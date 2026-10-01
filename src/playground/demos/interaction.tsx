@@ -71,8 +71,8 @@ function KeyboardMap() {
         </Group>
       </Stack>
       <Inline gap="md" wrap>
-        <Inline gap="2xs"><span className="size-3 rounded-sm bg-primary-subtle" /><Text variant="caption" tone="muted">Left hand — shortcuts allowed</Text></Inline>
-        <Inline gap="2xs"><span className="size-3 rounded-sm bg-layer-1" /><Text variant="caption" tone="muted">Right hand — belongs on the mouse</Text></Inline>
+        <Inline gap="2xs"><span className="size-3 rounded-sm bg-primary-subtle" /><Text variant="caption" tone="muted">Left hand, shortcuts allowed</Text></Inline>
+        <Inline gap="2xs"><span className="size-3 rounded-sm bg-layer-1" /><Text variant="caption" tone="muted">Right hand, belongs on the mouse</Text></Inline>
         <Text variant="caption" tone="muted">Press any key to see where it lives.</Text>
       </Inline>
     </Stack>
@@ -137,7 +137,7 @@ export function IntentFlow() {
 
 export const interactionDemos: DemoMap = {
   "getting-started/interaction": [
-    { title: "One hand per device", description: "Corpus shortcuts live on the left half of the keyboard; the right hand stays on the mouse.", render: () => <KeyboardMap /> },
+    { title: "One hand per device", description: "Vita shortcuts live on the left half of the keyboard; the right hand stays on the mouse.", render: () => <KeyboardMap /> },
     { title: "Shortcuts on real controls", description: "Buttons take a `shortcut` prop: it binds the key, announces it and shows it in tooltips.", render: () => <ShortcutsDemo /> },
     {
       title: "Belonging has no gaps",
@@ -148,7 +148,7 @@ export const interactionDemos: DemoMap = {
         </Stack>
       ),
     },
-    { title: "Intent over input", description: "Say it, review it, ship it — one composer instead of a twelve-field form.", render: () => <IntentFlow /> },
+    { title: "Intent over input", description: "Say it, review it, ship it, one composer instead of a twelve-field form.", render: () => <IntentFlow /> },
   ],
   "components/composer": [
     {

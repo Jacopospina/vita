@@ -2,11 +2,11 @@
 title: Text input
 summary: Single-line free text (plus TextArea and PasswordInput). Floating label inside, help below, errors that explain the fix.
 status: stable
-import: "import { TextInput, TextArea, PasswordInput } from \"@/components/corpus/text-input\""
+import: "import { TextInput, TextArea, PasswordInput } from \"@/components/vita/text-input\""
 use_when:
   - Free text the system can't predict (names, titles, references)
-  - Numeric identifiers — phone, postcode, card (inputMode="numeric")
-  - Long text — TextArea; secrets — PasswordInput
+  - Numeric identifiers, phone, postcode, card (inputMode="numeric")
+  - Long text, TextArea; secrets, PasswordInput
 avoid_when:
   - A known set of answers → RadioGroup / Dropdown / Combobox
   - Quantities → NumberInput
@@ -19,8 +19,8 @@ related: [form, number-input, search, forms]
 
 | State | Prop | Looks like |
 |---|---|---|
-| Default | — | `border-field` outline |
-| Focus | — | 2px `focus` outline |
+| Default |, | `border-field` outline |
+| Focus |, | 2px `focus` outline |
 | Invalid | `invalid` + `invalidText` | red border, error icon + message (replaces helper) |
 | Warning | `warn` + `warnText` | amber icon + message; the value is accepted |
 | Read-only | `readOnly` | no border fill, still selectable/copyable |
@@ -28,7 +28,7 @@ related: [form, number-input, search, forms]
 
 ## Rules
 
-1. **The label lives inside the field.** It rests where the value will be, then glides up and shrinks on focus or once filled — never above the field.
+1. **The label lives inside the field.** It rests where the value will be, then glides up and shrinks on focus or once filled, never above the field.
    - Placeholders are examples ("e.g. Q3 forecast"), never labels.
    - `hideLabel` only when the context is visually obvious (a search in a toolbar).
 2. **Required by default.** Every field is announced as required; mark the exceptions with `optional` ("(optional)" joins the label).

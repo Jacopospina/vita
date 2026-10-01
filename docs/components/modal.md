@@ -2,7 +2,7 @@
 title: Modal
 summary: Interrupts to focus on one task or decision. Modality is a last resort.
 status: stable
-import: "import { Modal, ModalTrigger, ModalContent, ModalHeader, ModalBody, ModalFooter, ModalClose, ConfirmModal } from \"@/components/corpus/modal\""
+import: "import { Modal, ModalTrigger, ModalContent, ModalHeader, ModalBody, ModalFooter, ModalClose, ConfirmModal } from \"@/components/vita/modal\""
 use_when:
   - Confirming a destructive or irreversible action (ConfirmModal danger)
   - A short, self-contained task (≤ 5 fields) that shouldn't leave the page
@@ -27,9 +27,9 @@ related: [dialogs, ui-shell-right-panel, popover, notification]
 
 ## Exit choreography
 
-- **Enter is expressive, exits are productive.** The modal arrives with presence and leaves quickly — the user has already moved on.
+- **Enter is expressive, exits are productive.** The modal arrives with presence and leaves quickly, the user has already moved on.
 - **Dismissed → falls.** ×, Escape or click-outside: it drops with gravity and tilts away.
-- **Sent → flies up.** When its data is submitted successfully (`ModalAction`, `ConfirmModal`), it dips for a beat, then shoots out through the top, solid all the way — it never fades.
+- **Sent → flies up.** When its data is submitted successfully (`ModalAction`, `ConfirmModal`), it dips for a beat, then shoots out through the top, solid all the way, it never fades.
 - **Failed → stays.** If the action throws, the modal stays open so the user can fix it.
 
 ```tsx

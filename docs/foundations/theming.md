@@ -1,10 +1,10 @@
 ---
 title: Theming & personalisation
-summary: Change about ten variables in one file and the whole system re-skins — color, shape, density, type and motion.
+summary: Change about ten variables in one file and the whole system re-skins, color, shape, density, type and motion.
 status: stable
-import: "@import \"./styles/corpus.css\";  /* once, at the app root */\n/* then edit ONLY src/styles/theme.css */"
+import: "@import \"./styles/vita.css\";  /* once, at the app root */\n/* then edit ONLY src/styles/theme.css */"
 use_when:
-  - Adapting Corpus to a new brand or product
+  - Adapting Vita to a new brand or product
   - Making a denser admin tool or a calmer consumer app
 avoid_when:
   - Tweaking a single component → change the knob, or propose a variant upstream
@@ -17,14 +17,14 @@ avoid_when:
 
 | Knob | Default | Changes |
 |---|---|---|
-| `--corpus-brand-hue` / `-chroma` | `257.4` / `0.218` | Primary, links, focus, selection, AI gradient |
-| `--corpus-neutral-hue` / `-chroma` | `286` / `0` | The tint of every grey, surface and border. Pure grey by default; raise the chroma to tint |
-| `--corpus-hue-success/warning/error/info` | `147 / 50 / 29 / 257` | Support colors (keep their meaning) |
-| `--corpus-radius` | `0.5rem` | Every corner |
-| `--corpus-density` | `1` | Control heights and insets fully; padding, margin and gap at half strength (never below 90%). Floored at 1.1 on touch |
-| `--corpus-font-sans` / `-mono` / `-numeric` | Google Sans Flex / Code / Code | Typefaces |
-| `--corpus-type-base` / `-ratio` | `0.8125rem` / `1.2` | The whole type ramp (13px body: desktop-native). Floored at 16px on touch |
-| `--corpus-motion-scale` | `1` | Every duration (0 = off) |
+| `--vita-brand-hue` / `-chroma` | `257.4` / `0.218` | Primary, links, focus, selection, AI gradient |
+| `--vita-neutral-hue` / `-chroma` | `286` / `0` | The tint of every grey, surface and border. Pure grey by default; raise the chroma to tint |
+| `--vita-hue-success/warning/error/info` | `147 / 50 / 29 / 257` | Support colors (keep their meaning) |
+| `--vita-radius` | `0.5rem` | Every corner |
+| `--vita-density` | `1` | Control heights and insets fully; padding, margin and gap at half strength (never below 90%). Floored at 1.1 on touch |
+| `--vita-font-sans` / `-mono` / `-numeric` | Google Sans Flex / Code / Code | Typefaces |
+| `--vita-type-base` / `-ratio` | `0.8125rem` / `1.2` | The whole type ramp (13px body: desktop-native). Floored at 16px on touch |
+| `--vita-motion-scale` | `1` | Every duration (0 = off) |
 
 > [!NOTE] Touch floors. When a finger is the pointer, density reads as at least 1.1 and the type base as at least 16px: fields reach 44px, text is readable at arm's length, and iOS no longer zooms into fields. `max()` only raises, so a team's own larger values stay.
 
@@ -41,17 +41,17 @@ avoid_when:
 3. **Support hues keep their meaning.** Shift them ±15°, never swap them.
 4. **Check contrast after color changes.** Yellow and lime brands (hue 85–120) usually fail with white text.
 
-> [!NOTE] Dark mode: add `.dark` or `data-theme="dark"` to any ancestor. Increased contrast: automatic, or `data-corpus-contrast="high"`.
+> [!NOTE] Dark mode: add `.dark` or `data-theme="dark"` to any ancestor. Increased contrast: automatic, or `data-vita-contrast="high"`.
 
 ## Light and dark
 
-- **Follows the sun.** Corpus is light while the sun is up where the user is, and dark after sunset (`useSunTheme`). It uses the device location if the user allows it, otherwise an estimate from their timezone.
+- **Follows the sun.** Vita is light while the sun is up where the user is, and dark after sunset (`useSunTheme`). It uses the device location if the user allows it, otherwise an estimate from their timezone.
 - **People can still choose.** The theme toggle overrides it until the next sunrise or sunset.
 
 ## Greys follow the weather
 
 - **Three states.** With `useWeatherTint` (on by default) the greys are **cold** below 15 °C, **neutral** from 15 to 18 °C, and **warm** from 18 °C up.
-- **Floating layers only.** The tint colours only surfaces that float on a z-index — the glass of the side nav, header, right panel, menus, popovers, dialogs, notifications and pinned toolbars. The page, in-flow cards and tiles, fields, lines and text stay neutral.
+- **Floating layers only.** The tint colours only surfaces that float on a z-index, the glass of the side nav, header, right panel, menus, popovers, dialogs, notifications and pinned toolbars. The page, in-flow cards and tiles, fields, lines and text stay neutral.
 - **Noticeable, still grey.** A tint is chroma 0.014: you see the warmth or the cool, but greys stay greys.
 - **Where the reading comes from.** The current temperature for the user's area (position rounded to about 10 km), refreshed every 30 minutes. Offline, it falls back to a seasonal estimate.
 - **It fades.** A change of state cross-fades the page once.

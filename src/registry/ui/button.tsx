@@ -14,7 +14,7 @@ import { Thinking } from "@/registry/ui/thinking"
 import { animateChildren } from "@/registry/ui/animated"
 
 /**
- * Button — triggers an action. Clear hierarchy with restraint:
+ * Button, triggers an action. Clear hierarchy with restraint:
  * ONE primary per view. Everything else steps down: secondary → tertiary → ghost.
  */
 const buttonVariants = cva(
@@ -34,9 +34,9 @@ const buttonVariants = cva(
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary-hover",
         tertiary: "border border-primary bg-transparent text-primary hover:bg-primary hover:text-primary-foreground",
         ghost: "bg-transparent text-foreground hover:bg-hover active:bg-active",
-        danger: "bg-error text-primary-foreground hover:bg-error-hover [--corpus-ring:var(--corpus-error)]",
-        "danger-tertiary": "border border-error bg-transparent text-error-foreground hover:bg-error hover:text-primary-foreground [--corpus-ring:var(--corpus-error)]",
-        "danger-ghost": "bg-transparent text-error-foreground hover:bg-error hover:text-primary-foreground [--corpus-ring:var(--corpus-error)]",
+        danger: "bg-error text-primary-foreground hover:bg-error-hover [--vita-ring:var(--vita-error)]",
+        "danger-tertiary": "border border-error bg-transparent text-error-foreground hover:bg-error hover:text-primary-foreground [--vita-ring:var(--vita-error)]",
+        "danger-ghost": "bg-transparent text-error-foreground hover:bg-error hover:text-primary-foreground [--vita-ring:var(--vita-error)]",
       },
       /* Symmetric padding, always. With an icon, the icon sits on the far right. */
       size: {
@@ -44,7 +44,7 @@ const buttonVariants = cva(
         md: "h-control-md px-3 text-body",
         lg: "h-control-lg px-4 text-body-lg",
         /** Hero calls to action, and dialog/panel actions. A rounder squircle, in proportion to its height. */
-        xl: "h-12 px-5 text-body-lg [--corpus-squircle-r:var(--corpus-radius-lg)]",
+        xl: "h-12 px-5 text-body-lg [--vita-squircle-r:var(--vita-radius-lg)]",
       },
       fullWidth: { true: "w-full", false: "" },
     },
@@ -61,7 +61,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   /** Working state: the orb thinks in the icon slot, the label can say what's happening. Blocks re-submit. */
   loading?: boolean
   /**
-   * The CONSEQUENCE of the action, shown IN the button — never elsewhere. The button is the last thing the
+   * The CONSEQUENCE of the action, shown IN the button, never elsewhere. The button is the last thing the
    * user looks at; they never look away to learn what their click did. Controlled; or use `onAction`.
    */
   status?: ButtonStatus
@@ -156,7 +156,7 @@ export interface IconButtonProps extends Omit<ButtonProps, "icon" | "iconPositio
   pressed?: boolean
 }
 
-/** IconButton — icon-only action. Defaults to ghost. Always has a tooltip. */
+/** IconButton, icon-only action. Defaults to ghost. Always has a tooltip. */
 export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
   ({ icon, label, variant = "ghost", size = "md", tooltipSide = "bottom", pressed, className, shortcut, ...props }, ref) => (
     <Tooltip content={shortcut ? <span className="inline-flex items-center gap-2">{label}<Kbd keys={shortcut} className="border-transparent bg-transparent text-inverse-foreground" /></span> : label} side={tooltipSide}>
@@ -178,7 +178,7 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
 IconButton.displayName = "IconButton"
 
 /**
- * ButtonSet — related buttons BELONG TOGETHER, so they touch: zero gap, joined edges. Max 3. Primary goes LAST.
+ * ButtonSet, related buttons BELONG TOGETHER, so they touch: zero gap, joined edges. Max 3. Primary goes LAST.
  * `stacked` for narrow containers: vertical join, primary on top.
  */
 export function ButtonSet({ className, stacked, ...props }: React.HTMLAttributes<HTMLDivElement> & { stacked?: boolean }) {
@@ -186,7 +186,7 @@ export function ButtonSet({ className, stacked, ...props }: React.HTMLAttributes
 }
 
 /**
- * ActionBar — the action row of a surface (modal, popover, side panel). Full-bleed, joined, no gaps; the surface owns the corners.
+ * ActionBar, the action row of a surface (modal, popover, side panel). Full-bleed, joined, no gaps; the surface owns the corners.
  * NEVER include Cancel/Close/Dismiss: the surface's × , Escape and click-outside already do that.
  * 1 action = full width. 2 actions = a secondary alternative (not a dismissal) + the primary.
  */
@@ -197,7 +197,7 @@ export function ActionBar({ className, ...props }: React.HTMLAttributes<HTMLDivE
       className={cn(
         "flex shrink-0 gap-0 border-t border-border-subtle",
         // Extra-large actions (the xl button size): decisive, easy targets at the bottom of the surface.
-        "*:h-12 *:flex-1 *:justify-start *:rounded-none *:px-5 *:text-body-lg *:active:scale-100 *:[--corpus-squircle-r:0px]",
+        "*:h-12 *:flex-1 *:justify-start *:rounded-none *:px-5 *:text-body-lg *:active:scale-100 *:[--vita-squircle-r:0px]",
         className,
       )}
       {...props}

@@ -8,7 +8,7 @@ import { TooltipProvider } from "@/registry/ui/tooltip"
 import { useSunTheme } from "@/registry/hooks/use-sun-theme"
 import { useWeatherTint } from "@/registry/hooks/use-weather-tint"
 import { swapAppearance } from "@/registry/lib/appearance"
-import { CorpusMark } from "@/brand/corpus-mark"
+import { VitaMark } from "@/brand/vita-mark"
 import { Toaster } from "@/registry/ui/notification"
 import { Container, Stack, Inline } from "@/registry/ui/layout"
 import { Text } from "@/registry/ui/text"
@@ -23,10 +23,10 @@ import { ComponentCanvas } from "./canvas"
 import { CardsExample, AgentsExample, RunsExample, ConversationsExample, SettingsExample, SignInExample } from "./examples"
 
 /*
- * The Corpus showcase, two pages sharing one header:
+ * The Vita showcase, two pages sharing one header:
  *   home  → hero with Sofia at its epicenter → the component canvas → footer
  *   make  → see what you can make: live examples (switch with the tabs, or hold and swing)
- * Everything on it is Corpus; the example product is Vita.
+ * Everything on it is Vita; the example product is Theo.
  */
 
 const DOCS = DOCS_URL
@@ -51,12 +51,12 @@ export function Showcase({ page = "home" }: { page?: "home" | "make" }) {
     <TooltipProvider>
       <Shell>
         <Header
-          productName="Corpus"
-          logo={<CorpusMark size={24} className="-m-0.5" />}
+          productName="Vita"
+          logo={<VitaMark size={24} className="-m-0.5" />}
           href={HOME_URL}
           actions={
             <>
-              <GlobalSearch items={searchPages((path) => window.location.assign(`${DOCS}${path}`))} placeholder="Search Corpus" className="size-8 rounded-inner-2" />
+              <GlobalSearch items={searchPages((path) => window.location.assign(`${DOCS}${path}`))} placeholder="Search Vita" className="size-8 rounded-inner-2" />
               <HeaderSeparator />
               <HeaderGlobalAction icon={dark ? Sun : Moon} label={dark ? "Light theme" : "Dark theme"} onClick={() => setDark((d) => !d)} />
               <GithubAction />
@@ -69,7 +69,7 @@ export function Showcase({ page = "home" }: { page?: "home" | "make" }) {
         <ShellMain>
           {page === "make" ? <MakePage /> : <HomePage />}
           <Text variant="footnote" tone="muted" className="pb-16 text-center">
-            Made with Corpus. From mind to matter. Source on <Link inline href="https://github.com/Jacopospina/corpus" external>GitHub</Link>.
+            Made with Vita. Mind, soul, life. Source on <Link inline href="https://github.com/Jacopospina/vita" external>GitHub</Link>.
           </Text>
         </ShellMain>
       </Shell>
@@ -88,9 +88,9 @@ function HomePage() {
           <OperationalTag tone="brand" onClick={() => (window.location.href = `${DOCS}components/capsule`)}>
             New: Capsule, liquid progress and hold-to-swing tabs <Icon as={ArrowRight} size="sm" />
           </OperationalTag>
-          <Text variant="display" as="h1" className="max-w-3xl">Give your ideas a body</Text>
+          <Text variant="display" as="h1" className="max-w-3xl">Give your ideas life</Text>
           <Text variant="body-lg" tone="muted" className="max-w-2xl">
-            The AI-agent-first design system, born for humans and machines making together. Documented and built so your agents design like designers — and you make what only you can make.
+            The AI-agent-first design system, born for humans and machines making together. Documented and built so your agents design like designers, and you make what only you can make.
           </Text>
           <Inline gap="md" justify="center">
             <Button size="xl" onClick={() => (window.location.href = `${DOCS}guidelines`)}>Start making</Button>
@@ -99,7 +99,7 @@ function HomePage() {
         </Stack>
       </Container>
 
-      {/* The component canvas — full bleed, past both edges of the window */}
+      {/* The component canvas, full bleed, past both edges of the window */}
       <ComponentCanvas />
 
       <div className="pb-16" />
@@ -107,14 +107,14 @@ function HomePage() {
   )
 }
 
-/** See what you can make — the live Vita examples, on a page of their own. */
+/** See what you can make, the live Theo examples, on a page of their own. */
 function MakePage() {
   return (
     <Container className="pt-12 pb-16">
       <Stack gap="2xl" className="stagger">
         <Stack gap="xs" align="center" className="text-center">
           <Text variant="large-title" as="h1">See what you can make</Text>
-          <Text variant="body-lg" tone="muted" className="max-w-2xl">Whole screens of Vita, built only from Corpus. Everything here is live: click, type, switch.</Text>
+          <Text variant="body-lg" tone="muted" className="max-w-2xl">Whole screens of Theo, built only from Vita. Everything here is live: click, type, switch.</Text>
         </Stack>
         <section id="examples" aria-label="Examples">
           <Tabs defaultValue="cards">

@@ -6,9 +6,9 @@ import { AnimatedNumber } from "@/registry/ui/animated"
 import { Skeleton } from "@/registry/ui/loading"
 
 /**
- * Kpi — one key number: label → value → trend. For dashboards, page headers and summary strips.
+ * Kpi, one key number: label → value → trend. For dashboards, page headers and summary strips.
  * The value is a number (it swaps digit by digit, always regular weight). The trend's colour says whether the change
- * is GOOD for this metric (`better`), its arrow says which way it went — never colour alone.
+ * is GOOD for this metric (`better`), its arrow says which way it went, never colour alone.
  * Many numbers in a table → DataTable. A single status, not a number → StatusIndicator.
  */
 export interface KpiProps {
@@ -57,7 +57,7 @@ export function Kpi({ label, value, format, delta, deltaFormat = { style: "perce
 }
 
 /**
- * KpiGroup — related KPIs that belong together: one surface, no gaps, hairline dividers between them.
+ * KpiGroup, related KPIs that belong together: one surface, no gaps, hairline dividers between them.
  * `bare` drops the surface (in page headers, where the header is the container).
  */
 export function KpiGroup({ children, bare, className }: { children: React.ReactNode; bare?: boolean; className?: string }) {

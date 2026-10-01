@@ -1,4 +1,4 @@
-/** Loads /docs/**.md and parses the small YAML frontmatter subset Corpus docs use. */
+/** Loads /docs/**.md and parses the small YAML frontmatter subset Vita docs use. */
 const raw = import.meta.glob("/docs/**/*.md", { query: "?raw", import: "default", eager: true }) as Record<string, string>
 
 export interface DocMeta {

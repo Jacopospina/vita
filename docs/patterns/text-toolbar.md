@@ -1,8 +1,8 @@
 ---
 title: Text toolbar
-summary: Formatting controls for rich-text editing — grouped, labelled, keyboard-friendly, with shortcuts.
+summary: Formatting controls for rich-text editing, grouped, labelled, keyboard-friendly, with shortcuts.
 status: stable
-import: "import { Toolbar, ToolbarButton, ToolbarToggle, ToolbarToggleGroup, ToolbarSeparator } from \"@/components/corpus/toolbar\""
+import: "import { Toolbar, ToolbarButton, ToolbarToggle, ToolbarToggleGroup, ToolbarSeparator } from \"@/components/vita/toolbar\""
 use_when:
   - Rich text editors (comments, descriptions, email drafts, notes)
 avoid_when:

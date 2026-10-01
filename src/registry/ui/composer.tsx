@@ -7,7 +7,7 @@ import { useExit } from "@/registry/hooks/use-exit"
 import { useFlip } from "@/registry/hooks/use-flip"
 
 /**
- * Composer — INTENT-FIRST INPUT. The user says what they want (type, speak, attach) and the system does the work.
+ * Composer, INTENT-FIRST INPUT. The user says what they want (type, speak, attach) and the system does the work.
  * Prefer one Composer + an AI-prepared review over a form of many fields.
  *
  *   - Suggestions fill the composer with one click (mouse-only path).
@@ -70,7 +70,7 @@ export function Composer({ placeholder = "Describe what you need", onSubmit, sug
           // Styled exactly like a text input: field border and fill, no resting shadow, same radius, hover and focus.
           "flex flex-col scope-md border border-border-field bg-field duration-moderate-02 ease-productive",
           "hover:border-border-strong hover:bg-layer-1 focus-within:bg-field",
-          "focus-within:border-transparent focus-within:outline-1 focus-within:outline-(--corpus-ring) focus-within:focus-halo focus-within:animate-focus-in",
+          "focus-within:border-transparent focus-within:outline-1 focus-within:outline-(--vita-ring) focus-within:focus-halo focus-within:animate-focus-in",
           listening && "border-transparent outline-1 outline-primary",
         )}
       >
@@ -115,7 +115,7 @@ export function Composer({ placeholder = "Describe what you need", onSubmit, sug
             <IconButton icon={listening ? MicrophoneFilled : Microphone} label={listening ? "Stop dictation" : "Dictate"} size="sm" pressed={listening} onClick={toggleVoice} className={cn("rounded-inner-1.5 [corner-shape:round]", listening && "animate-pulse text-primary")} />
           )}
           <span className="flex-1" />
-          {/* Send exists only when there's something to send — never a disabled button. It slides in from the
+          {/* Send exists only when there's something to send, never a disabled button. It slides in from the
               composer's floor (its POSITION moves; nothing is clipped), fading in: expressive in, productive out. */}
           <span className="flex">
             <span

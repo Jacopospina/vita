@@ -1,11 +1,11 @@
 ---
-name: corpus-visual-consistency
-description: Make any Corpus screen look like it was designed by the same person as every other screen — hierarchy, spacing rhythm, alignment, surfaces, color restraint, typography roles, density. Use when building or polishing a screen, when asked to "make it look better/cleaner/more consistent", or when reviewing UI visually.
+name: vita-visual-consistency
+description: Make any Vita screen look like it was designed by the same person as every other screen, hierarchy, spacing rhythm, alignment, surfaces, color restraint, typography roles, density. Use when building or polishing a screen, when asked to "make it look better/cleaner/more consistent", or when reviewing UI visually.
 ---
 
-# Corpus visual consistency
+# Vita visual consistency
 
-Consistency comes from rules, not taste. Run this checklist on every screen, top to bottom. Every "no" gets fixed with a Corpus token or component, never a one-off.
+Consistency comes from rules, not taste. Run this checklist on every screen, top to bottom. Every "no" gets fixed with a Vita token or component, never a one-off.
 
 ## 1. Hierarchy (squint test)
 
@@ -27,7 +27,7 @@ Consistency comes from rules, not taste. Run this checklist on every screen, top
 
 - [ ] Everything aligns to the grid's left edge. There are no centred body text or forms in product UI (empty states and login are the exceptions).
 - [ ] Numbers are right-aligned with `tabular-nums` in tables and metrics.
-- [ ] Icons are optically aligned with their text (Corpus components handle this; don't nudge with margins).
+- [ ] Icons are optically aligned with their text (Vita components handle this; don't nudge with margins).
 
 ## 4. Surfaces & depth
 
@@ -44,9 +44,9 @@ Consistency comes from rules, not taste. Run this checklist on every screen, top
 
 ## 6. Components used the same way everywhere
 
-- [ ] The same action has the same label, icon and position as on other screens (`corpus/taxonomy.json → actions`).
+- [ ] The same action has the same label, icon and position as on other screens (`vita/taxonomy.json → actions`).
 - [ ] Controls in a row share one size (`sm`/`md`/`lg`), matching density.
-- [ ] Icons come from the Corpus set, at sizes `sm` (inline) or `md` (standalone), and are the same icon for the same concept.
+- [ ] Icons come from the Vita set, at sizes `sm` (inline) or `md` (standalone), and are the same icon for the same concept.
 
 ## 7. States are designed, not forgotten
 
@@ -64,5 +64,5 @@ Also check disabled and read-only states per their patterns, dark mode and 200% 
 When asked to polish, return:
 
 1. The checklist items that failed.
-2. The exact Corpus-native change for each.
+2. The exact Vita-native change for each.
 3. The code.

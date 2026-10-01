@@ -2,7 +2,7 @@ import { cn } from "@/registry/lib/utils"
 import { isMac, parseCombo } from "@/registry/hooks/use-shortcut"
 
 /**
- * Kbd — shows a shortcut, platform-aware ("mod+s" → ⌘S on Mac, Ctrl+S elsewhere).
+ * Kbd, shows a shortcut, platform-aware ("mod+s" → ⌘S on Mac, Ctrl+S elsewhere).
  * Shortcuts appear in tooltips and menus, never as standalone instructions.
  */
 const glyph: Record<string, string> = { escape: "Esc", tab: "Tab", space: "Space", shift: "⇧", alt: isMac ? "⌥" : "Alt" }

@@ -2,13 +2,13 @@
 title: Tile
 summary: A surface that groups related content. Base, clickable, selectable and expandable, and never nested.
 status: stable
-import: "import { Tile, ClickableTile, SelectableTile, ExpandableTile, TileGroup, TileSet, TileSetItem } from \"@/components/corpus/tile\""
+import: "import { Tile, ClickableTile, SelectableTile, ExpandableTile, TileGroup, TileSet, TileSetItem } from \"@/components/vita/tile\""
 use_when:
-  - Base — grouping related info on a page (a metric, a summary)
-  - Clickable — a card that is one destination (a project, a feature area)
-  - Selectable — choosing among rich options (plans, templates) — single or multi
-  - Expandable — summary first, details on demand
-  - TileSet — several cards that share one meaning, as one object
+  - Base, grouping related info on a page (a metric, a summary)
+  - Clickable, a card that is one destination (a project, a feature area)
+  - Selectable, choosing among rich options (plans, templates), single or multi
+  - Expandable, summary first, details on demand
+  - TileSet, several cards that share one meaning, as one object
 avoid_when:
   - Tables of records → DataTable
   - Wrapping every section in a card "to make it look designed" → use whitespace

@@ -6,7 +6,7 @@ import { ActionBar } from "@/registry/ui/button"
 import { Icon } from "@/registry/ui/icon"
 
 /**
- * Popover — non-modal floating layer anchored to a trigger, opened by CLICK.
+ * Popover, non-modal floating layer anchored to a trigger, opened by CLICK.
  * Holds rich or interactive content (a short form, filters, details). If it needs >1 decision or blocks the page, use Modal.
  */
 export const Popover = PopoverPrimitive.Root
@@ -43,11 +43,11 @@ export function PopoverContent({
 }
 
 /**
- * Toggletip — an "i" button that opens a small popover with explanation and optional link/action.
+ * Toggletip, an "i" button that opens a small popover with explanation and optional link/action.
  * Use instead of a tooltip whenever the content is interactive or longer than one sentence.
  */
 /**
- * PopoverFooter — the popover's action row, exactly like a dialog's: an inset rounded group of joined
+ * PopoverFooter, the popover's action row, exactly like a dialog's: an inset rounded group of joined
  * buttons; the group owns its corners (concentric). Same rules: no Cancel (Esc / click-outside close it).
  */
 export function PopoverFooter({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {

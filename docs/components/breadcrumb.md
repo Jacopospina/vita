@@ -2,7 +2,7 @@
 title: Breadcrumb
 summary: Shows where the user is in a hierarchy of three or more levels and lets them move up.
 status: stable
-import: "import { Breadcrumb } from \"@/components/corpus/breadcrumb\""
+import: "import { Breadcrumb } from \"@/components/vita/breadcrumb\""
 use_when:
   - Pages nested ≥ 3 levels deep (Workspace / Projects / Q3 forecast)
   - Detail pages reached from a list, where "up" is meaningful

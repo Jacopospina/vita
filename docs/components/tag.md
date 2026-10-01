@@ -2,13 +2,13 @@
 title: Tag
 summary: Short labels that categorise, show status in dense rows, or represent applied filters.
 status: stable
-import: "import { Tag, SelectableTag, OperationalTag } from \"@/components/corpus/tag\""
+import: "import { Tag, SelectableTag, OperationalTag } from \"@/components/vita/tag\""
 use_when:
-  - Read-only — categories/metadata on items (region, type)
+  - Read-only, categories/metadata on items (region, type)
   - Status in dense table rows (with icon)
-  - Dismissible — applied filters / chosen values the user can remove
-  - Selectable — quick filter chips (toggle on/off)
-  - Operational — "+3" that reveals more in a popover
+  - Dismissible, applied filters / chosen values the user can remove
+  - Selectable, quick filter chips (toggle on/off)
+  - Operational, "+3" that reveals more in a popover
 avoid_when:
   - Actions → Button
   - Status on detail pages or with more nuance → StatusIndicator

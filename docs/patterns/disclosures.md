@@ -1,8 +1,8 @@
 ---
 title: Disclosures
-summary: Progressive disclosure — show what most people need, reveal the rest on demand.
+summary: Progressive disclosure, show what most people need, reveal the rest on demand.
 status: stable
-import: "import { Disclosure } from \"@/components/corpus/accordion\""
+import: "import { Disclosure } from \"@/components/vita/accordion\""
 use_when:
   - Advanced options most users don't touch
   - Secondary details that would clutter a summary

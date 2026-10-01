@@ -2,7 +2,7 @@
 title: Icons
 summary: One icon set through one Icon component, at four sizes. An icon supports a label; it rarely replaces one.
 status: stable
-import: "import { Icon } from \"@/components/corpus/icon\"\nimport { Add } from \"@/components/corpus/icons\"\n\n<Icon as={Add} size=\"sm\" />"
+import: "import { Icon } from \"@/components/vita/icon\"\nimport { Add } from \"@/components/vita/icons\"\n\n<Icon as={Add} size=\"sm\" />"
 use_when:
   - Reinforcing an action or a status label
   - Icon-only controls with universal meaning (close, search, menu, overflow), always with a tooltip
@@ -14,14 +14,14 @@ avoid_when:
 
 ## Sizes
 
-- **`sm` — 16px.** Inside buttons, fields, tags and menus (default).
-- **`md` — 20px.** Standalone icon buttons, header, toolbars.
-- **`lg` — 24px.** Dense empty states.
-- **`xl` — 32px.** Tiles and feature highlights.
+- **`sm`: 16px.** Inside buttons, fields, tags and menus (default).
+- **`md`: 20px.** Standalone icon buttons, header, toolbars.
+- **`lg`: 24px.** Dense empty states.
+- **`xl`: 32px.** Tiles and feature highlights.
 
 ## Rules
 
-1. **One way in.** Import from `@/components/corpus/icons`, render with `<Icon as={…} />`.
+1. **One way in.** Import from `@/components/vita/icons`, render with `<Icon as={…} />`.
 2. **Icons inherit text color.** Only status icons get their own color.
 3. **Decorative by default.** Pass `label` only when the icon alone carries meaning.
 4. **One icon per concept.** The taxonomy maps concepts to icons: delete is always `TrashCan`.

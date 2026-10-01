@@ -1,13 +1,13 @@
 {
-  "name": "Corpus",
+  "name": "Vita",
   "generated": "2026-10-01",
   "entries": [
     {
       "section": "getting-started",
       "slug": "about",
       "path": "docs/getting-started/about.md",
-      "title": "Mind, soul, body",
-      "summary": "The AI-agent-first design system, born for humans and machines making together — the body of every product, through which its mind and soul reach the world.",
+      "title": "Animus, anima, vita",
+      "summary": "Every product has a mind and a soul. Vita is where they come alive. The AI-agent-first design system, born for humans and machines making together.",
       "status": "stable"
     },
     {
@@ -18,7 +18,7 @@
       "summary": "The AI-agent-first design system, born for humans and machines making together. Its voice is the Creator's, and every word aims to awaken the maker in the reader.",
       "status": "stable",
       "use_when": [
-        "Writing in Corpus's own voice — docs, the showcase, onboarding, release notes, first-use moments",
+        "Writing in Vita's own voice: docs, the showcase, onboarding, release notes, first-use moments",
         "Naming a feature, writing a headline or choosing a slogan"
       ],
       "avoid_when": [
@@ -35,7 +35,7 @@
       "slug": "changelog",
       "path": "docs/getting-started/changelog.md",
       "title": "Changelog",
-      "summary": "Every change to Corpus, newest first, on one timeline. Breaking changes are marked and say how to migrate.",
+      "summary": "Every change to Vita, newest first, on one timeline. Breaking changes are marked and say how to migrate.",
       "status": "stable",
       "related": [
         "how-we-decide",
@@ -47,7 +47,7 @@
       "slug": "cli",
       "path": "docs/getting-started/cli.md",
       "title": "CLI",
-      "summary": "One command line to install Corpus, add components, stay up to date and audit any repo.",
+      "summary": "One command line to install Vita, add components, stay up to date and audit any repo.",
       "status": "stable",
       "related": [
         "installation",
@@ -60,7 +60,7 @@
       "slug": "installation",
       "path": "docs/getting-started/installation.md",
       "title": "Installation",
-      "summary": "Add Corpus to a React + Tailwind v4 product in one command — components, styles, docs, agent skills, the audit and its hooks.",
+      "summary": "Add Vita to a React + Tailwind v4 product in one command, components, styles, docs, agent skills, the audit and its hooks.",
       "status": "stable",
       "related": [
         "cli",
@@ -76,7 +76,7 @@
       "title": "Interaction",
       "summary": "Built for products where AI carries the complexity. One hand per device, intent over input, nothing redundant, nothing that snaps.",
       "status": "stable",
-      "import": "import { useShortcut } from \"@/components/corpus/hooks/use-shortcut\"\nimport { Kbd } from \"@/components/corpus/kbd\"\nimport { Composer } from \"@/components/corpus/composer\"",
+      "import": "import { useShortcut } from \"@/components/vita/hooks/use-shortcut\"\nimport { Kbd } from \"@/components/vita/kbd\"\nimport { Composer } from \"@/components/vita/composer\"",
       "use_when": [
         "Designing any flow, interaction or shortcut",
         "Deciding between a form and an intent-first flow"
@@ -91,7 +91,7 @@
       "slug": "principles",
       "path": "docs/getting-started/principles.md",
       "title": "Design principles",
-      "summary": "Ten ranked rules every Corpus screen obeys. When two conflict, the lower number wins.",
+      "summary": "Ten ranked rules every Vita screen obeys. When two conflict, the lower number wins.",
       "status": "stable"
     },
     {
@@ -99,7 +99,7 @@
       "slug": "registry",
       "path": "docs/getting-started/registry.md",
       "title": "Registry",
-      "summary": "Corpus ships as source — a registry of components, hooks, blocks, icons and styles you install into your repo and own.",
+      "summary": "Vita ships as source, a registry of components, hooks, blocks, icons and styles you install into your repo and own.",
       "status": "stable",
       "related": [
         "installation",
@@ -111,10 +111,10 @@
       "slug": "skills",
       "path": "docs/getting-started/skills.md",
       "title": "Skills",
-      "summary": "Six skills teach AI agents to design and build with Corpus like a designer would — installed with Corpus into every product.",
+      "summary": "Six skills teach AI agents to design and build with Vita like a designer would, installed with Vita into every product.",
       "status": "stable",
       "related": [
-        "corpus-for-ai",
+        "vita-for-ai",
         "installation",
         "content"
       ]
@@ -157,7 +157,7 @@
       "summary": "Words are part of the design system. Personas decide who we speak to, the taxonomy fixes the words, and skills enforce them.",
       "status": "stable",
       "use_when": [
-        "Writing any user-visible string — labels, buttons, errors, empty states, emails, AI responses",
+        "Writing any user-visible string, labels, buttons, errors, empty states, emails, AI responses",
         "Starting a new product or flow (create personas first)"
       ],
       "avoid_when": [
@@ -167,32 +167,12 @@
     },
     {
       "section": "foundations",
-      "slug": "corpus-for-ai",
-      "path": "docs/foundations/corpus-for-ai.md",
-      "title": "Corpus for AI",
-      "summary": "Corpus is built for agents as much as for people — machine-readable docs, skills, rules, decisions and an audit that answers on every edit.",
-      "status": "stable",
-      "use_when": [
-        "Setting up an agent to design or build with Corpus",
-        "Understanding how Corpus keeps agent-built screens consistent"
-      ],
-      "avoid_when": [
-        "Looking for the AI label or AI surfaces in the product → AI label"
-      ],
-      "related": [
-        "skills",
-        "cli",
-        "how-we-decide"
-      ]
-    },
-    {
-      "section": "foundations",
       "slug": "grid",
       "path": "docs/foundations/grid.md",
       "title": "Grid & layout",
       "summary": "A 16-column grid for page structure, stacks for everything inside it.",
       "status": "stable",
-      "import": "import { Grid, Column, Stack, Inline, Spacer, Container } from \"@/components/corpus/layout\"",
+      "import": "import { Grid, Column, Stack, Inline, Spacer, Container } from \"@/components/vita/layout\"",
       "use_when": [
         "Laying out a page or region (Grid + Column)",
         "Arranging elements vertically (Stack) or horizontally (Inline)"
@@ -209,7 +189,7 @@
       "title": "Icons",
       "summary": "One icon set through one Icon component, at four sizes. An icon supports a label; it rarely replaces one.",
       "status": "stable",
-      "import": "import { Icon } from \"@/components/corpus/icon\"\nimport { Add } from \"@/components/corpus/icons\"\n\n<Icon as={Add} size=\"sm\" />",
+      "import": "import { Icon } from \"@/components/vita/icon\"\nimport { Add } from \"@/components/vita/icons\"\n\n<Icon as={Add} size=\"sm\" />",
       "use_when": [
         "Reinforcing an action or a status label",
         "Icon-only controls with universal meaning (close, search, menu, overflow), always with a tooltip"
@@ -228,7 +208,7 @@
       "summary": "Everything that floats above the page is frosted glass. The higher it floats, the more it frosts and the more of what's behind shows through.",
       "status": "stable",
       "use_when": [
-        "Any surface with a z-index — side nav, header, right panel, menus, popovers, dialogs, notifications, pinned toolbars"
+        "Any surface with a z-index, side nav, header, right panel, menus, popovers, dialogs, notifications, pinned toolbars"
       ],
       "avoid_when": [
         "In-flow containers (cards, tiles, lists) → solid layers (layer-1..3)",
@@ -241,10 +221,10 @@
       "slug": "motion",
       "path": "docs/foundations/motion.md",
       "title": "Motion",
-      "summary": "Choreography is everything. Nothing snaps — every change transitions, variants morph like liquid, numbers roll and text reveals.",
+      "summary": "Choreography is everything. Nothing snaps, every change transitions, variants morph like liquid, numbers roll and text reveals.",
       "status": "stable",
       "use_when": [
-        "Always — motion is on by default for every property change"
+        "Always, motion is on by default for every property change"
       ],
       "avoid_when": [
         "Switching transitions off on a component → tune duration or easing instead",
@@ -259,7 +239,7 @@
       "title": "Pictograms",
       "summary": "Large pictograms for empty states, onboarding and feature tiles. Never as controls.",
       "status": "stable",
-      "import": "import { Pictogram } from \"@/components/corpus/pictogram\"\nimport { Rocket } from \"@/components/corpus/pictograms\"",
+      "import": "import { Pictogram } from \"@/components/vita/pictogram\"\nimport { Rocket } from \"@/components/vita/pictograms\"",
       "use_when": [
         "Empty states (first use, no results, error)",
         "Onboarding and feature explanations",
@@ -290,11 +270,11 @@
       "slug": "theming",
       "path": "docs/foundations/theming.md",
       "title": "Theming & personalisation",
-      "summary": "Change about ten variables in one file and the whole system re-skins — color, shape, density, type and motion.",
+      "summary": "Change about ten variables in one file and the whole system re-skins, color, shape, density, type and motion.",
       "status": "stable",
-      "import": "@import \"./styles/corpus.css\";  /* once, at the app root */\n/* then edit ONLY src/styles/theme.css */",
+      "import": "@import \"./styles/vita.css\";  /* once, at the app root */\n/* then edit ONLY src/styles/theme.css */",
       "use_when": [
-        "Adapting Corpus to a new brand or product",
+        "Adapting Vita to a new brand or product",
         "Making a denser admin tool or a calmer consumer app"
       ],
       "avoid_when": [
@@ -309,13 +289,33 @@
       "title": "Typography",
       "summary": "Ten roles generated from one base size and one ratio. Google Sans Flex for words, Google Sans Code for code and numbers.",
       "status": "stable",
-      "import": "import { Text, Heading } from \"@/components/corpus/text\"",
+      "import": "import { Text, Heading } from \"@/components/vita/text\"",
       "use_when": [
-        "Any text — pick the ROLE (title-2, body, caption), not a size"
+        "Any text, pick the ROLE (title-2, body, caption), not a size"
       ],
       "avoid_when": [
-        "Tailwind sizes (text-sm, text-2xl) → they don't exist in Corpus",
+        "Tailwind sizes (text-sm, text-2xl) → they don't exist in Vita",
         "Changing size to create emphasis inside a paragraph → use font-medium or font-semibold"
+      ]
+    },
+    {
+      "section": "foundations",
+      "slug": "vita-for-ai",
+      "path": "docs/foundations/vita-for-ai.md",
+      "title": "Vita for AI",
+      "summary": "Vita is built for agents as much as for people, machine-readable docs, skills, rules, decisions and an audit that answers on every edit.",
+      "status": "stable",
+      "use_when": [
+        "Setting up an agent to design or build with Vita",
+        "Understanding how Vita keeps agent-built screens consistent"
+      ],
+      "avoid_when": [
+        "Looking for the AI label or AI surfaces in the product → AI label"
+      ],
+      "related": [
+        "skills",
+        "cli",
+        "how-we-decide"
       ]
     },
     {
@@ -325,7 +325,7 @@
       "title": "Accordion",
       "summary": "A vertical stack of headers that each reveal a section. Progressive disclosure for content users scan by title.",
       "status": "stable",
-      "import": "import { Accordion, AccordionItem, AccordionTrigger, AccordionContent, Disclosure } from \"@/components/corpus/accordion\"",
+      "import": "import { Accordion, AccordionItem, AccordionTrigger, AccordionContent, Disclosure } from \"@/components/vita/accordion\"",
       "use_when": [
         "FAQs, help content, long settings grouped by topic",
         "Filter panels with many facets",
@@ -350,7 +350,7 @@
       "title": "AI label",
       "summary": "Marks anything generated, suggested or autofilled by AI, and explains how, in one click.",
       "status": "stable",
-      "import": "import { AILabel, AISurface } from \"@/components/corpus/ai-label\"",
+      "import": "import { AILabel, AISurface } from \"@/components/vita/ai-label\"",
       "use_when": [
         "A field value, cell, tile or message was produced or changed by AI",
         "An AI-powered feature needs a visible, explainable marker"
@@ -372,7 +372,7 @@
       "title": "Breadcrumb",
       "summary": "Shows where the user is in a hierarchy of three or more levels and lets them move up.",
       "status": "stable",
-      "import": "import { Breadcrumb } from \"@/components/corpus/breadcrumb\"",
+      "import": "import { Breadcrumb } from \"@/components/vita/breadcrumb\"",
       "use_when": [
         "Pages nested ≥ 3 levels deep (Workspace / Projects / Q3 forecast)",
         "Detail pages reached from a list, where \"up\" is meaningful"
@@ -394,7 +394,7 @@
       "title": "Button",
       "summary": "Triggers an action. Clear hierarchy, strict restraint. One primary per view, and every other button steps down.",
       "status": "stable",
-      "import": "import { Button, IconButton, ButtonSet } from \"@/components/corpus/button\"",
+      "import": "import { Button, IconButton, ButtonSet } from \"@/components/vita/button\"",
       "use_when": [
         "The user performs an action (save, create, send, delete, open a modal)",
         "Grouping the actions that end a form, modal or flow (ButtonSet)"
@@ -419,7 +419,7 @@
       "title": "Capsule",
       "summary": "Quick feedback at the top centre. Icon on the left, title over subtitle in the middle, the semantic story on the right.",
       "status": "stable",
-      "import": "import { capsule } from \"@/components/corpus/notification\"\n\nconst id = capsule({ icon: <Icon as={CloudUpload} size=\"md\" />, title: \"Syncing knowledge\", subtitle: \"Help center\", story: { progress: 40 }, duration: 0 })\ncapsule.update(id, { story: { progress: 100 }, duration: 1800 })",
+      "import": "import { capsule } from \"@/components/vita/notification\"\n\nconst id = capsule({ icon: <Icon as={CloudUpload} size=\"md\" />, title: \"Syncing knowledge\", subtitle: \"Help center\", story: { progress: 40 }, duration: 0 })\ncapsule.update(id, { story: { progress: 100 }, duration: 1800 })",
       "use_when": [
         "Glanceable feedback that something connected, finished or is progressing",
         "A live value worth watching for a few seconds (sync progress, a connection)"
@@ -443,7 +443,7 @@
       "title": "Chat bubble",
       "summary": "One message in a conversation between a person and an agent. Agent on the left, the person on the right; runs from the same author join.",
       "status": "stable",
-      "import": "import { ChatThread, ChatBubble, ChatTyping, MiniChat } from \"@/components/corpus/chat\"\n\n<ChatThread messages={messages} typing />",
+      "import": "import { ChatThread, ChatBubble, ChatTyping, MiniChat } from \"@/components/vita/chat\"\n\n<ChatThread messages={messages} typing />",
       "use_when": [
         "A conversation between a person and an agent, or between people",
         "Showing what an agent said and when, in order"
@@ -467,7 +467,7 @@
       "title": "Checkbox",
       "summary": "Independent choices that take effect on submit, and multi-selection from a short list.",
       "status": "stable",
-      "import": "import { Checkbox, CheckboxGroup } from \"@/components/corpus/checkbox\"",
+      "import": "import { Checkbox, CheckboxGroup } from \"@/components/vita/checkbox\"",
       "use_when": [
         "Selecting any number of options from ≤ 6 (CheckboxGroup)",
         "A single opt-in inside a form (agree to terms, subscribe)",
@@ -499,7 +499,7 @@
       "title": "Code snippet",
       "summary": "Code, commands and identifiers the user will copy. Copying is one click, with instant feedback.",
       "status": "stable",
-      "import": "import { CodeSnippet } from \"@/components/corpus/code-snippet\"",
+      "import": "import { CodeSnippet } from \"@/components/vita/code-snippet\"",
       "use_when": [
         "Showing commands, API keys, IDs, config the user must copy",
         "Displaying code samples in docs/onboarding"
@@ -519,7 +519,7 @@
       "title": "Composer",
       "summary": "The intent-first input. Users type, dictate or attach what they want; the AI does the work and hands back something to review.",
       "status": "experimental",
-      "import": "import { Composer } from \"@/components/corpus/composer\"",
+      "import": "import { Composer } from \"@/components/vita/composer\"",
       "use_when": [
         "Starting any task an agent can do (create, find, change, summarise)",
         "Replacing a long form with \"describe it, then review it\"",
@@ -544,7 +544,7 @@
       "title": "Contained list",
       "summary": "A titled list of similar items, each a row with an optional action.",
       "status": "stable",
-      "import": "import { ContainedList, ContainedListItem } from \"@/components/corpus/contained-list\"",
+      "import": "import { ContainedList, ContainedListItem } from \"@/components/vita/contained-list\"",
       "use_when": [
         "Members, connected apps, recent files, settings groups",
         "Rows that each open something or have one trailing action",
@@ -568,7 +568,7 @@
       "title": "Content switcher",
       "summary": "A segmented control. Switch between alternate presentations of the same content. One segment is always selected.",
       "status": "stable",
-      "import": "import { ContentSwitcher } from \"@/components/corpus/content-switcher\"",
+      "import": "import { ContentSwitcher } from \"@/components/vita/content-switcher\"",
       "use_when": [
         "Changing how the same data is shown (List | Grid, Chart | Table)",
         "Changing the granularity of one dataset (Day | Week | Month)",
@@ -593,7 +593,7 @@
       "title": "Data table",
       "summary": "View, compare, sort, select and act on many uniform records. The workhorse of product UI.",
       "status": "stable",
-      "import": "import { DataTable, type DataTableColumn } from \"@/components/corpus/data-table\"",
+      "import": "import { DataTable, type DataTableColumn } from \"@/components/vita/data-table\"",
       "use_when": [
         "Many records with the same attributes (> ~5 rows or any sorting/selecting need)",
         "Users compare values across rows or act on several rows at once"
@@ -621,11 +621,11 @@
       "title": "Date picker",
       "summary": "Dates by typing first, with a calendar when it helps. Simple, single and range.",
       "status": "stable",
-      "import": "import { DatePicker, DateRangePicker, Calendar } from \"@/components/corpus/date-picker\"",
+      "import": "import { DatePicker, DateRangePicker, Calendar } from \"@/components/vita/date-picker\"",
       "use_when": [
-        "simple — known dates far from today (birthday, contract start years ago): typing is fastest",
-        "single — near-future scheduling where weekday context matters (go-live, deadline)",
-        "range — periods (reporting range, booking)"
+        "simple, known dates far from today (birthday, contract start years ago): typing is fastest",
+        "single, near-future scheduling where weekday context matters (go-live, deadline)",
+        "range, periods (reporting range, booking)"
       ],
       "avoid_when": [
         "Relative ranges (\"Last 7 days\") → Dropdown of presets (optionally + custom range)",
@@ -641,14 +641,14 @@
       "slug": "dropdown",
       "path": "docs/components/dropdown.md",
       "title": "Dropdown",
-      "summary": "Choosing values from a list — Dropdown (one), Combobox (one, filterable) and Multiselect (many), all built from the same Option rows.",
+      "summary": "Choosing values from a list, Dropdown (one), Combobox (one, filterable) and Multiselect (many), all built from the same Option rows.",
       "status": "stable",
-      "import": "import { Dropdown, Combobox, MultiSelect } from \"@/components/corpus/dropdown\"",
+      "import": "import { Dropdown, Combobox, MultiSelect } from \"@/components/vita/dropdown\"",
       "use_when": [
-        "Dropdown — one of 7–20 options, options need descriptions/icons, or consistent styling in app chrome",
-        "Combobox — one of 20+ options where users know what to type (tool, country, team member)",
-        "Multiselect — several of more than 6 options (markets, tags, assignees)",
-        "Inline type — compact \"Sort by: Newest ▾\" in toolbars"
+        "Dropdown, one of 7–20 options, options need descriptions/icons, or consistent styling in app chrome",
+        "Combobox, one of 20+ options where users know what to type (tool, country, team member)",
+        "Multiselect, several of more than 6 options (markets, tags, assignees)",
+        "Inline type, compact \"Sort by: Newest ▾\" in toolbars"
       ],
       "avoid_when": [
         "2–6 options → RadioGroup (or ContentSwitcher for views)",
@@ -670,10 +670,10 @@
       "title": "File uploader",
       "summary": "Attach files by browsing or dropping, with per-file status and errors that explain the fix.",
       "status": "stable",
-      "import": "import { FileUploader } from \"@/components/corpus/file-uploader\"",
+      "import": "import { FileUploader } from \"@/components/vita/file-uploader\"",
       "use_when": [
-        "dropzone — uploading is the main task of the view (import, document collection)",
-        "button — attaching as one field among others in a form"
+        "dropzone, uploading is the main task of the view (import, document collection)",
+        "button, attaching as one field among others in a form"
       ],
       "avoid_when": [
         "Importing structured data with mapping → a dedicated import flow (pattern), with FileUploader as step 1"
@@ -691,7 +691,7 @@
       "title": "Form",
       "summary": "The structural pieces of every form. Form, FormGroup, FormRow, FormActions, FluidForm and the FieldShell wiring every input uses.",
       "status": "stable",
-      "import": "import { Form, FormGroup, FormRow, FormActions, FluidForm, Label, FieldShell } from \"@/components/corpus/form\"",
+      "import": "import { Form, FormGroup, FormRow, FormActions, FluidForm, Label, FieldShell } from \"@/components/vita/form\"",
       "use_when": [
         "Any time the user enters data that is submitted together"
       ],
@@ -711,9 +711,9 @@
       "slug": "global-search",
       "path": "docs/components/global-search.md",
       "title": "Global search",
-      "summary": "Spotlight for the product — a liquid-glass capsule in the header that summons a floating search panel with ⌘K from anywhere.",
+      "summary": "Spotlight for the product, a liquid-glass capsule in the header that summons a floating search panel with ⌘K from anywhere.",
       "status": "stable",
-      "import": "import { GlobalSearch } from \"@/components/corpus/global-search\"",
+      "import": "import { GlobalSearch } from \"@/components/vita/global-search\"",
       "use_when": [
         "Product-wide search from the global header (pages, records, settings)"
       ],
@@ -732,9 +732,9 @@
       "slug": "icon-placeholder",
       "path": "docs/components/icon-placeholder.md",
       "title": "Icon placeholder",
-      "summary": "The leading visual slot — a colored glyph on a neutral squircle tile, in small, medium and large. One look for list items, notifications and toast banners.",
+      "summary": "The leading visual slot, a colored glyph on a neutral squircle tile, in small, medium and large. One look for list items, notifications and toast banners.",
       "status": "stable",
-      "import": "import { IconPlaceholder } from \"@/components/corpus/icon-placeholder\"\n\n<IconPlaceholder icon={Bot} tone=\"info\" size=\"md\" />\n<IconPlaceholder icon={WarningAltFilled} tone=\"warning\" size=\"lg\" />",
+      "import": "import { IconPlaceholder } from \"@/components/vita/icon-placeholder\"\n\n<IconPlaceholder icon={Bot} tone=\"info\" size=\"md\" />\n<IconPlaceholder icon={WarningAltFilled} tone=\"warning\" size=\"lg\" />",
       "use_when": [
         "Leading visual of a list row (settings, objects)",
         "The left side of a notification or toast banner",
@@ -756,9 +756,9 @@
       "slug": "inline-loading",
       "path": "docs/components/inline-loading.md",
       "title": "Inline loading",
-      "summary": "The status of one operation, in place — \"Saving…\" → \"Saved\" → gone.",
+      "summary": "The status of one operation, in place, \"Saving…\" → \"Saved\" → gone.",
       "status": "stable",
-      "import": "import { InlineLoading } from \"@/components/corpus/loading\"",
+      "import": "import { InlineLoading } from \"@/components/vita/loading\"",
       "use_when": [
         "Auto-save and background save feedback next to the thing being saved",
         "An action whose result appears in place (toggle persisted, row updated)"
@@ -780,9 +780,9 @@
       "title": "KPI",
       "summary": "A key number with its label and trend. Group related KPIs in one surface; put a page's headline numbers on the right of its header.",
       "status": "stable",
-      "import": "import { Kpi, KpiGroup } from \"@/components/corpus/kpi\"",
+      "import": "import { Kpi, KpiGroup } from \"@/components/vita/kpi\"",
       "use_when": [
-        "Dashboards and overview pages — the handful of numbers that summarise a thing",
+        "Dashboards and overview pages, the handful of numbers that summarise a thing",
         "A page header's summary (PageHeader kpis)"
       ],
       "avoid_when": [
@@ -804,7 +804,7 @@
       "title": "Link",
       "summary": "Navigation to another page, section or resource. If it changes data, it's a Button.",
       "status": "stable",
-      "import": "import { Link } from \"@/components/corpus/link\"",
+      "import": "import { Link } from \"@/components/vita/link\"",
       "use_when": [
         "Navigating to another page or anchor",
         "Referencing a resource inside running text",
@@ -828,7 +828,7 @@
       "title": "List item",
       "summary": "The settings row. Icon placeholder on the left, title over an optional subtitle, and the control or chevron on the far right. Group related rows into one card.",
       "status": "stable",
-      "import": "import { ListGroup, ListItem, ListSection } from \"@/components/corpus/list-item\"\n\n<ListSection title=\"Agents\">\n  <ListGroup>\n    <ListItem icon={Bot} tone=\"brand\" title=\"Support triage\" subtitle=\"Zendesk · Live\" onClick={open} />\n    <ListItem icon={Plug} tone=\"success\" title=\"Slack\" trailing={<Button size=\"sm\" variant=\"secondary\">Manage</Button>} />\n  </ListGroup>\n</ListSection>",
+      "import": "import { ListGroup, ListItem, ListSection } from \"@/components/vita/list-item\"\n\n<ListSection title=\"Agents\">\n  <ListGroup>\n    <ListItem icon={Bot} tone=\"brand\" title=\"Support triage\" subtitle=\"Zendesk · Live\" onClick={open} />\n    <ListItem icon={Plug} tone=\"success\" title=\"Slack\" trailing={<Button size=\"sm\" variant=\"secondary\">Manage</Button>} />\n  </ListGroup>\n</ListSection>",
       "use_when": [
         "Settings, preferences and account pages",
         "Navigating into an object or a sub-page",
@@ -852,12 +852,12 @@
       "slug": "list",
       "path": "docs/components/list.md",
       "title": "List",
-      "summary": "Typographic lists inside content — bullets and numbered steps. Not interactive.",
+      "summary": "Typographic lists inside content, bullets and numbered steps. Not interactive.",
       "status": "stable",
-      "import": "import { UnorderedList, OrderedList, ListItem } from \"@/components/corpus/list\"",
+      "import": "import { UnorderedList, OrderedList, ListItem } from \"@/components/vita/list\"",
       "use_when": [
-        "Unordered — sets of related points in content",
-        "Ordered — sequential instructions where order matters"
+        "Unordered, sets of related points in content",
+        "Ordered, sequential instructions where order matters"
       ],
       "avoid_when": [
         "Interactive rows → ContainedList",
@@ -875,11 +875,11 @@
       "title": "Menu buttons",
       "summary": "Three buttons that open menus. MenuButton groups actions, ComboButton adds alternatives to a default action, OverflowMenu hides secondary actions.",
       "status": "stable",
-      "import": "import { MenuButton, ComboButton, OverflowMenu } from \"@/components/corpus/menu-button\"",
+      "import": "import { MenuButton, ComboButton, OverflowMenu } from \"@/components/vita/menu-button\"",
       "use_when": [
-        "MenuButton — several equally important related actions under one label (\"Export ▾\", \"Create ▾\")",
-        "ComboButton — one dominant action plus variations (\"Save\" | \"Save as…\", \"Save as template\")",
-        "OverflowMenu — secondary actions on a row, tile, card or page header (⋮)"
+        "MenuButton, several equally important related actions under one label (\"Export ▾\", \"Create ▾\")",
+        "ComboButton, one dominant action plus variations (\"Save\" | \"Save as…\", \"Save as template\")",
+        "OverflowMenu, secondary actions on a row, tile, card or page header (⋮)"
       ],
       "avoid_when": [
         "Selecting a value → Dropdown",
@@ -899,7 +899,7 @@
       "title": "Menu",
       "summary": "A temporary list of actions, opened from a trigger or right-click. Menus hold verbs, not values and not destinations.",
       "status": "stable",
-      "import": "import { Menu, MenuTrigger, MenuContent, MenuItem, MenuSeparator, MenuLabel, MenuCheckboxItem, MenuRadioGroup, MenuRadioItem, MenuSub, MenuSubTrigger, MenuSubContent, ContextMenu, ContextMenuTrigger, ContextMenuContent, ContextMenuItem } from \"@/components/corpus/menu\"",
+      "import": "import { Menu, MenuTrigger, MenuContent, MenuItem, MenuSeparator, MenuLabel, MenuCheckboxItem, MenuRadioGroup, MenuRadioItem, MenuSub, MenuSubTrigger, MenuSubContent, ContextMenu, ContextMenuTrigger, ContextMenuContent, ContextMenuItem } from \"@/components/vita/menu\"",
       "use_when": [
         "Offering 3–10 actions without taking permanent space",
         "View options that toggle (show grid, compact rows) via MenuCheckboxItem",
@@ -924,7 +924,7 @@
       "title": "Modal",
       "summary": "Interrupts to focus on one task or decision. Modality is a last resort.",
       "status": "stable",
-      "import": "import { Modal, ModalTrigger, ModalContent, ModalHeader, ModalBody, ModalFooter, ModalClose, ConfirmModal } from \"@/components/corpus/modal\"",
+      "import": "import { Modal, ModalTrigger, ModalContent, ModalHeader, ModalBody, ModalFooter, ModalClose, ConfirmModal } from \"@/components/vita/modal\"",
       "use_when": [
         "Confirming a destructive or irreversible action (ConfirmModal danger)",
         "A short, self-contained task (≤ 5 fields) that shouldn't leave the page",
@@ -949,13 +949,13 @@
       "slug": "notification",
       "path": "docs/components/notification.md",
       "title": "Notification",
-      "summary": "System messages with one anatomy — icon placeholder, title over subtitle, optional action. Inline for problems tied to a place, toast banner for confirmation, callout for static guidance.",
+      "summary": "System messages with one anatomy, icon placeholder, title over subtitle, optional action. Inline for problems tied to a place, toast banner for confirmation, callout for static guidance.",
       "status": "stable",
-      "import": "import { InlineNotification, Callout, Toaster, toast } from \"@/components/corpus/notification\"\n\ntoast({ icon: Bot, source: \"Vita\", title: \"Agent deployed\", subtitle: \"Support triage is live\" })",
+      "import": "import { InlineNotification, Callout, Toaster, toast } from \"@/components/vita/notification\"\n\ntoast({ icon: Bot, source: \"Theo\", title: \"Agent deployed\", subtitle: \"Support triage is live\" })",
       "use_when": [
-        "Inline — errors/warnings about a section, form summary, account-level issues",
-        "Toast — brief confirmation of something the user just did (with optional Undo)",
-        "Callout — permanent, non-dismissible contextual guidance"
+        "Inline, errors/warnings about a section, form summary, account-level issues",
+        "Toast, brief confirmation of something the user just did (with optional Undo)",
+        "Callout, permanent, non-dismissible contextual guidance"
       ],
       "avoid_when": [
         "A decision is required before continuing → Modal",
@@ -978,7 +978,7 @@
       "title": "Number input",
       "summary": "Precise numeric entry with steppers, bounds and units.",
       "status": "stable",
-      "import": "import { NumberInput } from \"@/components/corpus/number-input\"",
+      "import": "import { NumberInput } from \"@/components/vita/number-input\"",
       "use_when": [
         "Exact quantities with small adjustments (concurrent runs, seats, timeout, percentage)",
         "Values with min/max bounds the user must respect"
@@ -1000,7 +1000,7 @@
       "title": "Pagination",
       "summary": "Split large datasets into pages, with page-size control and an honest item count.",
       "status": "stable",
-      "import": "import { Pagination } from \"@/components/corpus/pagination\"",
+      "import": "import { Pagination } from \"@/components/vita/pagination\"",
       "use_when": [
         "Tables and lists with more items than fit comfortably (> 25–50)",
         "Users need to reference positions (\"it was on page 3\") or know the total"
@@ -1020,10 +1020,10 @@
       "title": "Popover",
       "summary": "A non-modal layer anchored to a trigger, opened by click, for rich or interactive content. Includes Toggletip.",
       "status": "stable",
-      "import": "import { Popover, PopoverTrigger, PopoverContent, PopoverFooter, PopoverClose, Toggletip } from \"@/components/corpus/popover\"",
+      "import": "import { Popover, PopoverTrigger, PopoverContent, PopoverFooter, PopoverClose, Toggletip } from \"@/components/vita/popover\"",
       "use_when": [
         "Small interactive content next to a control (column picker, quick assign, filter panel)",
-        "Toggletip — an explanation with a link or more than one sentence, opened by an ⓘ button"
+        "Toggletip, an explanation with a link or more than one sentence, opened by an ⓘ button"
       ],
       "avoid_when": [
         "Plain text hint on hover → Tooltip",
@@ -1043,9 +1043,9 @@
       "slug": "progress-bar",
       "path": "docs/components/progress-bar.md",
       "title": "Progress bar",
-      "summary": "Progress of a system process with a measurable end — or indeterminate when the end is unknown. Also quota and usage.",
+      "summary": "Progress of a system process with a measurable end, or indeterminate when the end is unknown. Also quota and usage.",
       "status": "stable",
-      "import": "import { ProgressBar } from \"@/components/corpus/progress-bar\"",
+      "import": "import { ProgressBar } from \"@/components/vita/progress-bar\"",
       "use_when": [
         "Uploads, imports, exports, setup jobs longer than ~2 seconds",
         "Usage vs limit (seats, storage) with helper text"
@@ -1068,9 +1068,9 @@
       "title": "Progress indicator",
       "summary": "The steps of a multi-step task, with where the user is and what's left. Completed steps stay reachable.",
       "status": "stable",
-      "import": "import { ProgressIndicator } from \"@/components/corpus/progress-indicator\"",
+      "import": "import { ProgressIndicator } from \"@/components/vita/progress-indicator\"",
       "use_when": [
-        "Wizards, onboarding, checkout — 3–6 sequential steps the user completes"
+        "Wizards, onboarding, checkout, 3–6 sequential steps the user completes"
       ],
       "avoid_when": [
         "System progress → ProgressBar",
@@ -1091,7 +1091,7 @@
       "title": "Radio button",
       "summary": "Exactly one choice from 2–6 visible options. Showing all options makes decisions faster.",
       "status": "stable",
-      "import": "import { RadioGroup, RadioButton } from \"@/components/corpus/radio-button\"",
+      "import": "import { RadioGroup, RadioButton } from \"@/components/vita/radio-button\"",
       "use_when": [
         "One choice from 2–6 options the user should compare",
         "Options need helper text explaining consequences (price, speed)"
@@ -1116,7 +1116,7 @@
       "title": "Search",
       "summary": "Find items in a collection by query. Always labelled, instantly clearable, and scoped to what it searches.",
       "status": "stable",
-      "import": "import { Search } from \"@/components/corpus/search\"",
+      "import": "import { Search } from \"@/components/vita/search\"",
       "use_when": [
         "Filtering a table/list by text (toolbar variant)",
         "Global or page-level search (field variant, lg)",
@@ -1137,9 +1137,9 @@
       "slug": "select",
       "path": "docs/components/select.md",
       "title": "Select",
-      "summary": "Pick one value, written with SelectOption/SelectGroup children. The same Corpus listbox as Dropdown — never the operating system's menu.",
+      "summary": "Pick one value, written with SelectOption/SelectGroup children. The same Vita listbox as Dropdown, never the operating system's menu.",
       "status": "stable",
-      "import": "import { Select, SelectOption, SelectGroup } from \"@/components/corpus/select\"",
+      "import": "import { Select, SelectOption, SelectGroup } from \"@/components/vita/select\"",
       "use_when": [
         "One value from a list you write inline (a handful of known options, grouped options)",
         "Forms where the options live in the markup rather than in data"
@@ -1163,7 +1163,7 @@
       "title": "Slider",
       "summary": "Choose a value or range where relative position matters more than precision. The value is always visible.",
       "status": "stable",
-      "import": "import { Slider } from \"@/components/corpus/slider\"",
+      "import": "import { Slider } from \"@/components/vita/slider\"",
       "use_when": [
         "Adjusting a continuous value with immediate feedback (volume, opacity, zoom)",
         "Filtering by a numeric range (price, weight) with two thumbs"
@@ -1183,9 +1183,9 @@
       "slug": "structured-list",
       "path": "docs/components/structured-list.md",
       "title": "Structured list",
-      "summary": "A small, read-mostly set of rows and columns — details, specs and comparisons. Selectable when choosing one row.",
+      "summary": "A small, read-mostly set of rows and columns, details, specs and comparisons. Selectable when choosing one row.",
       "status": "stable",
-      "import": "import { StructuredList } from \"@/components/corpus/structured-list\"",
+      "import": "import { StructuredList } from \"@/components/vita/structured-list\"",
       "use_when": [
         "Key/value details of one object (condensed + flush)",
         "Comparing a few options across attributes (plans, models)",
@@ -1207,13 +1207,13 @@
       "slug": "tabs",
       "path": "docs/components/tabs.md",
       "title": "Tabs",
-      "summary": "Switch between peer views of the same context — Overview · Activity · Settings.",
+      "summary": "Switch between peer views of the same context, Overview · Activity · Settings.",
       "status": "stable",
-      "import": "import { Tabs, TabsList, TabsTrigger, TabsContent } from \"@/components/corpus/tabs\"",
+      "import": "import { Tabs, TabsList, TabsTrigger, TabsContent } from \"@/components/vita/tabs\"",
       "use_when": [
-        "pill (default) — page-level views of one object; a raised pill slides between tabs",
-        "line — dense toolbars or where a track would be too heavy",
-        "contained — tabs attached to a panel/tile (secondary level)"
+        "pill (default), page-level views of one object; a raised pill slides between tabs",
+        "line, dense toolbars or where a track would be too heavy",
+        "contained, tabs attached to a panel/tile (secondary level)"
       ],
       "avoid_when": [
         "Same data in different presentations → ContentSwitcher",
@@ -1235,13 +1235,13 @@
       "title": "Tag",
       "summary": "Short labels that categorise, show status in dense rows, or represent applied filters.",
       "status": "stable",
-      "import": "import { Tag, SelectableTag, OperationalTag } from \"@/components/corpus/tag\"",
+      "import": "import { Tag, SelectableTag, OperationalTag } from \"@/components/vita/tag\"",
       "use_when": [
-        "Read-only — categories/metadata on items (region, type)",
+        "Read-only, categories/metadata on items (region, type)",
         "Status in dense table rows (with icon)",
-        "Dismissible — applied filters / chosen values the user can remove",
-        "Selectable — quick filter chips (toggle on/off)",
-        "Operational — \"+3\" that reveals more in a popover"
+        "Dismissible, applied filters / chosen values the user can remove",
+        "Selectable, quick filter chips (toggle on/off)",
+        "Operational, \"+3\" that reveals more in a popover"
       ],
       "avoid_when": [
         "Actions → Button",
@@ -1261,11 +1261,11 @@
       "title": "Text input",
       "summary": "Single-line free text (plus TextArea and PasswordInput). Floating label inside, help below, errors that explain the fix.",
       "status": "stable",
-      "import": "import { TextInput, TextArea, PasswordInput } from \"@/components/corpus/text-input\"",
+      "import": "import { TextInput, TextArea, PasswordInput } from \"@/components/vita/text-input\"",
       "use_when": [
         "Free text the system can't predict (names, titles, references)",
-        "Numeric identifiers — phone, postcode, card (inputMode=\"numeric\")",
-        "Long text — TextArea; secrets — PasswordInput"
+        "Numeric identifiers, phone, postcode, card (inputMode=\"numeric\")",
+        "Long text, TextArea; secrets, PasswordInput"
       ],
       "avoid_when": [
         "A known set of answers → RadioGroup / Dropdown / Combobox",
@@ -1285,13 +1285,13 @@
       "slug": "thinking",
       "path": "docs/components/thinking.md",
       "title": "Thinking",
-      "summary": "Corpus never spins — it thinks. Tiny particles that blend like liquid show what kind of work is happening. Skeletons whenever the layout is known.",
+      "summary": "Vita never spins, it thinks. Tiny particles that blend like liquid show what kind of work is happening. Skeletons whenever the layout is known.",
       "status": "stable",
-      "import": "import { Loading, Skeleton, SkeletonText } from \"@/components/corpus/loading\"\nimport { Thinking } from \"@/components/corpus/thinking\"",
+      "import": "import { Loading, Skeleton, SkeletonText } from \"@/components/vita/loading\"\nimport { Thinking } from \"@/components/vita/thinking\"",
       "use_when": [
-        "Skeleton — content with a known shape is on its way (cards, tables, profiles)",
-        "Loading / Thinking — a region is working and its layout is unknown",
-        "Loading overlay — interaction must be blocked while a region recomputes"
+        "Skeleton, content with a known shape is on its way (cards, tables, profiles)",
+        "Loading / Thinking, a region is working and its layout is unknown",
+        "Loading overlay, interaction must be blocked while a region recomputes"
       ],
       "avoid_when": [
         "A single action → Button loading / InlineLoading",
@@ -1312,13 +1312,13 @@
       "title": "Tile",
       "summary": "A surface that groups related content. Base, clickable, selectable and expandable, and never nested.",
       "status": "stable",
-      "import": "import { Tile, ClickableTile, SelectableTile, ExpandableTile, TileGroup, TileSet, TileSetItem } from \"@/components/corpus/tile\"",
+      "import": "import { Tile, ClickableTile, SelectableTile, ExpandableTile, TileGroup, TileSet, TileSetItem } from \"@/components/vita/tile\"",
       "use_when": [
-        "Base — grouping related info on a page (a metric, a summary)",
-        "Clickable — a card that is one destination (a project, a feature area)",
-        "Selectable — choosing among rich options (plans, templates) — single or multi",
-        "Expandable — summary first, details on demand",
-        "TileSet — several cards that share one meaning, as one object"
+        "Base, grouping related info on a page (a metric, a summary)",
+        "Clickable, a card that is one destination (a project, a feature area)",
+        "Selectable, choosing among rich options (plans, templates), single or multi",
+        "Expandable, summary first, details on demand",
+        "TileSet, several cards that share one meaning, as one object"
       ],
       "avoid_when": [
         "Tables of records → DataTable",
@@ -1337,9 +1337,9 @@
       "slug": "timeline",
       "path": "docs/components/timeline.md",
       "title": "Timeline",
-      "summary": "Events in time order on one vertical line — changelogs, run history, an agent's steps, audit trails.",
+      "summary": "Events in time order on one vertical line, changelogs, run history, an agent's steps, audit trails.",
       "status": "stable",
-      "import": "import { Timeline } from \"@/components/corpus/timeline\"",
+      "import": "import { Timeline } from \"@/components/vita/timeline\"",
       "use_when": [
         "A history people read top to bottom (changelog, activity, an agent's steps, an audit trail)"
       ],
@@ -1361,7 +1361,7 @@
       "title": "Toggle",
       "summary": "A switch for binary settings that take effect immediately. The rule: no Save button after a toggle.",
       "status": "stable",
-      "import": "import { Toggle } from \"@/components/corpus/toggle\"",
+      "import": "import { Toggle } from \"@/components/vita/toggle\"",
       "use_when": [
         "Turning a feature or preference on/off with immediate effect (settings pages, panels)"
       ],
@@ -1383,7 +1383,7 @@
       "title": "Tooltip",
       "summary": "A short plain-text name or hint on hover/focus. Includes DefinitionTooltip for glossary terms.",
       "status": "stable",
-      "import": "import { Tooltip, TooltipProvider, DefinitionTooltip } from \"@/components/corpus/tooltip\"",
+      "import": "import { Tooltip, TooltipProvider, DefinitionTooltip } from \"@/components/vita/tooltip\"",
       "use_when": [
         "Naming icon-only buttons (automatic with IconButton)",
         "Revealing the full text of truncated content",
@@ -1408,7 +1408,7 @@
       "title": "Tree view",
       "summary": "Navigate or select within a hierarchy of unknown depth, with full keyboard support.",
       "status": "stable",
-      "import": "import { TreeView, type TreeNode } from \"@/components/corpus/tree-view\"",
+      "import": "import { TreeView, type TreeNode } from \"@/components/vita/tree-view\"",
       "use_when": [
         "File/folder structures, org charts, category taxonomies, nested workspaces",
         "The user needs to see siblings and ancestors while choosing"
@@ -1428,9 +1428,9 @@
       "slug": "ui-shell-header",
       "path": "docs/components/ui-shell-header.md",
       "title": "UI shell header",
-      "summary": "The product's persistent top bar — name, global navigation and global actions. 48px, on every screen.",
+      "summary": "The product's persistent top bar, name, global navigation and global actions. 48px, on every screen.",
       "status": "stable",
-      "import": "import { Shell, ShellBody, ShellMain, Header, HeaderNavItem, HeaderGlobalAction } from \"@/components/corpus/ui-shell\"",
+      "import": "import { Shell, ShellBody, ShellMain, Header, HeaderNavItem, HeaderGlobalAction } from \"@/components/vita/ui-shell\"",
       "use_when": [
         "Every authenticated product screen (inside Shell)"
       ],
@@ -1452,7 +1452,7 @@
       "title": "UI shell left panel",
       "summary": "Side navigation between the product's main areas. Expanded (default) or rail; an overlay drawer on small screens.",
       "status": "stable",
-      "import": "import { LeftPanel, SideNavItem, SideNavMenu, SideNavSection } from \"@/components/corpus/ui-shell\"",
+      "import": "import { LeftPanel, SideNavItem, SideNavMenu, SideNavSection } from \"@/components/vita/ui-shell\"",
       "use_when": [
         "Products with 5+ top-level areas or two-level navigation",
         "Settings/admin areas with many sections"
@@ -1473,9 +1473,9 @@
       "slug": "ui-shell-right-panel",
       "path": "docs/components/ui-shell-right-panel.md",
       "title": "UI shell right panel",
-      "summary": "A non-modal panel that slides over the content from the right — notifications, help, AI assistant, details, edit-in-context.",
+      "summary": "A non-modal panel that slides over the content from the right, notifications, help, AI assistant, details, edit-in-context.",
       "status": "stable",
-      "import": "import { RightPanel } from \"@/components/corpus/ui-shell\"",
+      "import": "import { RightPanel } from \"@/components/vita/ui-shell\"",
       "use_when": [
         "Global panels opened from header actions (notifications, help, assistant)",
         "Viewing or editing an item's details while keeping the list visible",
@@ -1498,7 +1498,7 @@
       "slug": "agent-conversation",
       "path": "docs/patterns/agent-conversation.md",
       "title": "Agent conversation",
-      "summary": "How people and agents talk in Corpus — the mini chat, thinking states, suggested replies and hand-offs to a person.",
+      "summary": "How people and agents talk in Vita, the mini chat, thinking states, suggested replies and hand-offs to a person.",
       "status": "stable",
       "use_when": [
         "A product lets people talk to an agent (support, onboarding, internal assistants)",
@@ -1520,9 +1520,9 @@
       "slug": "common-actions",
       "path": "docs/patterns/common-actions.md",
       "title": "Common actions",
-      "summary": "Where actions live, how many are visible, and how create, edit, delete, save and export behave everywhere — with left-hand shortcuts.",
+      "summary": "Where actions live, how many are visible, and how create, edit, delete, save and export behave everywhere, with left-hand shortcuts.",
       "status": "stable",
-      "import": "import { PageHeader } from \"@/components/corpus/page-header\"",
+      "import": "import { PageHeader } from \"@/components/vita/page-header\"",
       "use_when": [
         "Any page, table, card or panel that exposes actions"
       ],
@@ -1541,7 +1541,7 @@
       "slug": "dialogs",
       "path": "docs/patterns/dialogs.md",
       "title": "Dialogs",
-      "summary": "Choosing between Modal, RightPanel, Popover, Toggletip and toast — and writing dialogs people understand in one glance.",
+      "summary": "Choosing between Modal, RightPanel, Popover, Toggletip and toast, and writing dialogs people understand in one glance.",
       "status": "stable",
       "use_when": [
         "Any time UI needs to appear on top of the current page"
@@ -1581,9 +1581,9 @@
       "slug": "disclosures",
       "path": "docs/patterns/disclosures.md",
       "title": "Disclosures",
-      "summary": "Progressive disclosure — show what most people need, reveal the rest on demand.",
+      "summary": "Progressive disclosure, show what most people need, reveal the rest on demand.",
       "status": "stable",
-      "import": "import { Disclosure } from \"@/components/corpus/accordion\"",
+      "import": "import { Disclosure } from \"@/components/vita/accordion\"",
       "use_when": [
         "Advanced options most users don't touch",
         "Secondary details that would clutter a summary"
@@ -1603,9 +1603,9 @@
       "slug": "empty-states",
       "path": "docs/patterns/empty-states.md",
       "title": "Empty states",
-      "summary": "Every region that can be empty has a designed empty state — first use, no results, or error — each with a next step.",
+      "summary": "Every region that can be empty has a designed empty state, first use, no results, or error, each with a next step.",
       "status": "stable",
-      "import": "import { EmptyState } from \"@/components/corpus/empty-state\"",
+      "import": "import { EmptyState } from \"@/components/vita/empty-state\"",
       "use_when": [
         "A table, list, dashboard widget or page has nothing to show"
       ],
@@ -1645,9 +1645,9 @@
       "slug": "fluid-styles",
       "path": "docs/patterns/fluid-styles.md",
       "title": "Fluid styles",
-      "summary": "Fluid inputs — fields tile edge to edge with labels inside. For dense expert data entry.",
+      "summary": "Fluid inputs, fields tile edge to edge with labels inside. For dense expert data entry.",
       "status": "stable",
-      "import": "import { FluidForm } from \"@/components/corpus/form\"",
+      "import": "import { FluidForm } from \"@/components/vita/form\"",
       "use_when": [
         "Expert users entering lots of structured data (configurations, admin records, bookings)",
         "Forms inside dense tools where vertical space is precious"
@@ -1667,7 +1667,7 @@
       "slug": "forms",
       "path": "docs/patterns/forms.md",
       "title": "Forms",
-      "summary": "How forms are structured end to end — single page vs multi-step, layout, validation, submission and recovery.",
+      "summary": "How forms are structured end to end, single page vs multi-step, layout, validation, submission and recovery.",
       "status": "stable",
       "use_when": [
         "Collecting data from the user"
@@ -1691,7 +1691,7 @@
       "title": "Global header",
       "summary": "What goes in the product-wide header, in which order, and what each global action opens.",
       "status": "stable",
-      "import": "import { Header, HeaderGlobalAction } from \"@/components/corpus/ui-shell\"",
+      "import": "import { Header, HeaderGlobalAction } from \"@/components/vita/ui-shell\"",
       "use_when": [
         "Every authenticated product"
       ],
@@ -1709,7 +1709,7 @@
       "slug": "global-search",
       "path": "docs/patterns/global-search.md",
       "title": "Global search",
-      "summary": "How people find anything from anywhere — summon a Spotlight-style panel with ⌘K, type, open with Enter.",
+      "summary": "How people find anything from anywhere, summon a Spotlight-style panel with ⌘K, type, open with Enter.",
       "status": "stable",
       "related": [
         "global-search",
@@ -1724,7 +1724,7 @@
       "title": "Intent-first input",
       "summary": "Describe, review, approve. The AI turns intent into a prepared result; the user corrects and ships it instead of filling in a form.",
       "status": "experimental",
-      "import": "import { Composer } from \"@/components/corpus/composer\"\nimport { AISurface, AILabel } from \"@/components/corpus/ai-label\"",
+      "import": "import { Composer } from \"@/components/vita/composer\"\nimport { AISurface, AILabel } from \"@/components/vita/ai-label\"",
       "use_when": [
         "Creating or configuring something with more than ~4 fields",
         "Tasks users describe more easily than they fill in (an agent, a report, a rule)"
@@ -1747,7 +1747,7 @@
       "title": "List items",
       "summary": "The settings row. Icon placeholder on the left, title (and subtitle) in the middle, the control or chevron on the far right. Rows that belong together join into one card.",
       "status": "stable",
-      "import": "import { ListGroup, ListItem, ListSection } from \"@/components/corpus/list-item\"\n\n<ListGroup>\n  <ListItem icon={Bot} tone=\"brand\" title=\"Support triage\" subtitle=\"Zendesk · Live\" onClick={open} />\n</ListGroup>",
+      "import": "import { ListGroup, ListItem, ListSection } from \"@/components/vita/list-item\"\n\n<ListGroup>\n  <ListItem icon={Bot} tone=\"brand\" title=\"Support triage\" subtitle=\"Zendesk · Live\" onClick={open} />\n</ListGroup>",
       "use_when": [
         "Settings, preferences and account pages",
         "Navigating into an object or sub-page (chevron rows)",
@@ -1771,7 +1771,7 @@
       "slug": "loading",
       "path": "docs/patterns/loading.md",
       "title": "Loading",
-      "summary": "Orchestrating loading across a page — progressive, region by region, without layout shift and without loaders everywhere.",
+      "summary": "Orchestrating loading across a page, progressive, region by region, without layout shift and without loaders everywhere.",
       "status": "stable",
       "use_when": [
         "Any view that fetches data"
@@ -1791,9 +1791,9 @@
       "slug": "login",
       "path": "docs/patterns/login.md",
       "title": "Login",
-      "summary": "Two-step, calm, secure login — identifier first, then password or SSO. Errors never leak whether an account exists.",
+      "summary": "Two-step, calm, secure login, identifier first, then password or SSO. Errors never leak whether an account exists.",
       "status": "stable",
-      "import": "import { LoginBlock } from \"@/components/corpus/blocks/login\"",
+      "import": "import { LoginBlock } from \"@/components/vita/blocks/login\"",
       "use_when": [
         "Any sign-in screen"
       ],
@@ -1811,7 +1811,7 @@
       "slug": "notifications",
       "path": "docs/patterns/notifications.md",
       "title": "Notifications",
-      "summary": "Matching the message to the right channel — toast, inline, modal, callout, or the notification panel.",
+      "summary": "Matching the message to the right channel, toast, inline, modal, callout, or the notification panel.",
       "status": "stable",
       "use_when": [
         "The system needs to tell the user something"
@@ -1831,9 +1831,9 @@
       "slug": "overflow-content",
       "path": "docs/patterns/overflow-content.md",
       "title": "Overflow content",
-      "summary": "What to do when content doesn't fit — truncate, wrap, clamp, scroll, or collapse — and what must never be cut.",
+      "summary": "What to do when content doesn't fit, truncate, wrap, clamp, scroll, or collapse, and what must never be cut.",
       "status": "stable",
-      "import": "import { Truncate } from \"@/components/corpus/truncate\"",
+      "import": "import { Truncate } from \"@/components/vita/truncate\"",
       "use_when": [
         "Long names in tables, cards, nav, breadcrumbs",
         "Long descriptions in constrained layouts",
@@ -1855,7 +1855,7 @@
       "slug": "read-only-states",
       "path": "docs/patterns/read-only-states.md",
       "title": "Read-only states",
-      "summary": "Showing values the user can see but not change — and switching between viewing and editing.",
+      "summary": "Showing values the user can see but not change, and switching between viewing and editing.",
       "status": "stable",
       "use_when": [
         "Detail pages where viewing is more common than editing",
@@ -1877,7 +1877,7 @@
       "title": "Right panel",
       "summary": "A floating panel on the right for global tools and editing in context, built with the same rules as the left navigation.",
       "status": "stable",
-      "import": "import { RightPanel } from \"@/components/corpus/ui-shell\"",
+      "import": "import { RightPanel } from \"@/components/vita/ui-shell\"",
       "use_when": [
         "Global tools opened from the header (notifications, help, assistant, theme)",
         "Viewing or editing an item while keeping the page in view",
@@ -1901,7 +1901,7 @@
       "slug": "search",
       "path": "docs/patterns/search.md",
       "title": "Search",
-      "summary": "Global and scoped search — where it lives, how results appear, and how to handle nothing found.",
+      "summary": "Global and scoped search, where it lives, how results appear, and how to handle nothing found.",
       "status": "stable",
       "use_when": [
         "Users know what they're looking for by name/ID"
@@ -1921,9 +1921,9 @@
       "slug": "status-indicators",
       "path": "docs/patterns/status-indicators.md",
       "title": "Status indicators",
-      "summary": "One vocabulary of states across the product — shape, color and word together, mapped in the taxonomy.",
+      "summary": "One vocabulary of states across the product, shape, color and word together, mapped in the taxonomy.",
       "status": "stable",
-      "import": "import { StatusIndicator } from \"@/components/corpus/status-indicator\"",
+      "import": "import { StatusIndicator } from \"@/components/vita/status-indicator\"",
       "use_when": [
         "Showing the state of an object (agent, run, deployment, integration)"
       ],
@@ -1942,9 +1942,9 @@
       "slug": "text-toolbar",
       "path": "docs/patterns/text-toolbar.md",
       "title": "Text toolbar",
-      "summary": "Formatting controls for rich-text editing — grouped, labelled, keyboard-friendly, with shortcuts.",
+      "summary": "Formatting controls for rich-text editing, grouped, labelled, keyboard-friendly, with shortcuts.",
       "status": "stable",
-      "import": "import { Toolbar, ToolbarButton, ToolbarToggle, ToolbarToggleGroup, ToolbarSeparator } from \"@/components/corpus/toolbar\"",
+      "import": "import { Toolbar, ToolbarButton, ToolbarToggle, ToolbarToggleGroup, ToolbarSeparator } from \"@/components/vita/toolbar\"",
       "use_when": [
         "Rich text editors (comments, descriptions, email drafts, notes)"
       ],
@@ -2004,7 +2004,7 @@
       "section": "decisions",
       "slug": "how-we-decide",
       "path": "docs/decisions/how-we-decide.md",
-      "title": "How Corpus decides",
+      "title": "How Vita decides",
       "summary": "Every system choice is a written record. Agents and people read the record before changing anything it covers; changing it means superseding it.",
       "status": "accepted",
       "date": "2026-10-01",
@@ -2019,7 +2019,7 @@
       "slug": "motion",
       "path": "docs/decisions/motion.md",
       "title": "Motion",
-      "summary": "Nothing snaps — except page load, global appearance swaps and floating-surface sizing, which never animate per element.",
+      "summary": "Nothing snaps, except page load, global appearance swaps and floating-surface sizing, which never animate per element.",
       "status": "accepted",
       "date": "2026-10-01",
       "decided_by": "Jacopo",
@@ -2045,10 +2045,25 @@
     },
     {
       "section": "decisions",
+      "slug": "the-name",
+      "path": "docs/decisions/the-name.md",
+      "title": "The name is Vita",
+      "summary": "The design system was called Corpus. It is now Vita, life, the third of a triad with Animus (the logic) and Anima (the AI).",
+      "status": "accepted",
+      "date": "2026-10-01",
+      "decided_by": "Jacopo",
+      "related": [
+        "about",
+        "brand",
+        "how-we-decide"
+      ]
+    },
+    {
+      "section": "decisions",
       "slug": "touch",
       "path": "docs/decisions/touch.md",
       "title": "Touch adapts by itself",
-      "summary": "When a finger is the pointer, Corpus grows its targets, its type and its hit areas, lightens its glass and switches the thinking orb to a filter-free renderer — without a knob and without a product doing anything.",
+      "summary": "When a finger is the pointer, Vita grows its targets, its type and its hit areas, lightens its glass and switches the thinking orb to a filter-free renderer, without a knob and without a product doing anything.",
       "status": "accepted",
       "date": "2026-10-01",
       "decided_by": "Jacopo",
@@ -2066,7 +2081,7 @@
       "slug": "weather-tint",
       "path": "docs/decisions/weather-tint.md",
       "title": "Weather tint",
-      "summary": "Floating layers lean cold or warm with the weather outside — Dynamic by default, or fixed Neutral, Cold or Warm.",
+      "summary": "Floating layers lean cold or warm with the weather outside, Dynamic by default, or fixed Neutral, Cold or Warm.",
       "status": "accepted",
       "date": "2026-10-01",
       "decided_by": "Jacopo",

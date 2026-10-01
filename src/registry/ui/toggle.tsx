@@ -5,7 +5,7 @@ import { Label } from "@/registry/ui/form"
 import { AnimatedText } from "@/registry/ui/animated"
 
 /**
- * Toggle (switch) — a binary setting that takes effect IMMEDIATELY. No "Save" button after a toggle.
+ * Toggle (switch), a binary setting that takes effect IMMEDIATELY. No "Save" button after a toggle.
  * If the change only applies on submit → Checkbox.
  */
 export interface ToggleProps extends React.ComponentProps<typeof SwitchPrimitive.Root> {
@@ -43,14 +43,14 @@ export function Toggle({ label, hideLabel, helperText, stateText, size = "md", l
           }}
           className={cn(
             // Squircle track; the knob inside is concentric (its radius = track radius − the 2px padding).
-            "group/switch peer relative tap inline-flex shrink-0 cursor-pointer items-center squircle p-0.5 duration-fast-02 ease-productive focus-ring [--corpus-squircle-r:var(--corpus-radius-sm)]",
+            "group/switch peer relative tap inline-flex shrink-0 cursor-pointer items-center squircle p-0.5 duration-fast-02 ease-productive focus-ring [--vita-squircle-r:var(--vita-radius-sm)]",
             "bg-border-strong data-[state=checked]:bg-success disabled:cursor-not-allowed disabled:bg-layer-3",
             size === "md" ? "h-6 w-10" : "h-4 w-7",
           )}
         >
           <SwitchPrimitive.Thumb
             className={cn(
-              "pointer-events-none block squircle bg-background shadow-raised duration-moderate-01 ease-spring [--corpus-squircle-r:calc(var(--corpus-radius-sm)-2px)]",
+              "pointer-events-none block squircle bg-background shadow-raised duration-moderate-01 ease-spring [--vita-squircle-r:calc(var(--vita-radius-sm)-2px)]",
               // A slim rectangle knob (half as wide as tall-ish: 12×20 md, 8×12 sm). Press: it stretches toward where it will travel (anchored on its
               // resting side); release: springs back.
               size === "md"

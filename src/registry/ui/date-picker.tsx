@@ -16,9 +16,9 @@ import { Popover, PopoverAnchor, PopoverContent } from "@/registry/ui/popover"
  *   range   → start–end (reporting periods, bookings).
  * Always accept typing. Show the format as placeholder. Validate on blur, not per keystroke.
  * `months` shows one or two months side by side. `presets` add common choices ("Last 7 days") beside the calendar
- * as ONE blended group of actions (joined rows, one surface) — picking one selects it and jumps the calendar there.
+ * as ONE blended group of actions (joined rows, one surface), picking one selects it and jumps the calendar there.
  */
-/** The day cell's looks — shared by the calendar and CalendarDay, so a day reads the same everywhere. */
+/** The day cell's looks, shared by the calendar and CalendarDay, so a day reads the same everywhere. */
 const dayClasses = {
   day: "size-control-xl p-0 text-center",
   day_button: "size-control-xl rounded-md text-body tabular-nums duration-fast-02 hover:bg-hover focus-ring",
@@ -35,7 +35,7 @@ const dayClasses = {
 export type CalendarDayState = "default" | "today" | "selected" | "range-start" | "range-middle" | "range-end" | "outside" | "disabled"
 
 /**
- * CalendarDay — one day button on its own, in any state (for documentation, legends and previews).
+ * CalendarDay, one day button on its own, in any state (for documentation, legends and previews).
  * In product UI days live inside Calendar / DatePicker.
  */
 export function CalendarDay({ day, state = "default" }: { day: number; state?: CalendarDayState }) {
@@ -59,7 +59,7 @@ export function CalendarDay({ day, state = "default" }: { day: number; state?: C
 }
 
 /**
- * Calendar — the month grid. Everything about it morphs:
+ * Calendar, the month grid. Everything about it morphs:
  *   · months slide in and out sideways; the caption's letters morph in with the default stagger;
  *   · the frame eases between month heights (5 vs 6 week rows) instead of snapping;
  *   · away from the current month, a Today button reveals beneath the grid and brings you back.
@@ -146,7 +146,7 @@ export function Calendar({ className, month: monthProp, onMonthChange, defaultMo
           />
         </div>
       </div>
-      {/* Today — only once you've left the current month; reveals and collapses, never pops. */}
+      {/* Today, only once you've left the current month; reveals and collapses, never pops. */}
       <div className={cn("reveal motion-productive", offToday && "reveal-open")}>
         <div>
           <div className="flex justify-center pt-1 pb-1">

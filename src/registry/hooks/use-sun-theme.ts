@@ -1,18 +1,18 @@
 import * as React from "react"
 
 /**
- * useSunTheme — Corpus follows the sun: light while the sun is up where the user is, dark once it has set.
+ * useSunTheme, Vita follows the sun: light while the sun is up where the user is, dark once it has set.
  * Location: the device position if the user allows it (remembered on this device), otherwise an estimate from the
- * timezone (longitude from the standard UTC offset, a mid latitude) — never wrong by more than about an hour.
+ * timezone (longitude from the standard UTC offset, a mid latitude), never wrong by more than about an hour.
  * Re-checks every few minutes. The user can still flip it; the override lasts until the next sunrise/sunset.
  *
  *   const [dark, setDark] = useSunTheme()   // apply with document.documentElement.classList.toggle("dark", dark)
  */
-const STORE = "corpus-sun-coords"
+const STORE = "vita-sun-coords"
 const RECHECK_MS = 5 * 60 * 1000
 const rad = Math.PI / 180
 
-/** Solar elevation in degrees for a moment and place (low-precision almanac — plenty for day/night). */
+/** Solar elevation in degrees for a moment and place (low-precision almanac, plenty for day/night). */
 export function sunElevation(date: Date, lat: number, lon: number) {
   const d = date.getTime() / 86400000 + 2440587.5 - 2451545 // days since J2000
   const g = (357.529 + 0.98560028 * d) * rad

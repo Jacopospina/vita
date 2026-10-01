@@ -85,13 +85,13 @@ function ReadOnlyDemo() {
       <Inline justify="between"><Text variant="title-3">Workspace settings</Text>{editing ? <IconButton icon={Close} label="Discard changes" shortcut="escape" onClick={() => setEditing(false)} /> : <Button variant="ghost" icon={Edit} shortcut="mod+e" onClick={() => setEditing(true)}>Edit</Button>}</Inline>
       {editing ? (
         <Form onSubmit={(e) => { e.preventDefault(); setEditing(false); toast({ kind: "success", title: "Settings saved" }) }}>
-          <TextInput label="Workspace name" defaultValue="Vita Support" />
-          <TextInput label="Default model" defaultValue="Vita Large" />
+          <TextInput label="Workspace name" defaultValue="Theo Support" />
+          <TextInput label="Default model" defaultValue="Theo Large" />
           <TextInput label="Workspace ID" defaultValue="ws_8f2k1" readOnly helperText="Set by the system" />
           <FormActions><Button type="submit" shortcut="mod+s">Save</Button></FormActions>
         </Form>
       ) : (
-        <StructuredList flush condensed label="Workspace settings" columns={["Field", "Value"]} rows={[{ id: "1", cells: ["Workspace name", "Vita Support"] }, { id: "2", cells: ["Default model", "Vita Large"] }, { id: "3", cells: ["Workspace ID", <Inline key="x" gap="2xs">ws_8f2k1<Icon as={Locked} label="Set by the system" className="text-helper" /></Inline>] }]} />
+        <StructuredList flush condensed label="Workspace settings" columns={["Field", "Value"]} rows={[{ id: "1", cells: ["Workspace name", "Theo Support"] }, { id: "2", cells: ["Default model", "Theo Large"] }, { id: "3", cells: ["Workspace ID", <Inline key="x" gap="2xs">ws_8f2k1<Icon as={Locked} label="Set by the system" className="text-helper" /></Inline>] }]} />
       )}
     </Stack>
   )
@@ -146,7 +146,7 @@ function CommonActionsDemo() {
         breadcrumb={[{ label: "Agents", href: "#" }, { label: "Support triage" }]}
         title="Support triage"
         status={<StatusIndicator kind="success">Live</StatusIndicator>}
-        description="Answers and routes support tickets · Vita Large · Production"
+        description="Answers and routes support tickets · Theo Large · Production"
         actions={<><Button variant="secondary" icon={Copy}>Duplicate</Button><Button icon={Renew}>Redeploy</Button><OverflowMenu label="More actions"><MenuItem icon={Edit}>Edit</MenuItem><MenuItem icon={Download}>Export config</MenuItem><MenuSeparator /><MenuItem icon={TrashCan} danger onSelect={() => setDel(true)}>Delete agent</MenuItem></OverflowMenu></>}
         tabs={<Tabs defaultValue="o"><TabsList><TabsTrigger value="o">Overview</TabsTrigger><TabsTrigger value="h">History</TabsTrigger></TabsList><TabsContent value="o" /><TabsContent value="h" /></Tabs>}
       />
@@ -168,7 +168,7 @@ function LoadingPatternDemo() {
           </Column>
         ))}
       </Grid>
-      {loaded ? <Text tone="muted">Content loaded — layout didn't shift.</Text> : <SkeletonText lines={2} />}
+      {loaded ? <Text tone="muted">Content loaded, layout didn't shift.</Text> : <SkeletonText lines={2} />}
     </Stack>
   )
 }
@@ -184,7 +184,7 @@ export const patternDemos: DemoMap = {
           breadcrumb={[{ label: "Agents", href: "#" }, { label: "Support triage" }]}
           title="Support triage"
           status={<StatusIndicator kind="success">Live</StatusIndicator>}
-          description="Answers and routes support tickets · Vita Large · Production"
+          description="Answers and routes support tickets · Theo Large · Production"
           kpis={
             <KpiGroup bare>
               <Kpi size="sm" label="Runs today" value={12840} delta={0.12} period="vs yesterday" />
@@ -237,7 +237,7 @@ export const patternDemos: DemoMap = {
       title: "Fluid vs default",
       render: () => (
         <Grid gutter="wide">
-          <Column sm={4} md={8} lg={8}><Stack gap="sm"><Text variant="headline">Fluid (dense data entry)</Text><FluidForm><TextInput label="Agent name" defaultValue="Support triage" /><TextInput label="Owner" defaultValue="Support" /><Select label="Model" defaultValue="large"><SelectOption value="large">Vita Large</SelectOption><SelectOption value="fast">Vita Fast</SelectOption></Select><TextInput label="Max concurrent runs" defaultValue="12" /></FluidForm></Stack></Column>
+          <Column sm={4} md={8} lg={8}><Stack gap="sm"><Text variant="headline">Fluid (dense data entry)</Text><FluidForm><TextInput label="Agent name" defaultValue="Support triage" /><TextInput label="Owner" defaultValue="Support" /><Select label="Model" defaultValue="large"><SelectOption value="large">Theo Large</SelectOption><SelectOption value="fast">Theo Fast</SelectOption></Select><TextInput label="Max concurrent runs" defaultValue="12" /></FluidForm></Stack></Column>
           <Column sm={4} md={8} lg={8}><Stack gap="sm"><Text variant="headline">Default</Text><Stack gap="md"><TextInput label="Agent name" defaultValue="Support triage" /><TextInput label="Owner" defaultValue="Support" /></Stack></Stack></Column>
         </Grid>
       ),
@@ -271,7 +271,7 @@ export const patternDemos: DemoMap = {
       render: () => (
         <Inline justify="end">
           <GlobalSearch
-            placeholder="Search Vita"
+            placeholder="Search Theo"
             shortcut="mod+shift+k"
             items={[
               { id: "a1", label: "Support triage", group: "Agents", description: "Live · Zendesk", onSelect: () => toast({ kind: "success", title: "Opening Support triage" }) },
@@ -287,7 +287,7 @@ export const patternDemos: DemoMap = {
   ],
   "patterns/global-header": [{ title: "Global header", description: "Name → nav → search · notifications (opens the right panel) · help · account.", render: () => <ShellDemo right /> }],
   "patterns/loading": [{ title: "Skeleton → content without layout shift", render: () => <LoadingPatternDemo /> }],
-  "patterns/login": [{ title: "Two-step login", render: () => <div className="flex justify-center py-8"><LoginBlock productName="Vita" signupHref="#" onSso={() => toast({ title: "Redirecting to your identity provider…" })} onSubmit={async () => { await new Promise((r) => setTimeout(r, 900)); throw new Error("x") }} /></div> }],
+  "patterns/login": [{ title: "Two-step login", render: () => <div className="flex justify-center py-8"><LoginBlock productName="Theo" signupHref="#" onSso={() => toast({ title: "Redirecting to your identity provider…" })} onSubmit={async () => { await new Promise((r) => setTimeout(r, 900)); throw new Error("x") }} /></div> }],
   "patterns/notifications": [
     {
       title: "Which notification?",
@@ -341,7 +341,7 @@ export const patternDemos: DemoMap = {
       title: "Status kinds",
       render: () => (
         <Stack gap="lg">
-          <Text variant="footnote" tone="muted">Final — hold still</Text>
+          <Text variant="footnote" tone="muted">Final, hold still</Text>
           <Inline gap="lg" wrap>
             <StatusIndicator kind="success">Live</StatusIndicator>
             <StatusIndicator kind="error">Failed</StatusIndicator>
@@ -352,7 +352,7 @@ export const patternDemos: DemoMap = {
             <StatusIndicator kind="undefined">Not set</StatusIndicator>
             <StatusIndicator kind="unknown">Unknown</StatusIndicator>
           </Inline>
-          <Text variant="footnote" tone="muted">Not final — alive, inner path moves</Text>
+          <Text variant="footnote" tone="muted">Not final, alive, inner path moves</Text>
           <Inline gap="lg" wrap>
             <StatusIndicator kind="in-progress">Deploying</StatusIndicator>
             <StatusIndicator kind="pending">Awaiting approval</StatusIndicator>
@@ -409,7 +409,7 @@ export const patternDemos: DemoMap = {
     },
     {
       title: "Controls on the far right",
-      description: "With a trailing control the row is not a link — the control is the target.",
+      description: "With a trailing control the row is not a link, the control is the target.",
       render: () => <ControlRows />,
     },
   ],
@@ -429,7 +429,7 @@ function ControlRows() {
 
 patternDemos["components/icon-placeholder"] = [
   {
-    title: "Sizes — small, medium, large",
+    title: "Sizes, small, medium, large",
     description: "Medium in list items, large in notifications and toast banners.",
     render: () => (
       <Inline gap="md">
