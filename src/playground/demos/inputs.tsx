@@ -12,7 +12,7 @@ import { Select, SelectOption, SelectGroup } from "@/registry/ui/select"
 import { Dropdown, Combobox, MultiSelect } from "@/registry/ui/dropdown"
 import { Option, OptionList } from "@/registry/ui/option"
 import { Bot, Plug, UserAvatar, Flash, Image } from "@/registry/icons"
-import { DatePicker, DateRangePicker, Calendar, datePresets, rangePresets } from "@/registry/ui/date-picker"
+import { DatePicker, DateRangePicker, Calendar, CalendarDay, datePresets, rangePresets } from "@/registry/ui/date-picker"
 import { Tile } from "@/registry/ui/tile"
 import type { DateRange } from "react-day-picker"
 import { Slider } from "@/registry/ui/slider"
@@ -259,6 +259,29 @@ export const inputDemos: DemoMap = {
     }
   ],
   "components/date-picker": [
+    {
+      title: "Day states",
+      description: "The day button on its own, in every state it can take.",
+      render: () => (
+        <div className="flex flex-wrap gap-6">
+          {([
+            ["Default", 12, "default"],
+            ["Today", 1, "today"],
+            ["Selected", 24, "selected"],
+            ["Range start", 9, "range-start"],
+            ["Range middle", 13, "range-middle"],
+            ["Range end", 17, "range-end"],
+            ["Outside the month", 30, "outside"],
+            ["Disabled", 10, "disabled"],
+          ] as const).map(([name, day, state]) => (
+            <Stack key={state} gap="xs" align="center">
+              <CalendarDay day={day} state={state} />
+              <Text variant="caption" tone="helper">{name}</Text>
+            </Stack>
+          ))}
+        </div>
+      ),
+    },
     {
       title: "Simple · Single · Range",
       render: () => (

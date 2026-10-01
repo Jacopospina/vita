@@ -1,6 +1,6 @@
 import * as React from "react"
 import { ColorPalette, Moon, Sun, LogoGithub } from "@/registry/icons"
-import { Shell, ShellBody, ShellMain, Header, HeaderGlobalAction, LeftPanel, SideNavItem, SideNavSection, RightPanel } from "@/registry/ui/ui-shell"
+import { Shell, ShellBody, ShellMain, Header, HeaderNavItem, HeaderGlobalAction, LeftPanel, SideNavItem, SideNavSection, RightPanel } from "@/registry/ui/ui-shell"
 import { TooltipProvider } from "@/registry/ui/tooltip"
 import { useSunTheme } from "@/registry/hooks/use-sun-theme"
 import { useWeatherTint } from "@/registry/hooks/use-weather-tint"
@@ -72,7 +72,14 @@ export function App() {
               <HeaderGlobalAction icon={LogoGithub} label="Repository" onClick={() => window.open("https://github.com/Jacopospina/corpus", "_blank")} />
             </>
           }
-        />
+        >
+          {/* The five doors into the docs. */}
+          <HeaderNavItem href="#/guidelines" active={section === "guidelines" || section === "getting-started"}>Start</HeaderNavItem>
+          <HeaderNavItem href="#/foundations/accessibility" active={section === "foundations"}>Foundations</HeaderNavItem>
+          <HeaderNavItem href="#/components/choosing-components" active={section === "components"}>Components</HeaderNavItem>
+          <HeaderNavItem href="#/patterns/agent-conversation" active={section === "patterns"}>Patterns</HeaderNavItem>
+          <HeaderNavItem href="#/decisions/how-we-decide" active={section === "decisions"}>Decisions</HeaderNavItem>
+        </Header>
         <ShellBody>
           {section !== "home" && (
           <LeftPanel label="Documentation">

@@ -5,6 +5,8 @@ import { Calendar as CalendarIcon, ChevronLeft, ChevronRight } from "@/registry/
 import { cn } from "@/registry/lib/utils"
 import { FieldShell, fieldClasses, fieldSize, type FieldBaseProps, type FieldSize } from "@/registry/ui/form"
 import { Icon } from "@/registry/ui/icon"
+import { AnimatedText } from "@/registry/ui/animated"
+import { Button } from "@/registry/ui/button"
 import { Popover, PopoverAnchor, PopoverContent } from "@/registry/ui/popover"
 
 /**
@@ -16,14 +18,90 @@ import { Popover, PopoverAnchor, PopoverContent } from "@/registry/ui/popover"
  * `months` shows one or two months side by side. `presets` add common choices ("Last 7 days") beside the calendar
  * as ONE blended group of actions (joined rows, one surface) — picking one selects it and jumps the calendar there.
  */
-export function Calendar({ className, ...props }: React.ComponentProps<typeof DayPicker>) {
+/** The day cell's looks — shared by the calendar and CalendarDay, so a day reads the same everywhere. */
+const dayClasses = {
+  day: "size-control-xl p-0 text-center",
+  day_button: "size-control-xl rounded-md text-body tabular-nums duration-fast-02 hover:bg-hover focus-ring",
+  // Today: primary, with a small dot under the number (absolutely placed, so the number never moves).
+  today: "text-primary [&>button]:relative [&>button]:after:absolute [&>button]:after:bottom-1.5 [&>button]:after:left-1/2 [&>button]:after:size-1 [&>button]:after:-translate-x-1/2 [&>button]:after:rounded-full [&>button]:after:bg-current",
+  selected: "[&>button]:bg-primary [&>button]:text-primary-foreground [&>button]:hover:bg-primary-hover",
+  range_start: "rounded-l-md bg-selected last:rounded-r-md",
+  range_end: "rounded-r-md bg-selected first:rounded-l-md",
+  range_middle: "rounded-none bg-selected first:rounded-l-md last:rounded-r-md [&>button]:!rounded-none [&>button]:!bg-transparent [&>button]:!text-selected-foreground [&>button]:hover:!bg-hover",
+  outside: "text-disabled-foreground",
+  disabled: "text-disabled-foreground [&>button]:pointer-events-none",
+}
+
+export type CalendarDayState = "default" | "today" | "selected" | "range-start" | "range-middle" | "range-end" | "outside" | "disabled"
+
+/**
+ * CalendarDay — one day button on its own, in any state (for documentation, legends and previews).
+ * In product UI days live inside Calendar / DatePicker.
+ */
+export function CalendarDay({ day, state = "default" }: { day: number; state?: CalendarDayState }) {
+  const cell = {
+    default: "",
+    today: dayClasses.today,
+    selected: dayClasses.selected,
+    "range-start": cn(dayClasses.range_start, dayClasses.selected),
+    "range-middle": dayClasses.range_middle,
+    "range-end": cn(dayClasses.range_end, dayClasses.selected),
+    outside: dayClasses.outside,
+    disabled: dayClasses.disabled,
+  }[state]
   return (
-    <DayPicker
-      showOutsideDays
-      animate
-      className={cn("p-1 text-body", className)}
-      // Roomy, easy targets (36px days). A range is ONE continuous band on the cells: rounded only on its outer
-      // corners (start: left, end: right), square in between; start and end days are filled.
+    <div className={cn(dayClasses.day, cell)}>
+      <button type="button" disabled={state === "disabled"} aria-pressed={state === "selected" || state.startsWith("range") || undefined} className={dayClasses.day_button}>
+        {day}
+      </button>
+    </div>
+  )
+}
+
+/**
+ * Calendar — the month grid. Everything about it morphs:
+ *   · months slide in and out sideways; the caption's letters morph in with the default stagger;
+ *   · the frame eases between month heights (5 vs 6 week rows) instead of snapping;
+ *   · away from the current month, a Today button reveals beneath the grid and brings you back.
+ */
+export function Calendar({ className, month: monthProp, onMonthChange, defaultMonth, ...props }: React.ComponentProps<typeof DayPicker>) {
+  const [own, setOwn] = React.useState<Date>(() => defaultMonth ?? new Date())
+  const month = monthProp ?? own
+  const setMonth = (m: Date) => {
+    if (monthProp === undefined) setOwn(m)
+    onMonthChange?.(m)
+  }
+  const today = new Date()
+  const shown = (props as { numberOfMonths?: number }).numberOfMonths ?? 1
+  const away = month.getFullYear() * 12 + month.getMonth()
+  const now = today.getFullYear() * 12 + today.getMonth()
+  const offToday = now < away || now > away + shown - 1
+
+  // Measured height: the frame transitions between month heights; clipped vertically only, so months still slide.
+  const inner = React.useRef<HTMLDivElement>(null)
+  const [h, setH] = React.useState<number>()
+  React.useEffect(() => {
+    const el = inner.current
+    if (!el) return
+    const ro = new ResizeObserver(() => setH(el.offsetHeight))
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
+
+  return (
+    <div className={cn("w-fit", className)}>
+      <div className="motion-productive [overflow-y:clip]" style={{ height: h }}>
+        <div ref={inner}>
+          <DayPicker
+            showOutsideDays
+            animate
+            month={month}
+            onMonthChange={setMonth}
+            // The year only when it isn't this year ("December", but "January 2027").
+            formatters={{ formatCaption: (d) => format(d, d.getFullYear() === today.getFullYear() ? "MMMM" : "MMMM yyyy") }}
+            className="p-1 text-body"
+            // Roomy, easy targets (36px days). A range is ONE continuous band on the cells: rounded only on its outer
+            // corners (start: left, end: right), square in between; start and end days are filled.
       classNames={{
         months: "flex flex-col gap-6 sm:flex-row",
         month: "flex flex-col gap-2",
@@ -35,16 +113,16 @@ export function Calendar({ className, ...props }: React.ComponentProps<typeof Da
         weekdays: "flex",
         weekday: "w-control-xl pb-1 text-caption font-medium text-helper",
         week: "mt-0.5 flex",
-        day: "size-control-xl p-0 text-center",
-        day_button: "size-control-xl rounded-md text-body tabular-nums duration-fast-02 hover:bg-hover focus-ring",
-        today: "font-semibold text-primary",
-        selected: "[&>button]:bg-primary [&>button]:text-primary-foreground [&>button]:hover:bg-primary-hover",
-        range_start: "rounded-l-md bg-selected last:rounded-r-md",
-        range_end: "rounded-r-md bg-selected first:rounded-l-md",
+        day: dayClasses.day,
+        day_button: dayClasses.day_button,
+        today: dayClasses.today,
+        selected: dayClasses.selected,
+        range_start: dayClasses.range_start,
+        range_end: dayClasses.range_end,
         // each week row's band is one shape: rounded where the row's highlight begins and ends, even mid-range
-        range_middle: "rounded-none bg-selected first:rounded-l-md last:rounded-r-md [&>button]:!rounded-none [&>button]:!bg-transparent [&>button]:!text-selected-foreground [&>button]:hover:!bg-hover",
-        outside: "text-disabled-foreground",
-        disabled: "text-disabled-foreground [&>button]:pointer-events-none",
+        range_middle: dayClasses.range_middle,
+        outside: dayClasses.outside,
+        disabled: dayClasses.disabled,
         root: "relative w-fit",
         // month change choreography. The picker names months by POSITION: moving forward, the new month enters
         // from "after" (right) and the old one exits to "before" (left); moving back, the reverse.
@@ -57,11 +135,28 @@ export function Calendar({ className, ...props }: React.ComponentProps<typeof Da
         caption_before_enter: "animate-month-caption-in",
         caption_before_exit: "animate-month-caption-out",
       }}
-      components={{
-        Chevron: ({ orientation }) => <Icon as={orientation === "left" ? ChevronLeft : ChevronRight} />,
-      }}
-      {...props}
-    />
+            components={{
+              Chevron: ({ orientation }) => <Icon as={orientation === "left" ? ChevronLeft : ChevronRight} />,
+              // The month name morphs in letter by letter (the default stagger) every time a new month arrives.
+              CaptionLabel: ({ children, ...rest }) => (
+                <span {...rest}>{typeof children === "string" ? <AnimatedText enter="mount">{children}</AnimatedText> : children}</span>
+              ),
+            }}
+            {...props}
+          />
+        </div>
+      </div>
+      {/* Today — only once you've left the current month; reveals and collapses, never pops. */}
+      <div className={cn("reveal motion-productive", offToday && "reveal-open")}>
+        <div>
+          <div className="flex justify-center pt-1 pb-1">
+            <Button size="sm" variant="ghost" tabIndex={offToday ? undefined : -1} aria-hidden={!offToday || undefined} onClick={() => setMonth(new Date(today.getFullYear(), today.getMonth(), 1))}>
+              Today
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
 

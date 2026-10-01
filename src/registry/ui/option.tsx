@@ -27,7 +27,8 @@ export const tickClasses = "absolute left-2.5 text-primary group-data-[highlight
  */
 export const itemClasses = cn(
   "group/item relative flex min-h-control-md w-full cursor-default items-center gap-2 rounded-inner-1.5 py-1 pr-2.5 pl-2.5 text-body outline-none select-none",
-  "aria-selected:bg-selected aria-selected:font-medium data-[state=checked]:bg-selected data-[state=checked]:font-medium",
+  // The selected fill yields to the highlight: a highlighted row is always full primary with white text.
+  "aria-selected:font-medium data-[state=checked]:font-medium aria-selected:not-data-[highlighted]:bg-selected data-[state=checked]:not-data-[highlighted]:bg-selected",
   "data-[highlighted]:bg-primary data-[highlighted]:text-primary-foreground data-[highlighted]:[&_.text-muted-foreground]:text-primary-foreground/80 data-[highlighted]:[&_.text-helper]:text-primary-foreground/80 data-[disabled]:pointer-events-none data-[disabled]:text-disabled-foreground",
 )
 
@@ -45,7 +46,7 @@ export interface OptionContentProps {
 
 /** The inside of every option row — shared by Option and the Radix-based lists, so all dropdowns look the same. */
 /** Multiple-choice rows reserve the left tick slot. */
-export const multiItemClasses = "pl-8 aria-selected:bg-transparent aria-selected:font-normal"
+export const multiItemClasses = "pl-8 aria-selected:not-data-[highlighted]:bg-transparent aria-selected:font-normal"
 
 export function OptionContent({ label, description, icon, meta, trailingIcon, selected = false, multiple = false }: OptionContentProps) {
   return (
