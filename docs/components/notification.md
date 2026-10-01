@@ -21,7 +21,7 @@ related: [capsule, notifications, modal, inline-loading, status-indicators]
 ## Anatomy
 
 One structure everywhere:
-- **Squircle card on a neutral surface.** Never a colored bar or a tinted fill.
+- **Squircle card on a white surface.** Inline notifications and callouts sit on `raised` (white); toast banners are glass. Never a colored bar or a tinted fill.
 - **[IconPlaceholder](#/components/icon-placeholder) on the left** (soft variant). The icon and its semantic color carry the kind: `info`, `success`, `warning` or `error`.
 - **Title over subtitle.**
 - **At most one action** on the right.

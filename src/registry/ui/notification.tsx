@@ -52,7 +52,7 @@ function Notice({ icon, kind, eyebrow, source, title, subtitle, children, action
       role={role}
       className={cn(
         "group/notice pointer-events-auto relative flex w-full items-start gap-3 squircle p-3 text-body text-foreground [--corpus-squircle-r:var(--corpus-radius-lg)]",
-        surface === "glass" ? "glass glass-5" : "border border-border-subtle bg-layer-1",
+        surface === "glass" ? "glass glass-5" : "border border-border-subtle bg-raised",
         motion,
         className,
       )}
