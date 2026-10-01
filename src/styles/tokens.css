@@ -39,6 +39,7 @@
   --corpus-raised: oklch(1 0 0);
   /* Floating layers (glass): raised, carrying the weather tint. */
   --corpus-elevated: oklch(0.995 var(--_ec) var(--_eh));
+  --corpus-glass-lift: 1.12; /* glass brightens what's behind it, so it stays white while you see through it */
   --corpus-field: oklch(1 0 0);
   --corpus-overlay: oklch(0 0 0 / 0.4);
   --corpus-inverse: oklch(0.232 var(--_nc) var(--_nh));
@@ -126,6 +127,7 @@
   --corpus-layer-3: oklch(0.349 var(--_nc) var(--_nh));
   --corpus-raised: oklch(0.227 var(--_nc) var(--_nh));
   --corpus-elevated: oklch(0.227 var(--_ec) var(--_eh));
+  --corpus-glass-lift: 1;
   --corpus-field: oklch(0.227 var(--_nc) var(--_nh));
   --corpus-overlay: oklch(0 0 0 / 0.6);
   --corpus-inverse: oklch(0.971 var(--_nc) var(--_nh));

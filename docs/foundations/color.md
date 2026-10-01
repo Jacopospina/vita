@@ -49,17 +49,17 @@ avoid_when:
 
 ## Glass by elevation
 
-- **`elevated` surface.** Glass fills from the `elevated` token: `raised` plus the weather tint (see Theming), so only floating layers carry it.
-
-
 Everything floating above the page is frosted glass. The higher it sits, the more frosted it is: more blur, and more of what's behind shows through.
 
-| Tier | Layer | Blur | Used by |
-|---|---|---|---|
-| `glass-1` | z-30 | 14px | Side navigation |
-| `glass-2` | z-40 | 20px | Header |
-| `glass-3` | z-50 | 28px | Right panel, menus, dropdown lists, popovers |
-| `glass-4` | z-50, above an overlay | 36px | Dialogs |
-| `glass-5` | z-60 | 44px | Notifications, capsules |
+| Tier | Layer | Blur | Fill | Used by |
+|---|---|---|---|---|
+| `glass-1` | z-30 | 10px | 66% | Side navigation |
+| `glass-2` | z-40 | 14px | 62% | Header |
+| `glass-3` | z-50 | 18px | 58% | Right panel, menus, dropdown lists, popovers |
+| `glass-4` | z-50, above an overlay | 24px | 52% | Dialogs |
+| `glass-5` | z-60 | 30px | 46% | Notifications, capsules |
+
+- **See through, read white.** Content moving beneath stays faintly visible. In light mode the glass brightens its backdrop (`glass-lift`), so it still reads white instead of greying into the page.
+- **`elevated` surface.** Glass fills from the `elevated` token: `raised` plus the weather tint (see Theming), so only floating layers carry it.
 
 Tooltips stay solid: they're a deliberately inverse surface.
