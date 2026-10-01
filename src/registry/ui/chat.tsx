@@ -16,7 +16,7 @@ import { useFlip } from "@/registry/hooks/use-flip"
  *                Consecutive messages from the same author JOIN (belonging): inner corners tighten, gap shrinks,
  *                only the last one shows the author mark.
  *   ChatThread   the column of bubbles; new messages enter from their author's side and the rest glide (FLIP).
- *   ChatTyping   the agent is thinking — Sofia, inside a bubble. Never three bouncing dots.
+ *   ChatTyping   the agent is thinking — Sofia and what it's doing, as a plain line (never a bubble, never bouncing dots).
  *   MiniChat     a compact agent panel: header (agent + status), thread, composer.
  * A long-form AI answer inside a page → AISurface. A system notice → InlineNotification.
  */
@@ -85,14 +85,12 @@ export function ChatBubble({ role, children, author, time, position = "single", 
   )
 }
 
-/** ChatTyping — the agent is thinking: Sofia in an agent bubble. */
+/** ChatTyping — the agent is thinking: Sofia and what it's doing, as a plain line on the agent's side (not a bubble). */
 export function ChatTyping({ label = "Thinking" }: { label?: string }) {
   return (
-    <div className="flex items-end gap-2" role="status">
-      <div className="flex origin-bottom-left animate-chip-in items-center gap-2 rounded-xl rounded-bl-sm bg-layer-2 px-3.5 py-2 text-body text-muted-foreground">
-        <Thinking mode="generating" size="sm" label={label} />
-        <span>{label}…</span>
-      </div>
+    <div role="status" className="flex animate-enter-fade items-center gap-2 py-1 text-body text-muted-foreground">
+      <Thinking mode="generating" size="sm" label={label} />
+      <span>{label}…</span>
     </div>
   )
 }
@@ -163,6 +161,9 @@ export function MiniChat({ agent, status = "Online", messages, typing, onSend, o
     if (sc) sc.scrollTop = sc.scrollHeight // land where it will be seen
     const bubble = sc?.querySelector<HTMLElement>(`[data-message-id="${CSS.escape(last.id)}"] [data-bubble]`)
     if (!bubble || typeof bubble.animate !== "function") return
+    // It arrives by flight, not by spring: stop the spring-in BEFORE measuring (its first frame is scaled to 60%),
+    // so the flying bubble is exactly the real one — same size, same shape.
+    bubble.getAnimations().forEach((a) => a.cancel())
     const end = bubble.getBoundingClientRect()
     const bs = getComputedStyle(bubble)
     // Align the bubble's text with where the typed text sat, so the words don't jump.
@@ -173,8 +174,8 @@ export function MiniChat({ agent, status = "Online", messages, typing, onSend, o
     // it lifts straight off the composer's text and lands on the real bubble, which stays hidden until it arrives.
     const ghost = bubble.cloneNode(true) as HTMLElement
     Object.assign(ghost.style, {
-      position: "fixed", left: `${end.left}px`, top: `${end.top}px`, width: `${end.width}px`, height: `${end.height}px`,
-      margin: "0", zIndex: "2147483000", pointerEvents: "none", animation: "none", boxSizing: "border-box",
+      position: "fixed", left: `${end.left}px`, top: `${end.top}px`, width: `${bubble.offsetWidth}px`, height: `${bubble.offsetHeight}px`,
+      margin: "0", zIndex: "2147483000", pointerEvents: "none", animation: "none", transition: "none", boxSizing: "border-box",
     })
     document.body.appendChild(ghost)
     bubble.style.opacity = "0"

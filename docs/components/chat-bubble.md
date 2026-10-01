@@ -19,7 +19,7 @@ related: [agent-conversation, ai-label, composer, thinking]
 |---|---|
 | `ChatBubble` | One message: `role` agent or user, `author`, `time`, `status` (sending, sent, failed) |
 | `ChatThread` | The column of messages. Runs from the same author join automatically |
-| `ChatTyping` | The agent is thinking: Sofia inside a bubble, with what it's doing |
+| `ChatTyping` | The agent is thinking: Sofia and what it's doing, as a plain line on the agent's side, not a bubble |
 | `MiniChat` | A compact agent panel: header with status, thread, composer |
 
 ## Rules
