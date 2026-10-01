@@ -43,10 +43,13 @@ export interface TagProps extends React.HTMLAttributes<HTMLSpanElement>, Variant
   disabled?: boolean
 }
 
+/** With a leading icon, the left padding equals the space above and below the icon: (height − 16px icon) / 2. */
+const iconInset = { sm: "pl-0.5", md: "pl-1", lg: "pl-2" } as const
+
 export function Tag({ tone, size, icon, onDismiss, dismissLabel, disabled, className, children, ...props }: TagProps) {
   const [leaving, exit] = useExit()
   return (
-    <span className={cn(tagVariants({ tone, size }), onDismiss && "pr-0.5", disabled && "opacity-50", leaving && "animate-exit-scale", className)} {...props}>
+    <span className={cn(tagVariants({ tone, size }), icon && iconInset[size ?? "md"], onDismiss && "pr-0.5", disabled && "opacity-50", leaving && "animate-exit-scale", className)} {...props}>
       {icon && <SwapIcon as={icon} size="sm" />}
       <span className="truncate">{animateChildren(children)}</span>
       {onDismiss && (

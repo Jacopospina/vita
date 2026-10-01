@@ -29,7 +29,7 @@ related: [status-indicators, filtering, dropdown]
 
 ## Rules
 
-1. **Status tags include an icon.** Color is never the only signal.
+1. **Status tags include an icon.** Color is never the only signal. The icon sits as far from the left edge as from the top and bottom (4px on the default tag).
 2. **One tone per meaning, product-wide.** The status → tone map belongs in the taxonomy.
 3. **Don't make read-only tags look clickable.** No hover state, no pointer.
 4. **Dismissible tags** name what's removed in their accessible label ("Remove Road").
