@@ -8,6 +8,8 @@ import { Thinking } from "@/registry/ui/thinking"
 import { Composer } from "@/registry/ui/composer"
 import { StatusIndicator } from "@/registry/ui/status-indicator"
 import { useFlip } from "@/registry/hooks/use-flip"
+import { AnimatedText } from "@/registry/ui/animated"
+import { nextMakingWord } from "@/registry/lib/making-words"
 
 /**
  * Chat — the conversation pieces for agents and people.
@@ -85,12 +87,28 @@ export function ChatBubble({ role, children, author, time, position = "single", 
   )
 }
 
-/** ChatTyping — the agent is thinking: Sofia and what it's doing, as a plain line on the agent's side (not a bubble). */
-export function ChatTyping({ label = "Thinking" }: { label?: string }) {
+/**
+ * useMakingWord — while an agent works, a different making word every couple of seconds ("Sketching", "Glazing"…),
+ * in the Creator's voice. Never "Loading" or "Thinking".
+ */
+export function useMakingWord(active = true, everyMs = 2400) {
+  const [word, setWord] = React.useState(() => nextMakingWord())
+  React.useEffect(() => {
+    if (!active) return
+    const t = window.setInterval(() => setWord((w) => nextMakingWord(w)), everyMs)
+    return () => window.clearInterval(t)
+  }, [active, everyMs])
+  return word
+}
+
+/** ChatTyping — the agent is working: Sofia and a rotating making word, as a plain line on the agent's side (not a bubble). */
+export function ChatTyping({ label }: { label?: string }) {
+  const rotating = useMakingWord(!label)
+  const text = label ?? rotating
   return (
     <div role="status" className="flex animate-enter-fade items-center gap-2 py-1 text-body text-muted-foreground">
-      <Thinking mode="generating" size="sm" label={label} />
-      <span>{label}…</span>
+      <Thinking mode="generating" size="sm" label={text} />
+      <AnimatedText>{`${text}…`}</AnimatedText>
     </div>
   )
 }
@@ -174,10 +192,12 @@ export function MiniChat({ agent, status = "Online", messages, typing, onSend, o
     // it lifts straight off the composer's text and lands on the real bubble, which stays hidden until it arrives.
     const ghost = bubble.cloneNode(true) as HTMLElement
     Object.assign(ghost.style, {
-      position: "fixed", left: `${end.left}px`, top: `${end.top}px`, width: `${bubble.offsetWidth}px`, height: `${bubble.offsetHeight}px`,
+      // exact fractional size (offsetWidth rounds down and re-wraps the text); a hair of slack keeps the same line breaks
+      position: "fixed", left: `${end.left}px`, top: `${end.top}px`, width: `${end.width + 0.5}px`, height: `${end.height}px`,
       margin: "0", zIndex: "2147483000", pointerEvents: "none", animation: "none", transition: "none", boxSizing: "border-box",
     })
     document.body.appendChild(ghost)
+    bubble.style.transition = "none" // the hand-off must be instant: no fade, no blink
     bubble.style.opacity = "0"
     // Travel on Corpus's expressive curve: it leaves fast and settles slowly — a message SENT, not drifted.
     const leaveFast = getComputedStyle(document.documentElement).getPropertyValue("--corpus-ease-expressive").trim() || "cubic-bezier(0.22, 1, 0.36, 1)"
@@ -192,12 +212,17 @@ export function MiniChat({ agent, status = "Online", messages, typing, onSend, o
     const land = () => {
       bubble.style.opacity = ""
       ghost.remove()
+      requestAnimationFrame(() => {
+        bubble.style.transition = ""
+      })
     }
     flight.onfinish = land
     flight.oncancel = land
   }, [messages])
   // The conversation stays pinned to the latest message: anything that grows the thread (new message, thinking,
   // a reply landing) keeps it at the bottom — unless the person scrolled up to read history.
+  const word = useMakingWord(!!typing && typeof typing !== "string")
+  const working = typing ? (typeof typing === "string" ? typing : word) : false
   const pinned = React.useRef(true)
   const threadRef = React.useRef<HTMLDivElement>(null)
   React.useEffect(() => {
@@ -229,14 +254,14 @@ export function MiniChat({ agent, status = "Online", messages, typing, onSend, o
         <IconPlaceholder icon={Bot} tone="brand" size="md" />
         <div className="flex min-w-0 flex-1 flex-col">
           <span className="truncate text-body font-semibold">{agent}</span>
-          <StatusIndicator kind={typing ? "in-progress" : "success"} size="sm">{typing ? "Thinking" : status}</StatusIndicator>
+          <StatusIndicator kind={working ? "in-progress" : "success"} size="sm">{working || status}</StatusIndicator>
         </div>
         {onClose && <IconButton icon={Close} label="Close chat" size="sm" shortcut="escape" onClick={onClose} />}
       </header>
       <div ref={scroller} className="flex min-h-0 flex-1 flex-col overflow-y-auto p-3">
         {/* short threads sit at the bottom, like a messaging app */}
         <div ref={threadRef} className="mt-auto">
-          <ChatThread messages={messages} typing={typing} launchedId={launchedId} />
+          <ChatThread messages={messages} typing={working} launchedId={launchedId} />
         </div>
       </div>
       <div ref={composerBox} className="border-t border-divider p-2">

@@ -32,7 +32,7 @@ function LiveMiniChat() {
       setMessages((m) => [...m, { id: id + "a", role: "agent", text, author: "Support triage", time: now() }])
     }, 1400)
   }
-  return <MiniChat agent="Support triage" messages={messages} typing={typing && "Thinking"} onSend={send} suggestions={["Where's my refund?", "Can I change plan?", "Talk to a person"]} />
+  return <MiniChat agent="Support triage" messages={messages} typing={typing} onSend={send} suggestions={["Where's my refund?", "Can I change plan?", "Talk to a person"]} />
 }
 
 export const chatDemos: DemoMap = {

@@ -59,6 +59,11 @@ How Corpus speaks across a person's journey, from first spark to a new identity.
 3. **Release.** Celebrate the moment it's real: "It's live."
 4. **Recognise.** Reflect the identity back: "You made that." This is the moment the creator wakes up.
 
+## While agents work
+
+- **Making words, never "Loading".** While an agent works, it shows one word at a time from the making vocabulary in the Creator's voice: Sketching, Glazing, Kneading, Weaving, Prototyping and 182 more.
+- **One word, rotating.** A new word appears every couple of seconds with a letter-by-letter reveal. The full list, with the playful word each one was reworded from, lives in `src/registry/lib/making-words.ts`.
+
 ## Personality
 
 | We are | We are not |
