@@ -343,7 +343,7 @@
       "title": "Chat bubble",
       "summary": "One message in a conversation between a person and an agent. Agent on the left, the person on the right; runs from the same author join.",
       "status": "stable",
-      "import": "import { ChatThread, ChatBubble, ChatTyping, MiniChat } from \"@/components/corpus/chat\"\n\n<ChatThread messages={messages} typing=\"Thinking\" />",
+      "import": "import { ChatThread, ChatBubble, ChatTyping, MiniChat } from \"@/components/corpus/chat\"\n\n<ChatThread messages={messages} typing />",
       "use_when": [
         "A conversation between a person and an agent, or between people",
         "Showing what an agent said and when, in order"

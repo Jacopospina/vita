@@ -2,7 +2,7 @@
 title: Chat bubble
 summary: One message in a conversation between a person and an agent. Agent on the left, the person on the right; runs from the same author join.
 status: stable
-import: "import { ChatThread, ChatBubble, ChatTyping, MiniChat } from \"@/components/corpus/chat\"\n\n<ChatThread messages={messages} typing=\"Thinking\" />"
+import: "import { ChatThread, ChatBubble, ChatTyping, MiniChat } from \"@/components/corpus/chat\"\n\n<ChatThread messages={messages} typing />"
 use_when:
   - A conversation between a person and an agent, or between people
   - Showing what an agent said and when, in order
@@ -19,7 +19,7 @@ related: [agent-conversation, ai-label, composer, thinking]
 |---|---|
 | `ChatBubble` | One message: `role` agent or user, `author`, `time`, `status` (sending, sent, failed) |
 | `ChatThread` | The column of messages. Runs from the same author join automatically |
-| `ChatTyping` | The agent is working: Sofia and a rotating making word (\"Sketching…\"), as a plain line on the agent's side, not a bubble |
+| `ChatTyping` | The agent is working: Sofia and a rotating making word ("Sketching…"), as a plain line on the agent's side, not a bubble |
 | `MiniChat` | A compact agent panel: header with status, thread, composer |
 
 ## Rules
