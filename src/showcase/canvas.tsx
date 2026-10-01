@@ -32,7 +32,8 @@ import { Kbd } from "@/registry/ui/kbd"
  */
 
 function Card({ children }: { children: React.ReactNode }) {
-  return <Tile elevated className="w-72 shrink-0 p-4">{children}</Tile>
+  // Plain card surface: card colour, no shadow.
+  return <Tile className="w-72 shrink-0 p-4">{children}</Tile>
 }
 
 function LiveMetric() {

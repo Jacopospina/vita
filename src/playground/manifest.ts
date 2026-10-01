@@ -29,6 +29,7 @@ export const manifest: Record<Section, NavEntry[]> = {
     { slug: "breadcrumb", title: "Breadcrumb" },
     { slug: "button", title: "Button" },
     { slug: "capsule", title: "Capsule" },
+    { slug: "chat-bubble", title: "Chat bubble" },
     { slug: "checkbox", title: "Checkbox" },
     { slug: "code-snippet", title: "Code snippet" },
     { slug: "composer", title: "Composer" },
@@ -71,6 +72,7 @@ export const manifest: Record<Section, NavEntry[]> = {
     { slug: "ui-shell-right-panel", title: "UI shell right panel" },
   ],
   patterns: [
+    { slug: "agent-conversation", title: "Agent conversation" },
     { slug: "common-actions", title: "Common actions" },
     { slug: "dialogs", title: "Dialogs" },
     { slug: "disabled-states", title: "Disabled states" },

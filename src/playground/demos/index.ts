@@ -7,9 +7,11 @@ import { feedbackDemos } from "./feedback"
 import { patternDemos } from "./patterns"
 import { aboutDemos } from "./about"
 import { interactionDemos } from "./interaction"
+import { chatDemos } from "./chat"
 
 export const demos: DemoMap = {
   ...aboutDemos,
+  ...chatDemos,
   ...interactionDemos,
   ...foundationDemos,
   ...actionDemos,

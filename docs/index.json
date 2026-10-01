@@ -338,6 +338,30 @@
     },
     {
       "section": "components",
+      "slug": "chat-bubble",
+      "path": "docs/components/chat-bubble.md",
+      "title": "Chat bubble",
+      "summary": "One message in a conversation between a person and an agent. Agent on the left, the person on the right; runs from the same author join.",
+      "status": "stable",
+      "import": "import { ChatThread, ChatBubble, ChatTyping, MiniChat } from \"@/components/corpus/chat\"\n\n<ChatThread messages={messages} typing=\"Thinking\" />",
+      "use_when": [
+        "A conversation between a person and an agent, or between people",
+        "Showing what an agent said and when, in order"
+      ],
+      "avoid_when": [
+        "A long AI answer inside a page → AISurface",
+        "A system notice (\"Handed to Billing\") → InlineNotification",
+        "Comments on a document → a list of comments, not bubbles"
+      ],
+      "related": [
+        "agent-conversation",
+        "ai-label",
+        "composer",
+        "thinking"
+      ]
+    },
+    {
+      "section": "components",
       "slug": "checkbox",
       "path": "docs/components/checkbox.md",
       "title": "Checkbox",
@@ -1300,6 +1324,28 @@
         "ui-shell-header",
         "popover",
         "filtering"
+      ]
+    },
+    {
+      "section": "patterns",
+      "slug": "agent-conversation",
+      "path": "docs/patterns/agent-conversation.md",
+      "title": "Agent conversation",
+      "summary": "How people and agents talk in Corpus — the mini chat, thinking states, suggested replies and hand-offs to a person.",
+      "status": "stable",
+      "use_when": [
+        "A product lets people talk to an agent (support, onboarding, internal assistants)",
+        "An agent drafts something a person reviews and sends"
+      ],
+      "avoid_when": [
+        "The agent's answer is a page section, not a conversation → AISurface",
+        "A one-shot request that produces a result → Intent-first input"
+      ],
+      "related": [
+        "chat-bubble",
+        "intent-first",
+        "ai-label",
+        "composer"
       ]
     },
     {

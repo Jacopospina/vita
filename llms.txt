@@ -62,6 +62,9 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/foun
 - [Capsule](docs/components/capsule.md): Quick feedback at the top centre. Icon on the left, title over subtitle in the middle, the semantic story on the right.
   - use: Glanceable feedback that something connected, finished or is progressing; A live value worth watching for a few seconds (sync progress, a connection)
   - avoid: Anything that needs reading or an action → toast banner; Errors the user must fix → InlineNotification next to the cause; Long-running work the user should track → ProgressBar in the page
+- [Chat bubble](docs/components/chat-bubble.md): One message in a conversation between a person and an agent. Agent on the left, the person on the right; runs from the same author join.
+  - use: A conversation between a person and an agent, or between people; Showing what an agent said and when, in order
+  - avoid: A long AI answer inside a page → AISurface; A system notice ("Handed to Billing") → InlineNotification; Comments on a document → a list of comments, not bubbles
 - [Checkbox](docs/components/checkbox.md): Independent choices that take effect on submit, and multi-selection from a short list.
   - use: Selecting any number of options from ≤ 6 (CheckboxGroup); A single opt-in inside a form (agree to terms, subscribe); Selecting rows in a table (handled by DataTable)
   - avoid: The change applies immediately → Toggle; Exactly one choice → RadioGroup; More than ~6 options → MultiSelect
@@ -186,6 +189,9 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/foun
 
 ## Patterns
 
+- [Agent conversation](docs/patterns/agent-conversation.md): How people and agents talk in Corpus — the mini chat, thinking states, suggested replies and hand-offs to a person.
+  - use: A product lets people talk to an agent (support, onboarding, internal assistants); An agent drafts something a person reviews and sends
+  - avoid: The agent's answer is a page section, not a conversation → AISurface; A one-shot request that produces a result → Intent-first input
 - [Common actions](docs/patterns/common-actions.md): Where actions live, how many are visible, and how create, edit, delete, save and export behave everywhere — with left-hand shortcuts.
   - use: Any page, table, card or panel that exposes actions
   - avoid: Inventing a new placement or verb for an action that already has one here
