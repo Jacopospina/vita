@@ -17,12 +17,33 @@ related: [inline-loading, progress-bar, loading-pattern]
 
 > [!IMPORTANT] The mode tells the user what the system is doing. Pick it by the work, not by taste.
 
+## Why the spinner belongs to the old world
+
+- **A spinner says one thing: wait.** It can't tell a slow server from an agent reading your files, writing an answer or searching your tools. Every kind of work looks the same, so people learn nothing and trust nothing.
+- **AI work has kinds, and people deserve to see them.** Retrieving, generating and searching take different time, carry different risk and end in different results. Showing which one is happening is how people stay in control of what the AI does.
+- **Sofia carries meaning a spinner can't.** Each mode is its own motion: drops flowing into a core, a body shape-shifting, a comet scanning, a ring gathering a voice. Recognisable at a glance, in any size, without a word.
+- **The AI is always visible.** Wherever the anima works, Sofia shows it. Never hide AI work behind a neutral spinner, and never dress plain logic up as AI.
+
+## Where Sofia appears, across the whole product
+
+| The work | Mode | Examples |
+|---|---|---|
+| Plain logic, no agent (heavy backend calls, imports, recalculations) | `basic` | Saving a large table, running a report, syncing an account |
+| An agent recalling, through memory or connectors | `retrieving` | Reading the help center, pulling records from a CRM, loading a conversation's history |
+| An agent creating | `generating` | Drafting a reply, building an agent, writing a summary |
+| An agent searching, through the web or connected tools | `searching` | Searching connectors, scanning documents, looking up an order |
+| A voice agent waiting, hearing, speaking | `idle` · `listening` · `talking` | A voice conversation (see Conversation bar) |
+
+- **Every surface, every size.** Inline in a button (`sm`), in a chat line (`sm`), in a panel (`lg`), over a region (`Loading overlay`), on an empty state (`xl`).
+- **One rule for agents and people.** If an agent builds the screen, it picks the mode the same way: by the work being done.
+
 ## Thinking modes
 
 1. **Basic.** Plain logic with no agent involved: three droplets orbit and merge, calm and steady. Follows the brand or text color.
 2. **Retrieving.** An agent recalling from memory: particles stream in from the edges and are absorbed by the core.
-3. **Generating.** An agent creating: the orb of tiny dots keeps shape-shifting, circle, star, infinity, squircle, blob, thinking in forms.
+3. **Generating.** An agent creating: a liquid outline keeps pouring from one shape into the next (heart, drop, egg, peanut, clover, pills) and into minimal figures made of strokes (dashed ring, arcs, plus, equals, a wave), thinking in forms.
 4. **Searching.** An agent looking things up: a comet with a fading trail scans a wobbling orbit.
+5. **Idle, listening, talking.** A voice agent: a calm core when waiting, a ring that gathers the person's voice, a body that swells and ripples as the agent speaks. Pass `level` to follow real sound.
 
 ## Rules
 
@@ -38,8 +59,8 @@ related: [inline-loading, progress-bar, loading-pattern]
 > [!NOTE] Loading never costs the user's machine. The orb picks the cheapest way to draw the same liquid and steps down on its own.
 
 1. **One loop for every orb.** All orbs on a page share one animation frame; off-screen orbs and hidden tabs draw nothing.
-2. **Two renderers, one liquid.** The *filter* renderer melts crisp drops through an SVG filter chain (blur, threshold, light, glow). The *field* renderer sums the same drops into a metaball field on a grid of at most 72 cells a side, lights and colours each cell, and lets the GPU upscale it. No filter anywhere.
-3. **Touch starts on the field.** Phones, tablets, Save-Data and devices with four cores or less take the field renderer from the first frame. The filter chain re-rasterises hundreds of pixels a side every frame, on the CPU on most phones.
-4. **Desktops step down by themselves.** The filter renderer watches its own frames; when they keep arriving late (under about 36 fps for a second), every orb switches to the field for the rest of the session.
+2. **Three renderers, one liquid.** The *filter* renderer melts crisp drops through an SVG filter chain (blur, threshold, light, glow). The *GPU* renderer evaluates the same chain per pixel in one shader, at full resolution. The *field* renderer sums the drops on a small grid and upscales it, as a last resort.
+3. **Touch starts on the GPU.** Phones, tablets, Save-Data and devices with four cores or less draw with the shader from the first frame: the same look as desktop, without re-rasterising a filter on the CPU. Without WebGL2 they use the field.
+4. **Desktops step down by themselves.** The filter renderer watches its own frames; when they keep arriving late (under about 36 fps for a second), every orb switches to the GPU renderer for the rest of the session.
 5. **No more frames than the eye sees.** The filter renderer draws at most 60 times a second (120 Hz displays doubled its cost for nothing visible) and at 1.5× resolution on orbs of 48px and up, where its blur hides the pixels. The field draws every display frame; it can afford to.
 6. **Never choose a renderer.** `data-renderer` on the canvas says which one is drawing, for tests and profiling. Products don't pick.

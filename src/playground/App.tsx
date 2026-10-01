@@ -9,7 +9,7 @@ import { VitaMark } from "@/brand/vita-mark"
 import { Toaster } from "@/registry/ui/notification"
 import { Search } from "@/registry/ui/search"
 import { manifest, sectionTitles, type Section } from "./manifest"
-import { globalNav, searchPages, HOME_URL } from "./nav"
+import { globalNav, navHref, searchPages, HOME_URL } from "./nav"
 import { GlobalSearch } from "@/registry/ui/global-search"
 import { GithubAction } from "./github"
 import { DocPage } from "./doc-page"
@@ -84,7 +84,7 @@ export function App() {
         >
           {/* The five doors into the docs, the same list as the showcase header. */}
           {globalNav.map((n) => (
-            <HeaderNavItem key={n.path} href={`#/${n.path}`} active={(n.sections as readonly string[]).includes(section)}>{n.label}</HeaderNavItem>
+            <HeaderNavItem key={n.path} href={navHref(n, "#/")} active={(n.sections as readonly string[]).includes(section)}>{n.label}</HeaderNavItem>
           ))}
         </Header>
         <ShellBody>

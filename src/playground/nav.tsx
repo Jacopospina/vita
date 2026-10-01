@@ -54,7 +54,12 @@ export const globalNav = [
   { label: "Components", path: "components/choosing-components", sections: ["components"] },
   { label: "Patterns", path: "patterns/agent-conversation", sections: ["patterns"] },
   { label: "Decisions", path: "decisions/how-we-decide", sections: ["decisions"] },
+  // Not a docs page: the live examples have a page of their own.
+  { label: "See what you can make", path: "make", sections: ["make"], href: MAKE_URL },
 ] as const
+
+/** Where a global nav item links: its own page, or a docs route (prefixed with the docs URL of the current page). */
+export const navHref = (n: (typeof globalNav)[number], docs: string) => ("href" in n ? n.href : `${docs}${n.path}`)
 
 /** Every page, for the header's global search (grouped by section). `base` prefixes links (the showcase lives elsewhere). */
 export function searchPages(go: (path: string) => void) {

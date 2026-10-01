@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Moon, Sun, ArrowRight } from "@/registry/icons"
 import { Shell, ShellMain, Header, HeaderNavItem, HeaderGlobalAction, HeaderSeparator } from "@/registry/ui/ui-shell"
-import { globalNav, searchPages, HOME_URL, DOCS_URL, MAKE_URL } from "@/playground/nav"
+import { globalNav, navHref, searchPages, HOME_URL, DOCS_URL, MAKE_URL } from "@/playground/nav"
 import { GlobalSearch } from "@/registry/ui/global-search"
 import { GithubAction } from "@/playground/github"
 import { TooltipProvider } from "@/registry/ui/tooltip"
@@ -64,7 +64,7 @@ export function Showcase({ page = "home" }: { page?: "home" | "make" }) {
           }
         >
           {/* The same global nav as the docs. */}
-          {globalNav.map((n) => <HeaderNavItem key={n.path} href={`${DOCS}${n.path}`}>{n.label}</HeaderNavItem>)}
+          {globalNav.map((n) => <HeaderNavItem key={n.path} href={navHref(n, DOCS)} active={page === "make" && n.path === "make"}>{n.label}</HeaderNavItem>)}
         </Header>
         <ShellMain>
           {page === "make" ? <MakePage /> : <HomePage />}
