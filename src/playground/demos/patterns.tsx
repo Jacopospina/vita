@@ -47,29 +47,34 @@ function FilteringDemo() {
   const all = ["Live", "Deploying", "Degraded", "Paused"]
   const rows = agents.filter((s) => (!statuses.length || statuses.includes(s.status)) && (!team || s.team === team) && (s.name + s.team).toLowerCase().includes(q.toLowerCase())).slice(0, 6)
   const applied = [...statuses.map((s) => ({ k: "status", v: s })), ...(team ? [{ k: "team", v: team }] : [])]
+  const clear = () => { setStatuses([]); setTeam("") }
+  // The data table's own toolbar: search, the applied filters and the filter popover sit on ONE row above the table.
   return (
-    <Stack gap="sm">
-      <Inline gap="xs" wrap>
-        <div className="w-64"><Search size="md" placeholder="Search agent or team" value={q} onValueChange={setQ} /></div>
-        <Popover>
-          <PopoverTrigger asChild><Button variant="secondary" icon={Filter}>Filter{applied.length ? ` (${applied.length})` : ""}</Button></PopoverTrigger>
-          <PopoverContent className="w-72">
-            <Stack gap="md">
-              <CheckboxGroup legend="Status">{all.map((s) => <Checkbox key={s} label={s} checked={statuses.includes(s)} onCheckedChange={(c) => setStatuses((x) => (c ? [...x, s] : x.filter((y) => y !== s)))} />)}</CheckboxGroup>
-              <Dropdown label="Team" items={["Support", "Finance", "Sales"].map((c) => ({ value: c, label: c }))} value={team} onValueChange={setTeam} />
-            </Stack>
-          </PopoverContent>
-        </Popover>
-      </Inline>
-      {applied.length > 0 && (
-        <Inline gap="xs" wrap>
+    <DataTable
+      label="Filtered agents"
+      title="Agents"
+      description={<span aria-live="polite">{rows.length} results</span>}
+      size="md"
+      columns={agentColumns}
+      rows={rows}
+      toolbar={
+        <>
+          <Search variant="toolbar" size="md" placeholder="Search agent or team" value={q} onValueChange={setQ} />
           {applied.map((a) => <Tag key={a.k + a.v} tone="outline" onDismiss={() => (a.k === "status" ? setStatuses((x) => x.filter((y) => y !== a.v)) : setTeam(""))}>{a.v}</Tag>)}
-          <Button size="sm" variant="ghost" onClick={() => { setStatuses([]); setTeam("") }}>Clear filters</Button>
-        </Inline>
-      )}
-      <Text variant="footnote" tone="muted" aria-live="polite">{rows.length} results</Text>
-      <DataTable label="Filtered agents" size="md" columns={agentColumns} rows={rows} emptyState={<EmptyState size="sm" pictogram={SearchPict} title="No agents match these filters" action={<Button variant="tertiary" onClick={() => { setStatuses([]); setTeam(""); setQ("") }}>Clear all filters</Button>} />} />
-    </Stack>
+          {applied.length > 0 && <Button size="sm" variant="ghost" onClick={clear}>Clear filters</Button>}
+          <Popover>
+            <PopoverTrigger asChild><Button variant="secondary" icon={Filter}>Filter{applied.length ? ` (${applied.length})` : ""}</Button></PopoverTrigger>
+            <PopoverContent className="w-72">
+              <Stack gap="md">
+                <CheckboxGroup legend="Status">{all.map((s) => <Checkbox key={s} label={s} checked={statuses.includes(s)} onCheckedChange={(c) => setStatuses((x) => (c ? [...x, s] : x.filter((y) => y !== s)))} />)}</CheckboxGroup>
+                <Dropdown label="Team" items={["Support", "Finance", "Sales"].map((c) => ({ value: c, label: c }))} value={team} onValueChange={setTeam} />
+              </Stack>
+            </PopoverContent>
+          </Popover>
+        </>
+      }
+      emptyState={<EmptyState size="sm" pictogram={SearchPict} title="No agents match these filters" action={<Button variant="tertiary" onClick={() => { clear(); setQ("") }}>Clear all filters</Button>} />}
+    />
   )
 }
 

@@ -20,7 +20,11 @@ related: [search, data-table, tag, dropdown, ui-shell-right-panel]
 
 ## Anatomy
 
-`[Search] [Filter (2) ▾]` → applied filters as **dismissible outline Tags** + "Clear filters" → result count (`aria-live`) → results.
+`[Search ··········· Deploying × · Degraded × · Clear filters · Filter (2) ▾]` — ONE row, the data table's own toolbar.
+
+- **One row.** Search fills the space; applied filters (dismissible outline Tags) and "Clear filters" sit beside it, then the trigger.
+- **Reuse the table's toolbar.** Pass it as `toolbar` on DataTable — never a separate bar above the table.
+- **Count in the header.** The result count is the table's description, announced (`aria-live`).
 
 ## Rules
 
