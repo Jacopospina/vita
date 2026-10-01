@@ -45,7 +45,7 @@ export function Calendar({ className, ...props }: React.ComponentProps<typeof Da
         range_middle: "rounded-none bg-selected first:rounded-l-md last:rounded-r-md [&>button]:!rounded-none [&>button]:!bg-transparent [&>button]:!text-selected-foreground [&>button]:hover:!bg-hover",
         outside: "text-disabled-foreground",
         disabled: "text-disabled-foreground [&>button]:pointer-events-none",
-        root: "relative",
+        root: "relative w-fit",
         // month change choreography. The picker names months by POSITION: moving forward, the new month enters
         // from "after" (right) and the old one exits to "before" (left); moving back, the reverse.
         weeks_after_enter: "animate-month-in-next",
