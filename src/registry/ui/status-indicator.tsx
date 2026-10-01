@@ -43,8 +43,8 @@ export const statusKinds = Object.keys(kinds) as StatusKind[]
 /** Final states hold still; every other state keeps an inner path moving. */
 export const isFinalStatus = (k: StatusKind) => !kinds[k].live
 
-/** SVG presentation attribute (not yet in React's types): rotate/scale an inner path around its own centre. */
-const origin = (v: string) => ({ "transform-origin": v }) as Record<string, string>
+/** Rotate/scale an inner path around its own centre (in SVG user units). */
+const origin = (v: string) => ({ style: { transformOrigin: v } })
 
 /** StatusGlyph — the animated glyphs for non-final states. 16-unit grid; ring still, inside alive. */
 export function StatusGlyph({ kind, className }: { kind: Exclude<StatusKind, "success" | "error" | "critical" | "warning" | "caution" | "info" | "undefined" | "unknown">; className?: string }) {

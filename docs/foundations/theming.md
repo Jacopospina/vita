@@ -40,3 +40,8 @@ avoid_when:
 4. **Check contrast after color changes.** Yellow and lime brands (hue 85–120) usually fail with white text.
 
 > [!NOTE] Dark mode: add `.dark` or `data-theme="dark"` to any ancestor. Increased contrast: automatic, or `data-corpus-contrast="high"`.
+
+## Light and dark
+
+- **Follows the sun.** Corpus is light while the sun is up where the user is, and dark after sunset (`useSunTheme`). It uses the device location if the user allows it, otherwise an estimate from their timezone.
+- **People can still choose.** The theme toggle overrides it until the next sunrise or sunset.

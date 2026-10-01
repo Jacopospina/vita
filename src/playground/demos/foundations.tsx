@@ -228,6 +228,28 @@ export const foundationDemos: DemoMap = {
       ),
     },
     {
+      title: "Weights",
+      description: "Every role comes in regular, medium and semibold — set with Text's `weight`.",
+      render: () => (
+        <Stack gap="md">
+          <div className="grid grid-cols-4 gap-2 border-b border-border-subtle pb-2">
+            <Text variant="caption" tone="helper">Role</Text>
+            {(["regular", "medium", "semibold"] as const).map((w) => (
+              <Stack key={w} gap="none"><Text variant="footnote" weight="medium">{w[0].toUpperCase() + w.slice(1)}</Text><Text variant="caption" tone="helper" className="font-mono">weight="{w}"</Text></Stack>
+            ))}
+          </div>
+          {typeRoles.map(([v, name]) => (
+            <div key={v} className="grid grid-cols-4 items-baseline gap-2 border-b border-border-subtle pb-3">
+              <Text variant="footnote" tone="muted">{name}</Text>
+              {(["regular", "medium", "semibold"] as const).map((w) => (
+                <Text key={w} variant={v} weight={w} truncate>Agents</Text>
+              ))}
+            </div>
+          ))}
+        </Stack>
+      ),
+    },
+    {
       title: "Semantic headings",
       render: () => (
         <Stack gap="xs">

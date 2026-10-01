@@ -39,7 +39,7 @@ avoid_when:
 ## Rules
 
 1. **Role, not size.** A page title is `title-1` even if you "want it bigger".
-2. **Two weights.** Regular for reading, semibold for headings; medium only for active states.
+2. **Three weights.** Every role comes in `regular` (reading), `medium` (labels and active states) and `semibold` (headings and emphasis). Set it with `Text`'s `weight` prop; never use bold.
 3. **45–75 characters per line.** Use `max-w-prose` for anything longer than two lines.
 4. **Sentence case.** Title Case only for proper nouns.
 5. **Numbers are values.** Mark them `tabular-nums` and right-align them when they're compared.

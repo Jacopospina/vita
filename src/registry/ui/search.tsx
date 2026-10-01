@@ -8,7 +8,7 @@ import { useShortcut } from "@/registry/hooks/use-shortcut"
 
 /**
  * Search — find content by query. Label is visually hidden but always present.
- * variant "field" = in forms/pages · "toolbar" = inside table toolbars/headers (transparent until focus) · "expandable" = icon that grows.
+ * variant "field" = in forms/pages · "toolbar" = inside toolbars, headers and sidebars (no border, soft fill) · "expandable" = icon that grows.
  */
 export interface SearchProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size" | "value" | "defaultValue" | "onChange"> {
   label?: string
@@ -93,7 +93,7 @@ export const Search = React.forwardRef<HTMLInputElement, SearchProps>(
             " duration-fast-02 ease-productive [&::-webkit-search-cancel-button]:appearance-none",
             "focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-focus focus-visible:animate-focus-in",
             variant === "field" && "border border-border-field bg-field hover:border-border-strong",
-            variant !== "field" && "border border-transparent bg-transparent hover:bg-hover focus:bg-field",
+            variant !== "field" && "border border-transparent bg-hover hover:bg-active focus:bg-field",
             collapsed && "pointer-events-none opacity-0",
           )}
         />

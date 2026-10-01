@@ -4,7 +4,14 @@
   "componentsAlias": "@/registry",
   "taxonomy": "templates/taxonomy.template.json",
   "audit": {
-    "include": ["src/playground"],
-    "exclude": ["src/registry", "src/styles", "src/playground/sources.ts"]
+    "include": [
+      "src/playground",
+      "src/showcase"
+    ],
+    "exclude": [
+      "src/registry",
+      "src/styles",
+      "src/playground/sources.ts"
+    ]
   }
 }

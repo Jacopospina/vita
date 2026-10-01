@@ -2,6 +2,7 @@ import * as React from "react"
 import { ColorPalette, Moon, Sun, LogoGithub } from "@/registry/icons"
 import { Shell, ShellBody, ShellMain, Header, HeaderGlobalAction, LeftPanel, SideNavItem, SideNavSection, RightPanel } from "@/registry/ui/ui-shell"
 import { TooltipProvider } from "@/registry/ui/tooltip"
+import { useSunTheme } from "@/registry/hooks/use-sun-theme"
 import { Toaster } from "@/registry/ui/notification"
 import { Search } from "@/registry/ui/search"
 import { manifest, sectionTitles, type Section } from "./manifest"
@@ -45,7 +46,8 @@ function useRoute() {
 export function App() {
   const [section, slug, leaving] = useRoute()
   const [themeOpen, setThemeOpen] = React.useState(false)
-  const [dark, setDark] = React.useState(() => window.matchMedia?.("(prefers-color-scheme: dark)").matches ?? false)
+  // Follows the sun where the user is; the header toggle overrides until the next sunrise/sunset.
+  const [dark, setDark] = useSunTheme()
   const [filter, setFilter] = React.useState("")
 
   React.useEffect(() => {
@@ -70,7 +72,7 @@ export function App() {
           {section !== "home" && (
           <LeftPanel label="Documentation">
             <div className="pb-1">
-              <Search size="sm" label="Filter pages" placeholder="Filter" shortcut="mod+f" value={filter} onValueChange={setFilter} />
+              <Search size="sm" variant="toolbar" label="Filter pages" placeholder="Filter" shortcut="mod+f" value={filter} onValueChange={setFilter} />
             </div>
             {!filter && (
               <SideNavSection>
