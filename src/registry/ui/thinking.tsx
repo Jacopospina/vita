@@ -19,15 +19,45 @@ type P = { x: number; y: number; r: number }
 const TAU = Math.PI * 2
 const smooth = (x: number) => x * x * (3 - 2 * x)
 
-/* Shapes for the generating orb: u ∈ [0,1) along the contour → point (unit radius ~0.7). */
+/* Shapes for the generating orb: u ∈ [0,1) along the contour → point (unit radius ~0.7). Every one is smooth —
+   lobes and curves, never points — so the liquid can pour from one into the next. */
+const polar = (r: (a: number, t: number) => number) => (u: number, t: number): [number, number] => {
+  const a = u * TAU
+  const k = r(a, t)
+  return [Math.cos(a) * k, Math.sin(a) * k]
+}
 const shapes: ((u: number, t: number) => [number, number])[] = [
-  (u) => [Math.cos(u * TAU) * 0.62, Math.sin(u * TAU) * 0.62],
-  (u) => { const a = u * TAU; const r = 0.54 + 0.1 * Math.cos(5 * a); return [Math.cos(a) * r, Math.sin(a) * r] }, // a soft flower, never a star
-  (u) => { const a = u * TAU; return [Math.cos(a) * 0.72, Math.sin(2 * a) * 0.4] },
-  (u) => { const a = u * TAU; const c = Math.cos(a), s = Math.sin(a); return [Math.sign(c) * Math.abs(c) ** 0.75 * 0.58, Math.sign(s) * Math.abs(s) ** 0.75 * 0.58] }, // rounded, no corners
-  (u, t) => { const a = u * TAU; const r = 0.52 + 0.12 * Math.sin(2 * a + t) + 0.09 * Math.sin(3 * a - t * 1.3); return [Math.cos(a) * r, Math.sin(a) * r] },
-  (u) => { const a = u * TAU; const r = 0.5 + 0.16 * Math.cos(3 * a); return [Math.cos(a) * r, Math.sin(a) * r] },
+  polar(() => 0.62), // circle
+  polar((a) => 0.54 + 0.1 * Math.cos(5 * a)), // soft flower
+  (u) => { const a = u * TAU; return [Math.cos(a) * 0.72, Math.sin(2 * a) * 0.4] }, // infinity
+  (u) => { const a = u * TAU; const c = Math.cos(a), s = Math.sin(a); return [Math.sign(c) * Math.abs(c) ** 0.75 * 0.58, Math.sign(s) * Math.abs(s) ** 0.75 * 0.58] }, // rounded square
+  polar((a, t) => 0.52 + 0.12 * Math.sin(2 * a + t) + 0.09 * Math.sin(3 * a - t * 1.3)), // wandering blob
+  polar((a) => 0.5 + 0.16 * Math.cos(3 * a)), // trefoil
+  (u) => { const a = u * TAU; const x = 16 * Math.sin(a) ** 3, y = 13 * Math.cos(a) - 5 * Math.cos(2 * a) - 2 * Math.cos(3 * a) - Math.cos(4 * a); return [x * 0.036, -y * 0.036 + 0.05] }, // heart
+  (u) => { const a = u * TAU; return [Math.sin(a) * 0.42 * (1 - Math.cos(a)) ** 0.9 * 0.8, -Math.cos(a) * 0.6] }, // drop
+  polar((a) => 0.52 + 0.11 * Math.cos(4 * a)), // clover
+  (u) => { const a = u * TAU; return [Math.cos(a) * 0.7, Math.sin(a) * 0.36] }, // wide pill
+  (u) => { const a = u * TAU; return [Math.cos(a) * 0.36, Math.sin(a) * 0.7] }, // tall pill
+  polar((a) => 0.56 + 0.06 * Math.cos(6 * a)), // soft hexagon
+  (u) => { const a = u * TAU; const r = 0.5 + 0.14 * Math.cos(2 * a); return [Math.cos(a) * r * 1.1, Math.sin(a) * r * 0.8] }, // peanut
+  (u) => { const a = u * TAU; return [Math.cos(a) * 0.6 * (1 + 0.18 * Math.sin(a)), Math.sin(a) * 0.5 - 0.04] }, // egg
+  polar((a, t) => 0.55 + 0.08 * Math.sin(7 * a + t * 2)), // rippling ring
+  (u) => { const a = u * TAU; const r = 0.46 + 0.14 * Math.cos(3 * a + Math.PI); return [Math.cos(a) * r, Math.sin(a) * r + 0.04] }, // rounded triangle
+  (u) => { const a = u * TAU; return [Math.cos(a) * 0.62 + 0.14 * Math.cos(2 * a), Math.sin(a) * 0.46] }, // bean
+  polar((a, t) => 0.5 + 0.13 * Math.sin(a * 2) * Math.sin(t * 0.9) + 0.08 * Math.cos(5 * a - t)), // breathing star-fish (soft)
 ]
+/* Shuffled order: a fixed permutation that never repeats a shape back to back, so the orb keeps surprising. */
+const order = (() => {
+  const o = shapes.map((_, i) => i)
+  let seed = 7
+  for (let i = o.length - 1; i > 0; i--) {
+    seed = (seed * 9301 + 49297) % 233280
+    const j = Math.floor((seed / 233280) * (i + 1))
+    ;[o[i], o[j]] = [o[j], o[i]]
+  }
+  return o
+})()
+const shapeAt = (i: number) => shapes[order[((i % order.length) + order.length) % order.length]]
 
 /**
  * Small orbs (≤ 24px) drop the detail and keep one bold, readable silhouette per mode:
@@ -47,12 +77,18 @@ function simpleParticles(mode: ThinkingMode, t: number): P[] {
     return out
   }
   if (mode === "generating") {
-    // Plump drops that stretch into thick bridges before they part — gooey, never pinched.
-    const rad = 0.1 + 0.36 * smooth((Math.sin(t * 2.4) + 1) / 2)
-    for (let k = 0; k < 4; k++) {
-      const a = t * 1.1 + (k * TAU) / 4
-      out.push({ x: Math.cos(a) * rad, y: Math.sin(a) * rad, r: 0.3 })
+    // The same shape cycle as the big orb, drawn by a few plump drops that melt into one silhouette.
+    const period = 1.8
+    const idx = Math.floor(t / period)
+    const local = (t % period) / period
+    const k = smooth(Math.min(1, Math.max(0, (local - 0.6) / 0.4)))
+    const A = shapeAt(idx), B = shapeAt(idx + 1)
+    for (let i = 0; i < 16; i++) {
+      const u = (i / 16 + t * 0.04) % 1
+      const [ax, ay] = A(u, t), [bx, by] = B(u, t)
+      out.push({ x: (ax + (bx - ax) * k) * 0.92, y: (ay + (by - ay) * k) * 0.92, r: 0.15 })
     }
+    out.push({ x: 0, y: 0, r: 0.3 })
     return out
   }
   if (mode === "searching") {
@@ -97,22 +133,32 @@ function particles(mode: ThinkingMode, n: number, t: number, seeds: number[]): P
     return out
   }
   // generating: tiny dots continuously re-forming the orb into shapes, with displacement
-  const period = 1.7
+  // Each shape HOLDS (so you can see what it is), then pours into the next.
+  const period = 2
   const idx = Math.floor(t / period)
   const local = (t % period) / period
-  const k = smooth(Math.min(1, Math.max(0, (local - 0.55) / 0.45)))
-  const A = shapes[idx % shapes.length]
-  const B = shapes[(idx + 1) % shapes.length]
+  const k = smooth(Math.min(1, Math.max(0, (local - 0.62) / 0.38)))
+  const A = shapeAt(idx)
+  const B = shapeAt(idx + 1)
   const breathe = 1 + 0.05 * Math.sin(t * 2.4)
   for (let i = 0; i < n; i++) {
     const u = (i / n + t * 0.04) % 1
     const [ax, ay] = A(u, t)
     const [bx, by] = B(u, t)
-    const dx = 0.05 * Math.sin(t * 3.1 + i * 1.7) + 0.03 * Math.sin(t * 5.3 + seeds[i] * 9)
-    const dy = 0.05 * Math.cos(t * 2.3 + i * 1.3) + 0.03 * Math.cos(t * 4.7 + seeds[i] * 7)
+    const dx = 0.025 * Math.sin(t * 3.1 + i * 1.7) + 0.015 * Math.sin(t * 5.3 + seeds[i] * 9)
+    const dy = 0.025 * Math.cos(t * 2.3 + i * 1.3) + 0.015 * Math.cos(t * 4.7 + seeds[i] * 7)
     out.push({ x: (ax + (bx - ax) * k) * breathe + dx, y: (ay + (by - ay) * k) * breathe + dy, r: 0.07 + 0.02 * Math.sin(t * 4 + i) })
   }
-  out.push({ x: 0.04 * Math.sin(t * 1.7), y: 0.04 * Math.cos(t * 1.3), r: 0.16 + 0.05 * Math.sin(t * 2.1) })
+  // A solid body inside the outline (two inner rings + the core): the silhouette reads as ONE shape, never a hollow ring.
+  for (const [scale, count, r] of [[0.62, Math.round(n / 3), 0.13], [0.3, Math.round(n / 6), 0.13]] as const) {
+    for (let i = 0; i < count; i++) {
+      const u = (i / count + t * 0.04) % 1
+      const [ax, ay] = A(u, t)
+      const [bx, by] = B(u, t)
+      out.push({ x: (ax + (bx - ax) * k) * breathe * scale, y: (ay + (by - ay) * k) * breathe * scale, r })
+    }
+  }
+  out.push({ x: 0.04 * Math.sin(t * 1.7), y: 0.04 * Math.cos(t * 1.3), r: 0.18 + 0.04 * Math.sin(t * 2.1) })
   return out
 }
 
@@ -258,7 +304,12 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
   // Liquid + light: goo → a second round of melt (rounds every neck and tip) → specular highlight → a pastel glow
   // behind. A WIDE blur with a gentle threshold is what makes it gooey: drops reach for each other through thick,
   // rounded bridges instead of snapping together at a sharp pinch. No drop shadow.
-  const blur = px <= 24 ? px * 0.085 : px * 0.065
+  // Retrieving is PRECISE: a tighter melt, so each recalled particle stays a distinct drop until it reaches the core.
+  // Generating is DEFINED: gooey between shapes, but each shape's silhouette reads clearly while it holds.
+  const precise = mode === "retrieving"
+  const defined = mode === "generating"
+  const blur = precise ? (px <= 24 ? px * 0.06 : px * 0.035) : defined ? (px <= 24 ? px * 0.06 : px * 0.045) : px <= 24 ? px * 0.085 : px * 0.065
+  const melt = precise ? px * 0.015 : defined ? px * 0.02 : px * 0.03
   const lit = px >= 48
   return (
     <span role="status" aria-live="polite" className={cn("relative inline-flex shrink-0", resolvedTone === "brand" && "text-primary", className)} style={{ width: px, height: px }}>
@@ -268,7 +319,7 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
             <feGaussianBlur in="SourceGraphic" stdDeviation={blur} result="blur" />
             <feColorMatrix in="blur" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -8" result="melt" />
             {/* Melt again: blur the shape a touch and re-threshold, so any leftover point or kink rounds off. */}
-            <feGaussianBlur in="melt" stdDeviation={px * 0.03} result="meltBlur" />
+            <feGaussianBlur in="melt" stdDeviation={melt} result="meltBlur" />
             <feColorMatrix in="meltBlur" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 9 -4" result="goo" />
             {lit ? (
               <>
