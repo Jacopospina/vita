@@ -6,3 +6,5 @@ dist
 dist/
 .claude/
 tests/visual/
+.vercel
+.env*
