@@ -1,6 +1,7 @@
 import * as React from "react"
 import { cn } from "@/registry/lib/utils"
 import { createOrbGL, MAX_DROPS, type OrbGL } from "@/registry/lib/orb-gl"
+import { simulatedVoice } from "@/registry/hooks/use-microphone"
 
 /**
  * Thinking, how Vita shows that something is working. The spinner belongs to the old world.
@@ -11,9 +12,56 @@ import { createOrbGL, MAX_DROPS, type OrbGL } from "@/registry/lib/orb-gl"
  *   generating  agent creating, the orb of tiny dots shape-shifts: circle, star, infinity, squircle, blob
  *   searching   agent looking things up, a comet with a fading trail scans a wobbling orbit
  *
+ * Voice (pass `level` to follow real sound; without it Sofia follows a believable simulated voice):
+ *   idle        the agent is present and waiting: a calm core, two drops drifting round it
+ *   listening   the person is talking: a ring of drops gathers inward with their voice, the core fills
+ *   talking     the agent is speaking: its body swells and ripples with its voice, waves travel out
+ *
  * Agentic modes wear the AI spectrum; basic follows the current text color.
  */
-export type ThinkingMode = "basic" | "retrieving" | "generating" | "searching"
+export type ThinkingMode = "basic" | "retrieving" | "generating" | "searching" | "idle" | "listening" | "talking"
+const VOICE = new Set<ThinkingMode>(["idle", "listening", "talking"])
+
+/** The voice states: the same liquid, driven by sound (lvl 0 to 1). `k` is how many drops trace a ring. */
+function voiceParticles(mode: ThinkingMode, t: number, lvl: number, k: number): P[] {
+  const out: P[] = []
+  if (mode === "idle") {
+    out.push({ x: 0, y: 0, r: 0.3 + 0.025 * Math.sin(t * 1.2) })
+    for (let j = 0; j < 2; j++) {
+      const a = t * 0.55 + j * Math.PI + 0.4 * Math.sin(t * 0.7 + j)
+      const rad = 0.42 + 0.07 * Math.sin(t * 0.9 + j * 2)
+      out.push({ x: Math.cos(a) * rad, y: Math.sin(a) * rad, r: 0.13 })
+    }
+    return out
+  }
+  if (mode === "listening") {
+    // An ear: the ring draws in as the voice gets louder, rippling where the sound arrives; the core fills.
+    const rho = 0.6 - 0.2 * lvl
+    for (let i = 0; i < k; i++) {
+      const a = (i / k) * TAU + t * 0.4
+      const rr = rho + 0.06 * lvl * Math.sin(4 * a - t * 6) + 0.02 * Math.sin(3 * a + t * 2)
+      out.push({ x: Math.cos(a) * rr, y: Math.sin(a) * rr, r: 0.1 + 0.03 * lvl })
+    }
+    out.push({ x: 0, y: 0, r: 0.12 + 0.14 * lvl })
+    return out
+  }
+  // talking: the body swells with the voice, its edge ripples in lobes, and each loud moment sends a wave out.
+  const body = 0.32 + 0.2 * lvl
+  for (let i = 0; i < k; i++) {
+    const a = (i / k) * TAU
+    // Wobbly: three wandering lobes, a counter-turning five, and a slow sway of the whole body.
+    const rr = body + 0.11 * (0.35 + lvl) * Math.sin(3 * a + t * 5 + 0.8 * Math.sin(t * 1.3)) + 0.07 * (0.5 + lvl) * Math.sin(5 * a - t * 3.4) + 0.05 * Math.sin(2 * a + t * 2.1)
+    out.push({ x: Math.cos(a) * rr, y: Math.sin(a) * rr, r: 0.12 })
+  }
+  out.push({ x: 0, y: 0, r: body * 0.9 })
+  const phase = (t * 0.9) % 1
+  const wave = 0.5 + 0.45 * phase
+  for (let i = 0; i < 8; i++) {
+    const a = (i / 8) * TAU + t * 0.3
+    out.push({ x: Math.cos(a) * wave, y: Math.sin(a) * wave, r: 0.07 * (1 - phase) * (0.4 + lvl) })
+  }
+  return out
+}
 const sizes = { sm: 16, md: 24, lg: 48, xl: 96, "2xl": 160, "3xl": 280 } as const
 type P = { x: number; y: number; r: number }
 
@@ -119,7 +167,8 @@ const shapeAt = (i: number): Shape => shapes[order[((i % order.length) + order.l
  *   basic → three drops orbit and merge · retrieving → a few drops fall into the core
  *   generating → four drops split apart and fuse again · searching → a comet circles with a short tail
  */
-function simpleParticles(mode: ThinkingMode, t: number): P[] {
+function simpleParticles(mode: ThinkingMode, t: number, lvl = 0): P[] {
+  if (VOICE.has(mode)) return voiceParticles(mode, t, lvl, 9)
   const out: P[] = []
   if (mode === "retrieving") {
     out.push({ x: 0, y: 0, r: 0.3 + 0.05 * Math.sin(t * 3) })
@@ -160,7 +209,8 @@ function simpleParticles(mode: ThinkingMode, t: number): P[] {
   return particles("basic", 3, t, [])
 }
 
-function particles(mode: ThinkingMode, n: number, t: number, seeds: number[]): P[] {
+function particles(mode: ThinkingMode, n: number, t: number, seeds: number[], lvl = 0): P[] {
+  if (VOICE.has(mode)) return voiceParticles(mode, t, lvl, Math.min(36, n))
   const out: P[] = []
   if (mode === "basic") {
     for (let k = 0; k < 3; k++) {
@@ -304,12 +354,18 @@ export interface ThinkingProps {
   size?: keyof typeof sizes
   /** spectrum = AI (default for agentic modes) · current = inherit text color (default for basic) · brand */
   tone?: "spectrum" | "current" | "brand"
+  /** Voice states: loudness now, 0 to 1 (e.g. useMicrophone().level, or the agent's audio). Simulated when omitted. */
+  level?: () => number
   /** Announced to screen readers, e.g. "Searching the help center". */
   label?: string
   className?: string
 }
 
-export function Thinking({ mode = "generating", size = "md", tone, label = "Thinking", className }: ThinkingProps) {
+export function Thinking({ mode = "generating", size = "md", tone, level, label = "Thinking", className }: ThinkingProps) {
+  const levelRef = React.useRef(level)
+  React.useLayoutEffect(() => {
+    levelRef.current = level
+  })
   const px = sizes[size]
   const ref = React.useRef<HTMLCanvasElement>(null)
   const glintRef = React.useRef<HTMLCanvasElement>(null)
@@ -357,6 +413,7 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
     let drawn = -Infinity
     const start = (started.current ||= performance.now())
     const R = px * 0.42
+    let lvlNow = 0
     /** A drop's radius on the canvas: ×1.3 on big orbs, the wide goo eats into each drop, so plumper drops keep the
         liquid full-bodied and its joins round. */
     const dropRadius = (p: P) => (simple ? p.r * R : Math.max(0.6, Math.min(0.34, p.r * grow) * R * 1.3))
@@ -385,7 +442,7 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
       } else {
         ctx.fillStyle = color
       }
-      for (const p of simple ? simpleParticles(mode, t) : particles(mode, n, t, seeds)) {
+      for (const p of simple ? simpleParticles(mode, t, lvlNow) : particles(mode, n, t, seeds, lvlNow)) {
         if (p.r < 0.005) continue // a gap in a segmented shape
         ctx.beginPath()
         ctx.arc(px / 2 + p.x * R, px / 2 + p.y * R, dropRadius(p), 0, TAU)
@@ -426,7 +483,7 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
         fieldDraw = (t: number) => {
           if (resolvedTone !== "spectrum") own = rgbOf(color, probe)
           let k = 0
-          for (const p of simple ? simpleParticles(mode, t) : particles(mode, n, t, seeds)) {
+          for (const p of simple ? simpleParticles(mode, t, lvlNow) : particles(mode, n, t, seeds, lvlNow)) {
             if (p.r < 0.005 || k >= MAX_DROPS) continue
             drops[k * 4] = (px / 2 + p.x * R) * glDpr
             drops[k * 4 + 1] = (px / 2 + p.y * R) * glDpr
@@ -464,7 +521,7 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
         fieldDraw = (t: number) => {
           if (resolvedTone !== "spectrum") own = rgbOf(color, probe)
           fld.fill(0)
-          for (const p of simple ? simpleParticles(mode, t) : particles(mode, n, t, seeds)) {
+          for (const p of simple ? simpleParticles(mode, t, lvlNow) : particles(mode, n, t, seeds, lvlNow)) {
             if (p.r < 0.005) continue
             // The filter path plumps drops ×1.3 because its blur eats into them; a field drop reads at its true size.
             const rr = (simple ? dropRadius(p) : dropRadius(p) / 1.3) * scale
@@ -539,6 +596,9 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
     const draw = (now: number) => {
       // 1.25× tempo: thinking should feel alive and busy, never idle.
       const t = reduced ? 0.9 : ((now - start) / 1000) * 1.25
+      // The voice level for this frame, eased so the liquid swells and settles instead of twitching.
+      const raw = VOICE.has(mode) ? (levelRef.current ? levelRef.current() : simulatedVoice(t * 0.8)) : 0
+      lvlNow += (raw - lvlNow) * (raw > lvlNow ? 0.35 : 0.12)
       if (now - last > 2000) {
         color = getComputedStyle(canvas).color
         light = isLight(color)

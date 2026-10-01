@@ -103,8 +103,19 @@ Are items uniform records with the same attributes?
 | One action in progress | `Button loading` or `InlineLoading` |
 | Measurable progress | `ProgressBar` |
 | Region with unknown layout | `Loading` / `Thinking` (mode: basic, retrieving, generating, searching), `overlay` only if interaction must be blocked |
+| A voice agent waiting, listening or speaking | `Thinking` idle / listening / talking |
 
-## 8. Layers: what floats over what
+## 8. The user wants to TALK to an agent
+
+| Need | Use | Not |
+|---|---|---|
+| A voice conversation with an agent | `ConversationBar` (+ `useMicrophone`) | A record button and a spinner |
+| Show that the microphone hears them, or that the agent is speaking | `LiveWaveform` | A pulsing dot, a fake animation |
+| Pick, test and mute the microphone | `MicSelector` | A plain Dropdown of device ids |
+| Show whose turn it is | `Thinking` idle / listening / talking | A status text alone |
+| Dictate into a field | `Composer` (its microphone) | A ConversationBar |
+
+## 9. Layers: what floats over what
 
 | Needs the page visible? | Blocks interaction? | Use |
 |---|---|---|

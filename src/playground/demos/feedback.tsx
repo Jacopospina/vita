@@ -192,6 +192,24 @@ export const feedbackDemos: DemoMap = {
         </div>
       ),
     },
+    {
+      title: "Voice: idle, listening, talking",
+      description: "For voice agents. Pass a live level (your microphone, the agent's audio) and Sofia follows it; without one she follows a simulated voice.",
+      render: () => (
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
+          {([
+            ["idle", "Idle", "Present, waiting for you"],
+            ["listening", "Listening", "Gathers your voice inward"],
+            ["talking", "Talking", "Swells and ripples as it speaks"],
+          ] as const).map(([mode, title, sub]) => (
+            <Stack key={mode} gap="sm" align="center" className="text-center">
+              <Thinking mode={mode} size="xl" label={title} />
+              <Stack gap="none" align="center"><Text variant="headline">{title}</Text><Text variant="caption" tone="muted">{sub}</Text></Stack>
+            </Stack>
+          ))}
+        </div>
+      ),
+    },
     { title: "Sizes", render: () => <Inline gap="xl" align="end"><Thinking mode="generating" size="sm" /><Thinking mode="generating" size="md" /><Thinking mode="generating" size="lg" /><Thinking mode="generating" size="xl" /><Thinking mode="generating" size="2xl" /></Inline> },
     { title: "Overlay (blocks a region)", render: () => <div className="relative h-40 rounded-md bg-layer-1 p-4"><Text tone="muted">Region content</Text><Loading overlay mode="retrieving" label="Loading report" /></div> },
     { title: "Skeleton (preferred)", render: () => <Stack gap="md" className="max-w-md"><Inline gap="sm"><Skeleton shape="circle" className="size-10" /><Stack gap="xs" className="flex-1"><Skeleton shape="text" className="w-1/2" /><Skeleton shape="text" className="w-1/3" /></Stack></Inline><SkeletonText lines={4} /><Skeleton className="h-32" /></Stack> },

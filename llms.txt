@@ -95,6 +95,9 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/gett
 - [Content switcher](docs/components/content-switcher.md): A segmented control. Switch between alternate presentations of the same content. One segment is always selected.
   - use: Changing how the same data is shown (List | Grid, Chart | Table); Changing the granularity of one dataset (Day | Week | Month); A mode with 2–5 mutually exclusive, equally weighted options that applies instantly
   - avoid: The panels contain different content → Tabs; It's a form value submitted later → RadioGroup; More than 5 options → Dropdown; Binary on/off → Toggle
+- [Conversation bar](docs/components/conversation-bar.md): A voice conversation with an agent, in one bar. Sofia shows who has the floor, the waveform shows the sound, and the controls stay where the thumb expects them.
+  - use: Talking to a voice agent (support, booking, a hands-free assistant); A call-like moment inside a product, docked at the bottom of a panel or page
+  - avoid: Text-only chat → MiniChat / Composer; Dictating into a field → Composer (its microphone streams speech into the text); Showing sound without a conversation → LiveWaveform
 - [Data table](docs/components/data-table.md): View, compare, sort, select and act on many uniform records. The workhorse of product UI.
   - use: Many records with the same attributes (> ~5 rows or any sorting/selecting need); Users compare values across rows or act on several rows at once
   - avoid: Few rows of key/value details → StructuredList; Heterogeneous items with one action each → ContainedList; Visual browsing → Tile grid; One column → it's a list
@@ -131,12 +134,18 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/gett
 - [List](docs/components/list.md): Typographic lists inside content, bullets and numbered steps. Not interactive.
   - use: Unordered, sets of related points in content; Ordered, sequential instructions where order matters
   - avoid: Interactive rows → ContainedList; Records → DataTable / StructuredList
+- [Live waveform](docs/components/live-waveform.md): Sound, as it happens. Rounded bars that follow a voice in real time, the person's microphone or the agent's voice.
+  - use: Showing that a microphone hears the person (recording, voice input, a call); Showing the agent's voice while it speaks
+  - avoid: The AI is working without sound → Thinking; A recording's playback position → a progress control; Decoration with no real sound behind it
 - [Menu buttons](docs/components/menu-buttons.md): Three buttons that open menus. MenuButton groups actions, ComboButton adds alternatives to a default action, OverflowMenu hides secondary actions.
   - use: MenuButton, several equally important related actions under one label ("Export ▾", "Create ▾"); ComboButton, one dominant action plus variations ("Save" | "Save as…", "Save as template"); OverflowMenu, secondary actions on a row, tile, card or page header (⋮)
   - avoid: Selecting a value → Dropdown; A single action → Button; Primary page actions hidden in an overflow → keep the primary visible
 - [Menu](docs/components/menu.md): A temporary list of actions, opened from a trigger or right-click. Menus hold verbs, not values and not destinations.
   - use: Offering 3–10 actions without taking permanent space; View options that toggle (show grid, compact rows) via MenuCheckboxItem; Power-user shortcuts via right-click (ContextMenu), always duplicated elsewhere
   - avoid: Choosing a form value → Dropdown / Select; Navigation → Side nav, Tabs, Links; 1–2 actions → show them as buttons; More than ~10 items or deep nesting → rethink the IA
+- [Mic selector](docs/components/mic-selector.md): Choose which microphone to talk through, hear that it works, and mute it. One useMicrophone() drives the device list, the live preview and the mute.
+  - use: Before or during a voice conversation, in settings or the conversation bar's settings; Anywhere the person records audio and may have more than one microphone
+  - avoid: Choosing any other value → Dropdown; The whole voice call → ConversationBar (it opens this from its settings button)
 - [Modal](docs/components/modal.md): Interrupts to focus on one task or decision. Modality is a last resort.
   - use: Confirming a destructive or irreversible action (ConfirmModal danger); A short, self-contained task (≤ 5 fields) that shouldn't leave the page; Critical information that must be acknowledged
   - avoid: The user needs to see the page while working → RightPanel; A couple of options next to a control → Popover; Long forms or multi-step flows → a page; Success messages → toast; Opening a modal from a modal → never
@@ -276,6 +285,9 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/gett
 - [Text toolbar](docs/patterns/text-toolbar.md): Formatting controls for rich-text editing, grouped, labelled, keyboard-friendly, with shortcuts.
   - use: Rich text editors (comments, descriptions, email drafts, notes)
   - avoid: Plain text fields → TextArea; Page-level actions → PageHeader / ButtonSet
+- [Voice conversation](docs/patterns/voice-conversation.md): Talking to an agent with your voice. The turn is always visible, the microphone is always yours to control, and typing is always an option.
+  - use: A product offers a voice agent (support, booking, hands-free help)
+  - avoid: Text conversations → Agent conversation
 
 ## Decisions
 

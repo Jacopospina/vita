@@ -17,6 +17,9 @@ const map: Record<string, string[]> = {
   // components (default: registry/ui/<slug>.tsx)
   "components/capsule": ["registry/ui/notification.tsx", "registry/ui/progress-bar.tsx"],
   "components/chat-bubble": ["registry/ui/chat.tsx"],
+  "components/conversation-bar": ["registry/ui/conversation-bar.tsx", "registry/hooks/use-microphone.ts"],
+  "components/live-waveform": ["registry/ui/live-waveform.tsx", "registry/hooks/use-microphone.ts"],
+  "components/mic-selector": ["registry/ui/mic-selector.tsx", "registry/hooks/use-microphone.ts"],
   "components/dropdown": ["registry/ui/dropdown.tsx", "registry/ui/option.tsx"],
   "components/menu-buttons": ["registry/ui/menu-button.tsx"],
   "components/inline-loading": ["registry/ui/loading.tsx", "registry/ui/thinking.tsx"],
@@ -36,6 +39,7 @@ const map: Record<string, string[]> = {
   "patterns/forms": ["registry/ui/form.tsx"],
   "patterns/global-header": ["registry/ui/ui-shell.tsx"],
   "patterns/loading": ["registry/ui/loading.tsx"],
+  "patterns/voice-conversation": ["registry/ui/conversation-bar.tsx", "registry/hooks/use-microphone.ts"],
   "patterns/login": ["registry/blocks/login.tsx"],
   "patterns/notifications": ["registry/ui/notification.tsx"],
   "patterns/overflow-content": ["registry/ui/truncate.tsx"],
