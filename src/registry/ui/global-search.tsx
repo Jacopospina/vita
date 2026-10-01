@@ -102,7 +102,10 @@ export function GlobalSearch({ items, placeholder = "Search", shortcut = "mod+k"
         <DialogPrimitive.Content
           aria-describedby={undefined}
           onEscapeKeyDown={(e) => { if (query) { e.preventDefault(); setQuery(""); setActive(0) } }}
-          className="fixed top-[18vh] left-1/2 z-50 w-[min(48rem,calc(100vw-2rem))] -translate-x-1/2 overflow-hidden scope-xl glass glass-4 text-foreground outline-none data-[state=closed]:animate-exit-scale data-[state=open]:animate-enter-dialog"
+          className="fixed top-[18vh] left-1/2 z-50 w-[min(48rem,calc(100vw-2rem))] -translate-x-1/2 overflow-hidden scope-xl glass glass-4 text-foreground outline-none [transition-property:border-radius] motion-productive data-[state=closed]:animate-exit-scale data-[state=open]:animate-enter-dialog"
+          // Empty, it's just the field: a full pill (half its height, border included). With results it eases to
+          // the panel's own corners as it grows.
+          style={q ? undefined : { borderRadius: "calc(2rem + 1px)" }}
         >
           <DialogPrimitive.Title className="sr-only">Search</DialogPrimitive.Title>
           <div className="flex h-16 items-center gap-3 px-4">

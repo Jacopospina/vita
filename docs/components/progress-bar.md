@@ -23,10 +23,9 @@ related: [progress-indicator, thinking, file-uploader]
 
 ## Look
 
-- **A solid bar with a liquid tip.** The body is solid and springs to the value. A small volume of real simulated liquid rides its tip, with pressure, surface tension, viscosity and walls it wets.
-- **Soft liquid.** The liquid's edges are slightly blurred, so the tip feels soft rather than cut out; the body and the track stay crisp.
-- **Determinate:** when the body slows, the liquid's own inertia surges past, sloshes and settles back against it. Lowering the value draws it back, like a sealed tube.
-- **Indeterminate:** a slug of liquid is pushed round the track by a pulsing pump. It stretches, tears into drops and fuses again; there is no sliding bar.
-- **Glow:** only in dark mode. Light mode keeps a faint halo.
+- **Sofia's liquid.** The bar is drawn with the same liquid as the thinking orb: a run of drops melted into one body, lit on its rim, with a soft glow.
+- **Determinate:** the body springs to the value. When it moves fast, its tip stretches ahead through a neck and a drop pulls away, then surface tension draws it back in.
+- **Indeterminate:** a slug of liquid is pumped slowly along the track (about 3.6 seconds a crossing), stretching on each push, with a droplet trailing that parts and fuses again. There is no sliding bar.
+- **Fallback:** without WebGL2, a CPU liquid draws the same states.
 - **Reduced motion:** the liquid is shown at rest, with no flow.
 - **Tone:** `brand` by default. Use `spectrum` for agent work. Finished and error switch to success and error.

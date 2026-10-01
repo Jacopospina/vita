@@ -28,7 +28,7 @@ uniform vec4 uP[${MAX_DROPS}]; // drops: x, y, radius (device px), unused
 uniform int uN;
 uniform float uS1, uSs, uSg; // blur radii (σ, device px): goo · light · glow
 uniform vec3 uSpec[7];
-uniform int uSpectrum;
+uniform int uSpectrum;       // 0 own colour · 1 conic round the centre (orbs) · 2 along x (bars)
 uniform vec3 uOwn;
 uniform float uRot;
 uniform int uLit;
@@ -73,9 +73,9 @@ void main() {
 
   // Colour: the conic spectrum turning with time, or the text colour.
   vec3 c = uOwn;
-  if (uSpectrum == 1) {
+  if (uSpectrum > 0) {
     vec2 v = p - uRes * 0.5;
-    float u = fract((atan(v.y, v.x) - uRot) / TAU) * 7.0;
+    float u = (uSpectrum == 1 ? fract((atan(v.y, v.x) - uRot) / TAU) : fract(p.x / uRes.x * 0.7 - uRot / TAU)) * 7.0;
     int i0 = int(floor(u));
     float f = u - float(i0);
     vec3 c0 = uSpec[0], c1 = uSpec[1];
@@ -122,13 +122,13 @@ void main() {
 }`
 
 export interface OrbGL {
-  draw(drops: Float32Array, count: number, opts: { t: number; rot: number; spectrum: boolean; own: [number, number, number] }): void
+  draw(drops: Float32Array, count: number, opts: { t: number; rot: number; spectrum: boolean | "linear"; own: [number, number, number] }): void
   dispose(): void
 }
 
 export function createOrbGL(
   canvas: HTMLCanvasElement,
-  cfg: { size: number; dpr: number; s1: number; ss: number; sg: number; lit: boolean; spectrum: [number, number, number][]; surface: number; light: [number, number, number] },
+  cfg: { size: number; /** A rectangle instead of a square (bars). */ width?: number; height?: number; dpr: number; s1: number; ss: number; sg: number; lit: boolean; spectrum: [number, number, number][]; surface: number; light: [number, number, number] },
 ): OrbGL | null {
   const gl = canvas.getContext("webgl2", { premultipliedAlpha: true, antialias: false, alpha: true, powerPreference: "low-power" })
   if (!gl) return null
@@ -154,10 +154,12 @@ export function createOrbGL(
   gl.enableVertexAttribArray(loc)
   gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0)
   const u = (n: string) => gl.getUniformLocation(prog, n)
-  const W = Math.round(cfg.size * cfg.dpr)
-  canvas.width = canvas.height = W
-  gl.viewport(0, 0, W, W)
-  gl.uniform2f(u("uRes"), W, W)
+  const W = Math.round((cfg.width ?? cfg.size) * cfg.dpr)
+  const H = Math.round((cfg.height ?? cfg.size) * cfg.dpr)
+  canvas.width = W
+  canvas.height = H
+  gl.viewport(0, 0, W, H)
+  gl.uniform2f(u("uRes"), W, H)
   gl.uniform1f(u("uS1"), cfg.s1 * cfg.dpr)
   gl.uniform1f(u("uSs"), cfg.ss * cfg.dpr)
   gl.uniform1f(u("uSg"), cfg.sg * cfg.dpr)
@@ -172,7 +174,7 @@ export function createOrbGL(
       gl.uniform4fv(uP, drops)
       gl.uniform1i(uN, count)
       gl.uniform1f(uRot, rot)
-      gl.uniform1i(uSpectrum, spectrum ? 1 : 0)
+      gl.uniform1i(uSpectrum, spectrum === "linear" ? 2 : spectrum ? 1 : 0)
       gl.uniform3f(uOwn, own[0] / 255, own[1] / 255, own[2] / 255)
       gl.clear(gl.COLOR_BUFFER_BIT)
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
