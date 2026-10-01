@@ -130,6 +130,11 @@ export function HeaderNavItem({ href, active, children, onClick }: { href?: stri
   )
 }
 
+/** HeaderSeparator — a small dot between groups of global actions (search · theme and links). */
+export function HeaderSeparator() {
+  return <span aria-hidden className="mx-1.5 size-1 shrink-0 rounded-full bg-border-strong" />
+}
+
 export const HeaderGlobalAction = React.forwardRef<HTMLButtonElement, { icon: IconType; label: string; active?: boolean; badge?: boolean; onClick?: () => void } & React.ButtonHTMLAttributes<HTMLButtonElement>>(
   ({ icon, label, active, badge, className, ...props }, ref) => (
     <span className="relative flex">

@@ -1,6 +1,6 @@
 import * as React from "react"
-import { ColorPalette, Moon, Sun, LogoGithub } from "@/registry/icons"
-import { Shell, ShellBody, ShellMain, Header, HeaderNavItem, HeaderGlobalAction, LeftPanel, SideNavItem, SideNavSection, RightPanel } from "@/registry/ui/ui-shell"
+import { ColorPalette, Moon, Sun } from "@/registry/icons"
+import { Shell, ShellBody, ShellMain, Header, HeaderNavItem, HeaderGlobalAction, HeaderSeparator, LeftPanel, SideNavItem, SideNavSection, RightPanel } from "@/registry/ui/ui-shell"
 import { TooltipProvider } from "@/registry/ui/tooltip"
 import { useSunTheme } from "@/registry/hooks/use-sun-theme"
 import { useWeatherTint } from "@/registry/hooks/use-weather-tint"
@@ -9,7 +9,9 @@ import { CorpusMark } from "@/brand/corpus-mark"
 import { Toaster } from "@/registry/ui/notification"
 import { Search } from "@/registry/ui/search"
 import { manifest, sectionTitles, type Section } from "./manifest"
-import { globalNav } from "./nav"
+import { globalNav, searchPages } from "./nav"
+import { GlobalSearch } from "@/registry/ui/global-search"
+import { GithubAction } from "./github"
 import { DocPage } from "./doc-page"
 import { ThemePanel } from "./theme-panel"
 import { HomePage, GuidelinesPage } from "./home"
@@ -68,9 +70,11 @@ export function App() {
           href="./showcase.html" // the Corpus homepage: the live showcase
           actions={
             <>
+              <GlobalSearch items={searchPages((path) => window.location.assign(`#/${path}`))} placeholder="Search Corpus" className="size-8 rounded-inner-2" />
+              <HeaderSeparator />
               <HeaderGlobalAction icon={dark ? Sun : Moon} label={dark ? "Light theme" : "Dark theme"} onClick={() => setDark((d) => !d)} />
               <HeaderGlobalAction icon={ColorPalette} label="Theme" active={themeOpen} onClick={() => setThemeOpen((o) => !o)} />
-              <HeaderGlobalAction icon={LogoGithub} label="Repository" onClick={() => window.open("https://github.com/Jacopospina/corpus", "_blank")} />
+              <GithubAction />
             </>
           }
         >

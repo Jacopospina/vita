@@ -10,6 +10,7 @@ import { StatusIndicator } from "@/registry/ui/status-indicator"
 import { ListItem, ListGroup, ListSection } from "@/registry/ui/list-item"
 import { IconPlaceholder } from "@/registry/ui/icon-placeholder"
 import { PageHeader } from "@/registry/ui/page-header"
+import { GlobalSearch } from "@/registry/ui/global-search"
 import { Kpi, KpiGroup } from "@/registry/ui/kpi"
 import { Truncate } from "@/registry/ui/truncate"
 import { LoginBlock } from "@/registry/blocks/login"
@@ -258,6 +259,27 @@ export const patternDemos: DemoMap = {
     { title: "Floating right panel", description: "Same inset, radius and glass as the left panel. Opened from a header action; × or Esc closes it.", render: () => <ShellDemo right /> },
     { title: "Edit in context", description: "Header · content · one primary action in an inset footer. No Cancel.", render: () => <ShellDemo edit /> },
   ],
+  "patterns/global-search": [
+    {
+      title: "Global search in the header",
+      description: "Click the capsule (or ⌘⇧K here): type “agent” or “run”; arrows move, Enter opens, Esc clears then dismisses.",
+      render: () => (
+        <Inline justify="end">
+          <GlobalSearch
+            placeholder="Search Vita"
+            shortcut="mod+shift+k"
+            items={[
+              { id: "a1", label: "Support triage", group: "Agents", description: "Live · Zendesk", onSelect: () => toast({ kind: "success", title: "Opening Support triage" }) },
+              { id: "a2", label: "Refund assistant", group: "Agents", description: "Draft", onSelect: () => toast({ kind: "success", title: "Opening Refund assistant" }) },
+              { id: "r1", label: "Run 8812", group: "Runs", description: "Failed · 2 min ago", onSelect: () => toast({ kind: "success", title: "Opening Run 8812" }) },
+              { id: "s1", label: "Team members", group: "Settings", onSelect: () => toast({ kind: "success", title: "Opening Team members" }) },
+              { id: "s2", label: "Agent defaults", group: "Settings", onSelect: () => toast({ kind: "success", title: "Opening Agent defaults" }) },
+            ]}
+          />
+        </Inline>
+      ),
+    },
+  ],
   "patterns/global-header": [{ title: "Global header", description: "Name → nav → search · notifications (opens the right panel) · help · account.", render: () => <ShellDemo right /> }],
   "patterns/loading": [{ title: "Skeleton → content without layout shift", render: () => <LoadingPatternDemo /> }],
   "patterns/login": [{ title: "Two-step login", render: () => <div className="flex justify-center py-8"><LoginBlock productName="Vita" signupHref="#" onSso={() => toast({ title: "Redirecting to your identity provider…" })} onSubmit={async () => { await new Promise((r) => setTimeout(r, 900)); throw new Error("x") }} /></div> }],
@@ -432,3 +454,6 @@ patternDemos["components/icon-placeholder"] = [
 patternDemos["components/list-item"] = patternDemos["patterns/list-items"]
 
 export { IconButton }
+
+// The Global search component page shows the same live demo as the pattern.
+patternDemos["components/global-search"] = patternDemos["patterns/global-search"]

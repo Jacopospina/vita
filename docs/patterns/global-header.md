@@ -16,7 +16,7 @@ related: [ui-shell-header, ui-shell-right-panel, search]
 2. **Prefix + product name** → home
 3. Header nav (only without a side nav)
 4. ——— spacer ———
-5. **Search** → expands inline, or opens a command palette (⌘K)
+5. **Search** → the [GlobalSearch](#/components/global-search) capsule, ⌘K from anywhere
 6. **Notifications** → `RightPanel` "Notifications", with a badge dot for unread items
 7. **Help** → `RightPanel` with docs, shortcuts and contact
 8. **App switcher** (multi-product platforms only)

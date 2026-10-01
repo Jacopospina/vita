@@ -110,6 +110,9 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/gett
 - [Form](docs/components/form.md): The structural pieces of every form. Form, FormGroup, FormRow, FormActions, FluidForm and the FieldShell wiring every input uses.
   - use: Any time the user enters data that is submitted together
   - avoid: Single instant settings → Toggle rows, no form wrapper needed; Inline edits of one value → read-only-states pattern (view → edit)
+- [Global search](docs/components/global-search.md): Spotlight for the product — a liquid-glass capsule in the header that summons a floating search panel with ⌘K from anywhere.
+  - use: Product-wide search from the global header (pages, records, settings)
+  - avoid: Searching a list or a page's content → Search; Filtering a table → the table's toolbar Search
 - [Icon placeholder](docs/components/icon-placeholder.md): The leading visual slot — a colored glyph on a neutral squircle tile, in small, medium and large. One look for list items, notifications and toast banners.
   - use: Leading visual of a list row (settings, objects); The left side of a notification or toast banner; An agent or app mark next to its name
   - avoid: An icon inline with text or inside a button → Icon; Large illustrative marks → Pictogram; A person → avatar media
@@ -239,6 +242,7 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/gett
 - [Global header](docs/patterns/global-header.md): What goes in the product-wide header, in which order, and what each global action opens.
   - use: Every authenticated product
   - avoid: Page-specific actions in the global header → PageHeader
+- [Global search](docs/patterns/global-search.md): How people find anything from anywhere — summon a Spotlight-style panel with ⌘K, type, open with Enter.
 - [Intent-first input](docs/patterns/intent-first.md): Describe, review, approve. The AI turns intent into a prepared result; the user corrects and ships it instead of filling in a form.
   - use: Creating or configuring something with more than ~4 fields; Tasks users describe more easily than they fill in (an agent, a report, a rule)
   - avoid: Tiny edits of one value → inline edit; Regulated data entry that must be typed exactly → Form

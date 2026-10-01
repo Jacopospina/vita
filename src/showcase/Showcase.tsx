@@ -1,7 +1,9 @@
 import * as React from "react"
-import { Moon, Sun, LogoGithub, ArrowRight, Book, Bot, Security, UserMultiple } from "@/registry/icons"
-import { Shell, ShellMain, Header, HeaderNavItem, HeaderGlobalAction } from "@/registry/ui/ui-shell"
-import { globalNav } from "@/playground/nav"
+import { Moon, Sun, ArrowRight, Book, Bot, Security, UserMultiple } from "@/registry/icons"
+import { Shell, ShellMain, Header, HeaderNavItem, HeaderGlobalAction, HeaderSeparator } from "@/registry/ui/ui-shell"
+import { globalNav, searchPages } from "@/playground/nav"
+import { GlobalSearch } from "@/registry/ui/global-search"
+import { GithubAction } from "@/playground/github"
 import { TooltipProvider } from "@/registry/ui/tooltip"
 import { useSunTheme } from "@/registry/hooks/use-sun-theme"
 import { useWeatherTint } from "@/registry/hooks/use-weather-tint"
@@ -73,8 +75,10 @@ export function Showcase() {
           href="./showcase.html"
           actions={
             <>
+              <GlobalSearch items={searchPages((path) => window.location.assign(`${DOCS}${path}`))} placeholder="Search Corpus" className="size-8 rounded-inner-2" />
+              <HeaderSeparator />
               <HeaderGlobalAction icon={dark ? Sun : Moon} label={dark ? "Light theme" : "Dark theme"} onClick={() => setDark((d) => !d)} />
-              <HeaderGlobalAction icon={LogoGithub} label="Repository" onClick={() => window.open("https://github.com/Jacopospina/corpus", "_blank")} />
+              <GithubAction />
             </>
           }
         >
