@@ -22,9 +22,9 @@ const smooth = (x: number) => x * x * (3 - 2 * x)
 /* Shapes for the generating orb: u ∈ [0,1) along the contour → point (unit radius ~0.7). */
 const shapes: ((u: number, t: number) => [number, number])[] = [
   (u) => [Math.cos(u * TAU) * 0.62, Math.sin(u * TAU) * 0.62],
-  (u) => { const a = u * TAU; const r = 0.5 + 0.2 * Math.cos(5 * a); return [Math.cos(a) * r, Math.sin(a) * r] },
+  (u) => { const a = u * TAU; const r = 0.54 + 0.1 * Math.cos(5 * a); return [Math.cos(a) * r, Math.sin(a) * r] }, // a soft flower, never a star
   (u) => { const a = u * TAU; return [Math.cos(a) * 0.72, Math.sin(2 * a) * 0.4] },
-  (u) => { const a = u * TAU; const c = Math.cos(a), s = Math.sin(a); return [Math.sign(c) * Math.abs(c) ** 0.5 * 0.55, Math.sign(s) * Math.abs(s) ** 0.5 * 0.55] },
+  (u) => { const a = u * TAU; const c = Math.cos(a), s = Math.sin(a); return [Math.sign(c) * Math.abs(c) ** 0.75 * 0.58, Math.sign(s) * Math.abs(s) ** 0.75 * 0.58] }, // rounded, no corners
   (u, t) => { const a = u * TAU; const r = 0.52 + 0.12 * Math.sin(2 * a + t) + 0.09 * Math.sin(3 * a - t * 1.3); return [Math.cos(a) * r, Math.sin(a) * r] },
   (u) => { const a = u * TAU; const r = 0.5 + 0.16 * Math.cos(3 * a); return [Math.cos(a) * r, Math.sin(a) * r] },
 ]
@@ -47,10 +47,11 @@ function simpleParticles(mode: ThinkingMode, t: number): P[] {
     return out
   }
   if (mode === "generating") {
-    const rad = 0.08 + 0.42 * smooth((Math.sin(t * 2.4) + 1) / 2)
+    // Plump drops that stretch into thick bridges before they part — gooey, never pinched.
+    const rad = 0.1 + 0.36 * smooth((Math.sin(t * 2.4) + 1) / 2)
     for (let k = 0; k < 4; k++) {
       const a = t * 1.1 + (k * TAU) / 4
-      out.push({ x: Math.cos(a) * rad, y: Math.sin(a) * rad, r: 0.24 })
+      out.push({ x: Math.cos(a) * rad, y: Math.sin(a) * rad, r: 0.3 })
     }
     return out
   }
@@ -204,7 +205,8 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
       }
       for (const p of simple ? simpleParticles(mode, t) : particles(mode, n, t, seeds)) {
         ctx.beginPath()
-        ctx.arc(px / 2 + p.x * R, px / 2 + p.y * R, simple ? p.r * R : Math.max(0.6, Math.min(0.34, p.r * grow) * R), 0, TAU)
+        // ×1.3: the wide goo blur eats into each drop — plumper drops keep the liquid full-bodied and its joins round.
+        ctx.arc(px / 2 + p.x * R, px / 2 + p.y * R, simple ? p.r * R : Math.max(0.6, Math.min(0.34, p.r * grow) * R * 1.3), 0, TAU)
         ctx.fill()
       }
       // Glints: tiny twinkling sparkles around agentic orbs (drawn crisp, outside the liquid).
@@ -253,8 +255,10 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
     }
   }, [mode, px, resolvedTone])
 
-  // Liquid + light: goo (soft threshold for antialiasing) → specular highlight → a pastel glow behind. No drop shadow.
-  const blur = px <= 24 ? px * 0.05 : px * 0.04
+  // Liquid + light: goo → a second round of melt (rounds every neck and tip) → specular highlight → a pastel glow
+  // behind. A WIDE blur with a gentle threshold is what makes it gooey: drops reach for each other through thick,
+  // rounded bridges instead of snapping together at a sharp pinch. No drop shadow.
+  const blur = px <= 24 ? px * 0.085 : px * 0.065
   const lit = px >= 48
   return (
     <span role="status" aria-live="polite" className={cn("relative inline-flex shrink-0", resolvedTone === "brand" && "text-primary", className)} style={{ width: px, height: px }}>
@@ -262,7 +266,10 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
         <defs>
           <filter id={fid} x="-40%" y="-40%" width="180%" height="180%" colorInterpolationFilters="sRGB">
             <feGaussianBlur in="SourceGraphic" stdDeviation={blur} result="blur" />
-            <feColorMatrix in="blur" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 14 -6" result="goo" />
+            <feColorMatrix in="blur" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -8" result="melt" />
+            {/* Melt again: blur the shape a touch and re-threshold, so any leftover point or kink rounds off. */}
+            <feGaussianBlur in="melt" stdDeviation={px * 0.03} result="meltBlur" />
+            <feColorMatrix in="meltBlur" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 9 -4" result="goo" />
             {lit ? (
               <>
                 <feGaussianBlur in="goo" stdDeviation={px * 0.035} result="soft" />
