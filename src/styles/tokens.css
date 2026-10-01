@@ -56,7 +56,7 @@
   --corpus-border-subtle: oklch(0.923 var(--_nc) var(--_nh));
   --corpus-border: oklch(0.827 var(--_nc) var(--_nh));
   --corpus-border-strong: oklch(0.648 var(--_nc) var(--_nh));
-  --corpus-border-field: oklch(0.648 var(--_nc) var(--_nh)); /* ≥3:1 on white */
+  --corpus-border-field: var(--corpus-border); /* soft at rest; hover strengthens to border-strong, focus adds the ring; increased contrast keeps a ≥3:1 field border */
   /* divider: the alt border for lines INSIDE a container (row separators). Translucent, so it stays soft on any layer. */
   --corpus-divider: color-mix(in oklab, var(--corpus-foreground) 5%, transparent);
 
@@ -142,7 +142,7 @@
   --corpus-border-subtle: oklch(0.294 var(--_nc) var(--_nh));
   --corpus-border: oklch(0.341 var(--_nc) var(--_nh));
   --corpus-border-strong: oklch(0.648 var(--_nc) var(--_nh));
-  --corpus-border-field: oklch(0.6 var(--_nc) var(--_nh));
+  --corpus-border-field: oklch(0.42 var(--_nc) var(--_nh));
   --corpus-divider: color-mix(in oklab, var(--corpus-foreground) 7%, transparent);
 
   --corpus-primary: oklch(0.624 calc(var(--_bc) * 0.945) calc(var(--_bh) - 2));
