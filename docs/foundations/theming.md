@@ -48,8 +48,8 @@ avoid_when:
 
 ## Greys follow the weather
 
-- **Warm outside, warm greys.** With `useWeatherTint` (on by default), greys lean a hair warm when it's warm where the user is and a hair cool when it's cold. Around 17 °C they stay pure.
-- **Barely there.** The tint tops out at chroma 0.006, reached at 30 °C or 0 °C. People should feel it, not see it.
+- **Three states.** With `useWeatherTint` (on by default) the greys are **cold** below 15 °C, **neutral** from 15 to 18 °C, and **warm** from 18 °C up.
+- **Noticeable, still grey.** A tint is chroma 0.014: you see the warmth or the cool, but greys stay greys.
 - **Where the reading comes from.** The current temperature for the user's area (position rounded to about 10 km), refreshed every 30 minutes. Offline, it falls back to a seasonal estimate.
-- **It fades.** Switching the tint, or a new reading, cross-fades over 1.2 s.
-- **Switchable.** People can turn it off, and the choice is remembered on their device. While on, it replaces the neutral hue and tint knobs.
+- **It fades.** A change of state cross-fades the page once.
+- **Fixed modes.** `setMode("none" | "cold" | "warm")` pins a state; `"weather"` (the default) follows the reading. The choice is remembered on the device. While a tint is on, it replaces the neutral hue and tint knobs.

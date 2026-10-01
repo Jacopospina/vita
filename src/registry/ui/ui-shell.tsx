@@ -33,7 +33,9 @@ export function ShellBody({ children, className }: { children: React.ReactNode; 
 }
 
 export function ShellMain({ children, className, ...props }: React.HTMLAttributes<HTMLElement>) {
-  return <main id="main-content" className={cn("min-w-0 flex-1 overflow-y-auto", className)} {...props}>{children}</main>
+  // `relative`: main is the containing block for anything absolutely positioned inside it (sr-only text, badges…),
+  // so it scrolls and clips with the page instead of stretching the document with phantom whitespace.
+  return <main id="main-content" className={cn("relative min-w-0 flex-1 overflow-y-auto", className)} {...props}>{children}</main>
 }
 
 /* ---------------- Header ---------------- */
@@ -244,8 +246,9 @@ export function RightPanel({ open, onOpenChange, title, children, footer, size =
       onAnimationEnd={(e) => { if (!open && e.target === e.currentTarget) setMounted(false) }}
       className={cn(
         // Floating, like the left panel: the same 8px inset from the window, the same radius (scope-xl) and
-        // 8px padding, so everything inside is concentric (rounded-inner-2 = 16 − 8).
-        "absolute inset-y-2 right-2 left-2 z-30 flex flex-col glass glass-1 scope-xl p-2 outline-none sm:left-auto",
+        // 8px padding, so everything inside is concentric (rounded-inner-2 = 16 − 8). It sits on the TOP shell
+        // layer (above the side nav and header), so it gets the matching, stronger glass tier.
+        "absolute inset-y-2 right-2 left-2 z-50 flex flex-col glass glass-3 scope-xl p-2 outline-none sm:left-auto",
         size === "sm" ? "sm:w-80" : size === "lg" ? "sm:w-140" : "sm:w-100",
         open ? "animate-enter-panel-right" : "pointer-events-none animate-exit-panel-right",
         className,

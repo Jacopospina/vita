@@ -20,7 +20,8 @@ related: [modal, ui-shell-header, popover, filtering]
 
 ## Look
 
-- **Floats like the left panel.** 8px from the window, 16px radius, 8px padding, the same glass tier.
+- **Floats like the left panel.** 8px from the window, 16px radius, 8px padding.
+- **Highest shell layer.** Above the side nav and header, with stronger glass (tier 3) to match.
 - **Concentric inside.** The 32px × and the footer action bar are rounded 8px (16 − 8).
 
 ## Rules

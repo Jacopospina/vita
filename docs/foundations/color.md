@@ -53,9 +53,9 @@ Everything floating above the page is frosted glass. The higher it sits, the mor
 
 | Tier | Layer | Blur | Used by |
 |---|---|---|---|
-| `glass-1` | z-30 | 14px | Side panels |
+| `glass-1` | z-30 | 14px | Side navigation |
 | `glass-2` | z-40 | 20px | Header |
-| `glass-3` | z-50 | 28px | Menus, dropdown lists, popovers |
+| `glass-3` | z-50 | 28px | Right panel, menus, dropdown lists, popovers |
 | `glass-4` | z-50, above an overlay | 36px | Dialogs |
 | `glass-5` | z-60 | 44px | Notifications, capsules |
 

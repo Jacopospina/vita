@@ -16,14 +16,15 @@ related: [ui-shell-right-panel, ui-shell-left-panel, global-header, dialogs, fil
 
 ## Anatomy
 
-1. **Panel.** Floats 8px in from the window, with the same top, radius (16px) and frosted glass as the left navigation.
+1. **Panel.** Floats 8px in from the window, with the same top and radius (16px) as the left navigation. It sits on the top shell layer, so its glass is stronger (tier 3).
 2. **Header row.** 32px tall: the title on the left, × on the right. The × is a 32px button rounded concentrically (16 − 8 = 8px).
 3. **Content.** Scrolls on its own; starts 10px in, aligned with the title.
 4. **Footer (optional).** One primary action in an inset, rounded action bar, like a dialog's.
 
 ## Rules
 
-- **Mirror the left panel.** Same inset, radius, padding and glass tier on both sides, so the shell reads as one system.
+- **Mirror the left panel.** Same inset, radius and padding on both sides, so the shell reads as one system.
+- **Highest layer.** The right panel floats above the side nav and the header, with the frost that matches its height (glass tier 3).
 - **Concentric inside.** Everything inside follows inner radius = 16 − 8: the × and the footer are both 8px.
 - **One panel at a time.** Opening another replaces it, and the header action that opened it shows as pressed.
 - **Non-modal.** The page stays usable; no scrim. Use a Modal when the page must wait.

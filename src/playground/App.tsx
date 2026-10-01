@@ -50,7 +50,7 @@ export function App() {
   const [themeOpen, setThemeOpen] = React.useState(false)
   // Follows the sun where the user is; the header toggle overrides until the next sunrise/sunset.
   const [dark, setDark] = useSunTheme()
-  const [weather, setWeather, celsius] = useWeatherTint()
+  const weather = useWeatherTint()
   const [filter, setFilter] = React.useState("")
 
   React.useEffect(() => {
@@ -101,7 +101,7 @@ export function App() {
             {section === "home" ? <HomePage /> : section === "guidelines" ? <GuidelinesPage /> : <DocPage key={`${section}/${slug}`} section={section} slug={slug} />}
           </ShellMain>
           <RightPanel open={themeOpen} onOpenChange={setThemeOpen} title="Theme" size="md">
-            <ThemePanel dark={dark} onDarkChange={setDark} weather={weather} onWeatherChange={setWeather} celsius={celsius} />
+            <ThemePanel dark={dark} onDarkChange={setDark} weather={weather} />
           </RightPanel>
         </ShellBody>
       </Shell>

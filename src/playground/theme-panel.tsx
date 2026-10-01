@@ -9,6 +9,7 @@ import { CodeSnippet } from "@/registry/ui/code-snippet"
 import { Button } from "@/registry/ui/button"
 import { Separator } from "@/registry/ui/separator"
 import { swapAppearance, withoutTransitions } from "@/registry/lib/appearance"
+import type { useWeatherTint } from "@/registry/hooks/use-weather-tint"
 
 /** Live editor for the theme.css knobs. Writes CSS custom properties on <html>. */
 const knobs = [
@@ -30,7 +31,7 @@ const fonts = [
   { value: "serif", label: "Serif (editorial)", css: `"New York", "Iowan Old Style", Georgia, serif` },
 ]
 
-export function ThemePanel({ dark, onDarkChange, weather, onWeatherChange, celsius }: { dark: boolean; onDarkChange: (d: boolean) => void; weather: boolean; onWeatherChange: (on: boolean) => void; celsius: number | null }) {
+export function ThemePanel({ dark, onDarkChange, weather }: { dark: boolean; onDarkChange: (d: boolean) => void; weather: ReturnType<typeof useWeatherTint> }) {
   const [values, setValues] = React.useState<Record<string, number>>(() => Object.fromEntries(knobs.map((k) => [k.key, k.def])))
   const [font, setFont] = React.useState("flex")
   const [preset, setPreset] = React.useState("default")
@@ -68,12 +69,21 @@ export function ThemePanel({ dark, onDarkChange, weather, onWeatherChange, celsi
       <Text tone="muted">Every token in Corpus derives from these knobs. Tune them here, then paste the result into <code className="font-mono">src/styles/theme.css</code>.</Text>
       <ContentSwitcher label="Preset" value={preset} onValueChange={applyPreset} size="sm" items={[{ value: "default", label: "Corpus" }, { value: "square", label: "Square" }, { value: "soft", label: "Soft" }, { value: "mono", label: "Mono" }]} className="w-full" />
       <Toggle label="Dark theme" checked={dark} onCheckedChange={onDarkChange} />
-      <Toggle
-        label="Tint greys by the weather"
-        helperText={weather ? `${celsius === null ? "Reading the temperature…" : `${Math.round(celsius)} °C outside`} · replaces the neutral hue and tint` : "Greys use the neutral hue and tint below"}
-        checked={weather}
-        onCheckedChange={onWeatherChange}
-      />
+      <Stack gap="xs">
+        <ContentSwitcher
+          label="Greys"
+          size="sm"
+          value={weather.mode}
+          onValueChange={(v) => weather.setMode(v as typeof weather.mode)}
+          items={[{ value: "weather", label: "Weather" }, { value: "none", label: "Neutral" }, { value: "cold", label: "Cold" }, { value: "warm", label: "Warm" }]}
+          className="w-full"
+        />
+        <Text variant="caption" tone="muted">
+          {weather.mode === "weather"
+            ? weather.celsius === null ? "Reading the temperature outside…" : `${Math.round(weather.celsius)} °C outside · ${weather.tint === "none" ? "neutral greys" : `${weather.tint} greys`}`
+            : "Fixed tint. While a tint is on, it replaces the neutral hue and tint below."}
+        </Text>
+      </Stack>
       <Separator />
       {knobs.map((k) => (
         <Slider
