@@ -8,6 +8,7 @@ export interface NavEntry {
 export const manifest: Record<Section, NavEntry[]> = {
   foundations: [
     { slug: "about", title: "Corpus" },
+    { slug: "whats-new", title: "What's new" },
     { slug: "brand", title: "Brand & voice" },
     { slug: "principles", title: "Design principles" },
     { slug: "interaction", title: "Interaction" },

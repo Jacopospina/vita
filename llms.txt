@@ -47,6 +47,7 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/foun
 - [Typography](docs/foundations/typography.md): Ten roles generated from one base size and one ratio. Google Sans Flex for words, Google Sans Code for code and numbers.
   - use: Any text — pick the ROLE (title-2, body, caption), not a size
   - avoid: Tailwind sizes (text-sm, text-2xl) → they don't exist in Corpus; Changing size to create emphasis inside a paragraph → use font-medium or font-semibold
+- [What's new](docs/foundations/whats-new.md): The latest changes to Corpus, newest first. Breaking changes say how to migrate. Generated from the changelog.
 
 ## Components
 

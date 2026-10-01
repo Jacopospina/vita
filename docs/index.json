@@ -235,6 +235,17 @@
       ]
     },
     {
+      "section": "foundations",
+      "slug": "whats-new",
+      "path": "docs/foundations/whats-new.md",
+      "title": "What's new",
+      "summary": "The latest changes to Corpus, newest first. Breaking changes say how to migrate. Generated from the changelog.",
+      "status": "stable",
+      "related": [
+        "how-we-decide"
+      ]
+    },
+    {
       "section": "components",
       "slug": "accordion",
       "path": "docs/components/accordion.md",
