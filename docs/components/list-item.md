@@ -14,6 +14,9 @@ avoid_when:
 related: [icon-placeholder, list-items, contained-list, structured-list, toggle]
 ---
 
+> [!NOTE] Colours and glyphs follow [Color → Status semantics](#/foundations/color): one meaning, one look, everywhere.
+
+
 ## Parts
 
 | Part | Props |

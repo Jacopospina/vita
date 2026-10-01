@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Add, Edit, TrashCan, Download, Copy, Filter, Close, TextBold, TextItalic, TextUnderline, TextStrikethrough, ListBulleted, ListNumbered, Link as LinkIcon, Code, Renew, Locked, Information, DataBase, Security, Plug, Bot, Notification } from "@/registry/icons"
+import { Add, Edit, TrashCan, Download, Copy, Filter, Close, TextBold, TextItalic, TextUnderline, TextStrikethrough, ListBulleted, ListNumbered, Link as LinkIcon, Code, Renew, Locked, Information, DataBase, Security, Plug, Bot, Notification, InformationFilled, CheckmarkFilled, WarningAltFilled, ErrorFilled } from "@/registry/icons"
 import { Report, Magnify as SearchPict, Warning_01 as ErrorPict } from "@/registry/pictograms"
 import type { DemoMap } from "./types"
 import { Stack, Inline, Grid, Column } from "@/registry/ui/layout"
@@ -336,12 +336,12 @@ export const patternDemos: DemoMap = {
             <ListItem icon={DataBase} title="Storage" onClick={() => {}} />
           </ListGroup>
           <ListGroup>
-            <ListItem icon={Security} tone="error" title="Security & access" onClick={() => {}} />
+            <ListItem icon={Security} tone="brand" title="Security & access" onClick={() => {}} />
           </ListGroup>
           <ListGroup>
-            <ListItem icon={Bot} tone="info" title="Agents" value="12" onClick={() => {}} />
-            <ListItem icon={Plug} tone="success" title="Integrations" onClick={() => {}} />
-            <ListItem icon={Notification} tone="warning" title="Notifications" onClick={() => {}} />
+            <ListItem icon={Bot} tone="brand" title="Agents" value="12" onClick={() => {}} />
+            <ListItem icon={Plug} tone="brand" title="Integrations" onClick={() => {}} />
+            <ListItem icon={Notification} tone="brand" title="Notifications" onClick={() => {}} />
           </ListGroup>
         </ListSection>
       ),
@@ -352,7 +352,7 @@ export const patternDemos: DemoMap = {
         <ListSection title="Agents" description="Everything deployed in this workspace." className="max-w-xl">
           <ListGroup>
             <ListItem icon={Bot} tone="brand" title="Support triage" subtitle="Zendesk · Live" onClick={() => {}} />
-            <ListItem icon={Bot} tone="info" title="Refund assistant" subtitle="Help center · Awaiting approval" onClick={() => {}} />
+            <ListItem icon={Bot} tone="brand" title="Refund assistant" subtitle="Help center · Awaiting approval" onClick={() => {}} />
             <ListItem icon={Bot} title="Sales call notes" subtitle="Salesforce · Draft" onClick={() => {}} />
           </ListGroup>
         </ListSection>
@@ -371,9 +371,9 @@ function ControlRows() {
   const [on, setOn] = React.useState(true)
   return (
     <ListGroup className="max-w-xl">
-      <ListItem icon={Notification} tone="warning" title="Notify on hand-off" subtitle="Ping the owner when an agent escalates" trailing={<Toggle size="sm" hideLabel label="Notify on hand-off" checked={on} onCheckedChange={setOn} />} />
-      <ListItem icon={Plug} tone="success" title="Slack" subtitle="Connected as #support" trailing={<Button size="sm" variant="secondary">Manage</Button>} />
-      <ListItem icon={Bot} tone="info" title="Default model" trailing={<StatusIndicator kind="success" size="sm">Healthy</StatusIndicator>} />
+      <ListItem icon={Notification} tone="brand" title="Notify on hand-off" subtitle="Ping the owner when an agent escalates" trailing={<Toggle size="sm" hideLabel label="Notify on hand-off" checked={on} onCheckedChange={setOn} />} />
+      <ListItem icon={Plug} tone="brand" title="Slack" subtitle="Connected as #support" trailing={<Button size="sm" variant="secondary">Manage</Button>} />
+      <ListItem icon={Bot} tone="brand" title="Default model" trailing={<StatusIndicator kind="success" size="sm">Healthy</StatusIndicator>} />
     </ListGroup>
   )
 }
@@ -384,23 +384,23 @@ patternDemos["components/icon-placeholder"] = [
     description: "Medium in list items, large in notifications and toast banners.",
     render: () => (
       <Inline gap="md">
-        <IconPlaceholder icon={Bot} tone="info" size="sm" />
-        <IconPlaceholder icon={Bot} tone="info" size="md" />
-        <IconPlaceholder icon={Bot} tone="info" size="lg" />
+        <IconPlaceholder icon={Bot} tone="brand" size="sm" />
+        <IconPlaceholder icon={Bot} tone="brand" size="md" />
+        <IconPlaceholder icon={Bot} tone="brand" size="lg" />
       </Inline>
     ),
   },
   {
     title: "Tones",
-    description: "Neutral tile; the glyph's color carries the category or kind.",
+    description: "Neutral or brand for categories. A status tone only when the tile IS a status, with that status's glyph.",
     render: () => (
       <Inline gap="md" wrap>
         <IconPlaceholder icon={Information} size="lg" />
         <IconPlaceholder icon={Renew} tone="brand" size="lg" />
-        <IconPlaceholder icon={Bot} tone="info" size="lg" />
-        <IconPlaceholder icon={Plug} tone="success" size="lg" />
-        <IconPlaceholder icon={Notification} tone="warning" size="lg" />
-        <IconPlaceholder icon={Security} tone="error" size="lg" />
+        <IconPlaceholder icon={InformationFilled} tone="info" size="lg" />
+        <IconPlaceholder icon={CheckmarkFilled} tone="success" size="lg" />
+        <IconPlaceholder icon={WarningAltFilled} tone="warning" size="lg" />
+        <IconPlaceholder icon={ErrorFilled} tone="error" size="lg" />
       </Inline>
     ),
   },

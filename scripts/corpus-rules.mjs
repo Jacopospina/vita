@@ -23,6 +23,21 @@ export function createRules({ alias = "@/components/corpus" } = {}) {
     msg: "Arbitrary Tailwind value. Use a token; if none fits, it's a design-system change.",
   },
   {
+    id: "status-decoration",
+    test: (line) => /\bbg-(?:success|warning|error|info)(?![-\w])/.exec(line),
+    msg: "Support colours carry status only (Color → Status semantics). Show a status through StatusIndicator, Tag, a notification or a -subtle tint — never as decoration.",
+  },
+  {
+    id: "status-tone-decoration",
+    test: (line) => (/(?:CheckmarkFilled|ErrorFilled|WarningAltFilled|InformationFilled)/.test(line) ? null : /<(?:ListItem|ContainedListItem|IconPlaceholder)\b[^>]*\btone="(?:success|warning|error|info)"/.exec(line)),
+    msg: "Status tone used as a category colour. Categories are neutral or brand; a row's status goes in a StatusIndicator (or the tile shows that status's own glyph).",
+  },
+  {
+    id: "status-glyph",
+    test: (line) => /\bWarning(?:Alt)?Filled\b[^\n]*(?:\btext-error\b|tone="error")|(?:\btext-error\b|tone="error")[^\n]*\bWarning(?:Alt)?Filled\b|\bErrorFilled\b[^\n]*(?:\btext-warning\b|tone="warning")|(?:\btext-warning\b|tone="warning")[^\n]*\bErrorFilled\b/.exec(line),
+    msg: "Status glyph doesn't match its colour. error → ErrorFilled, warning → WarningAltFilled, success → CheckmarkFilled, info → InformationFilled (registry/lib/status).",
+  },
+  {
     id: "type-size",
     test: (line) => /\btext-(?:xs|sm|base|lg|[2-9]?xl)\b/.exec(line) ?? /\bfont-(?:thin|extralight|light|extrabold|black)\b/.exec(line),
     msg: "Tailwind type size/weight. Use a role (text-body, text-title-2, text-caption…) and regular/medium/semibold only.",

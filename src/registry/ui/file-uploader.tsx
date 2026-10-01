@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Close, CheckmarkFilled, WarningFilled, Upload } from "@/registry/icons"
+import { Close, CheckmarkFilled, ErrorFilled, Upload } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { Icon } from "@/registry/ui/icon"
 import { Button } from "@/registry/ui/button"
@@ -90,7 +90,7 @@ function FileRow({ file: f, onRemove }: { file: UploadFile; onRemove: (id: strin
                 <span key={f.status} className="flex animate-enter-scale">
                   {f.status === "uploading" && <Thinking mode="basic" size="sm" tone="brand" label="Uploading" />}
                   {f.status === "complete" && <Icon as={CheckmarkFilled} className="text-success" label="Uploaded" draw="in" />}
-                  {f.status === "error" && <Icon as={WarningFilled} className="text-error" label="Upload failed" draw="in" />}
+                  {f.status === "error" && <Icon as={ErrorFilled} className="text-error" label="Upload failed" draw="in" />}
                 </span>
                 {f.status !== "uploading" && (
                   <button type="button" aria-label={`Remove ${f.name}`} onClick={() => exit(() => onRemove(f.id))} className="flex size-control-sm items-center justify-center rounded-sm text-muted-foreground hover:bg-hover hover:text-foreground focus-ring">

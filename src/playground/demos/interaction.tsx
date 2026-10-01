@@ -124,7 +124,7 @@ export function IntentFlow() {
           <TextInput label="Name" defaultValue="Refund assistant" />
           <TextInput label="Instructions" defaultValue="Answer refund questions using the help center. Hand off to Support when the amount is over $200." />
           <Select label="Knowledge" defaultValue="help"><SelectOption value="help">Help center (412 articles)</SelectOption></Select>
-          <Inline gap="xs"><Tag tone="brand">Zendesk</Tag><Tag tone="brand">Slack</Tag><Text variant="footnote" tone="muted">Tools</Text></Inline>
+          <Inline gap="xs"><Tag>Zendesk</Tag><Tag>Slack</Tag><Text variant="footnote" tone="muted">Tools</Text></Inline>
           <ButtonSet>
             <Button variant="secondary" onClick={() => setStage("ask")}>Change request</Button>
             <Button shortcut="mod+s" onClick={() => { toast({ kind: "success", title: "Agent deployed", subtitle: "Refund assistant is live" }); setStage("ask") }}>Deploy agent</Button>

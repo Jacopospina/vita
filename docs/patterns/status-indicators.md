@@ -11,6 +11,9 @@ avoid_when:
 related: [tag, notification, data-table]
 ---
 
+> [!NOTE] Colours and glyphs follow [Color → Status semantics](#/foundations/color): one meaning, one look, everywhere.
+
+
 ## Kinds
 
 **Final states hold still:**

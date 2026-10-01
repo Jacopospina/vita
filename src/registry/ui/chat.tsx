@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Bot, Close, WarningFilled } from "@/registry/icons"
+import { Bot, Close, ErrorFilled } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { Icon } from "@/registry/ui/icon"
 import { IconButton } from "@/registry/ui/button"
@@ -84,7 +84,7 @@ export function ChatBubble({ role, children, author, time, position = "single", 
           <div className="flex items-center gap-1.5 px-1 text-caption text-muted-foreground">
             {status === "failed" ? (
               <>
-                <Icon as={WarningFilled} size="sm" className="text-error" draw="in" />
+                <Icon as={ErrorFilled} size="sm" className="text-error" draw="in" />
                 <span>Not sent.</span>
                 {onRetry && <button type="button" onClick={onRetry} className="rounded-sm font-medium text-link focus-ring">Retry</button>}
               </>

@@ -89,8 +89,8 @@ export function CardsExample() {
             <Text variant="title-3">Team</Text>
             <ListGroup>
               <ListItem icon={UserAvatar} tone="brand" title="Ada Lovelace" subtitle="ada@vita.ai" trailing={<Tag size="sm">Owner</Tag>} />
-              <ListItem icon={UserAvatar} tone="info" title="Grace Hopper" subtitle="grace@vita.ai" trailing={<Tag size="sm">Editor</Tag>} />
-              <ListItem icon={UserAvatar} tone="success" title="Alan Turing" subtitle="alan@vita.ai" trailing={<Tag size="sm">Viewer</Tag>} />
+              <ListItem icon={UserAvatar} tone="brand" title="Grace Hopper" subtitle="grace@vita.ai" trailing={<Tag size="sm">Editor</Tag>} />
+              <ListItem icon={UserAvatar} tone="brand" title="Alan Turing" subtitle="alan@vita.ai" trailing={<Tag size="sm">Viewer</Tag>} />
             </ListGroup>
           </Stack>
         </Tile>
@@ -120,9 +120,9 @@ export function CardsExample() {
           <Stack gap="sm">
             <Text variant="title-3">Notifications</Text>
             <ListGroup>
-              <ListItem icon={Notification} tone="warning" title="Hand-offs" subtitle="When an agent escalates to a person" trailing={<Toggle size="sm" hideLabel label="Hand-offs" defaultChecked />} />
-              <ListItem icon={Bot} tone="info" title="Deployments" subtitle="When an agent goes live" trailing={<Toggle size="sm" hideLabel label="Deployments" defaultChecked />} />
-              <ListItem icon={Security} tone="error" title="Policy alerts" subtitle="When a run breaks a rule" trailing={<Toggle size="sm" hideLabel label="Policy alerts" />} />
+              <ListItem icon={Notification} tone="brand" title="Hand-offs" subtitle="When an agent escalates to a person" trailing={<Toggle size="sm" hideLabel label="Hand-offs" defaultChecked />} />
+              <ListItem icon={Bot} tone="brand" title="Deployments" subtitle="When an agent goes live" trailing={<Toggle size="sm" hideLabel label="Deployments" defaultChecked />} />
+              <ListItem icon={Security} tone="brand" title="Policy alerts" subtitle="When a run breaks a rule" trailing={<Toggle size="sm" hideLabel label="Policy alerts" />} />
             </ListGroup>
           </Stack>
         </Tile>
@@ -267,13 +267,13 @@ export function SettingsExample() {
       <ListSection title="Workspace">
         <ListGroup>
           <ListItem icon={Information} title="Name" value="Vita" onClick={() => {}} />
-          <ListItem icon={Bot} tone="info" title="Default model" value="Vita Large" onClick={() => {}} />
-          <ListItem icon={Security} tone="error" title="Security & access" onClick={() => {}} />
+          <ListItem icon={Bot} tone="brand" title="Default model" value="Vita Large" onClick={() => {}} />
+          <ListItem icon={Security} tone="brand" title="Security & access" onClick={() => {}} />
         </ListGroup>
       </ListSection>
       <ListSection title="Integrations" description="Tools your agents can use.">
         <ListGroup>
-          <ListItem icon={Plug} tone="success" title="Slack" subtitle="Connected as #support" trailing={<Button size="sm" variant="secondary">Manage</Button>} />
+          <ListItem icon={Plug} tone="brand" title="Slack" subtitle="Connected as #support" trailing={<Button size="sm" variant="secondary">Manage</Button>} />
           <ListItem icon={Plug} tone="brand" title="Zendesk" subtitle="Connected" trailing={<Button size="sm" variant="secondary">Manage</Button>} />
           <ListItem icon={Plug} title="Salesforce" subtitle="Not connected" trailing={<Button size="sm">Connect</Button>} />
         </ListGroup>

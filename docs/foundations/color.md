@@ -32,6 +32,23 @@ avoid_when:
 | Lines | `border-subtle` · `border` · `border-field` · `border-strong` | Fields use `border-field` (≥ 3:1). |
 | AI | `ai-spectrum` · `ai-subtle` | The rainbow outline, only for AI-generated content. |
 
+## Status semantics
+
+One map from meaning to colour and glyph, used by every status surface (`registry/lib/status`). If a status looks different anywhere, that's a bug.
+
+| Meaning | Colour | Glyph | StatusIndicator kinds | Examples |
+|---|---|---|---|---|
+| Success | Green `success` | CheckmarkFilled | `success` | Live, Healthy, Passed, Saved |
+| Warning | Orange `warning` | WarningAltFilled | `warning`, `caution` | Rate limited, Expires soon, Flaky |
+| Error | Red `error` | ErrorFilled | `error`, `critical`, `paused` | Failed, Down, Degraded, Paused, destructive actions |
+| Info | Blue `info` | InformationFilled | `info`, `in-progress`, `queued`, `incomplete` | Deploying, Queued, Evaluation finished |
+| Neutral | `muted-foreground` | — | `draft`, `pending`, `not-started`, `undefined`, `unknown` | Draft, Awaiting approval |
+
+- **Icons use the base colour; words use `-foreground`.** A glyph is `text-error`; text on a tint is `text-error-foreground`.
+- **Brand never means a status.** In-progress is info blue, not the primary colour.
+- **Categories are neutral or brand.** List rows, icon tiles and tags for categories (Agents, Integrations, Zendesk) never borrow a status tone.
+- **Enforced.** `pnpm audit:ds` flags status colours used as decoration, status tones on category rows and tiles, and glyphs that don't match their colour.
+
 ## Rules
 
 1. **Neutral first.** About 90% of a screen is greys. More than one brand-colored element per region means hierarchy has collapsed.

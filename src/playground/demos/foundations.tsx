@@ -90,13 +90,13 @@ const colorGroups: { title: string; tokens: { name: string; cls: string; fg?: st
   {
     title: "Support",
     tokens: [
-      { name: "success", cls: "bg-success", fg: "text-primary-foreground" },
+      { name: "success", cls: "bg-success", fg: "text-primary-foreground" }, // corpus-allow status-decoration: swatch documenting the token itself — approved by @jacopo
       { name: "success-subtle", cls: "bg-success-subtle", fg: "text-success-foreground" },
-      { name: "warning", cls: "bg-warning", fg: "text-foreground" },
+      { name: "warning", cls: "bg-warning", fg: "text-foreground" }, // corpus-allow status-decoration: swatch documenting the token itself — approved by @jacopo
       { name: "warning-subtle", cls: "bg-warning-subtle", fg: "text-warning-foreground" },
-      { name: "error", cls: "bg-error", fg: "text-primary-foreground" },
+      { name: "error", cls: "bg-error", fg: "text-primary-foreground" }, // corpus-allow status-decoration: swatch documenting the token itself — approved by @jacopo
       { name: "error-subtle", cls: "bg-error-subtle", fg: "text-error-foreground" },
-      { name: "info", cls: "bg-info", fg: "text-primary-foreground" },
+      { name: "info", cls: "bg-info", fg: "text-primary-foreground" }, // corpus-allow status-decoration: swatch documenting the token itself — approved by @jacopo
       { name: "info-subtle", cls: "bg-info-subtle", fg: "text-info-foreground" },
     ],
   },
@@ -200,11 +200,11 @@ function MaterialDemo() {
   return (
     <div className="relative h-80 overflow-hidden scope-lg bg-layer-1">
       <div aria-hidden className="absolute inset-0 grid grid-cols-5 place-items-center gap-3 p-6">
-        {(["bg-primary", "bg-success", "bg-warning", "bg-error", "bg-info"] as const).map((bg, i) => (
+        {(["bg-primary", "bg-inverse", "bg-primary", "bg-inverse", "bg-primary"] as const).map((bg, i) => (
           <div key={bg} className="flex flex-col items-center gap-3">
             <span className={cn("size-20 rounded-full", bg)} />
             <Text variant="title-2">{["Give", "your", "ideas", "a", "body."][i]}</Text>
-            <span className={cn("size-12 rounded-full", ["bg-info", "bg-error", "bg-primary", "bg-success", "bg-warning"][i])} />
+            <span className={cn("size-12 rounded-full", i % 2 ? "bg-primary" : "bg-inverse")} />
           </div>
         ))}
       </div>
@@ -436,7 +436,7 @@ export const foundationDemos: DemoMap = {
       render: () => (
         <Inline wrap gap="sm">
           <Tag tone="success" icon={Icons.CheckmarkFilled}>Healthy</Tag>
-          <Tag tone="error" icon={Icons.WarningAltFilled}>Degraded</Tag>
+          <Tag tone="error" icon={Icons.ErrorFilled}>Degraded</Tag>
           <Tag tone="error" icon={Icons.ErrorFilled}>Down</Tag>
         </Inline>
       ),

@@ -16,6 +16,9 @@ avoid_when:
 related: [status-indicators, filtering, dropdown]
 ---
 
+> [!NOTE] Colours and glyphs follow [Color → Status semantics](#/foundations/color): one meaning, one look, everywhere.
+
+
 ## Tones
 
 - `neutral`: categories.

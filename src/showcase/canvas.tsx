@@ -66,7 +66,7 @@ const columns: { offset: string; cards: React.ReactNode[] }[] = [
     cards: [
       <Stack key="t" gap="sm" align="center"><Thinking mode="generating" size="xl" label="Sofia" /><Text variant="footnote" tone="muted">Sofia is drafting your agent</Text></Stack>,
       <TextInput key="ti" label="Agent name" defaultValue="Support triage" />,
-      <Inline key="tg" gap="xs" wrap><Tag tone="success">Live</Tag><Tag tone="info">Zendesk</Tag><Tag tone="warning">Rate limited</Tag><Tag>Vita Large</Tag></Inline>,
+      <Inline key="tg" gap="xs" wrap><Tag tone="success">Live</Tag><Tag>Zendesk</Tag><Tag tone="warning">Rate limited</Tag><Tag>Vita Large</Tag></Inline>,
     ],
   },
   {
@@ -88,7 +88,7 @@ const columns: { offset: string; cards: React.ReactNode[] }[] = [
   {
     offset: "pt-20",
     cards: [
-      <ListGroup key="lg"><ListItem icon={Notification} tone="warning" title="Hand-offs" trailing={<Toggle size="sm" hideLabel label="Hand-offs" defaultChecked />} /><ListItem icon={Bot} tone="info" title="Deployments" trailing={<Toggle size="sm" hideLabel label="Deployments" />} /></ListGroup>,
+      <ListGroup key="lg"><ListItem icon={Notification} tone="brand" title="Hand-offs" trailing={<Toggle size="sm" hideLabel label="Hand-offs" defaultChecked />} /><ListItem icon={Bot} tone="brand" title="Deployments" trailing={<Toggle size="sm" hideLabel label="Deployments" />} /></ListGroup>,
       <Inline key="ring" gap="md"><ProgressRing value={100} size={44} /><Stack gap="none"><Text weight="semibold">Voice agent</Text><Text variant="footnote" tone="muted">Connected</Text></Stack></Inline>,
       <Search key="se" placeholder="Search agents" />,
     ],
@@ -104,7 +104,7 @@ const columns: { offset: string; cards: React.ReactNode[] }[] = [
   {
     offset: "pt-12",
     cards: [
-      <Inline key="ip" gap="sm" wrap><IconPlaceholder icon={Bot} tone="brand" size="lg" /><IconPlaceholder icon={Plug} tone="success" size="lg" /><IconPlaceholder icon={Notification} tone="warning" size="lg" /><IconPlaceholder icon={SearchIcon} tone="info" size="lg" /></Inline>,
+      <Inline key="ip" gap="sm" wrap><IconPlaceholder icon={Bot} tone="brand" size="lg" /><IconPlaceholder icon={Plug} tone="brand" size="lg" /><IconPlaceholder icon={Notification} tone="brand" size="lg" /><IconPlaceholder icon={SearchIcon} tone="brand" size="lg" /></Inline>,
       <Dropdown key="d" label="Team" defaultValue="s" items={[{ value: "s", label: "Support" }, { value: "f", label: "Finance" }, { value: "p", label: "People" }]} />,
       <Inline key="k" gap="sm"><IconButton icon={Add} label="Create agent" shortcut="mod+k" /><Text variant="footnote" tone="muted">Create anywhere</Text><Kbd keys="mod+k" /></Inline>,
     ],

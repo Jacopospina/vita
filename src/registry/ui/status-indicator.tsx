@@ -1,6 +1,7 @@
 import * as React from "react"
-import { CheckmarkFilled, ErrorFilled, WarningAltFilled, InformationFilled, WarningFilled, Misuse, UndefinedFilled, UnknownFilled } from "@/registry/icons"
+import { WarningFilled, Misuse, UndefinedFilled, UnknownFilled } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
+import { status } from "@/registry/lib/status"
 import { SwapIcon, ProgressGlyph } from "@/registry/ui/icon"
 import { AnimatedText } from "@/registry/ui/animated"
 
@@ -21,15 +22,15 @@ import { AnimatedText } from "@/registry/ui/animated"
  *   incomplete  partly done (half fill breathes)   · paused      stopped — destructive colour (bars breathe)
  */
 const kinds = {
-  success: { icon: CheckmarkFilled, color: "text-success", live: false },
-  error: { icon: ErrorFilled, color: "text-error", live: false },
+  success: { icon: status.success.icon, color: status.success.iconColor, live: false },
+  error: { icon: status.error.icon, color: status.error.iconColor, live: false },
   critical: { icon: Misuse, color: "text-error", live: false },
-  warning: { icon: WarningAltFilled, color: "text-warning-foreground", live: false },
+  warning: { icon: status.warning.icon, color: status.warning.iconColor, live: false },
   caution: { icon: WarningFilled, color: "text-warning", live: false },
-  info: { icon: InformationFilled, color: "text-info", live: false },
+  info: { icon: status.info.icon, color: status.info.iconColor, live: false },
   undefined: { icon: UndefinedFilled, color: "text-muted-foreground", live: false },
   unknown: { icon: UnknownFilled, color: "text-muted-foreground", live: false },
-  "in-progress": { icon: null, color: "text-primary", live: true },
+  "in-progress": { icon: null, color: status.info.iconColor, live: true }, // a status, so info — never brand
   pending: { icon: null, color: "text-muted-foreground", live: true },
   draft: { icon: null, color: "text-muted-foreground", live: false },
   queued: { icon: null, color: "text-info", live: true },

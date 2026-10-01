@@ -1,6 +1,7 @@
 import * as React from "react"
-import { CheckmarkFilled, ErrorFilled, InformationFilled, WarningAltFilled, Close } from "@/registry/icons"
+import { Close } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
+import { status } from "@/registry/lib/status"
 import { Icon } from "@/registry/ui/icon"
 import { Button } from "@/registry/ui/button"
 import { useExit } from "@/registry/hooks/use-exit"
@@ -19,9 +20,10 @@ import type { IconType } from "@/registry/icons"
  */
 type Kind = "info" | "success" | "warning" | "error"
 
-const icons = { info: InformationFilled, success: CheckmarkFilled, warning: WarningAltFilled, error: ErrorFilled } as const
+// Glyph and colour per kind come from the one status map, so a notification's "error" matches every other error.
+const icons = { info: status.info.icon, success: status.success.icon, warning: status.warning.icon, error: status.error.icon } as const
 
-const iconTone = { info: "text-info", success: "text-success", warning: "text-warning", error: "text-error" } as const
+const iconTone = { info: status.info.iconColor, success: status.success.iconColor, warning: status.warning.iconColor, error: status.error.iconColor } as const
 
 /**
  * Notice — the ONE notification anatomy, shared by inline notifications, callouts and toast banners:
@@ -230,7 +232,7 @@ capsule.dismiss = (id: number) => {
   else dismiss(id)
 }
 
-const kindIcon = { info: InformationFilled, success: CheckmarkFilled, warning: WarningAltFilled, error: ErrorFilled } as const
+const kindIcon = icons
 
 function renderIcon(icon: ToastIcon, className?: string) {
   if (icon && (typeof icon === "function" || (typeof icon === "object" && "render" in (icon as object)))) return <Icon as={icon as IconType} size="md" draw="in" className={className} />

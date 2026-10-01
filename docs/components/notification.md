@@ -15,6 +15,9 @@ avoid_when:
 related: [capsule, notifications, modal, inline-loading, status-indicators]
 ---
 
+> [!NOTE] Colours and glyphs follow [Color → Status semantics](#/foundations/color): one meaning, one look, everywhere.
+
+
 ## Anatomy
 
 One structure everywhere:

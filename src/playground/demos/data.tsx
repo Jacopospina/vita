@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Add, Document, Folder, TrashCan, Download, Edit, UserAvatar, Filter, CheckmarkFilled, WarningAltFilled, InProgress, PauseFilled } from "@/registry/icons"
+import { Add, Document, Folder, TrashCan, Download, Edit, UserAvatar, Filter, CheckmarkFilled, ErrorFilled, InProgress, PauseFilled } from "@/registry/icons"
 import { Report } from "@/registry/pictograms"
 import type { DemoMap } from "./types"
 import { Stack, Inline, Grid, Column } from "@/registry/ui/layout"
@@ -47,7 +47,7 @@ export function StatusTag({ status }: { status: Agent["status"] }) {
   const map = {
     Live: { tone: "success", icon: CheckmarkFilled },
     Deploying: { tone: "info", icon: InProgress },
-    Degraded: { tone: "error", icon: WarningAltFilled },
+    Degraded: { tone: "error", icon: ErrorFilled },
     Paused: { tone: "error", icon: PauseFilled },
   } as const
   return <Tag tone={map[status].tone} icon={map[status].icon}>{status}</Tag>
