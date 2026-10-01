@@ -424,8 +424,9 @@
 @utility glass {
   background-color: color-mix(in oklab, var(--corpus-elevated) var(--corpus-glass-fill, 16%), transparent);
   /* Translucent enough to see content moving beneath; the backdrop is brightened (light mode) so the glass still reads white. */
+  /* Unprefixed only: the build adds -webkit- for Safari. Writing both made the minifier keep just the prefixed one,
+     which Chrome ignores — production glass lost its blur. */
   backdrop-filter: blur(var(--corpus-glass-blur, 18px)) saturate(var(--corpus-glass-sat, 1.6)) brightness(var(--corpus-glass-lift));
-  -webkit-backdrop-filter: blur(var(--corpus-glass-blur, 18px)) saturate(var(--corpus-glass-sat, 1.6)) brightness(var(--corpus-glass-lift));
   border: 1px solid color-mix(in oklab, var(--corpus-foreground) 10%, transparent);
   box-shadow: var(--corpus-shadow-overlay), inset 0 1px 0 color-mix(in oklab, white 22%, transparent);
   @media (prefers-reduced-transparency: reduce) { background-color: var(--corpus-elevated); backdrop-filter: none; }
