@@ -1,7 +1,31 @@
 import { manifest, sectionTitles, type Section } from "./manifest"
 import { getDoc } from "./docs"
 import { demos } from "./demos"
+import * as React from "react"
 import { Text } from "@/registry/ui/text"
+
+/** A layout wrapper around several variants (Stack, Inline, a demo grid) — never a component's own root. */
+const isLayout = (el: Element) =>
+  el.children.length > 1 && !el.getAttribute("role") && (el.getAttribute("data-layout") === "stack" || (el instanceof HTMLDivElement && /(^|\s)grid(\s|$)/.test(el.className)))
+
+/** Shows ONE instance of a component: walks down the demo's layout wrappers, keeping only the first real child at each level. */
+function OneInstance({ children }: { children: React.ReactNode }) {
+  const ref = React.useRef<HTMLDivElement>(null)
+  React.useLayoutEffect(() => {
+    let el = ref.current?.firstElementChild
+    while (el && isLayout(el)) {
+      const kids = [...el.children] as HTMLElement[]
+      // Skip captions and headings that label a group of variants — the instance is the first thing that isn't just text.
+      const keep = kids.find((k) => k.children.length > 0 || /^(BUTTON|INPUT|SELECT|TEXTAREA|SVG|IMG)$/i.test(k.tagName)) ?? kids[0]
+      for (const k of kids) if (k !== keep) k.style.display = "none"
+      // Centre what's left: full-width components still fill, small ones sit in the middle.
+      Object.assign((el as HTMLElement).style, { justifyContent: "center", alignItems: "center" })
+      el = keep
+    }
+  })
+  // A minimum width so full-width components (slider, progress bar) have room to show.
+  return <div ref={ref} className="min-w-72">{children}</div>
+}
 
 /** A tangible preview for a page: colour swatches, a huge "Aa", or the page's hero demo, live. */
 function pagePreview(section: Section, slug: string) {
@@ -13,7 +37,9 @@ function pagePreview(section: Section, slug: string) {
     )
   if (section === "foundations" && slug === "typography") return <Text variant="display" weight="regular">Aa</Text>
   const hero = demos[`${section}/${slug}`]?.[0]
-  return hero ? hero.render() : undefined
+  if (!hero) return undefined
+  // Components preview as ONE instance (the hero's first variant); patterns and foundations show the whole hero.
+  return section === "components" ? <OneInstance>{hero.render()}</OneInstance> : hero.render()
 }
 
 /** The global nav — ONE list, used by the docs header and the showcase header so they never drift apart. */

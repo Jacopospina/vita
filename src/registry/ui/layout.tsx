@@ -46,7 +46,7 @@ export function Stack({ className, direction, gap, align, justify, wrap, asChild
   const Comp = asChild ? Slot.Root : "div"
   const ref = React.useRef<HTMLDivElement>(null)
   useFlip(ref, flip)
-  return <Comp ref={ref} className={cn(stackVariants({ direction, gap, align, justify, wrap }), className)} {...props} />
+  return <Comp ref={ref} data-layout="stack" className={cn(stackVariants({ direction, gap, align, justify, wrap }), className)} {...props} />
 }
 
 /**

@@ -1,15 +1,11 @@
 import * as React from "react"
-import * as icons from "@/registry/icons"
-import * as pictograms from "@/registry/pictograms"
-import { Book, Application, Grid as GridIcon, ColorPalette, Terminal, Bot, DataVis_1 as Chart, Pen } from "@/registry/icons"
+import { Book, Application, Grid as GridIcon, ColorPalette, Bot } from "@/registry/icons"
 import type { IconType } from "@/registry/icons"
 import { Container, Stack, Inline } from "@/registry/ui/layout"
 import { Text } from "@/registry/ui/text"
-import { ClickableTile, Tile, TileSet, TileSetItem } from "@/registry/ui/tile"
+import { TileSet, TileSetItem } from "@/registry/ui/tile"
 import { Tag } from "@/registry/ui/tag"
-import { Link } from "@/registry/ui/link"
 import { IconPlaceholder } from "@/registry/ui/icon-placeholder"
-import { Thinking } from "@/registry/ui/thinking"
 import { getDoc } from "./docs"
 import { manifest, type Section } from "./manifest"
 
@@ -19,8 +15,6 @@ import { manifest, type Section } from "./manifest"
  * anything we don't have yet says "Coming soon".
  */
 
-const count = (mod: Record<string, unknown>) => Object.values(mod).filter((v) => typeof v === "function" || (typeof v === "object" && v !== null && "render" in v)).length
-const fmt = (n: number) => new Intl.NumberFormat().format(Math.floor(n / 100) * 100)
 const summary = (section: Section, slug: string) => getDoc(section, slug)?.meta.summary ?? ""
 const title = (section: Section, slug: string) => manifest[section].find((e) => e.slug === slug)?.title ?? slug
 
@@ -62,93 +56,6 @@ function SectionHead({ name, children }: { name: string; children?: React.ReactN
     </Stack>
   )
 }
-
-/* ---------------- Home ---------------- */
-
-export function HomePage() {
-  const iconCount = count(icons as Record<string, unknown>)
-  const pictogramCount = count(pictograms as Record<string, unknown>)
-  return (
-    <Container className="py-16">
-      <Stack gap="3xl" className="stagger">
-        {/* Hero — Sofia, the Corpus thinking orb, above the name */}
-        <Stack gap="sm" align="center" className="text-center">
-          <Thinking mode="generating" size="2xl" label="Sofia" />
-          <Text variant="large-title" as="h1">Corpus</Text>
-          <Text variant="title-2" as="p">Give your ideas a body.</Text>
-          <Text variant="body-lg" tone="muted" className="max-w-xl">
-            The AI-agent-first design system, born for humans and machines making together. You bring the vision; Corpus gives you and your agents the same craft to give it form.
-          </Text>
-        </Stack>
-
-        {/* Featured: the guidelines */}
-        <ClickableTile href="#/guidelines" className="p-8">
-          <Stack gap="sm" className="max-w-2xl">
-            <IconPlaceholder icon={Book} tone="brand" size="lg" />
-            <Text variant="title-1" as="h2">Corpus Guidelines</Text>
-            <Text variant="body-lg" tone="muted">Everything you need to give your ideas a body: the principles, foundations, components and patterns behind Corpus.</Text>
-            <Text tone="primary" weight="medium">Start making</Text>
-          </Stack>
-        </ClickableTile>
-
-        {/* Resources — one group: same meaning, one surface */}
-        <TileSet columns={3}>
-          <Resource icon={GridIcon} name="Icons" href="#/foundations/icons" action="Browse icons">
-            A library of over {fmt(iconCount)} icons, drawn in and out with the rest of Corpus.
-          </Resource>
-          <Resource icon={Application} name="Pictograms" href="#/foundations/pictograms" action="Browse pictograms">
-            Over {fmt(pictogramCount)} pictograms for empty states, onboarding and feature highlights.
-          </Resource>
-          <Resource icon={ColorPalette} name="Theming" href="#/foundations/theming" action="Personalise Corpus">
-            {summary("foundations", "theming")}
-          </Resource>
-          <Resource icon={Terminal} name="Corpus CLI" href="#/getting-started/cli" action="Get started">
-            Install Corpus into any repository, then add, update and audit components from the command line.
-          </Resource>
-          <Resource icon={Pen} name="Design kit">Components, tokens and templates for design tools.</Resource>
-          <Resource icon={Bot} name="Agent skills">Six skills that teach AI agents to design and build with Corpus.</Resource>
-        </TileSet>
-
-        {/* Built with Corpus */}
-        <Stack gap="lg">
-          <SectionHead name="Built with Corpus" />
-          <TileSet columns={2}>
-            <TileSetItem href="#/patterns/intent-first" className="p-5">
-              <Stack gap="sm">
-                <Text variant="footnote" tone="muted">Vita</Text>
-                <Text variant="title-3">From a request to a deployed agent</Text>
-                <Text tone="muted">{summary("patterns", "intent-first")}</Text>
-                <Text tone="primary" weight="medium">Read more</Text>
-              </Stack>
-            </TileSetItem>
-            <TileSetItem className="p-5">
-              <Stack gap="sm">
-                <Text variant="title-3">Your story</Text>
-                <Text tone="muted">What makers are bringing to life with Corpus.</Text>
-                <Inline><SoonTag /></Inline>
-              </Stack>
-            </TileSetItem>
-          </TileSet>
-        </Stack>
-
-        {/* Pathway */}
-        <Tile className="p-8">
-          <Stack gap="sm" align="center" className="text-center">
-            <IconPlaceholder icon={Chart} tone="brand" size="lg" />
-            <Text variant="title-2" as="h2">What will you make?</Text>
-            <Text tone="muted" className="max-w-xl">Every product starts as an idea. Start with the principles, then let the decision guide hand you the right piece for every task.</Text>
-            <Inline gap="lg" justify="center">
-              <Link href="#/getting-started/principles">Read the principles</Link>
-              <Link href="#/components/choosing-components">Choose a component</Link>
-            </Inline>
-          </Stack>
-        </Tile>
-      </Stack>
-    </Container>
-  )
-}
-
-/* ---------------- Guidelines index ---------------- */
 
 const recentlyUpdated: [Section, string][] = [
   ["components", "capsule"],

@@ -7,6 +7,9 @@ import "@/styles/corpus.css"
 import "./prose.css"
 import { App } from "./App"
 
+// The docs have no home of their own: the showcase is the homepage. A bare docs URL goes there.
+if (!window.location.hash || window.location.hash === "#/") window.location.replace("./showcase.html")
+
 // Transitions stay off until fonts and layout settle, so nothing glides in from its pre-layout position.
 bootAppearance()
 guardHotStyleUpdates(import.meta.hot)

@@ -55,7 +55,7 @@ function PreviewFit({ children }: { children: React.ReactNode }) {
       <div
         ref={inner}
         inert
-        className={cn("pointer-events-none shrink-0 animate-enter-fade", stage ? "w-160" : "w-max max-w-160")}
+        className={cn("pointer-events-none shrink-0", stage ? "w-160" : "w-max max-w-160")}
         style={{ transform: `scale(${scale})` }}
       >
         {children}

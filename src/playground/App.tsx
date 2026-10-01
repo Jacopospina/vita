@@ -14,17 +14,17 @@ import { GlobalSearch } from "@/registry/ui/global-search"
 import { GithubAction } from "./github"
 import { DocPage } from "./doc-page"
 import { ThemePanel } from "./theme-panel"
-import { HomePage, GuidelinesPage } from "./home"
+import { GuidelinesPage } from "./home"
 
 /** Pseudo-sections for the two index pages. */
-type Route = Section | "home" | "guidelines"
+type Route = Section | "guidelines"
 
 function useRoute() {
   const read = (): [Route, string] => {
     const [, section, slug] = window.location.hash.replace(/^#/, "").split("/")
     if (section === "guidelines") return ["guidelines", ""]
     if (section && slug && section in manifest) return [section as Section, slug]
-    return ["home", ""]
+    return ["guidelines", ""] // unknown or empty → About Corpus
   }
   const [route, setRoute] = React.useState(read)
   const [leaving, setLeaving] = React.useState(false)
@@ -84,7 +84,7 @@ export function App() {
           ))}
         </Header>
         <ShellBody>
-          {section !== "home" && (
+          {(
           <LeftPanel label="Documentation">
             <div className="pb-1">
               <Search size="md" variant="toolbar" label="Filter pages" placeholder="Filter" shortcut="mod+f" value={filter} onValueChange={setFilter} />
@@ -108,7 +108,7 @@ export function App() {
           </LeftPanel>
           )}
           <ShellMain data-leaving={leaving || undefined}>
-            {section === "home" ? <HomePage /> : section === "guidelines" ? <GuidelinesPage /> : <DocPage key={`${section}/${slug}`} section={section} slug={slug} />}
+            {section === "guidelines" ? <GuidelinesPage /> : <DocPage key={`${section}/${slug}`} section={section} slug={slug} />}
           </ShellMain>
           <RightPanel open={themeOpen} onOpenChange={setThemeOpen} title="Theme" size="md">
             <ThemePanel dark={dark} onDarkChange={setDark} weather={weather} />

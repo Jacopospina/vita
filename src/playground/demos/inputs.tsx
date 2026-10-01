@@ -260,6 +260,17 @@ export const inputDemos: DemoMap = {
   ],
   "components/date-picker": [
     {
+      title: "Simple · Single · Range",
+      render: () => (
+        <Stack gap="lg">
+          <DatePicker mode="simple" label="Contract start" helperText="Type the date — no calendar needed" />
+          <DatePicker label="Go-live date" minDate={new Date()} />
+          <DateRangePicker startLabel="From" endLabel="To" />
+          <DatePicker label="Invalid" invalid invalidText="Go-live must be a weekday" />
+        </Stack>
+      ),
+    },
+    {
       title: "Day states",
       description: "The day button on its own, in every state it can take.",
       render: () => (
@@ -280,17 +291,6 @@ export const inputDemos: DemoMap = {
             </Stack>
           ))}
         </div>
-      ),
-    },
-    {
-      title: "Simple · Single · Range",
-      render: () => (
-        <Stack gap="lg">
-          <DatePicker mode="simple" label="Contract start" helperText="Type the date — no calendar needed" />
-          <DatePicker label="Go-live date" minDate={new Date()} />
-          <DateRangePicker startLabel="From" endLabel="To" />
-          <DatePicker label="Invalid" invalid invalidText="Go-live must be a weekday" />
-        </Stack>
       ),
     },
     {
