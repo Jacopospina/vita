@@ -2139,7 +2139,7 @@
       "slug": "the-name",
       "path": "docs/decisions/the-name.md",
       "title": "The name is Vita",
-      "summary": "The design system was called Corpus. It is now Vita, life, the third of a triad with Animus (the logic) and Anima (the AI).",
+      "summary": "Vita means life. It is the third of a triad with Animus (the logic) and Anima (the AI): the design system where both come alive.",
       "status": "accepted",
       "date": "2026-10-01",
       "decided_by": "Jacopo",

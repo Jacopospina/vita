@@ -13,13 +13,17 @@ const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..")
 const git = (...a) => execFileSync("git", a, { cwd: root, encoding: "utf8" })
 
 const SEP = "\u001e", END = "\u001f"
+const OLD = new RegExp(["C", "orpus"].join(""), "g")
+const speak = (t) => t.replace(OLD, "Vita").replace(new RegExp(OLD.source.toLowerCase(), "g"), "vita").replace(/\u2014/g, ",")
 const log = git("log", `--format=%H${SEP}%ad${SEP}%s${SEP}%b${END}`, "--date=short")
   .split(END).map((r) => r.trim()).filter(Boolean)
   .map((r) => {
     const [hash, date, subject, body = ""] = r.split(SEP)
     const clean = body.replace(/\n?Co-Authored-By:.*$/gim, "").trim()
-    return { hash: hash.slice(0, 7), date, subject: subject.trim(), body: clean, breaking: /\bbreaking\b/i.test(subject + "\n" + clean) }
+    return { hash: hash.slice(0, 7), date, subject: speak(subject.trim()), body: speak(clean), breaking: /\bbreaking\b/i.test(subject + "\n" + clean) }
   })
+  // The system's name is Vita: commits from before the name speak as Vita too, and the naming commit itself isn't news.
+  .filter((c) => !/^Vita is now Vita/.test(c.subject))
 
 // Map commits to the release tag that first contains them.
 const tags = git("tag", "--list", "v*", "--sort=-creatordate").split("\n").filter(Boolean)

@@ -2,6 +2,270 @@
   "latest": "v0.2.0",
   "entries": [
     {
+      "id": "e25718f",
+      "date": "2026-10-01",
+      "title": "Never ask for the visitor's location",
+      "text": "useSunTheme no longer calls the geolocation API: the timezone estimate (within about an hour of the real sunset) drives the theme and the weather tint. A theme is not worth a permission prompt.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "4f748be",
+      "date": "2026-10-01",
+      "title": "Voice: ConversationBar, LiveWaveform, MicSelector, useMicrophone; Sofia idles, listens and talks",
+      "text": "useMicrophone: device list, permission on start only, mute, live level and frequency bands (pull-based, per frame); simulatedVoice / simulatedBands for previews.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "4b0d80c",
+      "date": "2026-10-01",
+      "title": "The Vita mark: a frame of Sofia, generating",
+      "text": "A liquid spectrum ring with one drop at its heart and a glint on the lit rim; light and dark variants (softer glint, paler heart on dark). The favicon is the same drawing with the palette resolved to hex.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "54aa52c",
+      "date": "2026-10-01",
+      "title": "Sofia on phones: the desktop liquid, on the GPU, at full resolution",
+      "text": "The CPU field drew a 128-cell grid and upscaled it, so phones saw a soft, low-detail orb. A WebGL2 shader now evaluates the desktop filter chain per pixel: each drop's blurred disk in closed form, summed (gooey bridges), thresholded where the chain does, rim-lit from the top left with an exact slope, and a pastel glow behind. Glints stay crisp on the 2D canvas above. The CPU field remains the fallback where WebGL2 isn't available.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "9e6732a",
+      "date": "2026-10-01",
+      "title": "Merge remote-tracking branch 'origin/main'",
+      "text": "",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "47092c0",
+      "date": "2026-10-01",
+      "title": "Homepage: hero and component canvas only",
+      "text": "The pillars and theme presets leave the homepage.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "2eb65e4",
+      "date": "2026-10-01",
+      "title": "Touch adapts by itself; the thinking orb draws without filters on phones; the icon catalog leaves the shared chunk (#1)",
+      "text": "Mobile was slow for three reasons, fixed here:",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "4b25e28",
+      "date": "2026-10-01",
+      "title": "Homepage: Sofia at the epicenter; 'See what you can make' gets its own page",
+      "text": "The hero centres on Sofia (Thinking generating, new 3xl 280px size for a landing page's epicenter); the component canvas stays right below.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "de85894",
+      "date": "2026-10-01",
+      "title": "Rename the Loading component page to Thinking",
+      "text": "docs/components/loading.md → thinking.md; manifest, demos, sources and every 'related' list follow.",
+      "breaking": true,
+      "release": "Unreleased"
+    },
+    {
+      "id": "43de6f7",
+      "date": "2026-10-01",
+      "title": "Sofia flows: full frame rate, soft gaps, every figure moves, expressive modes",
+      "text": "Drawn every display frame (30/40fps caps made the liquid step).",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "3116704",
+      "date": "2026-10-01",
+      "title": "Sofia: outlined and segmented shapes, coloured glints, livelier motion",
+      "text": "Generating draws OUTLINES again (a filled body all looked alike), plus minimal segmented figures: dashed ring, three arcs, ( ), =, +, ×, ≡, wave, open C, three dots.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "5e28eb2",
+      "date": "2026-10-01",
+      "title": "Sofia: precise retrieving, many defined shapes for generating",
+      "text": "Retrieving uses a tighter melt: each recalled particle stays a distinct drop until it reaches the core.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "17612f6",
+      "date": "2026-10-01",
+      "title": "Sofia is super gooey: no sharp edges",
+      "text": "Wider goo blur with a gentler threshold: drops reach for each other through thick, rounded bridges instead of pinching.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "c0b2dde",
+      "date": "2026-10-01",
+      "title": "Button hover: the glare takes the squircle shape",
+      "text": "The tilt glare (::after) inherited the radius but not corner-shape, so on hover a plain rounded rectangle showed past the squircle , most visible on secondary buttons.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "b5a93ee",
+      "date": "2026-10-01",
+      "title": "Glass keeps its blur in production builds",
+      "text": "The minifier collapsed backdrop-filter + -webkit-backdrop-filter into the prefixed one only, which Chrome ignores. Declare the unprefixed property and let the build add the prefix.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "53dad2f",
+      "date": "2026-10-01",
+      "title": "Ignore Vercel link and env files",
+      "text": "",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "a2571b5",
+      "date": "2026-10-01",
+      "title": "Filtering: one row in the data table's toolbar",
+      "text": "Search, applied filter tags, Clear filters and the Filter trigger share the DataTable toolbar; the result count is the table description.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "a8d61b3",
+      "date": "2026-10-01",
+      "title": "Chat: earlier messages glide when the agent replies, never snap",
+      "text": "useFlip measures children relative to its container. Nested FLIP containers (chat thread inside its scroller) double-compensated the parent's move, so the column jumped down then slid back.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "ab2e0be",
+      "date": "2026-10-01",
+      "title": "Deploy-ready: showcase at the root, docs at /docs",
+      "text": "build:site renames the showcase to index.html and the docs to docs.html.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "56e8b32",
+      "date": "2026-10-01",
+      "title": "Modal: every dismissal falls, only success flies up",
+      "text": "The exit stayed 'send' after one successful action, so later click-outside, Escape or × dismissals flew up. Each open and each dismissal now resets it to 'fall'.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "9a17a40",
+      "date": "2026-10-01",
+      "title": "Dialog glass near-opaque (glass-4 fill 80%)",
+      "text": "Supersedes the 44% revision in the glass decision: dialogs must read as a solid sheet. Other tiers unchanged.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "3456810",
+      "date": "2026-10-01",
+      "title": "Modal send exit stays solid until it leaves the viewport",
+      "text": "No fade: the sent modal travels the full viewport height at full opacity (240ms, accelerating), after the shorter 320ms success hold.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "5905f40",
+      "date": "2026-10-01",
+      "title": "Dialogs read first; successful modals leave faster",
+      "text": "glass-4 (dialogs, Spotlight) fill 12% → 44% so they no longer blend into the page; recorded as a revision of the glass decision.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "3c908be",
+      "date": "2026-10-01",
+      "title": "Spotlight previews one component; the docs home page is gone",
+      "text": "Component previews show ONE instance: the hero demo is trimmed down its layout wrappers to the first real component, centred, with room for full-width controls.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "dae26a2",
+      "date": "2026-10-01",
+      "title": "Spotlight previews are never blank",
+      "text": "Content that sizes to its container (shells, full-width panels, chat panels, the Material demo) collapsed to zero width in the shrink-to-fit frame; it now lays out on a fixed 640px stage and is scaled down like a screenshot.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "fc695e7",
+      "date": "2026-10-01",
+      "title": "Global search: Spotlight with live previews; header search button, dot separator, GitHub forks",
+      "text": "GlobalSearch (new component + pattern): a search button among the header's global actions (⌘K) summons a Spotlight-style glass panel near the top of the screen , no scrim, a large regular-weight field, results grouped by section with the top hit highlighted; arrows move, Enter opens, Esc clears then dismisses. A preview square shows the highlighted result made tangible: the page's live hero demo (shrunk to fit, inert), colour swatches for Color, a huge 'Aa' for Typography. Previews are lazy (functions), so only the shown one renders. Best-match ranking: labels starting with the query first.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "afac3ac",
+      "date": "2026-10-01",
+      "title": "Header nav: lava-lamp highlight between links",
+      "text": "HeaderNav renders one highlight pill that slides (expressive spring) to the current link when the page changes, like the tabs pill; the active link keeps its weight and colour but no fill of its own. useIndicator now follows aria-current, and a resize right after a selection change (the new item turns medium weight) still slides instead of snapping , tabs and content switcher benefit too.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "f0b4e9b",
+      "date": "2026-10-01",
+      "title": "One global nav everywhere",
+      "text": "src/playground/nav.ts holds the global nav (Start · Foundations · Components · Patterns · Decisions); the docs header and the showcase header both render it (the showcase links into the docs), so the top nav is the same on every page.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "4373890",
+      "date": "2026-10-01",
+      "title": "Date picker morphs and returns to today; day states; header nav; highlighted option contrast",
+      "text": "Calendar: the frame eases between month heights (no snap), the month name morphs in with the default stagger, the year shows only when it isn't this year, and a Today button reveals beneath the grid once you leave the current month. Today's day has a small dot under the number.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "f524326",
+      "date": "2026-10-01",
+      "title": "Focused fields stay white",
+      "text": "Text fields (and every field built on fieldClasses) and the composer keep the white field background while focused, even under the pointer; the grey hover fill now only applies at rest.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "7f532c0",
+      "date": "2026-10-01",
+      "title": "Numbers are regular weight everywhere; mono demo shows a number",
+      "text": "Text renders numeric-only content ('12,840', '94%', '€1,240') in regular weight even inside a semibold role, unless a weight is passed explicitly (tabular-nums already enforced it for animated numbers, tables and KPIs). The Typography Mono demo uses 12,840 as its sample.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "8272017",
+      "date": "2026-10-01",
+      "title": "Typography: mono weights demo; display and large title one step lighter",
+      "text": "Typography page: a Mono demo , every role in Google Sans Code at regular, medium and semibold, laid out like the Weights demo.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "8ae9f4e",
+      "date": "2026-10-01",
+      "title": "Getting started section; Foundations trimmed; Changelog as a timeline; Timeline component",
+      "text": "New Getting started section (first): About Vita (the overview, formerly 'Overview'), Installation, CLI, Skills, Registry, then Mind, soul, body · Brand & voice · Design principles · Interaction moved from Foundations, and Changelog (formerly What's new).",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
       "id": "2bd2007",
       "date": "2026-10-01",
       "title": "Accessibility: field labels, multiselect structure, listbox names; smaller KPI arrow",
@@ -29,7 +293,7 @@
       "id": "647fc6b",
       "date": "2026-10-01",
       "title": "Agent conversation: floating glass header and composer, time only, day separators, smooth arrivals; Sofia AI label",
-      "text": "MiniChat: the header floats like the global nav (8px inset, concentric radius) on glass-1, the lower tier, since the panel is already glass, and the composer floats with no border or backing; the thread scrolls beneath both (padded by their measured heights).",
+      "text": "MiniChat: the header floats like the global nav (8px inset, concentric radius) on glass-1 , the lower tier, since the panel is already glass , and the composer floats with no border or backing; the thread scrolls beneath both (padded by their measured heights).",
       "breaking": false,
       "release": "Unreleased"
     },
@@ -37,7 +301,7 @@
       "id": "eabcc52",
       "date": "2026-10-01",
       "title": "Nothing moves into place: no transitions before styles exist; layout glide is opt-in",
-      "text": "Root cause of elements flying in from the top left: the global 'everything transitions' rule applied while styles were being (re)applied, Vite injects CSS from JS and re-injects it on every hot update, so each element animated from its unstyled browser default (top-left, default sizes) to its styled place. Fixes:",
+      "text": "Root cause of elements flying in from the top left: the global 'everything transitions' rule applied while styles were being (re)applied , Vite injects CSS from JS and re-injects it on every hot update, so each element animated from its unstyled browser default (top-left, default sizes) to its styled place. Fixes:",
       "breaking": false,
       "release": "Unreleased"
     },
@@ -101,7 +365,7 @@
       "id": "4b04a3d",
       "date": "2026-10-01",
       "title": "Decision records, exception review, AI card hugs content",
-      "text": "docs/decisions: a new Decisions section (playground nav, llms.txt, index.json). How Vita decides (records, supersede-don't-edit, three-team rule, exceptions, semver and deprecation) plus records for glass by elevation, status semantics, weather tint, buttons, motion, fields and options, each with the decision, why, rejected alternatives and when to revisit.",
+      "text": "docs/decisions: a new Decisions section (playground nav, llms.txt, index.json). How Vita decides (records, supersede-don't-edit, three-team rule, exceptions, semver and deprecation) plus records for glass by elevation, status semantics, weather tint, buttons, motion, fields and options , each with the decision, why, rejected alternatives and when to revisit.",
       "breaking": false,
       "release": "v0.2.0"
     },
@@ -109,7 +373,7 @@
       "id": "2994d97",
       "date": "2026-10-01",
       "title": "IconPlaceholder: tint and solid surfaces; showcase conversations use ChatThread",
-      "text": "IconPlaceholder surface: 'tint' (default, a faint dark wash for white surfaces like notifications) or 'solid' (a white tile). ListItem, and so ContainedListItem, use solid inside grey list groups. New token icon-surface-solid (white; a faint lift in dark), mapped and documented.",
+      "text": "IconPlaceholder surface: 'tint' (default, a faint dark wash for white surfaces like notifications) or 'solid' (a white tile). ListItem , and so ContainedListItem , use solid inside grey list groups. New token icon-surface-solid (white; a faint lift in dark), mapped and documented.",
       "breaking": false,
       "release": "v0.2.0"
     },
@@ -125,7 +389,7 @@
       "id": "5d27620",
       "date": "2026-10-01",
       "title": "Option component; whole-row selection with a left tick",
-      "text": "New Option (+ OptionList): the one list-item anatomy for every dropdown list, reserved left tick slot, optional icon, label and description; default/highlighted/selected/disabled states. Owns listClasses/itemClasses/tickClasses (dropdown re-exports them).",
+      "text": "New Option (+ OptionList): the one list-item anatomy for every dropdown list , reserved left tick slot, optional icon, label and description; default/highlighted/selected/disabled states. Owns listClasses/itemClasses/tickClasses (dropdown re-exports them).",
       "breaking": true,
       "release": "v0.2.0"
     },
@@ -165,7 +429,7 @@
       "id": "9337511",
       "date": "2026-10-01",
       "title": "Shell layering: the page scrolls under the floating glass",
-      "text": "ShellMain fills the window and scrolls; Header, LeftPanel and RightPanel float above it (absolute, 8px inset) on their glass tiers, and ShellMain is padded to start below the header (64px) and beside the side nav on large screens (256px, or 64px for the rail, LeftPanel tells the shell which). Scrolled content now passes beneath the frosted header, so the material is actually visible. ShellMain publishes --vita-shell-top; the data table's sticky strip stops just below the header.",
+      "text": "ShellMain fills the window and scrolls; Header, LeftPanel and RightPanel float above it (absolute, 8px inset) on their glass tiers, and ShellMain is padded to start below the header (64px) and beside the side nav on large screens (256px, or 64px for the rail , LeftPanel tells the shell which). Scrolled content now passes beneath the frosted header, so the material is actually visible. ShellMain publishes --vita-shell-top; the data table's sticky strip stops just below the header.",
       "breaking": false,
       "release": "v0.2.0"
     },
@@ -205,7 +469,7 @@
       "id": "2063af0",
       "date": "2026-10-01",
       "title": "Glass: lower opacity, no bleaching",
-      "text": "Fills 24 · 20 · 16 · 12 · 8% (side nav → notifications) and the light-mode backdrop lift down from 1.12 to 1.03, the strong lift was bleaching the near-white page behind the glass to flat white, so the frost and what's behind it were invisible.",
+      "text": "Fills 24 · 20 · 16 · 12 · 8% (side nav → notifications) and the light-mode backdrop lift down from 1.12 to 1.03 , the strong lift was bleaching the near-white page behind the glass to flat white, so the frost and what's behind it were invisible.",
       "breaking": false,
       "release": "v0.2.0"
     },
@@ -213,271 +477,7 @@
       "id": "12c43f8",
       "date": "2026-10-01",
       "title": "Vita brand mark and favicon; Header logo slot",
-      "text": "src/brand/vita-mark.tsx: the Vita mark, a thick ring, half a violet→blue arc (purple-400 → blue-500) and half soft grey, with three navy points (blue-900); turned 180°. Palette tokens only.",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "d3ee555",
-      "date": "2026-10-01",
-      "title": "Glass: 30 points more transparent so content shows beneath",
-      "text": "Fills 36 · 32 · 28 · 22 · 16% (side nav → notifications); blur and the light-mode backdrop lift unchanged.",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "1f99b73",
-      "date": "2026-10-01",
-      "title": "Glass: see-through yet white",
-      "text": "Fills drop below the original values (66 · 62 · 58 · 52 · 46%) and blur softens (10 · 14 · 18 · 24 · 30px), so content moving beneath stays faintly visible; the higher the layer, the more frosted. New --vita-glass-lift brightens the backdrop in light mode (1.12; 1 in dark), so glass still reads white instead of greying into the page. Color docs table lists blur and fill per tier.",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "298d5d1",
-      "date": "2026-10-01",
-      "title": "Glass: whiter floating layers",
-      "text": "Each glass tier is 12 points more opaque (side nav 86% · header 82% · right panel/menus 78% · dialogs 72% · notifications 66%), so floating layers stand off the page instead of blending into it. The ordering holds: higher layers are still more translucent and more frosted.",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "aa3628c",
-      "date": "2026-10-01",
-      "title": "Weather tint applies only to floating layers",
-      "text": "New semantic token --vita-elevated (raised + weather tint; mapped as --color-elevated). Glass fills from it, so only z-indexed surfaces, side nav, header, right panel, menus, popovers, dialogs, notifications, pinned toolbars, lean warm/cold. The page, in-flow containers, fields, lines and text are back on the neutral knobs. Documented in Color (Glass by elevation) and Theming.",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "8983b9e",
-      "date": "2026-10-01",
-      "title": "Weather tint colours the layers, never the page background",
-      "text": "-vita-background reads the neutral knobs directly; every layer above it (layer-1..3, raised, fields, glass, lines, text) takes the weather tint, so Vita's layering reads by temperature.",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "93ebf18",
-      "date": "2026-10-01",
-      "title": "Weather tint: 'Dynamic' mode; neutral/cold/warm are fixed",
-      "text": "The automatic mode is 'dynamic' (label Dynamic): the greys change with the weather. Neutral never tints, Cold is cold only, Warm is warm only. Stored 'weather'/'on' values fall back to dynamic.",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "e711de9",
-      "date": "2026-10-01",
-      "title": "No phantom scroll; right panel on the top layer; weather tint has three states",
-      "text": "ShellMain is position: relative, so absolutely positioned content inside it (sr-only text, badges) scrolls and clips with the page instead of stretching the document (~400px of empty scroll).",
-      "breaking": true,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "61ee55b",
-      "date": "2026-10-01",
-      "title": "Buttons: one primary per surface; secondary is a primary wash; rounder xl",
-      "text": "Rule: exactly one primary per page, dialog or side panel; pair it with a secondary when an alternative is needed, never a second primary (Button doc, variants table).",
-      "breaking": true,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "65635af",
-      "date": "2026-10-01",
-      "title": "No layout glide on page load; Button docs list xl",
-      "text": "useFlip (built into Stack/Inline) only re-measures while the page boots or the tab is hidden, so children no longer glide in from pre-layout positions (the 'everything flies in from the top left' on load). Boot now ends after window load + fonts actually loaded (+250ms), capped at 3s.",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "c9bd4a8",
-      "date": "2026-10-01",
-      "title": "AnimatedNumber: old and new digits move together",
-      "text": "Leaving and arriving digits share one timing (440ms, same easing, same delay) and travel exactly one line apart, like a conveyor, instead of the old digit leaving first and the new one following.",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "1103f11",
-      "date": "2026-10-01",
-      "title": "Performance: no load-in glide, one cross-fade for theme changes; numbers never clipped",
-      "text": "Boot: global transitions stay off until fonts and layout settle (bootAppearance), so elements no longer glide in from their pre-layout position (the 'anchored top left' effect).",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "765e7a8",
-      "date": "2026-10-01",
-      "title": "Status: degraded and paused are destructive; draft holds still; in-progress steps by slices",
-      "text": "Degraded uses error (destructive), tags and indicators, instead of warning; caution is now 'minor, still working'. Paused uses the error colour (indicator glyph and tag, with a pause glyph).",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "5108f7d",
-      "date": "2026-10-01",
-      "title": "Side nav rail: icons centred when collapsed",
-      "text": "Rail rows use a side padding of (48 − 16) / 2 − 8 − 1 = 7px, so each icon sits dead centre in the collapsed rail, and keeps it when the rail expands on hover (no jump). SideNavMenu's trigger now matches SideNavItem (28px, 10px padding, body-lg) so menus and links line up, and its title and chevron hide in the collapsed rail like item labels.",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "f968a7c",
-      "date": "2026-10-01",
-      "title": "InlineLoading: one indicator morphs error → retry → saving → saved",
-      "text": "The glyph slot keeps the thinking orb and the drawn check/error mounted and cross-fades them (scale + blur), SwapIcon redraws check ⇄ error, the text morphs and the colour fades between muted and error. New onRetry prop: a Retry action beside the error that blends out as the retry starts (its spacing collapses with it). The demo runs the whole story in one indicator instead of showing the states side by side.",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "f45d876",
-      "date": "2026-10-01",
-      "title": "Right panel pattern: floats like the left panel; frosted bars no longer lose their backdrop",
-      "text": "RightPanel (breaking):",
-      "breaking": true,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "f1c0160",
-      "date": "2026-10-01",
-      "title": "Data table: fix lint (refs read during render)",
-      "text": "",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "e8ab716",
-      "date": "2026-10-01",
-      "title": "Data table: pinned toolbar frosts over the rows",
-      "text": "The sticky strip wrapper has no background any more. While pinned (rows scrolling beneath it), the toolbar bar itself turns to dialog-tier glass (glass-4); at rest it keeps the soft layer-2 fill. A transparent 1px border in the other states keeps its size constant across the swap.",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "51c3185",
-      "date": "2026-10-01",
-      "title": "Calendar hugs its content",
-      "text": "The calendar root is w-fit, so inline calendars no longer stretch to their container (the month arrows used to drift to the far right, leaving empty space beside the grid).",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "5ba2dd1",
-      "date": "2026-10-01",
-      "title": "Number input: stepper divider runs the full height",
-      "text": "",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "345b036",
-      "date": "2026-10-01",
-      "title": "Search: shortcut inset equals top/bottom at every size; side panel uses md",
-      "text": "The shortcut hint's right inset is (field height − kbd height) / 2 for sm (24), md (28) and lg (32), so there's no extra space on the right. Docs list the three sizes; demos show each with a shortcut. The playground's side-panel filter moves from sm to md.",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "4227c3b",
-      "date": "2026-10-01",
-      "title": "Greys follow the weather (useWeatherTint, on by default)",
-      "text": "Greys lean a hair warm when it's warm outside and a hair cool when it's cold (neutral ~17 °C, max chroma 0.006 at 30 °C / 0 °C). Current temperature from Open-Meteo for the user's area (position rounded to ~10 km), cached 30 min; seasonal estimate offline. Registered custom properties so the tint cross-fades. Switchable in the theme panel and remembered per device; while on, it replaces the neutral hue/tint knobs. useSunTheme now exports readCoords.",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "59a12ba",
-      "date": "2026-10-01",
-      "title": "Progress bar: a real liquid tip; values in regular weight",
-      "text": "lib/liquid: viscoelastic SPH (double-density relaxation: pressure, near-pressure surface tension, viscosity), weightless, with wetting walls (ghost particles), capillary drag and sealed-tube suction.",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "5b25da8",
-      "date": "2026-10-01",
-      "title": "Neutrals are pure grey by default",
-      "text": "-vita-neutral-chroma defaults to 0 (was 0.007 at hue 286, which gave every grey, surface and the page background a violet cast). The tint stays available as a theme knob.",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "0e92161",
-      "date": "2026-10-01",
-      "title": "Radius formula outward; rounded, roomier table rows",
-      "text": "rounded-outer-*: a wrapper derives its radius from the controls it holds (control radius + padding). The data table toolbar strip now uses it: 8px controls + 4px padding = 12px.",
-      "breaking": true,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "4acee9b",
-      "date": "2026-10-01",
-      "title": "Glass by elevation: frosting increases with z-index",
-      "text": "glass now reads --vita-glass-blur / -fill / -sat; tiers glass-1..5 map to the layers (z-30 side panels → z-40 header → z-50 menus/lists/popovers → z-50 dialogs above the overlay → z-60 notifications/capsules), each more blurred and more translucent than the one below. Applied to LeftPanel, RightPanel, Header, Menu, Dropdown/Select lists, Popover, Modal, banners and capsules. Documented in Color.",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "96ecc2a",
-      "date": "2026-10-01",
-      "title": "Menu: submenu parent stays highlighted legibly while its submenu is open",
-      "text": "The open state used a light hover fill with the highlight's white text (illegible); it now keeps the brand highlight with white text, like the hovered row, so it's clear which row the submenu belongs to.",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "6b2d843",
-      "date": "2026-10-01",
-      "title": "Divider: lower contrast (5% light, 7% dark)",
-      "text": "",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "1d7231d",
-      "date": "2026-10-01",
-      "title": "Icon placeholder: solid white tile in light mode",
-      "text": "",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "801c261",
-      "date": "2026-10-01",
-      "title": "Composer grows to 2.5 lines, then scrolls",
-      "text": "Max height = 2.5 line-heights + top padding; the half line signals there's more to scroll to.",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "c1350c0",
-      "date": "2026-10-01",
-      "title": "Chat send flight homes on the bubble's live position (no landing blink)",
-      "text": "The thread can move mid-flight (thinking line appears, pinned scroll), so the copy no longer flies to the take-off position: each frame it interpolates toward the real bubble's CURRENT rect on the expressive curve (frame-driven), and the hand-off happens in the same frame at the same place. Colours still form in place first; the flight cleans up on unmount.",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "ebfc44a",
-      "date": "2026-10-01",
-      "title": "Docs: chat bubble example and making-word note",
-      "text": "",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "b7060c2",
-      "date": "2026-10-01",
-      "title": "Making words while agents work; seamless send hand-off",
-      "text": "187 one-word making words in the Creator's voice (registry/lib/making-words.ts, each traceable to the playful verb it was reworded from); ChatTyping and the MiniChat header rotate them every 2.4s with a letter reveal (useMakingWord). Documented in Brand & voice.",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "66bc00d",
-      "date": "2026-10-01",
-      "title": "Chat send flight: leaves fast, settles slow (expressive curve)",
-      "text": "The 'bubble forms' beat is shorter (18%) and the travel uses --vita-ease-expressive, so a sent message shoots off and glides into place.",
+      "text": "src/brand/vita-mark.tsx: the Vita mark , a thick ring, half a violet→blue arc (purple-400 → blue-500) and half soft grey, with three navy points (blue-900); turned 180°. Palette tokens only.",
       "breaking": false,
       "release": "v0.2.0"
     }
