@@ -25,6 +25,21 @@ import { nextMakingWord } from "@/registry/lib/making-words"
 
 export type ChatRole = "agent" | "user"
 
+/** A CSS cubic-bezier as a function (x → y), for animations driven frame by frame. */
+function cubicBezier(x1: number, y1: number, x2: number, y2: number) {
+  const bez = (t: number, a: number, b: number) => 3 * a * t * (1 - t) ** 2 + 3 * b * t * t * (1 - t) + t ** 3
+  return (x: number) => {
+    let lo = 0
+    let hi = 1
+    for (let i = 0; i < 24; i++) {
+      const mid = (lo + hi) / 2
+      if (bez(mid, x1, x2) < x) lo = mid
+      else hi = mid
+    }
+    return bez((lo + hi) / 2, y1, y2)
+  }
+}
+
 export interface ChatBubbleProps {
   role: ChatRole
   children: React.ReactNode
@@ -161,6 +176,8 @@ export function MiniChat({ agent, status = "Online", messages, typing, onSend, o
   const composerBox = React.useRef<HTMLDivElement>(null)
   const launch = React.useRef<{ rect: DOMRect; padL: number; padT: number; count: number } | null>(null)
   const [launchedId, setLaunchedId] = React.useState<string>()
+  const flightRef = React.useRef<(() => void) | null>(null)
+  React.useEffect(() => () => flightRef.current?.(), [])
   const send = (text: string) => {
     const ta = composerBox.current?.querySelector("textarea")
     if (ta && !window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) {
@@ -185,39 +202,58 @@ export function MiniChat({ agent, status = "Online", messages, typing, onSend, o
     const end = bubble.getBoundingClientRect()
     const bs = getComputedStyle(bubble)
     // Align the bubble's text with where the typed text sat, so the words don't jump.
-    const dx = l.rect.left + l.padL - (end.left + parseFloat(bs.paddingLeft))
-    const dy = l.rect.top + l.padT - (end.top + parseFloat(bs.paddingTop))
-    const from = `translate(${dx}px, ${dy}px)`
-    // Fly a detached copy in a fixed layer ABOVE everything (never clipped by the thread, never behind the composer):
-    // it lifts straight off the composer's text and lands on the real bubble, which stays hidden until it arrives.
+    // Where the flight starts: the bubble's box positioned so its text sits exactly on the typed text.
+    const fromX = l.rect.left + l.padL - parseFloat(bs.paddingLeft)
+    const fromY = l.rect.top + l.padT - parseFloat(bs.paddingTop)
+    // Fly a detached copy in a fixed layer ABOVE everything (never clipped by the thread, never behind the composer).
     const ghost = bubble.cloneNode(true) as HTMLElement
     Object.assign(ghost.style, {
       // exact fractional size (offsetWidth rounds down and re-wraps the text); a hair of slack keeps the same line breaks
-      position: "fixed", left: `${end.left}px`, top: `${end.top}px`, width: `${end.width + 0.5}px`, height: `${end.height}px`,
+      position: "fixed", left: "0px", top: "0px", width: `${end.width + 0.5}px`, height: `${end.height}px`,
       margin: "0", zIndex: "2147483000", pointerEvents: "none", animation: "none", transition: "none", boxSizing: "border-box",
+      transform: `translate(${fromX}px, ${fromY}px)`,
     })
     document.body.appendChild(ghost)
-    bubble.style.transition = "none" // the hand-off must be instant: no fade, no blink
+    bubble.style.transition = "none" // the hand-off must be instant: no fade
     bubble.style.opacity = "0"
-    // Travel on Corpus's expressive curve: it leaves fast and settles slowly — a message SENT, not drifted.
-    const leaveFast = getComputedStyle(document.documentElement).getPropertyValue("--corpus-ease-expressive").trim() || "cubic-bezier(0.22, 1, 0.36, 1)"
-    const flight = ghost.animate(
+    // 1) the bubble forms in place: fill fades in, text takes the bubble's colour (first 18% of the flight)
+    const FORM = 0.18
+    const DURATION = 560
+    ghost.animate(
       [
-        { transform: from, backgroundColor: "transparent", color: "var(--corpus-foreground)", offset: 0, easing: "linear" },
-        { transform: from, backgroundColor: bs.backgroundColor, color: bs.color, offset: 0.18, easing: leaveFast }, // 1) the bubble forms in place
-        { transform: "translate(0, 0)", backgroundColor: bs.backgroundColor, color: bs.color, offset: 1 }, // 2) it shoots off, then settles
+        { backgroundColor: "transparent", color: "var(--corpus-foreground)" },
+        { backgroundColor: bs.backgroundColor, color: bs.color },
       ],
-      { duration: 560 },
+      { duration: DURATION * FORM, fill: "forwards" },
     )
-    const land = () => {
-      bubble.style.opacity = ""
+    // 2) it shoots off and settles slowly (Corpus's expressive curve), HOMING on the real bubble's live position every
+    //    frame — the thread may scroll or reflow mid-flight (thinking appears, pinning), and the copy follows, so the
+    //    hand-off happens where the bubble actually is: no jump, no blink.
+    const ease = cubicBezier(0.22, 1, 0.36, 1)
+    const start = performance.now()
+    let raf = 0
+    const step = (now: number) => {
+      const p = Math.min(1, (now - start) / DURATION)
+      const t = p <= FORM ? 0 : ease((p - FORM) / (1 - FORM))
+      const to = bubble.getBoundingClientRect()
+      ghost.style.transform = `translate(${fromX + (to.left - fromX) * t}px, ${fromY + (to.top - fromY) * t}px)`
+      if (p < 1) {
+        raf = requestAnimationFrame(step)
+        return
+      }
+      bubble.style.opacity = "" // same frame, same place: the copy disappears exactly onto the bubble
       ghost.remove()
       requestAnimationFrame(() => {
         bubble.style.transition = ""
       })
     }
-    flight.onfinish = land
-    flight.oncancel = land
+    raf = requestAnimationFrame(step)
+    flightRef.current = () => {
+      cancelAnimationFrame(raf)
+      bubble.style.opacity = ""
+      bubble.style.transition = ""
+      ghost.remove()
+    }
   }, [messages])
   // The conversation stays pinned to the latest message: anything that grows the thread (new message, thinking,
   // a reply landing) keeps it at the bottom — unless the person scrolled up to read history.
