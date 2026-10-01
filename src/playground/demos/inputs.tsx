@@ -11,7 +11,7 @@ import { Search } from "@/registry/ui/search"
 import { Select, SelectOption, SelectGroup } from "@/registry/ui/select"
 import { Dropdown, Combobox, MultiSelect } from "@/registry/ui/dropdown"
 import { Option, OptionList } from "@/registry/ui/option"
-import { Bot, Plug, UserAvatar } from "@/registry/icons"
+import { Bot, Plug, UserAvatar, Flash, Image } from "@/registry/icons"
 import { DatePicker, DateRangePicker, Calendar, datePresets, rangePresets } from "@/registry/ui/date-picker"
 import { Tile } from "@/registry/ui/tile"
 import type { DateRange } from "react-day-picker"
@@ -145,10 +145,40 @@ export const inputDemos: DemoMap = {
       ),
     },
   ],
-  "components/option": [
+  "components/dropdown": [
+    {
+      title: "Dropdown · Combobox · Multiselect",
+      render: () => (
+        <Stack gap="lg" className="max-w-xs">
+          <Dropdown label="Model" items={[{ value: "fast", label: "Vita Fast", description: "Lowest latency and cost" }, { value: "large", label: "Vita Large" }, { value: "vision", label: "Vita Vision", description: "Reads images and PDFs" }]} defaultValue="large" />
+          <Combobox label="Country" items={countries} helperText="Type to filter" />
+          <MultiSelect label="Data residency" items={countries.slice(0, 8)} defaultValue={["france", "germany"]} />
+          <Dropdown label="Disabled" items={[]} disabled />
+          <Inline gap="2xs"><Text tone="muted">Sort by</Text><Dropdown type="inline" label="Sort by" hideLabel items={[{ value: "new", label: "Newest" }, { value: "old", label: "Oldest" }]} defaultValue="new" /></Inline>
+        </Stack>
+      ),
+    },
+    {
+      title: "Multiselect",
+      description: "Open it: what's chosen sits at the top, the rest follow. Click anywhere on a row to toggle it.",
+      render: () => <MultiSelect label="Data residency" items={countries.slice(0, 8)} defaultValue={["germany", "italy"]} className="max-w-xs" />,
+    },
+    {
+      title: "Empty, with helper text",
+      render: () => <MultiSelect label="Markets" items={countries.slice(0, 8)} helperText="Choose every market this agent answers for" className="max-w-xs" />,
+    },
+    {
+      title: "Invalid and disabled",
+      render: () => (
+        <Stack gap="md" className="max-w-xs">
+          <MultiSelect label="Teams" items={[{ value: "s", label: "Support" }, { value: "f", label: "Finance" }]} invalid invalidText="Choose at least one team" />
+          <MultiSelect label="Unavailable" items={[]} disabled />
+        </Stack>
+      ),
+    },
     {
       title: "States",
-      description: "Default · highlighted (pointer or keyboard) · selected · selected and highlighted · disabled. The tick slot is always reserved.",
+      description: "Default · highlighted (pointer or keyboard) · selected · selected and highlighted · disabled. One choice: the chosen option is a selected row — no tick.",
       render: () => (
         <OptionList>
           <Option label="Vita Large" />
@@ -180,14 +210,41 @@ export const inputDemos: DemoMap = {
       ),
     },
     {
+      title: "Right side: meta, meta + symbol, symbol",
+      description: "A small label on the right, a label followed by a symbol, or a symbol alone.",
+      render: () => (
+        <OptionList>
+          <Option label="Vita Large" meta="Default" selected />
+          <Option label="Vita Fast" meta="2× faster" trailingIcon={Flash} highlighted />
+          <Option label="Vita Vision" trailingIcon={Image} />
+          <Option label="Vita Voice" meta="Beta" />
+        </OptionList>
+      ),
+    },
+    {
+      title: "Live, with meta and symbols",
+      render: () => (
+        <Dropdown
+          label="Model"
+          defaultValue="l"
+          className="max-w-xs"
+          items={[
+            { value: "l", label: "Vita Large", meta: "Default" },
+            { value: "f", label: "Vita Fast", meta: "2× faster", trailingIcon: Flash },
+            { value: "v", label: "Vita Vision", trailingIcon: Image },
+          ]}
+        />
+      ),
+    },
+    {
       title: "Multiple selection",
       description: "Several ticks; the whole row toggles. Never a checkbox inside the row.",
       render: () => (
         <OptionList multiple>
-          <Option label="France" selected />
-          <Option label="Germany" selected highlighted />
-          <Option label="Italy" />
-          <Option label="Spain" />
+          <Option multiple label="France" selected />
+          <Option multiple label="Germany" selected highlighted />
+          <Option multiple label="Italy" />
+          <Option multiple label="Spain" />
         </OptionList>
       ),
     },
@@ -199,41 +256,7 @@ export const inputDemos: DemoMap = {
           <MultiSelect label="Countries" defaultValue={["fr", "de"]} items={[{ value: "fr", label: "France" }, { value: "de", label: "Germany" }, { value: "it", label: "Italy" }, { value: "es", label: "Spain" }]} />
         </Stack>
       ),
-    },
-  ],
-  "components/multiselect": [
-    {
-      title: "Multiselect",
-      description: "Open it: what's chosen sits at the top, the rest follow. Click anywhere on a row to toggle it.",
-      render: () => <MultiSelect label="Data residency" items={countries.slice(0, 8)} defaultValue={["germany", "italy"]} className="max-w-xs" />,
-    },
-    {
-      title: "Empty, with helper text",
-      render: () => <MultiSelect label="Markets" items={countries.slice(0, 8)} helperText="Choose every market this agent answers for" className="max-w-xs" />,
-    },
-    {
-      title: "Invalid and disabled",
-      render: () => (
-        <Stack gap="md" className="max-w-xs">
-          <MultiSelect label="Teams" items={[{ value: "s", label: "Support" }, { value: "f", label: "Finance" }]} invalid invalidText="Choose at least one team" />
-          <MultiSelect label="Unavailable" items={[]} disabled />
-        </Stack>
-      ),
-    },
-  ],
-  "components/dropdown": [
-    {
-      title: "Dropdown · Combobox · Multiselect",
-      render: () => (
-        <Stack gap="lg" className="max-w-xs">
-          <Dropdown label="Model" items={[{ value: "fast", label: "Vita Fast", description: "Lowest latency and cost" }, { value: "large", label: "Vita Large" }, { value: "vision", label: "Vita Vision", description: "Reads images and PDFs" }]} defaultValue="large" />
-          <Combobox label="Country" items={countries} helperText="Type to filter" />
-          <MultiSelect label="Data residency" items={countries.slice(0, 8)} defaultValue={["france", "germany"]} />
-          <Dropdown label="Disabled" items={[]} disabled />
-          <Inline gap="2xs"><Text tone="muted">Sort by</Text><Dropdown type="inline" label="Sort by" hideLabel items={[{ value: "new", label: "Newest" }, { value: "old", label: "Oldest" }]} defaultValue="new" /></Inline>
-        </Stack>
-      ),
-    },
+    }
   ],
   "components/date-picker": [
     {

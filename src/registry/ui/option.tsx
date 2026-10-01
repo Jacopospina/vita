@@ -21,22 +21,57 @@ export const listClasses = cn(
 /** The selection tick: left slot, primary; turns white with the text on the highlighted row. */
 export const tickClasses = "absolute left-2.5 text-primary group-data-[highlighted]/item:text-primary-foreground"
 
+/**
+ * Option rows. SINGLE choice (Dropdown, Combobox, Select): no tick — the chosen row is a selected row (soft selected
+ * fill + medium weight). MULTIPLE choice (Multiselect): a tick in a reserved left slot (pl-8), so labels never move.
+ */
 export const itemClasses = cn(
-  // The selection tick lives in a reserved left slot (pl-8), so labels never move when it draws in or out.
-  "group/item relative flex min-h-control-md w-full cursor-default items-center gap-2 rounded-inner-1.5 py-1 pr-2.5 pl-8 text-body outline-none select-none",
+  "group/item relative flex min-h-control-md w-full cursor-default items-center gap-2 rounded-inner-1.5 py-1 pr-2.5 pl-2.5 text-body outline-none select-none",
+  "aria-selected:bg-selected aria-selected:font-medium data-[state=checked]:bg-selected data-[state=checked]:font-medium",
   "data-[highlighted]:bg-primary data-[highlighted]:text-primary-foreground data-[highlighted]:[&_.text-muted-foreground]:text-primary-foreground/80 data-[highlighted]:[&_.text-helper]:text-primary-foreground/80 data-[disabled]:pointer-events-none data-[disabled]:text-disabled-foreground",
 )
 
-export interface OptionProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "children"> {
+/** What one option shows. `meta` = a small label on the right; `trailingIcon` = a symbol on the right (either or both). */
+export interface OptionContentProps {
   label: React.ReactNode
   description?: React.ReactNode
   icon?: IconType
+  meta?: React.ReactNode
+  trailingIcon?: IconType
   selected?: boolean
+  /** Multiple choice: a tick in the left slot instead of a selected row. */
+  multiple?: boolean
+}
+
+/** The inside of every option row — shared by Option and the Radix-based lists, so all dropdowns look the same. */
+/** Multiple-choice rows reserve the left tick slot. */
+export const multiItemClasses = "pl-8 aria-selected:bg-transparent aria-selected:font-normal"
+
+export function OptionContent({ label, description, icon, meta, trailingIcon, selected = false, multiple = false }: OptionContentProps) {
+  return (
+    <>
+      {multiple && <DrawnMark on={selected} className={tickClasses} />}
+      {icon && <Icon as={icon} className="text-muted-foreground" />}
+      <span className="flex min-w-0 flex-1 flex-col">
+        <span className="truncate">{label}</span>
+        {description && <span className="text-caption text-helper">{description}</span>}
+      </span>
+      {(meta || trailingIcon) && (
+        <span className="ml-2 flex shrink-0 items-center gap-1.5 text-muted-foreground">
+          {meta && <span className="text-caption">{meta}</span>}
+          {trailingIcon && <Icon as={trailingIcon} />}
+        </span>
+      )}
+    </>
+  )
+}
+
+export interface OptionProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "children">, OptionContentProps {
   highlighted?: boolean
   disabled?: boolean
 }
 
-export const Option = React.forwardRef<HTMLDivElement, OptionProps>(({ label, description, icon, selected = false, highlighted, disabled, className, ...props }, ref) => (
+export const Option = React.forwardRef<HTMLDivElement, OptionProps>(({ label, description, icon, meta, trailingIcon, selected = false, multiple = false, highlighted, disabled, className, ...props }, ref) => (
   <div
     ref={ref}
     role="option"
@@ -44,15 +79,10 @@ export const Option = React.forwardRef<HTMLDivElement, OptionProps>(({ label, de
     aria-disabled={disabled || undefined}
     data-disabled={disabled ? "" : undefined}
     data-highlighted={highlighted ? "" : undefined}
-    className={cn(itemClasses, className)}
+    className={cn(itemClasses, multiple && multiItemClasses, className)}
     {...props}
   >
-    <DrawnMark on={selected} className={tickClasses} />
-    {icon && <Icon as={icon} className="text-muted-foreground" />}
-    <span className="flex min-w-0 flex-col">
-      <span className="truncate">{label}</span>
-      {description && <span className="text-caption text-helper">{description}</span>}
-    </span>
+    <OptionContent {...{ label, description, icon, meta, trailingIcon, selected, multiple }} />
   </div>
 ))
 Option.displayName = "Option"

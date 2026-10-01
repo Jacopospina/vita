@@ -557,13 +557,13 @@
       "slug": "dropdown",
       "path": "docs/components/dropdown.md",
       "title": "Dropdown",
-      "summary": "Custom listbox for choosing values. Dropdown (one), Combobox (one, filterable) and MultiSelect (many).",
+      "summary": "Choosing values from a list — Dropdown (one), Combobox (one, filterable) and Multiselect (many), all built from the same Option rows.",
       "status": "stable",
       "import": "import { Dropdown, Combobox, MultiSelect } from \"@/components/corpus/dropdown\"",
       "use_when": [
         "Dropdown — one of 7–20 options, options need descriptions/icons, or consistent styling in app chrome",
         "Combobox — one of 20+ options where users know what to type (tool, country, team member)",
-        "MultiSelect — several of more than 6 options (markets, tags, assignees)",
+        "Multiselect — several of more than 6 options (markets, tags, assignees)",
         "Inline type — compact \"Sort by: Newest ▾\" in toolbars"
       ],
       "avoid_when": [
@@ -842,28 +842,6 @@
     },
     {
       "section": "components",
-      "slug": "multiselect",
-      "path": "docs/components/multiselect.md",
-      "title": "Multiselect",
-      "summary": "Choose several options from a list too long for checkboxes. Chosen options open at the top; the field shows a count and their names.",
-      "status": "stable",
-      "import": "import { MultiSelect } from \"@/components/corpus/dropdown\"",
-      "use_when": [
-        "Several choices from more than ~6 options (markets, tags, assignees)"
-      ],
-      "avoid_when": [
-        "Up to ~6 options → CheckboxGroup (all visible, one click each)",
-        "Exactly one choice → Dropdown or Combobox",
-        "Free-form values → TextInput with tags"
-      ],
-      "related": [
-        "dropdown",
-        "option",
-        "checkbox"
-      ]
-    },
-    {
-      "section": "components",
       "slug": "notification",
       "path": "docs/components/notification.md",
       "title": "Notification",
@@ -909,30 +887,6 @@
       "related": [
         "slider",
         "text-input"
-      ]
-    },
-    {
-      "section": "components",
-      "slug": "option",
-      "path": "docs/components/option.md",
-      "title": "Option",
-      "summary": "The list item inside every dropdown list — one row anatomy for Dropdown, Select, Combobox and MultiSelect.",
-      "status": "stable",
-      "import": "import { Option, OptionList } from \"@/components/corpus/option\"",
-      "use_when": [
-        "Rows of choices inside a dropdown list (one or several)",
-        "A static, in-page list of choices that should look like a dropdown list"
-      ],
-      "avoid_when": [
-        "Actions (verbs) → Menu items",
-        "Navigation rows → ListItem",
-        "A few always-visible choices → RadioGroup or CheckboxGroup"
-      ],
-      "related": [
-        "dropdown",
-        "select",
-        "list-item",
-        "menu"
       ]
     },
     {
@@ -1864,7 +1818,6 @@
       "decided_by": "Jacopo",
       "related": [
         "text-input",
-        "option",
         "dropdown"
       ]
     },

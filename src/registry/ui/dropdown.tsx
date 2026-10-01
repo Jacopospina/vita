@@ -1,19 +1,25 @@
 import * as React from "react"
 import { useFlip } from "@/registry/hooks/use-flip"
 import { Select as SelectPrimitive, Popover as PopoverPrimitive } from "radix-ui"
-import { ChevronDown, Close } from "@/registry/icons"
+import { ChevronDown, Close, type IconType } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { useControllable } from "@/registry/hooks/use-controllable"
 import { FieldShell, fieldClasses, fieldSize, type FieldBaseProps, type FieldSize } from "@/registry/ui/form"
-import { Icon, DrawnMark } from "@/registry/ui/icon"
+import { Icon } from "@/registry/ui/icon"
 import { AnimatedText, AnimatedNumber } from "@/registry/ui/animated"
-import { listClasses, itemClasses, tickClasses, Option } from "@/registry/ui/option"
+import { listClasses, itemClasses, Option, OptionContent } from "@/registry/ui/option"
 
 export interface DropdownItem {
   value: string
   label: string
   description?: string
   disabled?: boolean
+  /** A leading symbol. */
+  icon?: IconType
+  /** A small label on the right (e.g. "Default", a count). */
+  meta?: string
+  /** A symbol on the right. */
+  trailingIcon?: IconType
 }
 
 export { listClasses, itemClasses, tickClasses } from "@/registry/ui/option"
@@ -59,11 +65,7 @@ export function Dropdown({ items, value, defaultValue, onValueChange, placeholde
               <SelectPrimitive.Viewport className="p-0">
                 {items.map((it) => (
                   <SelectPrimitive.Item key={it.value} value={it.value} disabled={it.disabled} className={itemClasses}>
-                    <div className="flex flex-col">
-                      <SelectPrimitive.ItemText>{it.label}</SelectPrimitive.ItemText>
-                      {it.description && <span className="text-caption text-helper">{it.description}</span>}
-                    </div>
-                    <DrawnMark on={it.value === current} className={tickClasses} />
+                    <OptionContent {...it} label={<SelectPrimitive.ItemText>{it.label}</SelectPrimitive.ItemText>} selected={it.value === current} />
                   </SelectPrimitive.Item>
                 ))}
               </SelectPrimitive.Viewport>
@@ -175,8 +177,7 @@ export function Combobox({ items, value, defaultValue = "", onValueChange, size 
                     onClick={() => !it.disabled && commit(it)}
                     className={itemClasses}
                   >
-                    {it.label}
-                    <DrawnMark on={it.value === val} className={tickClasses} />
+                    <OptionContent {...it} selected={it.value === val} />
                   </li>
                 ))}
               </ul>
@@ -219,8 +220,12 @@ function MultiOptions({ items: all, selected, onToggle }: { items: DropdownItem[
         <Option
           key={it.value}
           ref={(el) => { rows.current[i] = el }}
+          multiple
           label={it.label}
           description={it.description}
+          icon={it.icon}
+          meta={it.meta}
+          trailingIcon={it.trailingIcon}
           selected={selected.includes(it.value)}
           highlighted={i === active}
           disabled={it.disabled}

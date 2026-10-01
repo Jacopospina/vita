@@ -4,8 +4,8 @@ import { ChevronDown } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { useControllable } from "@/registry/hooks/use-controllable"
 import { FieldShell, fieldClasses, fieldSize, type FieldBaseProps, type FieldSize } from "@/registry/ui/form"
-import { DrawnMark, Icon } from "@/registry/ui/icon"
-import { listClasses, itemClasses, tickClasses } from "@/registry/ui/option"
+import { Icon } from "@/registry/ui/icon"
+import { listClasses, itemClasses } from "@/registry/ui/option"
 import { AnimatedText } from "@/registry/ui/animated"
 
 /**
@@ -65,9 +65,8 @@ export function Select({ value, defaultValue, onValueChange, size = "md", disabl
 
 export function SelectOption({ value, disabled, children }: { value: string; disabled?: boolean; children: React.ReactNode }) {
   return (
-    <SelectPrimitive.Item value={value} disabled={disabled} className={cn(itemClasses, "[&[data-state=unchecked]_path]:[stroke-dashoffset:1]")}>
+    <SelectPrimitive.Item value={value} disabled={disabled} className={itemClasses}>
       <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
-      <DrawnMark on className={tickClasses} />
     </SelectPrimitive.Item>
   )
 }
