@@ -217,6 +217,7 @@
 
 /* Booting (until fonts/layout settle) and global appearance swaps: no per-element transitions. */
 @layer base {
+  :root:is([data-corpus-booting], [data-corpus-swapping]),
   :root:is([data-corpus-booting], [data-corpus-swapping]) :where(*, *::before, *::after) { transition: none !important; }
 }
 /* An appearance swap (theme, preset, tint) is ONE cross-fade of the page — the exception to the rule below. */

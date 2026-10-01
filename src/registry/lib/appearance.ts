@@ -29,6 +29,24 @@ export function swapAppearance(apply: () => void) {
   start.call(document, apply).finished.finally(() => root.removeAttribute(SWAP))
 }
 
+/**
+ * Dev only: Vite re-injects CSS on every hot update. Without this, each style edit makes every element transition
+ * from its momentarily-unstyled state — things "fly in from the top left" while you work.
+ */
+export function guardHotStyleUpdates(hot: { on: (event: string, cb: () => void) => void } | undefined) {
+  if (!hot) return
+  const root = document.documentElement
+  let t = 0
+  hot.on("vite:beforeUpdate", () => {
+    window.clearTimeout(t)
+    root.setAttribute(SWAP, "")
+  })
+  hot.on("vite:afterUpdate", () => {
+    window.clearTimeout(t)
+    t = window.setTimeout(() => root.removeAttribute(SWAP), 400)
+  })
+}
+
 export function bootAppearance() {
   const root = document.documentElement
   root.setAttribute(BOOT, "")

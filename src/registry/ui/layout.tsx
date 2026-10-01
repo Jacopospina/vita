@@ -34,13 +34,18 @@ const stackVariants = cva("flex", {
 
 export interface StackProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof stackVariants> {
   asChild?: boolean
+  /**
+   * Opt in to layout glide (FLIP): children glide when items are added, removed or reordered (lists, threads,
+   * stacks of chips). Off by default — static layout never moves; reflow (fonts, resizing) is instant.
+   */
+  flip?: boolean
 }
 
 /** Stack — vertical rhythm . The default container for anything laid out top-to-bottom. */
-export function Stack({ className, direction, gap, align, justify, wrap, asChild, ...props }: StackProps) {
+export function Stack({ className, direction, gap, align, justify, wrap, asChild, flip = false, ...props }: StackProps) {
   const Comp = asChild ? Slot.Root : "div"
   const ref = React.useRef<HTMLDivElement>(null)
-  useFlip(ref) // children glide when siblings appear, leave or resize — never jump
+  useFlip(ref, flip)
   return <Comp ref={ref} className={cn(stackVariants({ direction, gap, align, justify, wrap }), className)} {...props} />
 }
 

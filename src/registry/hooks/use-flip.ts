@@ -3,7 +3,8 @@ import * as React from "react"
 /**
  * useFlip — NOTHING JUMPS. When a container's children move because something appeared, disappeared
  * or changed size, each child glides from its old position to the new one (FLIP), productive motion.
- * Built into Stack/Inline, so every Corpus layout choreographs its own reflow.
+ * Opt-in: lists that gain, lose or reorder items (Stack `flip`, chat, toasts, chips, filtered options). Static layout
+ * never uses it — reflow from fonts or resizing must not move anything.
  */
 export function useFlip<T extends HTMLElement>(ref: React.RefObject<T | null>, enabled = true) {
   React.useEffect(() => {

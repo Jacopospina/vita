@@ -29,3 +29,9 @@ related: [motion, interaction]
 ## Revisit when
 
 - **A new global appearance knob appears** (route it through the cross-fade).
+
+## Revision — 2026-10-01
+
+- **Static layout never moves.** Layout glide (FLIP) is opt-in, only for lists whose items are added, removed or reordered. Stack and Inline no longer glide by default: font loading and reflow made headings and buttons drift.
+- **No transition before styles exist.** The page sets the boot flag before any CSS applies, and style hot-updates (development) apply with transitions off — otherwise every element animated from its unstyled, top-left default.
+
