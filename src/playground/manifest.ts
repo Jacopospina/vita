@@ -44,6 +44,7 @@ export const manifest: Record<Section, NavEntry[]> = {
     { slug: "form", title: "Form" },
     { slug: "icon-placeholder", title: "Icon placeholder" },
     { slug: "inline-loading", title: "Inline loading" },
+    { slug: "kpi", title: "KPI" },
     { slug: "link", title: "Link" },
     { slug: "list", title: "List" },
     { slug: "list-item", title: "List item" },

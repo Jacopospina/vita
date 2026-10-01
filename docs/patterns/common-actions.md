@@ -10,6 +10,10 @@ avoid_when:
 related: [button, menu-buttons, dialogs, notifications]
 ---
 
+## With KPIs
+
+- **Overview pages can lead with numbers.** `PageHeader kpis` puts 2–4 small [KPIs](#/components/kpi) on the right of the title; any page actions follow them.
+
 ## Placement hierarchy
 
 | Scope | Where | Max visible |

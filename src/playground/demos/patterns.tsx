@@ -10,6 +10,7 @@ import { StatusIndicator } from "@/registry/ui/status-indicator"
 import { ListItem, ListGroup, ListSection } from "@/registry/ui/list-item"
 import { IconPlaceholder } from "@/registry/ui/icon-placeholder"
 import { PageHeader } from "@/registry/ui/page-header"
+import { Kpi, KpiGroup } from "@/registry/ui/kpi"
 import { Truncate } from "@/registry/ui/truncate"
 import { LoginBlock } from "@/registry/blocks/login"
 import { DataTable } from "@/registry/ui/data-table"
@@ -167,7 +168,28 @@ function LoadingPatternDemo() {
 }
 
 export const patternDemos: DemoMap = {
-  "patterns/common-actions": [{ title: "Page-level actions", description: "1 primary · ≤2 secondary · rest in overflow · destructive last & confirmed.", render: () => <CommonActionsDemo /> }],
+  "patterns/common-actions": [
+    { title: "Page-level actions", description: "1 primary · ≤2 secondary · rest in overflow · destructive last & confirmed.", render: () => <CommonActionsDemo /> },
+    {
+      title: "With KPIs on the right",
+      description: "For overview pages: the few numbers that summarise the page sit on the right of the title.",
+      render: () => (
+        <PageHeader
+          breadcrumb={[{ label: "Agents", href: "#" }, { label: "Support triage" }]}
+          title="Support triage"
+          status={<StatusIndicator kind="success">Live</StatusIndicator>}
+          description="Answers and routes support tickets · Vita Large · Production"
+          kpis={
+            <KpiGroup bare>
+              <Kpi size="sm" label="Runs today" value={12840} delta={0.12} period="vs yesterday" />
+              <Kpi size="sm" label="Resolved" value={0.94} format={{ style: "percent" }} delta={0.02} />
+              <Kpi size="sm" label="Median reply" value={38} format={{ style: "unit", unit: "second", unitDisplay: "narrow" }} delta={-0.08} better="down" />
+            </KpiGroup>
+          }
+        />
+      ),
+    },
+  ],
   "patterns/dialogs": [
     {
       title: "Choosing the right dialog",

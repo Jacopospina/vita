@@ -2,6 +2,7 @@ import * as React from "react"
 import { Add, Document, Folder, TrashCan, Download, Edit, UserAvatar, Filter, CheckmarkFilled, ErrorFilled, InProgress, PauseFilled } from "@/registry/icons"
 import { Report } from "@/registry/pictograms"
 import type { DemoMap } from "./types"
+import { Kpi, KpiGroup } from "@/registry/ui/kpi"
 import { Stack, Inline, Grid, Column } from "@/registry/ui/layout"
 import { Text } from "@/registry/ui/text"
 import { Button, IconButton } from "@/registry/ui/button"
@@ -135,6 +136,42 @@ function TagDemo() {
 }
 
 export const dataDemos: DemoMap = {
+  "components/kpi": [
+    {
+      title: "A group of KPIs",
+      description: "Related numbers belong together: one surface, dividers between them.",
+      render: () => (
+        <KpiGroup>
+          <Kpi label="Runs today" value={12840} delta={0.12} period="vs yesterday" />
+          <Kpi label="Resolved" value={0.94} format={{ style: "percent" }} delta={0.02} period="vs last week" />
+          <Kpi label="Median reply" value={38} format={{ style: "unit", unit: "second", unitDisplay: "narrow" }} delta={-0.08} better="down" period="vs last week" />
+          <Kpi label="Cost" value={1240} format={{ style: "currency", currency: "EUR", maximumFractionDigits: 0 }} delta={0.15} better="down" period="vs last month" />
+        </KpiGroup>
+      ),
+    },
+    {
+      title: "Trend: good, bad, flat",
+      description: "Colour follows whether the change is good for the metric (better), the arrow its direction.",
+      render: () => (
+        <KpiGroup>
+          <Kpi label="Runs (better up)" value={12840} delta={0.12} />
+          <Kpi label="Errors (better down)" value={42} delta={0.3} better="down" />
+          <Kpi label="Hand-offs" value={118} delta={0} period="vs last week" />
+        </KpiGroup>
+      ),
+    },
+    {
+      title: "Sizes and states",
+      render: () => (
+        <Inline gap="2xl" align="start">
+          <Kpi size="sm" label="Small" value={12840} delta={0.12} />
+          <Kpi size="md" label="Medium" value={12840} delta={0.12} />
+          <Kpi size="lg" label="Large" value={12840} delta={0.12} helperText="Across all agents" />
+          <Kpi label="Loading" value={0} loading />
+        </Inline>
+      ),
+    },
+  ],
   "components/data-table": [
     { title: "Full data table", description: "Sortable columns, selection with batch actions, toolbar search, row overflow menu, pagination.", render: () => <TableDemo /> },
     { title: "Expandable rows, zebra, compact", render: () => <DataTable label="Compact" size="sm" zebra columns={agentColumns.slice(0, 4)} rows={agents.slice(0, 5)} renderExpanded={(r) => <Text tone="muted">{r.name} runs on {r.model} for the {r.team} team · {r.runs} runs in the last 24h.</Text>} /> },

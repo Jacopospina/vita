@@ -5,14 +5,17 @@ import { Breadcrumb, type BreadcrumbItem } from "@/registry/ui/breadcrumb"
 /**
  * PageHeader — the top of every page inside the shell: breadcrumb → title (+ status) → description → page actions → tabs.
  * Exactly one per page. Page actions: max 1 primary + 2 secondary; the rest go in an OverflowMenu.
+ * Variant: key numbers on the right (`kpis`) — for overview pages where a few figures ARE the summary.
  */
-export function PageHeader({ breadcrumb, title, status, description, actions, tabs, className }: {
+export function PageHeader({ breadcrumb, title, status, description, actions, kpis, tabs, className }: {
   breadcrumb?: BreadcrumbItem[]
   title: React.ReactNode
   /** A Tag or StatusIndicator next to the title. */
   status?: React.ReactNode
   description?: React.ReactNode
   actions?: React.ReactNode
+  /** Key numbers on the right of the title — a bare KpiGroup of 2–4 small Kpis. Sits before any actions. */
+  kpis?: React.ReactNode
   /** TabsList for page-level tabs; renders flush at the bottom. */
   tabs?: React.ReactNode
   className?: string
@@ -28,7 +31,12 @@ export function PageHeader({ breadcrumb, title, status, description, actions, ta
           </div>
           {description && <p className="max-w-prose text-body text-muted-foreground">{description}</p>}
         </div>
-        {actions && <div className="flex shrink-0 flex-wrap items-center gap-2">{actions}</div>}
+        {(kpis || actions) && (
+          <div className="flex shrink-0 flex-wrap items-center gap-6">
+            {kpis}
+            {actions && <div className="flex flex-wrap items-center gap-2">{actions}</div>}
+          </div>
+        )}
       </div>
       {tabs && <div>{tabs}</div>}
     </header>

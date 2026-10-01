@@ -106,6 +106,9 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/foun
 - [Inline loading](docs/components/inline-loading.md): The status of one operation, in place — "Saving…" → "Saved" → gone.
   - use: Auto-save and background save feedback next to the thing being saved; An action whose result appears in place (toggle persisted, row updated)
   - avoid: Blocking actions → Button loading; Page/region loads → Skeleton / Loading
+- [KPI](docs/components/kpi.md): A key number with its label and trend. Group related KPIs in one surface; put a page's headline numbers on the right of its header.
+  - use: Dashboards and overview pages — the handful of numbers that summarise a thing; A page header's summary (PageHeader kpis)
+  - avoid: Many numbers to compare row by row → DataTable; A state rather than a number → StatusIndicator; Progress toward a limit → ProgressBar
 - [Link](docs/components/link.md): Navigation to another page, section or resource. If it changes data, it's a Button.
   - use: Navigating to another page or anchor; Referencing a resource inside running text; Opening external documentation (external)
   - avoid: Performing an action (save, delete, open modal) → Button (ghost if it must look light); A whole card is the destination → ClickableTile; Going up a hierarchy → Breadcrumb
