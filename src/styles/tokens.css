@@ -91,9 +91,9 @@
   --corpus-success: oklch(0.73 0.194 var(--_hs));
   --corpus-success-subtle: color-mix(in oklab, var(--corpus-success) 14%, var(--corpus-background));
   --corpus-success-foreground: oklch(0.558 0.146 var(--_hs));
-  --corpus-warning: oklch(0.765 0.175 var(--_hw));
+  --corpus-warning: oklch(0.72 0.19 var(--_hw)); /* orange */
   --corpus-warning-subtle: color-mix(in oklab, var(--corpus-warning) 16%, var(--corpus-background));
-  --corpus-warning-foreground: oklch(0.552 0.192 calc(var(--_hw) - 27));
+  --corpus-warning-foreground: oklch(0.55 0.16 var(--_hw)); /* burnt orange text — never drifts to red */
   --corpus-error: oklch(0.654 0.232 var(--_he));
   --corpus-error-subtle: color-mix(in oklab, var(--corpus-error) 12%, var(--corpus-background));
   --corpus-error-foreground: oklch(0.553 0.225 var(--_he));
@@ -165,9 +165,9 @@
   --corpus-success: oklch(0.756 0.208 var(--_hs));
   --corpus-success-subtle: color-mix(in oklab, var(--corpus-success) 18%, var(--corpus-background));
   --corpus-success-foreground: oklch(0.782 0.218 var(--_hs));
-  --corpus-warning: oklch(0.782 0.171 calc(var(--_hw) + 4));
+  --corpus-warning: oklch(0.76 0.18 var(--_hw));
   --corpus-warning-subtle: color-mix(in oklab, var(--corpus-warning) 18%, var(--corpus-background));
-  --corpus-warning-foreground: oklch(0.82 0.152 calc(var(--_hw) + 10));
+  --corpus-warning-foreground: oklch(0.8 0.15 var(--_hw));
   --corpus-error: oklch(0.663 0.224 var(--_he));
   --corpus-error-subtle: color-mix(in oklab, var(--corpus-error) 18%, var(--corpus-background));
   --corpus-error-foreground: oklch(0.707 0.185 calc(var(--_he) - 3));

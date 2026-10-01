@@ -19,7 +19,7 @@ avoid_when:
 |---|---|---|
 | `--corpus-brand-hue` / `-chroma` | `257.4` / `0.218` | Primary, links, focus, selection, AI gradient |
 | `--corpus-neutral-hue` / `-chroma` | `286` / `0` | The tint of every grey, surface and border. Pure grey by default; raise the chroma to tint |
-| `--corpus-hue-success/warning/error/info` | `147 / 63 / 29 / 257` | Support colors (keep their meaning) |
+| `--corpus-hue-success/warning/error/info` | `147 / 50 / 29 / 257` | Support colors (keep their meaning) |
 | `--corpus-radius` | `0.5rem` | Every corner |
 | `--corpus-density` | `1.08` | Control heights and insets fully; padding, margin and gap at half strength (never below 90%) |
 | `--corpus-font-sans` / `-mono` / `-numeric` | Google Sans Flex / Code / Code | Typefaces |

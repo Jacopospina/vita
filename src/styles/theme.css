@@ -17,7 +17,7 @@
   --corpus-neutral-hue: 286;       /* tint of greys (use brand hue for harmony) */
   --corpus-neutral-chroma: 0;     /* 0 = pure grey (default), 0.02 = clearly tinted */
   --corpus-hue-success: 147.4;
-  --corpus-hue-warning: 62.6; 
+  --corpus-hue-warning: 50;   
   --corpus-hue-error: 28.7;
   --corpus-hue-info: 257.4;
 
