@@ -9,6 +9,7 @@ import { CorpusMark } from "@/brand/corpus-mark"
 import { Toaster } from "@/registry/ui/notification"
 import { Search } from "@/registry/ui/search"
 import { manifest, sectionTitles, type Section } from "./manifest"
+import { globalNav } from "./nav"
 import { DocPage } from "./doc-page"
 import { ThemePanel } from "./theme-panel"
 import { HomePage, GuidelinesPage } from "./home"
@@ -73,12 +74,10 @@ export function App() {
             </>
           }
         >
-          {/* The five doors into the docs. */}
-          <HeaderNavItem href="#/guidelines" active={section === "guidelines" || section === "getting-started"}>Start</HeaderNavItem>
-          <HeaderNavItem href="#/foundations/accessibility" active={section === "foundations"}>Foundations</HeaderNavItem>
-          <HeaderNavItem href="#/components/choosing-components" active={section === "components"}>Components</HeaderNavItem>
-          <HeaderNavItem href="#/patterns/agent-conversation" active={section === "patterns"}>Patterns</HeaderNavItem>
-          <HeaderNavItem href="#/decisions/how-we-decide" active={section === "decisions"}>Decisions</HeaderNavItem>
+          {/* The five doors into the docs — the same list as the showcase header. */}
+          {globalNav.map((n) => (
+            <HeaderNavItem key={n.path} href={`#/${n.path}`} active={(n.sections as readonly string[]).includes(section)}>{n.label}</HeaderNavItem>
+          ))}
         </Header>
         <ShellBody>
           {section !== "home" && (

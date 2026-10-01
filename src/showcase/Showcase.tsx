@@ -1,6 +1,7 @@
 import * as React from "react"
 import { Moon, Sun, LogoGithub, ArrowRight, Book, Bot, Security, UserMultiple } from "@/registry/icons"
 import { Shell, ShellMain, Header, HeaderNavItem, HeaderGlobalAction } from "@/registry/ui/ui-shell"
+import { globalNav } from "@/playground/nav"
 import { TooltipProvider } from "@/registry/ui/tooltip"
 import { useSunTheme } from "@/registry/hooks/use-sun-theme"
 import { useWeatherTint } from "@/registry/hooks/use-weather-tint"
@@ -77,10 +78,8 @@ export function Showcase() {
             </>
           }
         >
-          <HeaderNavItem href={DOCS}>Docs</HeaderNavItem>
-          <HeaderNavItem href={`${DOCS}components/choosing-components`}>Components</HeaderNavItem>
-          <HeaderNavItem href="#examples">Examples</HeaderNavItem>
-          <HeaderNavItem href="#themes">Themes</HeaderNavItem>
+          {/* The same global nav as the docs. */}
+          {globalNav.map((n) => <HeaderNavItem key={n.path} href={`${DOCS}${n.path}`}>{n.label}</HeaderNavItem>)}
         </Header>
         <ShellMain>
           <Container className="pt-16 pb-8">
