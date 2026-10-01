@@ -42,8 +42,8 @@ const buttonVariants = cva(
         sm: "h-control-sm px-2.5 text-body",
         md: "h-control-md px-3 text-body",
         lg: "h-control-lg px-4 text-body-lg",
-        /** Dialog and panel actions: the decisive, full-bleed buttons. */
-        xl: "h-12 px-5 text-body-lg",
+        /** Hero calls to action, and dialog/panel actions. A rounder squircle, in proportion to its height. */
+        xl: "h-12 px-5 text-body-lg [--corpus-squircle-r:var(--corpus-radius-lg)]",
       },
       fullWidth: { true: "w-full", false: "" },
     },

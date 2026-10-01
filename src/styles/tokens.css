@@ -58,9 +58,11 @@
   --corpus-primary-active: oklch(0.5 var(--_bc) var(--_bh));
   --corpus-primary-foreground: oklch(1 0 0);
   --corpus-primary-subtle: color-mix(in oklab, var(--corpus-primary) 12%, var(--corpus-background));
-  --corpus-secondary: oklch(0.923 var(--_nc) var(--_nh));
-  --corpus-secondary-hover: oklch(0.862 var(--_nc) var(--_nh));
-  --corpus-secondary-foreground: var(--corpus-foreground);
+  /* Secondary button: the primary colour at its lowest strength — a faint primary wash with primary text
+     (the link tone of the primary hue: the same blue, tuned to pass AA on the wash). */
+  --corpus-secondary: color-mix(in oklab, var(--corpus-primary) 10%, transparent);
+  --corpus-secondary-hover: color-mix(in oklab, var(--corpus-primary) 16%, transparent);
+  --corpus-secondary-foreground: var(--corpus-link);
   --corpus-link: oklch(0.522 calc(var(--_bc) * 0.81) var(--_bh));
   --corpus-link-visited: oklch(0.529 0.191 calc(var(--_bh) + 21));
   --corpus-focus: oklch(0.603 var(--_bc) var(--_bh));
@@ -137,8 +139,8 @@
   --corpus-primary-hover: oklch(0.685 calc(var(--_bc) * 0.78) calc(var(--_bh) - 4));
   --corpus-primary-active: oklch(0.56 var(--_bc) var(--_bh));
   --corpus-primary-subtle: color-mix(in oklab, var(--corpus-primary) 22%, var(--corpus-background));
-  --corpus-secondary: oklch(0.294 var(--_nc) var(--_nh));
-  --corpus-secondary-hover: oklch(0.349 var(--_nc) var(--_nh));
+  --corpus-secondary: color-mix(in oklab, var(--corpus-primary) 16%, transparent);
+  --corpus-secondary-hover: color-mix(in oklab, var(--corpus-primary) 22%, transparent);
   --corpus-link: oklch(0.669 calc(var(--_bc) * 0.83) calc(var(--_bh) - 6));
   --corpus-link-visited: oklch(0.6 0.19 calc(var(--_bh) + 21));
   --corpus-focus: oklch(0.624 calc(var(--_bc) * 0.945) calc(var(--_bh) - 2));
