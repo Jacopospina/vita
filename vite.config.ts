@@ -8,7 +8,7 @@ export default defineConfig({
   base: "./",
   resolve: { alias: { "@": path.resolve(import.meta.dirname, "src") } },
   server: { fs: { allow: ["."] } },
-  // Two pages: the documentation (index.html) and the showcase (showcase.html).
-  build: { rollupOptions: { input: { docs: path.resolve(import.meta.dirname, "index.html"), showcase: path.resolve(import.meta.dirname, "showcase.html") } } },
+  // Three pages: the documentation (index.html), the showcase (showcase.html) and what you can make (make.html).
+  build: { rollupOptions: { input: { docs: path.resolve(import.meta.dirname, "index.html"), showcase: path.resolve(import.meta.dirname, "showcase.html"), make: path.resolve(import.meta.dirname, "make.html") } } },
   test: { environment: "jsdom", globals: false, setupFiles: ["tests/setup.ts"], include: ["tests/**/*.test.{ts,tsx}"] },
 } as never)

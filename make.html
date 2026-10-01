@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Before ANY style applies: no transitions until Corpus has booted (otherwise every element animates from its
+         unstyled, top-left default to its styled place). Cleared by bootAppearance() once fonts and layout settle. -->
+    <script>document.documentElement.setAttribute("data-corpus-booting", "")</script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Corpus — see what you can make</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/showcase/make.tsx"></script>
+  </body>
+</html>

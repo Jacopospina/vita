@@ -30,5 +30,5 @@ related: [inline-loading, progress-bar, loading-pattern]
 2. **Skeletons first** when the layout is known — no orb over a blank card.
 3. **Delay 300ms** so fast responses never flash a loader.
 4. **Name the work.** `label="Searching the help center"` is announced to screen readers.
-5. **Sizes:** `sm` 16 inline and in buttons · `md` 24 · `lg` 48 regions · `xl` 96 empty regions · `2xl` 160 hero moments.
+5. **Sizes:** `sm` 16 inline and in buttons · `md` 24 · `lg` 48 regions · `xl` 96 empty regions · `2xl` 160 hero moments · `3xl` 280 the epicenter of a landing page (one per page).
 6. **Reduced motion** shows a still frame with a gentle pulse.

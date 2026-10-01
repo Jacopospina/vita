@@ -45,6 +45,7 @@ function pagePreview(section: Section, slug: string) {
 /** Where the two pages live: deployed, the showcase is the site root and the docs sit at /docs; in development they're the two HTML files. */
 export const HOME_URL = import.meta.env.PROD ? "/" : "./showcase.html"
 export const DOCS_URL = import.meta.env.PROD ? "/docs#/" : "./index.html#/"
+export const MAKE_URL = import.meta.env.PROD ? "/make" : "./make.html"
 
 /** The global nav — ONE list, used by the docs header and the showcase header so they never drift apart. */
 export const globalNav = [

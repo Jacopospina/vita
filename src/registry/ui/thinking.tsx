@@ -13,7 +13,7 @@ import { cn } from "@/registry/lib/utils"
  * Agentic modes wear the AI spectrum; basic follows the current text color.
  */
 export type ThinkingMode = "basic" | "retrieving" | "generating" | "searching"
-const sizes = { sm: 16, md: 24, lg: 48, xl: 96, "2xl": 160 } as const
+const sizes = { sm: 16, md: 24, lg: 48, xl: 96, "2xl": 160, "3xl": 280 } as const
 type P = { x: number; y: number; r: number }
 
 const TAU = Math.PI * 2
