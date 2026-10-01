@@ -57,6 +57,8 @@
   --corpus-link: oklch(0.522 calc(var(--_bc) * 0.81) var(--_bh));
   --corpus-link-visited: oklch(0.529 0.191 calc(var(--_bh) + 21));
   --corpus-focus: oklch(0.603 var(--_bc) var(--_bh));
+  /* focus ring colour — follows the element's meaning: components set it to error/warning when invalid/danger */
+  --corpus-ring: var(--corpus-focus);
   --corpus-focus-inset: oklch(1 0 0);
 
   /* state washes — work on any layer */

@@ -80,7 +80,7 @@ export function TreeView({ nodes, label, selected, onSelect, defaultExpanded = [
           aria-disabled={n.disabled || undefined}
           tabIndex={focused === n.id ? 0 : -1}
           onKeyDown={(e) => { e.stopPropagation(); onKeyDown(e, i) }}
-          className="outline-none focus-visible:[&>div]:outline-2 focus-visible:[&>div]:-outline-offset-2 focus-visible:[&>div]:outline-focus"
+          className="outline-none focus-visible:[&>div]:outline-1 focus-visible:[&>div]:-outline-offset-1 focus-visible:[&>div]:focus-halo-inset focus-visible:[&>div]:outline-(--corpus-ring)"
         >
           <div
             onClick={() => { setFocused(n.id); if (!n.disabled) onSelect?.(n.id); if (has) toggle(n.id) }}

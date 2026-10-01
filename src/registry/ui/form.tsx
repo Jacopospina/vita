@@ -14,11 +14,12 @@ export const fieldClasses = cn(
   "duration-moderate-02 ease-productive",
   // The floating label owns the empty state; placeholders (examples, formats) appear only while focused.
   "placeholder:text-transparent focus:placeholder:text-placeholder",
-  "hover:border-border-strong hover:bg-layer-1 hover:shadow-raised",
-  "focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-focus focus-visible:border-transparent focus-visible:animate-focus-in",
+  "hover:border-border-strong hover:bg-layer-1",
+  "focus-visible:outline-1 focus-visible:outline-offset-0 focus-visible:outline-(--corpus-ring) focus-visible:focus-halo focus-visible:border-transparent focus-visible:animate-focus-in",
   "disabled:cursor-not-allowed disabled:border-border-subtle disabled:bg-layer-1 disabled:text-disabled-foreground",
   "read-only:border-border-subtle read-only:bg-transparent read-only:hover:border-border-subtle",
-  "aria-invalid:border-error aria-invalid:focus-visible:outline-error",
+  // the ring follows the field's meaning: red when invalid, amber on a warning
+  "aria-invalid:border-error aria-invalid:[--corpus-ring:var(--corpus-error)] group-data-[invalid]/field:[--corpus-ring:var(--corpus-error)] group-data-[warn]/field:[--corpus-ring:var(--corpus-warning)]",
 )
 
 /* Fields are tall enough to hold their floating label inside. Values sit below the floated label. */
@@ -155,7 +156,7 @@ export function FieldShell({ id: idProp, label, hideLabel, helperText, invalid, 
   const showWarn = !invalid && warn && warnText
   const message = showInvalid ? invalidText : showWarn ? warnText : helperText
   return (
-    <div data-field="" data-ai-context="" data-invalid={invalid || undefined} data-filled={filled || undefined} className={cn("group/field flex min-w-0 flex-col", className)}>
+    <div data-field="" data-ai-context="" data-invalid={invalid || undefined} data-warn={(!invalid && warn) || undefined} data-filled={filled || undefined} className={cn("group/field flex min-w-0 flex-col", className)}>
       <div className="relative">
         {children({ id, "aria-describedby": message ? msgId : undefined, "aria-invalid": invalid || undefined, "aria-required": optional ? undefined : true })}
         <LabelPrimitive.Root

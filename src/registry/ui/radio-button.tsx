@@ -53,6 +53,7 @@ export function RadioButton({ label, helperText, className, id: idProp, ...props
           "duration-moderate-02 ease-productive focus-ring active:scale-90",
           "data-[state=checked]:border-primary data-[state=checked]:ease-expressive",
           "disabled:cursor-not-allowed disabled:border-disabled-foreground",
+          "aria-invalid:border-error aria-invalid:[--corpus-ring:var(--corpus-error)]",
         )}
         {...props}
       >

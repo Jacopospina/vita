@@ -87,7 +87,7 @@ export function DataTable<T extends { id: string }>({
   const cellPad = "px-3"
 
   return (
-    <section className={cn("flex w-full flex-col overflow-clip rounded-lg bg-layer-1", className)} aria-label={typeof title === "string" ? title : label}>
+    <section className={cn("flex w-full flex-col overflow-clip scope-xl bg-layer-1 [--corpus-inset-r:max(0px,calc(var(--corpus-scope-r)-var(--spacing)*2.5))]", className)} aria-label={typeof title === "string" ? title : label}>
       {(title || description) && (
         <header className={cn("flex flex-col gap-1 px-3 pt-3", toolbar || batchActions ? "pb-0" : "pb-3")}>
           {title && <h3 className="text-title-3">{title}</h3>}
@@ -101,7 +101,7 @@ export function DataTable<T extends { id: string }>({
         <div className="sticky top-0 z-20 bg-layer-1 p-2.5">
           <div
             className={cn(
-              "grid min-h-control-lg items-center squircle p-1 motion-expressive [grid-template-areas:'bar']",
+              "grid min-h-control-lg items-center rounded-inner-2.5 p-1 motion-expressive [grid-template-areas:'bar']",
               selecting ? "bg-primary text-primary-foreground shadow-raised" : "bg-layer-2",
             )}
           >
@@ -134,7 +134,7 @@ export function DataTable<T extends { id: string }>({
       <div className={cn("w-full overflow-x-auto px-2.5", stickyHeader && "max-h-120 overflow-y-auto")}>
         <table className="w-full border-separate border-spacing-0 text-body" aria-label={typeof title === "string" ? title : label}>
           <thead className={cn(stickyHeader && "sticky top-0 z-10")}>
-            <tr className={cn(rowH[size === "xl" ? "lg" : size], "[&>th]:bg-layer-3 [&>th:first-child]:rounded-l-md [&>th:last-child]:rounded-r-md")}>
+            <tr className={cn(rowH[size === "xl" ? "lg" : size], "[&>th]:bg-layer-3 [&>th:first-child]:rounded-l-(--corpus-inset-r) [&>th:last-child]:rounded-r-(--corpus-inset-r)")}>
               {renderExpanded && <th className="w-control-md"><span className="sr-only">Expand</span></th>}
               {selectable && (
                 <th className="w-control-md pl-3">
@@ -147,7 +147,7 @@ export function DataTable<T extends { id: string }>({
                 return (
                   <th key={c.key} scope="col" aria-sort={aria} className={cn("text-footnote font-semibold text-foreground", c.align === "end" ? "text-right" : "text-left", !c.sortable && cellPad)}>
                     {c.sortable ? (
-                      <button type="button" onClick={() => cycleSort(c.key)} className={cn("group flex h-full w-full items-center gap-2 px-3 py-1.5 hover:bg-layer-2 focus-ring-inset", c.align === "end" && "flex-row-reverse")}>
+                      <button type="button" onClick={() => cycleSort(c.key)} className={cn("group flex h-full w-full items-center gap-2 rounded-(--corpus-inset-r) px-3 py-1.5 duration-fast-02 hover:bg-layer-2 focus-ring-inset", c.align === "end" && "flex-row-reverse")}>
                         {c.header}
                         <SwapIcon as={active ? (sort!.dir === "asc" ? ArrowUp : ArrowDown) : ArrowsVertical} className={cn(!active && "opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100")} />
                       </button>
@@ -218,7 +218,8 @@ export function DataTable<T extends { id: string }>({
           </tbody>
         </table>
       </div>
-      {footer}
+      {/* Footer (pagination) sits in the same 10px inset as the toolbar strip and the table. */}
+      {footer && <div className="p-2.5">{footer}</div>}
     </section>
   )
 }

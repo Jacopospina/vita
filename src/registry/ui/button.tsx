@@ -32,9 +32,9 @@ const buttonVariants = cva(
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary-hover",
         tertiary: "border border-primary bg-transparent text-primary hover:bg-primary hover:text-primary-foreground",
         ghost: "bg-transparent text-foreground hover:bg-hover active:bg-active",
-        danger: "bg-error text-primary-foreground hover:bg-error-hover",
-        "danger-tertiary": "border border-error bg-transparent text-error-foreground hover:bg-error hover:text-primary-foreground",
-        "danger-ghost": "bg-transparent text-error-foreground hover:bg-error hover:text-primary-foreground",
+        danger: "bg-error text-primary-foreground hover:bg-error-hover [--corpus-ring:var(--corpus-error)]",
+        "danger-tertiary": "border border-error bg-transparent text-error-foreground hover:bg-error hover:text-primary-foreground [--corpus-ring:var(--corpus-error)]",
+        "danger-ghost": "bg-transparent text-error-foreground hover:bg-error hover:text-primary-foreground [--corpus-ring:var(--corpus-error)]",
       },
       /* Symmetric padding, always. With an icon, the icon sits on the far right. */
       size: {

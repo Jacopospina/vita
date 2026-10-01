@@ -23,26 +23,32 @@ export function Pagination({ page, pageSize, total, onPageChange, onPageSizeChan
   const start = total === 0 ? 0 : (page - 1) * pageSize + 1
   const end = Math.min(total, page * pageSize)
   const h = size === "sm" ? "h-control-sm" : size === "lg" ? "h-control-lg" : "h-control-md"
+  // A band like the table toolbar: rounded (concentric with the table card via --corpus-inset-r, else the field
+  // radius), small inset; pills inside follow the formula (band radius − 4px inset); dividers are inset too.
+  const pill = "rounded-[max(0px,calc(var(--corpus-inset-r,var(--corpus-radius-md))-var(--spacing)))] [corner-shape:round]"
+  const divider = <span aria-hidden className="my-1.5 w-px self-stretch bg-border-subtle" />
   return (
-    <div className={cn("flex w-full items-center justify-between gap-2 border-t border-border-subtle bg-layer-1 text-body text-muted-foreground", h, className)}>
-      <div className="flex h-full items-center gap-2 pl-4">
+    <div className={cn("flex w-full items-center justify-between gap-2 rounded-(--corpus-inset-r,var(--corpus-radius-md)) bg-layer-2 p-1 text-body text-muted-foreground", className)}>
+      <div className={cn("flex items-center gap-2 pl-3", h)}>
         {onPageSizeChange && (
-          <div className="flex h-full items-center gap-1 border-r border-border-subtle pr-2">
-            <span className="hidden sm:inline">{`${itemLabel[0].toUpperCase()}${itemLabel.slice(1)} per page`}</span>
-            <Dropdown type="inline" hideLabel label={`${itemLabel} per page`} value={String(pageSize)} onValueChange={(v) => onPageSizeChange(Number(v))} items={pageSizes.map((s) => ({ value: String(s), label: String(s) }))} />
-          </div>
+          <>
+            <div className="flex items-center gap-1">
+              <span className="hidden sm:inline">{`${itemLabel[0].toUpperCase()}${itemLabel.slice(1)} per page`}</span>
+              <Dropdown type="inline" hideLabel label={`${itemLabel} per page`} value={String(pageSize)} onValueChange={(v) => onPageSizeChange(Number(v))} items={pageSizes.map((s) => ({ value: String(s), label: String(s) }))} />
+            </div>
+            {divider}
+          </>
         )}
         <span className="inline-flex items-baseline gap-1" aria-live="polite"><AnimatedNumber value={start} />–<AnimatedNumber value={end} /> of <AnimatedNumber value={total} /> {itemLabel}</span>
       </div>
-      <div className="flex h-full items-center">
-        <div className="flex h-full items-center gap-1 border-l border-border-subtle px-2">
+      <div className={cn("flex items-center gap-1", h)}>
+        <div className="flex items-center gap-1 px-1">
           <Dropdown type="inline" hideLabel label="Page number" value={String(page)} onValueChange={(v) => onPageChange(Number(v))} items={Array.from({ length: pages }, (_, i) => ({ value: String(i + 1), label: String(i + 1) }))} />
           <span className="hidden sm:inline">of <AnimatedNumber value={pages} /> pages</span>
         </div>
-        <div className="flex h-full border-l border-border-subtle">
-          <IconButton icon={ChevronLeft} label="Previous page" size={size} disabled={page <= 1} onClick={() => onPageChange(page - 1)} className="h-full rounded-none" />
-          <IconButton icon={ChevronRight} label="Next page" size={size} disabled={page >= pages} onClick={() => onPageChange(page + 1)} className="h-full rounded-none border-l border-border-subtle" />
-        </div>
+        {divider}
+        <IconButton icon={ChevronLeft} label="Previous page" size={size} disabled={page <= 1} onClick={() => onPageChange(page - 1)} className={pill} />
+        <IconButton icon={ChevronRight} label="Next page" size={size} disabled={page >= pages} onClick={() => onPageChange(page + 1)} className={pill} />
       </div>
     </div>
   )

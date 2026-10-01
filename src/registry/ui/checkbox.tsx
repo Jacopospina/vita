@@ -29,7 +29,7 @@ export function Checkbox({ label, helperText, invalid, className, id: idProp, ..
         "data-[state=checked]:border-primary data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground",
         "data-[state=indeterminate]:border-primary data-[state=indeterminate]:bg-primary data-[state=indeterminate]:text-primary-foreground",
         "disabled:cursor-not-allowed disabled:border-disabled-foreground disabled:data-[state=checked]:bg-disabled-foreground",
-        "aria-invalid:border-error",
+        "aria-invalid:border-error aria-invalid:[--corpus-ring:var(--corpus-error)]",
         !label && className,
       )}
       {...props}

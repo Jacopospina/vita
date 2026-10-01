@@ -38,3 +38,8 @@ avoid_when:
 | Home / End | First / last item |
 
 > [!TIP] Before calling UI done: keyboard-only pass, 200% zoom, dark mode, reduced motion, and `corpus-audit` at 0.
+
+## Focus ring
+
+- **A crisp line and a flat halo.** Focus is a 1px outline plus a thick halo of solid colour (no blur), easing in. Never remove it; style it only through `focus-ring` / `focus-ring-inset`.
+- **It carries meaning.** The ring takes the element's semantic colour through `--corpus-ring`: blue by default, red on invalid fields and danger buttons, amber on warnings.

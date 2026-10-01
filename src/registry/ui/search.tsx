@@ -91,7 +91,7 @@ export const Search = React.forwardRef<HTMLInputElement, SearchProps>(
           className={cn(
             "h-full w-full min-w-0 rounded-md pr-control-md pl-control-md text-body text-foreground placeholder:text-placeholder",
             " duration-fast-02 ease-productive [&::-webkit-search-cancel-button]:appearance-none",
-            "focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-focus focus-visible:animate-focus-in",
+            "focus-visible:outline-1 focus-visible:outline-offset-0 focus-visible:outline-(--corpus-ring) focus-visible:focus-halo focus-visible:animate-focus-in",
             variant === "field" && "border border-border-field bg-field hover:border-border-strong",
             variant !== "field" && "border border-transparent bg-hover hover:bg-active focus:bg-field",
             collapsed && "pointer-events-none opacity-0",
