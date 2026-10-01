@@ -347,7 +347,10 @@
     content: "";
     position: absolute;
     inset: 0;
+    /* Same silhouette as its owner: radius AND corner shape (corner-shape isn't inherited by default — without it the
+       glare was a plain rounded rectangle peeking past the squircle on hover). */
     border-radius: inherit;
+    corner-shape: inherit;
     pointer-events: none;
     background: radial-gradient(circle at var(--corpus-glare-x, 50%) var(--corpus-glare-y, 50%), oklch(1 0 0 / 0.28), transparent 65%);
     opacity: var(--corpus-glare-o, 0);
