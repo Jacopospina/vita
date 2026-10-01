@@ -24,6 +24,7 @@ related: [progress-indicator, loading, file-uploader]
 ## Look
 
 - **A solid bar with a liquid tip.** The body is solid and springs to the value. A small volume of real simulated liquid rides its tip, with pressure, surface tension, viscosity and walls it wets.
+- **Soft liquid.** The liquid's edges are slightly blurred, so the tip feels soft rather than cut out; the body and the track stay crisp.
 - **Determinate:** when the body slows, the liquid's own inertia surges past, sloshes and settles back against it. Lowering the value draws it back, like a sealed tube.
 - **Indeterminate:** a slug of liquid is pushed round the track by a pulsing pump. It stretches, tears into drops and fuses again; there is no sliding bar.
 - **Glow:** only in dark mode. Light mode keeps a faint halo.

@@ -300,13 +300,31 @@ export function liquidCoverage(sim: LiquidSim, w: number, h: number, out?: Float
       }
     }
   }
-  // Iso-surface at about half the interior field (≈ 2.5 for a resting body), with a ~1px soft edge.
+  // Iso-surface at about half the interior field (≈ 2.5 for a resting body), with a ~1px antialiased edge.
+  for (let k = 0; k < field.length; k++) {
+    const v = (field[k] - 0.9) / 0.6
+    field[k] = v <= 0 ? 0 : v >= 1 ? 1 : v * v * (3 - 2 * v)
+  }
+  // Soft liquid: blur the liquid's edges sideways (two box passes ≈ a small gaussian, ~0.35 tube height) so the
+  // meniscus and drops feel soft rather than cut out. Sideways only — the tube's top and bottom stay crisp.
+  const r = Math.max(1, Math.round(h * 0.18))
+  const row = new Float32Array(w)
+  for (let pass = 0; pass < 2; pass++)
+    for (let py = 0; py < h; py++) {
+      const o = py * w
+      let acc = 0
+      for (let i = -r; i <= r; i++) acc += field[o + Math.min(w - 1, Math.max(0, i))]
+      for (let px = 0; px < w; px++) {
+        row[px] = acc / (2 * r + 1)
+        acc += field[o + Math.min(w - 1, px + r + 1)] - field[o + Math.max(0, px - r)]
+      }
+      field.set(row, o)
+    }
+  // The solid body stays crisp, composited over the softened liquid.
   for (let py = 0; py < h; py++)
     for (let px = 0; px < w; px++) {
       const k = py * w + px
-      const solid = Math.min(1, Math.max(0, body - px)) // the body, with an antialiased edge
-      const v = (field[k] - 0.9) / 0.6
-      field[k] = Math.max(solid, v <= 0 ? 0 : v >= 1 ? 1 : v * v * (3 - 2 * v))
+      field[k] = Math.max(field[k], Math.min(1, Math.max(0, body - px)))
     }
   return field
 }
