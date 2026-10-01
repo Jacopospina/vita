@@ -51,6 +51,7 @@
   --color-border: var(--corpus-border);
   --color-border-strong: var(--corpus-border-strong);
   --color-border-field: var(--corpus-border-field);
+  --color-divider: var(--corpus-divider);
   --color-primary: var(--corpus-primary);
   --color-primary-hover: var(--corpus-primary-hover);
   --color-primary-active: var(--corpus-primary-active);

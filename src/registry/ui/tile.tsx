@@ -119,7 +119,7 @@ export function TileSet({ columns = 2, tone = "default", className, children }: 
  * With `href` the cell is a link: soft hover wash inside the set and an arrow that nudges on hover.
  */
 export function TileSetItem({ className, href, children, ...props }: React.HTMLAttributes<HTMLElement> & { href?: string }) {
-  const cell = "flex flex-col gap-1.5 border-r border-b border-border-subtle p-3 text-foreground"
+  const cell = "flex flex-col gap-1.5 border-r border-b border-divider p-3 text-foreground"
   if (href) {
     return (
       <a href={href} className={cn(cell, "group relative pb-10 duration-moderate-01 hover:bg-hover focus-ring-inset", className)} {...props}>

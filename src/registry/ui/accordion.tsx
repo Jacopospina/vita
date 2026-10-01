@@ -18,7 +18,7 @@ export function AccordionItem({ className, ...props }: React.ComponentProps<type
     <AccordionPrimitive.Item
       className={cn(
         // inset separator above every section but the first; it fades when the row below is hovered
-        "group/item relative before:absolute before:inset-x-3 before:top-0 before:h-px before:bg-border before:duration-fast-02 first:before:opacity-0 has-[button:hover]:before:opacity-0",
+        "group/item relative before:absolute before:inset-x-3 before:top-0 before:h-px before:bg-divider before:duration-fast-02 first:before:opacity-0 has-[button:hover]:before:opacity-0",
         className,
       )}
       {...props}

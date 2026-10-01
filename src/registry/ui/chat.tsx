@@ -154,7 +154,7 @@ export function MiniChat({ agent, status = "Online", messages, typing, onSend, o
   }, [messages.length, typing])
   return (
     <section aria-label={`Chat with ${agent}`} className={cn("flex h-120 w-full max-w-sm flex-col overflow-hidden glass scope-xl", className)}>
-      <header className="flex items-center gap-3 border-b border-border-subtle px-3 py-2.5">
+      <header className="flex items-center gap-3 border-b border-divider px-3 py-2.5">
         <IconPlaceholder icon={Bot} tone="brand" size="md" />
         <div className="flex min-w-0 flex-1 flex-col">
           <span className="truncate text-body font-semibold">{agent}</span>
@@ -166,7 +166,7 @@ export function MiniChat({ agent, status = "Online", messages, typing, onSend, o
         <ChatThread messages={messages} typing={typing} />
         <div ref={end} />
       </div>
-      <div className="border-t border-border-subtle p-2">
+      <div className="border-t border-divider p-2">
         <Composer size="md" voice={false} attachments={false} placeholder={`Message ${agent}`} suggestions={messages.length ? undefined : suggestions} onSubmit={(v) => onSend(v)} />
       </div>
     </section>

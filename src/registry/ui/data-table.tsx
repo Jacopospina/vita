@@ -163,7 +163,7 @@ export function DataTable<T extends { id: string }>({
           <tbody>
             {loading &&
               Array.from({ length: 5 }).map((_, i) => (
-                <tr key={i} className={cn(rowH[size], "[&>td]:border-b [&>td]:border-border-subtle")}>
+                <tr key={i} className={cn(rowH[size], "[&>td]:border-b [&>td]:border-divider")}>
                   {Array.from({ length: colCount }).map((__, j) => (
                     <td key={j} className={cellPad}><Skeleton shape="text" className="w-3/4" /></td>
                   ))}
@@ -183,7 +183,7 @@ export function DataTable<T extends { id: string }>({
                       aria-selected={selectable ? isSel : undefined}
                       className={cn(
                         rowH[size],
-                        "animate-enter-fade duration-fast-02 hover:bg-hover [&>td]:border-b [&>td]:border-border-subtle",
+                        "animate-enter-fade duration-fast-02 hover:bg-hover [&>td]:border-b [&>td]:border-divider",
                         zebra && idx % 2 === 1 && "bg-layer-2",
                         isSel && "bg-selected hover:bg-selected",
                       )}
@@ -208,7 +208,7 @@ export function DataTable<T extends { id: string }>({
                       {rowActions && <td className="pr-2 text-right">{rowActions(row)}</td>}
                     </tr>
                     {renderExpanded && isOpen && (
-                      <tr className="bg-layer-2 [&>td]:border-b [&>td]:border-border-subtle">
+                      <tr className="bg-layer-2 [&>td]:border-b [&>td]:border-divider">
                         <td colSpan={colCount} className="animate-enter-fade px-3 py-3 pl-12">{renderExpanded(row)}</td>
                       </tr>
                     )}

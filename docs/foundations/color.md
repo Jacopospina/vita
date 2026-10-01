@@ -26,6 +26,7 @@ avoid_when:
 | Text | `foreground` · `muted-foreground` · `helper` · `placeholder` · `disabled-foreground` | Two text levels per region at most. |
 | Interactive | `primary` (+ `-hover` `-active` `-foreground` `-subtle`) · `secondary` · `link` · `focus` | Brand color means "you can act here". |
 | State | `hover` · `active` · `selected` · `selected-foreground` | Translucent washes that work on any layer. |
+| Divider | `divider` | The alt border for lines inside a container (row separators, inner dividers). Softer than `border`, translucent so it works on any layer; firmer in increased contrast. |
 | Icon surface | `icon-surface` | The IconPlaceholder tile. Translucent white: a light well in light mode, a faint lift in dark mode. |
 | Support | `success` · `warning` · `error` · `info` (+ `-subtle`, `-foreground`) | Status only. Text on tints uses `-foreground`. |
 | Lines | `border-subtle` · `border` · `border-field` · `border-strong` | Fields use `border-field` (≥ 3:1). |

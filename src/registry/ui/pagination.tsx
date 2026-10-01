@@ -26,7 +26,7 @@ export function Pagination({ page, pageSize, total, onPageChange, onPageSizeChan
   // A band like the table toolbar: rounded (concentric with the table card via --corpus-inset-r, else the field
   // radius), small inset; pills inside follow the formula (band radius − 4px inset); dividers are inset too.
   const pill = "rounded-[max(0px,calc(var(--corpus-inset-r,var(--corpus-radius-md))-var(--spacing)))] [corner-shape:round]"
-  const divider = <span aria-hidden className="my-1.5 w-px self-stretch bg-border-subtle" />
+  const divider = <span aria-hidden className="my-1.5 w-px self-stretch bg-divider" />
   return (
     <div className={cn("flex w-full items-center justify-between gap-2 rounded-(--corpus-inset-r,var(--corpus-radius-md)) bg-layer-2 p-1 text-body text-muted-foreground", className)}>
       <div className={cn("flex items-center gap-2 pl-3", h)}>

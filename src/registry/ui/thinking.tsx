@@ -253,7 +253,7 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
     }
   }, [mode, px, resolvedTone])
 
-  // Liquid + light: goo (soft threshold for antialiasing) → specular highlight → glow → drop shadow.
+  // Liquid + light: goo (soft threshold for antialiasing) → specular highlight → a pastel glow behind. No drop shadow.
   const blur = px <= 24 ? px * 0.05 : px * 0.04
   const lit = px >= 48
   return (
@@ -271,12 +271,12 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
                 </feSpecularLighting>
                 <feComposite in="spec" in2="goo" operator="in" result="specIn" />
                 <feComposite in="goo" in2="specIn" operator="arithmetic" k1="0" k2="1" k3="0.65" k4="0" result="shaded" />
-                <feGaussianBlur in="goo" stdDeviation={px * 0.09} result="glowBlur" />
-                <feColorMatrix in="glowBlur" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.45 0" result="glow" />
-                <feDropShadow in="shaded" dx="0" dy={px * 0.035} stdDeviation={px * 0.04} floodColor="#000" floodOpacity="0.35" result="grounded" />
+                {/* Glow behind: emitted, reflected light — wide, washed ~60% toward white (super-light pastel), low alpha. */}
+                <feGaussianBlur in="goo" stdDeviation={px * 0.16} result="glowBlur" />
+                <feColorMatrix in="glowBlur" values="0.4 0 0 0 0.6  0 0.4 0 0 0.6  0 0 0.4 0 0.6  0 0 0 0.32 0" result="glow" />
                 <feMerge>
                   <feMergeNode in="glow" />
-                  <feMergeNode in="grounded" />
+                  <feMergeNode in="shaded" />
                 </feMerge>
               </>
             ) : null}

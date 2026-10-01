@@ -56,7 +56,7 @@ export function ListItem({ icon, tone = "neutral", media, title, subtitle, value
   const row = cn(
     "group/row relative flex w-full min-h-control-xl items-center gap-2.5 rounded-inner-1 py-1.5 pr-2.5 pl-1.5 text-left text-foreground",
     // inset separator between rows; it fades when either neighbour is hovered/selected
-    "before:absolute before:right-2.5 before:left-1.5 before:top-0 before:h-px before:bg-border before:duration-fast-02 group-first/item:before:opacity-0",
+    "before:absolute before:right-2.5 before:left-1.5 before:top-0 before:h-px before:bg-divider before:duration-fast-02 group-first/item:before:opacity-0",
     navigable && "duration-fast-02 hover:bg-hover hover:before:opacity-0 active:bg-active focus-ring-inset",
     selected && "bg-selected text-selected-foreground before:opacity-0",
     disabled && "pointer-events-none text-disabled-foreground",
@@ -77,7 +77,9 @@ export function ListItem({ icon, tone = "neutral", media, title, subtitle, value
 /** ListGroup — rows that belong together, joined into one card. A single row on its own is a group of one. */
 export function ListGroup({ className, children, ...props }: React.HTMLAttributes<HTMLUListElement>) {
   return (
-    <ul role="list" className={cn("flex flex-col scope-lg squircle border border-border-subtle bg-layer-2 p-1 [--corpus-squircle-r:var(--corpus-radius-lg)]", className)} {...props}>
+    // Concentric: the group's radius (lg) minus its 4px padding is the rows' radius (rounded-inner-1) — plain rounding on
+    // both, so the curves stay parallel (a squircle outside would read rounder than the formula).
+    <ul role="list" className={cn("flex flex-col scope-lg border border-border-subtle bg-layer-2 p-1", className)} {...props}>
       {children}
     </ul>
   )

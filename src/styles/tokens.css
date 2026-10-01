@@ -44,6 +44,8 @@
   --corpus-border: oklch(0.827 var(--_nc) var(--_nh));
   --corpus-border-strong: oklch(0.648 var(--_nc) var(--_nh));
   --corpus-border-field: oklch(0.648 var(--_nc) var(--_nh)); /* ≥3:1 on white */
+  /* divider: the alt border for lines INSIDE a container (row separators). Translucent, so it stays soft on any layer. */
+  --corpus-divider: color-mix(in oklab, var(--corpus-foreground) 9%, transparent);
 
   /* interactive */
   --corpus-primary: oklch(0.603 var(--_bc) var(--_bh));
@@ -123,6 +125,7 @@
   --corpus-border: oklch(0.341 var(--_nc) var(--_nh));
   --corpus-border-strong: oklch(0.648 var(--_nc) var(--_nh));
   --corpus-border-field: oklch(0.6 var(--_nc) var(--_nh));
+  --corpus-divider: color-mix(in oklab, var(--corpus-foreground) 11%, transparent);
 
   --corpus-primary: oklch(0.624 calc(var(--_bc) * 0.945) calc(var(--_bh) - 2));
   --corpus-primary-hover: oklch(0.685 calc(var(--_bc) * 0.78) calc(var(--_bh) - 4));
@@ -173,6 +176,8 @@
     --corpus-helper: oklch(0.45 var(--_nc) var(--_nh));
     --corpus-border: oklch(0.648 var(--_nc) var(--_nh));
     --corpus-border-field: oklch(0.45 var(--_nc) var(--_nh));
+  --corpus-divider: color-mix(in oklab, var(--corpus-foreground) 28%, transparent);
+    --corpus-divider: color-mix(in oklab, var(--corpus-foreground) 28%, transparent);
   }
 }
 :root[data-corpus-contrast="high"] {
