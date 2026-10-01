@@ -44,6 +44,36 @@ avoid_when:
 - **No em dashes.** Use a comma, colon, full stop or parentheses. The build fails on one.
 - **AI copy is honest.** Say what the AI did and how sure it is; never "I think".
 
+## Vita's own voice
+
+When Vita speaks for itself (these docs, the showcase, onboarding, release notes), it speaks as the Creator. Inside products built with Vita, the persona's plain voice always wins.
+
+- **Speak to the maker.** "You make", "you shape": people are creators, never operators of a tool.
+- **Verbs of making.** Make, shape, craft, compose, bring to life, release.
+- **Possibility first.** Lead with what they'll create, then how; credit them, not Vita.
+- **One slogan per surface.** The signature is "Give your ideas life."
+- **While agents work, a making word.** Sketching, Glazing, Weaving and more, one at a time; never "Loading".
+
+## Write for the scan
+
+People scan before they read: across the top, a shorter line below, then down the left edge. Write so the scan alone carries the meaning.
+
+- **Most important first.** The first two paragraphs, and the first words of every heading, carry the point; people may read nothing else.
+- **Headings start with the information.** "Billing errors" beats "About the errors you may see in billing".
+- **Group what belongs together.** Sections, cards and tables give the eye places to stop, so nothing hides in a wall of text.
+- **Emphasise the words that matter** (semibold, the emphasis weight), a few per section, never whole sentences.
+- **Links say where they go.** "Read the billing guide", never "click here".
+- **Lists over paragraphs.** Steps are numbered; options and rules are bulleted.
+
+## Concise, scannable, objective
+
+Research on reading on screens found that text written this way made people far faster and more accurate, and they remembered more of it.
+
+- **Concise.** Cut about half the words. Shorter pages read as more complete, not less.
+- **Scannable.** Short paragraphs (two sentences at most), headings, lists, emphasised keywords and tables.
+- **Objective.** No promotional language, no buzzwords, no claims without proof.
+- **Readable lines.** Body text stays around 45 to 75 characters a line; Vita's prose width does this for you.
+
 ## Length budgets
 
 | Element | Max |

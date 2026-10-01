@@ -16,7 +16,6 @@ export const manifest: Record<Section, NavEntry[]> = {
   // Who Vita is: the idea, the voice and the principles. About Vita (the overview) opens the section.
   identity: [
     { slug: "about", title: "Animus, anima, vita" },
-    { slug: "brand", title: "Brand & voice" },
     { slug: "principles", title: "Design principles" },
   ],
   foundations: [

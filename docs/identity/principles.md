@@ -42,6 +42,7 @@ status: stable
 - **One decision per view.** At most one primary action; everything else steps down or waits behind a disclosure.
 - **Belonging has no gaps.** Things that belong together touch (button sets, action bars, segmented controls), so they read as one object, not many.
 - **Real words.** Labels come from the product's taxonomy, never internal jargon, never "Submit".
+- **Write for the scan.** People skim the top and the left edge: the point comes first, headings start with the information, paragraphs stop at two sentences, and lines stay readable (about 45 to 75 characters).
 - **Neutral by default.** About 90% of a screen is greys; colour is kept for meaning.
 
 ## 3. Recognition over recall

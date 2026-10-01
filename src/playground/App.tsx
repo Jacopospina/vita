@@ -25,7 +25,8 @@ const moved: Record<string, string> = {
   "components/loading": "components/thinking",
   "getting-started/interaction": "identity/principles",
   "getting-started/about": "identity/about",
-  "getting-started/brand": "identity/brand",
+  "getting-started/brand": "foundations/content",
+  "identity/brand": "foundations/content",
   "getting-started/principles": "identity/principles",
 }
 

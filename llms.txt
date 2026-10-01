@@ -15,9 +15,6 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/iden
 ## Identity
 
 - [Animus, anima, vita](docs/identity/about.md): Every product has a mind and a soul. Vita is where they come alive. The AI-agent-first design system, born for humans and machines making together.
-- [Brand & voice](docs/identity/brand.md): The AI-agent-first design system, born for humans and machines making together. Its voice is the Creator's, and every word aims to awaken the maker in the reader.
-  - use: Writing in Vita's own voice: docs, the showcase, onboarding, release notes, first-use moments; Naming a feature, writing a headline or choosing a slogan
-  - avoid: Product UI microcopy (buttons, labels, errors) → Content, personas & taxonomy; plain and direct wins inside products
 - [Design principles](docs/identity/principles.md): Four principles every Vita screen is built on, then the timeless principles of interface design they stand on. When two conflict, the lower number wins.
 
 ## Foundations

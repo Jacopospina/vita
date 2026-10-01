@@ -76,26 +76,6 @@
     },
     {
       "section": "identity",
-      "slug": "brand",
-      "path": "docs/identity/brand.md",
-      "title": "Brand & voice",
-      "summary": "The AI-agent-first design system, born for humans and machines making together. Its voice is the Creator's, and every word aims to awaken the maker in the reader.",
-      "status": "stable",
-      "use_when": [
-        "Writing in Vita's own voice: docs, the showcase, onboarding, release notes, first-use moments",
-        "Naming a feature, writing a headline or choosing a slogan"
-      ],
-      "avoid_when": [
-        "Product UI microcopy (buttons, labels, errors) → Content, personas & taxonomy; plain and direct wins inside products"
-      ],
-      "related": [
-        "content",
-        "about",
-        "principles"
-      ]
-    },
-    {
-      "section": "identity",
       "slug": "principles",
       "path": "docs/identity/principles.md",
       "title": "Design principles",
@@ -2128,7 +2108,7 @@
       "decided_by": "Jacopo",
       "related": [
         "about",
-        "brand",
+        "content",
         "how-we-decide"
       ]
     },

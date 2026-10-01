@@ -5,7 +5,7 @@ import { Stack, Inline, Grid, Column } from "@/registry/ui/layout"
 import { Text, Heading } from "@/registry/ui/text"
 import { Icon } from "@/registry/ui/icon"
 import { Button } from "@/registry/ui/button"
-import { Tile, TileSet, TileSetItem } from "@/registry/ui/tile"
+import { Tile } from "@/registry/ui/tile"
 import { Tag } from "@/registry/ui/tag"
 import { TextInput } from "@/registry/ui/text-input"
 import { StructuredList } from "@/registry/ui/structured-list"
@@ -222,54 +222,6 @@ function MaterialDemo() {
 
 export const foundationDemos: DemoMap = {
   "foundations/material": [{ title: "Five tiers, more frosted the higher they float", render: () => <MaterialDemo /> }],
-  "identity/brand": [
-    {
-      title: "Give your ideas life",
-      description: "Vita is the Creator. Every word it says aims to awaken the maker in the person reading it.",
-      render: () => (
-        <Stack gap="xl">
-          <Stack gap="xs" align="center" className="py-6 text-center">
-            <Text variant="caption" tone="muted" weight="semibold">THE AI-AGENT-FIRST DESIGN SYSTEM</Text>
-            <Text variant="large-title">Give your ideas life.</Text>
-            <Text tone="muted">Born for humans and machines making together. Documented so agents design like designers.</Text>
-          </Stack>
-          <Stack gap="sm">
-            <Text variant="headline">The awakening arc</Text>
-            <TileSet columns={2}>
-              {[
-                ["1 · Spark", "What do you want to bring to life?"],
-                ["2 · Shape", "Shape it freely. Vita keeps every detail consistent."],
-                ["3 · Release", "It's live."],
-                ["4 · Recognise", "You made that."],
-              ].map(([step, line]) => (
-                <TileSetItem key={step}>
-                  <Stack gap="2xs"><Text variant="footnote" tone="muted" weight="medium">{step}</Text><Text variant="title-3">"{line}"</Text></Stack>
-                </TileSetItem>
-              ))}
-            </TileSet>
-          </Stack>
-          <Stack gap="sm">
-            <Text variant="headline">Personality</Text>
-            <TileSet columns={3}>
-              {[["Imaginative", "Whimsical"], ["Crafted", "Precious"], ["Visionary", "Vague"], ["Generous", "Preachy"], ["Confident", "Arrogant"], ["Expressive", "Loud"]].map(([are, not]) => (
-                <TileSetItem key={are}>
-                  <Stack gap="none"><Text weight="semibold">{are}</Text><Text variant="footnote" tone="muted">not {not.toLowerCase()}</Text></Stack>
-                </TileSetItem>
-              ))}
-            </TileSet>
-          </Stack>
-          <Stack gap="sm">
-            <Text variant="headline">Supporting slogans</Text>
-            <Inline gap="sm" wrap>
-              {["Make what only you can make.", "Mind, soul, life.", "Built to be built with.", "Shape what's next."].map((x) => (
-                <Tile key={x} className="px-4 py-3"><Text weight="medium">{x}</Text></Tile>
-              ))}
-            </Inline>
-          </Stack>
-        </Stack>
-      ),
-    },
-  ],
   "foundations/theming": [
     {
       title: "Live theming",

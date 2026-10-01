@@ -50,7 +50,7 @@ Return a table (`Current | Proposed | Rule`), then the patched code. Run the aud
 
 ## Vita's own voice (brand)
 
-When writing **as Vita**, docs, the showcase, onboarding into Vita, release notes, use the Creator voice in `docs/identity/brand.md`:
+When writing **as Vita**, docs, the showcase, onboarding into Vita, release notes, use the Creator voice in `docs/foundations/content.md` ("Vita's own voice"):
 - Speak to the maker ("you make", "you shape"), with verbs of making.
 - Lead with what they'll create; credit them, not Vita.
 - One slogan per surface; the signature is "Give your ideas life."

@@ -4,7 +4,7 @@ summary: Vita means life. It is the third of a triad with Animus (the logic) and
 status: accepted
 date: 2026-10-01
 decided_by: Jacopo
-related: [about, brand, how-we-decide]
+related: [about, content, how-we-decide]
 ---
 
 ## Decision

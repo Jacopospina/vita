@@ -1,5 +1,5 @@
 /**
- * Making words, what an agent says while it works: ONE word each, in the Creator's voice (see docs/identity/brand.md).
+ * Making words, what an agent says while it works: ONE word each, in the Creator's voice (see "Vita's own voice" in docs/foundations/content.md).
  * Each entry keeps the original playful verb it was reworded from, so the mapping stays traceable.
  * Shown by ChatTyping / MiniChat while an agent thinks; rotate them, never show "Loading".
  */
