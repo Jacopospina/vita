@@ -79,7 +79,7 @@ export function Slider({ label, hideLabel, helperText, formatValue = String, sho
             aria-label={single ? undefined : i === 0 ? "Minimum" : "Maximum"}
             aria-valuetext={formatValue(v)}
             className={cn(
-              "relative block rounded-full border-2 border-primary bg-background shadow-raised duration-moderate-01 ease-productive focus-ring",
+              "relative tap block rounded-full border-2 border-primary bg-background shadow-raised duration-moderate-01 ease-productive focus-ring",
               single ? "flex h-6 items-center justify-center text-caption text-foreground" : "size-4 hover:scale-110 active:scale-110",
               single && (dragging ? "min-w-6 px-0" : "min-w-8 px-1.5"), // dragging: a perfect 24px circle
             )}

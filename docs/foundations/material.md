@@ -33,6 +33,7 @@ avoid_when:
 - **A whisper of lift.** In light mode the glass brightens its backdrop slightly (`glass-lift`, 1.03); more would bleach the page to flat white.
 - **Nothing filters a glass surface's ancestors.** A filter or opacity on a parent cuts the glass off from what's behind it, so entrance animations never hold a filter after they finish.
 - **Reduced transparency.** People who ask for it get the solid `elevated` surface, with no blur.
+- **Lighter on touch.** A backdrop blur is redrawn under every scrolled frame and costs the square of its radius. On touch devices every tier blurs at six tenths of its radius (6 · 8 · 11 · 14 · 18px); the order still rises with the layer and the scroll stays smooth.
 
 ## Never
 

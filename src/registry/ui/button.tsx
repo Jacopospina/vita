@@ -19,7 +19,8 @@ import { animateChildren } from "@/registry/ui/animated"
  */
 const buttonVariants = cva(
   [
-    "tilt relative inline-flex shrink-0 select-none items-center justify-center gap-2 whitespace-nowrap font-medium will-change-transform",
+    // No will-change: the tilt's perspective already gives a hovered button its own layer, and on touch there is no tilt.
+    "tilt relative inline-flex shrink-0 select-none items-center justify-center gap-2 whitespace-nowrap font-medium",
     // 240ms on the expressive curve: the hover lift and tilt ease in and out (110ms read as a snap).
     "squircle duration-moderate-02 ease-expressive",
     "focus-ring active:scale-98 motion-reduce:active:scale-100",

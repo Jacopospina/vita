@@ -11,6 +11,7 @@
 @import "./motion.css";
 
 @custom-variant dark (&:where(.dark, .dark *, [data-theme="dark"], [data-theme="dark"] *));
+/* Touch: use the built-in `pointer-coarse:` variant for what hover would otherwise reveal (a × , a sort arrow). */
 
 @theme inline {
   /* wipe Tailwind defaults */
@@ -142,7 +143,7 @@
 
   /* DENSITY drives the whole spacing scale: every p-*, m-*, gap-*, space-* (and spacing-based sizes) */
   /* spacing follows density at half strength, never below 90% — small gaps (4·8·16) stay comfortable */
-  --spacing: calc(0.25rem * max(0.9, 1 + (var(--corpus-density) - 1) * 0.5));
+  --spacing: calc(0.25rem * max(0.9, 1 + (var(--_d) - 1) * 0.5));
 
   /* density-driven sizes: h-control-md, px-inset, … */
   --spacing-control-xs: var(--corpus-control-xs);
@@ -356,6 +357,32 @@
     opacity: var(--corpus-glare-o, 0);
     mix-blend-mode: soft-light;
   }
+  /* Nothing hovers on a touch screen: no perspective (a 3D transform gives every button its own GPU layer — a page of
+     buttons is a page of textures on a phone) and no glare box. The press (scale) still plays. */
+  @media (hover: none) {
+    transform: none;
+    &::after { content: none; }
+  }
+}
+
+/*
+ * TAP — a 44px hit area around a small STANDALONE control, only under a finger (pointer: coarse). The element must be
+ * positioned (`relative` or `absolute`). The visual stays the same size; the invisible target grows to the finger.
+ * Standalone means no interactive neighbour within ~12px on either axis: checkboxes, radios, switches, slider knobs,
+ * a lone × or ⓘ. Never on rows, tabs, button sets or table cells — their targets would overlap their neighbours' boxes.
+ */
+@utility tap {
+  @media (pointer: coarse) {
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: max(100%, 44px);
+      height: max(100%, 44px);
+      translate: -50% -50%;
+    }
+  }
 }
 
 /* DRAW — icons trace their outline, then fill (enter); fill fades, outline un-traces (exit). Paths get pathLength=1 from <Icon draw>. */
@@ -382,6 +409,8 @@
     linear-gradient(var(--corpus-raised), var(--corpus-raised)) padding-box,
     conic-gradient(from var(--corpus-ai-angle), var(--corpus-ai-spectrum)) border-box;
   animation: corpus-ai-spin 6s linear infinite;
+  /* Each step of the angle repaints the gradient. On a phone, 15 steps a second (4° each) look the same and cost a quarter. */
+  @media (pointer: coarse) { animation-timing-function: steps(90); }
   @media (prefers-reduced-motion: reduce) { animation: none; }
 }
 @utility ai-gradient-text {
@@ -402,6 +431,14 @@
     line-height: 1.45;
   }
   ::selection { background: var(--corpus-primary-subtle); }
+  /* TAPS — every control answers a finger at once: no double-tap-to-zoom wait (a stepper tapped twice must step twice,
+     never zoom), no grey tap flash over the system's own press state, no long-press callout on buttons. Scrolling and
+     pinching inside stay as they are; the slider's touch-none still wins. */
+  :where(button, [role="button"], [role="checkbox"], [role="radio"], [role="switch"], [role="tab"], [role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"], [role="option"], [role="slider"], [role="combobox"], a[href], label, input, select, textarea, summary) {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+  :where(button, [role="button"], [role="checkbox"], [role="radio"], [role="switch"], [role="tab"], [role="slider"]) { -webkit-touch-callout: none; }
   /* Fallback ring for elements without their own — skipped by elements that opt out (outline-none), e.g. a
      composer's inner textarea, so only the component's ring shows. */
   :focus-visible:not(.outline-none) { outline: 1px solid var(--corpus-ring); outline-offset: 1px; box-shadow: 0 0 0 5px color-mix(in oklab, var(--corpus-ring) 22%, transparent); animation: var(--animate-focus-in); }
@@ -418,11 +455,14 @@
  *   glass-3  z-50  menus, lists, popovers glass-4  z-50+ dialogs (above their overlay)
  *   glass-5  z-60  notifications, capsules
  */
-@utility glass-1 { --corpus-glass-blur: 10px; --corpus-glass-fill: 24%; --corpus-glass-sat: 1.4; }
-@utility glass-2 { --corpus-glass-blur: 14px; --corpus-glass-fill: 20%; --corpus-glass-sat: 1.5; }
-@utility glass-3 { --corpus-glass-blur: 18px; --corpus-glass-fill: 16%; --corpus-glass-sat: 1.6; }
-@utility glass-4 { --corpus-glass-blur: 24px; --corpus-glass-fill: 80%; --corpus-glass-sat: 1.7; }
-@utility glass-5 { --corpus-glass-blur: 30px; --corpus-glass-fill: 8%; --corpus-glass-sat: 1.8; }
+@utility glass-1 { --corpus-glass-blur: calc(10px * var(--corpus-glass-scale, 1)); --corpus-glass-fill: 24%; --corpus-glass-sat: 1.4; }
+@utility glass-2 { --corpus-glass-blur: calc(14px * var(--corpus-glass-scale, 1)); --corpus-glass-fill: 20%; --corpus-glass-sat: 1.5; }
+@utility glass-3 { --corpus-glass-blur: calc(18px * var(--corpus-glass-scale, 1)); --corpus-glass-fill: 16%; --corpus-glass-sat: 1.6; }
+@utility glass-4 { --corpus-glass-blur: calc(24px * var(--corpus-glass-scale, 1)); --corpus-glass-fill: 80%; --corpus-glass-sat: 1.7; }
+@utility glass-5 { --corpus-glass-blur: calc(30px * var(--corpus-glass-scale, 1)); --corpus-glass-fill: 8%; --corpus-glass-sat: 1.8; }
+/* A backdrop blur is re-rendered under every scrolled frame, and its cost grows with the radius squared. On touch
+   devices the tiers keep their order at six tenths of the radius: frost still rises with the layer, the scroll stays smooth. */
+@media (pointer: coarse) { :root { --corpus-glass-scale: 0.6; } }
 
 @utility glass {
   background-color: color-mix(in oklab, var(--corpus-elevated) var(--corpus-glass-fill, 16%), transparent);

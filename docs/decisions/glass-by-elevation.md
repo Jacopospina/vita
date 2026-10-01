@@ -41,3 +41,8 @@ related: [material, color, ui-shell-header]
 
 - **glass-4 fill 44% → 80%.** 44% still let the page blend through; a dialog must read as a solid sheet. The blur stays, so only a hint of the page shows at the edges of colour.
 - **The "near-opaque" rejection no longer applies to dialogs.** It still holds for every other tier: shell, menus and notifications stay thin glass.
+
+## Revision — 2026-10-01: lighter blur on touch
+
+- **Blur radii × 0.6 under `pointer: coarse`** (6 · 8 · 11 · 14 · 18px). A backdrop blur is redrawn under every scrolled frame and costs the square of its radius; on phones the header's glass alone made scrolling stutter.
+- **Fills and the order of tiers are unchanged.** Frost still rises with the layer; only its radius shrinks. See *Touch adapts by itself*.

@@ -36,6 +36,7 @@ avoid_when:
 - **Field heights.** `h-field-sm` 36 · `md` 40 · `lg` 44 — a step taller to hold the floating label.
 - **Control insets.** `px-inset-sm` 6 · `px-inset` 8 · `px-inset-lg` 12.
 - **One knob.** `--corpus-density` scales control sizes fully, and the spacing scale (padding, margin, gap) at half strength with a 90% floor — so small gaps stay comfortable at low density.
+- **Touch floors it at 1.1.** Under a finger (`pointer: coarse`) every size above reads as if density were at least 1.1: `h-control-md` 31 · `h-field-md` 44. Small standalone controls add a 44px hit area with `tap`.
 
 ## Radius
 

@@ -25,7 +25,7 @@ function CopyButton({ text, className }: { text: string; className?: string }) {
   const { copied, copy } = useCopy()
   return (
     <Tooltip content={<AnimatedText>{copied ? "Copied" : "Copy to clipboard"}</AnimatedText>} side="left">
-      <button type="button" onClick={() => copy(text)} aria-label="Copy to clipboard" className={cn("flex size-control-sm shrink-0 items-center justify-center rounded-sm text-muted-foreground hover:bg-hover hover:text-foreground focus-ring", className)}>
+      <button type="button" onClick={() => copy(text)} aria-label="Copy to clipboard" className={cn("relative tap flex size-control-sm shrink-0 items-center justify-center rounded-sm text-muted-foreground hover:bg-hover hover:text-foreground focus-ring", className)}>
         <SwapIcon as={copied ? Checkmark : Copy} className={copied ? "text-success" : undefined} />
       </button>
     </Tooltip>

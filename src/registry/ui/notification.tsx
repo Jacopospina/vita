@@ -75,7 +75,8 @@ function Notice({ icon, kind, eyebrow, source, title, subtitle, children, action
           type="button"
           aria-label="Close notification"
           onClick={onClose}
-          className="absolute -top-2 -left-2 flex size-6 scale-75 items-center justify-center rounded-full border border-border-subtle bg-raised text-muted-foreground opacity-0 shadow-raised group-focus-within/notice:scale-100 group-focus-within/notice:opacity-100 group-hover/notice:scale-100 group-hover/notice:opacity-100 hover:text-foreground focus-ring"
+          // Hover reveals it; a finger can't hover, so on touch the × is always there, with a finger-sized target.
+          className="tap absolute -top-2 -left-2 flex size-6 scale-75 items-center justify-center rounded-full border border-border-subtle bg-raised text-muted-foreground opacity-0 shadow-raised group-focus-within/notice:scale-100 group-focus-within/notice:opacity-100 group-hover/notice:scale-100 group-hover/notice:opacity-100 hover:text-foreground focus-ring pointer-coarse:scale-100 pointer-coarse:opacity-100"
         >
           <Icon as={Close} size="sm" />
         </button>

@@ -115,6 +115,7 @@ export const manifest: Record<Section, NavEntry[]> = {
     { slug: "buttons", title: "Buttons" },
     { slug: "motion", title: "Motion" },
     { slug: "fields-and-options", title: "Fields and options" },
+    { slug: "touch", title: "Touch adapts by itself" },
   ],
 }
 
