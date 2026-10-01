@@ -15,26 +15,37 @@ import { GlyphGallery } from "./galleries"
 
 function PaletteGrid() {
   const steps = palette.steps as number[]
+  const colors = Object.entries(palette.colors)
+  // Belonging: all swatches are one block — flat cells, the block owns the radius (no per-row rounding).
   return (
-    <div className="overflow-x-auto">
-      <div className="grid min-w-180 grid-cols-12 gap-0">
-        <span />
-        {steps.map((st) => <Text key={st} variant="caption" tone="muted" className="pb-1 text-center tabular-nums">{st}</Text>)}
-        {Object.entries(palette.colors).map(([name, c]) => (
-          <React.Fragment key={name}>
-            <Stack gap="none" justify="center" className="pr-3"><Text variant="footnote" weight="medium" className="capitalize">{name}</Text><Text variant="caption" tone="helper" className="tabular-nums">{c.base}</Text></Stack>
-            {steps.map((st) => (
-              <div
-                key={st}
-                title={`--corpus-palette-${name}-${st}\n${(c.steps as Record<string, string>)[st]}`}
-                className={cn("relative flex h-12 items-end justify-center pb-1", st === 50 && "rounded-l-md", st === 950 && "rounded-r-md", st === 500 && "z-10 outline-2 -outline-offset-2 outline-foreground")}
-                style={{ ["--p" as string]: `var(--corpus-palette-${name}-${st})`, background: "var(--p)" }}
-              >
-                {st === 500 && <span className={cn("text-caption font-semibold", name === "yellow" || name === "mint" ? "text-foreground" : "text-primary-foreground")}>●</span>}
-              </div>
-            ))}
-          </React.Fragment>
-        ))}
+    // No scroll container (overflow-x would also make it scroll vertically): it fits the width and hugs its height.
+    <div>
+      <div className="flex gap-3">
+        <Stack gap="none">
+          <span className="h-5" />
+          {colors.map(([name, c]) => (
+            <Stack key={name} gap="none" justify="center" className="h-12"><Text variant="footnote" weight="medium" className="capitalize">{name}</Text><Text variant="caption" tone="helper" className="tabular-nums">{c.base}</Text></Stack>
+          ))}
+        </Stack>
+        <Stack gap="none" className="flex-1">
+          <div className="grid h-5 grid-cols-11">
+            {steps.map((st) => <Text key={st} variant="caption" tone="muted" className="text-center tabular-nums">{st}</Text>)}
+          </div>
+          <div className="grid grid-cols-11 overflow-hidden scope-lg">
+            {colors.map(([name, c]) =>
+              steps.map((st) => (
+                <div
+                  key={name + st}
+                  title={`--corpus-palette-${name}-${st}\n${(c.steps as Record<string, string>)[st]}`}
+                  className="relative flex h-12 items-end justify-center pb-1"
+                  style={{ ["--p" as string]: `var(--corpus-palette-${name}-${st})`, background: "var(--p)" }}
+                >
+                  {st === 500 && <span className={cn("text-caption font-semibold", name === "yellow" || name === "mint" ? "text-foreground" : "text-primary-foreground")}>●</span>}
+                </div>
+              )),
+            )}
+          </div>
+        </Stack>
       </div>
     </div>
   )
@@ -241,7 +252,7 @@ export const foundationDemos: DemoMap = {
   "foundations/color": [
     {
       title: "Palette — every hue, every step",
-      description: "13 hues × 11 steps. The ringed swatch (500) is the exact system color; hover any swatch for its variable and value. Primitives feed charts and new semantic tokens — product code uses the semantic tokens below.",
+      description: "13 hues × 11 steps. The dotted swatch (500) is the exact system color; hover any swatch for its variable and value. Primitives feed charts and new semantic tokens — product code uses the semantic tokens below.",
       render: () => <PaletteGrid />,
     },
     ...colorGroups.map((g) => ({
