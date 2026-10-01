@@ -99,7 +99,8 @@ export function Composer({ placeholder = "Describe what you need", onSubmit, sug
             }
           }}
           className={cn(
-            "field-sizing-content max-h-60 min-h-10 w-full resize-none bg-transparent px-3 pt-2.5 text-foreground outline-none placeholder:text-placeholder",
+            // grows with the text up to 2.5 lines (the half line hints there is more), then scrolls
+            "field-sizing-content max-h-[calc(2.5lh+var(--spacing)*2.5)] min-h-10 w-full resize-none overflow-y-auto bg-transparent px-3 pt-2.5 text-foreground outline-none placeholder:text-placeholder",
             size === "lg" ? "text-body-lg" : "text-body",
           )}
         />
