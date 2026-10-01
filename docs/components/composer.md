@@ -31,3 +31,9 @@ related: [intent-first, ai-label, text-input, search]
 5. **One composer per view.** It is the primary input; everything else supports it.
 
 > [!TIP] Voice uses the browser's speech recognition. When it isn't available the microphone simply doesn't appear.
+
+## Behaviour
+
+- **Styled like a text input.** Same border, fill, radius, hover and focus; no shadow.
+- **Send only when there's something to send.** The send button slides in from the composer's edge as you type or attach, and slides away when it's empty. It's never shown disabled.
+- **Attachments arrive with motion.** The chip row opens, each chip springs in, and the others glide aside.

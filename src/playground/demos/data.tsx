@@ -19,7 +19,6 @@ import { Tile, ClickableTile, SelectableTile, ExpandableTile, TileGroup } from "
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/registry/ui/accordion"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/registry/ui/tabs"
 import { Popover, PopoverTrigger, PopoverContent } from "@/registry/ui/popover"
-import { Icon } from "@/registry/ui/icon"
 import { EmptyState } from "@/registry/ui/empty-state"
 
 export interface Agent {
@@ -161,12 +160,12 @@ export const dataDemos: DemoMap = {
       render: () => (
         <Stack gap="xl" className="max-w-lg">
           <ContainedList label="Team members" action={<Button size="sm" variant="ghost" icon={Add}>Add member</Button>}>
-            {["Ada Lovelace · Owner", "Grace Hopper · Builder", "Alan Turing · Viewer"].map((m) => (
-              <ContainedListItem key={m} icon={<Icon as={UserAvatar} />} action={<OverflowMenu><MenuItem>Change role</MenuItem><MenuItem danger>Remove</MenuItem></OverflowMenu>}>{m}</ContainedListItem>
+            {[["Ada Lovelace", "Owner"], ["Grace Hopper", "Builder"], ["Alan Turing", "Viewer"]].map(([m, role]) => (
+              <ContainedListItem key={m} icon={UserAvatar} tone="brand" subtitle={role} action={<OverflowMenu><MenuItem>Change role</MenuItem><MenuItem danger>Remove</MenuItem></OverflowMenu>}>{m}</ContainedListItem>
             ))}
           </ContainedList>
-          <ContainedList label="Recent files" kind="disclosed" size="sm">
-            {["system-prompt.md", "help-center.csv", "refund-policy.pdf"].map((f) => <ContainedListItem key={f} icon={<Icon as={Document} />} onClick={() => {}}>{f}</ContainedListItem>)}
+          <ContainedList label="Recent files" kind="disclosed">
+            {["system-prompt.md", "help-center.csv", "refund-policy.pdf"].map((f) => <ContainedListItem key={f} icon={Document} onClick={() => {}}>{f}</ContainedListItem>)}
           </ContainedList>
         </Stack>
       ),

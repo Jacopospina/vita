@@ -192,6 +192,7 @@
   --animate-text-leave-down: corpus-text-out-down var(--corpus-duration-moderate-02) var(--corpus-ease-productive-exit) both;
   --animate-banner-in: corpus-banner-in var(--corpus-duration-expressive) var(--corpus-ease-expressive-enter) both, corpus-gravity var(--corpus-duration-expressive) linear both;
   --animate-enter-fall: corpus-fall-in var(--corpus-duration-expressive) linear both;
+  --animate-chip-in: corpus-chip-in var(--corpus-duration-expressive) var(--corpus-ease-spring) both;
   --animate-banner-out: corpus-banner-out var(--corpus-duration-moderate-02) var(--corpus-ease-productive-exit) both;
   --animate-island-in: corpus-island-in var(--corpus-duration-expressive) var(--corpus-ease-expressive-enter) both, corpus-gravity var(--corpus-duration-expressive) linear both;
   --animate-island-out: corpus-island-out var(--corpus-duration-moderate-02) var(--corpus-ease-productive-exit) var(--corpus-duration-moderate-02) both;

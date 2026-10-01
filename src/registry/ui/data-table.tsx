@@ -55,7 +55,7 @@ export interface DataTableProps<T extends { id: string }> {
 }
 
 export function DataTable<T extends { id: string }>({
-  title, description, columns, rows, size = "lg", zebra, stickyHeader, selectable, selected: selectedProp, onSelectedChange,
+  title, description, columns, rows, size = "xl", zebra, stickyHeader, selectable, selected: selectedProp, onSelectedChange,
   batchActions, toolbar, rowActions, renderExpanded, loading, emptyState, footer, className, label,
 }: DataTableProps<T>) {
   const [sort, setSort] = React.useState<SortState>(null)
@@ -96,9 +96,9 @@ export function DataTable<T extends { id: string }>({
       )}
       {(toolbar || batchActions) && (
         // ONE strip that MORPHS: toolbar ⇄ selection bar in the same place, with space before the table.
-        // Toolbar: full width, flush with the table. Selection bar: insets (px grows) so it reads as a raised layer.
+        // Same inset in both states (toolbar and selection bar), a notch tighter than the header.
         // STICKY: it stays in reach while the rows scroll (overflow-clip on the section keeps sticky working).
-        <div className={cn("sticky top-0 z-20 bg-layer-1 pt-3 pb-3 motion-expressive", selecting ? "px-3" : "px-0")}>
+        <div className="sticky top-0 z-20 bg-layer-1 p-2.5">
           <div
             className={cn(
               "grid min-h-control-lg items-center squircle p-1 motion-expressive [grid-template-areas:'bar']",
@@ -130,10 +130,11 @@ export function DataTable<T extends { id: string }>({
           </div>
         </div>
       )}
-      <div className={cn("w-full overflow-x-auto", stickyHeader && "max-h-120 overflow-y-auto")}>
-        <table className="w-full border-collapse text-body" aria-label={typeof title === "string" ? title : label}>
-          <thead className={cn("bg-layer-3", stickyHeader && "sticky top-0 z-10")}>
-            <tr className={rowH[size === "xl" ? "lg" : size]}>
+      {/* Inset like the toolbar strip above; the header row is a rounded band (separate borders allow cell radius). */}
+      <div className={cn("w-full overflow-x-auto px-2.5", stickyHeader && "max-h-120 overflow-y-auto")}>
+        <table className="w-full border-separate border-spacing-0 text-body" aria-label={typeof title === "string" ? title : label}>
+          <thead className={cn(stickyHeader && "sticky top-0 z-10")}>
+            <tr className={cn(rowH[size === "xl" ? "lg" : size], "[&>th]:bg-layer-3 [&>th:first-child]:rounded-l-md [&>th:last-child]:rounded-r-md")}>
               {renderExpanded && <th className="w-control-md"><span className="sr-only">Expand</span></th>}
               {selectable && (
                 <th className="w-control-md pl-3">
@@ -162,7 +163,7 @@ export function DataTable<T extends { id: string }>({
           <tbody>
             {loading &&
               Array.from({ length: 5 }).map((_, i) => (
-                <tr key={i} className={cn(rowH[size], "border-b border-border-subtle")}>
+                <tr key={i} className={cn(rowH[size], "[&>td]:border-b [&>td]:border-border-subtle")}>
                   {Array.from({ length: colCount }).map((__, j) => (
                     <td key={j} className={cellPad}><Skeleton shape="text" className="w-3/4" /></td>
                   ))}
@@ -182,7 +183,7 @@ export function DataTable<T extends { id: string }>({
                       aria-selected={selectable ? isSel : undefined}
                       className={cn(
                         rowH[size],
-                        "animate-enter-fade border-b border-border-subtle duration-fast-02 hover:bg-hover",
+                        "animate-enter-fade duration-fast-02 hover:bg-hover [&>td]:border-b [&>td]:border-border-subtle",
                         zebra && idx % 2 === 1 && "bg-layer-2",
                         isSel && "bg-selected hover:bg-selected",
                       )}
@@ -207,7 +208,7 @@ export function DataTable<T extends { id: string }>({
                       {rowActions && <td className="pr-2 text-right">{rowActions(row)}</td>}
                     </tr>
                     {renderExpanded && isOpen && (
-                      <tr className="border-b border-border-subtle bg-layer-2">
+                      <tr className="bg-layer-2 [&>td]:border-b [&>td]:border-border-subtle">
                         <td colSpan={colCount} className="animate-enter-fade px-3 py-3 pl-12">{renderExpanded(row)}</td>
                       </tr>
                     )}

@@ -21,7 +21,6 @@ import { MenuItem, MenuSeparator } from "@/registry/ui/menu"
 import { EmptyState } from "@/registry/ui/empty-state"
 import { PageHeader } from "@/registry/ui/page-header"
 import { ContainedList, ContainedListItem } from "@/registry/ui/contained-list"
-import { IconPlaceholder } from "@/registry/ui/icon-placeholder"
 import { LoginBlock } from "@/registry/blocks/login"
 import { toast, capsule } from "@/registry/ui/notification"
 import { Icon } from "@/registry/ui/icon"
@@ -234,11 +233,8 @@ export function ConversationsExample() {
       <Column md={8} lg={6}>
         <ContainedList label="Conversations">
           {conversations.map((x) => (
-            <ContainedListItem key={x.id} icon={<IconPlaceholder icon={Chat} tone={x.id === open ? "brand" : "neutral"} size="sm" />} onClick={() => setOpen(x.id)}>
-              <Stack gap="none">
-                <Text weight={x.id === open ? "semibold" : "regular"}>{x.who}</Text>
-                <Text variant="footnote" tone="muted" truncate>{x.topic}</Text>
-              </Stack>
+            <ContainedListItem key={x.id} icon={Chat} tone={x.id === open ? "brand" : "neutral"} subtitle={x.topic} selected={x.id === open} onClick={() => setOpen(x.id)}>
+              {x.who}
             </ContainedListItem>
           ))}
         </ContainedList>

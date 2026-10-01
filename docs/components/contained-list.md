@@ -20,3 +20,8 @@ related: [data-table, list, structured-list]
 2. **Rows are either clickable** (`onClick`, the whole row) **or carry a trailing action** (`action`). Never both, because two hit targets per row confuse.
 3. **Leading icon or avatar** only when it helps recognition. It's all rows or none.
 4. **Long lists** get a Search in the header action slot.
+
+## Built from list items
+
+- **Same rows as every list.** A contained list is a header over a `ListGroup` of `ListItem`s: comfortable rows, an icon placeholder, title and subtitle, and a trailing action.
+- **Pass an icon, not a node.** Give `icon` an icon and `tone`; it's drawn on an IconPlaceholder. Use a node only for avatars or custom marks.
