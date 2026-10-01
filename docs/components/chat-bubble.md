@@ -24,7 +24,7 @@ related: [agent-conversation, ai-label, composer, thinking]
 
 ## Rules
 
-1. **Sides mean authors.** The agent is always on the left on a neutral surface; the person is always on the right in brand colour.
+1. **Sides mean authors.** The agent is always on the left on a neutral surface; the person is always on the right in brand colour. Never put an avatar beside a bubble: the side and the author line say who wrote it.
 2. **Belonging joins messages.** Consecutive messages from one author sit close, their inner corners tighten, and only the last shows the author and time.
 3. **Thinking, not dots.** While the agent works, show `ChatTyping` with what it's doing ("Searching the help center"), never bouncing dots.
 4. **Failures stay in place.** A message that didn't send stays in the thread with "Not sent" and a Retry; never a toast.

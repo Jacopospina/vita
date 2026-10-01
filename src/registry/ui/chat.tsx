@@ -1,6 +1,5 @@
 import * as React from "react"
-import type { IconType } from "@/registry/icons"
-import { Bot, UserAvatar, Close, WarningFilled } from "@/registry/icons"
+import { Bot, Close, WarningFilled } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { Icon } from "@/registry/ui/icon"
 import { IconButton } from "@/registry/ui/button"
@@ -13,6 +12,7 @@ import { useFlip } from "@/registry/hooks/use-flip"
 /**
  * Chat — the conversation pieces for agents and people.
  *   ChatBubble   one message. Agent on the left on a neutral surface; the person on the right in brand colour.
+ *                Never an avatar beside a bubble: the side and the author line say who wrote it.
  *                Consecutive messages from the same author JOIN (belonging): inner corners tighten, gap shrinks,
  *                only the last one shows the author mark.
  *   ChatThread   the column of bubbles; new messages enter from their author's side and the rest glide (FLIP).
@@ -30,8 +30,6 @@ export interface ChatBubbleProps {
   author?: string
   /** Shown next to the author, e.g. "09:41". */
   time?: string
-  /** Leading mark for the agent (defaults to a bot on an icon placeholder). */
-  icon?: IconType
   /** First / middle / last / single bubble in a run from the same author — shapes the joined corners. */
   position?: "single" | "first" | "middle" | "last"
   /** Delivery state for the person's messages. Failed offers a retry. */
@@ -40,7 +38,7 @@ export interface ChatBubbleProps {
   className?: string
 }
 
-export function ChatBubble({ role, children, author, time, icon = Bot, position = "single", status, onRetry, className }: ChatBubbleProps) {
+export function ChatBubble({ role, children, author, time, position = "single", status, onRetry, className }: ChatBubbleProps) {
   const agent = role === "agent"
   const showMeta = position === "single" || position === "last"
   // Joined corners: the side facing the author tightens where bubbles meet.
@@ -49,11 +47,6 @@ export function ChatBubble({ role, children, author, time, icon = Bot, position 
     : { single: "rounded-xl rounded-br-sm", first: "rounded-xl rounded-br-sm", middle: "rounded-xl rounded-r-sm", last: "rounded-xl rounded-tr-sm" }[position]
   return (
     <div className={cn("flex items-end gap-2", agent ? "justify-start" : "justify-end", className)}>
-      {agent && (
-        <span className={cn("w-8 shrink-0", !showMeta && "invisible")} aria-hidden>
-          <IconPlaceholder icon={icon} tone="brand" size="md" />
-        </span>
-      )}
       <div className={cn("flex max-w-[80%] flex-col gap-1", agent ? "items-start" : "items-end")}>
         <div
           className={cn(
@@ -85,20 +78,14 @@ export function ChatBubble({ role, children, author, time, icon = Bot, position 
           </div>
         )}
       </div>
-      {!agent && (
-        <span className={cn("w-8 shrink-0", !showMeta && "invisible")} aria-hidden>
-          <IconPlaceholder icon={UserAvatar} size="md" />
-        </span>
-      )}
     </div>
   )
 }
 
 /** ChatTyping — the agent is thinking: Sofia in an agent bubble. */
-export function ChatTyping({ label = "Thinking", icon = Bot }: { label?: string; icon?: IconType }) {
+export function ChatTyping({ label = "Thinking" }: { label?: string }) {
   return (
     <div className="flex items-end gap-2" role="status">
-      <span className="w-8 shrink-0" aria-hidden><IconPlaceholder icon={icon} tone="brand" size="md" /></span>
       <div className="flex origin-bottom-left animate-chip-in items-center gap-2 rounded-xl rounded-bl-sm bg-layer-2 px-3.5 py-2 text-body text-muted-foreground">
         <Thinking mode="generating" size="sm" label={label} />
         <span>{label}…</span>

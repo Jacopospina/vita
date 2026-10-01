@@ -26,6 +26,6 @@ related: [chat-bubble, intent-first, ai-label, composer]
 
 ## Don't
 
-- **Don't pretend the agent is a person.** It has an agent mark and an agent name.
+- **Don't pretend the agent is a person.** It's named as an agent in the panel header and on its messages.
 - **Don't hide failures.** A message that didn't send stays visible with a Retry.
 - **Don't add a Cancel button to the panel.** ×, Escape and clicking away close it.
