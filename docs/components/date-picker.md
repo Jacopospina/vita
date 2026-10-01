@@ -27,3 +27,9 @@ related: [text-input, form]
 - **One or two months.** `months={1}` suits single dates; ranges default to `months={2}` so start and end are visible together.
 - **Presets are blended actions.** `presets` puts common choices ("Last 7 days", "This month") beside the calendar as one joined group on a single surface. Picking one selects it and moves the calendar there; the current preset stays highlighted.
 - **Ready-made sets.** Use `datePresets` and `rangePresets`, or pass your product's own common choices.
+
+## Calendar
+
+- **Easy targets.** Days are 36px squares with roomy month navigation.
+- **One band per range.** A range is a continuous band rounded only on its outer corners: the left of the first day, the right of the last. Days in between are square. When a range wraps, each week row's band is rounded where the row's highlight begins and ends.
+- **Months slide.** Moving forward, the new month slides in from the right and the old one slides out to the left; moving back, the reverse. The month name crossfades with it.

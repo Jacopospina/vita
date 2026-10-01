@@ -20,28 +20,42 @@ export function Calendar({ className, ...props }: React.ComponentProps<typeof Da
   return (
     <DayPicker
       showOutsideDays
+      animate
       className={cn("p-1 text-body", className)}
+      // Roomy, easy targets (36px days). A range is ONE continuous band on the cells: rounded only on its outer
+      // corners (start: left, end: right), square in between; start and end days are filled.
       classNames={{
-        months: "flex flex-col gap-4 sm:flex-row",
+        months: "flex flex-col gap-6 sm:flex-row",
         month: "flex flex-col gap-2",
-        month_caption: "flex h-control-sm items-center justify-center font-semibold",
-        nav: "absolute inset-x-1 top-1 flex justify-between",
-        button_previous: "flex size-control-sm items-center justify-center rounded-sm hover:bg-hover focus-ring",
-        button_next: "flex size-control-sm items-center justify-center rounded-sm hover:bg-hover focus-ring",
+        month_caption: "flex h-control-md items-center justify-center text-body font-semibold",
+        nav: "absolute inset-x-1 top-0 flex justify-between",
+        button_previous: "flex size-control-md items-center justify-center rounded-md hover:bg-hover focus-ring",
+        button_next: "flex size-control-md items-center justify-center rounded-md hover:bg-hover focus-ring",
         month_grid: "border-collapse",
         weekdays: "flex",
-        weekday: "w-control-sm text-caption font-normal text-helper",
+        weekday: "w-control-xl pb-1 text-caption font-medium text-helper",
         week: "mt-0.5 flex",
-        day: "size-control-sm p-0 text-center",
-        day_button: "size-control-sm rounded-sm tabular-nums hover:bg-hover focus-ring",
+        day: "size-control-xl p-0 text-center",
+        day_button: "size-control-xl rounded-md text-body tabular-nums duration-fast-02 hover:bg-hover focus-ring",
         today: "font-semibold text-primary",
         selected: "[&>button]:bg-primary [&>button]:text-primary-foreground [&>button]:hover:bg-primary-hover",
-        range_middle: "[&>button]:!bg-selected [&>button]:!text-selected-foreground rounded-none",
-        range_start: "",
-        range_end: "",
+        range_start: "rounded-l-md bg-selected last:rounded-r-md",
+        range_end: "rounded-r-md bg-selected first:rounded-l-md",
+        // each week row's band is one shape: rounded where the row's highlight begins and ends, even mid-range
+        range_middle: "rounded-none bg-selected first:rounded-l-md last:rounded-r-md [&>button]:!rounded-none [&>button]:!bg-transparent [&>button]:!text-selected-foreground [&>button]:hover:!bg-hover",
         outside: "text-disabled-foreground",
         disabled: "text-disabled-foreground [&>button]:pointer-events-none",
         root: "relative",
+        // month change choreography. The picker names months by POSITION: moving forward, the new month enters
+        // from "after" (right) and the old one exits to "before" (left); moving back, the reverse.
+        weeks_after_enter: "animate-month-in-next",
+        weeks_before_exit: "animate-month-out-next",
+        weeks_before_enter: "animate-month-in-prev",
+        weeks_after_exit: "animate-month-out-prev",
+        caption_after_enter: "animate-month-caption-in",
+        caption_after_exit: "animate-month-caption-out",
+        caption_before_enter: "animate-month-caption-in",
+        caption_before_exit: "animate-month-caption-out",
       }}
       components={{
         Chevron: ({ orientation }) => <Icon as={orientation === "left" ? ChevronLeft : ChevronRight} />,

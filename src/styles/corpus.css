@@ -194,6 +194,13 @@
   --animate-enter-fall: corpus-fall-in var(--corpus-duration-expressive) linear both;
   --animate-chip-in: corpus-chip-in var(--corpus-duration-expressive) var(--corpus-ease-spring) both;
   --animate-drift: corpus-drift 28s ease-in-out infinite alternate;
+  /* calendar months: same duration for every part (the picker cleans up when the caption finishes) */
+  --animate-month-in-next: corpus-month-in-right var(--corpus-duration-moderate-02) var(--corpus-ease-productive-enter) both;
+  --animate-month-out-next: corpus-month-out-left var(--corpus-duration-moderate-02) var(--corpus-ease-productive-exit) both;
+  --animate-month-in-prev: corpus-month-in-left var(--corpus-duration-moderate-02) var(--corpus-ease-productive-enter) both;
+  --animate-month-out-prev: corpus-month-out-right var(--corpus-duration-moderate-02) var(--corpus-ease-productive-exit) both;
+  --animate-month-caption-in: corpus-fade-in var(--corpus-duration-moderate-02) var(--corpus-ease-productive-enter) both;
+  --animate-month-caption-out: corpus-fade-out var(--corpus-duration-moderate-02) var(--corpus-ease-productive-exit) both;
   --animate-banner-out: corpus-banner-out var(--corpus-duration-moderate-02) var(--corpus-ease-productive-exit) both;
   --animate-island-in: corpus-island-in var(--corpus-duration-expressive) var(--corpus-ease-expressive-enter) both, corpus-gravity var(--corpus-duration-expressive) linear both;
   --animate-island-out: corpus-island-out var(--corpus-duration-moderate-02) var(--corpus-ease-productive-exit) var(--corpus-duration-moderate-02) both;
