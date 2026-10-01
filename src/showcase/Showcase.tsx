@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/registry/ui/tooltip"
 import { useSunTheme } from "@/registry/hooks/use-sun-theme"
 import { useWeatherTint } from "@/registry/hooks/use-weather-tint"
 import { swapAppearance } from "@/registry/lib/appearance"
+import { CorpusMark } from "@/brand/corpus-mark"
 import { Toaster } from "@/registry/ui/notification"
 import { Container, Stack, Inline } from "@/registry/ui/layout"
 import { IconPlaceholder } from "@/registry/ui/icon-placeholder"
@@ -67,6 +68,7 @@ export function Showcase() {
       <Shell>
         <Header
           productName="Corpus"
+          logo={<CorpusMark size={24} className="-m-0.5" />}
           href="./showcase.html"
           actions={
             <>

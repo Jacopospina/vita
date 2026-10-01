@@ -43,8 +43,10 @@ export function ShellMain({ children, className, ...props }: React.HTMLAttribute
 /** Header items: 32px concentric pills inside the floating bar (radius = bar radius − its 8px padding). */
 const pill = "h-8 rounded-inner-2 [corner-shape:round]"
 
-export function Header({ productName, prefix, href = "/", children, actions, className }: {
+export function Header({ productName, prefix, logo, href = "/", children, actions, className }: {
   productName: string
+  /** The product's mark, shown before its name (about 20px). */
+  logo?: React.ReactNode
   /** Company/platform prefix, e.g. "Corpus" in "Corpus [Insights]". */
   prefix?: string
   href?: string
@@ -63,6 +65,7 @@ export function Header({ productName, prefix, href = "/", children, actions, cla
       </a>
       <IconButton icon={navOpen ? Close : MenuIcon} label={navOpen ? "Close menu" : "Open menu"} onClick={() => setNavOpen(!navOpen)} className={cn(pill, "w-8 lg:hidden")} />
       <a href={href} className="flex h-8 items-center gap-1 rounded-inner-2 px-3 text-body whitespace-nowrap duration-fast-02 hover:bg-hover focus-ring-inset">
+        {logo && <span aria-hidden className="mr-1 flex shrink-0">{logo}</span>}
         {prefix && <span className="font-normal text-muted-foreground">{prefix}</span>}
         <span className="font-semibold">{productName}</span>
       </a>
