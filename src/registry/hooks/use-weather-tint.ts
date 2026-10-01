@@ -1,5 +1,6 @@
 import * as React from "react"
 import { readCoords, type Coords } from "@/registry/hooks/use-sun-theme"
+import { swapAppearance } from "@/registry/lib/appearance"
 
 /**
  * useWeatherTint — Corpus's greys lean a hair warm when it's warm outside and a hair cool when it's cold.
@@ -84,11 +85,14 @@ export function useWeatherTint() {
 
   React.useEffect(() => {
     const root = document.documentElement.style
-    if (!on || celsius === null) { root.setProperty("--corpus-weather", "0"); return }
-    const { hue, chroma } = weatherTint(celsius)
-    root.setProperty("--corpus-weather-hue", String(hue))
-    root.setProperty("--corpus-weather-chroma", String(chroma))
-    root.setProperty("--corpus-weather", "1")
+    // One cross-fade for the whole page, not a transition on every element that uses a grey.
+    swapAppearance(() => {
+      if (!on || celsius === null) return void root.setProperty("--corpus-weather", "0")
+      const { hue, chroma } = weatherTint(celsius)
+      root.setProperty("--corpus-weather-hue", String(hue))
+      root.setProperty("--corpus-weather-chroma", String(chroma))
+      root.setProperty("--corpus-weather", "1")
+    })
   }, [on, celsius])
 
   return [on, setOn, celsius] as const

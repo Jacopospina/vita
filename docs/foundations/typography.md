@@ -18,7 +18,8 @@ avoid_when:
 
 ## Values never snap
 
-- **Numbers roll.** Any number that changes uses `AnimatedNumber`: slot-machine digits, staggered, blur to sharp.
+- **Numbers are regular weight.** Always, whatever the weight of the text around them (`tabular-nums` enforces it).
+- **Numbers swap.** Any number that changes uses `AnimatedNumber`: each digit blurs out and the new one sharpens in, staggered, never clipped.
 - **Text reveals.** Any label that changes uses `AnimatedText`: letters stagger in one after another, sliding up from blur to sharp.
 
 ## Roles

@@ -29,7 +29,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
   ({ label, hideLabel, helperText, invalid, invalidText, warn, warnText, optional, labelAddon, className, id, value, defaultValue = null, onValueChange, min, max, step = 1, size = "md", unit, disabled, readOnly, ...props }, ref) => {
     const [val, setVal] = useControllable<number | null>(value, defaultValue, onValueChange)
     const clamp = (n: number) => Math.min(max ?? Infinity, Math.max(min ?? -Infinity, n))
-    // Values roll like a slot machine: stepper/arrow changes show a rolling overlay over the (transparent) input text.
+    // Values swap digit by digit: stepper/arrow changes show a rolling overlay over the (transparent) input text.
     // While the user TYPES, the raw input shows — typing is never delayed or animated.
     const [typing, setTyping] = React.useState(false)
     // Latest value for press-and-hold repeats (the interval must not read a stale closure).

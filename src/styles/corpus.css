@@ -322,7 +322,8 @@
 
 /* Numbers & numeric values: tabular figures in the numeric face. `tabular-nums` alone is enough. */
 @layer utilities {
-  .tabular-nums { font-family: var(--corpus-font-numeric); }
+  /* Numbers are always regular weight, whatever the surrounding text's weight. */
+  .tabular-nums { font-family: var(--corpus-font-numeric); font-weight: 400 !important; }
 }
 
 /* SQUIRCLE — continuous-curvature corners (not a circular arc). Needs a larger radius to read the same size.

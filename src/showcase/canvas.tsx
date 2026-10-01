@@ -1,4 +1,5 @@
 import * as React from "react"
+import { cn } from "@/registry/lib/utils"
 import { Add, Bot, Plug, Notification, Rocket, Search as SearchIcon } from "@/registry/icons"
 import { Stack, Inline } from "@/registry/ui/layout"
 import { Text } from "@/registry/ui/text"
@@ -111,10 +112,26 @@ const columns: { offset: string; cards: React.ReactNode[] }[] = [
 ]
 
 export function ComponentCanvas() {
+  // Off-screen, the canvas stops moving (drift and every live animation inside it pause).
+  const ref = React.useRef<HTMLElement>(null)
+  const [visible, setVisible] = React.useState(true)
+  React.useEffect(() => {
+    const el = ref.current
+    if (!el || typeof IntersectionObserver === "undefined") return
+    const io = new IntersectionObserver(([e]) => setVisible(e.isIntersecting))
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
   return (
     // Clipped on both axes (never scrolls); the canvas is wider than the window and centred, so cards run off both sides.
-    <section aria-label="Corpus components" className="relative flex h-160 justify-center overflow-clip">
-      <div aria-hidden className="canvas-fade flex shrink-0 gap-4 motion-safe:animate-drift" inert>
+    // The edge fade (a mask) sits on this STATIC frame; the drifting field below is its own GPU layer, so each frame
+    // is a cheap translate instead of re-masking the whole field.
+    <section ref={ref} aria-label="Corpus components" className="relative flex h-160 justify-center overflow-clip canvas-fade">
+      <div
+        aria-hidden
+        inert
+        className={cn("flex shrink-0 gap-4 will-change-transform contain-layout contain-paint motion-safe:animate-drift", !visible && "[&,&_*]:[animation-play-state:paused]")}
+      >
         {columns.map((col, i) => (
           <div key={i} className={`flex shrink-0 flex-col gap-4 ${col.offset}`}>
             {col.cards.map((c, j) => <Card key={j}>{c}</Card>)}

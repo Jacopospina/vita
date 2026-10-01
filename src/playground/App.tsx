@@ -4,6 +4,7 @@ import { Shell, ShellBody, ShellMain, Header, HeaderGlobalAction, LeftPanel, Sid
 import { TooltipProvider } from "@/registry/ui/tooltip"
 import { useSunTheme } from "@/registry/hooks/use-sun-theme"
 import { useWeatherTint } from "@/registry/hooks/use-weather-tint"
+import { swapAppearance } from "@/registry/lib/appearance"
 import { Toaster } from "@/registry/ui/notification"
 import { Search } from "@/registry/ui/search"
 import { manifest, sectionTitles, type Section } from "./manifest"
@@ -53,7 +54,7 @@ export function App() {
   const [filter, setFilter] = React.useState("")
 
   React.useEffect(() => {
-    document.documentElement.classList.toggle("dark", dark)
+    swapAppearance(() => document.documentElement.classList.toggle("dark", dark))
   }, [dark])
 
   return (

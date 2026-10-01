@@ -8,6 +8,7 @@ import { Dropdown } from "@/registry/ui/dropdown"
 import { CodeSnippet } from "@/registry/ui/code-snippet"
 import { Button } from "@/registry/ui/button"
 import { Separator } from "@/registry/ui/separator"
+import { swapAppearance, withoutTransitions } from "@/registry/lib/appearance"
 
 /** Live editor for the theme.css knobs. Writes CSS custom properties on <html>. */
 const knobs = [
@@ -36,17 +37,22 @@ export function ThemePanel({ dark, onDarkChange, weather, onWeatherChange, celsi
 
   React.useEffect(() => {
     const root = document.documentElement
-    knobs.forEach((k) => root.style.setProperty(k.key, `${values[k.key]}${k.unit}`))
-    root.style.setProperty("--corpus-font-sans", fonts.find((f) => f.value === font)!.css)
+    // Knobs move continuously (sliders): apply instantly rather than transitioning every element on the page.
+    withoutTransitions(() => {
+      knobs.forEach((k) => root.style.setProperty(k.key, `${values[k.key]}${k.unit}`))
+      root.style.setProperty("--corpus-font-sans", fonts.find((f) => f.value === font)!.css)
+    })
   }, [values, font])
 
   const applyPreset = (p: string) => {
     setPreset(p)
     const root = document.documentElement
-    knobs.forEach((k) => root.style.removeProperty(k.key))
-    root.style.removeProperty("--corpus-font-sans")
-    if (p === "default") root.removeAttribute("data-corpus-preset")
-    else root.setAttribute("data-corpus-preset", p)
+    swapAppearance(() => {
+      knobs.forEach((k) => root.style.removeProperty(k.key))
+      root.style.removeProperty("--corpus-font-sans")
+      if (p === "default") root.removeAttribute("data-corpus-preset")
+      else root.setAttribute("data-corpus-preset", p)
+    })
     requestAnimationFrame(() => {
       const cs = getComputedStyle(root)
       setValues(Object.fromEntries(knobs.map((k) => [k.key, parseFloat(cs.getPropertyValue(k.key)) || k.def])))

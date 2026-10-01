@@ -2,8 +2,8 @@ import { describe, it, expect, afterEach } from "vitest"
 import { render, cleanup } from "@testing-library/react"
 import { AnimatedText } from "@/registry/ui/animated"
 
-// A rolling value renders one 10-digit reel per digit; a letter reveal renders none.
-const reels = (el: HTMLElement) => el.querySelectorAll(".flex-col").length
+// A numeric value renders one animated digit per digit; a letter reveal renders none.
+const reels = (el: HTMLElement) => el.querySelectorAll("[data-digit]").length
 
 describe("text choreography: numbers always roll", () => {
   afterEach(cleanup)

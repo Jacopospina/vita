@@ -102,6 +102,11 @@
 @keyframes corpus-text-in-down { from { opacity: 0; transform: translateY(-0.55em); filter: blur(6px) } to { opacity: 1; transform: none; filter: blur(0) } }
 @keyframes corpus-text-out-down { from { opacity: 1; transform: none; filter: blur(0) } to { opacity: 0; transform: translateY(0.55em); filter: blur(6px) } }
 /* A chip arriving (attachments, tokens): springs in from small and blurred. */
+/* A digit swapping (AnimatedNumber): a short lift with a quick blur — no clipping window needed. */
+@keyframes corpus-digit-in-up { from { opacity: 0; transform: translateY(0.8em); filter: blur(3px) } 40% { opacity: 1 } }
+@keyframes corpus-digit-out-up { 60% { opacity: 1 } to { opacity: 0; transform: translateY(-0.8em); filter: blur(3px) } }
+@keyframes corpus-digit-in-down { from { opacity: 0; transform: translateY(-0.8em); filter: blur(3px) } 40% { opacity: 1 } }
+@keyframes corpus-digit-out-down { 60% { opacity: 1 } to { opacity: 0; transform: translateY(0.8em); filter: blur(3px) } }
 @keyframes corpus-chip-in { from { opacity: 0; transform: scale(0.6) translateY(0.25rem); filter: blur(4px) } }
 /* Canvas drift: a slow sideways sway that suggests the canvas goes on beyond the edges. */
 @keyframes corpus-drift { from { translate: -3rem 0 } to { translate: 3rem 0 } }
@@ -198,6 +203,14 @@
     transition-property: color, background-color, border-color, opacity, box-shadow;
   }
 }
+
+/* Booting (until fonts/layout settle) and global appearance swaps: no per-element transitions. */
+@layer base {
+  :root:is([data-corpus-booting], [data-corpus-swapping]) :where(*, *::before, *::after) { transition: none !important; }
+}
+/* An appearance swap (theme, preset, tint) is ONE cross-fade of the page — the exception to the rule below. */
+:root[data-corpus-swapping]::view-transition-old(root) { display: block; animation: corpus-fade-out var(--corpus-duration-moderate-02) var(--corpus-ease-productive) both; }
+:root[data-corpus-swapping]::view-transition-new(root) { animation: corpus-fade-in var(--corpus-duration-moderate-02) var(--corpus-ease-productive) both; }
 
 /* View transitions: element morphs only (named elements glide); the page itself never cross-fades as a whole. */
 ::view-transition-old(root) { display: none; }

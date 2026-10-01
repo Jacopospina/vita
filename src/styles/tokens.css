@@ -10,12 +10,11 @@
  *   lines        border-subtle · border · border-strong · border-field
  */
 /* Weather tint (useWeatherTint): when on (--corpus-weather: 1) greys lean a hair warm or cool with the temperature
-   outside, replacing the neutral knobs. Registered so switching it fades instead of snapping. */
+   outside, replacing the neutral knobs. Applied through swapAppearance, so it cross-fades once. */
 @property --corpus-weather { syntax: "<number>"; inherits: true; initial-value: 0; }
 @property --corpus-weather-hue { syntax: "<number>"; inherits: true; initial-value: 0; }
 @property --corpus-weather-chroma { syntax: "<number>"; inherits: true; initial-value: 0; }
 :root {
-  transition: --corpus-weather 1.2s ease, --corpus-weather-chroma 1.2s ease;
   --_nh: calc(var(--corpus-neutral-hue) + (var(--corpus-weather-hue) - var(--corpus-neutral-hue)) * var(--corpus-weather));
   --_nc: calc(var(--corpus-neutral-chroma) + (var(--corpus-weather-chroma) - var(--corpus-neutral-chroma)) * var(--corpus-weather));
   --_bh: var(--corpus-brand-hue);

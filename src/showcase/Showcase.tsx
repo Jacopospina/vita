@@ -4,6 +4,7 @@ import { Shell, ShellMain, Header, HeaderNavItem, HeaderGlobalAction } from "@/r
 import { TooltipProvider } from "@/registry/ui/tooltip"
 import { useSunTheme } from "@/registry/hooks/use-sun-theme"
 import { useWeatherTint } from "@/registry/hooks/use-weather-tint"
+import { swapAppearance } from "@/registry/lib/appearance"
 import { Toaster } from "@/registry/ui/notification"
 import { Container, Stack, Inline } from "@/registry/ui/layout"
 import { IconPlaceholder } from "@/registry/ui/icon-placeholder"
@@ -52,11 +53,13 @@ export function Showcase() {
   useWeatherTint()
   const [preset, setPreset] = React.useState("default")
   React.useEffect(() => {
-    document.documentElement.classList.toggle("dark", dark)
+    swapAppearance(() => document.documentElement.classList.toggle("dark", dark))
   }, [dark])
   React.useEffect(() => {
-    if (preset === "default") delete document.documentElement.dataset.corpusPreset
-    else document.documentElement.dataset.corpusPreset = preset
+    swapAppearance(() => {
+      if (preset === "default") delete document.documentElement.dataset.corpusPreset
+      else document.documentElement.dataset.corpusPreset = preset
+    })
   }, [preset])
 
   return (
@@ -90,8 +93,8 @@ export function Showcase() {
                   The AI-agent-first design system, born for humans and machines making together. Documented and built so your agents design like designers — and you make what only you can make.
                 </Text>
                 <Inline gap="md" justify="center">
-                  <Button onClick={() => (window.location.href = `${DOCS}guidelines`)}>Start making</Button>
-                  <Button variant="secondary" onClick={() => document.getElementById("examples")?.scrollIntoView({ behavior: "smooth" })}>See what you can make</Button>
+                  <Button size="xl" onClick={() => (window.location.href = `${DOCS}guidelines`)}>Start making</Button>
+                  <Button size="xl" variant="secondary" onClick={() => document.getElementById("examples")?.scrollIntoView({ behavior: "smooth" })}>See what you can make</Button>
                 </Inline>
               </Stack>
             </Stack>

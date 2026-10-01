@@ -36,7 +36,7 @@ export function Slider({ label, hideLabel, helperText, formatValue = String, sho
       window.removeEventListener("pointercancel", end)
     }
   }, [dragging])
-  // Values always roll like a slot machine (AnimatedText rolls numeric strings).
+  // Values always swap digit by digit (AnimatedText rolls numeric strings).
   const shown = (v: number) => (formatValue === String ? <AnimatedNumber value={v} /> : <AnimatedText>{formatValue(v)}</AnimatedText>)
   return (
     <div className={cn("flex w-full flex-col gap-2", className)}>

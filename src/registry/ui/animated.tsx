@@ -3,9 +3,10 @@ import { cn } from "@/registry/lib/utils"
 
 /**
  * Text choreography — values never snap.
- *   AnimatedNumber: digits roll like a slot machine (up when increasing, down when decreasing),
- *                   staggered from the last digit, each digit de-blurring as it lands.
- *   RollingText:    the same reels for ANY value string ("$1,200", "40%", "20 – 80").
+ *   AnimatedNumber: each changed digit swaps quickly — the old one lifts and blurs away, the new one rises
+ *                   and sharpens (downward when decreasing), staggered from the last digit. Never clipped.
+ *                   Numbers are always regular weight.
+ *   RollingText:    the same digits for ANY value string ("$1,200", "40%", "20 – 80").
  *   AnimatedText:   when text CHANGES, letters reveal in a stagger, sliding up and de-blurring —
  *                   unless the change is a number, which always rolls.
  *                   First render is static, so pages don't shimmer on load.
@@ -16,39 +17,35 @@ const STAGGER = 35 // ms between digits / words
 
 /* ---------------- AnimatedNumber ---------------- */
 
-/** One reel: a strip of 0–9 rolling behind a one-line window (clip-path, so baselines stay aligned). */
+/**
+ * One digit. On change the old digit lifts a little and blurs away while the new one rises from just below,
+ * blurred, and sharpens (reversed when the value drops). It travels a fraction of a line, so nothing needs
+ * clipping — no digit is ever cut off by its box. The invisible "0" holds width and baseline.
+ */
 function Digit({ value, index }: { value: number; index: number }) {
-  const strip = React.useRef<HTMLSpanElement>(null)
-  const prev = React.useRef(value)
-  React.useEffect(() => {
-    const el = strip.current
-    if (prev.current === value || !el || reduced() || typeof el.animate !== "function") {
-      prev.current = value
-      return
-    }
-    prev.current = value
-    el.animate([{ filter: "blur(4px)" }, { filter: "blur(0)" }], {
-      duration: 520,
-      delay: index * STAGGER,
-      easing: "cubic-bezier(0.16, 1, 0.3, 1)",
-      fill: "backwards",
-    })
-  }, [value, index])
+  const [state, setState] = React.useState({ cur: value, prev: null as number | null, dir: 1, n: 0 })
+  if (value !== state.cur) setState({ cur: value, prev: reduced() ? null : state.cur, dir: value > state.cur ? 1 : -1, n: state.n + 1 })
+  const delay = `${index * STAGGER}ms`
+  const up = state.dir > 0
   return (
-    // Clipped with clip-path, NOT overflow: overflow would move the reel's baseline to its bottom edge and
-    // misalign digits against separators ($ , .) and surrounding text. The invisible "0" keeps the text baseline.
-    // Whole-pixel line height (round(1lh)): each reel shifts by an exact multiple of it, so no digit lands on a
-    // fractional pixel and gets snapped up or down relative to its neighbours.
-    <span className="relative inline-block h-[1lh] leading-[round(1lh,1px)] [clip-path:inset(0)]">
+    <span data-digit className="relative inline-block">
       <span className="invisible">0</span>
+      {state.prev !== null && (
+        <span
+          key={`p${state.n}`}
+          className="absolute inset-0 text-center"
+          style={{ animation: `${up ? "corpus-digit-out-up" : "corpus-digit-out-down"} 380ms cubic-bezier(0.4, 0, 0.6, 1) ${delay} both` }}
+          onAnimationEnd={() => setState((s) => (s.n === state.n ? { ...s, prev: null } : s))}
+        >
+          {state.prev}
+        </span>
+      )}
       <span
-        ref={strip}
-        className="absolute inset-x-0 top-0 flex flex-col duration-expressive ease-expressive"
-        style={{ transform: `translateY(${-value * 10}%)`, transitionDelay: `${index * STAGGER}ms` }}
+        key={`c${state.n}`}
+        className="absolute inset-0 text-center"
+        style={state.n && state.prev !== null ? { animation: `${up ? "corpus-digit-in-up" : "corpus-digit-in-down"} 520ms cubic-bezier(0.16, 1, 0.3, 1) ${delay} both` } : undefined}
       >
-        {Array.from({ length: 10 }, (_, d) => (
-          <span key={d} className="h-[1lh] text-center">{d}</span>
-        ))}
+        {state.cur}
       </span>
     </span>
   )
@@ -68,14 +65,14 @@ export function AnimatedNumber({ value, format, locale, className }: AnimatedNum
 }
 
 /**
- * RollingText — ANY value string rolls like a slot machine: every digit is a reel, everything else
+ * RollingText — ANY value string animates per digit: every digit swaps on its own, everything else
  * ($, %, commas, units, "–") stays put. Reels are keyed from the right, so 99 → 100 adds a reel on the left.
  */
 export function RollingText({ text, className }: { text: string; className?: string }) {
   const chars = Array.from(text)
   let digitsFromRight = chars.filter((c) => /\d/.test(c)).length
   return (
-    <span className={cn("inline-flex items-baseline tabular-nums", className)}>
+    <span className={cn("inline-flex items-baseline font-normal tabular-nums", className)}>
       <span className="sr-only">{text}</span>
       <span aria-hidden className="inline-flex items-baseline whitespace-pre">
         {chars.map((c, i) => {
@@ -114,7 +111,7 @@ export function AnimatedText({ children, className, enter = "change", direction 
   const [first] = React.useState(children)
   const [changed, setChanged] = React.useState(false)
   if (!changed && children !== first) setChanged(true)
-  // Numbers are never letter-revealed: numeric values, or text whose only change is its digits, roll like a slot machine.
+  // Numbers are never letter-revealed: numeric values, or text whose only change is its digits, swap digit by digit.
   // (Sentences that merely CONTAIN numbers — "order 4821 arrives in 3–5 days" — stay normal, wrapping text.)
   if (!leaving && enter === "change" && (isNumericValue(children) || (changed && /\d/.test(children) && template(children) === template(first)))) {
     return <RollingText text={children} className={className} />
