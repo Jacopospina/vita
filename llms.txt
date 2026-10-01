@@ -158,6 +158,9 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/iden
 - [Popover](docs/components/popover.md): A non-modal layer anchored to a trigger, opened by click, for rich or interactive content. Includes Toggletip.
   - use: Small interactive content next to a control (column picker, quick assign, filter panel); Toggletip, an explanation with a link or more than one sentence, opened by an ⓘ button
   - avoid: Plain text hint on hover → Tooltip; Blocking decisions or long forms → Modal; Large contextual work areas → RightPanel; A list of actions → Menu
+- [Preview picker](docs/components/preview-picker.md): Choose one option by seeing what it does. Each option is a small tile that shows its effect, so nobody has to translate a number into a feeling.
+  - use: Settings whose result is visual (a corner radius, a density, a text size, a speed); Theme and appearance editors
+  - avoid: Colours → SwatchPicker; Options that are words, not effects → ContentSwitcher / RadioGroup; A precise value nobody needs to see first → NumberInput
 - [Progress bar](docs/components/progress-bar.md): Progress of a system process with a measurable end, or indeterminate when the end is unknown. Also quota and usage.
   - use: Uploads, imports, exports, setup jobs longer than ~2 seconds; Usage vs limit (seats, storage) with helper text
   - avoid: Steps the user completes → ProgressIndicator; Short actions → Button loading / InlineLoading; Content loading with known layout → Skeleton
@@ -179,6 +182,9 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/iden
 - [Structured list](docs/components/structured-list.md): A small, read-mostly set of rows and columns, details, specs and comparisons. Selectable when choosing one row.
   - use: Key/value details of one object (condensed + flush); Comparing a few options across attributes (plans, models); Choosing one of a few rows with multiple attributes (selectable)
   - avoid: Many rows, sorting, pagination, bulk actions → DataTable; Items with individual actions → ContainedList
+- [Swatch picker](docs/components/swatch-picker.md): Choose one colour from a small set of circles. Every option is visible, so people pick the colour they recognise instead of dialling one in.
+  - use: A colour from a small, curated set (brand colour, a label or tag colour, a theme tint); Settings and theme editors
+  - avoid: A precise or continuous colour (any hue, a hex value) → Slider or TextInput; More than about 14 colours → Dropdown with a colour icon per option; Choosing anything that isn't a colour → RadioGroup / ContentSwitcher
 - [Tabs](docs/components/tabs.md): Switch between peer views of the same context, Overview · Activity · Settings.
   - use: pill (default), page-level views of one object; a raised pill slides between tabs; line, dense toolbars or where a track would be too heavy; contained, tabs attached to a panel/tile (secondary level)
   - avoid: Same data in different presentations → ContentSwitcher; Steps the user must complete in order → ProgressIndicator; Navigation between different objects/areas → Side nav; Content users need to compare side by side → show both; A single tab → no tabs

@@ -11,3 +11,7 @@
   border-radius: var(--vita-radius-sm);
   color: var(--vita-foreground);
 }
+
+/* Theme editor: the motion-speed preview dot glides across its track. */
+@keyframes vita-preview-glide { from { transform: translateX(0) } to { transform: translateX(1.5rem) } }
+.preview-glide { animation: vita-preview-glide 0.9s var(--vita-ease-expressive) infinite alternate; }

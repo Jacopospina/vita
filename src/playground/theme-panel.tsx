@@ -1,9 +1,8 @@
 import * as React from "react"
-import { Slider } from "@/registry/ui/slider"
+import { SwatchPicker } from "@/registry/ui/swatch-picker"
+import { PreviewPicker } from "@/registry/ui/preview-picker"
 import { Stack } from "@/registry/ui/layout"
 import { Text } from "@/registry/ui/text"
-import { Toggle } from "@/registry/ui/toggle"
-import { ContentSwitcher } from "@/registry/ui/content-switcher"
 import { Dropdown } from "@/registry/ui/dropdown"
 import { CodeSnippet } from "@/registry/ui/code-snippet"
 import { Button } from "@/registry/ui/button"
@@ -24,6 +23,53 @@ const knobs = [
   { key: "--vita-motion-scale", label: "Motion speed", min: 0, max: 2, step: 0.25, def: 1, unit: "" },
 ] as const
 
+/* Colour is chosen by recognition, not dialled in: the system's hues for the brand, a few tints for the greys. */
+const brandColors = [
+  { value: "blue", label: "Blue", hue: 257.4, chroma: 0.218 },
+  { value: "indigo", label: "Indigo", hue: 278.3, chroma: 0.191 },
+  { value: "purple", label: "Purple", hue: 312.4, chroma: 0.213 },
+  { value: "pink", label: "Pink", hue: 17.9, chroma: 0.238 },
+  { value: "red", label: "Red", hue: 28.7, chroma: 0.232 },
+  { value: "orange", label: "Orange", hue: 50.0, chroma: 0.175 },
+  { value: "yellow", label: "Yellow", hue: 90.4, chroma: 0.177 },
+  { value: "green", label: "Green", hue: 147.4, chroma: 0.194 },
+  { value: "mint", label: "Mint", hue: 189.0, chroma: 0.13 },
+  { value: "teal", label: "Teal", hue: 212.7, chroma: 0.111 },
+  { value: "cyan", label: "Cyan", hue: 233.9, chroma: 0.133 },
+  { value: "brown", label: "Brown", hue: 72.8, chroma: 0.064 },
+  { value: "gray", label: "Graphite", hue: 286.2, chroma: 0.02 },
+]
+const greyTints = [
+  { value: "neutral", label: "Neutral", hue: 286, chroma: 0 },
+  { value: "cool", label: "Cool", hue: 250, chroma: 0.012 },
+  { value: "warm", label: "Warm", hue: 70, chroma: 0.012 },
+  { value: "sage", label: "Sage", hue: 150, chroma: 0.01 },
+  { value: "lilac", label: "Lilac", hue: 300, chroma: 0.012 },
+]
+const near = (a: number, b: number) => Math.abs(a - b) < 0.5
+
+/** A preview drawn at a knob's value (the one place the theme editor styles inline: it shows values tokens don't hold yet). */
+function Fx({ look, className, children }: { look: React.CSSProperties; className?: string; children?: React.ReactNode }) {
+  return <span aria-hidden className={className} style={look}>{children}</span> // vita-allow inline-style: the theme editor previews raw knob values before they become tokens, approved by @jacopo
+}
+
+/* Form follows function: every option shows what it does. */
+const radii = [
+  { v: 0, label: "Square" }, { v: 0.25, label: "Subtle" }, { v: 0.5, label: "Default" }, { v: 0.75, label: "Soft" }, { v: 1.25, label: "Round" },
+]
+const densities = [{ v: 0.9, label: "Compact" }, { v: 1.08, label: "Default" }, { v: 1.2, label: "Roomy" }]
+const bodySizes = [{ v: 0.75, label: "12" }, { v: 0.8125, label: "13" }, { v: 0.875, label: "14" }, { v: 1, label: "16" }]
+const ratios = [{ v: 1.125, label: "Subtle" }, { v: 1.2, label: "Default" }, { v: 1.25, label: "Bold" }, { v: 1.333, label: "Dramatic" }]
+const speeds = [{ v: 0, label: "Off" }, { v: 0.5, label: "Quick" }, { v: 1, label: "Default" }, { v: 1.5, label: "Calm" }, { v: 2, label: "Slow" }]
+const pick = (list: { v: number }[], x: number) => String(list.reduce((a, b) => (Math.abs(b.v - x) < Math.abs(a.v - x) ? b : a)).v)
+const knobPreviews: Record<string, { label: string; items: { value: string; label: string; preview: React.ReactNode }[] }> = {
+  "--vita-radius": { label: "Corner radius", items: radii.map((r) => ({ value: String(r.v), label: r.label, preview: <Fx className="size-6 border-2 border-current" look={{ borderRadius: `${r.v * 0.75}rem` }} /> })) },
+  "--vita-density": { label: "Density", items: densities.map((d) => ({ value: String(d.v), label: d.label, preview: <Fx className="flex w-8 flex-col" look={{ gap: `${(d.v - 0.75) * 12}px` }}>{[0, 1, 2].map((i) => <span key={i} className="h-0.5 rounded-full bg-current" />)}</Fx> })) },
+  "--vita-type-base": { label: "Body size", items: bodySizes.map((b) => ({ value: String(b.v), label: b.label, preview: <Fx look={{ fontSize: `${b.v}rem` }}>Aa</Fx> })) },
+  "--vita-type-ratio": { label: "Type scale", items: ratios.map((r) => ({ value: String(r.v), label: r.label, preview: <span className="flex items-baseline gap-0.5"><Fx className="font-semibold leading-none" look={{ fontSize: `${0.6 * r.v ** 4}rem` }}>A</Fx><Fx className="leading-none" look={{ fontSize: "0.6rem" }}>a</Fx></span> })) },
+  "--vita-motion-scale": { label: "Motion speed", items: speeds.map((m) => ({ value: String(m.v), label: m.label, preview: <span className="relative h-2 w-8"><Fx className="preview-glide absolute top-0 left-0 size-2 rounded-full bg-current" look={{ animationDuration: m.v ? `${0.9 * m.v}s` : "0s" }} /></span> })) },
+}
+
 const fonts = [
   { value: "flex", label: "Google Sans Flex (default)", css: `"Google Sans Flex Variable", "Google Sans Flex", system-ui, sans-serif` },
   { value: "system", label: "System UI", css: `system-ui, sans-serif` },
@@ -31,14 +77,14 @@ const fonts = [
   { value: "serif", label: "Serif (editorial)", css: `"New York", "Iowan Old Style", Georgia, serif` },
 ]
 
-export function ThemePanel({ dark, onDarkChange, weather }: { dark: boolean; onDarkChange: (d: boolean) => void; weather: ReturnType<typeof useWeatherTint> }) {
+export function ThemePanel({ weather }: { weather: ReturnType<typeof useWeatherTint> }) {
   const [values, setValues] = React.useState<Record<string, number>>(() => Object.fromEntries(knobs.map((k) => [k.key, k.def])))
   const [font, setFont] = React.useState("flex")
   const [preset, setPreset] = React.useState("default")
 
   React.useEffect(() => {
     const root = document.documentElement
-    // Knobs move continuously (sliders): apply instantly rather than transitioning every element on the page.
+    // Knobs apply at once (no per-element transitions across the whole page); the pickers show the change.
     withoutTransitions(() => {
       knobs.forEach((k) => root.style.setProperty(k.key, `${values[k.key]}${k.unit}`))
       root.style.setProperty("--vita-font-sans", fonts.find((f) => f.value === font)!.css)
@@ -67,16 +113,13 @@ export function ThemePanel({ dark, onDarkChange, weather }: { dark: boolean; onD
   return (
     <Stack gap="lg">
       <Text tone="muted">Every token in Vita derives from these knobs. Tune them here, then paste the result into <code className="font-mono">src/styles/theme.css</code>.</Text>
-      <ContentSwitcher label="Preset" value={preset} onValueChange={applyPreset} size="sm" items={[{ value: "default", label: "Vita" }, { value: "square", label: "Square" }, { value: "soft", label: "Soft" }, { value: "mono", label: "Mono" }]} className="w-full" />
-      <Toggle label="Dark theme" checked={dark} onCheckedChange={onDarkChange} />
+      <Dropdown label="Theme" value={preset} onValueChange={applyPreset} items={[{ value: "default", label: "Default" }, { value: "square", label: "Square" }, { value: "soft", label: "Soft" }, { value: "mono", label: "Mono" }]} />
       <Stack gap="xs">
-        <ContentSwitcher
+        <Dropdown
           label="Greys"
-          size="sm"
           value={weather.mode}
           onValueChange={(v) => weather.setMode(v as typeof weather.mode)}
-          items={[{ value: "dynamic", label: "Dynamic" }, { value: "none", label: "Neutral" }, { value: "cold", label: "Cold" }, { value: "warm", label: "Warm" }]}
-          className="w-full"
+          items={[{ value: "dynamic", label: "Dynamic", description: "Follows the weather outside" }, { value: "none", label: "Neutral" }, { value: "cold", label: "Cold" }, { value: "warm", label: "Warm" }]}
         />
         <Text variant="caption" tone="muted">
           {weather.mode === "dynamic"
@@ -85,17 +128,34 @@ export function ThemePanel({ dark, onDarkChange, weather }: { dark: boolean; onD
         </Text>
       </Stack>
       <Separator />
-      {knobs.map((k) => (
-        <Slider
-          key={k.key}
-          label={k.label}
-          min={k.min}
-          max={k.max}
-          step={k.step}
-          value={[values[k.key]]}
-          showBounds={false}
-          formatValue={(v) => `${Number(v.toFixed(3))}${k.unit}`}
-          onValueChange={([v]) => setValues((s) => ({ ...s, [k.key]: v }))}
+      <SwatchPicker
+        label="Brand colour"
+        size="sm"
+        items={brandColors.map((c) => ({ value: c.value, label: c.label, color: `var(--vita-palette-${c.value}-500)` }))}
+        value={brandColors.find((c) => near(c.hue, values["--vita-brand-hue"]))?.value ?? ""}
+        onValueChange={(v) => {
+          const c = brandColors.find((x) => x.value === v)!
+          setValues((s) => ({ ...s, "--vita-brand-hue": c.hue, "--vita-brand-chroma": c.chroma }))
+        }}
+      />
+      <SwatchPicker
+        label="Grey tint"
+        size="sm"
+        // vita-allow raw-color: the theme editor previews a grey tint the tokens don't have yet, approved by @jacopo
+        items={greyTints.map((c) => ({ value: c.value, label: c.label, color: `oklch(0.62 ${c.chroma * 4} ${c.hue})` }))}
+        value={greyTints.find((c) => near(c.hue, values["--vita-neutral-hue"]) && Math.abs(c.chroma - values["--vita-neutral-chroma"]) < 0.002)?.value ?? (values["--vita-neutral-chroma"] === 0 ? "neutral" : "")}
+        onValueChange={(v) => {
+          const c = greyTints.find((x) => x.value === v)!
+          setValues((s) => ({ ...s, "--vita-neutral-hue": c.hue, "--vita-neutral-chroma": c.chroma }))
+        }}
+      />
+      {Object.entries(knobPreviews).map(([key, p]) => (
+        <PreviewPicker
+          key={key}
+          label={p.label}
+          items={p.items}
+          value={pick(p.items.map((i) => ({ v: Number(i.value) })), values[key])}
+          onValueChange={(v) => setValues((s) => ({ ...s, [key]: Number(v) }))}
         />
       ))}
       <Dropdown label="Typeface" items={fonts.map(({ value, label }) => ({ value, label }))} value={font} onValueChange={setFont} />

@@ -1073,6 +1073,29 @@
     },
     {
       "section": "components",
+      "slug": "preview-picker",
+      "path": "docs/components/preview-picker.md",
+      "title": "Preview picker",
+      "summary": "Choose one option by seeing what it does. Each option is a small tile that shows its effect, so nobody has to translate a number into a feeling.",
+      "status": "experimental",
+      "import": "import { PreviewPicker } from \"@/components/vita/preview-picker\"",
+      "use_when": [
+        "Settings whose result is visual (a corner radius, a density, a text size, a speed)",
+        "Theme and appearance editors"
+      ],
+      "avoid_when": [
+        "Colours → SwatchPicker",
+        "Options that are words, not effects → ContentSwitcher / RadioGroup",
+        "A precise value nobody needs to see first → NumberInput"
+      ],
+      "related": [
+        "swatch-picker",
+        "content-switcher",
+        "radio-button"
+      ]
+    },
+    {
+      "section": "components",
       "slug": "progress-bar",
       "path": "docs/components/progress-bar.md",
       "title": "Progress bar",
@@ -1233,6 +1256,29 @@
         "contained-list",
         "read-only-states",
         "radio-button"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "swatch-picker",
+      "path": "docs/components/swatch-picker.md",
+      "title": "Swatch picker",
+      "summary": "Choose one colour from a small set of circles. Every option is visible, so people pick the colour they recognise instead of dialling one in.",
+      "status": "experimental",
+      "import": "import { SwatchPicker } from \"@/components/vita/swatch-picker\"",
+      "use_when": [
+        "A colour from a small, curated set (brand colour, a label or tag colour, a theme tint)",
+        "Settings and theme editors"
+      ],
+      "avoid_when": [
+        "A precise or continuous colour (any hue, a hex value) → Slider or TextInput",
+        "More than about 14 colours → Dropdown with a colour icon per option",
+        "Choosing anything that isn't a colour → RadioGroup / ContentSwitcher"
+      ],
+      "related": [
+        "radio-button",
+        "content-switcher",
+        "theming"
       ]
     },
     {

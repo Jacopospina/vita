@@ -43,6 +43,14 @@ How many options?
 └─ a file ................................ FileUploader
 ```
 
+## 2b. The user wants to choose a COLOUR
+
+| Need | Use | Not |
+|---|---|---|
+| One colour from a small set | `SwatchPicker` | A hue slider, a Dropdown of colour names |
+| A precise or continuous colour | `Slider` / `TextInput` | A wall of swatches |
+| A setting whose effect is visual (radius, density, size, speed) | `PreviewPicker` | A slider with a number |
+
 ## 3. The user wants to ENTER something
 
 | Input | Use |

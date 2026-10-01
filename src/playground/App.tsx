@@ -129,7 +129,7 @@ export function App() {
             {section === "guidelines" ? <GuidelinesPage /> : <DocPage key={`${section}/${slug}`} section={section} slug={slug} />}
           </ShellMain>
           <RightPanel open={themeOpen} onOpenChange={setThemeOpen} title="Theme" size="md">
-            <ThemePanel dark={dark} onDarkChange={setDark} weather={weather} />
+            <ThemePanel weather={weather} />
           </RightPanel>
         </ShellBody>
       </Shell>

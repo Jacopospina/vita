@@ -1,5 +1,7 @@
 import * as React from "react"
 import type { DemoMap } from "./types"
+import { SwatchPicker } from "@/registry/ui/swatch-picker"
+import { PreviewPicker } from "@/registry/ui/preview-picker"
 import { Stack, Inline } from "@/registry/ui/layout"
 import { Text } from "@/registry/ui/text"
 import { Button } from "@/registry/ui/button"
@@ -82,7 +84,43 @@ function FormDemo() {
   )
 }
 
+function SwatchDemo() {
+  const [v, setV] = React.useState("blue")
+  const hues = ["blue", "indigo", "purple", "pink", "red", "orange", "yellow", "green", "mint", "teal", "cyan", "brown"]
+  return <SwatchPicker label="Label colour" value={v} onValueChange={setV} items={hues.map((h) => ({ value: h, label: h[0].toUpperCase() + h.slice(1), color: `var(--vita-palette-${h}-500)` }))} className="max-w-sm" />
+}
+
 export const inputDemos: DemoMap = {
+  "components/preview-picker": [
+    {
+      title: "Choose by seeing",
+      description: "Each tile draws its own effect: here, the density of a list.",
+      render: () => (
+        <PreviewPicker
+          label="Density"
+          defaultValue="default"
+          className="max-w-sm"
+          items={[
+            { value: "compact", label: "Compact", preview: <span className="flex w-8 flex-col gap-0.5">{[0, 1, 2].map((i) => <span key={i} className="h-0.5 rounded-full bg-current" />)}</span> },
+            { value: "default", label: "Default", preview: <span className="flex w-8 flex-col gap-1">{[0, 1, 2].map((i) => <span key={i} className="h-0.5 rounded-full bg-current" />)}</span> },
+            { value: "roomy", label: "Roomy", preview: <span className="flex w-8 flex-col gap-1.5">{[0, 1, 2].map((i) => <span key={i} className="h-0.5 rounded-full bg-current" />)}</span> },
+          ]}
+        />
+      ),
+    },
+  ],
+  "components/swatch-picker": [
+    { title: "Choose a colour", description: "Every option visible, the chosen name beside the label. Arrows move the choice.", render: () => <SwatchDemo /> },
+    {
+      title: "Sizes",
+      render: () => (
+        <Stack gap="lg" className="max-w-sm">
+          <SwatchPicker label="Small" size="sm" items={["blue", "green", "orange"].map((h) => ({ value: h, label: h[0].toUpperCase() + h.slice(1), color: `var(--vita-palette-${h}-500)` }))} />
+          <SwatchPicker label="Medium" items={["blue", "green", "orange"].map((h) => ({ value: h, label: h[0].toUpperCase() + h.slice(1), color: `var(--vita-palette-${h}-500)` }))} />
+        </Stack>
+      ),
+    },
+  ],
   "components/text-input": [
     {
       title: "States",
