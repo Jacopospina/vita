@@ -178,6 +178,8 @@
   --animate-modal-fall: corpus-modal-fall var(--corpus-duration-moderate-02) var(--corpus-ease-productive-exit) both;
   --animate-modal-send: corpus-modal-send var(--corpus-duration-moderate-02) var(--corpus-ease-productive-exit) both;
   --animate-exit-scale: corpus-scale-out var(--corpus-duration-fast-02) var(--corpus-ease-productive-exit) both;
+  --animate-enter-list: corpus-list-rise var(--corpus-duration-moderate-01) var(--corpus-ease-productive-enter);
+  --animate-exit-list: corpus-list-sink var(--corpus-duration-fast-02) var(--corpus-ease-productive-exit) both;
   --animate-enter-fade: corpus-fade-in var(--corpus-duration-fast-02) var(--corpus-ease-productive-enter);
   --animate-exit-fade: corpus-fade-out var(--corpus-duration-fast-02) var(--corpus-ease-productive-exit) both;
   --animate-enter-slide-up: corpus-slide-up-in var(--corpus-duration-expressive) var(--corpus-ease-expressive-enter);

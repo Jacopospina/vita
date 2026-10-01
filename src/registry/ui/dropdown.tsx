@@ -19,7 +19,8 @@ export interface DropdownItem {
 // Menu-style list: 6px inset, 28px rows with 10px side padding, concentric 6px row radius (12 − 6), accent highlight.
 export const listClasses = cn(
   "z-50 max-h-80 min-w-(--radix-select-trigger-width) overflow-hidden scope-lg glass glass-3 p-1.5 text-foreground",
-  "data-[state=open]:animate-enter-scale data-[state=closed]:animate-exit-scale",
+  // Slides in from below the field (no scale, no width growth) and sinks back out.
+  "data-[state=open]:animate-enter-list data-[state=closed]:animate-exit-list",
 )
 export const itemClasses = cn(
   "group/item relative flex min-h-control-md w-full cursor-default items-center gap-2 rounded-inner-1.5 py-1 pr-8 pl-2.5 text-body outline-none select-none",

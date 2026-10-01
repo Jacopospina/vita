@@ -31,6 +31,9 @@
 @keyframes corpus-scale-out { to { opacity: 0; transform: scale(0.96) } }
 @keyframes corpus-slide-up-in { from { opacity: 0; transform: translateY(1rem) scale(0.98); filter: blur(8px) } }
 @keyframes corpus-slide-down-out { to { opacity: 0; transform: translateY(0.5rem) } }
+/* Dropdown lists: slide in from below (productive, no scale, no width growth) and sink back out. */
+@keyframes corpus-list-rise { from { opacity: 0; transform: translateY(0.5rem) } }
+@keyframes corpus-list-sink { to { opacity: 0; transform: translateY(0.25rem) } }
 @keyframes corpus-slide-left-in { from { transform: translateX(100%) } }
 @keyframes corpus-slide-right-out { to { transform: translateX(100%) } }
 /* Floating right panel: travels its width plus its inset and shadow, so it starts and ends fully off-screen. */
@@ -146,6 +149,8 @@
     --animate-enter-slide-up: corpus-fade-in var(--corpus-duration-fast-02) linear;
     --animate-exit-slide-down: corpus-fade-out var(--corpus-duration-fast-02) linear both;
     --animate-enter-panel-right: corpus-fade-in var(--corpus-duration-fast-02) linear;
+    --animate-enter-list: corpus-fade-in var(--corpus-duration-fast-02) linear;
+    --animate-exit-list: corpus-fade-out var(--corpus-duration-fast-02) linear both;
     --animate-exit-panel-right: corpus-fade-out var(--corpus-duration-fast-02) linear both;
     --animate-enter-panel-left: corpus-fade-in var(--corpus-duration-fast-02) linear;
     --animate-exit-panel-left: corpus-fade-out var(--corpus-duration-fast-02) linear both;
@@ -201,6 +206,11 @@
   /* Positioning layers are measured, not animated — the WRAPPER only. Everything inside a popover, menu or
      listbox keeps full choreography (checkbox draws, toggles slide, icons swap). */
   :where([data-radix-popper-content-wrapper], [data-radix-scroll-area-viewport]) {
+    transition-property: color, background-color, border-color, opacity, box-shadow;
+  }
+  /* The floating surface's own box is measured too (its width comes from the trigger after mount), so it never
+     grows from 0. Everything inside it keeps full choreography. */
+  :where([data-radix-popper-content-wrapper] > *) {
     transition-property: color, background-color, border-color, opacity, box-shadow;
   }
 }
