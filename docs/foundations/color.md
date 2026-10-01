@@ -47,19 +47,7 @@ avoid_when:
 - **Force it per product.** Set `data-corpus-contrast="high"` on `<html>` for regulated or accessibility-critical products.
 - **Text on tints always passes.** Every `-foreground` token uses the high-contrast variant.
 
-## Glass by elevation
+## Material
 
-Everything floating above the page is frosted glass. The higher it sits, the more frosted it is: more blur, and more of what's behind shows through.
+- **Floating surfaces are glass.** Tiers, blur, fill and the `elevated` surface live in [Material](#/foundations/material).
 
-| Tier | Layer | Blur | Fill | Used by |
-|---|---|---|---|---|
-| `glass-1` | z-30 | 10px | 24% | Side navigation |
-| `glass-2` | z-40 | 14px | 20% | Header |
-| `glass-3` | z-50 | 18px | 16% | Right panel, menus, dropdown lists, popovers |
-| `glass-4` | z-50, above an overlay | 24px | 12% | Dialogs |
-| `glass-5` | z-60 | 30px | 8% | Notifications, capsules |
-
-- **See through, read white.** Content moving beneath stays faintly visible. In light mode the glass brightens its backdrop (`glass-lift`), so it still reads white instead of greying into the page.
-- **`elevated` surface.** Glass fills from the `elevated` token: `raised` plus the weather tint (see Theming), so only floating layers carry it.
-
-Tooltips stay solid: they're a deliberately inverse surface.

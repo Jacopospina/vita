@@ -188,7 +188,40 @@ function MotionDemo() {
   )
 }
 
+/** The five glass tiers over a busy backdrop, so the frost and what shows through are visible. */
+function MaterialDemo() {
+  const tiers = [
+    { n: 1, cls: "glass glass-1", label: "Side navigation" },
+    { n: 2, cls: "glass glass-2", label: "Header" },
+    { n: 3, cls: "glass glass-3", label: "Right panel, menus" },
+    { n: 4, cls: "glass glass-4", label: "Dialogs" },
+    { n: 5, cls: "glass glass-5", label: "Notifications" },
+  ]
+  return (
+    <div className="relative h-80 overflow-hidden scope-lg bg-layer-1">
+      <div aria-hidden className="absolute inset-0 grid grid-cols-5 place-items-center gap-3 p-6">
+        {(["bg-primary", "bg-success", "bg-warning", "bg-error", "bg-info"] as const).map((bg, i) => (
+          <div key={bg} className="flex flex-col items-center gap-3">
+            <span className={cn("size-20 rounded-full", bg)} />
+            <Text variant="title-2">{["Give", "your", "ideas", "a", "body."][i]}</Text>
+            <span className={cn("size-12 rounded-full", ["bg-info", "bg-error", "bg-primary", "bg-success", "bg-warning"][i])} />
+          </div>
+        ))}
+      </div>
+      <div className="absolute inset-0 grid grid-cols-5 gap-3 p-6">
+        {tiers.map((t) => (
+          <div key={t.n} className={cn(t.cls, "flex flex-col justify-end scope-lg p-3")}>
+            <Text weight="semibold">glass-{t.n}</Text>
+            <Text variant="footnote" tone="muted">{t.label}</Text>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 export const foundationDemos: DemoMap = {
+  "foundations/material": [{ title: "Five tiers, more frosted the higher they float", render: () => <MaterialDemo /> }],
   "foundations/brand": [
     {
       title: "Give your ideas a body",

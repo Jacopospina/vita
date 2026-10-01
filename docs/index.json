@@ -130,6 +130,22 @@
     },
     {
       "section": "foundations",
+      "slug": "material",
+      "path": "docs/foundations/material.md",
+      "title": "Material",
+      "summary": "Everything that floats above the page is frosted glass. The higher it floats, the more it frosts and the more of what's behind shows through.",
+      "status": "stable",
+      "use_when": [
+        "Any surface with a z-index — side nav, header, right panel, menus, popovers, dialogs, notifications, pinned toolbars"
+      ],
+      "avoid_when": [
+        "In-flow containers (cards, tiles, lists) → solid layers (layer-1..3)",
+        "Tooltips → the solid inverse surface",
+        "Custom blur or translucency → use a glass tier"
+      ]
+    },
+    {
+      "section": "foundations",
       "slug": "motion",
       "path": "docs/foundations/motion.md",
       "title": "Motion",

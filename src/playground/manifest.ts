@@ -15,6 +15,7 @@ export const manifest: Record<Section, NavEntry[]> = {
     { slug: "grid", title: "Grid & layout" },
     { slug: "spacing", title: "Spacing" },
     { slug: "color", title: "Color" },
+    { slug: "material", title: "Material" },
     { slug: "typography", title: "Typography" },
     { slug: "motion", title: "Motion" },
     { slug: "icons", title: "Icons" },
