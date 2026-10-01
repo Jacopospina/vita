@@ -2,8 +2,8 @@ import * as React from "react"
 
 /**
  * useSunTheme, Vita follows the sun: light while the sun is up where the user is, dark once it has set.
- * Location: the device position if the user allows it (remembered on this device), otherwise an estimate from the
- * timezone (longitude from the standard UTC offset, a mid latitude), never wrong by more than about an hour.
+ * Location: estimated from the timezone (longitude from the standard UTC offset, a mid latitude), never wrong by
+ * more than about an hour. Vita NEVER asks for the device's position: a theme is not worth a permission prompt.
  * Re-checks every few minutes. The user can still flip it; the override lasts until the next sunrise/sunset.
  *
  *   const [dark, setDark] = useSunTheme()   // apply with document.documentElement.classList.toggle("dark", dark)
@@ -41,7 +41,7 @@ function estimate(): Coords {
   return { lat: south ? -35 : 45, lon: (-standard / 60) * 15 }
 }
 
-/** Where the user is: the remembered device position, else the timezone estimate. */
+/** Where the user is, roughly: a position the product saved itself (never asked for by Vita), else the timezone. */
 export const readCoords = (): Coords => stored() ?? estimate()
 
 function stored(): Coords | null {
@@ -54,27 +54,9 @@ function stored(): Coords | null {
 }
 
 export function useSunTheme() {
-  const [coords, setCoords] = React.useState<Coords>(() => stored() ?? estimate())
+  const [coords] = React.useState<Coords>(() => stored() ?? estimate())
   const [now, setNow] = React.useState(() => Date.now())
   const [override, setOverride] = React.useState<{ dark: boolean; daylight: boolean } | null>(null)
-
-  // Real position, if the user allows it. Remembered on this device so it's asked at most once.
-  React.useEffect(() => {
-    if (stored() || !("geolocation" in navigator)) return
-    navigator.geolocation.getCurrentPosition(
-      (p) => {
-        const c = { lat: p.coords.latitude, lon: p.coords.longitude }
-        try {
-          localStorage.setItem(STORE, JSON.stringify(c))
-        } catch {
-          /* private mode: just use it for this visit */
-        }
-        setCoords(c)
-      },
-      () => {},
-      { maximumAge: 24 * 3600 * 1000, timeout: 10000 },
-    )
-  }, [])
 
   React.useEffect(() => {
     const t = window.setInterval(() => setNow(Date.now()), RECHECK_MS)

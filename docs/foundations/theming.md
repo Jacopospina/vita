@@ -45,7 +45,7 @@ avoid_when:
 
 ## Light and dark
 
-- **Follows the sun.** Vita is light while the sun is up where the user is, and dark after sunset (`useSunTheme`). It uses the device location if the user allows it, otherwise an estimate from their timezone.
+- **Follows the sun.** Vita is light while the sun is up where the user is, and dark after sunset (`useSunTheme`). It estimates where the user is from their timezone (within about an hour of the real sunset) and never asks for their location: a theme is not worth a permission prompt.
 - **People can still choose.** The theme toggle overrides it until the next sunrise or sunset.
 
 ## Greys follow the weather
@@ -53,6 +53,6 @@ avoid_when:
 - **Three states.** With `useWeatherTint` (on by default) the greys are **cold** below 15 °C, **neutral** from 15 to 18 °C, and **warm** from 18 °C up.
 - **Floating layers only.** The tint colours only surfaces that float on a z-index, the glass of the side nav, header, right panel, menus, popovers, dialogs, notifications and pinned toolbars. The page, in-flow cards and tiles, fields, lines and text stay neutral.
 - **Noticeable, still grey.** A tint is chroma 0.014: you see the warmth or the cool, but greys stay greys.
-- **Where the reading comes from.** The current temperature for the user's area (position rounded to about 10 km), refreshed every 30 minutes. Offline, it falls back to a seasonal estimate.
+- **Where the reading comes from.** The current temperature for the user's area (estimated from their timezone, never from a location prompt), refreshed every 30 minutes. Offline, it falls back to a seasonal estimate.
 - **It fades.** A change of state cross-fades the page once.
 - **Four modes.** **Dynamic** (`"dynamic"`, the default) changes with the weather. **Neutral** (`"none"`) never tints, **Cold** (`"cold"`) is always cold and **Warm** (`"warm"`) is always warm. The choice is remembered on the device. While a tint is on, it replaces the neutral hue and tint knobs.
