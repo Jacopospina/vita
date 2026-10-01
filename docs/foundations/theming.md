@@ -45,3 +45,11 @@ avoid_when:
 
 - **Follows the sun.** Corpus is light while the sun is up where the user is, and dark after sunset (`useSunTheme`). It uses the device location if the user allows it, otherwise an estimate from their timezone.
 - **People can still choose.** The theme toggle overrides it until the next sunrise or sunset.
+
+## Greys follow the weather
+
+- **Warm outside, warm greys.** With `useWeatherTint` (on by default), greys lean a hair warm when it's warm where the user is and a hair cool when it's cold. Around 17 °C they stay pure.
+- **Barely there.** The tint tops out at chroma 0.006, reached at 30 °C or 0 °C. People should feel it, not see it.
+- **Where the reading comes from.** The current temperature for the user's area (position rounded to about 10 km), refreshed every 30 minutes. Offline, it falls back to a seasonal estimate.
+- **It fades.** Switching the tint, or a new reading, cross-fades over 1.2 s.
+- **Switchable.** People can turn it off, and the choice is remembered on their device. While on, it replaces the neutral hue and tint knobs.

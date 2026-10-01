@@ -3,6 +3,7 @@ import { ColorPalette, Moon, Sun, LogoGithub } from "@/registry/icons"
 import { Shell, ShellBody, ShellMain, Header, HeaderGlobalAction, LeftPanel, SideNavItem, SideNavSection, RightPanel } from "@/registry/ui/ui-shell"
 import { TooltipProvider } from "@/registry/ui/tooltip"
 import { useSunTheme } from "@/registry/hooks/use-sun-theme"
+import { useWeatherTint } from "@/registry/hooks/use-weather-tint"
 import { Toaster } from "@/registry/ui/notification"
 import { Search } from "@/registry/ui/search"
 import { manifest, sectionTitles, type Section } from "./manifest"
@@ -48,6 +49,7 @@ export function App() {
   const [themeOpen, setThemeOpen] = React.useState(false)
   // Follows the sun where the user is; the header toggle overrides until the next sunrise/sunset.
   const [dark, setDark] = useSunTheme()
+  const [weather, setWeather, celsius] = useWeatherTint()
   const [filter, setFilter] = React.useState("")
 
   React.useEffect(() => {
@@ -98,7 +100,7 @@ export function App() {
             {section === "home" ? <HomePage /> : section === "guidelines" ? <GuidelinesPage /> : <DocPage key={`${section}/${slug}`} section={section} slug={slug} />}
           </ShellMain>
           <RightPanel open={themeOpen} onOpenChange={setThemeOpen} title="Theme" size="md">
-            <ThemePanel dark={dark} onDarkChange={setDark} />
+            <ThemePanel dark={dark} onDarkChange={setDark} weather={weather} onWeatherChange={setWeather} celsius={celsius} />
           </RightPanel>
         </ShellBody>
       </Shell>

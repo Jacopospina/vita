@@ -29,7 +29,7 @@ const fonts = [
   { value: "serif", label: "Serif (editorial)", css: `"New York", "Iowan Old Style", Georgia, serif` },
 ]
 
-export function ThemePanel({ dark, onDarkChange }: { dark: boolean; onDarkChange: (d: boolean) => void }) {
+export function ThemePanel({ dark, onDarkChange, weather, onWeatherChange, celsius }: { dark: boolean; onDarkChange: (d: boolean) => void; weather: boolean; onWeatherChange: (on: boolean) => void; celsius: number | null }) {
   const [values, setValues] = React.useState<Record<string, number>>(() => Object.fromEntries(knobs.map((k) => [k.key, k.def])))
   const [font, setFont] = React.useState("flex")
   const [preset, setPreset] = React.useState("default")
@@ -62,6 +62,12 @@ export function ThemePanel({ dark, onDarkChange }: { dark: boolean; onDarkChange
       <Text tone="muted">Every token in Corpus derives from these knobs. Tune them here, then paste the result into <code className="font-mono">src/styles/theme.css</code>.</Text>
       <ContentSwitcher label="Preset" value={preset} onValueChange={applyPreset} size="sm" items={[{ value: "default", label: "Corpus" }, { value: "square", label: "Square" }, { value: "soft", label: "Soft" }, { value: "mono", label: "Mono" }]} className="w-full" />
       <Toggle label="Dark theme" checked={dark} onCheckedChange={onDarkChange} />
+      <Toggle
+        label="Tint greys by the weather"
+        helperText={weather ? `${celsius === null ? "Reading the temperature…" : `${Math.round(celsius)} °C outside`} · replaces the neutral hue and tint` : "Greys use the neutral hue and tint below"}
+        checked={weather}
+        onCheckedChange={onWeatherChange}
+      />
       <Separator />
       {knobs.map((k) => (
         <Slider

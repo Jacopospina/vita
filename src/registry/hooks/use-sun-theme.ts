@@ -30,7 +30,7 @@ export function sunElevation(date: Date, lat: number, lon: number) {
 /** Daylight = the sun's centre above the horizon, refraction included. */
 export const isDaylight = (date: Date, lat: number, lon: number) => sunElevation(date, lat, lon) > -0.833
 
-type Coords = { lat: number; lon: number }
+export type Coords = { lat: number; lon: number }
 
 /** Without a position: longitude from the STANDARD (non-summer) UTC offset, latitude ±45 by hemisphere guess. */
 function estimate(): Coords {
@@ -40,6 +40,9 @@ function estimate(): Coords {
   const south = /^(Australia|Antarctica|Pacific\/Auckland|America\/(Argentina|Santiago|Sao_Paulo|Montevideo)|Africa\/Johannesburg)/.test(tz)
   return { lat: south ? -35 : 45, lon: (-standard / 60) * 15 }
 }
+
+/** Where the user is: the remembered device position, else the timezone estimate. */
+export const readCoords = (): Coords => stored() ?? estimate()
 
 function stored(): Coords | null {
   try {

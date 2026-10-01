@@ -3,6 +3,7 @@ import { Moon, Sun, LogoGithub, ArrowRight, Book, Bot, Security, UserMultiple } 
 import { Shell, ShellMain, Header, HeaderNavItem, HeaderGlobalAction } from "@/registry/ui/ui-shell"
 import { TooltipProvider } from "@/registry/ui/tooltip"
 import { useSunTheme } from "@/registry/hooks/use-sun-theme"
+import { useWeatherTint } from "@/registry/hooks/use-weather-tint"
 import { Toaster } from "@/registry/ui/notification"
 import { Container, Stack, Inline } from "@/registry/ui/layout"
 import { IconPlaceholder } from "@/registry/ui/icon-placeholder"
@@ -48,6 +49,7 @@ const presets = [
 export function Showcase() {
   // Follows the sun where the visitor is; the header toggle overrides until the next sunrise/sunset.
   const [dark, setDark] = useSunTheme()
+  useWeatherTint()
   const [preset, setPreset] = React.useState("default")
   React.useEffect(() => {
     document.documentElement.classList.toggle("dark", dark)
