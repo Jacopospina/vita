@@ -17,9 +17,15 @@ export function useFlip<T extends HTMLElement>(ref: React.RefObject<T | null>, e
     // Hidden (display:none, a closed panel, an inactive tab) → every child measures 0,0. Recording that would make
     // children "fly in from the top left" when it appears, so positions are only kept while the container is laid out.
     const visible = () => el.offsetParent !== null || getComputedStyle(el).position === "fixed"
+    // Positions INSIDE the container. offsetTop is relative to the nearest positioned ancestor; when that isn't the
+    // container, the container's own move would count too — and a parent FLIP compensates for it already (double jump).
+    const pos = (c: HTMLElement) =>
+      c.offsetParent === el || c.offsetParent !== el.offsetParent
+        ? { x: c.offsetLeft, y: c.offsetTop }
+        : { x: c.offsetLeft - el.offsetLeft, y: c.offsetTop - el.offsetTop }
     const snap = () => {
       if (!visible()) return kids().forEach((c) => cache.delete(c))
-      kids().forEach((c) => cache.set(c, { x: c.offsetLeft, y: c.offsetTop }))
+      kids().forEach((c) => cache.set(c, pos(c)))
     }
 
     // Runs in observer callbacks: after layout, before paint — so the jump is never seen.
@@ -30,8 +36,9 @@ export function useFlip<T extends HTMLElement>(ref: React.RefObject<T | null>, e
       for (const c of kids()) {
         const prev = cache.get(c)
         if (!prev) continue
-        const dx = prev.x - c.offsetLeft
-        const dy = prev.y - c.offsetTop
+        const now = pos(c)
+        const dx = prev.x - now.x
+        const dy = prev.y - now.y
         if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
           c.animate([{ translate: `${dx}px ${dy}px` }, { translate: "0px 0px" }], {
             duration: 240,

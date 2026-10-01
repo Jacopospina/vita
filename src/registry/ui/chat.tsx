@@ -59,6 +59,10 @@ export interface ChatBubbleProps {
 
 export function ChatBubble({ role, children, author, time, position = "single", status, onRetry, launched, className }: ChatBubbleProps) {
   const agent = role === "agent"
+  // The spring-in plays ONCE, when the bubble first appears. A bubble that arrived by flight (launched) never plays it,
+  // and losing `launched` later (the next message takes it) must not replay it — that made the whole column jump.
+  const [fresh, setFresh] = React.useState(true)
+  if (launched && fresh) setFresh(false)
   const showMeta = position === "single" || position === "last"
   // Joined corners: the side facing the author tightens where bubbles meet.
   const corners = agent
@@ -75,8 +79,9 @@ export function ChatBubble({ role, children, author, time, position = "single", 
             agent ? "origin-bottom-left bg-layer-2 text-foreground" : "origin-bottom-right bg-primary text-primary-foreground",
             status === "sending" && "opacity-70",
             status === "failed" && "bg-error-subtle text-foreground",
-            !launched && "animate-chip-in",
+            fresh && !launched && "animate-chip-in",
           )}
+          onAnimationEnd={(e) => { if (e.target === e.currentTarget) setFresh(false) }}
         >
           {children}
         </div>
@@ -294,17 +299,26 @@ export function MiniChat({ agent, status = "Online", messages, typing, onSend, o
     const sc = scroller.current
     const th = threadRef.current
     if (!sc || !th) return
+    // Only the person unpins the thread: our own glide passes through "far from the bottom" mid-scroll and must not count.
+    let userAt = 0
+    const byUser = () => { userAt = performance.now() }
     const onScroll = () => {
-      pinned.current = sc.scrollHeight - sc.scrollTop - sc.clientHeight < 24
+      const atEnd = sc.scrollHeight - sc.scrollTop - sc.clientHeight < 24
+      if (atEnd) pinned.current = true
+      else if (performance.now() - userAt < 800) pinned.current = false
     }
+    // Growth (a reply replacing the thinking line, a bubble landing) GLIDES the conversation up — never a jump.
     const stick = () => {
-      if (pinned.current) sc.scrollTop = sc.scrollHeight
+      if (pinned.current) scrollToEnd(sc)
     }
+    const intents = ["wheel", "touchmove", "pointerdown", "keydown"] as const
+    intents.forEach((e) => sc.addEventListener(e, byUser, { passive: true }))
     sc.addEventListener("scroll", onScroll, { passive: true })
     const ro = new ResizeObserver(stick)
     ro.observe(th)
-    stick()
+    scrollToEnd(sc, false) // first paint starts at the latest message, no scroll animation on load
     return () => {
+      intents.forEach((e) => sc.removeEventListener(e, byUser))
       sc.removeEventListener("scroll", onScroll)
       ro.disconnect()
     }
