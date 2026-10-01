@@ -31,3 +31,9 @@ related: [disclosures, tabs, tile]
 3. **Open the first or the most relevant item by default** when the user arrives with a goal.
 4. **The motion is a height expand at `moderate-02`** and the chevron rotates. Reduced motion shows the content instantly.
 5. **Content width** is capped at `max-w-prose` for readability.
+
+## Look
+
+- **One surface.** The sections belong together, so they share one rounded card, like a `ListGroup`.
+- **Rounded rows.** Each trigger is a concentric pill, so hover and focus follow the card's corners.
+- **Inset separators.** Separators sit inside the card's padding and fade next to the row you're hovering.

@@ -7,13 +7,23 @@ import { Icon } from "@/registry/ui/icon"
 /**
  * Accordion — progressive disclosure for a LIST of sections the user scans by heading (FAQs, settings groups, filters).
  * Don't hide content most users need; don't nest accordions. One section → use an ExpandableTile or a Disclosure (Collapsible).
+ * Sections belong together: one rounded surface, concentric rounded rows, inset separators (like ListGroup).
  */
 export function Accordion({ className, align = "end", size = "md", ...props }: React.ComponentProps<typeof AccordionPrimitive.Root> & { align?: "start" | "end"; size?: "sm" | "md" | "lg" }) {
-  return <AccordionPrimitive.Root data-align={align} data-size={size} className={cn("group/accordion w-full border-t border-border-subtle", className)} {...props} />
+  return <AccordionPrimitive.Root data-align={align} data-size={size} className={cn("group/accordion flex w-full flex-col scope-lg border border-border-subtle bg-layer-2 p-1", className)} {...props} />
 }
 
 export function AccordionItem({ className, ...props }: React.ComponentProps<typeof AccordionPrimitive.Item>) {
-  return <AccordionPrimitive.Item className={cn("border-b border-border-subtle", className)} {...props} />
+  return (
+    <AccordionPrimitive.Item
+      className={cn(
+        // inset separator above every section but the first; it fades when the row below is hovered
+        "group/item relative before:absolute before:inset-x-3 before:top-0 before:h-px before:bg-border before:duration-fast-02 first:before:opacity-0 has-[button:hover]:before:opacity-0",
+        className,
+      )}
+      {...props}
+    />
+  )
 }
 
 export function AccordionTrigger({ className, children, ...props }: React.ComponentProps<typeof AccordionPrimitive.Trigger>) {
@@ -21,7 +31,7 @@ export function AccordionTrigger({ className, children, ...props }: React.Compon
     <AccordionPrimitive.Header className="flex">
       <AccordionPrimitive.Trigger
         className={cn(
-          "group flex flex-1 items-center gap-2 px-3 text-left text-body text-foreground duration-fast-02 ease-productive",
+          "group flex flex-1 items-center gap-2 rounded-inner-1 px-3 text-left text-body text-foreground duration-fast-02 ease-productive",
           "h-control-md group-data-[size=sm]/accordion:h-control-sm group-data-[size=lg]/accordion:h-control-lg",
           "hover:bg-hover focus-ring-inset disabled:text-disabled-foreground",
           "group-data-[align=start]/accordion:flex-row-reverse group-data-[align=start]/accordion:justify-end",
