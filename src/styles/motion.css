@@ -116,10 +116,6 @@
 @keyframes corpus-rise-in { from { opacity: 0; transform: translateY(1.25rem); filter: blur(10px) } }
 @keyframes corpus-sink-out { to { opacity: 0; transform: translateY(-0.5rem); filter: blur(4px) } }
 @keyframes corpus-pulse { 50% { opacity: 0.55 } }
-/* Liquid progress: droplets bob off the fill's head and merge back; indeterminate droplets flow along the track. */
-@keyframes corpus-drip-a { 0%, 100% { transform: translateX(0) } 50% { transform: translateX(0.5rem) } }
-@keyframes corpus-drip-b { 0%, 100% { transform: translateX(0) } 50% { transform: translateX(0.3rem) } }
-@keyframes corpus-flow { from { transform: translateX(-20%) } to { transform: translateX(115%) } }
 @keyframes corpus-status-write { 0% { stroke-dashoffset: 100 } 45%, 60% { stroke-dashoffset: 0 } 100% { stroke-dashoffset: -100 } }
 @keyframes corpus-status-dot { 0%, 100% { opacity: 0.25 } 40% { opacity: 1 } }
 @keyframes corpus-status-turn { to { transform: rotate(360deg) } }
@@ -170,12 +166,6 @@
     --animate-island-in: corpus-fade-in var(--corpus-duration-fast-02) linear both;
     --animate-island-out: corpus-fade-out var(--corpus-duration-fast-02) linear both;
     --animate-indeterminate: corpus-pulse 1.5s linear infinite;
-    --animate-drip-a: none;
-    --animate-drip-b: none;
-    --animate-flow-1: none;
-    --animate-flow-2: none;
-    --animate-flow-3: none;
-    --animate-flow-4: none;
   }
 }
 

@@ -23,7 +23,9 @@ related: [progress-indicator, loading, file-uploader]
 
 ## Look
 
-- **Liquid, like Thinking.** The fill runs through the same goo filter as the Thinking orb, with gloss on top and a soft glow. The liquid always stays inside the track.
-- **Determinate:** the fill's head is a living droplet; small drops wobble off it and merge back. The head is part of the fill, so it never runs ahead of the bar.
-- **Indeterminate:** droplets flow along the track at different speeds, catching up and fusing. There is no sliding bar.
+- **A solid bar with a liquid tip.** The body is solid and springs to the value. A small volume of real simulated liquid rides its tip, with pressure, surface tension, viscosity and walls it wets.
+- **Determinate:** when the body slows, the liquid's own inertia surges past, sloshes and settles back against it. Lowering the value draws it back, like a sealed tube.
+- **Indeterminate:** a slug of liquid is pushed round the track by a pulsing pump. It stretches, tears into drops and fuses again; there is no sliding bar.
+- **Glow:** only in dark mode. Light mode keeps a faint halo.
+- **Reduced motion:** the liquid is shown at rest, with no flow.
 - **Tone:** `brand` by default. Use `spectrum` for agent work. Finished and error switch to success and error.

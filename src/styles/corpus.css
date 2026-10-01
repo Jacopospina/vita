@@ -217,13 +217,7 @@
   --animate-status-breathe-late: corpus-status-breathe 2s var(--corpus-ease-productive) 1s infinite;
   --animate-status-fill: corpus-status-fill 2.4s var(--corpus-ease-productive) infinite;
   --animate-indeterminate: corpus-indeterminate 1.4s var(--corpus-ease-productive) infinite;
-  --animate-drip-a: corpus-drip-a 1.6s var(--corpus-ease-productive) infinite;
-  --animate-drip-b: corpus-drip-b 2.1s var(--corpus-ease-productive) 0.4s infinite;
   /* different speeds on purpose: blobs overtake each other and melt together, then pull apart */
-  --animate-flow-1: corpus-flow 1.7s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-  --animate-flow-2: corpus-flow 2.3s cubic-bezier(0.3, 0, 0.7, 1) 0.15s infinite;
-  --animate-flow-3: corpus-flow 2.9s cubic-bezier(0.6, 0, 0.4, 1) 0.35s infinite;
-  --animate-flow-4: corpus-flow 2s cubic-bezier(0.5, 0.1, 0.5, 0.9) 0.9s infinite;
 }
 
 /*
