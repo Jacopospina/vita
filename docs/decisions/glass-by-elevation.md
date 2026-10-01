@@ -10,7 +10,7 @@ related: [material, color, ui-shell-header]
 ## Decision
 
 - **Glass on every z-indexed surface.** Side nav, header, right panel, menus, popovers, dialogs, notifications, capsules, pinned toolbars.
-- **Tier by layer.** glass-1…5: blur 10 · 14 · 18 · 24 · 30px, fill 24 · 20 · 16 · 44 · 8% (dialogs revised, below).
+- **Tier by layer.** glass-1…5: blur 10 · 14 · 18 · 24 · 30px, fill 24 · 20 · 16 · 80 · 8% (dialogs revised, below).
 - **The page scrolls under the shell.** Header, side nav and right panel float over a full-window scroller.
 - **A whisper of lift.** Light mode brightens the backdrop 3%.
 - **Only floating layers carry the weather tint** (via `elevated`).
@@ -36,3 +36,8 @@ related: [material, color, ui-shell-header]
 - **glass-4 fill 12% → 44%.** Modals and Spotlight blended into the page behind them; a dialog is where people read and decide, so it must read first.
 - **Only this tier.** Every other tier keeps its fill; blur still rises with the layer.
 - **Still glass.** 44% stays below the rejected near-opaque range (66–86%), so the frost still shows.
+
+## Revision — 2026-10-01 (later): dialogs are near-opaque
+
+- **glass-4 fill 44% → 80%.** 44% still let the page blend through; a dialog must read as a solid sheet. The blur stays, so only a hint of the page shows at the edges of colour.
+- **The "near-opaque" rejection no longer applies to dialogs.** It still holds for every other tier: shell, menus and notifications stay thin glass.

@@ -19,7 +19,7 @@ avoid_when:
 | `glass-1` | z-30 | 10px | 24% | Side navigation |
 | `glass-2` | z-40 | 14px | 20% | Header |
 | `glass-3` | z-50 | 18px | 16% | Right panel, menus, dropdown lists, popovers |
-| `glass-4` | z-50, above an overlay | 24px | 44% | Dialogs — the one denser tier, so what you read in a dialog never blends into the page |
+| `glass-4` | z-50, above an overlay | 24px | 80% | Dialogs — the one denser tier, so what you read in a dialog never blends into the page |
 | `glass-5` | z-60 | 30px | 8% | Notifications, capsules |
 
 ## Rules

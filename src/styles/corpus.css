@@ -418,7 +418,7 @@
 @utility glass-1 { --corpus-glass-blur: 10px; --corpus-glass-fill: 24%; --corpus-glass-sat: 1.4; }
 @utility glass-2 { --corpus-glass-blur: 14px; --corpus-glass-fill: 20%; --corpus-glass-sat: 1.5; }
 @utility glass-3 { --corpus-glass-blur: 18px; --corpus-glass-fill: 16%; --corpus-glass-sat: 1.6; }
-@utility glass-4 { --corpus-glass-blur: 24px; --corpus-glass-fill: 44%; --corpus-glass-sat: 1.7; }
+@utility glass-4 { --corpus-glass-blur: 24px; --corpus-glass-fill: 80%; --corpus-glass-sat: 1.7; }
 @utility glass-5 { --corpus-glass-blur: 30px; --corpus-glass-fill: 8%; --corpus-glass-sat: 1.8; }
 
 @utility glass {
