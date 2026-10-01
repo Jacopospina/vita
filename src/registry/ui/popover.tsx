@@ -60,7 +60,7 @@ export function Toggletip({ label = "More information", children, align = "start
     <Popover>
       <PopoverTrigger
         aria-label={label}
-        className="inline-flex size-5 items-center justify-center rounded-sm text-muted-foreground hover:text-foreground focus-ring"
+        className="relative tap inline-flex size-5 items-center justify-center rounded-sm text-muted-foreground hover:text-foreground focus-ring"
       >
         <Icon as={Information} size="sm" />
       </PopoverTrigger>

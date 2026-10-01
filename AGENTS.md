@@ -16,8 +16,9 @@ Corpus is consumed by humans and AI agents in product repos, so every change mus
 4. **Demos:** add every variant and state to `src/playground/demos/*.tsx`. The first demo is the hero preview.
 5. **Manifest:** `src/playground/manifest.ts`. Map the sources in `src/playground/sources.ts` if the slug ≠ the filename.
 6. **Choreography check:** expressive arrivals (notifications, dialogs, field messages) obey *Motion → Gravity*. Nothing may mount, unmount or swap on a state change without a transition (see *Motion → State changes never snap*): `forceMount` + data-state for indicators, `SwapIcon` for glyphs, `useExit`/`FieldMessage` for leaving content, `reveal` for expand/collapse.
-7. Run `pnpm llms` (regenerates `docs/index.json` and `llms.txt`), then `pnpm check`.
-8. For visual changes, run `pnpm visual`: every page in real Chrome — no phantom scroll, nothing gliding after load, axe (WCAG A/AA) clean, and a screenshot diff against your local baseline (`--update` accepts).
+7. **Touch check** (`docs/decisions/touch.md`): anything hover reveals also shows under `pointer-coarse:`; a small *standalone* control gets `tap` (never rows, tabs or grouped buttons); a continuous animation must stop off-screen and cost nothing per frame on a phone (no per-frame filters, no `will-change` on many elements).
+8. Run `pnpm llms` (regenerates `docs/index.json` and `llms.txt`), then `pnpm check`.
+9. For visual changes, run `pnpm visual`: every page in real Chrome — no phantom scroll, nothing gliding after load, axe (WCAG A/AA) clean, and a screenshot diff against your local baseline (`--update` accepts).
 
 ## Writing docs (card-first — pages must be scannable in seconds)
 

@@ -174,7 +174,7 @@ export function DataTable<T extends { id: string }>({
                     {c.sortable ? (
                       <button type="button" onClick={() => cycleSort(c.key)} className={cn("group flex h-full w-full items-center gap-2 rounded-(--corpus-inset-r) px-3 py-1.5 duration-fast-02 hover:bg-layer-2 focus-ring-inset", c.align === "end" && "flex-row-reverse")}>
                         {c.header}
-                        <SwapIcon as={active ? (sort!.dir === "asc" ? ArrowUp : ArrowDown) : ArrowsVertical} className={cn(!active && "opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100")} />
+                        <SwapIcon as={active ? (sort!.dir === "asc" ? ArrowUp : ArrowDown) : ArrowsVertical} className={cn(!active && "opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 pointer-coarse:opacity-60")} />
                       </button>
                     ) : (
                       c.header

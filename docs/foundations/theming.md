@@ -21,10 +21,12 @@ avoid_when:
 | `--corpus-neutral-hue` / `-chroma` | `286` / `0` | The tint of every grey, surface and border. Pure grey by default; raise the chroma to tint |
 | `--corpus-hue-success/warning/error/info` | `147 / 50 / 29 / 257` | Support colors (keep their meaning) |
 | `--corpus-radius` | `0.5rem` | Every corner |
-| `--corpus-density` | `1.08` | Control heights and insets fully; padding, margin and gap at half strength (never below 90%) |
+| `--corpus-density` | `1` | Control heights and insets fully; padding, margin and gap at half strength (never below 90%). Floored at 1.1 on touch |
 | `--corpus-font-sans` / `-mono` / `-numeric` | Google Sans Flex / Code / Code | Typefaces |
-| `--corpus-type-base` / `-ratio` | `0.8125rem` / `1.2` | The whole type ramp (13px body: desktop-native) |
+| `--corpus-type-base` / `-ratio` | `0.8125rem` / `1.2` | The whole type ramp (13px body: desktop-native). Floored at 16px on touch |
 | `--corpus-motion-scale` | `1` | Every duration (0 = off) |
+
+> [!NOTE] Touch floors. When a finger is the pointer, density reads as at least 1.1 and the type base as at least 16px: fields reach 44px, text is readable at arm's length, and iOS no longer zooms into fields. `max()` only raises, so a team's own larger values stay.
 
 ## Presets
 

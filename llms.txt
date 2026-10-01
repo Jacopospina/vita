@@ -285,4 +285,5 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/gett
 - [How Corpus decides](docs/decisions/how-we-decide.md): Every system choice is a written record. Agents and people read the record before changing anything it covers; changing it means superseding it.
 - [Motion](docs/decisions/motion.md): Nothing snaps — except page load, global appearance swaps and floating-surface sizing, which never animate per element.
 - [Status semantics](docs/decisions/status-semantics.md): One map from meaning to colour and glyph, used by every status surface; status colours never decorate.
+- [Touch adapts by itself](docs/decisions/touch.md): When a finger is the pointer, Corpus grows its targets, its type and its hit areas, lightens its glass and switches the thinking orb to a filter-free renderer — without a knob and without a product doing anything.
 - [Weather tint](docs/decisions/weather-tint.md): Floating layers lean cold or warm with the weather outside — Dynamic by default, or fixed Neutral, Cold or Warm.

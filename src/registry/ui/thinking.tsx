@@ -221,21 +221,81 @@ function particles(mode: ThinkingMode, n: number, t: number, seeds: number[]): P
  * Performance budget — loading must never cost the user's machine:
  *   · ONE shared animation loop for every orb on the page (not one per instance)
  *   · orbs off-screen or in a hidden tab don't draw at all
- *   · drawn every display frame (capped rates read as stepping), and only while visible
- *   · canvases at device resolution (max 2×), the lighting chain + glints only on big orbs (≥ 48px)
+ *   · two ways to draw the same liquid (below): the SVG goo chain for machines that can afford it, a filter-free
+ *     metaball FIELD for everything else — and the chain hands over to the field as soon as frames arrive late
+ *   · the goo chain draws at most 60 times a second (120 Hz displays doubled its cost for nothing the eye can see)
+ *     and at 1.5× resolution on big orbs: its blur hides the pixels anyway. Small orbs stay at full 2×.
  *   · reduced motion / Save-Data → one still frame
+ *
+ * Two renderers, one liquid:
+ *   filter  crisp drops on a canvas, melted by an SVG filter chain (blur → threshold, twice → specular light →
+ *           glow). The chain re-rasterises every frame — on a phone, on the CPU, at hundreds of pixels a side.
+ *   field   the same drops summed into a metaball field on a small grid (≤ 72² cells), thresholded with a soft
+ *           edge, coloured and lit per cell, then upscaled by the GPU. No filter anywhere; a frame costs a fraction
+ *           of a millisecond. Phones, tablets and low-core devices take it from the start.
  */
 type Tick = (now: number) => void
 const ticks = new Set<Tick>()
 let loop = 0
+/** Orbs currently drawing through the filter chain: only then do late frames say anything about it. */
+let heavy = 0
+let prevFrame = 0
+let frames = 0
+let late = 0
 function frame(now: number) {
+  // Adaptive: frames that keep arriving late (< ~36 fps, net of the on-time ones, after a second of warm-up) mean
+  // this machine can't afford the filter chain — every orb switches to the field for the rest of the session.
+  if (heavy && !document.documentElement.hasAttribute("data-corpus-booting")) {
+    const dt = now - prevFrame
+    if (prevFrame && ++frames > 60) {
+      late = dt > 28 ? late + 1 : Math.max(0, late - 1)
+      if (late > 20) { late = 0; degrade() }
+    }
+  }
+  prevFrame = now
   ticks.forEach((t) => t(now))
   loop = ticks.size ? requestAnimationFrame(frame) : 0
 }
 function onTick(t: Tick) {
   ticks.add(t)
-  if (!loop) loop = requestAnimationFrame(frame)
+  if (!loop) { frames = 0; late = 0; prevFrame = 0; loop = requestAnimationFrame(frame) }
   return () => void ticks.delete(t)
+}
+
+/* Which renderer. Decided once per session on the client, upgraded to "field" if the machine can't keep up. */
+let lite: boolean | null = null
+const liteListeners = new Set<() => void>()
+function constrained() {
+  if (typeof window === "undefined") return false
+  const nav = navigator as Navigator & { connection?: { saveData?: boolean }; deviceMemory?: number }
+  return (
+    window.matchMedia?.("(pointer: coarse)").matches === true ||
+    (navigator.hardwareConcurrency ?? 8) <= 4 ||
+    (nav.deviceMemory ?? 8) <= 4 ||
+    nav.connection?.saveData === true
+  )
+}
+const isLite = () => (lite ??= constrained())
+function degrade() {
+  if (lite) return
+  lite = true
+  liteListeners.forEach((l) => l())
+}
+const subscribeLite = (l: () => void) => (liteListeners.add(l), () => void liteListeners.delete(l))
+/** Test hook: force a renderer (null = decide again from the device). */
+export function setThinkingRenderer(r: "filter" | "field" | null) {
+  lite = r === null ? null : r === "field"
+  liteListeners.forEach((l) => l())
+}
+
+/** Resolve any CSS colour to sRGB bytes through a 1×1 canvas. */
+function rgbOf(css: string, probe: CanvasRenderingContext2D): [number, number, number] {
+  probe.clearRect(0, 0, 1, 1)
+  probe.fillStyle = "#000" // reset first, so an unparsable colour never keeps the previous one
+  probe.fillStyle = css
+  probe.fillRect(0, 0, 1, 1)
+  const d = probe.getImageData(0, 0, 1, 1).data
+  return [d[0], d[1], d[2]]
 }
 
 export interface ThinkingProps {
@@ -254,25 +314,28 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
   const glintRef = React.useRef<HTMLCanvasElement>(null)
   const fid = "corpus-goo-" + React.useId().replace(/[^a-zA-Z0-9]/g, "")
   const resolvedTone = tone ?? (mode === "basic" ? "current" : "spectrum")
+  const field = React.useSyncExternalStore(subscribeLite, isLite, () => false)
+  // The liquid keeps its time across a renderer switch, so a hand-over mid-session never restarts the shapes.
+  const started = React.useRef(0)
 
   React.useEffect(() => {
     const canvas = ref.current
     const ctx = canvas?.getContext("2d")
     if (!canvas || !ctx) return
-    // Device resolution, capped: the goo blur already antialiases the edges.
-    const dpr = Math.min(2, window.devicePixelRatio || 1)
+    const lit = px >= 48
+    // Device resolution, capped: the goo blur already antialiases the edges (big orbs on the filter path need less).
+    const dpr = Math.min(field || !lit ? 2 : 1.5, window.devicePixelRatio || 1)
     canvas.width = px * dpr
     canvas.height = px * dpr
     ctx.scale(dpr, dpr)
-    const glintsOn = mode !== "basic" && px >= 48
-    const gcanvas = glintsOn ? glintRef.current : null
+    const glints = mode !== "basic" && lit
+    const gcanvas = glints && !field ? glintRef.current : null
     const gctx = gcanvas?.getContext("2d") ?? null
     if (gcanvas && gctx) {
       gcanvas.width = px * dpr
       gcanvas.height = px * dpr
       gctx.scale(dpr, dpr)
     }
-    const glints = glintsOn
     const simple = px <= 24
     // Small orbs: fewer, proportionally larger particles so they stay solid down to 16px.
     const n = mode === "searching" ? Math.max(6, Math.min(28, Math.round(px / 3))) : Math.max(7, Math.min(90, Math.round(px / 1.1)))
@@ -280,7 +343,8 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
     const seeds = Array.from({ length: n }, (_, i) => (Math.sin(i * 127.1) * 43758.5453) % 1).map((s) => Math.abs(s))
     const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData === true
     const reduced = saveData || window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
-    const interval = 0 // every display frame: capped rates made the liquid step instead of flow
+    // The filter chain draws at most ~60 times a second; the field is cheap enough for every display frame.
+    const interval = field ? 0 : 1000 / 70
     const root = getComputedStyle(document.documentElement)
     const spectrum = ["blue", "indigo", "purple", "pink", "orange", "mint", "cyan"].map((h) => root.getPropertyValue(`--corpus-palette-${h}-500`).trim())
     let color = getComputedStyle(canvas).color
@@ -289,16 +353,27 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
     let light = isLight(color)
     let last = 0
     let drawn = -Infinity
-    const start = performance.now()
+    const start = (started.current ||= performance.now())
     const R = px * 0.42
-    const draw = (now: number) => {
-      // 1.25× tempo: thinking should feel alive and busy, never idle.
-      const t = reduced ? 0.9 : ((now - start) / 1000) * 1.25
-      if (now - last > 2000) {
-        color = getComputedStyle(canvas).color
-        light = isLight(color)
-        last = now
+    /** A drop's radius on the canvas: ×1.3 on big orbs — the wide goo eats into each drop, so plumper drops keep the
+        liquid full-bodied and its joins round. */
+    const dropRadius = (p: P) => (simple ? p.r * R : Math.max(0.6, Math.min(0.34, p.r * grow) * R * 1.3))
+    const drawGlints = (c: CanvasRenderingContext2D, t: number) => {
+      for (let i = 0; i < 6; i++) {
+        const a = seeds[i % seeds.length] * TAU + t * (0.35 + i * 0.07)
+        const rad = R * (0.92 + 0.12 * Math.sin(t * 1.3 + i))
+        const tw = Math.max(0, Math.sin(t * 2.2 + i * 1.9))
+        c.globalAlpha = tw * (light ? 1 : 0.9)
+        c.fillStyle = light ? spectrum[i % spectrum.length] || color : "white"
+        c.beginPath()
+        c.arc(px / 2 + Math.cos(a) * rad, px / 2 + Math.sin(a) * rad, Math.max(0.6, px * 0.009) * (0.6 + tw), 0, TAU)
+        c.fill()
       }
+      c.globalAlpha = 1
+    }
+
+    /* ---- filter path: crisp drops, the SVG chain melts them ---- */
+    const drawFilter = (t: number) => {
       ctx.clearRect(0, 0, px, px)
       if (resolvedTone === "spectrum" && "createConicGradient" in ctx) {
         const g = ctx.createConicGradient(t * 1.8, px / 2, px / 2)
@@ -311,29 +386,129 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
       for (const p of simple ? simpleParticles(mode, t) : particles(mode, n, t, seeds)) {
         if (p.r < 0.005) continue // a gap in a segmented shape
         ctx.beginPath()
-        // ×1.3: the wide goo blur eats into each drop — plumper drops keep the liquid full-bodied and its joins round.
-        ctx.arc(px / 2 + p.x * R, px / 2 + p.y * R, simple ? p.r * R : Math.max(0.6, Math.min(0.34, p.r * grow) * R * 1.3), 0, TAU)
+        ctx.arc(px / 2 + p.x * R, px / 2 + p.y * R, dropRadius(p), 0, TAU)
         ctx.fill()
       }
       // Glints: tiny twinkling sparkles around agentic orbs (drawn crisp, outside the liquid).
       if (gctx) {
         gctx.clearRect(0, 0, px, px)
-        if (glints) {
-          for (let i = 0; i < 6; i++) {
-            const a = seeds[i % seeds.length] * TAU + t * (0.35 + i * 0.07)
-            const rad = R * (0.92 + 0.12 * Math.sin(t * 1.3 + i))
-            const tw = Math.max(0, Math.sin(t * 2.2 + i * 1.9))
-            gctx.globalAlpha = tw * (light ? 1 : 0.9)
-            gctx.fillStyle = light ? spectrum[i % spectrum.length] || color : "white"
-            gctx.beginPath()
-            gctx.arc(px / 2 + Math.cos(a) * rad, px / 2 + Math.sin(a) * rad, Math.max(0.6, px * 0.009) * (0.6 + tw), 0, TAU)
-            gctx.fill()
+        if (glints) drawGlints(gctx, t)
+      }
+    }
+
+    /* ---- field path: the liquid as a metaball field on a small grid, no filter anywhere ---- */
+    // Grid: 2 cells per CSS px on small orbs (they must stay crisp), one per px up to 128 on big ones — with a
+    // two-cell edge and the GPU's smooth upscale, the rim reads as the goo's own softness, never as pixels.
+    const g = simple ? px * 2 : Math.min(128, Math.max(48, px))
+    let fieldDraw: ((t: number) => void) | null = null
+    if (field) {
+      const off = document.createElement("canvas")
+      off.width = off.height = g
+      const octx = off.getContext("2d")
+      const probe = document.createElement("canvas").getContext("2d", { willReadFrequently: true })
+      // A tiny copy of the orb, drawn large again, is the glow: the upscale blurs it for free.
+      const glow = lit ? document.createElement("canvas") : null
+      if (glow) glow.width = glow.height = 12
+      const glowCtx = glow?.getContext("2d") ?? null
+      if (octx && probe) {
+        const img = octx.createImageData(g, g)
+        const data = img.data
+        const fld = new Float32Array(g * g)
+        const spec = spectrum.map((c) => rgbOf(c, probe))
+        let own = rgbOf(color, probe)
+        const scale = g / px // cells per CSS px
+        const centre = g / 2
+        // Iso-level and edge: an isolated drop reads at exactly its radius (its field there is (1 − 1/2.1²)³); the
+        // edge ramps over about two cells, so the upscale shows a soft rim instead of the grid.
+        const ISO = 0.46, EDGE = 0.45
+        ctx.imageSmoothingQuality = "high"
+        fieldDraw = (t: number) => {
+          if (resolvedTone !== "spectrum") own = rgbOf(color, probe)
+          fld.fill(0)
+          for (const p of simple ? simpleParticles(mode, t) : particles(mode, n, t, seeds)) {
+            if (p.r < 0.005) continue
+            // The filter path plumps drops ×1.3 because its blur eats into them; a field drop reads at its true size.
+            const rr = (simple ? dropRadius(p) : dropRadius(p) / 1.3) * scale
+            const ri = rr * 2.1 // reach: drops feel each other well before they touch, so bridges form (goo)
+            const X = centre + p.x * R * scale, Y = centre + p.y * R * scale
+            const x0 = Math.max(0, Math.floor(X - ri)), x1 = Math.min(g - 1, Math.ceil(X + ri))
+            const y0 = Math.max(0, Math.floor(Y - ri)), y1 = Math.min(g - 1, Math.ceil(Y + ri))
+            const inv = 1 / (ri * ri)
+            for (let y = y0; y <= y1; y++) {
+              const dy = y + 0.5 - Y
+              const row = y * g
+              for (let x = x0; x <= x1; x++) {
+                const dx = x + 0.5 - X
+                const q = 1 - (dx * dx + dy * dy) * inv
+                if (q > 0) fld[row + x] += q * q * q
+              }
+            }
           }
-          gctx.globalAlpha = 1
+          const rot = t * 1.8
+          for (let y = 0; y < g; y++) {
+            for (let x = 0; x < g; x++) {
+              const k = y * g + x, o = k * 4
+              let a = (fld[k] - ISO) / EDGE + 0.5
+              if (a <= 0) { data[o + 3] = 0; continue }
+              if (a > 1) a = 1
+              a = a * a * (3 - 2 * a)
+              let r: number, gr: number, b: number
+              if (resolvedTone === "spectrum") {
+                // The same conic sweep as the gradient on the filter path, turning with time.
+                let u = ((Math.atan2(y + 0.5 - centre, x + 0.5 - centre) - rot) / TAU) % 1
+                if (u < 0) u += 1
+                u *= spec.length
+                const i = Math.floor(u), f = u - i
+                const c0 = spec[i], c1 = spec[(i + 1) % spec.length]
+                r = c0[0] + (c1[0] - c0[0]) * f; gr = c0[1] + (c1[1] - c0[1]) * f; b = c0[2] + (c1[2] - c0[2]) * f
+              } else {
+                ;[r, gr, b] = own
+              }
+              if (lit && x > 0 && y > 0 && x < g - 1 && y < g - 1) {
+                // Specular light from the top left: the field's slope is the surface normal, so the rim facing the
+                // light catches a white highlight — the lit look of the filter path, at a fraction of the cost.
+                const gx = fld[k + 1] - fld[k - 1], gy = fld[k + g] - fld[k - g]
+                const m = Math.hypot(gx, gy)
+                if (m > 0.03) {
+                  let h = (0.45 * gx + 0.8 * gy) / m // cosine to the light; a steep slope (the rim) shines, the flat body doesn't
+                  if (h > 0) {
+                    h = h ** 6 * Math.min(1, m * 3) * 0.75
+                    r += (255 - r) * h; gr += (255 - gr) * h; b += (255 - b) * h
+                  }
+                }
+              }
+              data[o] = r; data[o + 1] = gr; data[o + 2] = b; data[o + 3] = a * 255
+            }
+          }
+          octx.putImageData(img, 0, 0)
+          ctx.clearRect(0, 0, px, px)
+          if (glow && glowCtx) {
+            // Glow behind: a pastel halo — the orb shrunk to 10 cells (inside a clear 1-cell border, so the stretched
+            // copy fades to nothing before its own edge) and drawn back large, a third as strong.
+            glowCtx.clearRect(0, 0, 12, 12)
+            glowCtx.drawImage(off, 1, 1, 10, 10)
+            ctx.globalAlpha = 0.3
+            ctx.drawImage(glow, -px * 0.16, -px * 0.16, px * 1.32, px * 1.32)
+            ctx.globalAlpha = 1
+          }
+          ctx.drawImage(off, 0, 0, px, px)
+          if (glints) drawGlints(ctx, t)
         }
       }
     }
-    draw(start)
+
+    const draw = (now: number) => {
+      // 1.25× tempo: thinking should feel alive and busy, never idle.
+      const t = reduced ? 0.9 : ((now - start) / 1000) * 1.25
+      if (now - last > 2000) {
+        color = getComputedStyle(canvas).color
+        light = isLight(color)
+        last = now
+      }
+      if (fieldDraw) fieldDraw(t)
+      else drawFilter(t)
+    }
+    draw(performance.now())
     if (reduced) return
     // Only tick while on screen; the shared loop itself stops when no orb needs it.
     let off: (() => void) | null = null
@@ -343,10 +518,13 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
       draw(now)
     }
     const setVisible = (v: boolean) => {
-      if (v && !off) off = onTick(tick)
-      else if (!v && off) {
+      if (v && !off) {
+        off = onTick(tick)
+        if (!field) heavy++
+      } else if (!v && off) {
         off()
         off = null
+        if (!field) heavy--
       }
     }
     if (typeof IntersectionObserver === "undefined") {
@@ -359,7 +537,7 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
       io.disconnect()
       setVisible(false)
     }
-  }, [mode, px, resolvedTone])
+  }, [mode, px, resolvedTone, field])
 
   // Liquid + light: goo → a second round of melt (rounds every neck and tip) → specular highlight → a pastel glow
   // behind. A WIDE blur with a gentle threshold is what makes it gooey: drops reach for each other through thick,
@@ -373,36 +551,38 @@ export function Thinking({ mode = "generating", size = "md", tone, label = "Thin
   const lit = px >= 48
   return (
     <span role="status" aria-live="polite" className={cn("relative inline-flex shrink-0", resolvedTone === "brand" && "text-primary", className)} style={{ width: px, height: px }}>
-      <svg aria-hidden width="0" height="0" className="absolute">
-        <defs>
-          <filter id={fid} x="-40%" y="-40%" width="180%" height="180%" colorInterpolationFilters="sRGB">
-            <feGaussianBlur in="SourceGraphic" stdDeviation={blur} result="blur" />
-            <feColorMatrix in="blur" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -8" result="melt" />
-            {/* Melt again: blur the shape a touch and re-threshold, so any leftover point or kink rounds off. */}
-            <feGaussianBlur in="melt" stdDeviation={melt} result="meltBlur" />
-            <feColorMatrix in="meltBlur" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 9 -4" result="goo" />
-            {lit ? (
-              <>
-                <feGaussianBlur in="goo" stdDeviation={px * 0.035} result="soft" />
-                <feSpecularLighting in="soft" surfaceScale={px * 0.06} specularConstant="1.1" specularExponent="26" lightingColor="#ffffff" result="spec">
-                  <fePointLight x={px * 0.28} y={px * 0.2} z={px * 0.9} />
-                </feSpecularLighting>
-                <feComposite in="spec" in2="goo" operator="in" result="specIn" />
-                <feComposite in="goo" in2="specIn" operator="arithmetic" k1="0" k2="1" k3="0.65" k4="0" result="shaded" />
-                {/* Glow behind: emitted, reflected light — wide, washed ~60% toward white (super-light pastel), low alpha. */}
-                <feGaussianBlur in="goo" stdDeviation={px * 0.16} result="glowBlur" />
-                <feColorMatrix in="glowBlur" values="0.4 0 0 0 0.6  0 0.4 0 0 0.6  0 0 0.4 0 0.6  0 0 0 0.32 0" result="glow" />
-                <feMerge>
-                  <feMergeNode in="glow" />
-                  <feMergeNode in="shaded" />
-                </feMerge>
-              </>
-            ) : null}
-          </filter>
-        </defs>
-      </svg>
-      <canvas ref={ref} aria-hidden className="motion-reduce:animate-[corpus-pulse_2s_ease-in-out_infinite]" style={{ width: px, height: px, filter: `url(#${fid})` }} />
-      {mode !== "basic" && px >= 48 && <canvas ref={glintRef} aria-hidden className="pointer-events-none absolute inset-0" style={{ width: px, height: px }} />}
+      {!field && (
+        <svg aria-hidden width="0" height="0" className="absolute">
+          <defs>
+            <filter id={fid} x="-40%" y="-40%" width="180%" height="180%" colorInterpolationFilters="sRGB">
+              <feGaussianBlur in="SourceGraphic" stdDeviation={blur} result="blur" />
+              <feColorMatrix in="blur" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -8" result="melt" />
+              {/* Melt again: blur the shape a touch and re-threshold, so any leftover point or kink rounds off. */}
+              <feGaussianBlur in="melt" stdDeviation={melt} result="meltBlur" />
+              <feColorMatrix in="meltBlur" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 9 -4" result="goo" />
+              {lit ? (
+                <>
+                  <feGaussianBlur in="goo" stdDeviation={px * 0.035} result="soft" />
+                  <feSpecularLighting in="soft" surfaceScale={px * 0.06} specularConstant="1.1" specularExponent="26" lightingColor="#ffffff" result="spec">
+                    <fePointLight x={px * 0.28} y={px * 0.2} z={px * 0.9} />
+                  </feSpecularLighting>
+                  <feComposite in="spec" in2="goo" operator="in" result="specIn" />
+                  <feComposite in="goo" in2="specIn" operator="arithmetic" k1="0" k2="1" k3="0.65" k4="0" result="shaded" />
+                  {/* Glow behind: emitted, reflected light — wide, washed ~60% toward white (super-light pastel), low alpha. */}
+                  <feGaussianBlur in="goo" stdDeviation={px * 0.16} result="glowBlur" />
+                  <feColorMatrix in="glowBlur" values="0.4 0 0 0 0.6  0 0.4 0 0 0.6  0 0 0.4 0 0.6  0 0 0 0.32 0" result="glow" />
+                  <feMerge>
+                    <feMergeNode in="glow" />
+                    <feMergeNode in="shaded" />
+                  </feMerge>
+                </>
+              ) : null}
+            </filter>
+          </defs>
+        </svg>
+      )}
+      <canvas ref={ref} aria-hidden data-renderer={field ? "field" : "filter"} className="motion-reduce:animate-[corpus-pulse_2s_ease-in-out_infinite]" style={{ width: px, height: px, filter: field ? undefined : `url(#${fid})` }} />
+      {!field && mode !== "basic" && lit && <canvas ref={glintRef} aria-hidden className="pointer-events-none absolute inset-0" style={{ width: px, height: px }} />}
       <span className="sr-only">{label}</span>
     </span>
   )

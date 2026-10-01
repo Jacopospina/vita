@@ -2045,6 +2045,24 @@
     },
     {
       "section": "decisions",
+      "slug": "touch",
+      "path": "docs/decisions/touch.md",
+      "title": "Touch adapts by itself",
+      "summary": "When a finger is the pointer, Corpus grows its targets, its type and its hit areas, lightens its glass and switches the thinking orb to a filter-free renderer — without a knob and without a product doing anything.",
+      "status": "accepted",
+      "date": "2026-10-01",
+      "decided_by": "Jacopo",
+      "related": [
+        "accessibility",
+        "spacing",
+        "theming",
+        "material",
+        "thinking",
+        "glass-by-elevation"
+      ]
+    },
+    {
+      "section": "decisions",
       "slug": "weather-tint",
       "path": "docs/decisions/weather-tint.md",
       "title": "Weather tint",
