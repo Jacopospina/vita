@@ -124,6 +124,14 @@ export function LeftPanel({ children, rail, className, label = "Side navigation"
   )
 }
 
+/**
+ * In a collapsed rail, rows keep their icons exactly centred: the rail is 48px with 8px padding and a 1px glass
+ * border, so the row's side padding is (48 − 16) / 2 − 8 − 1 = 7px. The same padding holds when the rail expands
+ * on hover, so the icons never jump.
+ */
+const railRow = "group-data-[rail]/nav:lg:px-[calc((var(--spacing)*12-1rem)/2-var(--spacing)*2-1px)]"
+const railHidden = "group-data-[rail]/nav:lg:opacity-0 group-data-[rail]/nav:lg:group-hover/nav:opacity-100"
+
 export function SideNavItem({ href, icon, active, children, onClick }: { href?: string; icon?: IconType; active?: boolean; children: React.ReactNode; onClick?: () => void }) {
   return (
     <a
@@ -133,12 +141,13 @@ export function SideNavItem({ href, icon, active, children, onClick }: { href?: 
       className={cn(
         // Finder row: compact, accent icon + label, soft grey highlight when selected.
         "relative flex h-control-md shrink-0 items-center gap-2 rounded-inner-2 px-2.5 text-body-lg whitespace-nowrap text-foreground duration-fast-02",
+        railRow,
         "hover:bg-hover focus-ring-inset",
         active && "bg-active font-medium",
       )}
     >
       {icon && <Icon as={icon} className="text-primary" />}
-      <span className="truncate group-data-[rail]/nav:lg:opacity-0 group-data-[rail]/nav:lg:group-hover/nav:opacity-100">{children}</span>
+      <span className={cn("truncate", railHidden)}>{children}</span>
     </a>
   )
 }
@@ -146,10 +155,11 @@ export function SideNavItem({ href, icon, active, children, onClick }: { href?: 
 export function SideNavMenu({ icon, title, defaultOpen, children }: { icon?: IconType; title: string; defaultOpen?: boolean; children: React.ReactNode }) {
   return (
     <Collapsible.Root defaultOpen={defaultOpen}>
-      <Collapsible.Trigger className="group flex h-control-sm w-full items-center gap-2 rounded-inner-2 px-2 text-body text-foreground hover:bg-hover focus-ring-inset">
+      {/* Same row as SideNavItem (height, padding, type), so a menu and a link line up — and centre in the rail. */}
+      <Collapsible.Trigger className={cn("group flex h-control-md w-full items-center gap-2 rounded-inner-2 px-2.5 text-body-lg whitespace-nowrap text-foreground duration-fast-02 hover:bg-hover focus-ring-inset", railRow)}>
         {icon && <Icon as={icon} className="text-primary" />}
-        <span className="flex-1 truncate text-left">{title}</span>
-        <Icon as={ChevronDown} className=" duration-moderate-01 group-data-[state=open]:rotate-180" />
+        <span className={cn("flex-1 truncate text-left", railHidden)}>{title}</span>
+        <Icon as={ChevronDown} className={cn("duration-moderate-01 group-data-[state=open]:rotate-180", railHidden)} />
       </Collapsible.Trigger>
       <Collapsible.Content className="overflow-hidden data-[state=closed]:animate-collapse data-[state=open]:animate-expand">
         <div className="flex flex-col py-0.5 [&>a]:pl-8">{children}</div>
