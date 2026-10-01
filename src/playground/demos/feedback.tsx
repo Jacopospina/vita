@@ -21,12 +21,24 @@ import { Tile } from "@/registry/ui/tile"
 import { Link } from "@/registry/ui/link"
 
 function InlineLoadingDemo() {
+  // One indicator morphs through the whole story: saving → couldn't save → (Retry) → saving → saved.
+  // In this demo every first attempt fails and the retry succeeds.
   const [status, setStatus] = React.useState<"inactive" | "active" | "finished" | "error">("inactive")
+  const attempt = React.useRef(0)
+  const save = () => {
+    const n = ++attempt.current
+    setStatus("active")
+    window.setTimeout(() => {
+      if (n % 2 === 1) return setStatus("error")
+      setStatus("finished")
+      window.setTimeout(() => setStatus("inactive"), 2000)
+    }, 1400)
+  }
+  const text = status === "active" ? "Saving…" : status === "finished" ? "Saved" : status === "error" ? "Couldn't save." : undefined
   return (
     <Inline gap="md">
-      <Button variant="secondary" disabled={status === "active"} onClick={() => { setStatus("active"); setTimeout(() => setStatus("finished"), 1500); setTimeout(() => setStatus("inactive"), 3500) }}>Save draft</Button>
-      <InlineLoading status={status} description={status === "active" ? "Saving…" : status === "finished" ? "Saved" : undefined} />
-      <InlineLoading status="error" description="Couldn't save. Retry?" />
+      <Button variant="secondary" disabled={status === "active"} onClick={save}>Save draft</Button>
+      <InlineLoading status={status} description={text} onRetry={save} />
       <InlineLoading mode="searching" description="Searching the help center" />
     </Inline>
   )

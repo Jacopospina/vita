@@ -1,7 +1,7 @@
 import * as React from "react"
-import { CheckmarkFilled, ErrorFilled } from "@/registry/icons"
+import { CheckmarkFilled, ErrorFilled, type IconType } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
-import { Icon } from "@/registry/ui/icon"
+import { SwapIcon } from "@/registry/ui/icon"
 import { AnimatedText } from "@/registry/ui/animated"
 import { Thinking, type ThinkingMode } from "@/registry/ui/thinking"
 
@@ -22,13 +22,29 @@ export function Loading({ size = "md", mode = "basic", label = "Loading", overla
 
 /**
  * InlineLoading — status of a single operation, in place: "Saving…" → "Saved" → (fades). Also covers error.
+ * ONE indicator that morphs between states — never several side by side: error → (Retry) → saving → saved,
+ * or back to error. The glyph cross-fades (thinking ⇄ drawn check/error), the text morphs, the colour fades.
+ *   onRetry  shown with an error: a "Retry" action that blends out as the retry starts.
  */
-export function InlineLoading({ status = "active", description, mode = "basic", className }: { status?: "active" | "finished" | "error" | "inactive"; description?: React.ReactNode; mode?: ThinkingMode; className?: string }) {
+export function InlineLoading({ status = "active", description, mode = "basic", onRetry, className }: {
+  status?: "active" | "finished" | "error" | "inactive"
+  description?: React.ReactNode
+  mode?: ThinkingMode
+  onRetry?: () => void
+  className?: string
+}) {
   // Never pops: while inactive it keeps a zero-width slot; appearing/leaving fades, blurs and grows/collapses its width.
   const [last, setLast] = React.useState({ status, description })
   if (status !== "inactive" && (status !== last.status || description !== last.description)) setLast({ status, description })
   const shown = status === "inactive" ? last : { status, description }
   const visible = status !== "inactive"
+  const active = shown.status === "active"
+  const error = shown.status === "error"
+  // The last drawn glyph stays mounted under the thinking orb, so leaving "active" draws/fades it back in.
+  const [glyph, setGlyph] = React.useState<IconType>(() => (error ? ErrorFilled : CheckmarkFilled))
+  const nextGlyph = error ? ErrorFilled : shown.status === "finished" ? CheckmarkFilled : glyph
+  if (nextGlyph !== glyph) setGlyph(() => nextGlyph)
+  const layer = (on: boolean) => cn("motion-productive [grid-area:1/1]", on ? "scale-100 opacity-100 blur-none" : "scale-50 opacity-0 blur-xs")
   return (
     <div
       role="status"
@@ -37,11 +53,36 @@ export function InlineLoading({ status = "active", description, mode = "basic", 
       className={cn("inline-grid items-center self-center motion-productive", visible ? "grid-cols-[1fr] opacity-100 blur-none" : "grid-cols-[0fr] opacity-0 blur-xs", className)}
     >
       <div className="flex min-w-0 items-center overflow-hidden">
-        <div className="flex items-center gap-2 text-footnote leading-none whitespace-nowrap text-muted-foreground">
-          {shown.status === "active" && <Thinking mode={mode} size="sm" tone={mode === "basic" ? "brand" : undefined} label={typeof shown.description === "string" ? shown.description : "Working"} />}
-          {shown.status === "finished" && <Icon as={CheckmarkFilled} draw="in" className="text-success" />}
-          {shown.status === "error" && <Icon as={ErrorFilled} draw="in" className="text-error" />}
-          {shown.description && <span className={shown.status === "error" ? "text-error-foreground" : undefined}>{typeof shown.description === "string" ? <AnimatedText>{shown.description}</AnimatedText> : shown.description}</span>}
+        <div className={cn("flex items-center gap-2 text-footnote leading-none whitespace-nowrap motion-productive", error ? "text-error-foreground" : "text-muted-foreground")}>
+          <span aria-hidden className="grid size-4 shrink-0 place-items-center">
+            <span className={layer(active)}>
+              <Thinking mode={mode} size="sm" tone={mode === "basic" ? "brand" : undefined} label={typeof shown.description === "string" ? shown.description : "Working"} />
+            </span>
+            <span className={layer(!active)}>
+              <SwapIcon as={glyph} className={error ? "text-error" : "text-success"} />
+            </span>
+          </span>
+          <span className="inline-flex items-center">
+            {shown.description && (typeof shown.description === "string" ? <AnimatedText>{shown.description}</AnimatedText> : shown.description)}
+            {onRetry && (
+              // Its spacing lives inside the collapsing column, so nothing is left behind when it blends out.
+              <span className={cn("reveal-x motion-productive", error && "reveal-x-open")}>
+                <span>
+                  <span className="block pl-1.5">
+                    <button
+                      type="button"
+                      tabIndex={error ? undefined : -1}
+                      aria-hidden={!error || undefined}
+                      onClick={onRetry}
+                      className={cn("rounded-sm font-medium text-link underline-offset-2 hover:underline focus-ring motion-productive", error ? "opacity-100 blur-none" : "opacity-0 blur-xs")}
+                    >
+                      Retry
+                    </button>
+                  </span>
+                </span>
+              </span>
+            )}
+          </span>
         </div>
       </div>
     </div>
