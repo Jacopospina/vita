@@ -90,7 +90,7 @@ export function ModalAction({ onAction, children, ...props }: Omit<ButtonProps, 
       {...props}
       onAction={async () => {
         await onAction()
-        window.setTimeout(send, 520)
+        window.setTimeout(send, 320) // long enough to see the check land, short enough not to wait
       }}
     >
       {children}

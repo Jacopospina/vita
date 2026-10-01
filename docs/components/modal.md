@@ -27,9 +27,9 @@ related: [dialogs, ui-shell-right-panel, popover, notification]
 
 ## Exit choreography
 
-- **Enter is expressive, exits are productive.** The modal arrives with presence and leaves quickly (240ms) — the user has already moved on.
+- **Enter is expressive, exits are productive.** The modal arrives with presence and leaves quickly — the user has already moved on.
 - **Dismissed → falls.** ×, Escape or click-outside: it drops with gravity and tilts away.
-- **Sent → flies up.** When its data is submitted successfully (`ModalAction`, `ConfirmModal`), it dips slightly, then slides out through the top of the viewport.
+- **Sent → flies up.** When its data is submitted successfully (`ModalAction`, `ConfirmModal`), it dips for a beat, then shoots out through the top (150ms) — success shouldn't make anyone wait.
 - **Failed → stays.** If the action throws, the modal stays open so the user can fix it.
 
 ```tsx

@@ -10,7 +10,7 @@ related: [material, color, ui-shell-header]
 ## Decision
 
 - **Glass on every z-indexed surface.** Side nav, header, right panel, menus, popovers, dialogs, notifications, capsules, pinned toolbars.
-- **Tier by layer.** glass-1…5: blur 10 · 14 · 18 · 24 · 30px, fill 24 · 20 · 16 · 12 · 8%.
+- **Tier by layer.** glass-1…5: blur 10 · 14 · 18 · 24 · 30px, fill 24 · 20 · 16 · 44 · 8% (dialogs revised, below).
 - **The page scrolls under the shell.** Header, side nav and right panel float over a full-window scroller.
 - **A whisper of lift.** Light mode brightens the backdrop 3%.
 - **Only floating layers carry the weather tint** (via `elevated`).
@@ -30,3 +30,9 @@ related: [material, color, ui-shell-header]
 ## Revisit when
 
 - **Readability suffers** over busy content (raise the fill for that tier only).
+
+## Revision — 2026-10-01: dialogs are denser
+
+- **glass-4 fill 12% → 44%.** Modals and Spotlight blended into the page behind them; a dialog is where people read and decide, so it must read first.
+- **Only this tier.** Every other tier keeps its fill; blur still rises with the layer.
+- **Still glass.** 44% stays below the rejected near-opaque range (66–86%), so the frost still shows.

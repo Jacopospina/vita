@@ -177,7 +177,7 @@
   --animate-exit-dialog: corpus-scale-out var(--corpus-duration-moderate-01) var(--corpus-ease-expressive-exit) both;
   /* Exits are productive: the user has already moved on. */
   --animate-modal-fall: corpus-modal-fall var(--corpus-duration-moderate-02) var(--corpus-ease-productive-exit) both;
-  --animate-modal-send: corpus-modal-send var(--corpus-duration-moderate-02) var(--corpus-ease-productive-exit) both;
+  --animate-modal-send: corpus-modal-send var(--corpus-duration-moderate-01) var(--corpus-ease-productive-exit) both;
   --animate-exit-scale: corpus-scale-out var(--corpus-duration-fast-02) var(--corpus-ease-productive-exit) both;
   --animate-enter-list: corpus-list-rise var(--corpus-duration-moderate-01) var(--corpus-ease-productive-enter);
   --animate-exit-list: corpus-list-sink var(--corpus-duration-fast-02) var(--corpus-ease-productive-exit) both;
@@ -418,7 +418,7 @@
 @utility glass-1 { --corpus-glass-blur: 10px; --corpus-glass-fill: 24%; --corpus-glass-sat: 1.4; }
 @utility glass-2 { --corpus-glass-blur: 14px; --corpus-glass-fill: 20%; --corpus-glass-sat: 1.5; }
 @utility glass-3 { --corpus-glass-blur: 18px; --corpus-glass-fill: 16%; --corpus-glass-sat: 1.6; }
-@utility glass-4 { --corpus-glass-blur: 24px; --corpus-glass-fill: 12%; --corpus-glass-sat: 1.7; }
+@utility glass-4 { --corpus-glass-blur: 24px; --corpus-glass-fill: 44%; --corpus-glass-sat: 1.7; }
 @utility glass-5 { --corpus-glass-blur: 30px; --corpus-glass-fill: 8%; --corpus-glass-sat: 1.8; }
 
 @utility glass {

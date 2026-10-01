@@ -89,8 +89,8 @@
 }
 @keyframes corpus-modal-send {
   0% { transform: none; opacity: 1 }
-  15% { transform: translateY(0.25rem); opacity: 1 }
-  100% { transform: translateY(-60vh) scale(0.97); opacity: 0 }
+  10% { transform: translateY(0.25rem); opacity: 1 }
+  100% { transform: translateY(-40vh) scale(0.97); opacity: 0 }
 }
 /* In-progress glyph: the pie advances a slice at a time — it moves to the next quarter, holds, moves on — and once
    full it empties from its start and begins again. The icon never spins. (Each interval eases on its own.) */
