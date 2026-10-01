@@ -6,8 +6,8 @@ import { cn } from "@/registry/lib/utils"
 import { useControllable } from "@/registry/hooks/use-controllable"
 import { FieldShell, fieldClasses, fieldSize, type FieldBaseProps, type FieldSize } from "@/registry/ui/form"
 import { Icon, DrawnMark } from "@/registry/ui/icon"
-import { Checkbox } from "@/registry/ui/checkbox"
 import { AnimatedText, AnimatedNumber } from "@/registry/ui/animated"
+import { listClasses, itemClasses, tickClasses, Option } from "@/registry/ui/option"
 
 export interface DropdownItem {
   value: string
@@ -16,16 +16,7 @@ export interface DropdownItem {
   disabled?: boolean
 }
 
-// Menu-style list: 6px inset, 28px rows with 10px side padding, concentric 6px row radius (12 − 6), accent highlight.
-export const listClasses = cn(
-  "z-50 max-h-80 min-w-(--radix-select-trigger-width) overflow-hidden scope-lg glass glass-3 p-1.5 text-foreground",
-  // Slides in from below the field (no scale, no width growth) and sinks back out.
-  "data-[state=open]:animate-enter-list data-[state=closed]:animate-exit-list",
-)
-export const itemClasses = cn(
-  "group/item relative flex min-h-control-md w-full cursor-default items-center gap-2 rounded-inner-1.5 py-1 pr-8 pl-2.5 text-body outline-none select-none",
-  "data-[highlighted]:bg-primary data-[highlighted]:text-primary-foreground data-[highlighted]:[&_.text-muted-foreground]:text-primary-foreground/80 data-[highlighted]:[&_.text-helper]:text-primary-foreground/80 data-[disabled]:pointer-events-none data-[disabled]:text-disabled-foreground",
-)
+export { listClasses, itemClasses, tickClasses } from "@/registry/ui/option"
 
 /**
  * Dropdown — pick ONE option from a custom-rendered list (icons, descriptions, consistent styling across OSs).
@@ -72,7 +63,7 @@ export function Dropdown({ items, value, defaultValue, onValueChange, placeholde
                       <SelectPrimitive.ItemText>{it.label}</SelectPrimitive.ItemText>
                       {it.description && <span className="text-caption text-helper">{it.description}</span>}
                     </div>
-                    <DrawnMark on={it.value === current} className="absolute right-2 text-primary" />
+                    <DrawnMark on={it.value === current} className={tickClasses} />
                   </SelectPrimitive.Item>
                 ))}
               </SelectPrimitive.Viewport>
@@ -185,7 +176,7 @@ export function Combobox({ items, value, defaultValue = "", onValueChange, size 
                     className={itemClasses}
                   >
                     {it.label}
-                    <DrawnMark on={it.value === val} className="absolute right-2 text-primary" />
+                    <DrawnMark on={it.value === val} className={tickClasses} />
                   </li>
                 ))}
               </ul>
@@ -200,6 +191,46 @@ export function Combobox({ items, value, defaultValue = "", onValueChange, size 
 /**
  * MultiSelect — choose SEVERAL options from a list too long for a CheckboxGroup (> ~6). Selected count shows as a tag.
  */
+/** The MultiSelect's options: whole rows toggle (click, Enter or Space); a tick in the left slot shows what's chosen. */
+function MultiOptions({ items, selected, onToggle }: { items: DropdownItem[]; selected: string[]; onToggle: (v: string) => void }) {
+  const [active, setActive] = React.useState(0)
+  const rows = React.useRef<(HTMLDivElement | null)[]>([])
+  const move = (i: number) => {
+    const n = Math.max(0, Math.min(items.length - 1, i))
+    setActive(n)
+    rows.current[n]?.focus()
+  }
+  return (
+    <div
+      role="listbox"
+      aria-multiselectable
+      className="flex flex-col"
+      onKeyDown={(e) => {
+        if (e.key === "ArrowDown") { e.preventDefault(); move(active + 1) }
+        if (e.key === "ArrowUp") { e.preventDefault(); move(active - 1) }
+        if (e.key === "Home") { e.preventDefault(); move(0) }
+        if (e.key === "End") { e.preventDefault(); move(items.length - 1) }
+      }}
+    >
+      {items.map((it, i) => (
+        <Option
+          key={it.value}
+          ref={(el) => { rows.current[i] = el }}
+          label={it.label}
+          description={it.description}
+          selected={selected.includes(it.value)}
+          highlighted={i === active}
+          disabled={it.disabled}
+          tabIndex={i === active ? 0 : -1}
+          onMouseEnter={() => setActive(i)}
+          onClick={() => !it.disabled && onToggle(it.value)}
+          onKeyDown={(e) => { if ((e.key === "Enter" || e.key === " ") && !it.disabled) { e.preventDefault(); onToggle(it.value) } }}
+        />
+      ))}
+    </div>
+  )
+}
+
 export function MultiSelect({ items, value, defaultValue = [], onValueChange, size = "md", disabled, className, ...field }: ListboxPopoverProps & { value?: string[]; defaultValue?: string[]; onValueChange?: (v: string[]) => void }) {
   const [val, setVal] = useControllable(value, defaultValue, onValueChange)
   const toggle = (v: string) => setVal(val.includes(v) ? val.filter((x) => x !== v) : [...val, v])
@@ -234,13 +265,7 @@ export function MultiSelect({ items, value, defaultValue = [], onValueChange, si
           </PopoverPrimitive.Trigger>
           <PopoverPrimitive.Portal>
             <PopoverPrimitive.Content align="start" sideOffset={4} className={cn(listClasses, "w-(--radix-popover-trigger-width) min-w-0 overflow-y-auto")}>
-              <div role="listbox" aria-multiselectable className="flex flex-col">
-                {items.map((it) => (
-                  <div key={it.value} className="rounded-inner-1.5 px-2.5 py-1 hover:bg-hover">
-                    <Checkbox label={it.label} checked={val.includes(it.value)} disabled={it.disabled} onCheckedChange={() => toggle(it.value)} />
-                  </div>
-                ))}
-              </div>
+              <MultiOptions items={items} selected={val} onToggle={toggle} />
             </PopoverPrimitive.Content>
           </PopoverPrimitive.Portal>
         </PopoverPrimitive.Root>

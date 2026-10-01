@@ -132,6 +132,9 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/foun
 - [Number input](docs/components/number-input.md): Precise numeric entry with steppers, bounds and units.
   - use: Exact quantities with small adjustments (concurrent runs, seats, timeout, percentage); Values with min/max bounds the user must respect
   - avoid: Approximate values where feel matters → Slider; Identifiers that happen to be digits (phone, postcode, ID) → TextInput inputMode="numeric"; Large free-form amounts (currency) → TextInput with inputMode="decimal" and formatting
+- [Option](docs/components/option.md): The list item inside every dropdown list — one row anatomy for Dropdown, Select, Combobox and MultiSelect.
+  - use: Rows of choices inside a dropdown list (one or several); A static, in-page list of choices that should look like a dropdown list
+  - avoid: Actions (verbs) → Menu items; Navigation rows → ListItem; A few always-visible choices → RadioGroup or CheckboxGroup
 - [Pagination](docs/components/pagination.md): Split large datasets into pages, with page-size control and an honest item count.
   - use: Tables and lists with more items than fit comfortably (> 25–50); Users need to reference positions ("it was on page 3") or know the total
   - avoid: Feeds or activity streams users scroll through → "Load more" / infinite loading; Fewer items than one page → no pagination

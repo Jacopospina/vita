@@ -10,6 +10,8 @@ import { NumberInput } from "@/registry/ui/number-input"
 import { Search } from "@/registry/ui/search"
 import { Select, SelectOption, SelectGroup } from "@/registry/ui/select"
 import { Dropdown, Combobox, MultiSelect } from "@/registry/ui/dropdown"
+import { Option, OptionList } from "@/registry/ui/option"
+import { Bot, Plug, UserAvatar } from "@/registry/icons"
 import { DatePicker, DateRangePicker, Calendar, datePresets, rangePresets } from "@/registry/ui/date-picker"
 import { Tile } from "@/registry/ui/tile"
 import type { DateRange } from "react-day-picker"
@@ -139,6 +141,62 @@ export const inputDemos: DemoMap = {
           </Select>
           <Select label="Model" invalid invalidText="Choose a model" placeholder="Choose"><SelectOption value="large">Vita Large</SelectOption></Select>
           <Select label="Disabled" disabled placeholder="Unavailable" />
+        </Stack>
+      ),
+    },
+  ],
+  "components/option": [
+    {
+      title: "States",
+      description: "Default · highlighted (pointer or keyboard) · selected · selected and highlighted · disabled. The tick slot is always reserved.",
+      render: () => (
+        <OptionList>
+          <Option label="Vita Large" />
+          <Option label="Vita Fast" highlighted />
+          <Option label="Vita Vision" selected />
+          <Option label="Vita Voice" selected highlighted />
+          <Option label="Vita Legacy" disabled />
+        </OptionList>
+      ),
+    },
+    {
+      title: "With description",
+      render: () => (
+        <OptionList>
+          <Option label="Vita Large" description="Most capable, slower" selected />
+          <Option label="Vita Fast" description="Quick answers, lower cost" highlighted />
+          <Option label="Vita Vision" description="Reads images and documents" />
+        </OptionList>
+      ),
+    },
+    {
+      title: "With icon",
+      render: () => (
+        <OptionList>
+          <Option icon={Bot} label="Agents" selected />
+          <Option icon={Plug} label="Integrations" />
+          <Option icon={UserAvatar} label="People" highlighted />
+        </OptionList>
+      ),
+    },
+    {
+      title: "Multiple selection",
+      description: "Several ticks; the whole row toggles. Never a checkbox inside the row.",
+      render: () => (
+        <OptionList multiple>
+          <Option label="France" selected />
+          <Option label="Germany" selected highlighted />
+          <Option label="Italy" />
+          <Option label="Spain" />
+        </OptionList>
+      ),
+    },
+    {
+      title: "Live, in each dropdown",
+      render: () => (
+        <Stack gap="md" className="max-w-xs">
+          <Dropdown label="Model" defaultValue="l" items={[{ value: "l", label: "Vita Large" }, { value: "f", label: "Vita Fast" }]} />
+          <MultiSelect label="Countries" defaultValue={["fr", "de"]} items={[{ value: "fr", label: "France" }, { value: "de", label: "Germany" }, { value: "it", label: "Italy" }, { value: "es", label: "Spain" }]} />
         </Stack>
       ),
     },

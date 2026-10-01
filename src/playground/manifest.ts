@@ -52,6 +52,7 @@ export const manifest: Record<Section, NavEntry[]> = {
     { slug: "modal", title: "Modal" },
     { slug: "notification", title: "Notification" },
     { slug: "number-input", title: "Number input" },
+    { slug: "option", title: "Option" },
     { slug: "pagination", title: "Pagination" },
     { slug: "popover", title: "Popover" },
     { slug: "progress-bar", title: "Progress bar" },

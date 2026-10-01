@@ -5,7 +5,7 @@ import { cn } from "@/registry/lib/utils"
 import { useControllable } from "@/registry/hooks/use-controllable"
 import { FieldShell, fieldClasses, fieldSize, type FieldBaseProps, type FieldSize } from "@/registry/ui/form"
 import { DrawnMark, Icon } from "@/registry/ui/icon"
-import { listClasses, itemClasses } from "@/registry/ui/dropdown"
+import { listClasses, itemClasses, tickClasses } from "@/registry/ui/option"
 import { AnimatedText } from "@/registry/ui/animated"
 
 /**
@@ -67,7 +67,7 @@ export function SelectOption({ value, disabled, children }: { value: string; dis
   return (
     <SelectPrimitive.Item value={value} disabled={disabled} className={cn(itemClasses, "[&[data-state=unchecked]_path]:[stroke-dashoffset:1]")}>
       <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
-      <DrawnMark on className="absolute right-2 text-primary" />
+      <DrawnMark on className={tickClasses} />
     </SelectPrimitive.Item>
   )
 }

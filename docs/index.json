@@ -891,6 +891,30 @@
     },
     {
       "section": "components",
+      "slug": "option",
+      "path": "docs/components/option.md",
+      "title": "Option",
+      "summary": "The list item inside every dropdown list — one row anatomy for Dropdown, Select, Combobox and MultiSelect.",
+      "status": "stable",
+      "import": "import { Option, OptionList } from \"@/components/corpus/option\"",
+      "use_when": [
+        "Rows of choices inside a dropdown list (one or several)",
+        "A static, in-page list of choices that should look like a dropdown list"
+      ],
+      "avoid_when": [
+        "Actions (verbs) → Menu items",
+        "Navigation rows → ListItem",
+        "A few always-visible choices → RadioGroup or CheckboxGroup"
+      ],
+      "related": [
+        "dropdown",
+        "select",
+        "list-item",
+        "menu"
+      ]
+    },
+    {
+      "section": "components",
       "slug": "pagination",
       "path": "docs/components/pagination.md",
       "title": "Pagination",
