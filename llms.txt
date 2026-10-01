@@ -240,6 +240,9 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/foun
 - [Read-only states](docs/patterns/read-only-states.md): Showing values the user can see but not change — and switching between viewing and editing.
   - use: Detail pages where viewing is more common than editing; Values set by the system or by someone with more permissions
   - avoid: Using disabled fields to display data (low contrast, not selectable)
+- [Right panel](docs/patterns/right-panel.md): A floating panel on the right for global tools and editing in context, built with the same rules as the left navigation.
+  - use: Global tools opened from the header (notifications, help, assistant, theme); Viewing or editing an item while keeping the page in view; Filters for a large table
+  - avoid: A decision that must block the page → Modal; A few options next to a control → Popover; Long multi-step flows → a page
 - [Search](docs/patterns/search.md): Global and scoped search — where it lives, how results appear, and how to handle nothing found.
   - use: Users know what they're looking for by name/ID
   - avoid: Browsing by attributes → Filtering

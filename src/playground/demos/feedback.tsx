@@ -111,12 +111,12 @@ function ModalDemo() {
   )
 }
 
-export function ShellDemo({ rail, right }: { rail?: boolean; right?: boolean }) {
-  const [open, setOpen] = React.useState(!!right)
+export function ShellDemo({ rail, right, edit }: { rail?: boolean; right?: boolean; edit?: boolean }) {
+  const [open, setOpen] = React.useState(!!right || !!edit)
   return (
     <div className="h-120 overflow-hidden rounded-lg border border-border-subtle [&>div]:h-full">
       <Shell>
-        <Header productName="Vita" actions={<><HeaderGlobalAction icon={SearchIcon} label="Search" /><HeaderGlobalAction icon={Notification} label="Notifications" badge active={open} onClick={() => setOpen((o) => !o)} /><HeaderGlobalAction icon={Help} label="Help" /><HeaderGlobalAction icon={UserAvatar} label="Account" /></>}>
+        <Header productName="Vita" actions={<><HeaderGlobalAction icon={SearchIcon} label="Search" /><HeaderGlobalAction icon={Notification} label="Notifications" badge active={open && !edit} onClick={() => setOpen((o) => !o)} /><HeaderGlobalAction icon={Help} label="Help" /><HeaderGlobalAction icon={UserAvatar} label="Account" /></>}>
           <HeaderNavItem href="#" active>Agents</HeaderNavItem>
           <HeaderNavItem href="#">Runs</HeaderNavItem>
           <HeaderNavItem href="#">Reports</HeaderNavItem>
@@ -131,13 +131,28 @@ export function ShellDemo({ rail, right }: { rail?: boolean; right?: boolean }) 
             <SideNavSection title="Workspace"><SideNavItem href="#" icon={Settings}>Settings</SideNavItem></SideNavSection>
           </LeftPanel>
           <ShellMain className="p-6"><Stack gap="md"><Text variant="title-2">Dashboard</Text><Tile className="h-32" /><Tile className="h-32" /></Stack></ShellMain>
-          <RightPanel open={open} onOpenChange={setOpen} title="Notifications" size="sm">
-            <Stack gap="sm">
-              <InlineNotification kind="success" title="Agent deployed" subtitle="Support triage · 2 min ago" />
-              <InlineNotification kind="warning" title="Slack token expires" subtitle="In 3 days" />
-              <InlineNotification kind="info" title="Evaluation finished" subtitle="Invoice extractor · 96% pass" />
-            </Stack>
-          </RightPanel>
+          {edit ? (
+            <RightPanel
+              open={open}
+              onOpenChange={setOpen}
+              title="Support triage"
+              footer={<Button onClick={() => { setOpen(false); toast({ kind: "success", title: "Changes saved", subtitle: "Support triage" }) }}>Save changes</Button>}
+            >
+              <Stack gap="md">
+                <TextInput label="Agent name" defaultValue="Support triage" />
+                <Dropdown label="Model" defaultValue="l" items={[{ value: "l", label: "Vita Large" }, { value: "f", label: "Vita Fast" }]} />
+                <Checkbox label="Hand off to a person when unsure" defaultChecked />
+              </Stack>
+            </RightPanel>
+          ) : (
+            <RightPanel open={open} onOpenChange={setOpen} title="Notifications" size="sm">
+              <Stack gap="sm">
+                <InlineNotification kind="success" title="Agent deployed" subtitle="Support triage · 2 min ago" />
+                <InlineNotification kind="warning" title="Slack token expires" subtitle="In 3 days" />
+                <InlineNotification kind="info" title="Evaluation finished" subtitle="Invoice extractor · 96% pass" />
+              </Stack>
+            </RightPanel>
+          )}
         </ShellBody>
       </Shell>
     </div>
@@ -240,5 +255,8 @@ export const feedbackDemos: DemoMap = {
   ],
   "components/ui-shell-header": [{ title: "Header with nav and global actions", render: () => <ShellDemo /> }],
   "components/ui-shell-left-panel": [{ title: "Expanded side nav", render: () => <ShellDemo /> }, { title: "Rail (hover to expand)", render: () => <ShellDemo rail /> }],
-  "components/ui-shell-right-panel": [{ title: "Notifications panel", render: () => <ShellDemo right /> }],
+  "components/ui-shell-right-panel": [
+    { title: "Notifications panel", render: () => <ShellDemo right /> },
+    { title: "Editing in context, with a primary action", render: () => <ShellDemo edit /> },
+  ],
 }

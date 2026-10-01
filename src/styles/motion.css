@@ -33,6 +33,9 @@
 @keyframes corpus-slide-down-out { to { opacity: 0; transform: translateY(0.5rem) } }
 @keyframes corpus-slide-left-in { from { transform: translateX(100%) } }
 @keyframes corpus-slide-right-out { to { transform: translateX(100%) } }
+/* Floating right panel: travels its width plus its inset and shadow, so it starts and ends fully off-screen. */
+@keyframes corpus-float-in-right { from { transform: translateX(calc(100% + 2rem)) } }
+@keyframes corpus-float-out-right { to { transform: translateX(calc(100% + 2rem)) } }
 @keyframes corpus-slide-right-in { from { transform: translateX(-100%) } }
 @keyframes corpus-slide-left-out { to { transform: translateX(-100%) } }
 @keyframes corpus-collapse-down { from { height: 0 } to { height: var(--radix-accordion-content-height, var(--radix-collapsible-content-height)) } }

@@ -194,16 +194,18 @@ export function RightPanel({ open, onOpenChange, title, children, footer, size =
   onOpenChange: (o: boolean) => void
   title: string
   children: React.ReactNode
-  /** Primary action(s) only — rendered as a full-bleed ActionBar. Never a Cancel: × and Escape close the panel. */
+  /** Primary action(s) only — rendered as an inset ActionBar. Never a Cancel: × and Escape close the panel. */
   footer?: React.ReactNode
   size?: "sm" | "md" | "lg"
   className?: string
 }) {
   const [mounted, setMounted] = React.useState(open)
   if (open && !mounted) setMounted(true)
+  const panel = React.useRef<HTMLElement>(null)
+  // Unmount when the exit animation ends (whatever the motion speed), with a fallback if it never fires.
   React.useEffect(() => {
     if (open) return
-    const t = setTimeout(() => setMounted(false), 160) // let the exit animation finish
+    const t = setTimeout(() => setMounted(false), 1000)
     return () => clearTimeout(t)
   }, [open])
   React.useEffect(() => {
@@ -212,23 +214,41 @@ export function RightPanel({ open, onOpenChange, title, children, footer, size =
     window.addEventListener("keydown", onKey)
     return () => window.removeEventListener("keydown", onKey)
   }, [open, onOpenChange])
+  // Focus moves into the panel when it opens and returns to whatever opened it when it closes.
+  React.useEffect(() => {
+    if (!open) return
+    const trigger = document.activeElement as HTMLElement | null
+    const el = panel.current
+    el?.focus({ preventScroll: true })
+    return () => {
+      // Only hand focus back if it's still with the panel (the user may have moved on to the page).
+      if (trigger?.isConnected && (!el || el.contains(document.activeElement) || document.activeElement === document.body)) trigger.focus({ preventScroll: true })
+    }
+  }, [open])
   if (!mounted) return null
   return (
     <aside
+      ref={panel}
+      tabIndex={-1}
       aria-label={title}
+      onAnimationEnd={(e) => { if (!open && e.target === e.currentTarget) setMounted(false) }}
       className={cn(
-        "absolute inset-y-0 right-0 z-30 flex w-full flex-col glass glass-1",
+        // Floating, like the left panel: the same 8px inset from the window, the same radius (scope-xl) and
+        // 8px padding, so everything inside is concentric (rounded-inner-2 = 16 − 8).
+        "absolute inset-y-2 right-2 left-2 z-30 flex flex-col glass glass-1 scope-xl p-2 outline-none sm:left-auto",
         size === "sm" ? "sm:w-80" : size === "lg" ? "sm:w-140" : "sm:w-100",
-        open ? "animate-enter-panel-right" : "animate-exit-panel-right",
+        open ? "animate-enter-panel-right" : "pointer-events-none animate-exit-panel-right",
         className,
       )}
     >
-      <div className="flex h-12 shrink-0 items-center justify-between border-b border-border-subtle pl-4">
-        <h2 className="text-headline">{title}</h2>
-        <IconButton icon={Close} label="Close panel" onClick={() => onOpenChange(false)} className="size-12 rounded-none" />
+      {/* Header row: 32px, like the global header's pills — the title's centre sits on the header bar's centre. */}
+      <div className="flex h-8 shrink-0 items-center justify-between gap-2 pl-2.5">
+        <h2 className="truncate text-headline">{title}</h2>
+        <IconButton icon={Close} label="Close panel" shortcut="escape" tooltipSide="left" onClick={() => onOpenChange(false)} className="size-8 rounded-inner-2 px-0" />
       </div>
-      <div className="min-h-0 flex-1 overflow-y-auto p-3">{children}</div>
-      {footer && <ActionBar>{footer}</ActionBar>}
+      {/* Content aligns with the title (10px in); the gutter leaves room for focus halos inside the scroll area. */}
+      <div className="min-h-0 flex-1 overflow-y-auto px-2.5 pt-2 pb-2.5">{children}</div>
+      {footer && <ActionBar className="overflow-hidden rounded-inner-2 border-t-0">{footer}</ActionBar>}
     </aside>
   )
 }

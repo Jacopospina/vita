@@ -89,6 +89,7 @@ export const manifest: Record<Section, NavEntry[]> = {
     { slug: "notifications", title: "Notifications" },
     { slug: "overflow-content", title: "Overflow content" },
     { slug: "read-only-states", title: "Read-only states" },
+    { slug: "right-panel", title: "Right panel" },
     { slug: "search", title: "Search" },
     { slug: "status-indicators", title: "Status indicators" },
     { slug: "text-toolbar", title: "Text toolbar" },

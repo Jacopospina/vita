@@ -232,6 +232,10 @@ export const patternDemos: DemoMap = {
       ),
     },
   ],
+  "patterns/right-panel": [
+    { title: "Floating right panel", description: "Same inset, radius and glass as the left panel. Opened from a header action; × or Esc closes it.", render: () => <ShellDemo right /> },
+    { title: "Edit in context", description: "Header · content · one primary action in an inset footer. No Cancel.", render: () => <ShellDemo edit /> },
+  ],
   "patterns/global-header": [{ title: "Global header", description: "Name → nav → search · notifications (opens the right panel) · help · account.", render: () => <ShellDemo right /> }],
   "patterns/loading": [{ title: "Skeleton → content without layout shift", render: () => <LoadingPatternDemo /> }],
   "patterns/login": [{ title: "Two-step login", render: () => <div className="flex justify-center py-8"><LoginBlock productName="Vita" signupHref="#" onSso={() => toast({ title: "Redirecting to your identity provider…" })} onSubmit={async () => { await new Promise((r) => setTimeout(r, 900)); throw new Error("x") }} /></div> }],
