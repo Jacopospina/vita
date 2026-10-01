@@ -412,14 +412,14 @@
  *   glass-3  z-50  menus, lists, popovers glass-4  z-50+ dialogs (above their overlay)
  *   glass-5  z-60  notifications, capsules
  */
-@utility glass-1 { --corpus-glass-blur: 10px; --corpus-glass-fill: 36%; --corpus-glass-sat: 1.4; }
-@utility glass-2 { --corpus-glass-blur: 14px; --corpus-glass-fill: 32%; --corpus-glass-sat: 1.5; }
-@utility glass-3 { --corpus-glass-blur: 18px; --corpus-glass-fill: 28%; --corpus-glass-sat: 1.6; }
-@utility glass-4 { --corpus-glass-blur: 24px; --corpus-glass-fill: 22%; --corpus-glass-sat: 1.7; }
-@utility glass-5 { --corpus-glass-blur: 30px; --corpus-glass-fill: 16%; --corpus-glass-sat: 1.8; }
+@utility glass-1 { --corpus-glass-blur: 10px; --corpus-glass-fill: 24%; --corpus-glass-sat: 1.4; }
+@utility glass-2 { --corpus-glass-blur: 14px; --corpus-glass-fill: 20%; --corpus-glass-sat: 1.5; }
+@utility glass-3 { --corpus-glass-blur: 18px; --corpus-glass-fill: 16%; --corpus-glass-sat: 1.6; }
+@utility glass-4 { --corpus-glass-blur: 24px; --corpus-glass-fill: 12%; --corpus-glass-sat: 1.7; }
+@utility glass-5 { --corpus-glass-blur: 30px; --corpus-glass-fill: 8%; --corpus-glass-sat: 1.8; }
 
 @utility glass {
-  background-color: color-mix(in oklab, var(--corpus-elevated) var(--corpus-glass-fill, 28%), transparent);
+  background-color: color-mix(in oklab, var(--corpus-elevated) var(--corpus-glass-fill, 16%), transparent);
   /* Translucent enough to see content moving beneath; the backdrop is brightened (light mode) so the glass still reads white. */
   backdrop-filter: blur(var(--corpus-glass-blur, 18px)) saturate(var(--corpus-glass-sat, 1.6)) brightness(var(--corpus-glass-lift));
   -webkit-backdrop-filter: blur(var(--corpus-glass-blur, 18px)) saturate(var(--corpus-glass-sat, 1.6)) brightness(var(--corpus-glass-lift));
