@@ -38,19 +38,22 @@ export interface IconPlaceholderProps {
   size?: IconPlaceholderSize
   /** Draw the glyph in on mount (notifications). */
   draw?: boolean
+  /** tint (default): a faint dark wash, for white or raised surfaces · solid: a white tile, for grey list groups. */
+  surface?: "tint" | "solid"
   className?: string
 }
 
 const isIconType = (x: unknown): x is IconType =>
   typeof x === "function" || (typeof x === "object" && x !== null && "render" in x && !React.isValidElement(x))
 
-export function IconPlaceholder({ icon, tone = "neutral", size = "md", draw, className }: IconPlaceholderProps) {
+export function IconPlaceholder({ icon, tone = "neutral", size = "md", draw, surface = "tint", className }: IconPlaceholderProps) {
   const s = sizes[size]
   return (
     <span
       aria-hidden
       className={cn(
-        "flex shrink-0 items-center justify-center squircle bg-icon-surface duration-moderate-01 [--corpus-squircle-r:22%]",
+        "flex shrink-0 items-center justify-center squircle duration-moderate-01 [--corpus-squircle-r:22%]",
+        surface === "solid" ? "bg-icon-surface-solid" : "bg-icon-surface",
         s.tile,
         tones[tone],
         className,

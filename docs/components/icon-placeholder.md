@@ -27,6 +27,7 @@ related: [list-item, notification, icons]
 
 ## Rules
 
+- **Two surfaces.** `tint` (default): a faint dark wash, on white surfaces like notifications. `solid`: a white tile, inside grey list groups (ListItem uses it).
 - **Tone = meaning.** Neutral or brand for categories; a status tone only when the tile is that status, with its own glyph ([Color → Status semantics](#/foundations/color)).
 1. **Never hand-roll an icon on a square.** Every icon-on-a-tile in Corpus is an `IconPlaceholder`, so tone, radius and size stay in sync.
 2. **One look, three sizes.** A neutral tile with a colored glyph, everywhere. Only the size changes. The glyph's `tone` (neutral, brand, info, success, warning, error) carries the category or the kind.

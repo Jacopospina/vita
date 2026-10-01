@@ -27,7 +27,7 @@ avoid_when:
 | Interactive | `primary` (+ `-hover` `-active` `-foreground` `-subtle`) · `secondary` (a faint primary wash with primary text) · `link` · `focus` | Brand color means "you can act here". |
 | State | `hover` · `active` · `selected` · `selected-foreground` | Translucent washes that work on any layer. |
 | Divider | `divider` | The alt border for lines inside a container (row separators, inner dividers). Softer than `border`, translucent so it works on any layer; firmer in increased contrast. |
-| Icon surface | `icon-surface` | The IconPlaceholder tile. A faint dark wash (5% black) in light mode, so it reads super-light grey on any surface; a faint lift in dark mode. |
+| Icon surface | `icon-surface` · `icon-surface-solid` | The IconPlaceholder tile. `icon-surface` (tint) is a faint dark wash (5% black) for white surfaces; `icon-surface-solid` is a white tile for grey list groups. Both are faint lifts in dark mode. |
 | Support | `success` · `warning` · `error` · `info` (+ `-subtle`, `-foreground`) | Status only. Text on tints uses `-foreground`. |
 | Lines | `border-subtle` · `border` · `border-field` · `border-strong` | Fields use `border-field`: soft at rest, `border-strong` on hover, the focus ring on focus. Increased contrast restores a ≥ 3:1 field border. |
 | AI | `ai-spectrum` · `ai-subtle` | The rainbow outline, only for AI-generated content. |

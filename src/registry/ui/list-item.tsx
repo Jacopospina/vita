@@ -42,7 +42,7 @@ export function ListItem({ icon, tone = "neutral", media, title, subtitle, value
       {media ? (
         <span className="flex shrink-0 items-center">{media}</span>
       ) : icon ? (
-        <IconPlaceholder icon={icon} tone={tone} size="md" />
+        <IconPlaceholder icon={icon} tone={tone} size="md" surface="solid" />
       ) : null}
       <span className="flex min-w-0 flex-1 flex-col">
         <span className="truncate text-body">{title}</span>

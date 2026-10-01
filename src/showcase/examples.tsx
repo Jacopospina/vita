@@ -12,6 +12,7 @@ import { ListGroup, ListItem, ListSection } from "@/registry/ui/list-item"
 import { Toggle } from "@/registry/ui/toggle"
 import { Calendar } from "@/registry/ui/date-picker"
 import { AISurface, AILabel } from "@/registry/ui/ai-label"
+import { ChatThread, type ChatMessage } from "@/registry/ui/chat"
 import { Tag, SelectableTag } from "@/registry/ui/tag"
 import { DataTable, type DataTableColumn } from "@/registry/ui/data-table"
 import { Search } from "@/registry/ui/search"
@@ -228,6 +229,25 @@ const conversations = [
 export function ConversationsExample() {
   const [open, setOpen] = React.useState("c1")
   const c = conversations.find((x) => x.id === open) ?? conversations[0]
+  const first = c.who.split(" ")[0]
+  // Operator's view: the customer on the left; your side (the Vita agent, then you) on the right.
+  const [sent, setSent] = React.useState<Record<string, ChatMessage[]>>({})
+  const messages: ChatMessage[] = [
+    { id: `${c.id}-1`, role: "agent", author: c.who, text: "Hi, I'm waiting on this — can you help?", time: "09:12" },
+    {
+      id: `${c.id}-2`,
+      role: "user",
+      author: c.agent,
+      time: "09:12",
+      text: (
+        <Stack gap="xs">
+          <span>I've checked your account. Everything is in order — you'll get an update by email within one working day.</span>
+          <AILabel size="xs">Answered from the Vita help center.</AILabel>
+        </Stack>
+      ),
+    },
+    ...(sent[c.id] ?? []),
+  ]
   return (
     <Grid>
       <Column md={8} lg={6}>
@@ -245,14 +265,17 @@ export function ConversationsExample() {
             <Text variant="title-3">{c.topic}</Text>
             <Text variant="footnote" tone="muted">{c.who} · handled by {c.agent}</Text>
           </Stack>
-          <Tile><Text>{c.who.split(" ")[0]}: Hi, I'm waiting on this — can you help?</Text></Tile>
-          <AISurface>
-            <Stack gap="sm">
-              <Inline justify="between"><Text weight="semibold">{c.agent}</Text><AILabel size="xs">Answered from the Vita help center.</AILabel></Inline>
-              <Text tone="muted">I've checked your account. Everything is in order — you'll get an update by email within one working day.</Text>
-            </Stack>
-          </AISurface>
-          <Composer size="md" voice={false} placeholder={`Reply to ${c.who.split(" ")[0]}`} onSubmit={() => capsule({ icon: <Icon as={Send} size="md" />, title: "Reply sent", subtitle: c.who, story: { status: "success" } })} />
+          <ChatThread messages={messages} />
+          <Composer
+            size="md"
+            voice={false}
+            placeholder={`Reply to ${first}`}
+            onSubmit={(text: string) => {
+              if (!text.trim()) return
+              setSent((all) => ({ ...all, [c.id]: [...(all[c.id] ?? []), { id: `${c.id}-r${(all[c.id]?.length ?? 0) + 1}`, role: "user", author: "You", text, time: "now" }] }))
+              capsule({ icon: <Icon as={Send} size="md" />, title: "Reply sent", subtitle: c.who, story: { status: "success" } })
+            }}
+          />
         </Stack>
       </Column>
     </Grid>

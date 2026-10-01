@@ -71,6 +71,7 @@
   --color-selected-foreground: var(--corpus-selected-foreground);
   --color-skeleton: var(--corpus-skeleton);
   --color-icon-surface: var(--corpus-icon-surface);
+  --color-icon-surface-solid: var(--corpus-icon-surface-solid);
   --color-success: var(--corpus-success);
   --color-success-subtle: var(--corpus-success-subtle);
   --color-success-foreground: var(--corpus-success-foreground);
