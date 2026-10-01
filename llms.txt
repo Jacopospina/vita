@@ -2,7 +2,7 @@
 
 > Corpus is the body of the product: the only source of UI. Components are imported from @/components/corpus/*, tokens are Tailwind utilities, patterns are documented flows. Never create local components or raw values.
 
-Start with: docs/components/choosing-components.md (decision guide) · docs/foundations/principles.md · skills/corpus-design-system/SKILL.md
+Start with: docs/components/choosing-components.md (decision guide) · docs/foundations/principles.md · docs/decisions/ (system decisions — read before changing what they cover) · skills/corpus-design-system/SKILL.md
 
 ## Foundations
 
@@ -258,3 +258,13 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/foun
 - [Text toolbar](docs/patterns/text-toolbar.md): Formatting controls for rich-text editing — grouped, labelled, keyboard-friendly, with shortcuts.
   - use: Rich text editors (comments, descriptions, email drafts, notes)
   - avoid: Plain text fields → TextArea; Page-level actions → PageHeader / ButtonSet
+
+## Decisions
+
+- [Buttons](docs/decisions/buttons.md): One primary per page, dialog or side panel; the secondary is a faint primary wash with primary text; xl is rounder.
+- [Fields and options](docs/decisions/fields-and-options.md): Soft field borders at rest; dropdown options are whole-row targets with a reserved left tick slot.
+- [Glass by elevation](docs/decisions/glass-by-elevation.md): Every floating surface is frosted glass, more frosted the higher it floats; the page scrolls beneath the shell so the material is visible.
+- [How Corpus decides](docs/decisions/how-we-decide.md): Every system choice is a written record. Agents and people read the record before changing anything it covers; changing it means superseding it.
+- [Motion](docs/decisions/motion.md): Nothing snaps — except page load, global appearance swaps and floating-surface sizing, which never animate per element.
+- [Status semantics](docs/decisions/status-semantics.md): One map from meaning to colour and glyph, used by every status surface; status colours never decorate.
+- [Weather tint](docs/decisions/weather-tint.md): Floating layers lean cold or warm with the weather outside — Dynamic by default, or fixed Neutral, Cold or Warm.

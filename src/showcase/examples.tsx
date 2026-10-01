@@ -105,7 +105,7 @@ export function CardsExample() {
         </Tile>
       </Column>
       <Column md={4} lg={8}>
-        <AISurface className="h-full">
+        <AISurface>
           <Stack gap="sm">
             <Inline justify="between"><Text variant="title-3">Suggested reply</Text><AILabel size="sm">Drafted by Support triage from the help center article "Refunds".</AILabel></Inline>
             <Text tone="muted">Hi Sam, your refund for order 4821 was approved today. It should reach your card within 3–5 working days.</Text>

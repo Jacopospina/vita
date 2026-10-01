@@ -8,7 +8,7 @@ import fs from "node:fs"
 import path from "node:path"
 
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..")
-const sections = ["foundations", "components", "patterns"]
+const sections = ["foundations", "components", "patterns", "decisions"]
 
 function parse(src) {
   const m = /^---\n([\s\S]*?)\n---/.exec(src)
@@ -43,7 +43,7 @@ const lines = [
   "",
   "> Corpus is the body of the product: the only source of UI. Components are imported from @/components/corpus/*, tokens are Tailwind utilities, patterns are documented flows. Never create local components or raw values.",
   "",
-  "Start with: docs/components/choosing-components.md (decision guide) · docs/foundations/principles.md · skills/corpus-design-system/SKILL.md",
+  "Start with: docs/components/choosing-components.md (decision guide) · docs/foundations/principles.md · docs/decisions/ (system decisions — read before changing what they cover) · skills/corpus-design-system/SKILL.md",
   "",
 ]
 for (const section of sections) {

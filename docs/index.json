@@ -1816,6 +1816,107 @@
         "button",
         "tooltip"
       ]
+    },
+    {
+      "section": "decisions",
+      "slug": "buttons",
+      "path": "docs/decisions/buttons.md",
+      "title": "Buttons",
+      "summary": "One primary per page, dialog or side panel; the secondary is a faint primary wash with primary text; xl is rounder.",
+      "status": "accepted",
+      "date": "2026-10-01",
+      "decided_by": "Jacopo",
+      "related": [
+        "button",
+        "dialogs"
+      ]
+    },
+    {
+      "section": "decisions",
+      "slug": "fields-and-options",
+      "path": "docs/decisions/fields-and-options.md",
+      "title": "Fields and options",
+      "summary": "Soft field borders at rest; dropdown options are whole-row targets with a reserved left tick slot.",
+      "status": "accepted",
+      "date": "2026-10-01",
+      "decided_by": "Jacopo",
+      "related": [
+        "text-input",
+        "option",
+        "dropdown"
+      ]
+    },
+    {
+      "section": "decisions",
+      "slug": "glass-by-elevation",
+      "path": "docs/decisions/glass-by-elevation.md",
+      "title": "Glass by elevation",
+      "summary": "Every floating surface is frosted glass, more frosted the higher it floats; the page scrolls beneath the shell so the material is visible.",
+      "status": "accepted",
+      "date": "2026-10-01",
+      "decided_by": "Jacopo",
+      "related": [
+        "material",
+        "color",
+        "ui-shell-header"
+      ]
+    },
+    {
+      "section": "decisions",
+      "slug": "how-we-decide",
+      "path": "docs/decisions/how-we-decide.md",
+      "title": "How Corpus decides",
+      "summary": "Every system choice is a written record. Agents and people read the record before changing anything it covers; changing it means superseding it.",
+      "status": "accepted",
+      "date": "2026-10-01",
+      "decided_by": "Jacopo",
+      "related": [
+        "glass-by-elevation",
+        "status-semantics"
+      ]
+    },
+    {
+      "section": "decisions",
+      "slug": "motion",
+      "path": "docs/decisions/motion.md",
+      "title": "Motion",
+      "summary": "Nothing snaps — except page load, global appearance swaps and floating-surface sizing, which never animate per element.",
+      "status": "accepted",
+      "date": "2026-10-01",
+      "decided_by": "Jacopo",
+      "related": [
+        "motion",
+        "interaction"
+      ]
+    },
+    {
+      "section": "decisions",
+      "slug": "status-semantics",
+      "path": "docs/decisions/status-semantics.md",
+      "title": "Status semantics",
+      "summary": "One map from meaning to colour and glyph, used by every status surface; status colours never decorate.",
+      "status": "accepted",
+      "date": "2026-10-01",
+      "decided_by": "Jacopo",
+      "related": [
+        "color",
+        "status-indicators",
+        "tag"
+      ]
+    },
+    {
+      "section": "decisions",
+      "slug": "weather-tint",
+      "path": "docs/decisions/weather-tint.md",
+      "title": "Weather tint",
+      "summary": "Floating layers lean cold or warm with the weather outside — Dynamic by default, or fixed Neutral, Cold or Warm.",
+      "status": "accepted",
+      "date": "2026-10-01",
+      "decided_by": "Jacopo",
+      "related": [
+        "theming",
+        "material"
+      ]
     }
   ]
 }

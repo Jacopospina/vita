@@ -1,4 +1,4 @@
-export type Section = "foundations" | "components" | "patterns"
+export type Section = "foundations" | "components" | "patterns" | "decisions"
 
 export interface NavEntry {
   slug: string
@@ -96,10 +96,20 @@ export const manifest: Record<Section, NavEntry[]> = {
     { slug: "status-indicators", title: "Status indicators" },
     { slug: "text-toolbar", title: "Text toolbar" },
   ],
+  decisions: [
+    { slug: "how-we-decide", title: "How Corpus decides" },
+    { slug: "glass-by-elevation", title: "Glass by elevation" },
+    { slug: "status-semantics", title: "Status semantics" },
+    { slug: "weather-tint", title: "Weather tint" },
+    { slug: "buttons", title: "Buttons" },
+    { slug: "motion", title: "Motion" },
+    { slug: "fields-and-options", title: "Fields and options" },
+  ],
 }
 
 export const sectionTitles: Record<Section, string> = {
   foundations: "Foundations",
   components: "Components",
   patterns: "Patterns",
+  decisions: "Decisions",
 }

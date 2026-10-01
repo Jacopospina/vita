@@ -30,6 +30,8 @@ The docs renderer turns markdown into Corpus components. Write for it:
 
 ## Rules
 
+- **Decisions are written down.** Before changing anything a record in `docs/decisions/` covers, read it. Changing a decided thing means superseding the record (`docs/decisions/how-we-decide.md`) in the same commit — never a silent reversal.
+
 - **Disclosure chevrons point down when closed and up when open.** Any chevron that reveals content below it (accordion, dropdown, section, expandable row, tree node) follows this rule, and it rotates with a transition. Chevrons pointing sideways only mean "go to" or "open to the side" (navigation rows, submenus, pagination).
 - **Docs never name external design systems or vendors.** Corpus speaks in its own voice.
 - **Corpus's own voice is the Creator** (`docs/foundations/brand.md`): docs, the showcase, onboarding and release notes speak to the maker and aim to awaken the creator in them; the primary slogan is "Give your ideas a body." Product microcopy inside Vita demos stays plain (content rules).
