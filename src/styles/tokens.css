@@ -9,8 +9,10 @@
  *   support      success · warning · error · info (+ -subtle, -foreground)
  *   lines        border-subtle · border · border-strong · border-field
  */
-/* Weather tint (useWeatherTint): when on (--corpus-weather: 1) greys lean a hair warm or cool with the temperature
-   outside, replacing the neutral knobs. Applied through swapAppearance, so it cross-fades once. */
+/* Weather tint (useWeatherTint): when on (--corpus-weather: 1) every layer ABOVE the page — layers, raised
+   surfaces, fields, glass, lines, text — leans warm or cold, replacing the neutral knobs. The page background
+   itself stays on the neutral knobs: the tint lives in Corpus's layers, so stacking reads by temperature too.
+   Applied through swapAppearance, so it cross-fades once. */
 @property --corpus-weather { syntax: "<number>"; inherits: true; initial-value: 0; }
 @property --corpus-weather-hue { syntax: "<number>"; inherits: true; initial-value: 0; }
 @property --corpus-weather-chroma { syntax: "<number>"; inherits: true; initial-value: 0; }
@@ -27,7 +29,8 @@
   color-scheme: light;
 
   /* surfaces — grouped layering: white canvas, soft grey layers */
-  --corpus-background: oklch(0.988 var(--_nc) var(--_nh)); /* the lightest grey — pure white glares */
+  /* The lightest grey — pure white glares. Never weather-tinted (neutral knobs only). */
+  --corpus-background: oklch(0.988 var(--corpus-neutral-chroma) var(--corpus-neutral-hue));
   --corpus-layer-1: oklch(0.972 var(--_nc) var(--_nh)); /* cards: a soft step off the page */
   --corpus-layer-2: oklch(0.923 var(--_nc) var(--_nh));
   --corpus-layer-3: oklch(0.862 var(--_nc) var(--_nh));
