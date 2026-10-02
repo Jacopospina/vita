@@ -621,7 +621,9 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
       // The voice level for this frame, eased so the liquid swells and settles instead of twitching.
       const raw = VOICE.has(mode) ? (levelRef.current ? levelRef.current() : simulatedVoice(t * 0.8)) : 0
       lvlNow += (raw - lvlNow) * (raw > lvlNow ? 0.35 : 0.12)
-      if (now - last > 2000) {
+      // Follow the text colour closely: a button's colour changes the moment it goes busy (its hover ends), and
+      // Sofia must change with it, never keep the old colour (white on a now-white button).
+      if (now - last > 120) {
         color = getComputedStyle(canvas).color
         light = !onPrimary && isLight(color)
         last = now
