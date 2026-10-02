@@ -79,7 +79,7 @@ const pill = "h-8 rounded-inner-2 [corner-shape:round]"
 
 export function Header({ productName, prefix, logo, badge, href = "/", children, actions, className }: {
   productName: string
-  /** A small label right after the name, e.g. a release stage (<Tag size="sm" tone="info">Draft</Tag>). */
+  /** A small label right after the name, e.g. a release stage (<Tag size="sm" tone="neutral">Draft</Tag>). */
   badge?: React.ReactNode
   /** The product's mark, shown before its name (about 20px). */
   logo?: React.ReactNode

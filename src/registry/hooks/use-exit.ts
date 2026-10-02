@@ -1,4 +1,5 @@
 import * as React from "react"
+import { motionMs, EASE_PRODUCTIVE } from "@/registry/lib/utils"
 
 /**
  * useExit, play an exit before something disappears. Nothing in Vita vanishes instantly.
@@ -29,7 +30,8 @@ export function useExit(ms = 150) {
  * once it unmounts. Pair with useExit and the same duration: const undo = collapseOut(el, ms); exit(() => { onDismiss(); undo?.() }).
  */
 export function collapseOut(el: HTMLElement | null, ms = 220): (() => void) | undefined {
-  if (!el || window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return
+  const duration = motionMs(ms)
+  if (!el || !duration) return
   const parent = el.parentElement ? getComputedStyle(el.parentElement) : null
   const gap = parent && /flex|grid/.test(parent.display) ? parseFloat(parent.columnGap) || 0 : 0
   const cs = getComputedStyle(el)
@@ -40,7 +42,7 @@ export function collapseOut(el: HTMLElement | null, ms = 220): (() => void) | un
       { width: `${el.getBoundingClientRect().width}px`, minWidth: "0px", paddingLeft: cs.paddingLeft, paddingRight: cs.paddingRight, borderLeftWidth: cs.borderLeftWidth, borderRightWidth: cs.borderRightWidth, marginRight: cs.marginRight },
       { width: "0px", minWidth: "0px", paddingLeft: "0px", paddingRight: "0px", borderLeftWidth: "0px", borderRightWidth: "0px", marginRight: `${-gap}px` },
     ],
-    { duration: ms, easing: "cubic-bezier(0.2, 0, 0.38, 0.9)", fill: "forwards" },
+    { duration, easing: EASE_PRODUCTIVE, fill: "forwards" },
   )
   // Restore: for when the item turns out to stay (the parent kept it). Unmounted, it's a no-op.
   return () => { anim.cancel(); el.style.overflow = overflow }

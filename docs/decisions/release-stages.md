@@ -4,7 +4,7 @@ summary: Everything in Vita, and Vita itself, sits on one of three stages. Draft
 status: accepted
 date: 2026-10-02
 decided_by: Jacopo
-related: [how-we-decide, components-and-patterns]
+related: [how-we-decide, status-semantics, components-and-patterns]
 ---
 
 ## Decision
@@ -15,7 +15,7 @@ related: [how-we-decide, components-and-patterns]
 
 ## How it shows
 
-- **One tag, one tone.** Draft is info, Experimental is warning, Stable is success, wherever a stage appears.
+- **One tag, one tone.** Draft is neutral (never info, which Status semantics keeps for "in progress"), Experimental is warning, Stable is success.
 - **Pages carry their stage.** A doc's `status` frontmatter is its stage, shown as a tag next to its title.
 
 ## Why

@@ -14,3 +14,4 @@ export function BadCopy() {
   return <Button label="Submit">Oops</Button>
 }
 export const OldWorld = () => <span className="size-4 animate-spin rounded-full" />
+export const SharpTile = () => <div className="rounded-none bg-layer-1 p-3">Sharp</div>

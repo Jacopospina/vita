@@ -37,7 +37,7 @@ related: [voice-conversation, mic-selector, thinking]
 4. **Both edges fade out**, so the bars sit in any container without a hard border.
 5. **No background of its own.** The edge fade would fade a fill too, leaving a smudge behind the bars.
 
-> [!IMPORTANT] Breaking (2026-10-02): `tone="spectrum"` is removed. Use the default `brand`.
+> [!IMPORTANT] Breaking (2026-10-02): `tone="spectrum"` is removed and the default is now `brand` (it was `current`). Pass `tone="current"` where the bars should follow the text colour.
 
 ## Accessibility
 

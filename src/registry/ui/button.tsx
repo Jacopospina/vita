@@ -2,7 +2,7 @@ import * as React from "react"
 import { Slot } from "radix-ui"
 import { cva, type VariantProps } from "class-variance-authority"
 import type { IconType } from "@/registry/icons"
-import { cn } from "@/registry/lib/utils"
+import { cn, motionMs, EASE_PRODUCTIVE } from "@/registry/lib/utils"
 import { Icon, SwapIcon, DrawnMark } from "@/registry/ui/icon"
 import { ErrorFilled } from "@/registry/icons"
 import { Tooltip } from "@/registry/ui/tooltip"
@@ -145,8 +145,9 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       const w = el.offsetWidth
       const from = lastWidth.current
       lastWidth.current = w
-      if (from === null || Math.abs(from - w) < 0.5 || window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return
-      el.animate([{ width: `${from}px`, overflow: "clip" }, { width: `${w}px`, overflow: "clip" }], { duration: 240, easing: "cubic-bezier(0.2, 0, 0.38, 0.9)" })
+      const duration = motionMs(240) // moderate-02, on the theme's motion speed
+      if (from === null || Math.abs(from - w) < 0.5 || !duration) return
+      el.animate([{ width: `${from}px`, overflow: "clip" }, { width: `${w}px`, overflow: "clip" }], { duration, easing: EASE_PRODUCTIVE })
     }, [status, label, asChild])
     return (
       <Comp

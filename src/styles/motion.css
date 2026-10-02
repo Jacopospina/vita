@@ -48,8 +48,16 @@
 @keyframes vita-indeterminate { from { transform: translateX(-100%) } to { transform: translateX(250%) } }
 /* A glyph changing in place (ScrambleText): the old one blurs out while the new one unblurs in, same spot, like a
    lock-screen clock. No movement, no scale: only focus and presence. */
-@keyframes vita-glyph-in { from { opacity: 0; filter: blur(6px) } to { opacity: 1; filter: blur(0) } }
-@keyframes vita-glyph-out { from { opacity: 1; filter: blur(0) } to { opacity: 0; filter: blur(6px) } }
+@keyframes vita-glyph-in { from { opacity: 0; filter: blur(6px) } to { opacity: 1; filter: none } }
+@keyframes vita-glyph-out { from { opacity: 1; filter: none } to { opacity: 0; filter: blur(6px) } }
+/* On touch the glyphs only fade: a loading line is a continuous animation, and phones get no per-frame filters
+   (decision: Touch adapts by itself). */
+@media (pointer: coarse) {
+  :root {
+    --animate-glyph-in: vita-fade-in var(--vita-duration-moderate-02) var(--vita-ease-productive) both;
+    --animate-glyph-out: vita-fade-out var(--vita-duration-moderate-02) var(--vita-ease-productive) both;
+  }
+}
 @keyframes vita-text-in { from { opacity: 0; transform: translateY(0.6em); filter: blur(8px) } to { opacity: 1; transform: none; filter: blur(0) } }
 /*
  * GRAVITY, expressive arrivals are briefly subject to gravity: they FALL in (accelerating), dip a hair below

@@ -125,6 +125,12 @@ function installAgentLayer({ skills, hook }) {
   ok("audit + eslint plugin → .vita/")
   // skills
   if (skills) {
+    // The skills were renamed (Architect, Consistency, Motion Design, Copywriting, Personae, Theming): an update removes
+    // the old folders, or agents would load two versions of the same skill.
+    for (const old of ["vita-design-system", "vita-visual-consistency", "vita-motion", "vita-content", "vita-personas", "vita-theme"]) {
+      const dir = path.join(CWD, ".claude/skills", old)
+      if (fs.existsSync(path.join(dir, "SKILL.md"))) { fs.rmSync(dir, { recursive: true, force: true }); ok(`removed renamed skill .claude/skills/${old}`) }
+    }
     const n = copyTree(path.join(PKG, "skills"), path.join(CWD, ".claude/skills"), { transform: (c) => c.replaceAll("@/components/vita", cfg.componentsAlias) })
     ok(`${n} skill files → .claude/skills/vita-*`)
   }
