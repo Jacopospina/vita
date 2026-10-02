@@ -499,7 +499,8 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
             if (p.r < 0.005 || k >= MAX_DROPS) continue
             drops[k * 4] = (px / 2 + p.x * R) * glDpr
             drops[k * 4 + 1] = (px / 2 + p.y * R) * glDpr
-            drops[k * 4 + 2] = dropRadius(p) * glDpr
+            // The filter path plumps drops ×1.3 because its two-stage melt eats into them; the closed form doesn't.
+            drops[k * 4 + 2] = (simple ? dropRadius(p) : dropRadius(p) / 1.3) * glDpr
             k++
           }
           o.draw(drops, k, { t, rot: t * 1.8, spectrum: resolvedTone === "spectrum", own })

@@ -69,7 +69,9 @@ void main() {
       Ug += cov(dist, d.z, uSg);
     }
   }
-  U = min(U, 1.0); Us = min(Us, 1.0); Ug = min(Ug, 1.0);
+  // A soft union: sparse drops still add up (the gooey bridges), dense ones saturate like overlapping paint instead
+  // of piling up, so a tightly packed outline stays as slim as the filter chain draws it.
+  U = 1.0 - exp(-U); Us = 1.0 - exp(-Us); Ug = 1.0 - exp(-Ug);
 
   // Colour: the conic spectrum turning with time, or the text colour.
   vec3 c = uOwn;
@@ -86,7 +88,7 @@ void main() {
   // The goo: threshold where the filter chain does (≈ 0.43), with an edge no wider than ~1.5 device px.
   float w = max(fwidth(U) * 1.5, 0.004);
   // 0.5: the second melt of the chain erodes the first threshold a little, lines as slim as on desktop.
-  float A = smoothstep(0.5 - w, 0.5 + w, U);
+  float A = smoothstep(0.45 - w, 0.45 + w, U);
 
   vec3 rgb = c;
   float alpha = A;
@@ -104,9 +106,15 @@ void main() {
     vec3 n = normalize(vec3(-grad, 1.0));
     // A low light from the top left (30° above the surface): flat tops stay their colour, only rims tilted toward
     // the light catch it, the glint along the edge that the desktop chain shows.
-    vec3 l = normalize(vec3(-0.61, -0.61, 0.5));
+    vec3 l = normalize(vec3(-0.5, -0.5, 0.71));
     vec3 hv = normalize(l + vec3(0.0, 0.0, 1.0));
-    float spec = 1.1 * pow(max(dot(n, hv), 0.0), 26.0) * A;
+    // The desktop chain's broad sheen (a soft highlight across the body) plus the bright rim.
+    // Volume: a soft, broad sheen from the point light on the unflattened surface (the body's gentle curve, top
+    // left), a third as strong as the chain's so it never washes the colour out.
+    vec3 n2 = normalize(vec3(-gS * uSurface * 0.6, 1.0));
+    vec3 hp = normalize(normalize(uLight - vec3(p, 0.0)) + vec3(0.0, 0.0, 1.0));
+    float sheen = 0.38 * pow(max(dot(n2, hp), 0.0), 18.0);
+    float spec = (1.1 * pow(max(dot(n, hv), 0.0), 26.0) + sheen) * A;
     rgb = min(vec3(1.0), rgb + 0.65 * spec);
     alpha = min(1.0, A + 0.65 * spec * A);
     // Glow behind: wide, pastel, a third as strong.
