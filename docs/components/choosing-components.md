@@ -107,7 +107,8 @@ Are items uniform records with the same attributes?
 | Situation | Use |
 |---|---|
 | < 300ms | Nothing |
-| Layout known | `Skeleton` (preferred) |
+| Layout known | `Skeleton` (preferred) for shapes: avatars, images, cards |
+| Text whose style is known (a title, a name, a value) | `ScrambleText`: glyphs change one by one in the real typeface, each blurring out as the next blurs in, then the text lands |
 | One action in progress | `Button loading` or `InlineLoading` |
 | Measurable progress | `ProgressBar` |
 | Region with unknown layout | `Loading` / `Thinking` (mode: basic, retrieving, generating, searching), `overlay` only if interaction must be blocked |

@@ -113,7 +113,8 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const label = status !== "idle" && feedback?.[status] ? feedback[status] : children
     // The far-right slot carries the consequence: icon → thinking orb → drawn check / error mark.
     const slot =
-      status === "loading" ? <Thinking mode="basic" size="sm" tone="current" label={feedback?.loading ?? "Working"} />
+      // Sofia draws at 24 (md) so she reads as Sofia, but -m-1 keeps her in the 16px icon slot: the button never grows.
+      status === "loading" ? <Thinking mode="basic" size="md" tone="current" label={feedback?.loading ?? "Working"} className="-m-1" />
       : status === "success" ? <DrawnMark on className="animate-enter-fade" />
       : status === "error" ? <Icon as={ErrorFilled} size="sm" draw="in" />
       : icon ? <Icon as={icon} size="sm" /> : null

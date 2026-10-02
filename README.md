@@ -21,7 +21,7 @@ Every product has three parts. **Animus**, the mind, is the backend logic: rules
 | **Foundations** (12) | Vita · principles · theming · grid · spacing · color · typography · motion · icons · pictograms · accessibility · content, personas & taxonomy |
 | **Components** (41 + guide) | Accordion, AI label, Breadcrumb, Button, Checkbox, Code snippet, Contained list, Content switcher, Data table, Date picker, Dropdown (+ Combobox, MultiSelect), File uploader, Form (+ FluidForm), Inline loading, Link, List, Loading (+ Skeleton), Menu, Menu buttons, Modal, Notification (+ Toast, Callout), Number input, Pagination, Popover (+ Toggletip), Progress bar, Progress indicator, Radio button, Search, Select, Slider, Structured list, Tabs, Tag, Text input, Tile, Toggle, Tooltip, Tree view, UI shell header / left panel / right panel, plus Empty state, Status indicator, Page header, Truncate, Toolbar, Layout, Text, Icon, Pictogram |
 | **Patterns** (17) | Common actions, Dialogs, Disabled states, Disclosures, Empty states, Filtering, Fluid styles, Forms, Global header, Loading, Login, Notifications, Overflow content, Read-only states, Search, Status indicators, Text toolbar |
-| **Skills** (6) | `vita-design-system`, `vita-content`, `vita-personas`, `vita-motion`, `vita-visual-consistency`, `vita-theme` |
+| **Skills** (6) | `vita-architect`, `vita-copywriting`, `vita-personae`, `vita-motion-design`, `vita-consistency`, `vita-theming` |
 | **Enforcement** | `vita-audit` (CLI/CI), ESLint plugin (editor), Claude Code hook (agents fix violations as they write) |
 
 Every page in the docs site has the same four tabs:
@@ -63,7 +63,7 @@ Then:
 1. In your global CSS, replace `@import "tailwindcss";` with `@import "./styles/vita/vita.css";`.
 2. Alias `@/components/vita` → `src/components/vita` (tsconfig `paths` + bundler alias).
 3. Mount `<TooltipProvider>` and `<Toaster />` once at the root.
-4. Fill in `vita/product.md`, then ask your agent to *"use the vita-personas skill"*.
+4. Fill in `vita/product.md`, then ask your agent to *"use the vita-personae skill"*.
 5. Tune `src/styles/vita/theme.css`.
 
 Other commands:

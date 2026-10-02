@@ -1,5 +1,5 @@
 import * as React from "react"
-import { DayPicker, type DateRange } from "react-day-picker"
+import { DayPicker, type DateRange, type DayPickerProps } from "react-day-picker"
 import { format, isValid, parse, addDays, startOfMonth, endOfMonth, subMonths, nextMonday, isSameDay } from "date-fns"
 import { Calendar as CalendarIcon, ChevronLeft, ChevronRight } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
@@ -135,13 +135,7 @@ export function Calendar({ className, month: monthProp, onMonthChange, defaultMo
         caption_before_enter: "animate-month-caption-in",
         caption_before_exit: "animate-month-caption-out",
       }}
-            components={{
-              Chevron: ({ orientation }) => <Icon as={orientation === "left" ? ChevronLeft : ChevronRight} />,
-              // The month name morphs in letter by letter (the default stagger) every time a new month arrives.
-              CaptionLabel: ({ children, ...rest }) => (
-                <span {...rest}>{typeof children === "string" ? <AnimatedText enter="mount">{children}</AnimatedText> : children}</span>
-              ),
-            }}
+            components={calendarParts}
             {...props}
           />
         </div>
@@ -158,6 +152,16 @@ export function Calendar({ className, month: monthProp, onMonthChange, defaultMo
       </div>
     </div>
   )
+}
+
+/** Stable across renders: defined inline, these would remount on every render (picking a day included) and the
+    month name would replay its entrance each time. It plays only when a new month arrives. */
+const calendarParts: DayPickerProps["components"] = {
+  Chevron: ({ orientation }) => <Icon as={orientation === "left" ? ChevronLeft : ChevronRight} />,
+  // The month name morphs in letter by letter (the default stagger) every time a new month arrives.
+  CaptionLabel: ({ children, ...rest }) => (
+    <span {...rest}>{typeof children === "string" ? <AnimatedText enter="mount">{children}</AnimatedText> : children}</span>
+  ),
 }
 
 const FMT = "dd/MM/yyyy"

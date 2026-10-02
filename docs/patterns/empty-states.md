@@ -34,3 +34,4 @@ Sometimes empty is a success ("All caught up"). Say so positively and offer no a
 4. **Keep the chrome.** Show the table header and toolbar even when empty, so the user understands the space.
 5. **Permissions empty** ("You don't have access") says who to ask.
 6. **Every search gets one.** Wherever people type to find something (a page search, a filter, a sidebar, a combobox, global search), no results shows an empty state that names the query and offers a way out.
+7. **The pictogram tells the story without words.** It depicts both the title and the subtitle, so a glance explains what happened (see Pictograms).

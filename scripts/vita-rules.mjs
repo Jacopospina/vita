@@ -61,6 +61,11 @@ export function createRules({ alias = "@/components/vita" } = {}) {
     msg: "Radius/shadow outside the scale. Use rounded-sm|md|lg|xl|full and shadow-raised|floating|overlay.",
   },
   {
+    id: "square-corner",
+    test: (line) => /\brounded(?:-[trblse]{1,2})?-(?:none|0)\b/.exec(line),
+    msg: "Square corner. Every corner comes from the theme radius (rounded-sm|md|lg|xl, scope-* + rounded-inner-*), so it follows whatever radius the product picks, square included.",
+  },
+  {
     id: "raw-motion",
     test: (line) => /\bduration-\d+\b|\bease-(?:linear|in|out|in-out)\b|\bdelay-\d+\b|\banimate-(?:bounce|ping|pulse)\b|cubic-bezier\(/.exec(line),
     msg: "Raw motion value. Use duration-fast-01…slow-02, ease-productive/expressive/spring, animate-enter-*/exit-*.",

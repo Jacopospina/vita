@@ -62,7 +62,12 @@ export function ConversationBar({ agent, state, onStart, onEnd, mic, agentLevel,
   }
 
   return (
-    <section aria-label={`Voice conversation with ${agent}`} className={cn("flex w-full items-center gap-2 glass glass-2 scope-xl p-2", className)}>
+    <section aria-label={`Voice conversation with ${agent}`} className={cn(
+      // The right edge matches the space above and below the trailing controls (Sofia lg 48 vs a control-md), so the
+      // Start button and the call controls sit evenly inset on every side.
+      "flex w-full items-center gap-2 glass glass-2 scope-xl p-2 pr-[calc(var(--spacing)*2+(var(--spacing)*12-var(--vita-control-md))/2)]",
+      className,
+    )}>
       <Thinking
         mode={orb[state]}
         size="lg"
@@ -82,7 +87,7 @@ export function ConversationBar({ agent, state, onStart, onEnd, mic, agentLevel,
           <div className={cn("min-w-0 flex-1 motion-productive max-sm:hidden", live ? "opacity-100" : "opacity-0")}>
             <LiveWaveform
               size="sm"
-              tone={state === "talking" ? "spectrum" : "brand"}
+              tone="brand"
               active={(state === "listening" && !muted) || state === "talking"}
               processing={state === "thinking" || state === "connecting"}
               getBands={state === "listening" && mic?.status === "live" ? mic.bands : undefined}

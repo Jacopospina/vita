@@ -1,9 +1,9 @@
 ---
-name: vita-theme
+name: vita-theming
 description: Personalise Vita for a product or brand by changing only the theme knobs, brand hue/chroma, neutral tint, radius, density, typefaces, type scale, motion speed, and verify contrast. Use when someone wants to rebrand, change colors, make the UI denser/roomier, rounder/squarer, change fonts, or match a brand guideline.
 ---
 
-# Vita theming
+# Vita Theming
 
 Everything visual derives from about 10 knobs in `src/styles/vita/theme.css`. **Edit only that file.** Never override tokens or component classes.
 
@@ -27,6 +27,7 @@ Everything visual derives from about 10 knobs in `src/styles/vita/theme.css`. **
 3. **Density follows the primary persona**, not taste (see `vita/personas`).
 4. **One sans and one mono.** A display face is allowed only for marketing surfaces.
 5. **Don't change semantic tokens** (`tokens.css`) per product. If a new semantic role is needed, that's a design-system change.
+6. **Corners always come from the radius knob.** Whatever radius the product picks (Default or its own), every corner follows it: no `rounded-none`, no local radius. After a radius change, check a picker, a tree row, a tile and a panel; a corner that didn't move is a bug to fix in the component, not in the theme.
 
 ## Deliver
 

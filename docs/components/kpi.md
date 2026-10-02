@@ -37,6 +37,7 @@ related: [page-header, data-table, status-indicator, common-actions]
 3. **Always say against what.** A trend without a `period` is a guess.
 4. **Never colour alone.** The arrow carries the direction; colour adds good or bad.
 5. **In a page header, small and bare.** `<KpiGroup bare>` with `size="sm"` Kpis, on the right of the title, before any actions.
+6. **Loading scrambles, never a grey bar.** `loading` shows digits changing one by one in the value's own type (Scramble text) and keeps the trend line's place; when it ends, the real digits land in random order. Pass `loadingLength` when the value's length will differ a lot.
 
 ## Sizes
 

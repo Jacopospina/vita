@@ -1,4 +1,5 @@
 import * as React from "react"
+import { cn } from "@/registry/lib/utils"
 import { Add, Edit, TrashCan, Download, Copy, Filter, Close, TextBold, TextItalic, TextUnderline, TextStrikethrough, ListBulleted, ListNumbered, Link as LinkIcon, Code, Renew, Locked, Information, DataBase, Security, Plug, Bot, Notification, InformationFilled, CheckmarkFilled, WarningAltFilled, ErrorFilled } from "@/registry/icons"
 import { Report, Magnify as SearchPict, Warning_01 as ErrorPict } from "@/registry/pictograms"
 import type { DemoMap } from "./types"
@@ -61,7 +62,10 @@ function FilteringDemo() {
         <>
           <Search variant="toolbar" size="md" placeholder="Search agent or team" value={q} onValueChange={setQ} />
           {applied.map((a) => <Tag key={a.k + a.v} tone="outline" onDismiss={() => (a.k === "status" ? setStatuses((x) => x.filter((y) => y !== a.v)) : setTeam(""))}>{a.v}</Tag>)}
-          {applied.length > 0 && <Button size="sm" variant="ghost" onClick={clear}>Clear filters</Button>}
+          {/* Opens and closes sideways (its gap too), so the search beside it never snaps to a new width. */}
+          <div className={cn("reveal-x motion-productive", applied.length ? "reveal-x-open" : "-ml-2")} inert={!applied.length || undefined}>
+            <div><Button size="sm" variant="ghost" className="whitespace-nowrap" onClick={clear}>Clear filters</Button></div>
+          </div>
           <Popover>
             <PopoverTrigger asChild><Button variant="secondary" icon={Filter}>Filter{applied.length ? ` (${applied.length})` : ""}</Button></PopoverTrigger>
             <PopoverContent className="w-72">
@@ -230,6 +234,14 @@ export const patternDemos: DemoMap = {
     { title: "First use", render: () => <EmptyState size="lg" pictogram={Report} title="Create your first agent" description="Describe what it should do, connect your tools and deploy. It takes about five minutes." action={<Button icon={Add}>Create agent</Button>} secondaryAction={<Button variant="ghost">Start from a template</Button>} /> },
     { title: "No results", render: () => <EmptyState pictogram={SearchPict} title="No results for “suport”" description="Check the spelling or search by agent ID." action={<Button variant="tertiary">Clear search</Button>} /> },
     { title: "Error", render: () => <EmptyState pictogram={ErrorPict} title="We couldn't load agents" description="The connection timed out. Your agents are still running." action={<Button variant="tertiary" icon={Renew}>Try again</Button>} /> },
+    {
+      title: "Small, inside a panel, with a secondary action",
+      render: () => (
+        <div className="flex h-64 max-w-sm scope-lg border border-border-subtle">
+          <EmptyState size="sm" pictogram={Report} title="No reports yet" description="Reports appear here after an agent's first run." action={<Button size="sm">Run an agent</Button>} secondaryAction={<Button size="sm" variant="ghost">Learn about reports</Button>} />
+        </div>
+      ),
+    },
   ],
   "patterns/filtering": [{ title: "Search + filter popover + applied tags", render: () => <FilteringDemo /> }],
   "patterns/fluid-styles": [
@@ -451,6 +463,22 @@ patternDemos["components/icon-placeholder"] = [
         <IconPlaceholder icon={WarningAltFilled} tone="warning" size="lg" />
         <IconPlaceholder icon={ErrorFilled} tone="error" size="lg" />
       </Inline>
+    ),
+  },
+  {
+    title: "Surfaces, tint and solid",
+    description: "Tint (default) on white and raised surfaces. Solid, a white tile, on grey list groups and layers.",
+    render: () => (
+      <div className="grid gap-4 sm:grid-cols-2">
+        <Stack gap="sm" align="center" className="scope-lg border border-border-subtle bg-background p-6">
+          <Inline gap="md"><IconPlaceholder icon={Bot} size="sm" /><IconPlaceholder icon={Bot} tone="brand" /><IconPlaceholder icon={Bot} tone="brand" size="lg" /></Inline>
+          <Text variant="caption" tone="muted">Tint, on a white surface</Text>
+        </Stack>
+        <Stack gap="sm" align="center" className="scope-lg bg-layer-2 p-6">
+          <Inline gap="md"><IconPlaceholder icon={Bot} surface="solid" size="sm" /><IconPlaceholder icon={Bot} tone="brand" surface="solid" /><IconPlaceholder icon={Bot} tone="brand" surface="solid" size="lg" /></Inline>
+          <Text variant="caption" tone="muted">Solid, on a grey surface</Text>
+        </Stack>
+      </div>
     ),
   },
 ]

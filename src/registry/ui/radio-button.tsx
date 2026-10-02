@@ -49,7 +49,9 @@ export function RadioButton({ label, helperText, className, id: idProp, ...props
       <RadioPrimitive.Item
         id={id}
         className={cn(
-          "peer relative tap mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full border border-border-strong bg-field",
+          // Sizes snap to even pixels: spacing follows density, and a 16.8px ring around a 6.3px dot rasterises off-centre
+          // and slightly oval. Even ring + even dot = a true circle with the dot dead centre, at any density.
+          "peer relative tap mt-0.5 flex size-[round(calc(var(--spacing)*4),2px)] shrink-0 items-center justify-center rounded-full border border-border-strong bg-field",
           "duration-moderate-02 ease-productive focus-ring active:scale-90",
           "data-[state=checked]:border-primary data-[state=checked]:ease-expressive",
           "disabled:cursor-not-allowed disabled:border-disabled-foreground",
@@ -70,7 +72,7 @@ export function RadioButton({ label, helperText, className, id: idProp, ...props
             "data-[disabled]:bg-disabled-foreground",
           )}
         >
-          <span className="size-1.5 scale-0 rounded-full bg-primary-foreground opacity-0 blur-xs duration-moderate-01 ease-productive group-data-[state=checked]/ind:scale-100 group-data-[state=checked]/ind:opacity-100 group-data-[state=checked]/ind:blur-none group-data-[state=checked]/ind:delay-75 group-data-[state=checked]/ind:ease-spring" />
+          <span className="size-[round(calc(var(--spacing)*1.5),2px)] scale-0 rounded-full bg-primary-foreground opacity-0 blur-xs duration-moderate-01 ease-productive group-data-[state=checked]/ind:scale-100 group-data-[state=checked]/ind:opacity-100 group-data-[state=checked]/ind:blur-none group-data-[state=checked]/ind:delay-75 group-data-[state=checked]/ind:ease-spring" />
         </RadioPrimitive.Indicator>
       </RadioPrimitive.Item>
       <div className="flex flex-col gap-0.5">

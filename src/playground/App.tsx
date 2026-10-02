@@ -91,7 +91,7 @@ export function App() {
         <Header
           productName="Vita"
           logo={<VitaMark size={24} className="-m-0.5" />}
-          badge={<Tag size="sm" tone="warning">Experimental</Tag>}
+          badge={<Tag size="sm" tone="info">Draft</Tag>}
           href={HOME_URL} // the Vita homepage: the live showcase
           actions={
             <>

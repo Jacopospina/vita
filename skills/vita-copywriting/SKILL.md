@@ -1,11 +1,11 @@
 ---
-name: vita-content
+name: vita-copywriting
 description: Write or review every user-visible word in a Vita product, labels, buttons, headings, helper text, errors, empty states, toasts, confirmations, emails, AI messages, through the product taxonomy and persona voice. Use whenever UI text is created or changed, or when copy "feels off".
 ---
 
-# Vita content
+# Vita Copywriting
 
-Every string passes through the **taxonomy** (`vita/taxonomy.json`) and the **persona** (`vita/personas/*.md`). If either file is missing, run `vita-personas` first, or ask the user which persona the screen serves.
+Every string passes through the **taxonomy** (`vita/taxonomy.json`) and the **persona** (`vita/personas/*.md`). If either file is missing, run `vita-personae` first, or ask the user which persona the screen serves.
 
 ## Procedure for each string
 

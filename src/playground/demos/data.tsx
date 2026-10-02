@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Add, Document, Folder, TrashCan, Download, Edit, UserAvatar, Filter, CheckmarkFilled, ErrorFilled, InProgress, PauseFilled } from "@/registry/icons"
+import { Add, Document, Folder, TrashCan, Download, Edit, UserAvatar, Filter, CheckmarkFilled, ErrorFilled, InProgress, PauseFilled, Renew } from "@/registry/icons"
 import { Report } from "@/registry/pictograms"
 import type { DemoMap } from "./types"
 import { Kpi, KpiGroup } from "@/registry/ui/kpi"
@@ -128,9 +128,24 @@ function TagDemo() {
     <Stack gap="lg">
       <Inline wrap gap="xs">{(["neutral", "brand", "success", "warning", "error", "info", "outline", "inverse"] as const).map((t) => <Tag key={t} tone={t}>{t}</Tag>)}</Inline>
       <Inline wrap gap="xs"><Tag size="sm">Small</Tag><Tag>Medium</Tag><Tag size="lg">Large</Tag><Tag icon={Document}>With icon</Tag></Inline>
-      <Inline wrap gap="xs"><Text tone="muted">Applied:</Text>{filters.map((f) => <Tag key={f} tone="outline" onDismiss={() => setFilters((x) => x.filter((y) => y !== f))}>{f}</Tag>)}</Inline>
+      <Inline wrap gap="xs"><Text tone="muted">Applied:</Text>{filters.map((f) => <Tag key={f} tone="outline" onDismiss={() => setFilters((x) => x.filter((y) => y !== f))}>{f}</Tag>)}<Tag tone="outline" disabled onDismiss={() => {}}>Locked by admin</Tag></Inline>
       <Inline wrap gap="xs" role="group" aria-label="Region">{["EU", "UK", "US", "APAC"].map((r) => <SelectableTag key={r} selected={sel.includes(r)} onSelectedChange={(s) => setSel((x) => (s ? [...x, r] : x.filter((y) => y !== r)))}>{r}</SelectableTag>)}</Inline>
       <Inline gap="xs"><Tag>Slack</Tag><Popover><PopoverTrigger asChild><OperationalTag>+3</OperationalTag></PopoverTrigger><PopoverContent className="w-48"><Stack gap="2xs"><Tag>Gmail</Tag><Tag>Notion</Tag><Tag>Salesforce</Tag></Stack></PopoverContent></Popover></Inline>
+    </Stack>
+  )
+}
+
+function KpiLoadingDemo() {
+  const [loading, setLoading] = React.useState(false)
+  const reload = () => { setLoading(true); window.setTimeout(() => setLoading(false), 2200) }
+  return (
+    <Stack gap="md">
+      <KpiGroup>
+        <Kpi label="Runs today" value={12840} delta={0.12} period="vs yesterday" loading={loading} />
+        <Kpi label="Resolved" value={0.94} format={{ style: "percent" }} delta={0.02} period="vs last week" loading={loading} />
+        <Kpi label="Cost" value={1240} format={{ style: "currency", currency: "EUR", maximumFractionDigits: 0 }} delta={0.15} better="down" period="vs last month" loading={loading} />
+      </KpiGroup>
+      <Inline><Button variant="secondary" icon={Renew} onClick={reload} disabled={loading}>Reload</Button></Inline>
     </Stack>
   )
 }
@@ -167,9 +182,13 @@ export const dataDemos: DemoMap = {
           <Kpi size="sm" label="Small" value={12840} delta={0.12} />
           <Kpi size="md" label="Medium" value={12840} delta={0.12} />
           <Kpi size="lg" label="Large" value={12840} delta={0.12} helperText="Across all agents" />
-          <Kpi label="Loading" value={0} loading />
         </Inline>
       ),
+    },
+    {
+      title: "Loading",
+      description: "Press Reload: each value scrambles in its own type, blurred, then locks into the number. The trend line keeps its place.",
+      render: () => <KpiLoadingDemo />,
     },
   ],
   "components/data-table": [
@@ -185,6 +204,14 @@ export const dataDemos: DemoMap = {
         return <P />
       },
     },
+    {
+      title: "Sizes, small, medium, large",
+      description: "Match the table it pages: small under compact tables, large under spacious ones.",
+      render: () => {
+        const P = ({ size }: { size: "sm" | "md" | "lg" }) => { const [p, setP] = React.useState(2); return <Pagination size={size} page={p} pageSize={25} total={240} onPageChange={setP} /> }
+        return <Stack gap="lg"><P size="sm" /><P size="md" /><P size="lg" /></Stack>
+      },
+    },
   ],
   "components/structured-list": [
     { title: "Read-only", render: () => <StructuredList label="Plan details" columns={["Feature", "Team", "Enterprise"]} rows={[{ id: "1", cells: ["Seats", "50", "Unlimited"] }, { id: "2", cells: ["SSO", "Not included", "Included"] }, { id: "3", cells: ["Support", "Email", "Dedicated manager"] }]} /> },
@@ -193,7 +220,7 @@ export const dataDemos: DemoMap = {
   ],
   "components/contained-list": [
     {
-      title: "On-page and disclosed",
+      title: "On-page and disclosed, with selected and disabled rows",
       render: () => (
         <Stack gap="xl" className="max-w-lg">
           <ContainedList label="Team members" action={<Button size="sm" variant="ghost" icon={Add}>Add member</Button>}>
@@ -202,7 +229,7 @@ export const dataDemos: DemoMap = {
             ))}
           </ContainedList>
           <ContainedList label="Recent files" kind="disclosed">
-            {["system-prompt.md", "help-center.csv", "refund-policy.pdf"].map((f) => <ContainedListItem key={f} icon={Document} onClick={() => {}}>{f}</ContainedListItem>)}
+            {["system-prompt.md", "help-center.csv", "refund-policy.pdf"].map((f, i) => <ContainedListItem key={f} icon={Document} onClick={() => {}} selected={i === 0} disabled={i === 2} subtitle={i === 2 ? "Uploading" : undefined}>{f}</ContainedListItem>)}
           </ContainedList>
         </Stack>
       ),
@@ -239,6 +266,17 @@ export const dataDemos: DemoMap = {
         }
         return <T />
       },
+    },
+    {
+      title: "Extra small, for dense side panels",
+      render: () => (
+        <div className="max-w-xs">
+          <TreeView label="Agents" size="xs" defaultExpanded={["support"]} nodes={[
+            { id: "support", label: "Support", icon: Folder, children: [{ id: "triage", label: "Support triage", icon: Document }, { id: "refunds", label: "Refund assistant", icon: Document }] },
+            { id: "sales", label: "Sales", icon: Folder, children: [{ id: "leads", label: "Lead qualifier", icon: Document }] },
+          ]} />
+        </div>
+      ),
     },
   ],
   "components/tile": [{ title: "Tile variants", render: () => <TileDemo /> }],

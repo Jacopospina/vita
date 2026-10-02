@@ -3,7 +3,7 @@ import { ArrowDown, ArrowUp, Subtract } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { Icon } from "@/registry/ui/icon"
 import { AnimatedNumber } from "@/registry/ui/animated"
-import { Skeleton } from "@/registry/ui/loading"
+import { ScrambleText } from "@/registry/ui/scramble-text"
 
 /**
  * Kpi, one key number: label → value → trend. For dashboards, page headers and summary strips.
@@ -26,31 +26,54 @@ export interface KpiProps {
   helperText?: React.ReactNode
   /** sm: in page headers and strips · md: cards (default) · lg: a hero number. */
   size?: "sm" | "md" | "lg"
+  /** The value is on its way: digits change one by one in the value's own type (each blurs out as the next blurs in), then the real number lands in random order. */
   loading?: boolean
+  /** Digits to scramble while loading, about as many as the value will have. Default: the current value's length. */
+  loadingLength?: number
   className?: string
 }
 
+/** How long the arriving value locks in before the live number (which rolls on later changes) takes over. */
+const ARRIVE_MS = 700
+
 const valueSize = { sm: "text-title-3", md: "text-title-1", lg: "text-large-title" } as const
 
-export function Kpi({ label, value, format, delta, deltaFormat = { style: "percent", maximumFractionDigits: 1 }, better = "up", period, helperText, size = "md", loading, className }: KpiProps) {
+export function Kpi({ label, value, format, delta, deltaFormat = { style: "percent", maximumFractionDigits: 1 }, better = "up", period, helperText, size = "md", loading, loadingLength, className }: KpiProps) {
   const flat = delta === undefined || Math.abs(delta) < 1e-9
   const good = !flat && (delta! > 0) === (better === "up")
   const tone = flat ? "text-muted-foreground" : good ? "text-success-foreground" : "text-error-foreground"
+  const text = React.useMemo(() => new Intl.NumberFormat(undefined, format).format(value), [value, format])
+  // Loading → loaded: the scramble locks into the number, then hands over to the live, rolling number.
+  const [wasLoading, setWasLoading] = React.useState(!!loading)
+  const [arriving, setArriving] = React.useState(false)
+  if (!!loading !== wasLoading) {
+    setWasLoading(!!loading)
+    setArriving(!loading)
+  }
+  React.useEffect(() => {
+    if (!arriving) return
+    const t = window.setTimeout(() => setArriving(false), ARRIVE_MS)
+    return () => window.clearTimeout(t)
+  }, [arriving])
   return (
     <div className={cn("flex min-w-0 flex-col gap-0.5", className)}>
       <span className="truncate text-footnote text-muted-foreground">{label}</span>
-      {loading ? (
-        <Skeleton className={cn("w-24 max-w-full", size === "lg" ? "h-10" : size === "md" ? "h-8" : "h-6")} />
+      {loading || arriving ? (
+        // Loading: the value scrambles in its own size; arriving: it locks digit by digit into the number.
+        <ScrambleText text={loading ? undefined : text} length={loadingLength ?? Math.max(3, text.length)} charset="digits" label={`Loading ${typeof label === "string" ? label : "value"}`} className={cn(valueSize[size], "tabular-nums")} />
       ) : (
         <span className={valueSize[size]}><AnimatedNumber value={value} format={format} /></span>
       )}
-      {(delta !== undefined || period) && !loading && (
-        <span className={cn("inline-flex items-center gap-1 text-footnote", tone)}>
+      {(delta !== undefined || period) && (loading ? (
+        // The trend line keeps its place while loading (no jump when it arrives), as a quieter scramble.
+        <ScrambleText length={period ? 14 : 5} label="" className="text-footnote" />
+      ) : (
+        <span className={cn("inline-flex items-center gap-1 text-footnote", arriving && "animate-enter-fade", tone)}>
           <Icon as={flat ? Subtract : delta! > 0 ? ArrowUp : ArrowDown} size="sm" className="size-3" label={flat ? "No change" : delta! > 0 ? "Up" : "Down"} />
           {delta !== undefined && <AnimatedNumber value={Math.abs(delta)} format={deltaFormat} />}
           {period && <span className="text-muted-foreground">{period}</span>}
         </span>
-      )}
+      ))}
       {helperText && <span className="text-caption text-helper">{helperText}</span>}
     </div>
   )

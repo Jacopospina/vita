@@ -69,6 +69,7 @@ export const manifest: Record<Section, NavEntry[]> = {
     { slug: "progress-bar", title: "Progress bar" },
     { slug: "progress-indicator", title: "Progress indicator" },
     { slug: "radio-button", title: "Radio button" },
+    { slug: "scramble-text", title: "Scramble text" },
     { slug: "search", title: "Search" },
     { slug: "select", title: "Select" },
     { slug: "slider", title: "Slider" },
@@ -126,6 +127,7 @@ export const manifest: Record<Section, NavEntry[]> = {
     { slug: "touch", title: "Touch adapts by itself" },
     { slug: "the-name", title: "The name is Vita" },
     { slug: "components-and-patterns", title: "Components and patterns" },
+    { slug: "release-stages", title: "Release stages" },
   ],
 }
 

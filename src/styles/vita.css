@@ -193,6 +193,8 @@
   --animate-expand: vita-collapse-down var(--vita-duration-moderate-02) var(--vita-ease-productive);
   --animate-collapse: vita-collapse-up var(--vita-duration-moderate-01) var(--vita-ease-productive) both;
   --animate-spin: vita-spin 690ms linear infinite;
+  --animate-glyph-in: vita-glyph-in var(--vita-duration-moderate-02) var(--vita-ease-productive) both;
+  --animate-glyph-out: vita-glyph-out var(--vita-duration-moderate-02) var(--vita-ease-productive) both;
   --animate-text-reveal: vita-text-in var(--vita-duration-expressive) var(--vita-ease-expressive-enter) both;
   --animate-text-reveal-down: vita-text-in-down var(--vita-duration-expressive) var(--vita-ease-expressive-enter) both;
   --animate-text-leave-down: vita-text-out-down var(--vita-duration-moderate-02) var(--vita-ease-productive-exit) both;
@@ -328,12 +330,14 @@
   background-clip: text;
   color: transparent;
 }
-@utility reveal { display: grid; grid-template-rows: 0fr; & > * { overflow: hidden; min-height: 0; } }
-@utility reveal-open { grid-template-rows: 1fr; }
+/* Clipping is only for the move: once open, the content may reach past its box (a tilting button, a focus ring, a
+   shadow) instead of being cut. Overflow flips back to visible after the reveal ends, and to hidden at once on close. */
+@utility reveal { display: grid; grid-template-rows: 0fr; & > * { overflow: hidden; min-height: 0; transition: overflow 0s allow-discrete; } }
+@utility reveal-open { grid-template-rows: 1fr; & > * { overflow: visible; transition-delay: var(--vita-duration-expressive); } }
 /* Horizontal reveal: width grows from 0 to its content (capsule expanding sideways).
    The direct child must NOT have a fixed width (wrap sized content in a plain div), or the column can't collapse. */
-@utility reveal-x { display: grid; grid-template-columns: 0fr; & > * { overflow: hidden; min-width: 0; } }
-@utility reveal-x-open { grid-template-columns: 1fr; }
+@utility reveal-x { display: grid; grid-template-columns: 0fr; & > * { overflow: hidden; min-width: 0; transition: overflow 0s allow-discrete; } }
+@utility reveal-x-open { grid-template-columns: 1fr; & > * { overflow: visible; transition-delay: var(--vita-duration-expressive); } }
 
 /* Numbers & numeric values: tabular figures in the numeric face. `tabular-nums` alone is enough. */
 @layer utilities {

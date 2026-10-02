@@ -1,9 +1,9 @@
 ---
-name: vita-motion
+name: vita-motion-design
 description: Decide whether and how anything should animate in a Vita product, durations, easings, choreography, reduced motion. Use when adding transitions, animations, micro-interactions, entrance/exit effects, loading motion, or when someone asks to "make it feel smoother/alive".
 ---
 
-# Vita motion
+# Vita Motion Design
 
 Motion explains change. It never decorates. Read `.vita/docs/foundations/motion.md` for the full rules.
 
@@ -15,6 +15,8 @@ Vita transitions every property change by default and morphs variants. Your job 
 - **Expressive**: significant moments, page changes, the primary action, alerts and notifications appearing, movement that carries meaning.
 - **Values**: numbers use `AnimatedNumber` (slot-machine roll, staggered, blur→sharp); changing text uses `AnimatedText` (letter-by-letter stagger, slide up, blur→sharp).
 - **Reorders and layout jumps**: wrap the state change in `morph()` and give moving items a `view-transition-name`.
+- **The space a thing leaves closes over time.** When an item leaves a row, check its NEIGHBOURS, not just the item: a field that fills the row (`flex-1`), the next chip, the button after it. Close the space with it: `Tag onDismiss` does it for you; for your own items use `collapseOut(el)` with `useExit`, or wrap optional controls in `reveal-x` and pull back their gap (`-ml-2` while closed). An exit that fades the item and then lets the row jump is still a snap.
+- **Test the neighbour.** Add and remove every optional item (applied filters, clear buttons, counts) and watch the widest sibling. If it changes size in one frame, it snaps.
 
 ## Step 2: prefer what the component already does
 

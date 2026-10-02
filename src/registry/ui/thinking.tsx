@@ -17,7 +17,9 @@ import { simulatedVoice } from "@/registry/hooks/use-microphone"
  *   listening   the person is talking: a ring of drops gathers inward with their voice, the core fills
  *   talking     the agent is speaking: its body swells and ripples with its voice, waves travel out
  *
- * Agentic modes wear the AI spectrum; basic follows the current text color.
+ * Agentic modes wear the AI spectrum; basic follows the current text color. On a primary surface (a primary button,
+ * a brand banner) pass tone="on-primary": the same spectrum washed to pastel, with white glints, so Sofia stays
+ * visible and still reads as the AI.
  */
 export type ThinkingMode = "basic" | "retrieving" | "generating" | "searching" | "idle" | "listening" | "talking"
 const VOICE = new Set<ThinkingMode>(["idle", "listening", "talking"])
@@ -218,7 +220,8 @@ function simpleParticles(mode: ThinkingMode, t: number, lvl = 0): P[] {
     }
     return out
   }
-  return particles("basic", 3, t, [])
+  // Basic at 16 to 24px: plumper drops. At the big orb's proportions each is about 2px, and the melt erases it.
+  return particles("basic", 3, t, []).map((p) => ({ ...p, r: p.r * 1.6 }))
 }
 
 function particles(mode: ThinkingMode, n: number, t: number, seeds: number[], lvl = 0): P[] {
@@ -364,8 +367,9 @@ function rgbOf(css: string, probe: CanvasRenderingContext2D): [number, number, n
 export interface ThinkingProps {
   mode?: ThinkingMode
   size?: keyof typeof sizes
-  /** spectrum = AI (default for agentic modes) · current = inherit text color (default for basic) · brand */
-  tone?: "spectrum" | "current" | "brand"
+  /** spectrum = AI (default for agentic modes) · current = inherit text color (default for basic) · brand ·
+      on-primary = the spectrum in pastel, for a primary background */
+  tone?: "spectrum" | "current" | "brand" | "on-primary"
   /** Voice states: loudness now, 0 to 1 (e.g. useMicrophone().level, or the agent's audio). Simulated when omitted. */
   level?: () => number
   /** Announced to screen readers, e.g. "Searching the help center". */
@@ -416,11 +420,14 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
     // The filter chain draws at most ~60 times a second; the field is cheap enough for every display frame.
     const interval = field ? 0 : 1000 / 70
     const root = getComputedStyle(document.documentElement)
-    const spectrum = ["blue", "indigo", "purple", "pink", "orange", "mint", "cyan"].map((h) => root.getPropertyValue(`--vita-palette-${h}-500`).trim())
+    // On a primary surface the spectrum goes pastel (200s): the 500s sink into the brand colour behind them.
+    const onPrimary = resolvedTone === "on-primary"
+    const rainbow = resolvedTone === "spectrum" || onPrimary
+    const spectrum = ["blue", "indigo", "purple", "pink", "orange", "mint", "cyan"].map((h) => root.getPropertyValue(`--vita-palette-${h}-${onPrimary ? 200 : 500}`).trim())
     let color = getComputedStyle(canvas).color
     // Light mode = dark text. There the white glints vanish on the page, so they take the spectrum's colours instead.
     const isLight = (c: string) => { const m = c.match(/[\d.]+/g); return !!m && (0.2126 * +m[0] + 0.7152 * +m[1] + 0.0722 * +m[2]) / 255 < 0.5 }
-    let light = isLight(color)
+    let light = !onPrimary && isLight(color)
     let last = 0
     let drawn = -Infinity
     const start = (started.current ||= performance.now())
@@ -446,7 +453,7 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
     /* ---- filter path: crisp drops, the SVG chain melts them ---- */
     const drawFilter = (t: number) => {
       ctx.clearRect(0, 0, px, px)
-      if (resolvedTone === "spectrum" && "createConicGradient" in ctx) {
+      if (rainbow && "createConicGradient" in ctx) {
         const g = ctx.createConicGradient(t * 1.8, px / 2, px / 2)
         spectrum.forEach((c, i) => g.addColorStop(i / spectrum.length, c))
         g.addColorStop(1, spectrum[0])
@@ -493,7 +500,7 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
         let own = rgbOf(color, probe)
         const o = orb
         fieldDraw = (t: number) => {
-          if (resolvedTone !== "spectrum") own = rgbOf(color, probe)
+          if (!rainbow) own = rgbOf(color, probe)
           let k = 0
           for (const p of simple ? simpleParticles(mode, t, lvlNow) : particles(mode, n, t, seeds, lvlNow)) {
             if (p.r < 0.005 || k >= MAX_DROPS) continue
@@ -503,7 +510,7 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
             drops[k * 4 + 2] = (simple ? dropRadius(p) : dropRadius(p) / 1.3) * glDpr
             k++
           }
-          o.draw(drops, k, { t, rot: t * 1.8, spectrum: resolvedTone === "spectrum", own })
+          o.draw(drops, k, { t, rot: t * 1.8, spectrum: rainbow, own })
           // Glints stay crisp, on the 2D canvas above the liquid.
           ctx.clearRect(0, 0, px, px)
           if (glints) drawGlints(ctx, t)
@@ -532,7 +539,7 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
         const ISO = 0.46, EDGE = 0.45
         ctx.imageSmoothingQuality = "high"
         fieldDraw = (t: number) => {
-          if (resolvedTone !== "spectrum") own = rgbOf(color, probe)
+          if (!rainbow) own = rgbOf(color, probe)
           fld.fill(0)
           for (const p of simple ? simpleParticles(mode, t, lvlNow) : particles(mode, n, t, seeds, lvlNow)) {
             if (p.r < 0.005) continue
@@ -562,7 +569,7 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
               if (a > 1) a = 1
               a = a * a * (3 - 2 * a)
               let r: number, gr: number, b: number
-              if (resolvedTone === "spectrum") {
+              if (rainbow) {
                 // The same conic sweep as the gradient on the filter path, turning with time.
                 let u = ((Math.atan2(y + 0.5 - centre, x + 0.5 - centre) - rot) / TAU) % 1
                 if (u < 0) u += 1
@@ -614,7 +621,7 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
       lvlNow += (raw - lvlNow) * (raw > lvlNow ? 0.35 : 0.12)
       if (now - last > 2000) {
         color = getComputedStyle(canvas).color
-        light = isLight(color)
+        light = !onPrimary && isLight(color)
         last = now
       }
       if (fieldDraw) fieldDraw(t)

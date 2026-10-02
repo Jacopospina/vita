@@ -79,7 +79,7 @@ const pill = "h-8 rounded-inner-2 [corner-shape:round]"
 
 export function Header({ productName, prefix, logo, badge, href = "/", children, actions, className }: {
   productName: string
-  /** A small label right after the name, e.g. a release stage (<Tag size="sm" tone="warning">Experimental</Tag>). */
+  /** A small label right after the name, e.g. a release stage (<Tag size="sm" tone="info">Draft</Tag>). */
   badge?: React.ReactNode
   /** The product's mark, shown before its name (about 20px). */
   logo?: React.ReactNode
@@ -353,8 +353,8 @@ export function RightPanel({ open, onOpenChange, title, children, footer, size =
         <IconButton icon={Close} label="Close panel" shortcut="escape" tooltipSide="left" onClick={() => onOpenChange(false)} className="size-8 rounded-inner-2 px-0" />
       </div>
       {/* The body is its own surface: full height between header and footer, scrolling on its own, solid (no blur)
-          so what you read never shimmers over the page. Concentric with the panel (rounded-inner-2 = 16 − 8). */}
-      <div className="mt-2 min-h-0 flex-1 overflow-y-auto rounded-inner-2 bg-background p-3">{children}</div>
+          so what you read never shimmers over the page. A subtle border defines its edge on the glass. Concentric with the panel (rounded-inner-2 = 16 − 8). */}
+      <div className="mt-2 min-h-0 flex-1 overflow-y-auto rounded-inner-2 border border-border-subtle bg-background p-3">{children}</div>
       {footer && <ActionBar className="mt-2 overflow-hidden rounded-inner-2 border-t-0">{footer}</ActionBar>}
     </aside>
   )

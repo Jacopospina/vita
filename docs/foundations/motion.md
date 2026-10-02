@@ -52,9 +52,10 @@ avoid_when:
 2. **Icons draw their path.** `SwapIcon` un-draws the old glyph while the new one traces its outline and fills in; `<Icon draw="in">` for icons that appear. Checkmarks (`DrawnMark`) draw on select and un-draw on clear.
 3. **Static layout never moves.** Nothing glides into place on load or reflow. Lists that gain, lose or reorder items glide them instead (`Stack flip`, chat threads, toast stacks, chips, filtered options).
 4. **Controls that come and go keep their slot.** Clear buttons, shortcut hints, counts and batch bars fade and scale, then give their space back smoothly.
-5. **Messages drop in and drop out.** Every field reserves one line for its message; the message slides down, its letters cascade in one after another (blur → sharp) and its icon draws its path, the exit reverses it, letters staggering downward and the icon un-drawing.
-6. **Branches expand.** Tree and disclosure content open and close with `reveal` / `reveal-open`.
-7. **Focus settles in.** Focus rings arrive over 400ms, from wide and transparent to tight and solid.
+5. **The space closes with the item.** A dismissed tag shrinks out of its row (`collapseOut`), gap included, so a search field that fills the row widens with it instead of snapping.
+6. **Messages drop in and drop out.** Every field reserves one line for its message; the message slides down, its letters cascade in one after another (blur → sharp) and its icon draws its path, the exit reverses it, letters staggering downward and the icon un-drawing.
+7. **Branches expand.** Tree and disclosure content open and close with `reveal` / `reveal-open`.
+8. **Focus settles in.** Focus rings arrive over 400ms, from wide and transparent to tight and solid.
 
 ## Enter & exit
 

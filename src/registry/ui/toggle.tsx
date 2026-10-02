@@ -45,6 +45,9 @@ export function Toggle({ label, hideLabel, helperText, stateText, size = "md", l
             // Squircle track; the knob inside is concentric (its radius = track radius − the 2px padding).
             "group/switch peer relative tap inline-flex shrink-0 cursor-pointer items-center squircle p-0.5 duration-fast-02 ease-productive focus-ring [--vita-squircle-r:var(--vita-radius-sm)]",
             "bg-border-strong data-[state=checked]:bg-success disabled:cursor-not-allowed disabled:bg-layer-3",
+            // Hover, on and off: the track moves a step toward the text colour (darker in light, lighter in dark).
+            "enabled:hover:bg-[color-mix(in_oklab,var(--vita-border-strong)_80%,var(--vita-foreground))]",
+            "enabled:data-[state=checked]:hover:bg-[color-mix(in_oklab,var(--vita-success)_85%,var(--vita-foreground))]",
             size === "md" ? "h-6 w-10" : "h-4 w-7",
           )}
         >

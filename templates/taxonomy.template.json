@@ -1,5 +1,5 @@
 {
-  "$comment": "Vita taxonomy, the ONE vocabulary of the product. Example values use the demo product 'Theo', a platform that deploys custom AI agents. Maintained with the vita-personas skill; enforced by vita-content + vita-audit (avoid list).",
+  "$comment": "Vita taxonomy, the ONE vocabulary of the product. Example values use the demo product 'Theo', a platform that deploys custom AI agents. Maintained with the vita-personae skill; enforced by vita-copywriting + vita-audit (avoid list).",
   "product": "Theo",
   "personas": ["agent-builder", "business-owner"],
   "objects": {

@@ -51,8 +51,8 @@ export function AILabel({ size = "md", children, title = "AI explained", classNa
             "inline-flex items-center rounded-pill font-semibold tracking-wide text-foreground focus-ring",
             tone !== "muted" && "ai-gradient-border",
             tone === "auto" &&
-              "in-data-[ai-context]:border in-data-[ai-context]:border-border-strong! in-data-[ai-context]:bg-none! in-data-[ai-context]:bg-transparent! in-data-[ai-context]:animate-none! in-data-[ai-context]:[&>span]:bg-none! in-data-[ai-context]:[&>span]:text-foreground/60!",
-            tone === "muted" && "border border-border-strong bg-none bg-transparent [&>span]:bg-none! [&>span]:text-foreground/60!",
+              "in-data-[ai-context]:border in-data-[ai-context]:border-border-strong! in-data-[ai-context]:bg-none! in-data-[ai-context]:bg-transparent! in-data-[ai-context]:animate-none! in-data-[ai-context]:[&>span]:bg-none! in-data-[ai-context]:[&>span]:text-muted-foreground!",
+            tone === "muted" && "border border-border-strong bg-none bg-transparent [&>span]:bg-none! [&>span]:text-muted-foreground!",
             s,
             className,
           )}

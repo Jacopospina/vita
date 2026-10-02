@@ -73,7 +73,7 @@ export function MicSelector({ mic, hidePreview, size = "md", className }: MicSel
           getBands={mic.status === "live" ? mic.bands : undefined}
           getLevel={mic.status === "live" ? mic.level : () => 0}
           label="Microphone level"
-          className={cn("rounded-inner-2 bg-layer-2 transition-opacity", mic.status !== "live" && "opacity-60")}
+          className={cn("transition-opacity", mic.status !== "live" && "opacity-60")}
         />
       )}
     </div>

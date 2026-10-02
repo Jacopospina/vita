@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/registry/lib/utils"
 import { Icon, SwapIcon } from "@/registry/ui/icon"
 import { animateChildren } from "@/registry/ui/animated"
-import { useExit } from "@/registry/hooks/use-exit"
+import { useExit, collapseOut } from "@/registry/hooks/use-exit"
 
 /**
  * Tag, label, categorise or filter. Four types:
@@ -47,16 +47,18 @@ export interface TagProps extends React.HTMLAttributes<HTMLSpanElement>, Variant
 const iconInset = { sm: "pl-0.5", md: "pl-1", lg: "pl-2" } as const
 
 export function Tag({ tone, size, icon, onDismiss, dismissLabel, disabled, className, children, ...props }: TagProps) {
-  const [leaving, exit] = useExit()
+  const [leaving, exit] = useExit(220)
+  const self = React.useRef<HTMLSpanElement>(null)
   return (
-    <span className={cn(tagVariants({ tone, size }), icon && iconInset[size ?? "md"], onDismiss && "pr-0.5", disabled && "opacity-50", leaving && "animate-exit-scale", className)} {...props}>
+    <span ref={self} className={cn(tagVariants({ tone, size }), icon && iconInset[size ?? "md"], onDismiss && "pr-0.5", disabled && "opacity-50", leaving && "animate-exit-scale", className)} {...props}>
       {icon && <SwapIcon as={icon} size="sm" />}
       <span className="truncate">{animateChildren(children)}</span>
       {onDismiss && (
         <button
           type="button"
           disabled={disabled}
-          onClick={() => exit(onDismiss)}
+          // The tag shrinks out of the row as it goes, so whatever fills the row (a search field) widens with it.
+          onClick={() => { const undo = collapseOut(self.current, 220); exit(() => { onDismiss(); requestAnimationFrame(() => undo?.()) }) }}
           aria-label={dismissLabel ?? `Remove ${typeof children === "string" ? children : "tag"}`}
           className="flex size-5 items-center justify-center rounded-pill hover:bg-hover focus-ring"
         >

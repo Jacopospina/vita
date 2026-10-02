@@ -11,11 +11,12 @@ import { useTilt } from "@/registry/hooks/use-tilt"
  *   clickable   → the WHOLE tile navigates somewhere (one destination, no inner buttons).
  *   selectable  → choosing among rich options (plans, templates). Single = radio semantics, multi = checkbox.
  *   expandable  → shows a summary; reveals details on demand.
+ * Tiles never cast a shadow, resting or hovered: they sit IN the page. Hover answers with the surface and the tilt.
  */
 const base = "relative flex flex-col gap-1.5 scope-lg bg-layer-1 p-3 text-foreground"
 
 export function Tile({ className, elevated, ...props }: React.HTMLAttributes<HTMLDivElement> & { elevated?: boolean }) {
-  return <div data-ai-context="" className={cn(base, elevated && "border border-border-subtle bg-raised shadow-raised", className)} {...props} />
+  return <div data-ai-context="" className={cn(base, elevated && "border border-border-subtle bg-raised", className)} {...props} />
 }
 
 export const ClickableTile = React.forwardRef<HTMLAnchorElement, React.AnchorHTMLAttributes<HTMLAnchorElement> & { disabled?: boolean }>(
@@ -27,7 +28,7 @@ export const ClickableTile = React.forwardRef<HTMLAnchorElement, React.AnchorHTM
         aria-disabled={disabled || undefined}
         className={cn(
           base,
-          "tilt group cursor-pointer pb-10 duration-moderate-01 ease-spring hover:bg-layer-2 hover:shadow-floating focus-ring active:scale-99",
+          "tilt group cursor-pointer pb-10 duration-moderate-01 ease-spring hover:bg-layer-2 focus-ring active:scale-99",
           disabled && "pointer-events-none text-disabled-foreground",
           className,
         )}
@@ -60,7 +61,7 @@ export function SelectableTile({ selected, onSelectedChange, mode = "multi", cla
       onClick={() => onSelectedChange(mode === "single" ? true : !selected)}
       className={cn(
         base,
-        "tilt cursor-pointer border border-transparent text-left duration-moderate-01 ease-spring hover:bg-layer-2 hover:shadow-floating focus-ring",
+        "tilt cursor-pointer border border-transparent text-left duration-moderate-01 ease-spring hover:bg-layer-2 focus-ring",
         selected && "border-primary bg-selected hover:bg-selected",
         disabled && "pointer-events-none text-disabled-foreground",
         className,
