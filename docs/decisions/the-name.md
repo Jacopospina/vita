@@ -19,6 +19,10 @@ related: [about, content, how-we-decide]
 - **Life, not matter.** A design system is not a static collection of parts; it is an ecosystem that grows, moves and answers.
 - **Vita is the whole.** Life is the sum of mind, soul and body working together: the logic, the intelligence and the experience in front of people.
 
+## Revision (2026-10-02)
+
+- **The slogan is superseded** by *The slogan*: "The first agentic design system." The name, the triad and Theo stand.
+
 ## Revisit when
 
 - **Never by habit.** The name changes only with a new decision record.

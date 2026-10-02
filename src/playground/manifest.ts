@@ -128,6 +128,7 @@ export const manifest: Record<Section, NavEntry[]> = {
     { slug: "the-name", title: "The name is Vita" },
     { slug: "components-and-patterns", title: "Components and patterns" },
     { slug: "release-stages", title: "Release stages" },
+    { slug: "the-slogan", title: "The slogan" },
   ],
 }
 

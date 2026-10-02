@@ -1,6 +1,6 @@
 # Working on Vita (the design system itself)
 
-**Positioning:** Vita is the AI-agent-first design system, born for humans and machines making together. Every change must keep it documented and enforced well enough that an agent makes designer-quality decisions on its own.
+**Positioning:** Vita is the first agentic design system: made for AI products, and for the agents that build them. Every change must keep it documented and enforced well enough that an agent makes designer-quality decisions on its own.
 
 Vita is consumed by humans and AI agents in product repos, so every change must keep the system **coherent, documented and enforceable**.
 
@@ -43,7 +43,7 @@ The docs renderer turns markdown into Vita components. Write for it:
 - **Disclosure chevrons point down when closed and up when open.** Any chevron that reveals content below it (accordion, dropdown, section, expandable row, tree node) follows this rule, and it rotates with a transition. Chevrons pointing sideways only mean "go to" or "open to the side" (navigation rows, submenus, pagination).
 - **Never write the em dash.** Not in docs, UI copy, comments, commit messages or generated files: use a comma, colon, full stop or parentheses. `pnpm check` fails on one.
 - **Docs never name external design systems or vendors.** Vita speaks in its own voice.
-- **Vita's own voice is the Creator** (`docs/foundations/content.md`, "Vita's own voice"): docs, the showcase, onboarding and release notes speak to the maker and aim to awaken the creator in them; the primary slogan is "Give your ideas life." The brand triad is Animus (backend logic), Anima (the AI layer) and Vita (the design system, where both come alive): see `docs/identity/about.md`. Product microcopy inside Theo demos stays plain (content rules).
+- **Vita's own voice is the Creator** (`docs/foundations/content.md`, "Vita's own voice"): docs, the showcase, onboarding and release notes speak to the maker and aim to awaken the creator in them; the primary slogan is "The first agentic design system." (`docs/decisions/the-slogan.md`). The brand triad is Animus (backend logic), Anima (the AI layer) and Vita (the design system, where both come alive): see `docs/identity/about.md`. Product microcopy inside Theo demos stays plain (content rules).
 - **Example product in demos and docs is "Theo".** No real company or client names.
 - **The playground is product code.** It must pass `pnpm audit:ds` with zero violations (dogfooding).
 - **Tokens:** new semantic tokens go in `src/styles/tokens.css` (light + dark), are mapped in `src/styles/vita.css`, and are documented in `docs/foundations/color.md` (or the relevant foundation). Never add knobs lightly: the promise is "about 10 variables".

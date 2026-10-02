@@ -71,7 +71,7 @@
       "slug": "about",
       "path": "docs/identity/about.md",
       "title": "Animus, anima, vita",
-      "summary": "Every product has a mind and a soul. Vita is where they come alive. The AI-agent-first design system, born for humans and machines making together.",
+      "summary": "Every product has a mind and a soul. Vita is where they come alive. The first agentic design system, made for AI products and the agents that build them.",
       "status": "stable"
     },
     {
@@ -2234,6 +2234,21 @@
         "about",
         "content",
         "how-we-decide"
+      ]
+    },
+    {
+      "section": "decisions",
+      "slug": "the-slogan",
+      "path": "docs/decisions/the-slogan.md",
+      "title": "The slogan",
+      "summary": "\"The first agentic design system.\" Vita says what it is for in one line, made for AI products and the agents that build them. It replaces \"Give your ideas life.\"",
+      "status": "accepted",
+      "date": "2026-10-02",
+      "decided_by": "Jacopo",
+      "related": [
+        "the-name",
+        "content",
+        "about"
       ]
     },
     {

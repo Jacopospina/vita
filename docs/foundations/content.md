@@ -52,7 +52,7 @@ When Vita speaks for itself (these docs, the showcase, onboarding, release notes
 - **Speak to the maker.** "You make", "you shape": people are creators, never operators of a tool.
 - **Verbs of making.** Make, shape, craft, compose, bring to life, release.
 - **Possibility first.** Lead with what they'll create, then how; credit them, not Vita.
-- **One slogan per surface.** The signature is "Give your ideas life."
+- **One slogan per surface.** The signature is "The first agentic design system." (decision: The slogan).
 - **While agents work, a making word.** Sketching, Glazing, Weaving and more, one at a time; never "Loading".
 
 ## Write for the scan

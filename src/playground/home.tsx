@@ -83,7 +83,7 @@ export function GuidelinesPage() {
         <Stack gap="xs">
           <Text variant="large-title" as="h1">About Vita</Text>
           <Text variant="body-lg" tone="muted" className="max-w-3xl">
-            Vita is the AI-agent-first design system, born for humans and machines making together. It gives every product one living experience, where the backend's logic (animus) and the AI's intelligence (anima) come alive for the people who use them.
+            Vita is the first agentic design system, made for AI products and the agents that build them. It gives every product one living experience, where the backend's logic (animus) and the AI's intelligence (anima) come alive for the people who use them.
           </Text>
           <Inline gap="sm" className="pt-1"><Link href="#/identity/about">Animus, anima, vita</Link><Link href="#/getting-started/installation">Install Vita</Link></Inline>
         </Stack>
