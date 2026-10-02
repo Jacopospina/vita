@@ -62,10 +62,10 @@ export function ProgressBar({
         aria-valuemax={max}
         aria-valuenow={indeterminate ? undefined : Math.round(pct)}
         aria-busy={status === "active"}
-        className={cn("relative w-full rounded-full bg-border-subtle", size === "sm" ? "h-1" : "h-2")}
+        className={cn("relative w-full overflow-hidden rounded-full bg-border-subtle", size === "sm" ? "h-1" : "h-2")}
       >
-        {/* Sofia's liquid: a taller canvas than the track, so the tip can bulge and drops can part from it. */}
-        <canvas ref={sofia} aria-hidden className={cn("pointer-events-none absolute inset-x-0 top-1/2 w-full -translate-y-1/2", color, !gpu && "opacity-0")} style={{ height: (size === "sm" ? 4 : 8) * 3 }} />
+        {/* Sofia's liquid, exactly the track's size and clipped to it: the liquid never leaves its tube. */}
+        <canvas ref={sofia} aria-hidden className={cn("pointer-events-none absolute inset-0 size-full", color, !gpu && "opacity-0")} />
         {/* Fallback: the canvas clips the liquid to the track (rounded); the glow is a filter outside it. */}
         <canvas
           ref={canvas}
@@ -118,14 +118,17 @@ function useSofiaBar(ref: React.RefObject<HTMLCanvasElement | null>, opts: { flo
     if (!probe) return
     const reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false
     const dpr = Math.min(2, window.devicePixelRatio || 1)
-    const H = track * 3
+    // The canvas IS the track: the liquid fills the tube's height and is clipped to its rounded ends.
+    const H = track
     const r = track / 2
     const cy = H / 2
     const root = getComputedStyle(document.documentElement)
     const spec = ["blue", "indigo", "purple", "pink", "orange", "mint", "cyan"].map((c) => toRGB(root.getPropertyValue(`--vita-palette-${c}-500`).trim(), probe))
     let W = Math.max(1, el.clientWidth)
+    // Sofia's viscosity: the same melt relative to drop size as the orb (blur ≈ the drop radius), so the tip and its
+    // trailing drop stretch through thick, rounded necks instead of parting cleanly.
     const make = () =>
-      createOrbGL(el, { size: H, width: W, height: H, dpr, lit: true, s1: r * 0.45, ss: Math.hypot(r * 0.45, r * 0.7), sg: Math.hypot(r * 0.45, r * 1.8), spectrum: spec, surface: r * 0.9, light: [0, 0, H] })
+      createOrbGL(el, { size: H, width: W, height: H, dpr, lit: true, s1: r * 0.8, ss: Math.hypot(r * 0.8, r * 0.6), sg: Math.hypot(r * 0.8, r * 1.4), spectrum: spec, surface: r * 0.9, light: [0, 0, H] })
     let orb = make()
     if (!orb) return
     queueMicrotask(() => setGpu(true))
@@ -158,8 +161,8 @@ function useSofiaBar(ref: React.RefObject<HTMLCanvasElement | null>, opts: { flo
           // The surge: when the body moves fast, a neck and a drop stretch ahead, then are drawn back in.
           const surge = Math.max(0, Math.min(4 * r, v * W * 0.06))
           if (surge > r * 0.3) {
-            k = push(k, tipX + surge * 0.55, r * 0.62)
-            k = push(k, tipX + surge, r * 0.85)
+            k = push(k, tipX + surge * 0.55, r * 0.9)
+            k = push(k, tipX + surge, r * 1.05)
           }
         }
       } else {
@@ -175,7 +178,7 @@ function useSofiaBar(ref: React.RefObject<HTMLCanvasElement | null>, opts: { flo
         for (let x = head - len; x <= head; x += step) k = push(k, x, r * (0.92 + 0.08 * Math.sin((x - head) / len * Math.PI)))
         // A droplet trails the slug: it parts as the slug pulls ahead and fuses back as it slows.
         const gap = r * (0.4 + 2.2 * Math.max(0, Math.sin(t * 2.2)))
-        k = push(k, head - len - gap - r * 0.6, r * 0.62)
+        k = push(k, head - len - gap - r * 0.6, r * 0.95)
       }
       if (k === 0) k = push(k, -10 * r, 0.001)
       orb!.draw(drops, k, { t, rot: t * 1.2, spectrum: spectrum ? "linear" : false, own })
