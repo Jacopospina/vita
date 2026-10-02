@@ -28,7 +28,8 @@ const dayClasses = {
   range_start: "rounded-l-md bg-selected last:rounded-r-md",
   range_end: "rounded-r-md bg-selected first:rounded-l-md",
   range_middle: "rounded-none bg-selected first:rounded-l-md last:rounded-r-md [&>button]:!rounded-none [&>button]:!bg-transparent [&>button]:!text-selected-foreground [&>button]:hover:!bg-hover",
-  outside: "text-disabled-foreground",
+  // Outside days can still be picked: quieter than this month (helper grey), never the disabled grey (it fails contrast).
+  outside: "text-helper",
   disabled: "text-disabled-foreground [&>button]:pointer-events-none",
 }
 
