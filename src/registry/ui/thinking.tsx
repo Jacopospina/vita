@@ -80,8 +80,11 @@ const sizes = { sm: 16, md: 24, lg: 48, xl: 96, "2xl": 160, "3xl": 280 } as cons
 type P = { x: number; y: number; r: number }
 
 const TAU = Math.PI * 2
-/** Springy arrival: overshoots its target a little, then settles, shapes POP into place instead of easing in. */
-const pop = (x: number) => { const c = 2.2; return 1 + (c + 1) * (x - 1) ** 3 + c * (x - 1) ** 2 }
+/** Generating's morph: smootherstep, starting and landing at rest. No overshoot, so one shape pours into the next. */
+const pour = (x: number) => x * x * x * (x * (6 * x - 15) + 10)
+/** Generating's rhythm (seconds of liquid time): each shape holds most of the cycle, then pours over a long window. */
+const GEN_PERIOD = 2.4
+const GEN_MORPH = 0.45 // share of the period spent changing shape
 /** Twist + squash for a figure: the whole orb sways and pulses as it changes shape. */
 const sway = (x: number, y: number, t: number, kick: number): [number, number] => {
   const a = 0.22 * Math.sin(t * 1.1) + 0.35 * kick
@@ -196,19 +199,18 @@ function simpleParticles(mode: ThinkingMode, t: number, lvl = 0): P[] {
   }
   if (mode === "generating") {
     // The same shape cycle as the big orb, drawn by a few plump drops that melt into one silhouette.
-    const period = 1.5
-    const idx = Math.floor(t / period)
-    const local = (t % period) / period
-    const m = Math.min(1, Math.max(0, (local - 0.6) / 0.4))
-    const k = pop(m)
-    const kick = Math.sin(Math.PI * m) // peaks mid-morph
+    const idx = Math.floor(t / GEN_PERIOD)
+    const local = (t % GEN_PERIOD) / GEN_PERIOD
+    const m = Math.min(1, Math.max(0, (local - (1 - GEN_MORPH)) / GEN_MORPH))
+    const k = pour(m)
+    const kick = 0.5 * Math.sin(Math.PI * m) // a gentle sway mid-morph, never a jolt
     const A = shapeAt(idx), B = shapeAt(idx + 1)
     const breathe = 0.92 * (1 + 0.07 * Math.sin(t * 3.2))
     for (let i = 0; i < 16; i++) {
       const u = (i / 16 + t * 0.07) % 1
       const [ax, ay, av = 1] = A(open.has(A) ? i / 16 : u, t), [bx, by, bv = 1] = B(open.has(B) ? i / 16 : u, t)
       const [x, y] = sway((ax + (bx - ax) * k) * breathe, (ay + (by - ay) * k) * breathe, t, kick)
-      out.push({ x, y, r: 0.15 * Math.max(0, av + (bv - av) * Math.min(1, k)) })
+      out.push({ x, y, r: 0.125 * Math.max(0, av + (bv - av) * Math.min(1, k)) })
     }
     // Outline only, like the big orb: a liquid line tracing the shape.
     return out
@@ -260,12 +262,11 @@ function particles(mode: ThinkingMode, n: number, t: number, seeds: number[], lv
   }
   // generating: tiny dots continuously re-forming the orb into shapes, with displacement
   // Each shape HOLDS (so you can see what it is), then pours into the next.
-  const period = 1.6
-  const idx = Math.floor(t / period)
-  const local = (t % period) / period
-  const m = Math.min(1, Math.max(0, (local - 0.6) / 0.4))
-  const k = pop(m) // overshoots, then settles: the new shape pops into place
-  const kick = Math.sin(Math.PI * m)
+  const idx = Math.floor(t / GEN_PERIOD)
+  const local = (t % GEN_PERIOD) / GEN_PERIOD
+  const m = Math.min(1, Math.max(0, (local - (1 - GEN_MORPH)) / GEN_MORPH))
+  const k = pour(m) // starts and lands at rest: the shape pours into the next, no pop
+  const kick = 0.5 * Math.sin(Math.PI * m)
   const A = shapeAt(idx)
   const B = shapeAt(idx + 1)
   const breathe = 1 + 0.08 * Math.sin(t * 3)
@@ -276,7 +277,8 @@ function particles(mode: ThinkingMode, n: number, t: number, seeds: number[], lv
     const dx = 0.025 * Math.sin(t * 3.1 + i * 1.7) + 0.015 * Math.sin(t * 5.3 + seeds[i] * 9)
     const dy = 0.025 * Math.cos(t * 2.3 + i * 1.3) + 0.015 * Math.cos(t * 4.7 + seeds[i] * 7)
     const [x, y] = sway((ax + (bx - ax) * k) * breathe + dx, (ay + (by - ay) * k) * breathe + dy, t, kick)
-    out.push({ x, y, r: (0.07 + 0.02 * Math.sin(t * 4 + i)) * Math.max(0, av + (bv - av) * Math.min(1, k)) })
+    // A slimmer line (0.058, was 0.07): the shape reads as a drawn stroke, not a tube.
+    out.push({ x, y, r: (0.058 + 0.016 * Math.sin(t * 4 + i)) * Math.max(0, av + (bv - av) * Math.min(1, k)) })
   }
   // Outline only, the shape is drawn as a liquid LINE, so each one reads distinctly (a filled body all looks alike).
   return out
