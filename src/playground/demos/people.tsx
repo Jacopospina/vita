@@ -120,7 +120,7 @@ export const peopleDemos: DemoMap = {
   "components/avatar": [
     {
       title: "Three sizes",
-      description: "Initials on a soft grey gradient when there's no photo: sm 24, md 32, lg 40.",
+      description: "Initials on a soft blue gradient when there's no photo: sm 24, md 32, lg 40.",
       render: () => <Inline gap="lg" align="end"><Avatar name="Indie Novak" size="sm" /><Avatar name="Indie Novak" /><Avatar name="Indie Novak" size="lg" /></Inline>,
     },
     {

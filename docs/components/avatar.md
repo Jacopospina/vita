@@ -1,6 +1,6 @@
 ---
 title: Avatar
-summary: A person, at a glance. Their photo when there is one, otherwise their initials, white on a soft grey gradient. Three sizes.
+summary: A person, at a glance. Their photo when there is one, otherwise their initials, white on a soft, muted blue gradient mixed from Vita palette tokens. Three sizes.
 status: experimental
 import: "import { Avatar } from \"@/components/vita/avatar\""
 use_when:

@@ -23,14 +23,17 @@ export type ThinkingMode = "basic" | "retrieving" | "generating" | "searching" |
 const VOICE = new Set<ThinkingMode>(["idle", "listening", "talking"])
 
 /** The voice states: the same liquid, driven by sound (lvl 0 to 1). `k` is how many drops trace a ring. */
-function voiceParticles(mode: ThinkingMode, t: number, lvl: number, k: number): P[] {
+function voiceParticles(mode: ThinkingMode, t: number, lvl: number, k: number, small = false): P[] {
   const out: P[] = []
   if (mode === "idle") {
-    out.push({ x: 0, y: 0, r: 0.3 + 0.025 * Math.sin(t * 1.2) })
+    // Small orbs (16 to 24px) get a plumper core and drops: at that size the melt would leave only a dot, and Sofia
+    // must stay recognisable wherever she appears (a provenance line, a button).
+    const g = small ? 2.5 : 1
+    out.push({ x: 0, y: 0, r: (0.3 + 0.025 * Math.sin(t * 1.2)) * g })
     for (let j = 0; j < 2; j++) {
       const a = t * 0.55 + j * Math.PI + 0.4 * Math.sin(t * 0.7 + j)
-      const rad = 0.42 + 0.07 * Math.sin(t * 0.9 + j * 2)
-      out.push({ x: Math.cos(a) * rad, y: Math.sin(a) * rad, r: 0.13 })
+      const rad = (0.42 + 0.07 * Math.sin(t * 0.9 + j * 2)) * (small ? 1.15 : 1)
+      out.push({ x: Math.cos(a) * rad, y: Math.sin(a) * rad, r: 0.13 * g })
     }
     return out
   }
@@ -168,7 +171,7 @@ const shapeAt = (i: number): Shape => shapes[order[((i % order.length) + order.l
  *   generating → four drops split apart and fuse again · searching → a comet circles with a short tail
  */
 function simpleParticles(mode: ThinkingMode, t: number, lvl = 0): P[] {
-  if (VOICE.has(mode)) return voiceParticles(mode, t, lvl, 9)
+  if (VOICE.has(mode)) return voiceParticles(mode, t, lvl, 9, true)
   const out: P[] = []
   if (mode === "retrieving") {
     out.push({ x: 0, y: 0, r: 0.3 + 0.05 * Math.sin(t * 3) })

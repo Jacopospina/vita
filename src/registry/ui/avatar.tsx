@@ -3,7 +3,7 @@ import { cn } from "@/registry/lib/utils"
 
 /**
  * Avatar: a person, at a glance. Their photo when there is one; otherwise their initials, white on a soft
- * grey gradient. Three sizes: sm 24 (dense rows, mentions), md 32 (messages, lists), lg 40 (headers, profiles).
+ * muted blue gradient. Three sizes: sm 24 (dense rows, mentions), md 32 (messages, lists), lg 40 (headers, profiles).
  *
  *   <Avatar name="Indie Novak" />            → "IN"
  *   <Avatar name="Indie Novak" src={url} />  → the photo, initials while it loads or if it fails
@@ -44,8 +44,9 @@ export function Avatar({ name, src, size = "md", className }: AvatarProps) {
       aria-label={name}
       className={cn(
         "relative inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full font-semibold text-primary-foreground select-none",
-        // The fallback: a soft grey gradient (neutral: a person, not a status or a brand), deep enough for white initials.
-        "bg-linear-to-b from-[var(--vita-palette-gray-400)] to-[var(--vita-palette-gray-600)]",
+        // The fallback: a soft, muted blue gradient, mixed only from Vita palette tokens (no raw colour):
+        // a pale mist at the top (20% blue-600 in gray-100), a dusk lavender at the bottom (45% indigo-700 in gray-200).
+        "bg-linear-to-b from-[color-mix(in_oklab,var(--vita-palette-blue-600)_20%,var(--vita-palette-gray-100))] to-[color-mix(in_oklab,var(--vita-palette-indigo-700)_45%,var(--vita-palette-gray-200))]",
         sizes[size],
         className,
       )}
