@@ -112,7 +112,7 @@ export function ThemePanel({ weather }: { weather: ReturnType<typeof useWeatherT
   const css = `:root {\n${knobs.map((k) => `  ${k.key}: ${values[k.key]}${k.unit};`).join("\n")}\n  --vita-font-sans: ${fonts.find((f) => f.value === font)!.css};\n}`
 
   return (
-    <Stack gap="lg">
+    <Stack gap="md">
       <Text tone="muted">Every token in Vita derives from these knobs. Tune them here, then paste the result into <code className="font-mono">src/styles/theme.css</code>.</Text>
       <Dropdown label="Theme" value={preset} onValueChange={applyPreset} items={[{ value: "default", label: "Default" }, { value: "square", label: "Square" }, { value: "soft", label: "Soft" }, { value: "mono", label: "Mono" }]} />
       <Stack gap="xs">

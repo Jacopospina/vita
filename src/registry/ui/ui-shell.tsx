@@ -352,9 +352,10 @@ export function RightPanel({ open, onOpenChange, title, children, footer, size =
         <h2 className="truncate text-headline">{title}</h2>
         <IconButton icon={Close} label="Close panel" shortcut="escape" tooltipSide="left" onClick={() => onOpenChange(false)} className="size-8 rounded-inner-2 px-0" />
       </div>
-      {/* Content aligns with the title (10px in); the gutter leaves room for focus halos inside the scroll area. */}
-      <div className="min-h-0 flex-1 overflow-y-auto px-2.5 pt-2 pb-2.5">{children}</div>
-      {footer && <ActionBar className="overflow-hidden rounded-inner-2 border-t-0">{footer}</ActionBar>}
+      {/* The body is its own surface: full height between header and footer, scrolling on its own, solid (no blur)
+          so what you read never shimmers over the page. Concentric with the panel (rounded-inner-2 = 16 − 8). */}
+      <div className="mt-2 min-h-0 flex-1 overflow-y-auto rounded-inner-2 bg-background p-3">{children}</div>
+      {footer && <ActionBar className="mt-2 overflow-hidden rounded-inner-2 border-t-0">{footer}</ActionBar>}
     </aside>
   )
 }

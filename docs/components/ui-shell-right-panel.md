@@ -22,7 +22,8 @@ related: [modal, ui-shell-header, popover, filtering]
 
 - **Floats like the left panel.** 8px from the window, 16px radius, 8px padding.
 - **Highest shell layer.** Above the side nav and header, with stronger glass (tier 3) to match.
-- **Concentric inside.** The 32px × and the footer action bar are rounded 8px (16 − 8).
+- **Concentric inside.** The 32px ×, the body and the footer action bar are rounded 8px (16 − 8).
+- **A solid body.** Between header and footer, the content sits on its own page-coloured surface: full height, scrolling on its own, with no blur behind what you read. Only the frame is glass.
 
 ## Rules
 
