@@ -220,9 +220,7 @@ function simpleParticles(mode: ThinkingMode, t: number, lvl = 0): P[] {
     }
     return out
   }
-  // Basic at 16 to 24px: plumper drops on a wider orbit. At the big orb's proportions each is about 2px and the melt
-  // erases it; much bigger and the three melt into one blob. This size reads as three distinct balls at a glance.
-  return particles("basic", 3, t, []).map((p) => ({ x: p.x * 1.2, y: p.y * 1.2, r: Math.max(0.26, p.r * 1.35) }))
+  return particles("basic", 3, t, [])
 }
 
 function particles(mode: ThinkingMode, n: number, t: number, seeds: number[], lvl = 0): P[] {
@@ -436,7 +434,10 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
     let lvlNow = 0
     /** A drop's radius on the canvas: ×1.3 on big orbs, the wide goo eats into each drop, so plumper drops keep the
         liquid full-bodied and its joins round. */
-    const dropRadius = (p: P) => (simple ? p.r * R : Math.max(0.6, Math.min(0.34, p.r * grow) * R * 1.3))
+    // Basic keeps the same proportions at every size (drops, orbit, melt): in a button it's the Thinking page's liquid,
+    // scaled down, never a different animation.
+    const scaled = simple && mode !== "basic"
+    const dropRadius = (p: P) => (scaled ? p.r * R : mode === "basic" ? Math.max(0.6, p.r * R * 1.3) : Math.max(0.6, Math.min(0.34, p.r * grow) * R * 1.3))
     const drawGlints = (c: CanvasRenderingContext2D, t: number) => {
       for (let i = 0; i < 6; i++) {
         const a = seeds[i % seeds.length] * TAU + t * (0.35 + i * 0.07)
@@ -484,8 +485,8 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
     let orb: OrbGL | null = null
     if (field && glRef.current) {
       const probe = document.createElement("canvas").getContext("2d", { willReadFrequently: true })
-      const precise = mode === "retrieving", defined = mode === "generating" || (mode === "basic" && px <= 24)
-      const blur = precise ? (px <= 24 ? px * 0.06 : px * 0.035) : defined ? (px <= 24 ? px * 0.06 : px * 0.045) : px <= 24 ? px * 0.085 : px * 0.065
+      const precise = mode === "retrieving", defined = mode === "generating"
+      const blur = precise ? (px <= 24 ? px * 0.06 : px * 0.035) : defined ? (px <= 24 ? px * 0.06 : px * 0.045) : px <= 24 && mode !== "basic" ? px * 0.085 : px * 0.065
       const glDpr = Math.min(2, window.devicePixelRatio || 1)
       orb = probe
         ? createOrbGL(glRef.current, {
@@ -508,7 +509,7 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
             drops[k * 4] = (px / 2 + p.x * R) * glDpr
             drops[k * 4 + 1] = (px / 2 + p.y * R) * glDpr
             // The filter path plumps drops ×1.3 because its two-stage melt eats into them; the closed form doesn't.
-            drops[k * 4 + 2] = (simple ? dropRadius(p) : dropRadius(p) / 1.3) * glDpr
+            drops[k * 4 + 2] = (scaled ? dropRadius(p) : dropRadius(p) / 1.3) * glDpr
             k++
           }
           o.draw(drops, k, { t, rot: t * 1.8, spectrum: rainbow, own })
@@ -545,7 +546,7 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
           for (const p of simple ? simpleParticles(mode, t, lvlNow) : particles(mode, n, t, seeds, lvlNow)) {
             if (p.r < 0.005) continue
             // The filter path plumps drops ×1.3 because its blur eats into them; a field drop reads at its true size.
-            const rr = (simple ? dropRadius(p) : dropRadius(p) / 1.3) * scale
+            const rr = (scaled ? dropRadius(p) : dropRadius(p) / 1.3) * scale
             const ri = rr * 2.1 // reach: drops feel each other well before they touch, so bridges form (goo)
             const X = centre + p.x * R * scale, Y = centre + p.y * R * scale
             const x0 = Math.max(0, Math.floor(X - ri)), x1 = Math.min(g - 1, Math.ceil(X + ri))
@@ -666,9 +667,8 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
   // Retrieving is PRECISE: a tighter melt, so each recalled particle stays a distinct drop until it reaches the core.
   // Generating is DEFINED: gooey between shapes, but each shape's silhouette reads clearly while it holds.
   const precise = mode === "retrieving"
-  // Small basic is DEFINED too: three distinct balls in a button; a wide melt would shrink a lone drop to nothing.
-  const defined = mode === "generating" || mode === "idle" || (mode === "basic" && px <= 24)
-  const blur = precise ? (px <= 24 ? px * 0.06 : px * 0.035) : defined ? (px <= 24 ? px * 0.06 : px * 0.045) : px <= 24 ? px * 0.085 : px * 0.065
+  const defined = mode === "generating" || mode === "idle"
+  const blur = precise ? (px <= 24 ? px * 0.06 : px * 0.035) : defined ? (px <= 24 ? px * 0.06 : px * 0.045) : px <= 24 && mode !== "basic" ? px * 0.085 : px * 0.065
   const melt = precise ? px * 0.015 : defined ? px * 0.02 : px * 0.03
   const lit = px >= 48
   return (
