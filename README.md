@@ -1,10 +1,10 @@
 # Vita
 
-**Give your ideas life.**
+**The first agentic design system.** Made for AI products, and for the agents that build them.
 
 Every product has three parts. **Animus**, the mind, is the backend logic: rules, data and structure. **Anima**, the soul, is the AI layer: the language model that perceives, interprets and speaks. **Vita**, life, is the design system: the living experience where the mind's logic and the soul's intelligence become one thing people can touch, read and trust.
 
-**The AI-agent-first design system, born for humans and machines making together.** Vita is documented and built so AI agents make designer-quality design decisions on their own; designers, engineers, PMs and agents ship the same quality of UI because the system decides for them. It's for React + Tailwind v4:
+**Agentic, end to end.** Vita is documented and built so AI agents make designer-quality design decisions on their own; designers, engineers, PMs and agents ship the same quality of UI because the system decides for them. It's for React + Tailwind v4:
 
 - **Which component** to use and when not to (decision guides for every component).
 - **How things move** (motion tokens and choreography rules).

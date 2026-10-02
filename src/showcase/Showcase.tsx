@@ -93,9 +93,9 @@ function HomePage() {
           {/* The epicenter: Sofia, making. Everything on the page radiates from here. */}
           <Thinking mode="generating" size="3xl" label="Sofia is making" className="mb-2" />
           <Tag tone="neutral">Draft</Tag>
-          <Text variant="display" as="h1" className="max-w-3xl">Give your ideas life</Text>
+          <Text variant="display" as="h1" className="max-w-3xl">The first agentic design system</Text>
           <Text variant="body-lg" tone="muted" className="max-w-2xl">
-            The AI-agent-first design system, born for humans and machines making together. Documented and built so your agents design like designers, and you make what only you can make.
+            Made for AI products, and for the agents that build them. Documented and enforced so your agents design like designers, and you make what only you can make.
           </Text>
           {/* Side by side on larger screens; stacked, full width on a phone (never off the edge). */}
           <Inline gap="md" justify="center" className="max-sm:w-full max-sm:flex-col max-sm:items-stretch">

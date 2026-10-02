@@ -14,7 +14,7 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/iden
 
 ## Identity
 
-- [Animus, anima, vita](docs/identity/about.md): Every product has a mind and a soul. Vita is where they come alive. The AI-agent-first design system, born for humans and machines making together.
+- [Animus, anima, vita](docs/identity/about.md): Every product has a mind and a soul. Vita is where they come alive. The first agentic design system, made for AI products and the agents that build them.
 - [Design principles](docs/identity/principles.md): Four principles every Vita screen is built on, then the timeless principles of interface design they stand on. When two conflict, the lower number wins.
 
 ## Foundations
@@ -309,5 +309,6 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/iden
 - [Release stages](docs/decisions/release-stages.md): Everything in Vita, and Vita itself, sits on one of three stages. Draft comes first, then Experimental, then Stable.
 - [Status semantics](docs/decisions/status-semantics.md): One map from meaning to colour and glyph, used by every status surface; status colours never decorate.
 - [The name is Vita](docs/decisions/the-name.md): Vita means life. It is the third of a triad with Animus (the logic) and Anima (the AI): the design system where both come alive.
+- [The slogan](docs/decisions/the-slogan.md): "The first agentic design system." Vita says what it is for in one line, made for AI products and the agents that build them. It replaces "Give your ideas life."
 - [Touch adapts by itself](docs/decisions/touch.md): When a finger is the pointer, Vita grows its targets and hit areas, keeps its type proportionate, lightens its glass and switches the thinking orb to a filter-free renderer, without a knob and without a product doing anything.
 - [Weather tint](docs/decisions/weather-tint.md): Floating layers lean cold or warm with the weather outside, Dynamic by default, or fixed Neutral, Cold or Warm.

@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "private": true,
   "type": "module",
-  "description": "Vita, an opinionated, AI-agent-first design system: tokens, components, patterns, skills and enforcement.",
+  "description": "Vita, the first agentic design system: made for AI products and the agents that build them. Tokens, components, patterns, skills and enforcement.",
   "bin": {
     "vita": "./bin/vita.mjs"
   },

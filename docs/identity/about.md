@@ -1,6 +1,6 @@
 ---
 title: Animus, anima, vita
-summary: Every product has a mind and a soul. Vita is where they come alive. The AI-agent-first design system, born for humans and machines making together.
+summary: Every product has a mind and a soul. Vita is where they come alive. The first agentic design system, made for AI products and the agents that build them.
 status: stable
 ---
 
