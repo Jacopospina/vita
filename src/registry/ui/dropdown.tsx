@@ -3,6 +3,7 @@ import { useFlip } from "@/registry/hooks/use-flip"
 import { Select as SelectPrimitive, Popover as PopoverPrimitive } from "radix-ui"
 import { ChevronDown, Close, type IconType } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
+import { EmptyState } from "@/registry/ui/empty-state"
 import { useControllable } from "@/registry/hooks/use-controllable"
 import { FieldShell, fieldClasses, fieldSize, type FieldBaseProps, type FieldSize } from "@/registry/ui/form"
 import { Icon } from "@/registry/ui/icon"
@@ -163,7 +164,7 @@ export function Combobox({ items, value, defaultValue = "", onValueChange, size 
               className={cn(listClasses, "w-(--radix-popover-trigger-width) min-w-0 overflow-y-auto")}
             >
               <ul ref={options} id={listId} role="listbox">
-                {filtered.length === 0 && <li className="px-2.5 py-2 text-body text-muted-foreground">No results</li>}
+                {filtered.length === 0 && <li role="presentation"><EmptyState size="sm" title={query ? `No results for “${query}”` : "No results"} description="Try a different word." /></li>}
                 {filtered.map((it, i) => (
                   <li
                     key={it.value}

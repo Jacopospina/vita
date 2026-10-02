@@ -32,3 +32,4 @@ Sometimes empty is a success ("All caught up"). Say so positively and offer no a
 2. **One action,** plus an optional secondary. No action for success-empty states.
 3. **Keep the chrome.** Show the table header and toolbar even when empty, so the user understands the space.
 4. **Permissions empty** ("You don't have access") says who to ask.
+5. **Every search gets one.** Wherever people type to find something (a page search, a filter, a sidebar, a combobox, global search), no results shows an empty state that names the query and offers a way out.

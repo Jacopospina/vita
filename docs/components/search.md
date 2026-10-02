@@ -32,6 +32,6 @@ The shortcut hint sits as far from the right edge as from the top and bottom, at
 1. **Placeholder states the scope:** "Search agents", not "Search…".
 2. **Filter live** for local data (debounce 150–300ms). Search on Enter for expensive server queries, and say so ("Press Enter to search").
 3. **Keyboard: ⌘F / Ctrl+F focuses, Escape clears and lets go.** Set `shortcut="mod+f"` on the page's main search. × clears with the mouse.
-4. **Always show the result count** (`aria-live`) and a helpful empty state with a "Clear search" action (see *Empty states*).
+4. **Nothing found is an empty state, everywhere.** Page search, filters, sidebar filters, Combobox and global search all answer an empty result with `EmptyState` (search pictogram, "No results for “…”", a hint, and "Clear" where it helps), never blank space. Show the result count (`aria-live`) when there are results.
 5. **Keep the query visible** in the results ("12 results for “support”").
 6. **Search ≠ filter.** Search narrows by free text; filters narrow by attributes. Use both together (see the *Filtering* pattern).

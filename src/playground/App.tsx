@@ -12,6 +12,9 @@ import { manifest, sectionTitles, type Section } from "./manifest"
 import { globalNav, navHref, searchPages, HOME_URL, MAKE_URL } from "./nav"
 import { GlobalSearch } from "@/registry/ui/global-search"
 import { Tag } from "@/registry/ui/tag"
+import { EmptyState } from "@/registry/ui/empty-state"
+import { Button } from "@/registry/ui/button"
+import { Magnify } from "@/registry/pictograms"
 import { GithubAction } from "./github"
 import { DocPage } from "./doc-page"
 import { ThemePanel } from "./theme-panel"
@@ -110,6 +113,10 @@ export function App() {
             <div className="pb-1">
               <Search size="md" variant="toolbar" label="Filter pages" placeholder="Filter" shortcut="mod+f" value={filter} onValueChange={setFilter} />
             </div>
+            {/* Every search answers "nothing" with an empty state, never blank space. */}
+            {filter && !(Object.keys(manifest) as Section[]).some((s) => manifest[s].some((e) => e.title.toLowerCase().includes(filter.toLowerCase()))) && !"about vita".includes(filter.toLowerCase()) && (
+              <EmptyState size="sm" pictogram={Magnify} title={`No pages match “${filter}”`} description="Try another word, or browse the sections." action={<Button variant="tertiary" size="sm" onClick={() => setFilter("")}>Clear filter</Button>} />
+            )}
             {(Object.keys(manifest) as Section[]).map((s) => {
               const entries = manifest[s].filter((e) => e.title.toLowerCase().includes(filter.toLowerCase()))
               // Identity opens with About Vita, the overview of everything.

@@ -3,6 +3,8 @@ import { Dialog as DialogPrimitive } from "radix-ui"
 import { Search as SearchIcon } from "@/registry/icons"
 import type { IconType } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
+import { EmptyState } from "@/registry/ui/empty-state"
+import { Magnify } from "@/registry/pictograms"
 import { Icon } from "@/registry/ui/icon"
 import { IconButton } from "@/registry/ui/button"
 import { AnimatedText } from "@/registry/ui/animated"
@@ -133,7 +135,8 @@ export function GlobalSearch({ items, placeholder = "Search", shortcut = "mod+k"
             <div>
               <div className="flex border-t border-divider">
               <div id={listId} role="listbox" aria-label="Results" className="max-h-[50vh] min-w-0 flex-1 overflow-y-auto p-1.5">
-                {results.length === 0 && <p className="px-2.5 py-3 text-body text-muted-foreground">No results for “{query}”</p>}
+                {/* A search never answers with blank space: an empty result is an empty state. */}
+                {results.length === 0 && <EmptyState size="sm" pictogram={Magnify} title={`No results for “${query}”`} description="Try a shorter or different word." />}
                 {results.map((r, i) => {
                   const header = r.group && r.group !== results[i - 1]?.group ? (i === 0 ? `Top hit · ${r.group}` : r.group) : null
                   return (

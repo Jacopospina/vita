@@ -138,6 +138,7 @@ If you catch yourself doing any of these, stop and re-read this page:
 
 - Writing a `div` with `onClick`.
 - A placeholder used as the only label.
+- A search that shows blank space when nothing matches.
 - A shortcut that no tooltip shows.
 - Filters applied but not visible as tags.
 - A second primary button.
