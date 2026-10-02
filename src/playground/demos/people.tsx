@@ -36,7 +36,8 @@ const statuses = [
   { value: "done", label: "Done", icon: CheckmarkFilled, tone: "text-success" },
 ] as const
 
-/** The same card, with a status you can change: the glyph is a button that opens the statuses; it redraws on change. */
+/** The same card, with a status you can change: the glyph is a button that opens the statuses; it redraws on change.
+    Its tooltip just names the status: the pointer and the hover state already say it can be clicked. */
 function StatusCard({ title, id, time, initial }: { title: string; id: string; time: string; initial: (typeof statuses)[number]["value"] }) {
   const [status, setStatus] = React.useState<string>(initial)
   const s = statuses.find((x) => x.value === status) ?? statuses[0]
@@ -45,7 +46,7 @@ function StatusCard({ title, id, time, initial }: { title: string; id: string; t
       <Inline gap="xs">
         <Menu>
           <MenuTrigger asChild>
-            <IconButton icon={s.icon} label={`Status: ${s.label}. Change status`} size="sm" className={`-m-1 size-6 ${s.tone}`} />
+            <IconButton icon={s.icon} label={s.label} size="sm" className={`-m-1 size-6 ${s.tone}`} />
           </MenuTrigger>
           <MenuContent>
             <MenuRadioGroup value={status} onValueChange={setStatus}>

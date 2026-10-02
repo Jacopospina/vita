@@ -53,6 +53,7 @@ status: stable
 - **State stays on screen.** Applied filters are tags, the current page is highlighted, the selected value shows in its field, today is marked in the calendar.
 - **Context travels with the decision.** A confirmation names what it acts on ("Delete 3 agents?"), and errors say what to fix next to where it is.
 - **Icons come with words.** An icon alone always has a tooltip; in navigation and menus, icons sit next to a label.
+- **Signifiers do the teaching, words don't repeat them.** A pointer cursor, a hover state and a control's shape already say "you can click this"; labels and tooltips name what it is ("In progress"), never how to use it ("Click to change").
 
 ## 4. Choreograph every change
 

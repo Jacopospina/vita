@@ -25,7 +25,7 @@ related: [tile, list-item, data-table, status-indicators]
 2. **One look per set.** Every card in a grid has the same parts in the same places, so the eye compares, not reads.
 3. **The whole card is the target** when it opens something: use `ClickableTile` for the same composition.
 4. **Status by meaning.** The glyph and its colour come from the status semantics, never decoration.
-5. **A status you can change** is the glyph itself: an icon button (named "Status: In progress. Change status") that opens a menu of statuses, each with its glyph; the glyph redraws on change.
+5. **A status you can change** is the glyph itself: an icon button that opens a menu of statuses, each with its glyph; the glyph redraws on change. Its tooltip names the status ("In progress"), nothing more.
 
 ## Example
 

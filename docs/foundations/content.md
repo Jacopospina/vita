@@ -37,6 +37,7 @@ avoid_when:
 - **Plain and direct.** Write like a knowledgeable colleague.
 - **Sentence case.** Everywhere.
 - **Front-load.** "Delete 3 agents?", not "Are you sure you want to…".
+- **Don't explain the obvious.** If a signifier already says it (a pointer cursor, a hover state, a chevron, a button's shape), the words don't repeat it: no "Click to…", "Tap here to…", "Change status" in labels or tooltips.
 - **Name the thing.** Confirmations, toasts and errors say which object they mean, so nobody has to remember what they just did.
 - **Buttons say what happens.** The confirm button repeats the title's verb.
 - **Errors fix things.** What happened, why, how to fix it. No blame, no "oops".

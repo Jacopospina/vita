@@ -26,3 +26,4 @@ related: [popover, button, overflow-content]
 3. **Inverse surface** (dark in light mode), `footnote` size, fade only.
 4. **Keyboard focus shows tooltips too.** Never put a tooltip on a non-focusable element.
 5. **Shortcuts belong in tooltips:** "Bold (⌘B)".
+6. **Name, never instruct.** A tooltip says what something is ("In progress", "Microphone settings"), never what to do with it ("Click to change status"). The pointer, the hover state and the control's shape already say it can be clicked.
