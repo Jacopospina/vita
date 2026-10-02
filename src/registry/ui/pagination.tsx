@@ -32,11 +32,12 @@ export function Pagination({ page, pageSize, total, onPageChange, onPageSizeChan
       <div className={cn("flex items-center gap-2 pl-3", h)}>
         {onPageSizeChange && (
           <>
-            <div className="flex items-center gap-1">
+            {/* Phones keep the range and the page controls; the page size waits for a wider screen. */}
+            <div className="flex items-center gap-1 max-sm:hidden">
               <span className="hidden sm:inline">{`${itemLabel[0].toUpperCase()}${itemLabel.slice(1)} per page`}</span>
               <Dropdown type="inline" hideLabel label={`${itemLabel} per page`} value={String(pageSize)} onValueChange={(v) => onPageSizeChange(Number(v))} items={pageSizes.map((s) => ({ value: String(s), label: String(s) }))} />
             </div>
-            {divider}
+            <span className="contents max-sm:hidden">{divider}</span>
           </>
         )}
         <span className="inline-flex items-baseline gap-1" aria-live="polite"><AnimatedNumber value={start} />–<AnimatedNumber value={end} /> of <AnimatedNumber value={total} /> {itemLabel}</span>

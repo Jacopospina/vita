@@ -1,6 +1,6 @@
 {
   "name": "Vita",
-  "generated": "2026-10-01",
+  "generated": "2026-10-02",
   "entries": [
     {
       "section": "getting-started",
@@ -2163,7 +2163,7 @@
       "slug": "touch",
       "path": "docs/decisions/touch.md",
       "title": "Touch adapts by itself",
-      "summary": "When a finger is the pointer, Vita grows its targets, its type and its hit areas, lightens its glass and switches the thinking orb to a filter-free renderer, without a knob and without a product doing anything.",
+      "summary": "When a finger is the pointer, Vita grows its targets and hit areas, keeps its type proportionate, lightens its glass and switches the thinking orb to a filter-free renderer, without a knob and without a product doing anything.",
       "status": "accepted",
       "date": "2026-10-01",
       "decided_by": "Jacopo",

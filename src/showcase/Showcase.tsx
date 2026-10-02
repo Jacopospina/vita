@@ -1,6 +1,6 @@
 import * as React from "react"
-import { Moon, Sun } from "@/registry/icons"
-import { Shell, ShellMain, Header, HeaderNavItem, HeaderGlobalAction, HeaderSeparator } from "@/registry/ui/ui-shell"
+import { Moon, Sun, LogoGithub } from "@/registry/icons"
+import { Shell, ShellMain, Header, HeaderNavItem, HeaderGlobalAction, HeaderSeparator, LeftPanel, SideNavItem } from "@/registry/ui/ui-shell"
 import { globalNav, navHref, searchPages, HOME_URL, DOCS_URL, MAKE_URL } from "@/playground/nav"
 import { GlobalSearch } from "@/registry/ui/global-search"
 import { GithubAction } from "@/playground/github"
@@ -57,15 +57,22 @@ export function Showcase({ page = "home" }: { page?: "home" | "make" }) {
           actions={
             <>
               <GlobalSearch items={searchPages((path) => window.location.assign(`${DOCS}${path}`))} placeholder="Search Vita" className="size-8 rounded-inner-2" />
-              <HeaderSeparator />
+              <span className="flex items-center gap-1 max-sm:hidden"><HeaderSeparator /></span>
               <HeaderGlobalAction icon={dark ? Sun : Moon} label={dark ? "Light theme" : "Dark theme"} onClick={() => setDark((d) => !d)} />
-              <GithubAction />
+              <span className="flex items-center gap-1 max-sm:hidden"><GithubAction /></span>
             </>
           }
         >
           {/* The same global nav as the docs. */}
           {globalNav.map((n) => <HeaderNavItem key={n.path} href={navHref(n, DOCS)} active={page === "make" && n.path === "make"}>{n.label}</HeaderNavItem>)}
         </Header>
+        {/* The phone menu: the global nav (the header hides it on small screens). */}
+        <LeftPanel mobileOnly label="Menu">
+          {globalNav.map((n) => <SideNavItem key={n.path} href={navHref(n, DOCS)} active={page === "make" && n.path === "make"}>{n.label}</SideNavItem>)}
+          <div className="mt-auto flex flex-col gap-px border-t border-divider pt-2">
+            <SideNavItem href="https://github.com/Jacopospina/vita" icon={LogoGithub}>GitHub</SideNavItem>
+          </div>
+        </LeftPanel>
         <ShellMain>
           {page === "make" ? <MakePage /> : <HomePage />}
           <Text variant="footnote" tone="muted" className="pb-16 text-center">
@@ -90,7 +97,8 @@ function HomePage() {
           <Text variant="body-lg" tone="muted" className="max-w-2xl">
             The AI-agent-first design system, born for humans and machines making together. Documented and built so your agents design like designers, and you make what only you can make.
           </Text>
-          <Inline gap="md" justify="center">
+          {/* Side by side on larger screens; stacked, full width on a phone (never off the edge). */}
+          <Inline gap="md" justify="center" className="max-sm:w-full max-sm:flex-col max-sm:items-stretch">
             <Button size="xl" onClick={() => (window.location.href = `${DOCS}guidelines`)}>Start making</Button>
             <Button size="xl" variant="secondary" onClick={() => (window.location.href = MAKE_URL)}>See what you can make</Button>
           </Inline>

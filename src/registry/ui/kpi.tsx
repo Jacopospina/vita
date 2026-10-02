@@ -40,7 +40,7 @@ export function Kpi({ label, value, format, delta, deltaFormat = { style: "perce
     <div className={cn("flex min-w-0 flex-col gap-0.5", className)}>
       <span className="truncate text-footnote text-muted-foreground">{label}</span>
       {loading ? (
-        <Skeleton className={cn("w-24", size === "lg" ? "h-10" : size === "md" ? "h-8" : "h-6")} />
+        <Skeleton className={cn("w-24 max-w-full", size === "lg" ? "h-10" : size === "md" ? "h-8" : "h-6")} />
       ) : (
         <span className={valueSize[size]}><AnimatedNumber value={value} format={format} /></span>
       )}
@@ -65,7 +65,8 @@ export function KpiGroup({ children, bare, className }: { children: React.ReactN
     <div
       role="group"
       className={cn(
-        "grid auto-cols-fr grid-flow-col divide-x divide-divider",
+        // A row of equals; on a phone, two per row with a gap instead of dividers.
+        "grid auto-cols-fr grid-flow-col divide-x divide-divider max-sm:grid-flow-row max-sm:grid-cols-2 max-sm:gap-y-3 max-sm:divide-x-0",
         bare ? "*:px-4 *:first:pl-0 *:last:pr-0" : "scope-lg bg-layer-1 py-3 *:px-4",
         className,
       )}

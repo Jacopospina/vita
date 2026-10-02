@@ -87,7 +87,7 @@ function FormDemo() {
 function SwatchDemo() {
   const [v, setV] = React.useState("blue")
   const hues = ["blue", "indigo", "purple", "pink", "red", "orange", "yellow", "green", "mint", "teal", "cyan", "brown"]
-  return <SwatchPicker label="Label colour" value={v} onValueChange={setV} items={hues.map((h) => ({ value: h, label: h[0].toUpperCase() + h.slice(1), color: `var(--vita-palette-${h}-500)` }))} className="max-w-sm" />
+  return <SwatchPicker label="Label colour" size="sm" value={v} onValueChange={setV} items={hues.map((h) => ({ value: h, label: h[0].toUpperCase() + h.slice(1), color: `var(--vita-palette-${h}-500)` }))} className="max-w-sm" />
 }
 
 export const inputDemos: DemoMap = {

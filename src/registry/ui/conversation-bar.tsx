@@ -74,11 +74,12 @@ export function ConversationBar({ agent, state, onStart, onEnd, mic, agentLevel,
       {/* Middle: who and what, or the text field while typing. Swaps cross-fade in place. */}
       <div className="grid min-w-0 flex-1 items-center">
         <div className={cn("col-start-1 row-start-1 flex min-w-0 items-center gap-3 motion-productive", typing && live ? "pointer-events-none opacity-0 blur-xs" : "opacity-100")}>
-          <div className="flex min-w-0 shrink-0 flex-col">
+          <div className="flex min-w-0 shrink flex-col">
             <span className="truncate text-body font-semibold">{agent}</span>
             <span className="truncate text-caption text-muted-foreground" aria-live="polite"><AnimatedText>{status}</AnimatedText></span>
           </div>
-          <div className={cn("min-w-0 flex-1 motion-productive", live ? "opacity-100" : "opacity-0")}>
+          {/* On a phone the bar keeps the name, status and controls; the waveform needs the room of a wider screen. */}
+          <div className={cn("min-w-0 flex-1 motion-productive max-sm:hidden", live ? "opacity-100" : "opacity-0")}>
             <LiveWaveform
               size="sm"
               tone={state === "talking" ? "spectrum" : "brand"}

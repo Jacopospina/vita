@@ -23,28 +23,29 @@ const knobs = [
   { key: "--vita-motion-scale", label: "Motion speed", min: 0, max: 2, step: 0.25, def: 1, unit: "" },
 ] as const
 
-/* Colour is chosen by recognition, not dialled in: the system's hues for the brand, a few tints for the greys. */
+/* Colour is chosen by recognition, not dialled in: the system's hues for the brand, a few tints for the greys.
+   Named in Vita's voice (life and making), so a colour is something you can picture, not a hue number. */
 const brandColors = [
-  { value: "blue", label: "Blue", hue: 257.4, chroma: 0.218 },
-  { value: "indigo", label: "Indigo", hue: 278.3, chroma: 0.191 },
-  { value: "purple", label: "Purple", hue: 312.4, chroma: 0.213 },
-  { value: "pink", label: "Pink", hue: 17.9, chroma: 0.238 },
-  { value: "red", label: "Red", hue: 28.7, chroma: 0.232 },
-  { value: "orange", label: "Orange", hue: 50.0, chroma: 0.175 },
-  { value: "yellow", label: "Yellow", hue: 90.4, chroma: 0.177 },
-  { value: "green", label: "Green", hue: 147.4, chroma: 0.194 },
-  { value: "mint", label: "Mint", hue: 189.0, chroma: 0.13 },
-  { value: "teal", label: "Teal", hue: 212.7, chroma: 0.111 },
-  { value: "cyan", label: "Cyan", hue: 233.9, chroma: 0.133 },
-  { value: "brown", label: "Brown", hue: 72.8, chroma: 0.064 },
-  { value: "gray", label: "Graphite", hue: 286.2, chroma: 0.02 },
+  { value: "blue", label: "Tide", hue: 257.4, chroma: 0.218 },
+  { value: "indigo", label: "Dusk", hue: 278.3, chroma: 0.191 },
+  { value: "purple", label: "Iris", hue: 312.4, chroma: 0.213 },
+  { value: "pink", label: "Petal", hue: 17.9, chroma: 0.238 },
+  { value: "red", label: "Pulse", hue: 28.7, chroma: 0.232 },
+  { value: "orange", label: "Ember", hue: 50.0, chroma: 0.175 },
+  { value: "yellow", label: "Pollen", hue: 90.4, chroma: 0.177 },
+  { value: "green", label: "Sprout", hue: 147.4, chroma: 0.194 },
+  { value: "mint", label: "Dew", hue: 189.0, chroma: 0.13 },
+  { value: "teal", label: "Lagoon", hue: 212.7, chroma: 0.111 },
+  { value: "cyan", label: "Breeze", hue: 233.9, chroma: 0.133 },
+  { value: "brown", label: "Clay", hue: 72.8, chroma: 0.064 },
+  { value: "gray", label: "Charcoal", hue: 286.2, chroma: 0.02 },
 ]
 const greyTints = [
-  { value: "neutral", label: "Neutral", hue: 286, chroma: 0 },
-  { value: "cool", label: "Cool", hue: 250, chroma: 0.012 },
-  { value: "warm", label: "Warm", hue: 70, chroma: 0.012 },
-  { value: "sage", label: "Sage", hue: 150, chroma: 0.01 },
-  { value: "lilac", label: "Lilac", hue: 300, chroma: 0.012 },
+  { value: "neutral", label: "Stone", hue: 286, chroma: 0 },
+  { value: "cool", label: "Mist", hue: 250, chroma: 0.012 },
+  { value: "warm", label: "Sand", hue: 70, chroma: 0.012 },
+  { value: "sage", label: "Moss", hue: 150, chroma: 0.01 },
+  { value: "lilac", label: "Haze", hue: 300, chroma: 0.012 },
 ]
 const near = (a: number, b: number) => Math.abs(a - b) < 0.5
 

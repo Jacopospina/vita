@@ -20,6 +20,8 @@ export function StructuredList({ columns, rows, selectable, value, onValueChange
 }) {
   const cell = cn(condensed ? "py-1.5" : "py-2.5", flush ? "pr-3 first:pl-0" : "px-3", "text-left align-top")
   return (
+    // Scrolls sideways on a narrow screen instead of pushing the page wider.
+    <div className="max-w-full overflow-x-auto">
     <table aria-label={label} role={selectable ? "radiogroup" : undefined} className={cn("w-full border-collapse text-body", className)}>
       <thead>
         <tr className="border-b border-border">
@@ -51,5 +53,6 @@ export function StructuredList({ columns, rows, selectable, value, onValueChange
         })}
       </tbody>
     </table>
+    </div>
   )
 }

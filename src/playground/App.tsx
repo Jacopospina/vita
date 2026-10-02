@@ -1,5 +1,5 @@
 import * as React from "react"
-import { ColorPalette, Moon, Sun } from "@/registry/icons"
+import { Application, ColorPalette, LogoGithub, Moon, Sun } from "@/registry/icons"
 import { Shell, ShellBody, ShellMain, Header, HeaderNavItem, HeaderGlobalAction, HeaderSeparator, LeftPanel, SideNavItem, SideNavSection, RightPanel } from "@/registry/ui/ui-shell"
 import { TooltipProvider } from "@/registry/ui/tooltip"
 import { useSunTheme } from "@/registry/hooks/use-sun-theme"
@@ -9,7 +9,7 @@ import { VitaMark } from "@/brand/vita-mark"
 import { Toaster } from "@/registry/ui/notification"
 import { Search } from "@/registry/ui/search"
 import { manifest, sectionTitles, type Section } from "./manifest"
-import { globalNav, navHref, searchPages, HOME_URL } from "./nav"
+import { globalNav, navHref, searchPages, HOME_URL, MAKE_URL } from "./nav"
 import { GlobalSearch } from "@/registry/ui/global-search"
 import { Tag } from "@/registry/ui/tag"
 import { GithubAction } from "./github"
@@ -89,10 +89,13 @@ export function App() {
           actions={
             <>
               <GlobalSearch items={searchPages((path) => window.location.assign(`#/${path}`))} placeholder="Search Vita" className="size-8 rounded-inner-2" />
-              <HeaderSeparator />
+              <span className="flex items-center gap-1 max-sm:hidden"><HeaderSeparator /></span>
               <HeaderGlobalAction icon={dark ? Sun : Moon} label={dark ? "Light theme" : "Dark theme"} onClick={() => setDark((d) => !d)} />
-              <HeaderGlobalAction icon={ColorPalette} label="Theme" active={themeOpen} onClick={() => setThemeOpen((o) => !o)} />
-              <GithubAction />
+              {/* On a phone these two live in the menu, so the header fits. */}
+              <span className="flex items-center gap-1 max-sm:hidden">
+                <HeaderGlobalAction icon={ColorPalette} label="Theme" active={themeOpen} onClick={() => setThemeOpen((o) => !o)} />
+                <GithubAction />
+              </span>
             </>
           }
         >
@@ -123,6 +126,12 @@ export function App() {
                 </SideNavSection>
               )
             })}
+            {/* Phone menu only: what the header shows on larger screens. */}
+            <div className="mt-auto flex flex-col gap-px border-t border-divider pt-2 lg:hidden">
+              <SideNavItem href={MAKE_URL} icon={Application}>See what you can make</SideNavItem>
+              <SideNavItem icon={ColorPalette} onClick={() => setThemeOpen(true)}>Theme</SideNavItem>
+              <SideNavItem href="https://github.com/Jacopospina/vita" icon={LogoGithub}>GitHub</SideNavItem>
+            </div>
           </LeftPanel>
           )}
           <ShellMain data-leaving={leaving || undefined}>

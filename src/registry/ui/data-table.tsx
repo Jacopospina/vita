@@ -132,7 +132,7 @@ export function DataTable<T extends { id: string }>({
             {toolbar && (
               <div
                 inert={selecting || undefined}
-                className={cn("flex items-center justify-end gap-2 motion-expressive [grid-area:bar] [&>[role=search]]:min-w-0 [&>[role=search]]:flex-1", selecting ? "pointer-events-none scale-98 opacity-0 blur-xs" : "opacity-100")}
+                className={cn("flex items-center justify-end gap-2 motion-expressive [grid-area:bar] [&>[role=search]]:min-w-0 [&>[role=search]]:flex-1 max-sm:flex-wrap max-sm:[&>[role=search]]:basis-full", selecting ? "pointer-events-none scale-98 opacity-0 blur-xs" : "opacity-100")}
               >
                 {toolbar}
               </div>

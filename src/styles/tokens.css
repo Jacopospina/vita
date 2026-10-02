@@ -256,12 +256,22 @@
 /*
  * TOUCH, a finger, not a pointer (phones, tablets). The knobs stay the team's, but two of them gain a floor:
  *   density ≥ 1.1   controls, fields and insets grow a tenth (field md lands on 44px, the finger's size)
- *   type ≥ 16px     body text a phone can read, and iOS stops zooming into fields set below 16px
+ *   type ≥ 15px     body text a phone reads at arm's length; fields alone sit at 16px so iOS never zooms (vita.css)
  * Teams asking for more (a 1.2 density, a larger base) keep it; max() only ever raises.
  */
 @media (pointer: coarse) {
   :root {
     --_d: max(var(--vita-density), 1.1);
-    --_t: max(var(--vita-type-base), 1rem);
+    --_t: max(var(--vita-type-base), 0.9375rem);
+  }
+}
+
+/*
+ * NARROW SCREENS (phones): the type scale tightens, so headings stay in proportion to a 390px screen instead of the
+ * desktop's. Ratio ≤ 1.15: a phone's display is ~40px, not ~57px; titles read as titles without shouting.
+ */
+@media (max-width: 40rem) {
+  :root {
+    --_r: min(var(--vita-type-ratio), 1.15);
   }
 }

@@ -1,6 +1,6 @@
 ---
 title: Touch adapts by itself
-summary: When a finger is the pointer, Vita grows its targets, its type and its hit areas, lightens its glass and switches the thinking orb to a filter-free renderer, without a knob and without a product doing anything.
+summary: When a finger is the pointer, Vita grows its targets and hit areas, keeps its type proportionate, lightens its glass and switches the thinking orb to a filter-free renderer, without a knob and without a product doing anything.
 status: accepted
 date: 2026-10-01
 decided_by: Jacopo
@@ -38,3 +38,13 @@ related: [accessibility, spacing, theming, material, thinking, glass-by-elevatio
 
 - **A product needs the desktop ramp on tablets** (a floor opt-out, decided here first).
 - **`ctx.filter` lands everywhere.** Canvas-native blur could replace the metaball field with less code.
+
+## Revision, 2026-10-02: proportionate on phones
+
+- **Body type floors at 15px, fields at 16px.** A 16px body made every heading grow with it and read as oversized on a phone. Body text now floors at 15px; inputs, text areas and selects stay at 16px under a finger, so iOS still never zooms.
+- **The type scale tightens on narrow screens.** Up to 640px wide the ratio is at most 1.15: a phone's display type is about 40px instead of 57px, page titles about 30px.
+- **Big headings lighten a step on narrow screens** (display, large title, title 1 at 550): at phone size the desktop semibold reads as heavy.
+- **The phone menu is a solid sheet**, closes when you go somewhere or press Escape, and exists on every page (pages without a sidebar get a menu-only panel).
+- **Header actions move into the menu on phones** (theme, repository), so the header never overflows.
+- **Nothing overflows a 390px screen.** Toolbars wrap, KPI groups go two per row, tables scroll sideways inside their own box, and the conversation bar drops its waveform before its controls.
+- **Squircles everywhere.** Where `corner-shape` isn't supported (Safari, iOS), the same superellipse is applied as a mask, so buttons and tiles keep their shape on iPhone.

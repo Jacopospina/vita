@@ -31,6 +31,20 @@ const ShellCtx = React.createContext<{ navOpen: boolean; setNavOpen: (o: boolean
 export function Shell({ children, className }: { children: React.ReactNode; className?: string }) {
   const [navOpen, setNavOpen] = React.useState(false)
   const [nav, setNav] = React.useState<NavKind>("none")
+  // The mobile menu closes when you go somewhere (a route change) or press Escape.
+  React.useEffect(() => {
+    if (!navOpen) return
+    const close = () => setNavOpen(false)
+    const esc = (e: KeyboardEvent) => e.key === "Escape" && close()
+    window.addEventListener("hashchange", close)
+    window.addEventListener("popstate", close)
+    window.addEventListener("keydown", esc)
+    return () => {
+      window.removeEventListener("hashchange", close)
+      window.removeEventListener("popstate", close)
+      window.removeEventListener("keydown", esc)
+    }
+  }, [navOpen])
   return (
     <ShellCtx.Provider value={{ navOpen, setNavOpen, nav, setNav }}>
       <div className={cn("relative h-dvh overflow-hidden bg-background text-foreground", className)}>{children}</div>
@@ -150,13 +164,21 @@ HeaderGlobalAction.displayName = "HeaderGlobalAction"
 
 /* ---------------- Left panel (side nav) ---------------- */
 
-export function LeftPanel({ children, rail, className, label = "Side navigation" }: { children: React.ReactNode; rail?: boolean; className?: string; label?: string }) {
+export function LeftPanel({ children, rail, mobileOnly, className, label = "Side navigation" }: {
+  children: React.ReactNode
+  rail?: boolean
+  /** Only the small-screen menu (opened from the header): pages without a sidebar still get a working menu. */
+  mobileOnly?: boolean
+  className?: string
+  label?: string
+}) {
   const { navOpen, setNavOpen, setNav } = React.useContext(ShellCtx)
-  // Tell the shell how much room to leave for us.
+  // Tell the shell how much room to leave for us (none when we only exist as the mobile menu).
   React.useEffect(() => {
+    if (mobileOnly) return
     setNav(rail ? "rail" : "full")
     return () => setNav("none")
-  }, [rail, setNav])
+  }, [rail, mobileOnly, setNav])
   return (
     <>
       {navOpen && <div className="absolute inset-0 top-16 z-30 animate-enter-fade bg-overlay lg:hidden" onClick={() => setNavOpen(false)} />}
@@ -168,8 +190,9 @@ export function LeftPanel({ children, rail, className, label = "Side navigation"
           "group/nav z-30 flex shrink-0 flex-col overflow-y-auto glass glass-1 scope-xl p-2",
           // Floats over the scrolling page, below the header (top-16 = 8 + 48 + 8), inset 8px like the header.
           "absolute top-16 bottom-2 left-2 w-60 -translate-x-[calc(100%+1rem)] duration-moderate-02 ease-productive",
-          "lg:translate-x-0",
-          navOpen && "translate-x-0",
+          mobileOnly ? "lg:hidden" : "lg:translate-x-0",
+          // Open over the page on a small screen it's a sheet, not a sidebar: solid, so nothing behind competes with it.
+          navOpen && "translate-x-0 max-lg:bg-raised!",
           rail && "lg:w-12 lg:hover:w-60",
           className,
         )}
@@ -189,14 +212,15 @@ const railRow = "group-data-[rail]/nav:lg:px-[calc((var(--spacing)*12-1rem)/2-va
 const railHidden = "group-data-[rail]/nav:lg:opacity-0 group-data-[rail]/nav:lg:group-hover/nav:opacity-100"
 
 export function SideNavItem({ href, icon, active, children, onClick }: { href?: string; icon?: IconType; active?: boolean; children: React.ReactNode; onClick?: () => void }) {
+  const { setNavOpen } = React.useContext(ShellCtx)
   return (
     <a
       href={href}
-      onClick={onClick}
+      onClick={() => { onClick?.(); setNavOpen(false) }}
       aria-current={active ? "page" : undefined}
       className={cn(
         // Finder row: compact, accent icon + label, soft grey highlight when selected.
-        "relative flex h-control-md shrink-0 items-center gap-2 rounded-inner-2 px-2.5 text-body-lg whitespace-nowrap text-foreground duration-fast-02",
+        "relative flex h-control-md shrink-0 items-center gap-2 rounded-inner-2 px-2.5 text-body-lg whitespace-nowrap text-foreground duration-fast-02 max-lg:text-body",
         railRow,
         "hover:bg-hover focus-ring-inset",
         active && "bg-active font-medium",

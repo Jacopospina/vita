@@ -53,7 +53,6 @@ export const globalNav = [
   { label: "Foundations", path: "foundations/accessibility", sections: ["foundations"] },
   { label: "Components", path: "components/choosing-components", sections: ["components"] },
   { label: "Patterns", path: "patterns/agent-conversation", sections: ["patterns"] },
-  { label: "Decisions", path: "decisions/how-we-decide", sections: ["decisions"] },
   // Not a docs page: the live examples have a page of their own.
   { label: "See what you can make", path: "make", sections: ["make"], href: MAKE_URL },
 ] as const

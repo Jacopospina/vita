@@ -333,7 +333,7 @@ export const foundationDemos: DemoMap = {
       title: "Spacing scale",
       description: "The 2px-based scale. Only these steps are allowed; the audit rejects every other step.",
       render: () => (
-        <Stack gap="xs">
+        <Stack gap="xs" className="overflow-x-auto">
           {spacing.map(([name, tw, px]) => (
             <div key={name} className="grid grid-cols-4 items-center gap-4">
               <Text variant="footnote" className="font-mono">{name}</Text>

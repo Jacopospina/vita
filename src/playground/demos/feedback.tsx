@@ -210,7 +210,7 @@ export const feedbackDemos: DemoMap = {
         </div>
       ),
     },
-    { title: "Sizes", render: () => <Inline gap="xl" align="end"><Thinking mode="generating" size="sm" /><Thinking mode="generating" size="md" /><Thinking mode="generating" size="lg" /><Thinking mode="generating" size="xl" /><Thinking mode="generating" size="2xl" /></Inline> },
+    { title: "Sizes", render: () => <Inline gap="xl" align="end" wrap><Thinking mode="generating" size="sm" /><Thinking mode="generating" size="md" /><Thinking mode="generating" size="lg" /><Thinking mode="generating" size="xl" /><Thinking mode="generating" size="2xl" /></Inline> },
     { title: "Overlay (blocks a region)", render: () => <div className="relative h-40 rounded-md bg-layer-1 p-4"><Text tone="muted">Region content</Text><Loading overlay mode="retrieving" label="Loading report" /></div> },
     { title: "Skeleton (preferred)", render: () => <Stack gap="md" className="max-w-md"><Inline gap="sm"><Skeleton shape="circle" className="size-10" /><Stack gap="xs" className="flex-1"><Skeleton shape="text" className="w-1/2" /><Skeleton shape="text" className="w-1/3" /></Stack></Inline><SkeletonText lines={4} /><Skeleton className="h-32" /></Stack> },
   ],
