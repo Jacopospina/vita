@@ -409,7 +409,7 @@
         "A live value worth watching for a few seconds (sync progress, a connection)"
       ],
       "avoid_when": [
-        "Anything that needs reading or an action → toast banner",
+        "The person's own action worked and there's something to read or undo → toast banner",
         "Errors the user must fix → InlineNotification next to the cause",
         "Long-running work the user should track → ProgressBar in the page"
       ],
@@ -947,6 +947,7 @@
         "A decision is required before continuing → Modal",
         "Field-level validation → the field's invalidText",
         "Errors inside a toast that need action → InlineNotification near the cause",
+        "A system state to glance at (connected, syncing, progress) → Capsule",
         "Marketing/announcements → not a system notification"
       ],
       "related": [
@@ -1944,6 +1945,7 @@
       ],
       "related": [
         "notification",
+        "capsule",
         "dialogs",
         "status-indicators",
         "global-header"

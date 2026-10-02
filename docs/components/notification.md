@@ -11,12 +11,20 @@ avoid_when:
   - A decision is required before continuing → Modal
   - Field-level validation → the field's invalidText
   - Errors inside a toast that need action → InlineNotification near the cause
+  - A system state to glance at (connected, syncing, progress) → Capsule
   - Marketing/announcements → not a system notification
 related: [capsule, notifications, modal, inline-loading, status-indicators]
 ---
 
 > [!NOTE] Colours and glyphs follow [Color → Status semantics](#/foundations/color): one meaning, one look, everywhere.
 
+
+## Notification or capsule?
+
+- **Inline: something needs fixing.** It stays next to the cause until it's fixed.
+- **Toast: the person's own action worked, with something to read or undo.** Success or info only.
+- **Callout: guidance that's part of the page.** Permanent, never dismissed.
+- **Not a notification: a system state to glance at** (connected, syncing, a live progress). That's a [Capsule](#/components/capsule): nothing to read, no action, one at a time.
 
 ## Anatomy
 
