@@ -26,14 +26,23 @@ const VOICE = new Set<ThinkingMode>(["idle", "listening", "talking"])
 function voiceParticles(mode: ThinkingMode, t: number, lvl: number, k: number, small = false): P[] {
   const out: P[] = []
   if (mode === "idle") {
-    // Small orbs (16 to 24px) get a plumper core and drops: at that size the melt would leave only a dot, and Sofia
-    // must stay recognisable wherever she appears (a provenance line, a button).
-    const g = small ? 2.5 : 1
-    out.push({ x: 0, y: 0, r: (0.3 + 0.025 * Math.sin(t * 1.2)) * g })
+    // Small orbs (16 to 24px) idle as the Vita mark: a thin liquid ring with one drop at its heart, breathing. A blob
+    // reads as a dot at that size; the ring reads as Sofia.
+    if (small) {
+      const n = 12
+      for (let i = 0; i < n; i++) {
+        const a = (i / n) * TAU + t * 0.35
+        const rr = 0.74 + 0.04 * Math.sin(3 * a + t * 1.4)
+        out.push({ x: Math.cos(a) * rr, y: Math.sin(a) * rr, r: 0.2 })
+      }
+      out.push({ x: 0.03 * Math.sin(t * 0.9), y: 0.03 * Math.cos(t * 0.8), r: 0.21 + 0.015 * Math.sin(t * 1.2) })
+      return out
+    }
+    out.push({ x: 0, y: 0, r: 0.3 + 0.025 * Math.sin(t * 1.2) })
     for (let j = 0; j < 2; j++) {
       const a = t * 0.55 + j * Math.PI + 0.4 * Math.sin(t * 0.7 + j)
-      const rad = (0.42 + 0.07 * Math.sin(t * 0.9 + j * 2)) * (small ? 1.15 : 1)
-      out.push({ x: Math.cos(a) * rad, y: Math.sin(a) * rad, r: 0.13 * g })
+      const rad = 0.42 + 0.07 * Math.sin(t * 0.9 + j * 2)
+      out.push({ x: Math.cos(a) * rad, y: Math.sin(a) * rad, r: 0.13 })
     }
     return out
   }
@@ -648,7 +657,7 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
   // Retrieving is PRECISE: a tighter melt, so each recalled particle stays a distinct drop until it reaches the core.
   // Generating is DEFINED: gooey between shapes, but each shape's silhouette reads clearly while it holds.
   const precise = mode === "retrieving"
-  const defined = mode === "generating"
+  const defined = mode === "generating" || mode === "idle"
   const blur = precise ? (px <= 24 ? px * 0.06 : px * 0.035) : defined ? (px <= 24 ? px * 0.06 : px * 0.045) : px <= 24 ? px * 0.085 : px * 0.065
   const melt = precise ? px * 0.015 : defined ? px * 0.02 : px * 0.03
   const lit = px >= 48

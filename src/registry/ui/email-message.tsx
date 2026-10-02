@@ -102,7 +102,7 @@ export function EmailMessage({ subject, from, to, cc, bcc, time, draftedBy, acti
           <header className="flex min-h-7 items-center gap-2">
             {draftedBy && (
               <span className="flex min-w-0 flex-1 items-center gap-1.5">
-                <Thinking mode="idle" size="sm" label="AI" />
+                <Thinking mode="idle" size="md" label="AI" />
                 <span className="truncate text-footnote font-medium text-ai">Drafted by {draftedBy}</span>
               </span>
             )}

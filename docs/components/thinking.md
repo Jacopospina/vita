@@ -43,7 +43,7 @@ related: [inline-loading, progress-bar, loading-pattern]
 2. **Retrieving.** An agent recalling from memory: particles stream in from the edges and are absorbed by the core.
 3. **Generating.** An agent creating: a liquid outline keeps pouring from one shape into the next (heart, drop, egg, peanut, clover, pills) and into minimal figures made of strokes (dashed ring, arcs, plus, equals, a wave), thinking in forms.
 4. **Searching.** An agent looking things up: a comet with a fading trail scans a wobbling orbit.
-5. **Idle, listening, talking.** A voice agent: a calm core when waiting, a ring that gathers the person's voice, a body that swells and ripples as the agent speaks. Pass `level` to follow real sound.
+5. **Idle, listening, talking.** A voice agent: a calm core when waiting (on small orbs, 16 to 24px, the Vita mark: a thin liquid ring with a drop at its heart, so Sofia stays recognisable), a ring that gathers the person's voice, a body that swells and ripples as the agent speaks. Pass `level` to follow real sound.
 
 ## Rules
 
@@ -51,7 +51,7 @@ related: [inline-loading, progress-bar, loading-pattern]
 2. **Skeletons first** when the layout is known, no orb over a blank card.
 3. **Delay 300ms** so fast responses never flash a loader.
 4. **Name the work.** `label="Searching the help center"` is announced to screen readers.
-5. **Sizes:** `sm` 16 inline and in buttons · `md` 24 · `lg` 48 regions · `xl` 96 empty regions · `2xl` 160 hero moments · `3xl` 280 the epicenter of a landing page (one per page).
+5. **Sizes:** `md` 24 is the smallest Sofia that reads as Sofia beside text (provenance lines, headers); `sm` 16 only inside buttons and dense rows · · `md` 24 · `lg` 48 regions · `xl` 96 empty regions · `2xl` 160 hero moments · `3xl` 280 the epicenter of a landing page (one per page).
 6. **Reduced motion** shows a still frame with a gentle pulse.
 
 ## Performance

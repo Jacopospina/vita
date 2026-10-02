@@ -64,7 +64,7 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/iden
 - [AI label](docs/components/ai-label.md): Marks anything generated, suggested or autofilled by AI, and explains how, in one click.
   - use: A field value, cell, tile or message was produced or changed by AI; An AI-powered feature needs a visible, explainable marker
   - avoid: Branding or marketing flair → the AI gradient is reserved for AI provenance; Content that a human reviewed and edited → remove the label once a human takes ownership, or show "Edited"
-- [Avatar](docs/components/avatar.md): A person, at a glance. Their photo when there is one, otherwise their initials, white on a soft grey gradient. Three sizes.
+- [Avatar](docs/components/avatar.md): A person, at a glance. Their photo when there is one, otherwise their initials, white on a soft, muted blue gradient mixed from Vita palette tokens. Three sizes.
   - use: Showing who wrote, sent, owns or is assigned something (messages, lists, comments, headers)
   - avoid: An agent, an app or a system → IconPlaceholder; The AI working → Thinking
 - [Breadcrumb](docs/components/breadcrumb.md): Shows where the user is in a hierarchy of three or more levels and lets them move up.
