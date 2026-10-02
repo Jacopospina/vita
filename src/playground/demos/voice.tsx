@@ -31,7 +31,7 @@ function WaveformStatesDemo() {
   return (
     <Stack gap="md" className="max-w-md">
       <ContentSwitcher label="State" items={[{ value: "idle", label: "Idle" }, { value: "processing", label: "Processing" }, { value: "active", label: "Active" }]} value={state} onValueChange={setState} />
-      <LiveWaveform active={state === "active"} processing={state === "processing"} tone="spectrum" size="lg" label="Agent voice" />
+      <LiveWaveform active={state === "active"} processing={state === "processing"} tone="brand" size="lg" label="Agent voice" />
       <LiveWaveform active={state === "active"} processing={state === "processing"} variant="scrolling" tone="brand" size="md" label="Your voice, over time" />
     </Stack>
   )
@@ -90,7 +90,7 @@ export const voiceDemos: DemoMap = {
         <Stack gap="md" className="max-w-md">
           <LiveWaveform active size="sm" tone="current" label="Current colour" />
           <LiveWaveform active size="md" tone="brand" label="Brand" />
-          <LiveWaveform active size="lg" tone="spectrum" label="AI spectrum" />
+          <LiveWaveform active size="lg" label="Large" />
         </Stack>
       ),
     },

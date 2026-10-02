@@ -1,4 +1,6 @@
 import * as React from "react"
+import { Pictogram } from "@/registry/ui/pictogram"
+import { Rocket, Magnify } from "@/registry/pictograms"
 import * as Icons from "@/registry/icons"
 import type { DemoMap } from "./types"
 import { Stack, Inline, Grid, Column } from "@/registry/ui/layout"
@@ -385,7 +387,7 @@ export const foundationDemos: DemoMap = {
             <Column sm={4} md={8} lg={12}><Tile className="h-24">lg 12 · content</Tile></Column>
           </Grid>
           <Grid gutter="condensed" className="overflow-hidden rounded-lg">
-            {[1, 2, 3, 4].map((i) => <Column key={i} sm={4} md={4} lg={4}><Tile className="h-24 rounded-none">Condensed tile {i}</Tile></Column>)}
+            {[1, 2, 3, 4].map((i) => <Column key={i} sm={4} md={4} lg={4}><Tile className="h-24">Condensed tile {i}</Tile></Column>)}
           </Grid>
         </Stack>
       ),
@@ -396,7 +398,22 @@ export const foundationDemos: DemoMap = {
     { title: "Easing & duration tokens", render: () => <MotionDemo /> },
   ],
   "foundations/icons": [{ title: "Every icon", description: "The full set, searchable. Click any icon to copy its import.", render: () => <GlyphGallery kind="icons" /> }],
-  "foundations/pictograms": [{ title: "Every pictogram", description: "The full set, searchable. Click any pictogram to copy its import.", render: () => <GlyphGallery kind="pictograms" /> }],
+  "foundations/pictograms": [
+    {
+      title: "Tones and sizes",
+      description: "Brand for positive moments (first use), neutral for no results and errors. md 48 in panels, lg 64 by default, xl 80 for a full page.",
+      render: () => (
+        <Inline gap="xl" align="end" wrap>
+          <Pictogram as={Rocket} size="xl" tone="brand" />
+          <Pictogram as={Rocket} size="lg" tone="brand" />
+          <Pictogram as={Rocket} size="md" tone="brand" />
+          <Pictogram as={Magnify} size="lg" tone="neutral" />
+          <Pictogram as={Magnify} size="md" tone="neutral" />
+        </Inline>
+      ),
+    },
+    { title: "Every pictogram", description: "The full set, searchable. Click any pictogram to copy its import.", render: () => <GlyphGallery kind="pictograms" /> },
+  ],
   "foundations/accessibility": [
     {
       title: "Focus is always visible",

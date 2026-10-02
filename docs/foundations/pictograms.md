@@ -24,6 +24,7 @@ avoid_when:
 2. **Tone:**
    - `brand` for positive moments: onboarding, first use.
    - `neutral` for no-results and errors. Don't make an error feel celebratory.
-3. **Meaning over decoration.** The pictogram illustrates the concept of the empty region (`Report` for an empty report list, `Magnify` for no results).
-4. **Decorative by default.** Pass `label` only if the pictogram conveys information not present in the text.
-5. **Don't mix illustration styles.** Only pictograms exported from `@/components/vita/pictograms` are allowed.
+3. **It shows what's happening, without words.** Pick the pictogram that depicts BOTH the title and the subtitle: someone who glances at it, before reading, already knows the situation. "No agents match these filters, try fewer" is a magnifier over an empty result, not a generic robot; "Connect a source to start" is a plug, not a folder.
+4. **Test it with the text covered.** Hide the title and subtitle and ask what the pictogram says. If the answer isn't the message, choose another one.
+5. **Decorative by default.** Pass `label` only if the pictogram conveys information not present in the text.
+6. **Don't mix illustration styles.** Only pictograms exported from `@/components/vita/pictograms` are allowed.

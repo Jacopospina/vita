@@ -52,7 +52,7 @@ export function Showcase({ page = "home" }: { page?: "home" | "make" }) {
         <Header
           productName="Vita"
           logo={<VitaMark size={24} className="-m-0.5" />}
-          badge={<Tag size="sm" tone="warning">Experimental</Tag>}
+          badge={<Tag size="sm" tone="neutral">Draft</Tag>}
           href={HOME_URL}
           actions={
             <>
@@ -92,7 +92,7 @@ function HomePage() {
         <Stack gap="md" align="center" className="stagger text-center">
           {/* The epicenter: Sofia, making. Everything on the page radiates from here. */}
           <Thinking mode="generating" size="3xl" label="Sofia is making" className="mb-2" />
-          <Tag tone="warning">Experimental</Tag>
+          <Tag tone="neutral">Draft</Tag>
           <Text variant="display" as="h1" className="max-w-3xl">Give your ideas life</Text>
           <Text variant="body-lg" tone="muted" className="max-w-2xl">
             The AI-agent-first design system, born for humans and machines making together. Documented and built so your agents design like designers, and you make what only you can make.

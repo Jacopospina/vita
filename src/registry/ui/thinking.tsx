@@ -17,7 +17,9 @@ import { simulatedVoice } from "@/registry/hooks/use-microphone"
  *   listening   the person is talking: a ring of drops gathers inward with their voice, the core fills
  *   talking     the agent is speaking: its body swells and ripples with its voice, waves travel out
  *
- * Agentic modes wear the AI spectrum; basic follows the current text color.
+ * Agentic modes wear the AI spectrum; basic follows the current text color. On a primary surface (a primary button,
+ * a brand banner) pass tone="on-primary": the same spectrum washed to pastel, with white glints, so Sofia stays
+ * visible and still reads as the AI.
  */
 export type ThinkingMode = "basic" | "retrieving" | "generating" | "searching" | "idle" | "listening" | "talking"
 const VOICE = new Set<ThinkingMode>(["idle", "listening", "talking"])
@@ -364,8 +366,9 @@ function rgbOf(css: string, probe: CanvasRenderingContext2D): [number, number, n
 export interface ThinkingProps {
   mode?: ThinkingMode
   size?: keyof typeof sizes
-  /** spectrum = AI (default for agentic modes) · current = inherit text color (default for basic) · brand */
-  tone?: "spectrum" | "current" | "brand"
+  /** spectrum = AI (default for agentic modes) · current = inherit text color (default for basic) · brand ·
+      on-primary = the spectrum in pastel, for a primary background */
+  tone?: "spectrum" | "current" | "brand" | "on-primary"
   /** Voice states: loudness now, 0 to 1 (e.g. useMicrophone().level, or the agent's audio). Simulated when omitted. */
   level?: () => number
   /** Announced to screen readers, e.g. "Searching the help center". */
@@ -416,11 +419,14 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
     // The filter chain draws at most ~60 times a second; the field is cheap enough for every display frame.
     const interval = field ? 0 : 1000 / 70
     const root = getComputedStyle(document.documentElement)
-    const spectrum = ["blue", "indigo", "purple", "pink", "orange", "mint", "cyan"].map((h) => root.getPropertyValue(`--vita-palette-${h}-500`).trim())
+    // On a primary surface the spectrum goes pastel (200s): the 500s sink into the brand colour behind them.
+    const onPrimary = resolvedTone === "on-primary"
+    const rainbow = resolvedTone === "spectrum" || onPrimary
+    const spectrum = ["blue", "indigo", "purple", "pink", "orange", "mint", "cyan"].map((h) => root.getPropertyValue(`--vita-palette-${h}-${onPrimary ? 200 : 500}`).trim())
     let color = getComputedStyle(canvas).color
     // Light mode = dark text. There the white glints vanish on the page, so they take the spectrum's colours instead.
     const isLight = (c: string) => { const m = c.match(/[\d.]+/g); return !!m && (0.2126 * +m[0] + 0.7152 * +m[1] + 0.0722 * +m[2]) / 255 < 0.5 }
-    let light = isLight(color)
+    let light = !onPrimary && isLight(color)
     let last = 0
     let drawn = -Infinity
     const start = (started.current ||= performance.now())
@@ -428,7 +434,10 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
     let lvlNow = 0
     /** A drop's radius on the canvas: ×1.3 on big orbs, the wide goo eats into each drop, so plumper drops keep the
         liquid full-bodied and its joins round. */
-    const dropRadius = (p: P) => (simple ? p.r * R : Math.max(0.6, Math.min(0.34, p.r * grow) * R * 1.3))
+    // Basic keeps the same proportions at every size (drops, orbit, melt): in a button it's the Thinking page's liquid,
+    // scaled down, never a different animation.
+    const scaled = simple && mode !== "basic"
+    const dropRadius = (p: P) => (scaled ? p.r * R : mode === "basic" ? Math.max(0.6, p.r * R * 1.3) : Math.max(0.6, Math.min(0.34, p.r * grow) * R * 1.3))
     const drawGlints = (c: CanvasRenderingContext2D, t: number) => {
       for (let i = 0; i < 6; i++) {
         const a = seeds[i % seeds.length] * TAU + t * (0.35 + i * 0.07)
@@ -446,7 +455,7 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
     /* ---- filter path: crisp drops, the SVG chain melts them ---- */
     const drawFilter = (t: number) => {
       ctx.clearRect(0, 0, px, px)
-      if (resolvedTone === "spectrum" && "createConicGradient" in ctx) {
+      if (rainbow && "createConicGradient" in ctx) {
         const g = ctx.createConicGradient(t * 1.8, px / 2, px / 2)
         spectrum.forEach((c, i) => g.addColorStop(i / spectrum.length, c))
         g.addColorStop(1, spectrum[0])
@@ -477,7 +486,7 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
     if (field && glRef.current) {
       const probe = document.createElement("canvas").getContext("2d", { willReadFrequently: true })
       const precise = mode === "retrieving", defined = mode === "generating"
-      const blur = precise ? (px <= 24 ? px * 0.06 : px * 0.035) : defined ? (px <= 24 ? px * 0.06 : px * 0.045) : px <= 24 ? px * 0.085 : px * 0.065
+      const blur = precise ? (px <= 24 ? px * 0.06 : px * 0.035) : defined ? (px <= 24 ? px * 0.06 : px * 0.045) : px <= 24 && mode !== "basic" ? px * 0.085 : px * 0.065
       const glDpr = Math.min(2, window.devicePixelRatio || 1)
       orb = probe
         ? createOrbGL(glRef.current, {
@@ -493,17 +502,17 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
         let own = rgbOf(color, probe)
         const o = orb
         fieldDraw = (t: number) => {
-          if (resolvedTone !== "spectrum") own = rgbOf(color, probe)
+          if (!rainbow) own = rgbOf(color, probe)
           let k = 0
           for (const p of simple ? simpleParticles(mode, t, lvlNow) : particles(mode, n, t, seeds, lvlNow)) {
             if (p.r < 0.005 || k >= MAX_DROPS) continue
             drops[k * 4] = (px / 2 + p.x * R) * glDpr
             drops[k * 4 + 1] = (px / 2 + p.y * R) * glDpr
             // The filter path plumps drops ×1.3 because its two-stage melt eats into them; the closed form doesn't.
-            drops[k * 4 + 2] = (simple ? dropRadius(p) : dropRadius(p) / 1.3) * glDpr
+            drops[k * 4 + 2] = (scaled ? dropRadius(p) : dropRadius(p) / 1.3) * glDpr
             k++
           }
-          o.draw(drops, k, { t, rot: t * 1.8, spectrum: resolvedTone === "spectrum", own })
+          o.draw(drops, k, { t, rot: t * 1.8, spectrum: rainbow, own })
           // Glints stay crisp, on the 2D canvas above the liquid.
           ctx.clearRect(0, 0, px, px)
           if (glints) drawGlints(ctx, t)
@@ -532,12 +541,12 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
         const ISO = 0.46, EDGE = 0.45
         ctx.imageSmoothingQuality = "high"
         fieldDraw = (t: number) => {
-          if (resolvedTone !== "spectrum") own = rgbOf(color, probe)
+          if (!rainbow) own = rgbOf(color, probe)
           fld.fill(0)
           for (const p of simple ? simpleParticles(mode, t, lvlNow) : particles(mode, n, t, seeds, lvlNow)) {
             if (p.r < 0.005) continue
             // The filter path plumps drops ×1.3 because its blur eats into them; a field drop reads at its true size.
-            const rr = (simple ? dropRadius(p) : dropRadius(p) / 1.3) * scale
+            const rr = (scaled ? dropRadius(p) : dropRadius(p) / 1.3) * scale
             const ri = rr * 2.1 // reach: drops feel each other well before they touch, so bridges form (goo)
             const X = centre + p.x * R * scale, Y = centre + p.y * R * scale
             const x0 = Math.max(0, Math.floor(X - ri)), x1 = Math.min(g - 1, Math.ceil(X + ri))
@@ -562,7 +571,7 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
               if (a > 1) a = 1
               a = a * a * (3 - 2 * a)
               let r: number, gr: number, b: number
-              if (resolvedTone === "spectrum") {
+              if (rainbow) {
                 // The same conic sweep as the gradient on the filter path, turning with time.
                 let u = ((Math.atan2(y + 0.5 - centre, x + 0.5 - centre) - rot) / TAU) % 1
                 if (u < 0) u += 1
@@ -612,9 +621,11 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
       // The voice level for this frame, eased so the liquid swells and settles instead of twitching.
       const raw = VOICE.has(mode) ? (levelRef.current ? levelRef.current() : simulatedVoice(t * 0.8)) : 0
       lvlNow += (raw - lvlNow) * (raw > lvlNow ? 0.35 : 0.12)
-      if (now - last > 2000) {
+      // Follow the text colour closely: a button's colour changes the moment it goes busy (its hover ends), and
+      // Sofia must change with it, never keep the old colour (white on a now-white button).
+      if (now - last > 120) {
         color = getComputedStyle(canvas).color
-        light = isLight(color)
+        light = !onPrimary && isLight(color)
         last = now
       }
       if (fieldDraw) fieldDraw(t)
@@ -659,7 +670,7 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
   // Generating is DEFINED: gooey between shapes, but each shape's silhouette reads clearly while it holds.
   const precise = mode === "retrieving"
   const defined = mode === "generating" || mode === "idle"
-  const blur = precise ? (px <= 24 ? px * 0.06 : px * 0.035) : defined ? (px <= 24 ? px * 0.06 : px * 0.045) : px <= 24 ? px * 0.085 : px * 0.065
+  const blur = precise ? (px <= 24 ? px * 0.06 : px * 0.035) : defined ? (px <= 24 ? px * 0.06 : px * 0.045) : px <= 24 && mode !== "basic" ? px * 0.085 : px * 0.065
   const melt = precise ? px * 0.015 : defined ? px * 0.02 : px * 0.03
   const lit = px >= 48
   return (

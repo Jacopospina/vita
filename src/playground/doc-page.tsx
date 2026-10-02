@@ -37,7 +37,7 @@ export function DocPage({ section, slug }: { section: Section; slug: string }) {
   const sources = sourcesFor(section, slug)
   const tokens = React.useMemo(() => tokensIn(sources.map((s) => s.code).join("\n")), [sources])
   const title = doc?.meta.title ?? entry?.title ?? slug
-  const statusTone = doc?.meta.status === "stable" ? "success" : doc?.meta.status === "experimental" ? "warning" : "neutral"
+  const statusTone = ({ stable: "success", experimental: "warning", draft: "neutral" } as const)[doc?.meta.status as "stable"] ?? "neutral"
   const [hero, ...rest] = pageDemos
   const hasUsage = !!(doc?.meta.use_when?.length || doc?.meta.avoid_when?.length)
   const isArticle = sources.length === 0 && !hasUsage

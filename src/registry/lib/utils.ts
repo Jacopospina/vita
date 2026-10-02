@@ -23,3 +23,20 @@ const twMerge = extendTailwindMerge({
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
+
+/** Vita's productive easing, for animations started from script (Web Animations). Same curve as --vita-ease-productive. */
+export const EASE_PRODUCTIVE = "cubic-bezier(0.2, 0, 0.38, 0.9)"
+
+/**
+ * A duration for an animation started from script, on Vita's motion terms: scaled by the theme's motion speed
+ * (`--vita-motion-scale`, 0 turns motion off), and 0 under reduced motion or while the page boots or swaps theme
+ * (static layout never moves on load). 0 means: don't animate, just apply the end state.
+ */
+export function motionMs(ms: number): number {
+  if (typeof window === "undefined") return 0
+  const root = document.documentElement
+  if (root.hasAttribute("data-vita-booting") || root.hasAttribute("data-vita-swapping")) return 0
+  if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return 0
+  const scale = parseFloat(getComputedStyle(root).getPropertyValue("--vita-motion-scale"))
+  return ms * (Number.isFinite(scale) ? Math.max(0, scale) : 1)
+}

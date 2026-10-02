@@ -12,7 +12,8 @@ import { simulatedBands, simulatedVoice } from "@/registry/hooks/use-microphone"
  *
  *   variant  bars       the spectrum, mirrored from the centre (a voice's shape)
  *            scrolling  the loudness over time, scrolling left (a voice's rhythm)
- *   tone     current (inherits text colour) · brand · spectrum (the AI's voice: the same colours as Sofia)
+ *   tone     brand (default: the primary colour, for any voice, the person's or the agent's) · current (inherits text colour)
+ *            A waveform is never the AI spectrum: Sofia beside it already says who is speaking.
  *
  * Not for: a recording's static shape or playback position → a progress control; "the AI is working" → Thinking.
  * Every change between states eases (bars travel to their new height), and both edges fade out.
@@ -24,7 +25,7 @@ export interface LiveWaveformProps {
   processing?: boolean
   variant?: "bars" | "scrolling"
   size?: keyof typeof heights
-  tone?: "current" | "brand" | "spectrum"
+  tone?: "brand" | "current"
   /** Frequency bands now, each 0 to 1 (e.g. useMicrophone().bands). */
   getBands?: (n: number) => ArrayLike<number>
   /** Loudness now, 0 to 1 (e.g. useMicrophone().level). Used by `scrolling`, and by `bars` when there are no bands. */
@@ -42,7 +43,7 @@ export function LiveWaveform({
   processing = false,
   variant = "bars",
   size = "md",
-  tone = "current",
+  tone = "brand",
   getBands,
   getLevel,
   barWidth = 3,
@@ -79,8 +80,6 @@ export function LiveWaveform({
     resize()
     const ro = new ResizeObserver(resize)
     ro.observe(canvas)
-    const root = getComputedStyle(document.documentElement)
-    const spectrum = ["blue", "indigo", "purple", "pink", "orange", "mint", "cyan"].map((c) => root.getPropertyValue(`--vita-palette-${c}-500`).trim())
     const start = performance.now()
     let lastShift = 0
     let raf = 0
@@ -117,13 +116,7 @@ export function LiveWaveform({
       ctx.clearRect(0, 0, w, h)
       const total = n * barWidth + (n - 1) * gap
       const x0 = (w - total) / 2
-      if (tone === "spectrum") {
-        const g = ctx.createLinearGradient(0, 0, w, 0)
-        spectrum.forEach((c, i) => g.addColorStop(i / (spectrum.length - 1), c))
-        ctx.fillStyle = g
-      } else {
-        ctx.fillStyle = getComputedStyle(canvas).color
-      }
+      ctx.fillStyle = getComputedStyle(canvas).color
       for (let i = 0; i < n; i++) {
         const bh = Math.max(barWidth, cur[i] * (h - 2))
         const x = x0 + i * (barWidth + gap)

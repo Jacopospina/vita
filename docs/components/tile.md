@@ -22,7 +22,7 @@ related: [contained-list, radio-button, checkbox, accordion]
 
 1. **Surfaces:**
    - `Tile` sits on `layer-1` with no border.
-   - `elevated` (raised + border + shadow) is only for tiles floating over complex backgrounds.
+   - `elevated` (raised surface + border) is only for tiles over complex backgrounds. Tiles never cast a shadow, resting or hovered.
 2. **A ClickableTile has one destination and no inner interactive elements.** Its arrow slides slightly on hover (productive motion).
 3. **Selectable tiles:**
    - `single` uses radio semantics inside a `TileGroup`; `multi` uses checkbox semantics.

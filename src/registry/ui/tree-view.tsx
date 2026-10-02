@@ -86,11 +86,12 @@ export function TreeView({ nodes, label, selected, onSelect, defaultExpanded = [
             onClick={() => { setFocused(n.id); if (!n.disabled) onSelect?.(n.id); if (has) toggle(n.id) }}
             style={{ paddingLeft: `calc(${depth} * 1.5rem + 0.5rem)` }}
             className={cn(
-              "relative flex cursor-pointer items-center gap-2 rounded-sm pr-2 text-body duration-fast-02",
+              "relative flex cursor-pointer items-center gap-2 rounded-md pr-2 text-body duration-fast-02",
               size === "xs" ? "h-control-xs" : "h-control-sm",
               "hover:bg-hover",
-              "before:absolute before:inset-y-1 before:left-0 before:w-0.5 before:rounded-full before:bg-transparent before:duration-moderate-01",
-              isSel && "bg-selected font-medium text-selected-foreground before:inset-y-0 before:bg-primary",
+              // The selection mark sits inside the row, a short pill clear of its rounded corners (never a flat edge).
+              "before:absolute before:inset-y-2 before:left-1 before:w-0.5 before:rounded-full before:bg-transparent before:duration-moderate-01",
+              isSel && "bg-selected font-medium text-selected-foreground before:inset-y-1.5 before:bg-primary",
               n.disabled && "pointer-events-none text-disabled-foreground",
             )}
           >

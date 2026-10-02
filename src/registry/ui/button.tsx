@@ -2,7 +2,7 @@ import * as React from "react"
 import { Slot } from "radix-ui"
 import { cva, type VariantProps } from "class-variance-authority"
 import type { IconType } from "@/registry/icons"
-import { cn } from "@/registry/lib/utils"
+import { cn, motionMs, EASE_PRODUCTIVE } from "@/registry/lib/utils"
 import { Icon, SwapIcon, DrawnMark } from "@/registry/ui/icon"
 import { ErrorFilled } from "@/registry/icons"
 import { Tooltip } from "@/registry/ui/tooltip"
@@ -113,12 +113,42 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const label = status !== "idle" && feedback?.[status] ? feedback[status] : children
     // The far-right slot carries the consequence: icon → thinking orb → drawn check / error mark.
     const slot =
-      status === "loading" ? <Thinking mode="basic" size="sm" tone="current" label={feedback?.loading ?? "Working"} />
+      // Sofia draws at 24 (md) so she reads as Sofia, but -m-1 keeps her in the 16px icon slot: the button never grows.
+      status === "loading" ? <Thinking mode="basic" size="md" tone="current" label={feedback?.loading ?? "Working"} className="-m-1" />
       : status === "success" ? <DrawnMark on className="animate-enter-fade" />
       : status === "error" ? <Icon as={ErrorFilled} size="sm" draw="in" />
       : icon ? <Icon as={icon} size="sm" /> : null
     // With an icon: label left, icon on the far right, a normal gap between.
     const withIcon = { sm: "gap-2", md: "gap-2.5", lg: "gap-3", xl: "gap-3" }[size ?? "md"]
+
+    // The slot cross-fades: when the consequence changes (icon → Sofia → check), the old glyph scales and fades out
+    // in place while the new one scales in. Nothing in the slot vanishes in one frame.
+    const slotKey = status === "idle" ? "icon" : status
+    const [cur, setCur] = React.useState<{ key: string; node: React.ReactNode }>({ key: slotKey, node: slot })
+    const [leaving, setLeaving] = React.useState<{ key: string; node: React.ReactNode } | null>(null)
+    if (cur.key !== slotKey) {
+      setLeaving(cur.node ? cur : null)
+      setCur({ key: slotKey, node: slot })
+    }
+    React.useEffect(() => {
+      if (!leaving) return
+      const t = window.setTimeout(() => setLeaving(null), 200)
+      return () => window.clearTimeout(t)
+    }, [leaving])
+
+    // The width glides when the label or slot changes ("Save" → "Saving" → "Couldn't save"): measured before and
+    // after the change, then animated, so the button never jumps to its new size.
+    const lastWidth = React.useRef<number | null>(null)
+    React.useLayoutEffect(() => {
+      const el = inner.current
+      if (!el || asChild) return
+      const w = el.offsetWidth
+      const from = lastWidth.current
+      lastWidth.current = w
+      const duration = motionMs(240) // moderate-02, on the theme's motion speed
+      if (from === null || Math.abs(from - w) < 0.5 || !duration) return
+      el.animate([{ width: `${from}px`, overflow: "clip" }, { width: `${w}px`, overflow: "clip" }], { duration, easing: EASE_PRODUCTIVE })
+    }, [status, label, asChild])
     return (
       <Comp
         ref={inner}
@@ -136,7 +166,12 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ) : (
           <>
             <span aria-live="polite" className="inline-flex items-center gap-2">{animateChildren(label)}</span>
-            {slot && <span key={status === "idle" ? "icon" : status} className="flex shrink-0 items-center animate-enter-scale">{slot}</span>}
+            {(slot || leaving) && (
+              <span className="relative flex shrink-0 items-center">
+                {slot && <span key={slotKey} className={cn("flex items-center", (leaving || slotKey !== "icon") && "animate-enter-scale")}>{slot}</span>}
+                {leaving && <span key={`out-${leaving.key}`} aria-hidden className="pointer-events-none absolute inset-0 flex items-center justify-center animate-exit-scale">{leaving.node}</span>}
+              </span>
+            )}
           </>
         )}
       </Comp>

@@ -2,7 +2,7 @@
 
 > Vita is the body of the product: the only source of UI. Components are imported from @/components/vita/*, tokens are Tailwind utilities, patterns are documented flows. Never create local components or raw values.
 
-Start with: docs/components/choosing-components.md (decision guide) · docs/identity/principles.md · docs/decisions/ (system decisions, read before changing what they cover) · skills/vita-design-system/SKILL.md
+Start with: docs/components/choosing-components.md (decision guide) · docs/identity/principles.md · docs/decisions/ (system decisions, read before changing what they cover) · skills/vita-architect/SKILL.md
 
 ## Getting started
 
@@ -164,6 +164,9 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/iden
 - [Radio button](docs/components/radio-button.md): Exactly one choice from 2–6 visible options. Showing all options makes decisions faster.
   - use: One choice from 2–6 options the user should compare; Options need helper text explaining consequences (price, speed)
   - avoid: More than 6 options → Dropdown / Select; Rich visual options → SelectableTile (single); Switching a view instantly → ContentSwitcher; On/off → Toggle / Checkbox
+- [Scramble text](docs/components/scramble-text.md): Text on its way, set in its real typeface. Glyphs change one by one where the words will be, each blurring out as the next blurs in, then the real text lands in random order.
+  - use: A title, name, value or sentence is loading and its style is known; Numbers or IDs are on their way (charset digits or mixed); Refreshing text in place (loading with the old text present)
+  - avoid: Avatars, images, cards and other shapes → Skeleton; A region whose layout is unknown → Loading (Thinking); Known progress → ProgressBar
 - [Search](docs/components/search.md): Find items in a collection by query. Always labelled, instantly clearable, and scoped to what it searches.
   - use: Filtering a table/list by text (toolbar variant); Global or page-level search (field variant, lg); Space-constrained headers/toolbars (expandable)
   - avoid: Picking one value from a known list → Combobox; Entering a value that will be saved → TextInput
@@ -303,6 +306,7 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/iden
 - [Glass by elevation](docs/decisions/glass-by-elevation.md): Every floating surface is frosted glass, more frosted the higher it floats; the page scrolls beneath the shell so the material is visible.
 - [How Vita decides](docs/decisions/how-we-decide.md): Every system choice is a written record. Agents and people read the record before changing anything it covers; changing it means superseding it.
 - [Motion](docs/decisions/motion.md): Nothing snaps, except page load, global appearance swaps and floating-surface sizing, which never animate per element.
+- [Release stages](docs/decisions/release-stages.md): Everything in Vita, and Vita itself, sits on one of three stages. Draft comes first, then Experimental, then Stable.
 - [Status semantics](docs/decisions/status-semantics.md): One map from meaning to colour and glyph, used by every status surface; status colours never decorate.
 - [The name is Vita](docs/decisions/the-name.md): Vita means life. It is the third of a triad with Animus (the logic) and Anima (the AI): the design system where both come alive.
 - [Touch adapts by itself](docs/decisions/touch.md): When a finger is the pointer, Vita grows its targets and hit areas, keeps its type proportionate, lightens its glass and switches the thinking orb to a filter-free renderer, without a knob and without a product doing anything.

@@ -405,12 +405,13 @@ export const inputDemos: DemoMap = {
   ],
   "components/slider": [
     {
-      title: "Single, range, formatted",
+      title: "Single, range, formatted, without bounds",
       render: () => (
         <Stack gap="xl" className="max-w-md">
           <Slider label="Creativity" defaultValue={[40]} />
           <Slider label="Monthly budget" min={0} max={2000} step={50} defaultValue={[200, 1200]} formatValue={(v) => `$${v}`} />
           <Slider label="Confidence threshold" defaultValue={[80]} formatValue={(v) => `${v}%`} helperText="Below this, the agent hands off to a person" />
+          <Slider label="Volume" showBounds={false} defaultValue={[60]} helperText="Without bounds, when the ends need no number" />
           <Slider label="Disabled" disabled defaultValue={[30]} />
         </Stack>
       ),

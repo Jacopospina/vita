@@ -43,7 +43,7 @@ const lines = [
   "",
   "> Vita is the body of the product: the only source of UI. Components are imported from @/components/vita/*, tokens are Tailwind utilities, patterns are documented flows. Never create local components or raw values.",
   "",
-  "Start with: docs/components/choosing-components.md (decision guide) · docs/identity/principles.md · docs/decisions/ (system decisions, read before changing what they cover) · skills/vita-design-system/SKILL.md",
+  "Start with: docs/components/choosing-components.md (decision guide) · docs/identity/principles.md · docs/decisions/ (system decisions, read before changing what they cover) · skills/vita-architect/SKILL.md",
   "",
 ]
 for (const section of sections) {

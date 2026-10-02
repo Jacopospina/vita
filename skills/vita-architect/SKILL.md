@@ -1,9 +1,9 @@
 ---
-name: vita-design-system
+name: vita-architect
 description: Build or change ANY user interface with the Vita design system, pick the right component or pattern, use only Vita tokens, never create local components or raw values. Use whenever you write, edit, style or review UI code (JSX/TSX, CSS, Tailwind classes), build a screen, form, table, dialog, empty/loading/error state, or answer "which component should I use". Also use before designing a flow end to end.
 ---
 
-# Vita design system
+# Vita Architect
 
 Vita is the body of the product: the only source of UI. This skill turns intent into Vita components, tokens and patterns.
 
@@ -12,7 +12,7 @@ Vita is the body of the product: the only source of UI. This skill turns intent 
 1. **Only Vita components.** Import from `@/components/vita/*`. Never build a local component, re-style a primitive, or import another UI or icon library.
 2. **Only Vita tokens.** No hex/rgb/oklch, no arbitrary values (`w-[317px]`), no palette colors (`bg-blue-500`), no Tailwind type sizes (`text-sm`), no off-scale spacing (`p-5`), no `dark:` overrides, no inline styles.
 3. **Only Vita patterns.** Flows follow `.vita/docs/patterns/*`. Don't invent a new way to filter, confirm, load or show empty.
-4. **Every string goes through the taxonomy** (`vita/taxonomy.json`), via the `vita-content` skill.
+4. **Every string goes through the taxonomy** (`vita/taxonomy.json`), via the `vita-copywriting` skill.
 5. **No Cancel/Close/Dismiss buttons** on modals or panels (× , Escape and click-outside close them). Footers are `ActionBar`s.
 6. **Belonging has no gaps.** Related actions go in `ButtonSet`/`Group` (zero gap, joined).
 7. **Left-hand shortcuts only.** Use `shortcut="mod+s"`-style props; never Enter, arrows or right-side letters. Every task must also work by mouse alone.
@@ -25,13 +25,13 @@ If Vita lacks what you need: **stop and say so**. Propose the smallest compositi
 
 ## Workflow
 
-1. **Understand the job.** Which persona (`vita/personas/*.md`)? What task, what frequency, what context? If personas don't exist yet, run the `vita-personas` skill first.
+1. **Understand the job.** Which persona (`vita/personas/*.md`)? What task, what frequency, what context? If personas don't exist yet, run the `vita-personae` skill first.
 2. **Find the pattern.** Read `.vita/docs/index.json` and the matching `.vita/docs/patterns/*.md` (forms, filtering, empty states, dialogs, loading, common actions…).
 3. **Choose components** with `.vita/docs/components/choosing-components.md`. It's a decision tree: follow it, don't pattern-match from memory. Then read each chosen component's doc (`use_when`, `avoid_when`, opinions).
 4. **Lay out** with `Stack`, `Inline`, `Grid`/`Column`, `Container`, `PageHeader` (see `foundations/grid.md`, `foundations/spacing.md`).
-5. **Write content** with the `vita-content` skill.
-6. **Add motion** only as the `vita-motion` skill allows. Most components already animate correctly.
-7. **Check visual consistency** with the `vita-visual-consistency` checklist.
+5. **Write content** with the `vita-copywriting` skill.
+6. **Add motion** only as the `vita-motion-design` skill allows. Most components already animate correctly.
+7. **Check visual consistency** with the `vita-consistency` checklist.
 8. **Verify:** run `npm run vita:audit` (or `node .vita/scripts/vita-audit.mjs <file>`) until it reports 0 violations. Typecheck. Check light and dark, keyboard, and 200% zoom.
 
 ## Quick selection table
@@ -57,7 +57,7 @@ If Vita lacks what you need: **stop and say so**. Propose the smallest compositi
 | "Done" feedback | `toast` |
 | Problem to fix | `InlineNotification` near the cause |
 | Object state | `StatusIndicator` |
-| Nothing to show | `EmptyState` |
+| Nothing to show | `EmptyState`, full height, with a pictogram that depicts both its title and subtitle (readable without the words) |
 | Loading with known layout | `Skeleton` |
 | AI-generated content | `AILabel` + `AISurface` |
 

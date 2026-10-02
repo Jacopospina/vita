@@ -51,8 +51,9 @@ related: [inline-loading, progress-bar, loading-pattern]
 2. **Skeletons first** when the layout is known, no orb over a blank card.
 3. **Delay 300ms** so fast responses never flash a loader.
 4. **Name the work.** `label="Searching the help center"` is announced to screen readers.
-5. **Sizes:** `md` 24 is the smallest Sofia that reads as Sofia beside text (provenance lines, headers); `sm` 16 only inside buttons and dense rows · · `md` 24 · `lg` 48 regions · `xl` 96 empty regions · `2xl` 160 hero moments · `3xl` 280 the epicenter of a landing page (one per page).
-6. **Reduced motion** shows a still frame with a gentle pulse.
+5. **Sizes:** `md` 24 is the smallest Sofia that reads as Sofia beside text (provenance lines, headers); `sm` 16 only in dense rows; inside a button Sofia draws at `md` 24 within the 16px icon slot (negative margin), so she reads clearly and the button keeps its size · `md` 24 · `lg` 48 regions · `xl` 96 empty regions · `2xl` 160 hero moments · `3xl` 280 the epicenter of a landing page (one per page).
+6. **On a primary surface, `tone="on-primary"`.** The spectrum goes pastel with white glints, so Sofia stays visible on a primary button or brand banner and still reads as the AI.
+7. **Reduced motion** shows a still frame with a gentle pulse.
 
 ## Performance
 

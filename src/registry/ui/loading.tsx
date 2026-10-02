@@ -8,7 +8,7 @@ import { Thinking, type ThinkingMode } from "@/registry/ui/thinking"
 /**
  * Loading family. Vita never spins, it THINKS (see Thinking). Choose by SCOPE and DURATION:
  *   < 300ms           → show nothing (avoid flashes)
- *   known layout      → Skeleton (preferred: preserves layout, feels faster)
+ *   known layout      → Skeleton (preferred: preserves layout, feels faster); text in a known style → ScrambleText
  *   a single action   → InlineLoading next to its trigger, or Button `loading`
  *   whole region/page → Loading (thinking orb), with an overlay only if interaction must be blocked
  *   known progress    → ProgressBar

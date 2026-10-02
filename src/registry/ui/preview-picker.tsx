@@ -59,12 +59,12 @@ export function PreviewPicker({ label, items, value, defaultValue, onValueChange
             value={item.value}
             aria-label={item.label}
             className={cn(
-              "group flex min-w-0 flex-col items-center gap-1 rounded-inner-1 p-1 text-caption text-muted-foreground focus-ring",
+              "group flex min-w-0 flex-col items-center gap-1 scope-md p-1 text-caption text-muted-foreground focus-ring",
               "duration-moderate-02 ease-expressive hover:bg-hover",
               "aria-checked:text-foreground",
             )}
           >
-            <span aria-hidden className="flex h-10 w-full items-center justify-center overflow-hidden rounded-inner-2 bg-layer-2 text-foreground duration-moderate-02 ease-expressive group-aria-checked:bg-background group-aria-checked:shadow-[inset_0_0_0_2px_var(--vita-foreground)]">
+            <span aria-hidden className="flex h-10 w-full items-center justify-center overflow-hidden rounded-inner-1 bg-layer-2 text-foreground duration-moderate-02 ease-expressive group-aria-checked:bg-background group-aria-checked:shadow-[inset_0_0_0_2px_var(--vita-foreground)]">
               {item.preview}
             </span>
             <span className="w-full truncate text-center">{item.label}</span>

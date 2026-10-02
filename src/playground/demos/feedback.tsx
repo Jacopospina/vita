@@ -1,11 +1,12 @@
 import * as React from "react"
-import { Notification, Help, Bot, Headphones, CloudUpload, Rocket, Time, Search as SearchIcon, UserAvatar, Dashboard, Activity, Document, Settings, Chat } from "@/registry/icons"
+import { Notification, Help, Bot, Headphones, CloudUpload, Rocket, Time, Search as SearchIcon, UserAvatar, Dashboard, Activity, Document, Settings, Chat, Renew } from "@/registry/icons"
 import type { DemoMap } from "./types"
 import { Stack, Inline } from "@/registry/ui/layout"
 import { Text } from "@/registry/ui/text"
 import { Button, IconButton } from "@/registry/ui/button"
 import { Loading, InlineLoading, Skeleton, SkeletonText } from "@/registry/ui/loading"
 import { Thinking } from "@/registry/ui/thinking"
+import { ScrambleText } from "@/registry/ui/scramble-text"
 import { Icon } from "@/registry/ui/icon"
 import { InlineNotification, Callout, toast, capsule } from "@/registry/ui/notification"
 import { ProgressBar } from "@/registry/ui/progress-bar"
@@ -82,6 +83,25 @@ function ProgressDemo() {
   )
 }
 
+function ScrambleDemo() {
+  // Loads on demand: the profile below shuffles for a moment, then every line locks into its text.
+  const [ready, setReady] = React.useState(true)
+  const reload = () => { setReady(false); window.setTimeout(() => setReady(true), 1800) }
+  return (
+    <Stack gap="lg" className="max-w-md">
+      <Stack gap="xs">
+        <ScrambleText text={ready ? "Support triage" : undefined} length={14} className="text-title-2" />
+        <ScrambleText text={ready ? "Answers tickets from the help center and hands refunds to a person." : undefined} length={44} className="text-body text-muted-foreground" />
+      </Stack>
+      <Inline gap="xl">
+        <Stack gap="2xs"><Text variant="caption" tone="muted">Runs today</Text><ScrambleText text={ready ? "12,840" : undefined} length={6} charset="digits" className="text-title-3 tabular-nums" /></Stack>
+        <Stack gap="2xs"><Text variant="caption" tone="muted">Agent ID</Text><ScrambleText text={ready ? "AGT-1042" : undefined} length={8} charset="mixed" className="text-title-3" /></Stack>
+      </Inline>
+      <Inline><Button variant="secondary" icon={Renew} onClick={reload} disabled={!ready}>Reload</Button></Inline>
+    </Stack>
+  )
+}
+
 function StepsDemo() {
   const [cur, setCur] = React.useState(2)
   const steps = [{ label: "Purpose", secondaryLabel: "Support triage" }, { label: "Knowledge" }, { label: "Tools" }, { label: "Test" }, { label: "Deploy" }]
@@ -89,7 +109,7 @@ function StepsDemo() {
     <Stack gap="xl">
       <ProgressIndicator steps={steps} current={cur} onStepClick={setCur} />
       <Inline><Button size="sm" variant="secondary" disabled={cur === 0} onClick={() => setCur(cur - 1)}>Back</Button><Button size="sm" disabled={cur === steps.length - 1} onClick={() => setCur(cur + 1)}>Next</Button></Inline>
-      <div className="max-w-xs"><ProgressIndicator vertical steps={[{ label: "Account" }, { label: "Workspace", invalid: true, secondaryLabel: "Workspace name missing" }, { label: "Billing" }]} current={1} /></div>
+      <div className="max-w-xs"><ProgressIndicator vertical steps={[{ label: "Account" }, { label: "Workspace", invalid: true, secondaryLabel: "Workspace name missing" }, { label: "Billing" }, { label: "Single sign-on", disabled: true, secondaryLabel: "Enterprise plan" }]} current={1} /></div>
     </Stack>
   )
 }
@@ -195,11 +215,23 @@ export const feedbackDemos: DemoMap = {
         </div>
       ),
     },
+    {
+      title: "On a primary surface",
+      render: () => (
+        <div className="flex flex-wrap items-center gap-8 rounded-lg bg-primary p-6 text-primary-foreground">
+          <Thinking mode="generating" size="xl" tone="on-primary" label="Generating" />
+          <Thinking mode="retrieving" size="lg" tone="on-primary" label="Retrieving" />
+          <Thinking mode="talking" size="lg" tone="on-primary" label="Talking" />
+          <Thinking mode="idle" size="md" tone="on-primary" label="Idle" />
+        </div>
+      ),
+    },
     { title: "Sizes", render: () => <Inline gap="xl" align="end" wrap><Thinking mode="generating" size="sm" /><Thinking mode="generating" size="md" /><Thinking mode="generating" size="lg" /><Thinking mode="generating" size="xl" /><Thinking mode="generating" size="2xl" /></Inline> },
     { title: "Overlay (blocks a region)", render: () => <div className="relative h-40 rounded-md bg-layer-1 p-4"><Text tone="muted">Region content</Text><Loading overlay mode="retrieving" label="Loading report" /></div> },
     { title: "Skeleton (preferred)", render: () => <Stack gap="md" className="max-w-md"><Inline gap="sm"><Skeleton shape="circle" className="size-10" /><Stack gap="xs" className="flex-1"><Skeleton shape="text" className="w-1/2" /><Skeleton shape="text" className="w-1/3" /></Stack></Inline><SkeletonText lines={4} /><Skeleton className="h-32" /></Stack> },
   ],
   "components/inline-loading": [{ title: "Save lifecycle", render: () => <InlineLoadingDemo /> }],
+  "components/scramble-text": [{ title: "Loading, then locking into the text", description: "Press Reload: the lines shuffle in their real type, then each letter locks in.", render: () => <ScrambleDemo /> }],
   "components/notification": [
     {
       title: "Inline, four kinds",

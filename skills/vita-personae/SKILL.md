@@ -1,9 +1,9 @@
 ---
-name: vita-personas
+name: vita-personae
 description: Create and maintain the product's user personas, their end-to-end journeys, and the product taxonomy (vocabulary) derived from them. Use at the start of any product or major feature, when vita/personas is empty, when someone asks "who is this for", when designing an end-to-end flow, or when words/terminology are inconsistent.
 ---
 
-# Vita personas → journeys → taxonomy
+# Vita Personae: personas → journeys → taxonomy
 
 This is the soul (Anima) shaping the body (Vita). Personas decide who we design for; journeys decide which patterns we need; the taxonomy decides every word.
 
@@ -63,7 +63,7 @@ Summarise, in five lines max, for the team:
 - The taxonomy decisions that changed existing copy.
 - The design-system gaps found.
 
-From now on, every UI task uses the `vita-content` skill with these files.
+From now on, every UI task uses the `vita-copywriting` skill with these files.
 
 ## Keep it alive
 

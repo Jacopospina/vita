@@ -13,9 +13,9 @@ avoid_when:
 ## The chain
 
 1. **`vita/product.md`.** What the product is, for whom, and the job it does.
-2. **`vita/personas/*.md`.** 2–4 personas, created with the `vita-personas` skill.
+2. **`vita/personas/*.md`.** 2–4 personas, created with the `vita-personae` skill.
 3. **`vita/taxonomy.json`.** The one vocabulary: objects, actions, statuses, banned words, tone.
-4. **Every string.** Written with the `vita-content` skill; banned words fail the audit.
+4. **Every string.** Written with the `vita-copywriting` skill; banned words fail the audit.
 
 ## A persona is
 

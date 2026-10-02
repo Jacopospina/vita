@@ -25,17 +25,19 @@ related: [voice-conversation, mic-selector, thinking]
 |---|---|
 | `variant="bars"` | The spectrum, mirrored from the centre: the shape of a voice, now |
 | `variant="scrolling"` | Loudness over time, scrolling left: the rhythm of a voice |
-| `tone="current"` | Inherits the text colour (neutral surfaces) |
-| `tone="brand"` | The person's voice |
-| `tone="spectrum"` | The agent's voice, in Sofia's colours |
+| `tone="brand"` | Default: the primary colour, for every voice |
+| `tone="current"` | Inherits the text colour (muted mic, neutral surfaces) |
 | `size` | `sm` 24 · `md` 40 · `lg` 64 px tall |
 
 ## Rules
 
 1. **Only real sound.** A waveform says "audio is flowing"; never animate one for decoration.
-2. **The person is brand, the agent is spectrum.** Same rule as Sofia: AI work wears the AI colours.
+2. **Always primary, never the AI spectrum.** Sofia beside the waveform says who is speaking; the bars only say that sound flows.
 3. **Nothing jumps.** Bars rise quickly and fall gently, and they travel between states.
 4. **Both edges fade out**, so the bars sit in any container without a hard border.
+5. **No background of its own.** The edge fade would fade a fill too, leaving a smudge behind the bars.
+
+> [!IMPORTANT] Breaking (2026-10-02): `tone="spectrum"` is removed and the default is now `brand` (it was `current`). Pass `tone="current"` where the bars should follow the text colour.
 
 ## Accessibility
 

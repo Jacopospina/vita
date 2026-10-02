@@ -125,6 +125,12 @@ function installAgentLayer({ skills, hook }) {
   ok("audit + eslint plugin → .vita/")
   // skills
   if (skills) {
+    // The skills were renamed (Architect, Consistency, Motion Design, Copywriting, Personae, Theming): an update removes
+    // the old folders, or agents would load two versions of the same skill.
+    for (const old of ["vita-design-system", "vita-visual-consistency", "vita-motion", "vita-content", "vita-personas", "vita-theme"]) {
+      const dir = path.join(CWD, ".claude/skills", old)
+      if (fs.existsSync(path.join(dir, "SKILL.md"))) { fs.rmSync(dir, { recursive: true, force: true }); ok(`removed renamed skill .claude/skills/${old}`) }
+    }
     const n = copyTree(path.join(PKG, "skills"), path.join(CWD, ".claude/skills"), { transform: (c) => c.replaceAll("@/components/vita", cfg.componentsAlias) })
     ok(`${n} skill files → .claude/skills/vita-*`)
   }
@@ -193,7 +199,7 @@ Next:
        @import "./${path.relative(path.join(CWD, "src"), path.join(CWD, cfg.stylesDir, "vita.css")).replaceAll("\\", "/")}";
   2. Make sure "${cfg.componentsAlias}" resolves to ${cfg.componentsDir} (tsconfig paths / vite alias).
   3. Mount <TooltipProvider> and <Toaster /> once at the app root.
-  4. Fill vita/product.md, then ask your agent: "use the vita-personas skill to create our personas and taxonomy".
+  4. Fill vita/product.md, then ask your agent: "use the vita-personae skill to create our personas and taxonomy".
   5. Tune the brand in ${cfg.stylesDir}/theme.css (≈10 knobs).
   6. Run \`npm run vita:audit\` in CI.
 `)

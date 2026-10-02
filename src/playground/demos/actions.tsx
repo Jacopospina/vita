@@ -57,6 +57,7 @@ function AIDemo() {
   return (
     <Stack gap="lg">
       <Inline gap="md"><AILabel size="xs" /><AILabel size="sm" /><AILabel size="md" /></Inline>
+      <Inline gap="md" align="center"><AILabel tone="spectrum" /><Text variant="caption" tone="muted">Spectrum, standing alone</Text><AILabel tone="muted" /><Text variant="caption" tone="muted">Muted, inside a surface that already says AI</Text></Inline>
       <div className="max-w-sm">
         <TextInput
           label="Agent purpose"
@@ -194,12 +195,14 @@ export const actionDemos: DemoMap = {
   ],
   "components/content-switcher": [
     {
-      title: "Text, icon-only, sizes",
+      title: "Text, icon-only, sizes, a disabled option",
       render: () => (
         <Stack gap="md">
           <ContentSwitcher label="Time range" items={[{ value: "d", label: "Day" }, { value: "w", label: "Week" }, { value: "m", label: "Month" }, { value: "y", label: "Year" }]} />
           <ContentSwitcher label="Layout" iconOnly items={[{ value: "list", label: "List view", icon: ListIcon }, { value: "grid", label: "Grid view", icon: GridIcon }]} />
           <ContentSwitcher label="Size" size="sm" items={[{ value: "a", label: "Small" }, { value: "b", label: "Switcher" }]} />
+          <ContentSwitcher label="Large size" size="lg" items={[{ value: "a", label: "Large" }, { value: "b", label: "Switcher" }]} />
+          <ContentSwitcher label="Plan" items={[{ value: "team", label: "Team" }, { value: "business", label: "Business" }, { value: "enterprise", label: "Enterprise", disabled: true }]} />
         </Stack>
       ),
     },
