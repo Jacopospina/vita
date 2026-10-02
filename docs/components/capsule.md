@@ -7,11 +7,19 @@ use_when:
   - Glanceable feedback that something connected, finished or is progressing
   - A live value worth watching for a few seconds (sync progress, a connection)
 avoid_when:
-  - Anything that needs reading or an action → toast banner
+  - The person's own action worked and there's something to read or undo → toast banner
   - Errors the user must fix → InlineNotification next to the cause
   - Long-running work the user should track → ProgressBar in the page
 related: [notification, notifications, progress-bar, thinking]
 ---
+
+## Capsule or notification?
+
+- **Capsule: the system reports a state, and a glance is enough.** Connected, syncing, uploading, finished: an icon, a title and a live story, with nothing to read and no action.
+- **Toast: the person's own action worked, and there's something to read or undo.** "Agent paused · Undo", "Agent deployed · View".
+- **InlineNotification: something needs fixing.** It stays next to the cause until it's fixed.
+
+The test: needs fixing → inline; read or undo → toast; glance at a state → capsule. When the work a capsule tracks fails, the capsule leaves and an `InlineNotification` takes over; a capsule never shows an error.
 
 ## Anatomy, always three parts
 

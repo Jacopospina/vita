@@ -75,7 +75,7 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/iden
   - avoid: Navigating to another page → Link (or ClickableTile); Choosing a value → Dropdown / RadioGroup / ContentSwitcher; Several related actions under one label → MenuButton; Toggling a setting → Toggle
 - [Capsule](docs/components/capsule.md): Quick feedback at the top centre. Icon on the left, title over subtitle in the middle, the semantic story on the right.
   - use: Glanceable feedback that something connected, finished or is progressing; A live value worth watching for a few seconds (sync progress, a connection)
-  - avoid: Anything that needs reading or an action → toast banner; Errors the user must fix → InlineNotification next to the cause; Long-running work the user should track → ProgressBar in the page
+  - avoid: The person's own action worked and there's something to read or undo → toast banner; Errors the user must fix → InlineNotification next to the cause; Long-running work the user should track → ProgressBar in the page
 - [Chat bubble](docs/components/chat-bubble.md): One message in a conversation between a person and an agent. Agent on the left, the person on the right; runs from the same author join.
   - use: A conversation between a person and an agent, or between people; Showing what an agent said and when, in order
   - avoid: A long AI answer inside a page → AISurface; A system notice ("Handed to Billing") → InlineNotification; Comments on a document → a list of comments, not bubbles
@@ -142,7 +142,7 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/iden
   - avoid: The user needs to see the page while working → RightPanel; A couple of options next to a control → Popover; Long forms or multi-step flows → a page; Success messages → toast; Opening a modal from a modal → never
 - [Notification](docs/components/notification.md): System messages with one anatomy, icon placeholder, title over subtitle, optional action. Inline for problems tied to a place, toast banner for confirmation, callout for static guidance.
   - use: Inline, errors/warnings about a section, form summary, account-level issues; Toast, brief confirmation of something the user just did (with optional Undo); Callout, permanent, non-dismissible contextual guidance
-  - avoid: A decision is required before continuing → Modal; Field-level validation → the field's invalidText; Errors inside a toast that need action → InlineNotification near the cause; Marketing/announcements → not a system notification
+  - avoid: A decision is required before continuing → Modal; Field-level validation → the field's invalidText; Errors inside a toast that need action → InlineNotification near the cause; A system state to glance at (connected, syncing, progress) → Capsule; Marketing/announcements → not a system notification
 - [Number input](docs/components/number-input.md): Precise numeric entry with steppers, bounds and units.
   - use: Exact quantities with small adjustments (concurrent runs, seats, timeout, percentage); Values with min/max bounds the user must respect
   - avoid: Approximate values where feel matters → Slider; Identifiers that happen to be digits (phone, postcode, ID) → TextInput inputMode="numeric"; Large free-form amounts (currency) → TextInput with inputMode="decimal" and formatting

@@ -54,12 +54,21 @@ If Vita lacks what you need: **stop and say so**. Propose the smallest compositi
 | Rows with one action | `ContainedList` |
 | Confirm destructive | `ConfirmModal danger` |
 | Edit alongside the page | `RightPanel` |
-| "Done" feedback | `toast` |
-| Problem to fix | `InlineNotification` near the cause |
+| "Done": the person's own action worked (worth reading, often Undo) | `toast` |
+| A system state to glance at: connected, syncing, progress | `capsule` (icon · title · live story), one at a time, updated in place |
+| Problem to fix | `InlineNotification` near the cause (never a toast, never a capsule) |
 | Object state | `StatusIndicator` |
 | Nothing to show | `EmptyState`, full height, with a pictogram that depicts both its title and subtitle (readable without the words) |
 | Loading with known layout | `Skeleton` |
 | AI-generated content | `AILabel` + `AISurface` |
+
+## Capsule or notification? Decide by what the message asks of the person
+
+1. **Needs fixing?** `InlineNotification` next to the cause; it stays until fixed.
+2. **Something to read or undo, caused by the person?** `toast` (success or info), with Undo when reversible.
+3. **A state to glance at, reported by the system (often with progress)?** `capsule`; nothing to read, no action.
+
+Never both for one event. A capsule that turns into a failure hands over to an `InlineNotification`; it never shows an error itself. Details: `.vita/docs/patterns/notifications.md`.
 
 ## Page skeleton (use this shape)
 
