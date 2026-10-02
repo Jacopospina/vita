@@ -220,8 +220,9 @@ function simpleParticles(mode: ThinkingMode, t: number, lvl = 0): P[] {
     }
     return out
   }
-  // Basic at 16 to 24px: plumper drops. At the big orb's proportions each is about 2px, and the melt erases it.
-  return particles("basic", 3, t, []).map((p) => ({ ...p, r: p.r * 1.6 }))
+  // Basic at 16 to 24px: plumper drops on a wider orbit. At the big orb's proportions each is about 2px and the melt
+  // erases it; much bigger and the three melt into one blob. This size reads as three distinct balls at a glance.
+  return particles("basic", 3, t, []).map((p) => ({ x: p.x * 1.2, y: p.y * 1.2, r: Math.max(0.26, p.r * 1.35) }))
 }
 
 function particles(mode: ThinkingMode, n: number, t: number, seeds: number[], lvl = 0): P[] {
@@ -483,7 +484,7 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
     let orb: OrbGL | null = null
     if (field && glRef.current) {
       const probe = document.createElement("canvas").getContext("2d", { willReadFrequently: true })
-      const precise = mode === "retrieving", defined = mode === "generating"
+      const precise = mode === "retrieving", defined = mode === "generating" || (mode === "basic" && px <= 24)
       const blur = precise ? (px <= 24 ? px * 0.06 : px * 0.035) : defined ? (px <= 24 ? px * 0.06 : px * 0.045) : px <= 24 ? px * 0.085 : px * 0.065
       const glDpr = Math.min(2, window.devicePixelRatio || 1)
       orb = probe
@@ -665,7 +666,8 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
   // Retrieving is PRECISE: a tighter melt, so each recalled particle stays a distinct drop until it reaches the core.
   // Generating is DEFINED: gooey between shapes, but each shape's silhouette reads clearly while it holds.
   const precise = mode === "retrieving"
-  const defined = mode === "generating" || mode === "idle"
+  // Small basic is DEFINED too: three distinct balls in a button; a wide melt would shrink a lone drop to nothing.
+  const defined = mode === "generating" || mode === "idle" || (mode === "basic" && px <= 24)
   const blur = precise ? (px <= 24 ? px * 0.06 : px * 0.035) : defined ? (px <= 24 ? px * 0.06 : px * 0.045) : px <= 24 ? px * 0.085 : px * 0.065
   const melt = precise ? px * 0.015 : defined ? px * 0.02 : px * 0.03
   const lit = px >= 48
