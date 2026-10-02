@@ -484,7 +484,7 @@
   mask-composite: intersect;
 }
 
-/* PHONES, proportion: fields keep 16px under a finger (iOS zooms into anything smaller), whatever the body size. */
+/* PHONES: fields never drop below 16px under a finger (iOS zooms into anything smaller), even in small-text slots. */
 @media (pointer: coarse) {
   input[class], textarea[class], select[class] { font-size: max(1rem, var(--vita-text-body)); }
 }
