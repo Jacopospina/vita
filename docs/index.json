@@ -330,6 +330,27 @@
     },
     {
       "section": "components",
+      "slug": "avatar",
+      "path": "docs/components/avatar.md",
+      "title": "Avatar",
+      "summary": "A person, at a glance. Their photo when there is one, otherwise their initials, white on a soft grey gradient. Three sizes.",
+      "status": "experimental",
+      "import": "import { Avatar } from \"@/components/vita/avatar\"",
+      "use_when": [
+        "Showing who wrote, sent, owns or is assigned something (messages, lists, comments, headers)"
+      ],
+      "avoid_when": [
+        "An agent, an app or a system → IconPlaceholder",
+        "The AI working → Thinking"
+      ],
+      "related": [
+        "email-message",
+        "icon-placeholder",
+        "list-item"
+      ]
+    },
+    {
+      "section": "components",
       "slug": "breadcrumb",
       "path": "docs/components/breadcrumb.md",
       "title": "Breadcrumb",
@@ -649,6 +670,29 @@
         "checkbox",
         "menu",
         "filtering"
+      ]
+    },
+    {
+      "section": "components",
+      "slug": "email-message",
+      "path": "docs/components/email-message.md",
+      "title": "Email message",
+      "summary": "One email, read or reviewed in place. Subject, sender, recipients and message; when an agent drafted it, a provenance header says so and carries the actions.",
+      "status": "experimental",
+      "import": "import { EmailMessage } from \"@/components/vita/email-message\"",
+      "use_when": [
+        "Reviewing an email an agent drafted before it's sent",
+        "Showing a sent or received email inside a product (a thread, an activity log)"
+      ],
+      "avoid_when": [
+        "A chat turn → ChatBubble",
+        "Writing an email from scratch → Form with a TextArea, or Composer"
+      ],
+      "related": [
+        "avatar",
+        "ai-label",
+        "chat-bubble",
+        "composer"
       ]
     },
     {
@@ -1592,6 +1636,28 @@
         "intent-first",
         "ai-label",
         "composer"
+      ]
+    },
+    {
+      "section": "patterns",
+      "slug": "cards",
+      "path": "docs/patterns/cards.md",
+      "title": "Cards",
+      "summary": "A card is a pattern, not a component. It is composed of components (a Tile, an Icon, Text) to show one item people scan in a set.",
+      "status": "experimental",
+      "use_when": [
+        "Items people scan side by side (tasks, tickets, runs, documents)",
+        "A board or a grid where each item needs a status and a title"
+      ],
+      "avoid_when": [
+        "Uniform records people compare → Data table",
+        "A list with one line per item → List / Contained list"
+      ],
+      "related": [
+        "tile",
+        "list-item",
+        "data-table",
+        "status-indicators"
       ]
     },
     {

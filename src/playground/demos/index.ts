@@ -9,11 +9,13 @@ import { aboutDemos } from "./about"
 import { interactionDemos } from "./interaction"
 import { chatDemos } from "./chat"
 import { voiceDemos } from "./voice"
+import { peopleDemos } from "./people"
 
 export const demos: DemoMap = {
   ...aboutDemos,
   ...chatDemos,
   ...voiceDemos,
+  ...peopleDemos,
   ...interactionDemos,
   ...foundationDemos,
   ...actionDemos,

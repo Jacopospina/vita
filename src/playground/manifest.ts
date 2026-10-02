@@ -36,6 +36,7 @@ export const manifest: Record<Section, NavEntry[]> = {
     { slug: "choosing-components", title: "Choosing a component" },
     { slug: "accordion", title: "Accordion" },
     { slug: "ai-label", title: "AI label" },
+    { slug: "avatar", title: "Avatar" },
     { slug: "breadcrumb", title: "Breadcrumb" },
     { slug: "button", title: "Button" },
     { slug: "capsule", title: "Capsule" },
@@ -49,6 +50,7 @@ export const manifest: Record<Section, NavEntry[]> = {
     { slug: "data-table", title: "Data table" },
     { slug: "date-picker", title: "Date picker" },
     { slug: "dropdown", title: "Dropdown" },
+    { slug: "email-message", title: "Email message" },
     { slug: "file-uploader", title: "File uploader" },
     { slug: "form", title: "Form" },
     { slug: "global-search", title: "Global search" },
@@ -91,6 +93,7 @@ export const manifest: Record<Section, NavEntry[]> = {
   ],
   patterns: [
     { slug: "agent-conversation", title: "Agent conversation" },
+    { slug: "cards", title: "Cards" },
     { slug: "voice-conversation", title: "Voice conversation" },
     { slug: "common-actions", title: "Common actions" },
     { slug: "dialogs", title: "Dialogs" },

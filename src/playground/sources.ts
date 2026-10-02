@@ -16,6 +16,7 @@ const map: Record<string, string[]> = {
   // components (default: registry/ui/<slug>.tsx)
   "components/capsule": ["registry/ui/notification.tsx", "registry/ui/progress-bar.tsx"],
   "components/chat-bubble": ["registry/ui/chat.tsx"],
+  "patterns/cards": ["registry/ui/tile.tsx"],
   "components/conversation-bar": ["registry/ui/conversation-bar.tsx", "registry/hooks/use-microphone.ts"],
   "components/live-waveform": ["registry/ui/live-waveform.tsx", "registry/hooks/use-microphone.ts"],
   "components/mic-selector": ["registry/ui/mic-selector.tsx", "registry/hooks/use-microphone.ts"],

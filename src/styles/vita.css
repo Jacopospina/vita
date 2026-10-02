@@ -321,6 +321,13 @@
 @utility focus-halo-inset { box-shadow: inset 0 0 0 4px color-mix(in oklab, var(--vita-ring) 22%, transparent); }
 
 /* Collapsible regions without measuring: grid rows 0fr ↔ 1fr, child overflow-hidden. */
+/* AI words: provenance lines such as "Drafted by Support triage", painted orange → pink → purple → teal, evenly. */
+@utility text-ai {
+  background-image: linear-gradient(90deg, var(--vita-palette-orange-500), var(--vita-palette-pink-500), var(--vita-palette-purple-500), var(--vita-palette-teal-500));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
 @utility reveal { display: grid; grid-template-rows: 0fr; & > * { overflow: hidden; min-height: 0; } }
 @utility reveal-open { grid-template-rows: 1fr; }
 /* Horizontal reveal: width grows from 0 to its content (capsule expanding sideways).

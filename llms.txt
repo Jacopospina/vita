@@ -64,6 +64,9 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/iden
 - [AI label](docs/components/ai-label.md): Marks anything generated, suggested or autofilled by AI, and explains how, in one click.
   - use: A field value, cell, tile or message was produced or changed by AI; An AI-powered feature needs a visible, explainable marker
   - avoid: Branding or marketing flair → the AI gradient is reserved for AI provenance; Content that a human reviewed and edited → remove the label once a human takes ownership, or show "Edited"
+- [Avatar](docs/components/avatar.md): A person, at a glance. Their photo when there is one, otherwise their initials, white on a soft grey gradient. Three sizes.
+  - use: Showing who wrote, sent, owns or is assigned something (messages, lists, comments, headers)
+  - avoid: An agent, an app or a system → IconPlaceholder; The AI working → Thinking
 - [Breadcrumb](docs/components/breadcrumb.md): Shows where the user is in a hierarchy of three or more levels and lets them move up.
   - use: Pages nested ≥ 3 levels deep (Workspace / Projects / Q3 forecast); Detail pages reached from a list, where "up" is meaningful
   - avoid: Flat products (≤ 2 levels) → the side nav already tells users where they are; Showing history ("back") → browser back / explicit Back button in flows; Steps in a process → ProgressIndicator
@@ -104,6 +107,9 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/iden
 - [Dropdown](docs/components/dropdown.md): Choosing values from a list, Dropdown (one), Combobox (one, filterable) and Multiselect (many), all built from the same Option rows.
   - use: Dropdown, one of 7–20 options, options need descriptions/icons, or consistent styling in app chrome; Combobox, one of 20+ options where users know what to type (tool, country, team member); Multiselect, several of more than 6 options (markets, tags, assignees); Inline type, compact "Sort by: Newest ▾" in toolbars
   - avoid: 2–6 options → RadioGroup (or ContentSwitcher for views); Actions → Menu / MenuButton (dropdowns choose values; menus do things); Options written inline as children → Select (same control)
+- [Email message](docs/components/email-message.md): One email, read or reviewed in place. Subject, sender, recipients and message; when an agent drafted it, a provenance header says so and carries the actions.
+  - use: Reviewing an email an agent drafted before it's sent; Showing a sent or received email inside a product (a thread, an activity log)
+  - avoid: A chat turn → ChatBubble; Writing an email from scratch → Form with a TextArea, or Composer
 - [File uploader](docs/components/file-uploader.md): Attach files by browsing or dropping, with per-file status and errors that explain the fix.
   - use: dropzone, uploading is the main task of the view (import, document collection); button, attaching as one field among others in a form
   - avoid: Importing structured data with mapping → a dedicated import flow (pattern), with FileUploader as step 1
@@ -227,6 +233,9 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/iden
 - [Agent conversation](docs/patterns/agent-conversation.md): How people and agents talk in Vita, the mini chat, thinking states, suggested replies and hand-offs to a person.
   - use: A product lets people talk to an agent (support, onboarding, internal assistants); An agent drafts something a person reviews and sends
   - avoid: The agent's answer is a page section, not a conversation → AISurface; A one-shot request that produces a result → Intent-first input
+- [Cards](docs/patterns/cards.md): A card is a pattern, not a component. It is composed of components (a Tile, an Icon, Text) to show one item people scan in a set.
+  - use: Items people scan side by side (tasks, tickets, runs, documents); A board or a grid where each item needs a status and a title
+  - avoid: Uniform records people compare → Data table; A list with one line per item → List / Contained list
 - [Common actions](docs/patterns/common-actions.md): Where actions live, how many are visible, and how create, edit, delete, save and export behave everywhere, with left-hand shortcuts.
   - use: Any page, table, card or panel that exposes actions
   - avoid: Inventing a new placement or verb for an action that already has one here
