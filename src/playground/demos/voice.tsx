@@ -5,8 +5,8 @@ import { Text } from "@/registry/ui/text"
 import { Button } from "@/registry/ui/button"
 import { ContentSwitcher } from "@/registry/ui/content-switcher"
 import { LiveWaveform } from "@/registry/ui/live-waveform"
-import { MicSelector } from "@/registry/ui/mic-selector"
-import { ConversationBar, type ConversationState } from "@/registry/ui/conversation-bar"
+import { MicSelector } from "@/registry/blocks/mic-selector"
+import { ConversationBar, type ConversationState } from "@/registry/blocks/conversation-bar"
 import { useMicrophone, simulatedVoice } from "@/registry/hooks/use-microphone"
 import { toast } from "@/registry/ui/notification"
 
@@ -81,20 +81,6 @@ function ConversationDemo({ typing = true }: { typing?: boolean }) {
 }
 
 export const voiceDemos: DemoMap = {
-  "components/conversation-bar": [
-    { title: "A voice conversation", description: "Start, then talk: the bar listens to your microphone, the agent thinks, then answers. Mute, type instead or change microphone from the bar.", render: () => <ConversationDemo /> },
-    {
-      title: "Every state",
-      render: () => (
-        <Stack gap="sm" className="w-full max-w-xl">
-          {(["disconnected", "connecting", "listening", "thinking", "talking"] as const).map((s) => (
-            <ConversationBar key={s} agent="Support triage" state={s} onStart={() => {}} onEnd={() => {}} onSendText={() => {}} />
-          ))}
-        </Stack>
-      ),
-    },
-    { title: "Voice only (no typing)", render: () => <ConversationDemo typing={false} /> },
-  ],
   "components/live-waveform": [
     { title: "Your microphone, live", description: "Bars mirrored from the centre follow the voice's spectrum.", render: () => <MicWaveformDemo /> },
     { title: "Idle, processing, active", description: "Bars travel between states; nothing jumps.", render: () => <WaveformStatesDemo /> },
@@ -109,10 +95,21 @@ export const voiceDemos: DemoMap = {
       ),
     },
   ],
-  "components/mic-selector": [
+  "patterns/mic-selector": [
     { title: "Choose, test, mute", description: "Allow the microphone, pick a device, watch its level, mute it.", render: () => <MicSelectorDemo /> },
   ],
   "patterns/voice-conversation": [
-    { title: "Talking to an agent", render: () => <ConversationDemo /> },
+    { title: "A voice conversation", description: "Start, then talk: the bar listens to your microphone, the agent thinks, then answers. Mute, type instead or change microphone from the bar.", render: () => <ConversationDemo /> },
+    {
+      title: "Every state",
+      render: () => (
+        <Stack gap="sm" className="w-full max-w-xl">
+          {(["disconnected", "connecting", "listening", "thinking", "talking"] as const).map((s) => (
+            <ConversationBar key={s} agent="Support triage" state={s} onStart={() => {}} onEnd={() => {}} onSendText={() => {}} />
+          ))}
+        </Stack>
+      ),
+    },
+    { title: "Voice only (no typing)", render: () => <ConversationDemo typing={false} /> },
   ],
 }

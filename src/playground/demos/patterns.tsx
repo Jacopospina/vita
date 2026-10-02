@@ -10,7 +10,7 @@ import { StatusIndicator } from "@/registry/ui/status-indicator"
 import { ListItem, ListGroup, ListSection } from "@/registry/ui/list-item"
 import { IconPlaceholder } from "@/registry/ui/icon-placeholder"
 import { PageHeader } from "@/registry/ui/page-header"
-import { GlobalSearch } from "@/registry/ui/global-search"
+import { GlobalSearch } from "@/registry/blocks/global-search"
 import { Kpi, KpiGroup } from "@/registry/ui/kpi"
 import { Truncate } from "@/registry/ui/truncate"
 import { LoginBlock } from "@/registry/blocks/login"
@@ -461,4 +461,3 @@ patternDemos["components/list-item"] = patternDemos["patterns/list-items"]
 export { IconButton }
 
 // The Global search component page shows the same live demo as the pattern.
-patternDemos["components/global-search"] = patternDemos["patterns/global-search"]

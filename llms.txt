@@ -95,9 +95,6 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/iden
 - [Content switcher](docs/components/content-switcher.md): A segmented control. Switch between alternate presentations of the same content. One segment is always selected.
   - use: Changing how the same data is shown (List | Grid, Chart | Table); Changing the granularity of one dataset (Day | Week | Month); A mode with 2–5 mutually exclusive, equally weighted options that applies instantly
   - avoid: The panels contain different content → Tabs; It's a form value submitted later → RadioGroup; More than 5 options → Dropdown; Binary on/off → Toggle
-- [Conversation bar](docs/components/conversation-bar.md): A voice conversation with an agent, in one bar. Sofia shows who has the floor, the waveform shows the sound, and the controls stay where the thumb expects them.
-  - use: Talking to a voice agent (support, booking, a hands-free assistant); A call-like moment inside a product, docked at the bottom of a panel or page
-  - avoid: Text-only chat → MiniChat / Composer; Dictating into a field → Composer (its microphone streams speech into the text); Showing sound without a conversation → LiveWaveform
 - [Data table](docs/components/data-table.md): View, compare, sort, select and act on many uniform records. The workhorse of product UI.
   - use: Many records with the same attributes (> ~5 rows or any sorting/selecting need); Users compare values across rows or act on several rows at once
   - avoid: Few rows of key/value details → StructuredList; Heterogeneous items with one action each → ContainedList; Visual browsing → Tile grid; One column → it's a list
@@ -107,18 +104,12 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/iden
 - [Dropdown](docs/components/dropdown.md): Choosing values from a list, Dropdown (one), Combobox (one, filterable) and Multiselect (many), all built from the same Option rows.
   - use: Dropdown, one of 7–20 options, options need descriptions/icons, or consistent styling in app chrome; Combobox, one of 20+ options where users know what to type (tool, country, team member); Multiselect, several of more than 6 options (markets, tags, assignees); Inline type, compact "Sort by: Newest ▾" in toolbars
   - avoid: 2–6 options → RadioGroup (or ContentSwitcher for views); Actions → Menu / MenuButton (dropdowns choose values; menus do things); Options written inline as children → Select (same control)
-- [Email message](docs/components/email-message.md): One email, read or reviewed in place. Subject, sender, recipients and message; when an agent drafted it, a provenance header says so and carries the actions.
-  - use: Reviewing an email an agent drafted before it's sent; Showing a sent or received email inside a product (a thread, an activity log)
-  - avoid: A chat turn → ChatBubble; Writing an email from scratch → Form with a TextArea, or Composer
 - [File uploader](docs/components/file-uploader.md): Attach files by browsing or dropping, with per-file status and errors that explain the fix.
   - use: dropzone, uploading is the main task of the view (import, document collection); button, attaching as one field among others in a form
   - avoid: Importing structured data with mapping → a dedicated import flow (pattern), with FileUploader as step 1
 - [Form](docs/components/form.md): The structural pieces of every form. Form, FormGroup, FormRow, FormActions, FluidForm and the FieldShell wiring every input uses.
   - use: Any time the user enters data that is submitted together
   - avoid: Single instant settings → Toggle rows, no form wrapper needed; Inline edits of one value → read-only-states pattern (view → edit)
-- [Global search](docs/components/global-search.md): Spotlight for the product, a liquid-glass capsule in the header that summons a floating search panel with ⌘K from anywhere.
-  - use: Product-wide search from the global header (pages, records, settings)
-  - avoid: Searching a list or a page's content → Search; Filtering a table → the table's toolbar Search
 - [Icon placeholder](docs/components/icon-placeholder.md): The leading visual slot, a colored glyph on a neutral squircle tile, in small, medium and large. One look for list items, notifications and toast banners.
   - use: Leading visual of a list row (settings, objects); The left side of a notification or toast banner; An agent or app mark next to its name
   - avoid: An icon inline with text or inside a button → Icon; Large illustrative marks → Pictogram; A person → avatar media
@@ -146,9 +137,6 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/iden
 - [Menu](docs/components/menu.md): A temporary list of actions, opened from a trigger or right-click. Menus hold verbs, not values and not destinations.
   - use: Offering 3–10 actions without taking permanent space; View options that toggle (show grid, compact rows) via MenuCheckboxItem; Power-user shortcuts via right-click (ContextMenu), always duplicated elsewhere
   - avoid: Choosing a form value → Dropdown / Select; Navigation → Side nav, Tabs, Links; 1–2 actions → show them as buttons; More than ~10 items or deep nesting → rethink the IA
-- [Mic selector](docs/components/mic-selector.md): Choose which microphone to talk through, hear that it works, and mute it. One useMicrophone() drives the device list, the live preview and the mute.
-  - use: Before or during a voice conversation, in settings or the conversation bar's settings; Anywhere the person records audio and may have more than one microphone
-  - avoid: Choosing any other value → Dropdown; The whole voice call → ConversationBar (it opens this from its settings button)
 - [Modal](docs/components/modal.md): Interrupts to focus on one task or decision. Modality is a last resort.
   - use: Confirming a destructive or irreversible action (ConfirmModal danger); A short, self-contained task (≤ 5 fields) that shouldn't leave the page; Critical information that must be acknowledged
   - avoid: The user needs to see the page while working → RightPanel; A couple of options next to a control → Popover; Long forms or multi-step flows → a page; Success messages → toast; Opening a modal from a modal → never
@@ -248,6 +236,9 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/iden
 - [Disclosures](docs/patterns/disclosures.md): Progressive disclosure, show what most people need, reveal the rest on demand.
   - use: Advanced options most users don't touch; Secondary details that would clutter a summary
   - avoid: Hiding required fields; Hiding errors or critical information
+- [Email message](docs/patterns/email-message.md): One email, read or reviewed in place. Subject, sender, recipients and message; when an agent drafted it, a provenance header says so and carries the actions.
+  - use: Reviewing an email an agent drafted before it's sent; Showing a sent or received email inside a product (a thread, an activity log)
+  - avoid: A chat turn → ChatBubble; Writing an email from scratch → Form with a TextArea, or Composer
 - [Empty states](docs/patterns/empty-states.md): Every region that can be empty has a designed empty state, first use, no results, or error, each with a next step.
   - use: A table, list, dashboard widget or page has nothing to show
   - avoid: Showing a blank area or a lonely "No data"
@@ -276,6 +267,9 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/iden
 - [Login](docs/patterns/login.md): Two-step, calm, secure login, identifier first, then password or SSO. Errors never leak whether an account exists.
   - use: Any sign-in screen
   - avoid: Custom login layouts per product → use LoginBlock and theme it
+- [Mic selector](docs/patterns/mic-selector.md): Choose which microphone to talk through, hear that it works, and mute it. One useMicrophone() drives the device list, the live preview and the mute.
+  - use: Before or during a voice conversation, in settings or the conversation bar's settings; Anywhere the person records audio and may have more than one microphone
+  - avoid: Choosing any other value → Dropdown; The whole voice call → ConversationBar (it opens this from its settings button)
 - [Notifications](docs/patterns/notifications.md): Matching the message to the right channel, toast, inline, modal, callout, or the notification panel.
   - use: The system needs to tell the user something
   - avoid: Messages the user doesn't need to act on or know about → don't send them
@@ -304,6 +298,7 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/iden
 ## Decisions
 
 - [Buttons](docs/decisions/buttons.md): One primary per page, dialog or side panel; the secondary is a faint primary wash with primary text; xl is rounder.
+- [Components and patterns](docs/decisions/components-and-patterns.md): A component is one building block with one job. A pattern is made of several components, arranged to do a task. Patterns never become components.
 - [Fields and options](docs/decisions/fields-and-options.md): Soft field borders at rest; dropdown options are whole-row targets with a reserved left tick slot.
 - [Glass by elevation](docs/decisions/glass-by-elevation.md): Every floating surface is frosted glass, more frosted the higher it floats; the page scrolls beneath the shell so the material is visible.
 - [How Vita decides](docs/decisions/how-we-decide.md): Every system choice is a written record. Agents and people read the record before changing anything it covers; changing it means superseding it.

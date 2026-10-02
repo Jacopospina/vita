@@ -8,7 +8,7 @@ import { Tile } from "@/registry/ui/tile"
 import { Button, IconButton } from "@/registry/ui/button"
 import { Menu, MenuTrigger, MenuContent, MenuRadioGroup, MenuRadioItem } from "@/registry/ui/menu"
 import { Avatar } from "@/registry/ui/avatar"
-import { EmailMessage } from "@/registry/ui/email-message"
+import { EmailMessage } from "@/registry/blocks/email-message"
 import { StructuredList } from "@/registry/ui/structured-list"
 import { toast } from "@/registry/ui/notification"
 
@@ -134,7 +134,7 @@ export const peopleDemos: DemoMap = {
       ),
     },
   ],
-  "components/email-message": [
+  "patterns/email-message": [
     { title: "Drafted by an agent", description: "The agent read a free-text request and turned it into structured fields to confirm. The header names the agent and carries the actions; add Cc or Bcc from the To line, remove them with ×.", render: () => <EmailDemo /> },
     { title: "Without the header", description: "A message people wrote: no provenance, no header.", render: () => <EmailDemo drafted={false} /> },
   ],

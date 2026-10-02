@@ -2,14 +2,14 @@
 title: Mic selector
 summary: Choose which microphone to talk through, hear that it works, and mute it. One useMicrophone() drives the device list, the live preview and the mute.
 status: experimental
-import: "import { MicSelector } from \"@/components/vita/mic-selector\"\nimport { useMicrophone } from \"@/components/vita/use-microphone\""
+import: "import { MicSelector } from \"@/components/vita/blocks/mic-selector\"\nimport { useMicrophone } from \"@/components/vita/use-microphone\""
 use_when:
   - Before or during a voice conversation, in settings or the conversation bar's settings
   - Anywhere the person records audio and may have more than one microphone
 avoid_when:
   - Choosing any other value → Dropdown
   - The whole voice call → ConversationBar (it opens this from its settings button)
-related: [conversation-bar, live-waveform, dropdown]
+related: [voice-conversation, live-waveform, dropdown]
 ---
 
 ## Anatomy

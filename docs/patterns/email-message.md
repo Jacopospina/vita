@@ -2,7 +2,7 @@
 title: Email message
 summary: One email, read or reviewed in place. Subject, sender, recipients and message; when an agent drafted it, a provenance header says so and carries the actions.
 status: experimental
-import: "import { EmailMessage } from \"@/components/vita/email-message\""
+import: "import { EmailMessage } from \"@/components/vita/blocks/email-message\""
 use_when:
   - Reviewing an email an agent drafted before it's sent
   - Showing a sent or received email inside a product (a thread, an activity log)

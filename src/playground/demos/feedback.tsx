@@ -174,36 +174,21 @@ export function ShellDemo({ rail, right, edit }: { rail?: boolean; right?: boole
 export const feedbackDemos: DemoMap = {
   "components/thinking": [
     {
-      title: "Thinking, four modes",
-      description: "Particles that blend like liquid. Pick the mode by what is happening; agentic modes wear the AI spectrum.",
+      title: "Sofia's states",
+      description: "One liquid, seven states. Pick the state by what is happening; agentic states wear the AI spectrum, and the voice states follow a live level when you pass one.",
       render: () => (
-        <div className="grid grid-cols-2 gap-5 md:grid-cols-4">
+        <div className="grid grid-cols-2 gap-x-5 gap-y-10 md:grid-cols-4">
           {([
             ["basic", "Basic logic", "No agent involved"],
             ["retrieving", "Retrieving", "Recalling from memory"],
             ["generating", "Generating", "Creating, the orb shape-shifts"],
             ["searching", "Searching", "Looking things up"],
-          ] as const).map(([mode, title, sub]) => (
-            <Stack key={mode} gap="sm" align="center" className="text-center">
-              <Thinking mode={mode} size="xl" label={title} tone={mode === "basic" ? "brand" : undefined} />
-              <Stack gap="none" align="center"><Text variant="headline">{title}</Text><Text variant="caption" tone="muted">{sub}</Text></Stack>
-            </Stack>
-          ))}
-        </div>
-      ),
-    },
-    {
-      title: "Voice: idle, listening, talking",
-      description: "For voice agents. Pass a live level (your microphone, the agent's audio) and Sofia follows it; without one she follows a simulated voice.",
-      render: () => (
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
-          {([
             ["idle", "Idle", "Present, waiting for you"],
             ["listening", "Listening", "Gathers your voice inward"],
             ["talking", "Talking", "Swells and ripples as it speaks"],
           ] as const).map(([mode, title, sub]) => (
             <Stack key={mode} gap="sm" align="center" className="text-center">
-              <Thinking mode={mode} size="xl" label={title} />
+              <Thinking mode={mode} size="xl" label={title} tone={mode === "basic" ? "brand" : undefined} />
               <Stack gap="none" align="center"><Text variant="headline">{title}</Text><Text variant="caption" tone="muted">{sub}</Text></Stack>
             </Stack>
           ))}

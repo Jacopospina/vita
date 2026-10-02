@@ -4,6 +4,11 @@
 
 Vita is consumed by humans and AI agents in product repos, so every change must keep the system **coherent, documented and enforceable**.
 
+## Component or pattern?
+
+- **Component:** one building block with one job (`registry/ui`, `docs/components`).
+- **Pattern:** made of several Vita components arranged to do a task (`docs/patterns`, code in `registry/blocks` when shipped). See `docs/decisions/components-and-patterns.md`.
+
 ## When you add or change a component
 
 1. **Source:** `src/registry/ui/<name>.tsx`.

@@ -8,7 +8,7 @@ import { Button, IconButton } from "@/registry/ui/button"
 import { TextInput } from "@/registry/ui/text-input"
 import { AnimatedText } from "@/registry/ui/animated"
 import { Popover, PopoverTrigger, PopoverContent } from "@/registry/ui/popover"
-import { MicSelector } from "@/registry/ui/mic-selector"
+import { MicSelector } from "@/registry/blocks/mic-selector"
 import { useMakingWord } from "@/registry/ui/chat"
 
 /**

@@ -572,31 +572,6 @@
     },
     {
       "section": "components",
-      "slug": "conversation-bar",
-      "path": "docs/components/conversation-bar.md",
-      "title": "Conversation bar",
-      "summary": "A voice conversation with an agent, in one bar. Sofia shows who has the floor, the waveform shows the sound, and the controls stay where the thumb expects them.",
-      "status": "experimental",
-      "import": "import { ConversationBar } from \"@/components/vita/conversation-bar\"\nimport { useMicrophone } from \"@/components/vita/use-microphone\"",
-      "use_when": [
-        "Talking to a voice agent (support, booking, a hands-free assistant)",
-        "A call-like moment inside a product, docked at the bottom of a panel or page"
-      ],
-      "avoid_when": [
-        "Text-only chat → MiniChat / Composer",
-        "Dictating into a field → Composer (its microphone streams speech into the text)",
-        "Showing sound without a conversation → LiveWaveform"
-      ],
-      "related": [
-        "live-waveform",
-        "mic-selector",
-        "thinking",
-        "composer",
-        "voice-conversation"
-      ]
-    },
-    {
-      "section": "components",
       "slug": "data-table",
       "path": "docs/components/data-table.md",
       "title": "Data table",
@@ -674,29 +649,6 @@
     },
     {
       "section": "components",
-      "slug": "email-message",
-      "path": "docs/components/email-message.md",
-      "title": "Email message",
-      "summary": "One email, read or reviewed in place. Subject, sender, recipients and message; when an agent drafted it, a provenance header says so and carries the actions.",
-      "status": "experimental",
-      "import": "import { EmailMessage } from \"@/components/vita/email-message\"",
-      "use_when": [
-        "Reviewing an email an agent drafted before it's sent",
-        "Showing a sent or received email inside a product (a thread, an activity log)"
-      ],
-      "avoid_when": [
-        "A chat turn → ChatBubble",
-        "Writing an email from scratch → Form with a TextArea, or Composer"
-      ],
-      "related": [
-        "avatar",
-        "ai-label",
-        "chat-bubble",
-        "composer"
-      ]
-    },
-    {
-      "section": "components",
       "slug": "file-uploader",
       "path": "docs/components/file-uploader.md",
       "title": "File uploader",
@@ -736,27 +688,6 @@
         "text-input",
         "fluid-styles",
         "read-only-states"
-      ]
-    },
-    {
-      "section": "components",
-      "slug": "global-search",
-      "path": "docs/components/global-search.md",
-      "title": "Global search",
-      "summary": "Spotlight for the product, a liquid-glass capsule in the header that summons a floating search panel with ⌘K from anywhere.",
-      "status": "stable",
-      "import": "import { GlobalSearch } from \"@/components/vita/global-search\"",
-      "use_when": [
-        "Product-wide search from the global header (pages, records, settings)"
-      ],
-      "avoid_when": [
-        "Searching a list or a page's content → Search",
-        "Filtering a table → the table's toolbar Search"
-      ],
-      "related": [
-        "search",
-        "ui-shell-header",
-        "global-header"
       ]
     },
     {
@@ -918,7 +849,7 @@
         "Decoration with no real sound behind it"
       ],
       "related": [
-        "conversation-bar",
+        "voice-conversation",
         "mic-selector",
         "thinking"
       ]
@@ -970,28 +901,6 @@
         "menu-buttons",
         "dropdown",
         "common-actions"
-      ]
-    },
-    {
-      "section": "components",
-      "slug": "mic-selector",
-      "path": "docs/components/mic-selector.md",
-      "title": "Mic selector",
-      "summary": "Choose which microphone to talk through, hear that it works, and mute it. One useMicrophone() drives the device list, the live preview and the mute.",
-      "status": "experimental",
-      "import": "import { MicSelector } from \"@/components/vita/mic-selector\"\nimport { useMicrophone } from \"@/components/vita/use-microphone\"",
-      "use_when": [
-        "Before or during a voice conversation, in settings or the conversation bar's settings",
-        "Anywhere the person records audio and may have more than one microphone"
-      ],
-      "avoid_when": [
-        "Choosing any other value → Dropdown",
-        "The whole voice call → ConversationBar (it opens this from its settings button)"
-      ],
-      "related": [
-        "conversation-bar",
-        "live-waveform",
-        "dropdown"
       ]
     },
     {
@@ -1745,6 +1654,29 @@
     },
     {
       "section": "patterns",
+      "slug": "email-message",
+      "path": "docs/patterns/email-message.md",
+      "title": "Email message",
+      "summary": "One email, read or reviewed in place. Subject, sender, recipients and message; when an agent drafted it, a provenance header says so and carries the actions.",
+      "status": "experimental",
+      "import": "import { EmailMessage } from \"@/components/vita/blocks/email-message\"",
+      "use_when": [
+        "Reviewing an email an agent drafted before it's sent",
+        "Showing a sent or received email inside a product (a thread, an activity log)"
+      ],
+      "avoid_when": [
+        "A chat turn → ChatBubble",
+        "Writing an email from scratch → Form with a TextArea, or Composer"
+      ],
+      "related": [
+        "avatar",
+        "ai-label",
+        "chat-bubble",
+        "composer"
+      ]
+    },
+    {
+      "section": "patterns",
       "slug": "empty-states",
       "path": "docs/patterns/empty-states.md",
       "title": "Empty states",
@@ -1953,6 +1885,28 @@
     },
     {
       "section": "patterns",
+      "slug": "mic-selector",
+      "path": "docs/patterns/mic-selector.md",
+      "title": "Mic selector",
+      "summary": "Choose which microphone to talk through, hear that it works, and mute it. One useMicrophone() drives the device list, the live preview and the mute.",
+      "status": "experimental",
+      "import": "import { MicSelector } from \"@/components/vita/blocks/mic-selector\"\nimport { useMicrophone } from \"@/components/vita/use-microphone\"",
+      "use_when": [
+        "Before or during a voice conversation, in settings or the conversation bar's settings",
+        "Anywhere the person records audio and may have more than one microphone"
+      ],
+      "avoid_when": [
+        "Choosing any other value → Dropdown",
+        "The whole voice call → ConversationBar (it opens this from its settings button)"
+      ],
+      "related": [
+        "voice-conversation",
+        "live-waveform",
+        "dropdown"
+      ]
+    },
+    {
+      "section": "patterns",
       "slug": "notifications",
       "path": "docs/patterns/notifications.md",
       "title": "Notifications",
@@ -2109,6 +2063,7 @@
       "title": "Voice conversation",
       "summary": "Talking to an agent with your voice. The turn is always visible, the microphone is always yours to control, and typing is always an option.",
       "status": "experimental",
+      "import": "import { ConversationBar } from \"@/components/vita/blocks/conversation-bar\"\nimport { useMicrophone } from \"@/components/vita/use-microphone\"",
       "use_when": [
         "A product offers a voice agent (support, booking, hands-free help)"
       ],
@@ -2116,11 +2071,11 @@
         "Text conversations → Agent conversation"
       ],
       "related": [
-        "conversation-bar",
         "live-waveform",
         "mic-selector",
         "thinking",
-        "agent-conversation"
+        "agent-conversation",
+        "composer"
       ]
     },
     {
@@ -2135,6 +2090,22 @@
       "related": [
         "button",
         "dialogs"
+      ]
+    },
+    {
+      "section": "decisions",
+      "slug": "components-and-patterns",
+      "path": "docs/decisions/components-and-patterns.md",
+      "title": "Components and patterns",
+      "summary": "A component is one building block with one job. A pattern is made of several components, arranged to do a task. Patterns never become components.",
+      "status": "accepted",
+      "date": "2026-10-02",
+      "decided_by": "Jacopo",
+      "related": [
+        "how-we-decide",
+        "choosing-components",
+        "cards",
+        "email-message"
       ]
     },
     {

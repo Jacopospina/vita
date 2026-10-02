@@ -10,7 +10,7 @@ import { Toaster } from "@/registry/ui/notification"
 import { Search } from "@/registry/ui/search"
 import { manifest, sectionTitles, type Section } from "./manifest"
 import { globalNav, navHref, searchPages, HOME_URL, MAKE_URL } from "./nav"
-import { GlobalSearch } from "@/registry/ui/global-search"
+import { GlobalSearch } from "@/registry/blocks/global-search"
 import { Tag } from "@/registry/ui/tag"
 import { EmptyState } from "@/registry/ui/empty-state"
 import { Button } from "@/registry/ui/button"
@@ -26,6 +26,10 @@ type Route = Section | "guidelines"
 /** Renamed pages: old links keep working. */
 const moved: Record<string, string> = {
   "components/loading": "components/thinking",
+  "components/email-message": "patterns/email-message",
+  "components/mic-selector": "patterns/mic-selector",
+  "components/conversation-bar": "patterns/voice-conversation",
+  "components/global-search": "patterns/global-search",
   "getting-started/interaction": "identity/principles",
   "getting-started/about": "identity/about",
   "getting-started/brand": "foundations/content",

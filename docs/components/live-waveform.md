@@ -10,7 +10,7 @@ avoid_when:
   - The AI is working without sound → Thinking
   - A recording's playback position → a progress control
   - Decoration with no real sound behind it
-related: [conversation-bar, mic-selector, thinking]
+related: [voice-conversation, mic-selector, thinking]
 ---
 
 ## States
