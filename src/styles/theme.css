@@ -23,6 +23,7 @@
 
   /* 2. SHAPE ------------------------------------------------------ */
   --vita-radius: 0.5rem;        /* 0 = square · 0.5rem = default · 0.75rem = soft */
+  --vita-line: 0.5px;           /* line weight of every icon and pictogram: 0 = as drawn · 0.5px = default · 1px = bold. Their corners follow the radius: rounded, square when the radius is 0 */
 
   /* 3. DENSITY ---------------------------------------------------- */
   --vita-density: 1;            /* desktop-settings density: 0.8 compact · 1 default · 1.2 comfortable/touch, scales controls AND every padding/gap */

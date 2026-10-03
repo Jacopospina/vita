@@ -83,7 +83,7 @@ export function SwapIcon({ as, className, size = "sm", ...props }: IconProps) {
         <>
           {/* The two glyphs are measured, never seen; the morph draws in their place, in the text colour. */}
           <span ref={from} aria-hidden className="pointer-events-none invisible absolute inset-0"><Icon as={previous} size={size} {...props} /></span>
-          <svg aria-hidden viewBox="0 0 1 1" width={px} height={px} className="pointer-events-none absolute inset-0 shrink-0 fill-current">
+          <svg aria-hidden viewBox="0 0 1 1" width={px} height={px} className="glyph pointer-events-none absolute inset-0 shrink-0 fill-current">
             <path ref={shape} fillRule="evenodd" />
           </svg>
         </>
@@ -137,7 +137,8 @@ export function Icon({ as: Glyph, size = "sm", label, className, draw, ...props 
       aria-hidden={label ? undefined : true}
       aria-label={label}
       role={label ? "img" : undefined}
-      className={cn("shrink-0 fill-current", draw === "in" && "icon-draw", draw === "out" && "icon-undraw", className)}
+      // glyph: Vita's line weight and corners; while drawing in or out, the draw owns the outline instead.
+      className={cn("shrink-0 fill-current", !draw && "glyph", draw === "in" && "icon-draw", draw === "out" && "icon-undraw", className)}
       {...(props as object)}
     />
   )

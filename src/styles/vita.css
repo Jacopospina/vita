@@ -417,6 +417,27 @@
   }
 }
 
+/*
+ * GLYPH, icons and pictograms wear Vita's line: an even outline around every shape (in screen pixels, so it weighs
+ * the same at 16px and at 80px) thickens the drawing by --vita-line, and its joins round the corners. A square
+ * theme (radius 0) squares them again. Transparent bounding boxes and cut-out details are left alone.
+ */
+@utility glyph {
+  & :is(path, circle, rect, polygon, ellipse):not([fill="none"]):not([data-name*="Transparent"]):not([data-icon-path="inner-path"]) {
+    stroke: currentColor;
+    stroke-width: var(--vita-line, 0.5px);
+    vector-effect: non-scaling-stroke;
+    stroke-linejoin: round;
+    paint-order: stroke fill;
+  }
+}
+@container style(--vita-radius: 0rem) {
+  .glyph :is(path, circle, rect, polygon, ellipse) { stroke-linejoin: miter; }
+}
+@container style(--vita-radius: 0) {
+  .glyph :is(path, circle, rect, polygon, ellipse) { stroke-linejoin: miter; }
+}
+
 /* DRAW, icons trace their outline, then fill (enter); fill fades, outline un-traces (exit). Paths get pathLength=1 from <Icon draw>. */
 @utility icon-draw {
   & :is(path, circle, rect, polygon, ellipse):not([fill="none"]):not([data-name*="Transparent"]) {

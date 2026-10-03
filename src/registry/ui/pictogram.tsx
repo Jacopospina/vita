@@ -24,7 +24,8 @@ export function Pictogram({ as: Glyph, size = "lg", tone = "brand", label, class
       aria-hidden={label ? undefined : true}
       aria-label={label}
       role={label ? "img" : undefined}
-      className={cn("shrink-0 fill-current", sizeClass[size], tone === "brand" ? "text-primary" : "text-muted-foreground", className)}
+      // glyph: the same line weight and rounded corners as every Vita icon (theme knobs --vita-line and --vita-radius).
+      className={cn("glyph shrink-0 fill-current", sizeClass[size], tone === "brand" ? "text-primary" : "text-muted-foreground", className)}
     />
   )
 }

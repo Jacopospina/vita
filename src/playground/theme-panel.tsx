@@ -7,6 +7,8 @@ import { Dropdown } from "@/registry/ui/dropdown"
 import { CodeSnippet } from "@/registry/ui/code-snippet"
 import { Button } from "@/registry/ui/button"
 import { Separator } from "@/registry/ui/separator"
+import { Icon } from "@/registry/ui/icon"
+import { Bot } from "@/registry/icons"
 import { swapAppearance, withoutTransitions } from "@/registry/lib/appearance"
 import type { useWeatherTint } from "@/registry/hooks/use-weather-tint"
 
@@ -17,6 +19,7 @@ const knobs = [
   { key: "--vita-neutral-hue", label: "Neutral hue", min: 0, max: 360, step: 1, def: 286, unit: "" },
   { key: "--vita-neutral-chroma", label: "Neutral tint", min: 0, max: 0.03, step: 0.001, def: 0, unit: "" },
   { key: "--vita-radius", label: "Corner radius", min: 0, max: 1.25, step: 0.125, def: 0.5, unit: "rem" },
+  { key: "--vita-line", label: "Line weight", min: 0, max: 1, step: 0.25, def: 0.5, unit: "px" },
   { key: "--vita-density", label: "Density", min: 0.8, max: 1.25, step: 0.01, def: 1.08, unit: "" },
   { key: "--vita-type-base", label: "Body size", min: 0.75, max: 1.125, step: 0.0625, def: 0.8125, unit: "rem" },
   { key: "--vita-type-ratio", label: "Type scale ratio", min: 1.1, max: 1.333, step: 0.01, def: 1.2, unit: "" },
@@ -58,6 +61,7 @@ function Fx({ look, className, children }: { look: React.CSSProperties; classNam
 const radii = [
   { v: 0, label: "Square" }, { v: 0.25, label: "Subtle" }, { v: 0.5, label: "Default" }, { v: 0.75, label: "Soft" }, { v: 1.25, label: "Round" },
 ]
+const lines = [{ v: 0, label: "Fine" }, { v: 0.5, label: "Default" }, { v: 1, label: "Bold" }]
 const densities = [{ v: 0.9, label: "Compact" }, { v: 1.08, label: "Default" }, { v: 1.2, label: "Roomy" }]
 const bodySizes = [{ v: 0.75, label: "12" }, { v: 0.8125, label: "13" }, { v: 0.875, label: "14" }, { v: 1, label: "16" }]
 const ratios = [{ v: 1.125, label: "Subtle" }, { v: 1.2, label: "Default" }, { v: 1.25, label: "Bold" }, { v: 1.333, label: "Dramatic" }]
@@ -65,6 +69,7 @@ const speeds = [{ v: 0, label: "Off" }, { v: 0.5, label: "Quick" }, { v: 1, labe
 const pick = (list: { v: number }[], x: number) => String(list.reduce((a, b) => (Math.abs(b.v - x) < Math.abs(a.v - x) ? b : a)).v)
 const knobPreviews: Record<string, { label: string; items: { value: string; label: string; preview: React.ReactNode }[] }> = {
   "--vita-radius": { label: "Corner radius", items: radii.map((r) => ({ value: String(r.v), label: r.label, preview: <Fx className="size-6 border-2 border-current" look={{ borderRadius: `${r.v * 0.75}rem` }} /> })) },
+  "--vita-line": { label: "Line weight", items: lines.map((l) => ({ value: String(l.v), label: l.label, preview: <Fx look={{ "--vita-line": `${l.v}px` } as React.CSSProperties}><Icon as={Bot} size="md" /></Fx> })) },
   "--vita-density": { label: "Density", items: densities.map((d) => ({ value: String(d.v), label: d.label, preview: <Fx className="flex w-8 flex-col" look={{ gap: `${(d.v - 0.75) * 12}px` }}>{[0, 1, 2].map((i) => <span key={i} className="h-0.5 rounded-full bg-current" />)}</Fx> })) },
   "--vita-type-base": { label: "Body size", items: bodySizes.map((b) => ({ value: String(b.v), label: b.label, preview: <Fx look={{ fontSize: `${b.v}rem` }}>Aa</Fx> })) },
   "--vita-type-ratio": { label: "Type scale", items: ratios.map((r) => ({ value: String(r.v), label: r.label, preview: <span className="flex items-baseline gap-0.5"><Fx className="font-semibold leading-none" look={{ fontSize: `${0.6 * r.v ** 4}rem` }}>A</Fx><Fx className="leading-none" look={{ fontSize: "0.6rem" }}>a</Fx></span> })) },

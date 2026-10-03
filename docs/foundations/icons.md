@@ -27,6 +27,7 @@ avoid_when:
 4. **One icon per concept.** The taxonomy maps concepts to icons: delete is always `TrashCan`.
 5. **Far right on buttons.** A button's icon always sits at its right edge, after the label.
 6. **Icon-only needs a label.** `IconButton` requires it and shows it as a tooltip.
+7. **The theme sets the line.** Every icon wears `--vita-line` (weight) and follows `--vita-radius` (rounded corners, square at 0). Never restyle an icon's strokes locally.
 7. **Disclosure chevrons: down when closed, up when open.** A chevron that reveals content below always points down while closed and rotates up once open. Sideways chevrons mean "go to" or "open to the side" only.
 
 ## Common mapping
