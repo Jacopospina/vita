@@ -32,7 +32,7 @@ const cfg = {
 }
 cfg.audit.exclude = [...new Set([...(cfg.audit.exclude ?? []), cfg.componentsDir, cfg.stylesDir])]
 
-const RUNTIME_DEPS = ["radix-ui", "class-variance-authority", "clsx", "tailwind-merge", "@carbon/icons-react", "@carbon/pictograms-react", "react-day-picker", "date-fns", "@fontsource-variable/google-sans-flex", "@fontsource-variable/google-sans-code"]
+const RUNTIME_DEPS = ["radix-ui", "class-variance-authority", "clsx", "tailwind-merge", "@carbon/icons-react", "@carbon/pictograms-react", "polygon-clipping", "react-day-picker", "date-fns", "@fontsource-variable/google-sans-flex", "@fontsource-variable/google-sans-code"]
 
 const log = (...a) => console.log(...a)
 const ok = (m) => log(`  ✓ ${m}`)
