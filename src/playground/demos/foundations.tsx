@@ -5,6 +5,8 @@ import * as Icons from "@/registry/icons"
 import type { DemoMap } from "./types"
 import { Stack, Inline, Grid, Column } from "@/registry/ui/layout"
 import { Text, Heading } from "@/registry/ui/text"
+import { AILabel, AISurface } from "@/registry/ui/ai-label"
+import { Thinking } from "@/registry/ui/thinking"
 import { Icon } from "@/registry/ui/icon"
 import { Button } from "@/registry/ui/button"
 import { Tile } from "@/registry/ui/tile"
@@ -398,6 +400,28 @@ export const foundationDemos: DemoMap = {
     { title: "Easing & duration tokens", render: () => <MotionDemo /> },
   ],
   "foundations/icons": [{ title: "Every icon", description: "The full set, searchable. Click any icon to copy its import.", render: () => <GlyphGallery kind="icons" /> }],
+  "foundations/vita-for-ai": [
+    {
+      title: "AI, marked, explained and at work",
+      description: "A standalone AI label, a generated reply in an AI surface (its label muted in context; click it for the explanation), and Sofia showing the kind of work.",
+      render: () => (
+        <Stack gap="lg" className="max-w-xl">
+          <Inline gap="sm" align="center"><AILabel title="Summarised by Support triage">Summarised from 12 tickets in the last week · high confidence.</AILabel><Text tone="muted">Standalone: the full spectrum</Text></Inline>
+          <AISurface>
+            <Stack gap="xs">
+              <Inline gap="xs"><AILabel size="sm" title="Suggested reply">Drafted from the help center article "Refunds" · high confidence.</AILabel><Text weight="semibold">Suggested reply</Text></Inline>
+              <Text tone="muted">Your refund was approved today and reaches your card in 3 to 5 days.</Text>
+            </Stack>
+          </AISurface>
+          <Inline gap="xl" align="center" wrap>
+            {([["retrieving", "Retrieving"], ["searching", "Searching"], ["generating", "Generating"]] as const).map(([m, l]) => (
+              <Stack key={m} gap="xs" align="center"><Thinking mode={m} size="lg" label={l} /><Text variant="caption" tone="muted">{l}</Text></Stack>
+            ))}
+          </Inline>
+        </Stack>
+      ),
+    },
+  ],
   "foundations/pictograms": [
     {
       title: "Tones and sizes",
