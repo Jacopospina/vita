@@ -421,7 +421,7 @@ export const inputDemos: DemoMap = {
       description: "A size, a density, a level: the knob lands only on the steps, and shows the step by name.",
       render: () => (
         <Stack gap="xl" className="max-w-md">
-          <StepSlider label="Pictogram size" defaultValue="lg" steps={[{ value: "md", label: "Small" }, { value: "lg", label: "Medium" }, { value: "xl", label: "Large" }]} />
+          <StepSlider label="Pictogram size" hideLabel defaultValue="lg" steps={[{ value: "md", label: "Small" }, { value: "lg", label: "Medium" }, { value: "xl", label: "Large" }]} />
           <StepSlider label="Density" defaultValue="default" steps={[{ value: "compact", label: "Compact" }, { value: "default", label: "Default" }, { value: "roomy", label: "Roomy" }]} />
         </Stack>
       ),

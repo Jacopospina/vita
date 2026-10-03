@@ -27,6 +27,7 @@ related: [number-input, filtering]
 - **For ordered steps of one thing.** A size (48 · 64 · 80), a density, a level: the content stays the same, only its scale moves. Tabs and content switchers mean different content in each option, so they're wrong here.
 - **Never free-form.** The knob only lands on the steps, and the current step rides in the knob; nothing else repeats it.
 - **Name the intent, not the number.** People choose "Small" or "Large", not 48 or 64: label steps by what they mean.
+- **Let the steps speak.** When the step names already say what the control does (Small · Medium · Large is a size), hide the visible label (`hideLabel`); it stays as the name screen readers hear. Keep it when they don't ("Default" says nothing on its own).
 - **Keyboard.** Arrows move one step; Home and End jump to the first and last.
 
 ## Value

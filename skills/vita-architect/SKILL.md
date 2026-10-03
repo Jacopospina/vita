@@ -48,7 +48,7 @@ If Vita lacks what you need: **stop and say so**. Propose the smallest compositi
 | 1 of 20+ | `Combobox` |
 | Many of 7+ | `MultiSelect` |
 | Same data, different view | `ContentSwitcher` |
-| Same content, different scale (size, density, zoom: ordered steps) | `StepSlider`, never tabs |
+| Same content, different scale (size, density, zoom: ordered steps) | `StepSlider`, never tabs; steps named by intent (Small · Medium · Large), and `hideLabel` when those names already say what it controls |
 | Peer views of an object | `Tabs` |
 | Many records | `DataTable` + `Pagination` |
 | Few key/value rows | `StructuredList` |

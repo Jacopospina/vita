@@ -75,8 +75,10 @@ export function GlyphGallery({ kind }: { kind: "icons" | "pictograms" }) {
         </div>
         {/* One property at a few ordered steps (the content stays the same): a stepped slider, not tabs. */}
         <div className="w-56">
+          {/* Small · Medium · Large already say what it does: the label is for screen readers only. */}
           <StepSlider
             label="Size"
+            hideLabel
             value={size}
             onValueChange={setSize}
             steps={kind === "icons"
