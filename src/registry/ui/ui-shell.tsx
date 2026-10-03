@@ -192,7 +192,8 @@ export function LeftPanel({ children, rail, mobileOnly, className, label = "Side
   }, [rail, mobileOnly, setNav])
   return (
     <>
-      {navOpen && <div className="absolute inset-0 top-16 z-30 animate-enter-fade bg-overlay max-sm:top-0 max-sm:bottom-16 lg:hidden" onClick={() => setNavOpen(false)} />}
+      {/* The dim covers the whole window on a phone, under the bottom header (z-40), which stays live above it. */}
+      {navOpen && <div className="absolute inset-0 top-16 z-30 animate-enter-fade bg-overlay max-sm:top-0 lg:hidden" onClick={() => setNavOpen(false)} />}
       <nav
         aria-label={label}
         data-rail={rail || undefined}
@@ -202,6 +203,8 @@ export function LeftPanel({ children, rail, mobileOnly, className, label = "Side
           // Floats over the scrolling page, below the header (top-16 = 8 + 48 + 8), inset 8px like the header.
           // On a phone the header is at the bottom, so the sheet keeps clear of it there instead.
           "absolute top-16 bottom-2 left-2 w-60 -translate-x-[calc(100%+1rem)] duration-moderate-02 ease-productive max-sm:top-2 max-sm:bottom-16",
+          // A phone gets the whole width (inset like the header), so every row is a full-width target.
+          "max-sm:right-2 max-sm:w-auto",
           mobileOnly ? "lg:hidden" : "lg:translate-x-0",
           // Open over the page on a small screen it's a sheet, not a sidebar: solid, so nothing behind competes with it.
           navOpen && "translate-x-0 max-lg:bg-raised!",
