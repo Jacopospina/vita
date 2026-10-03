@@ -53,7 +53,8 @@ export function AILabel({ size = "md", children, title = "AI explained", classNa
     return (
       <Popover>
         <PopoverTrigger aria-label="AI – Show information" className={cn("inline-flex shrink-0 rounded-full focus-ring", className)}>
-          <Thinking mode="generating" size="sm" label="AI" />
+          {/* md (24): the smallest Sofia that reads as Sofia beside text. -my-1 keeps the row the height of its text. */}
+          <Thinking mode="generating" size="md" label="AI" className="-my-1" />
         </PopoverTrigger>
         {explain}
       </Popover>
