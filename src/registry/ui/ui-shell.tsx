@@ -67,7 +67,7 @@ export function ShellMain({ children, className, ...props }: React.HTMLAttribute
   return (
     <main
       id="main-content"
-      className={cn("absolute inset-0 overflow-x-hidden overflow-y-auto pt-16 [--vita-shell-top:4rem] max-sm:pt-0 max-sm:pb-16 max-sm:[--vita-shell-top:0px]", nav === "full" && "lg:pl-64", nav === "rail" && "lg:pl-16", className)}
+      className={cn("absolute inset-0 overflow-x-hidden overflow-y-auto pt-17 [--vita-shell-top:calc(var(--spacing)*17)] max-sm:pt-0 max-sm:pb-16 max-sm:[--vita-shell-top:0px]", nav === "full" && "lg:pl-64", nav === "rail" && "lg:pl-16", className)}
       {...props}
     >
       {children}
@@ -102,7 +102,8 @@ export function Header({ productName, prefix, logo, badge, href = "/", children,
     <header
       className={cn(
         // Never wider than 1024px: on a wide screen the bar stays a compact, centred object, not a strip edge to edge.
-        "absolute inset-x-2 top-2 z-40 mx-auto flex h-12 max-w-5xl items-center gap-1 glass glass-2 scope-xl p-2",
+        // 12px (sm) from the top of the window; everything below it starts at top-17 (12 + 48 + 8).
+        "absolute inset-x-2 top-3 z-40 mx-auto flex h-12 max-w-5xl items-center gap-1 glass glass-2 scope-xl p-2",
         "max-sm:top-auto max-sm:bottom-2 max-sm:mx-auto max-sm:w-fit max-sm:max-w-full",
         className,
       )}
@@ -194,16 +195,16 @@ export function LeftPanel({ children, rail, mobileOnly, className, label = "Side
   return (
     <>
       {/* The dim covers the whole window on a phone, under the bottom header (z-40), which stays live above it. */}
-      {navOpen && <div className="absolute inset-0 top-16 z-30 animate-enter-fade bg-overlay max-sm:top-0 lg:hidden" onClick={() => setNavOpen(false)} />}
+      {navOpen && <div className="absolute inset-0 top-17 z-30 animate-enter-fade bg-overlay max-sm:top-0 lg:hidden" onClick={() => setNavOpen(false)} />}
       <nav
         aria-label={label}
         data-rail={rail || undefined}
         className={cn(
           // Floating sidebar: frosted glass, inset from the window, rounded; rows inside are concentric (rounded-inner-2).
           "group/nav z-30 flex shrink-0 flex-col overflow-y-auto glass glass-1 scope-xl p-2",
-          // Floats over the scrolling page, below the header (top-16 = 8 + 48 + 8), inset 8px like the header.
+          // Floats over the scrolling page, below the header (top-17 = 12 above it + 48 tall + 8 below), inset 8px at the sides.
           // On a phone the header is at the bottom, so the sheet keeps clear of it there instead.
-          "absolute top-16 bottom-2 left-2 w-60 -translate-x-[calc(100%+1rem)] duration-moderate-02 ease-productive max-sm:top-2 max-sm:bottom-16",
+          "absolute top-17 bottom-2 left-2 w-60 -translate-x-[calc(100%+1rem)] duration-moderate-02 ease-productive max-sm:top-2 max-sm:bottom-16",
           // A phone gets the whole width (inset like the header), so every row is a full-width target.
           "max-sm:right-2 max-sm:w-auto",
           mobileOnly ? "lg:hidden" : "lg:translate-x-0",
@@ -357,7 +358,7 @@ export function RightPanel({ open, onOpenChange, title, children, footer, size =
         // Floating, like the left panel: the same 8px inset from the window, the same radius (scope-xl) and
         // 8px padding, so everything inside is concentric (rounded-inner-2 = 16 − 8). It sits on the TOP shell
         // layer (above the side nav and header), so it gets the matching, stronger glass tier.
-        "absolute top-16 right-2 bottom-2 left-2 z-50 flex flex-col glass glass-3 scope-xl p-2 outline-none max-sm:top-2 max-sm:bottom-16 sm:left-auto",
+        "absolute top-17 right-2 bottom-2 left-2 z-50 flex flex-col glass glass-3 scope-xl p-2 outline-none max-sm:top-2 max-sm:bottom-16 sm:left-auto",
         size === "sm" ? "sm:w-80" : size === "lg" ? "sm:w-140" : "sm:w-100",
         open ? "animate-enter-panel-right" : "pointer-events-none animate-exit-panel-right",
         className,
