@@ -40,7 +40,8 @@
   /* Floating layers (glass): raised, carrying the weather tint. */
   --vita-elevated: oklch(0.995 var(--_ec) var(--_eh));
   --vita-glass-lift: 1.03; /* a whisper of brightening, more would bleach the page behind to flat white */
-  --vita-field: oklch(1 0 0);
+  /* Fields: white at low opacity, so the surface they sit on (a card, a panel, glass) shows through softly. */
+  --vita-field: oklch(1 0 0 / 0.55);
   --vita-overlay: oklch(0 0 0 / 0.4);
   --vita-inverse: oklch(0.232 var(--_nc) var(--_nh));
   --vita-inverse-foreground: oklch(0.971 var(--_nc) var(--_nh));
@@ -129,7 +130,7 @@
   --vita-raised: oklch(0.227 var(--_nc) var(--_nh));
   --vita-elevated: oklch(0.227 var(--_ec) var(--_eh));
   --vita-glass-lift: 1;
-  --vita-field: oklch(0.227 var(--_nc) var(--_nh));
+  --vita-field: oklch(1 0 0 / 0.06);
   --vita-overlay: oklch(0 0 0 / 0.6);
   --vita-inverse: oklch(0.971 var(--_nc) var(--_nh));
   --vita-inverse-foreground: oklch(0.232 var(--_nc) var(--_nh));
