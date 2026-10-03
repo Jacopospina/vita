@@ -31,4 +31,5 @@ related: [tabs, radio-button, toggle]
 ## Hold and drag
 
 - **Swing to browse.** Press and give a gentle swing left or right: each swing moves exactly one step in that direction and shows its content. To keep going, pause briefly and swing again, or swing the other way. It's a gesture, not a distance, so there's no aiming and no effort.
+- **Hold and slide on touch.** Hold a segment for a moment, then slide: the segment under the thumb is the one selected, the pill leaning toward the thumb. Lift to keep it. A tap still selects.
 - **Click still works.** A plain click selects one segment, and keyboard arrows move between segments.

@@ -32,3 +32,4 @@ related: [ui-shell-left-panel, ui-shell-right-panel, global-header]
 
 - **Floating glass, like the side panel.** The header floats 8px from the window's edges, with frosted `glass` and rounded corners. It's the same material as the LeftPanel, so the two read as one frame.
 - **Pills inside.** The product name, nav items and global actions are 32px pills with the concentric radius. The current nav item gets the same soft grey as the current sidebar row.
+- **At the bottom on a phone.** Up to 40rem wide the bar sits at the bottom, within the thumb's reach, as a centred pill as wide as its contents: the menu button, the product mark (the name folds into it), the global actions. The menu sheet and the right panel keep clear of it.

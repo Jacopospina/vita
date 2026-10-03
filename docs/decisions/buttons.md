@@ -27,3 +27,9 @@ related: [button, dialogs]
 ## Revisit when
 
 - **The brand hue changes** (re-check the wash contrast).
+
+## Revision, 2026-10-03: width and touch
+
+- **Full width only in action bars** (panels, dialogs, popovers: surfaces above the page). In page content a button is as wide as its label, `lg` or `xl`; the login form's buttons included. A full-bleed button on a page reads as a bar that isn't there.
+- **On touch, a button with an icon shows only its icon**, except the primary and buttons that fill a bar (see *Touch adapts by itself*, revision 2026-10-03).
+- **Label and icon take the button's colour in the same frame.** Text carriers no longer transition an inherited colour on their own; a red button was briefly red with blue letters.

@@ -11,7 +11,8 @@ import { useDragSelect } from "@/registry/hooks/use-drag-select"
  *   contained → tabs attached to a panel/card (secondary level)
  * Switching filters or modes of ONE dataset → ContentSwitcher. Sequential steps → ProgressIndicator.
  * Hold and nudge to browse: while pressed, a gentle sideways swing snaps to the next/previous tab (content follows);
- * the pill leans with the pointer so movement and position always agree.
+ * the pill leans with the pointer so movement and position always agree. Under a thumb: hold, then slide, and the
+ * tab under the thumb is the one shown. A list wider than its row scrolls sideways, without a scrollbar.
  */
 export function Tabs({ className, ...props }: React.ComponentProps<typeof TabsPrimitive.Root>) {
   return <TabsPrimitive.Root className={cn("flex flex-col", className)} {...props} />
@@ -33,7 +34,9 @@ export function TabsList({ className, variant = "pill", fullWidth, children, onP
       ref={ref}
       data-variant={variant}
       className={cn(
-        "group/tabs relative flex overflow-x-auto",
+        // Overflow scrolls, bar hidden (it would sit under the pill like a second indicator). Sideways touches
+        // stay with the list (hold-and-slide, or a hand pan); up and down stays the page's.
+        "group/tabs relative flex overflow-x-auto scrollbar-none touch-pan-y *:touch-pan-y",
         variant === "pill" && "w-fit max-w-full gap-0.5 scope-md bg-layer-2 p-0.5",
         variant === "line" && "gap-1 border-b border-border-subtle",
         variant === "contained" && "gap-px",

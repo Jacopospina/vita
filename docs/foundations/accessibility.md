@@ -45,6 +45,8 @@ avoid_when:
 - **Hit areas.** `tap` adds a 44px target around a small *standalone* control: checkboxes, radios, switches, slider knobs and lone × or ⓘ buttons already carry it. Never on rows, tabs, button sets or table cells, whose targets would overlap their neighbours.
 - **Nothing waits for a second tap.** Every control has `touch-action: manipulation`: a stepper tapped twice steps twice and never zooms the page. The grey tap flash is off; the press state is the feedback.
 - **Hover is not the only way.** Whatever hover reveals (a notification's ×, a sort arrow, a section chevron) is visible under a finger through the `pointer-coarse:` variant.
+- **Holding never selects text.** Controls (buttons, tabs, switches, options, labels) can't be text-selected, so a stepper held to repeat or a tab held to browse never lights up as a selection. Fields still select: that's typing.
+- **Hold and slide.** Switches drag, tabs and segments slide under a held thumb, lists open on a hold and pick on lift, calendars swipe between months. Every one still works with a tap and with the keyboard.
 
 ## Focus ring
 

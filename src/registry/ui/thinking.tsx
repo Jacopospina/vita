@@ -488,7 +488,9 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
     if (field && glRef.current) {
       const probe = document.createElement("canvas").getContext("2d", { willReadFrequently: true })
       const precise = mode === "retrieving", defined = mode === "generating"
-      const blur = precise ? (px <= 24 ? px * 0.06 : px * 0.035) : defined ? (px <= 24 ? px * 0.06 : px * 0.045) : px <= 24 && mode !== "basic" ? px * 0.085 : px * 0.065
+      // Small voice orbs (the 16 and 24px idle ring) are a thin line of tiny drops: at the full blur their field
+      // never reaches the goo's threshold and the ring faded to nothing. A tighter blur keeps the line whole.
+      const blur = precise ? (px <= 24 ? px * 0.06 : px * 0.035) : defined ? (px <= 24 ? px * 0.06 : px * 0.045) : px <= 24 && VOICE.has(mode) ? px * 0.045 : px <= 24 && mode !== "basic" ? px * 0.085 : px * 0.065
       const glDpr = Math.min(2, window.devicePixelRatio || 1)
       orb = probe
         ? createOrbGL(glRef.current, {

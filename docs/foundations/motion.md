@@ -56,6 +56,7 @@ avoid_when:
 6. **Messages drop in and drop out.** Every field reserves one line for its message; the message slides down, its letters cascade in one after another (blur → sharp) and its icon draws its path, the exit reverses it, letters staggering downward and the icon un-drawing.
 7. **Branches expand.** Tree and disclosure content open and close with `reveal` / `reveal-open`.
 8. **Focus settles in.** Focus rings arrive over 400ms, from wide and transparent to tight and solid.
+9. **Colour moves as one.** The element that sets a colour transitions it; the text and glyphs inside (labels, letters, icon paths) follow in the same frame instead of each lagging a transition behind, so a button turning red is never red with blue letters.
 
 ## Enter & exit
 

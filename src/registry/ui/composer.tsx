@@ -85,25 +85,32 @@ export function Composer({ placeholder = "Describe what you need", onSubmit, sug
             </ul>
           </div>
         </div>
-        <textarea
-          ref={inputRef}
-          aria-label={label}
-          rows={1}
-          value={value}
-          placeholder={listening ? "Listening…" : placeholder}
-          onChange={(e) => setValue(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" && !e.shiftKey && !e.nativeEvent.isComposing) {
-              e.preventDefault()
-              submit()
-            }
-          }}
-          className={cn(
-            // grows with the text up to 2.5 lines (the half line hints there is more), then scrolls
-            "field-sizing-content max-h-[calc(2.5lh+var(--spacing)*2.5)] min-h-10 w-full resize-none overflow-y-auto bg-transparent px-3 pt-2.5 text-foreground outline-none placeholder:text-placeholder",
-            size === "lg" ? "text-body-lg" : "text-body",
-          )}
-        />
+        {/* The field grows with its text, up to 2.5 lines (the half line hints there is more), then scrolls. The
+            height comes from a hidden twin of the text (or of the placeholder, so a long prompt is never cut off on
+            a narrow screen), which works in every browser; field-sizing does the same where it exists. */}
+        <div className="relative">
+          <div aria-hidden className={cn("pointer-events-none invisible max-h-[calc(2.5lh+var(--spacing)*2.5)] min-h-10 w-full px-3 pt-2.5 break-words whitespace-pre-wrap", size === "lg" ? "text-body-lg" : "text-body")}>
+            {(value || (listening ? "Listening…" : placeholder)) + "​"}
+          </div>
+          <textarea
+            ref={inputRef}
+            aria-label={label}
+            rows={1}
+            value={value}
+            placeholder={listening ? "Listening…" : placeholder}
+            onChange={(e) => setValue(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey && !e.nativeEvent.isComposing) {
+                e.preventDefault()
+                submit()
+              }
+            }}
+            className={cn(
+              "absolute inset-0 size-full resize-none overflow-y-auto bg-transparent px-3 pt-2.5 text-foreground outline-none placeholder:text-placeholder",
+              size === "lg" ? "text-body-lg" : "text-body",
+            )}
+          />
+        </div>
         <div className="flex items-center gap-1 px-1.5 pb-1.5">
           {attachments && (
             <>

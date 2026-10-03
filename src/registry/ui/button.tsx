@@ -10,13 +10,22 @@ import { Group } from "@/registry/ui/layout"
 import { Kbd } from "@/registry/ui/kbd"
 import { useShortcut } from "@/registry/hooks/use-shortcut"
 import { useTilt } from "@/registry/hooks/use-tilt"
+import { useCoarsePointer } from "@/registry/hooks/use-media"
 import { Thinking } from "@/registry/ui/thinking"
 import { animateChildren } from "@/registry/ui/animated"
 
 /**
  * Button, triggers an action. Clear hierarchy with restraint:
  * ONE primary per view. Everything else steps down: secondary → tertiary → ghost.
+ *
+ * Under a finger, a button with an icon shows ONLY the icon (its label stays for screen readers), so a row of
+ * actions fits a phone. The primary keeps its words: it's the one action the person must read. Buttons that fill a
+ * bar (ActionBar, a stacked ButtonSet) keep their words too, they have the room.
+ * Full width only inside a panel, dialog or popover (ActionBar); in page content a button is as wide as its label.
  */
+
+/** Set by ActionBar and a stacked ButtonSet: the buttons inside fill the row, so they keep their labels on touch. */
+const KeepLabel = React.createContext(false)
 const buttonVariants = cva(
   [
     // No will-change: the tilt's perspective already gives a hovered button its own layer, and on touch there is no tilt.
@@ -111,6 +120,11 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     useShortcut(shortcut, () => inner.current?.click(), { enabled: !!shortcut && !disabled && !busy })
     const tilt = useTilt<HTMLButtonElement>({ max: 12, lift: 1.05 }, { onPointerMove: props.onPointerMove, onPointerLeave: props.onPointerLeave })
     const label = status !== "idle" && feedback?.[status] ? feedback[status] : children
+    // Touch: the icon alone stands for the action (the label stays, read by screen readers), except on the primary
+    // and on buttons that fill a bar. The consequence still plays in the slot: orb, check, error mark.
+    const coarse = useCoarsePointer()
+    const keepLabel = React.useContext(KeepLabel)
+    const iconOnly = coarse && !!icon && (variant ?? "primary") !== "primary" && !fullWidth && !keepLabel && !asChild
     // The far-right slot carries the consequence: icon → thinking orb → drawn check / error mark.
     const slot =
       // Sofia draws at 24 (md) so she reads as Sofia, but -m-1 keeps her in the 16px icon slot: the button never grows.
@@ -153,7 +167,14 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       <Comp
         ref={inner}
         aria-keyshortcuts={shortcut}
-        className={cn(buttonVariants({ variant, size, fullWidth }), slot && cn("justify-between", withIcon), busy && "pointer-events-none", status !== "idle" && status !== "loading" && statusTone[status], className)}
+        className={cn(
+          buttonVariants({ variant, size, fullWidth }),
+          slot && cn("justify-between", withIcon),
+          iconOnly && cn(iconButtonSize[size ?? "md"], "justify-center gap-0 px-0"),
+          busy && "pointer-events-none",
+          status !== "idle" && status !== "loading" && statusTone[status],
+          className,
+        )}
         disabled={asChild ? undefined : disabled}
         aria-busy={busy || undefined}
         data-status={status === "idle" ? undefined : status}
@@ -165,7 +186,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           children
         ) : (
           <>
-            <span aria-live="polite" className="inline-flex items-center gap-2">{animateChildren(label)}</span>
+            <span aria-live="polite" className={cn("inline-flex items-center gap-2", iconOnly && "sr-only")}>{animateChildren(label)}</span>
             {(slot || leaving) && (
               <span className="relative flex shrink-0 items-center">
                 {slot && <span key={slotKey} className={cn("flex items-center", (leaving || slotKey !== "icon") && "animate-enter-scale")}>{slot}</span>}
@@ -216,8 +237,13 @@ IconButton.displayName = "IconButton"
  * ButtonSet, related buttons BELONG TOGETHER, so they touch: zero gap, joined edges. Max 3. Primary goes LAST.
  * `stacked` for narrow containers: vertical join, primary on top.
  */
-export function ButtonSet({ className, stacked, ...props }: React.HTMLAttributes<HTMLDivElement> & { stacked?: boolean }) {
-  return <Group orientation={stacked ? "vertical" : "horizontal"} className={cn(stacked && "w-full flex-col-reverse *:w-full", className)} {...props} />
+export function ButtonSet({ className, stacked, children, ...props }: React.HTMLAttributes<HTMLDivElement> & { stacked?: boolean }) {
+  return (
+    <Group orientation={stacked ? "vertical" : "horizontal"} className={cn(stacked && "w-full flex-col-reverse *:w-full", className)} {...props}>
+      {/* Stacked buttons fill their column: they keep their words on touch. */}
+      <KeepLabel.Provider value={!!stacked}>{children}</KeepLabel.Provider>
+    </Group>
+  )
 }
 
 /**
@@ -225,7 +251,7 @@ export function ButtonSet({ className, stacked, ...props }: React.HTMLAttributes
  * NEVER include Cancel/Close/Dismiss: the surface's × , Escape and click-outside already do that.
  * 1 action = full width. 2 actions = a secondary alternative (not a dismissal) + the primary.
  */
-export function ActionBar({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
+export function ActionBar({ className, children, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       role="group"
@@ -236,7 +262,10 @@ export function ActionBar({ className, ...props }: React.HTMLAttributes<HTMLDivE
         className,
       )}
       {...props}
-    />
+    >
+      {/* Bar actions fill the surface's width: they keep their words on touch. */}
+      <KeepLabel.Provider value>{children}</KeepLabel.Provider>
+    </div>
   )
 }
 

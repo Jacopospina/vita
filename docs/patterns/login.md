@@ -26,4 +26,4 @@ related: [forms, text-input, notification]
    - Never "No account with this email".
    - Rate limiting says when to retry.
 5. **"Remember my email"** is on by default. The session length is decided by security policy, not by a checkbox label that promises more.
-6. **Full-width `lg` buttons** here, and only here among product pages.
+6. **`lg` buttons at their own width.** Continue and SSO are large and left-aligned under the field, never full bleed: full width belongs to action bars in panels and dialogs.

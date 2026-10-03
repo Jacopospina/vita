@@ -38,6 +38,7 @@ Include the story whenever there is one. It is what the compact capsule shows fi
 2. **Update, don't stack.** Use `capsule.update(id, …)`, so progress morphs in place and never re-enters.
 3. **Short:** 3s by default. `duration: 0` keeps it until you update it with a duration.
 4. **Same material as notifications:** frosted `glass`, following the theme.
+5. **The same capsule on every screen.** It is laid out across the full width and centred, so a phone shows the desktop capsule at the desktop width; only a window narrower than the capsule trims its text.
 
 ## Choreography
 

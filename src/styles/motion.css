@@ -217,6 +217,16 @@
     transition-duration: var(--vita-duration-moderate-01);
     transition-timing-function: var(--vita-ease-productive);
   }
+  /* Text and glyph carriers only INHERIT their colour (a button's label, each animated letter, an icon's paths).
+     A transition on an inherited colour lags one step behind the parent at every level of nesting: a button
+     turning red had white text arrive three transitions later, blue on red in between. They follow the element
+     that sets the colour, in the same frame. A carrier that sets its own colour (text-success on a span) keeps it. */
+  :where(:is(span, svg, path, g, circle, rect, polygon, polyline, ellipse, line, use):not([class*="text-"])) {
+    transition-property: background-color, border-color, outline-color, text-decoration-color, box-shadow, opacity,
+      transform, translate, scale, rotate, border-radius, width, height, min-height, max-height, max-width, padding, margin,
+      gap, font-size, line-height, letter-spacing, font-weight, outline-offset, outline-width, grid-template-rows,
+      grid-template-columns, filter, backdrop-filter, visibility, stroke-dashoffset, fill-opacity, stroke-opacity;
+  }
   /* Positioning layers are measured, not animated, the WRAPPER only. Everything inside a popover, menu or
      listbox keeps full choreography (checkbox draws, toggles slide, icons swap). */
   :where([data-radix-popper-content-wrapper], [data-radix-scroll-area-viewport]) {

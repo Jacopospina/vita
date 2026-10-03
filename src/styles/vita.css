@@ -292,6 +292,13 @@
   border-radius: max(0px, calc(var(--vita-scope-r2, var(--vita-radius-sm)) - --value(number) * var(--spacing)));
 }
 
+/* A scroller without a visible bar: a tab list or a chip row that runs past its edge still scrolls, the content
+   itself says there is more (it's cut at the edge). The bar would sit under the pill like a second indicator. */
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+}
+
 /* The two motion characters, as one class each (duration + easing). */
 @utility motion-productive { transition-duration: var(--vita-duration-moderate-01); transition-timing-function: var(--vita-ease-productive); }
 @utility motion-expressive { transition-duration: var(--vita-duration-expressive); transition-timing-function: var(--vita-ease-expressive); }
@@ -454,6 +461,12 @@
     -webkit-tap-highlight-color: transparent;
   }
   :where(button, [role="button"], [role="checkbox"], [role="radio"], [role="switch"], [role="tab"], [role="slider"]) { -webkit-touch-callout: none; }
+  /* HOLDING a control never selects text: a stepper held to repeat, a tab held to browse, a switch held to drag.
+     Only fields keep selection (that's typing). */
+  :where(button, [role="button"], [role="checkbox"], [role="radio"], [role="switch"], [role="tab"], [role="tablist"], [role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"], [role="menu"], [role="option"], [role="listbox"], [role="slider"], [role="combobox"], [role="group"], [role="radiogroup"], [role="toolbar"], [role="status"], label, summary, kbd) {
+    -webkit-user-select: none;
+    user-select: none;
+  }
   /* Fallback ring for elements without their own, skipped by elements that opt out (outline-none), e.g. a
      composer's inner textarea, so only the component's ring shows. */
   :focus-visible:not(.outline-none) { outline: 1px solid var(--vita-ring); outline-offset: 1px; box-shadow: 0 0 0 5px color-mix(in oklab, var(--vita-ring) 22%, transparent); animation: var(--animate-focus-in); }

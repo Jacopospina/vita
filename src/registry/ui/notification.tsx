@@ -299,7 +299,7 @@ export function Capsule({ o, leaving }: { o: CapsuleOptions; leaving?: boolean }
       ref={ref}
       role="status"
       className={cn(
-        "glass glass-5 pointer-events-auto flex items-center rounded-pill p-1.5 text-foreground",
+        "glass glass-5 pointer-events-auto flex max-w-full items-center rounded-pill p-1.5 text-foreground",
         leaving ? "animate-island-out" : "animate-island-in",
       )}
     >
@@ -312,7 +312,8 @@ export function Capsule({ o, leaving }: { o: CapsuleOptions; leaving?: boolean }
       </div>
       <div className={cn("reveal-x duration-moderate-02 ease-productive", open && "reveal-x-open")}>
         <div>
-          <div className={cn("flex w-56 max-w-[calc(100vw-8rem)] flex-col items-center px-3 text-center duration-moderate-02", open ? "opacity-100" : "opacity-0")}>
+          {/* The same width on every screen; only a window too narrow for it (under 22rem) trims it. */}
+          <div className={cn("flex w-56 max-w-[calc(100vw-8.5rem)] flex-col items-center px-3 text-center duration-moderate-02", open ? "opacity-100" : "opacity-0")}>
             <p className="w-full truncate text-body font-semibold">{o.title}</p>
             {o.subtitle && <p className="w-full truncate text-footnote text-muted-foreground">{animateChildren(o.subtitle)}</p>}
           </div>
@@ -367,7 +368,9 @@ export function Toaster() {
           </div>
         ))}
       </div>
-      <div ref={capsules} aria-live="polite" className="pointer-events-none fixed top-3 left-1/2 z-60 flex -translate-x-1/2 flex-col items-center gap-2">
+      {/* Spans the whole width and centres its children: anchored at the middle (left-1/2) the capsule could only
+          grow into the right half of the window, so on a phone it was squeezed to half its width. */}
+      <div ref={capsules} aria-live="polite" className="pointer-events-none fixed inset-x-3 top-3 z-60 flex flex-col items-center gap-2">
         {list.map((t) => (t.type === "capsule" ? <Capsule key={t.id} o={t.o} leaving={t.leaving} /> : null))}
       </div>
     </>
