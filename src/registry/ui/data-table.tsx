@@ -5,14 +5,20 @@ import { Icon, SwapIcon } from "@/registry/ui/icon"
 import { Checkbox } from "@/registry/ui/checkbox"
 import { IconButton } from "@/registry/ui/button"
 import { Skeleton } from "@/registry/ui/loading"
+import { Dropdown } from "@/registry/ui/dropdown"
+import { OnPrimary } from "@/registry/ui/ai-label"
 import { AnimatedNumber, AnimatedText } from "@/registry/ui/animated"
 import { morph, useMorphId } from "@/registry/hooks/use-morph"
+import { usePhone } from "@/registry/hooks/use-media"
 
 /**
  * DataTable, view, compare, sort, select and act on MANY records with the same attributes.
  * < ~5 rows & no actions → StructuredList. Non-uniform items → ContainedList or Tiles.
  *
  * Anatomy: title/description → toolbar (search · filter · primary action) → batch actions (on selection) → header → rows → pagination.
+ * On a phone the same table is a list of cards: the first column is the card's title, the other columns are its
+ * lines (label on the left, value on the right); sorting moves to a "Sort by" control above the list; selection,
+ * expansion and the row's actions keep their places. Nothing scrolls sideways.
  */
 export interface DataTableColumn<T> {
   key: string
@@ -84,6 +90,7 @@ export function DataTable<T extends { id: string }>({
   const [open, setOpen] = React.useState<Set<string>>(new Set())
   const selected = selectedProp ?? innerSel
   const setSelected = (ids: string[]) => { setInnerSel(ids); onSelectedChange?.(ids) }
+  const phone = usePhone()
 
   const sorted = React.useMemo(() => {
     if (!sort) return rows
@@ -102,12 +109,17 @@ export function DataTable<T extends { id: string }>({
   // Re-sorting MORPHS: each row glides to its new position.
   const cycleSort = (key: string) =>
     morph(() => setSort((s) => (s?.key !== key ? { key, dir: "asc" } : s.dir === "asc" ? { key, dir: "desc" } : null)))
+  const toggleOpen = (id: string) => setOpen((s) => { const n = new Set(s); if (n.has(id)) n.delete(id); else n.add(id); return n })
+  const toggleRow = (id: string, on: boolean) => setSelected(on ? selected.filter((s) => s !== id) : [...selected, id])
+  const cellOf = (c: DataTableColumn<T>, row: T) => (c.cell ? c.cell(row) : String((row as Record<string, unknown>)[c.key] ?? ""))
 
   const colCount = columns.length + (selectable ? 1 : 0) + (renderExpanded ? 1 : 0) + (rowActions ? 1 : 0)
   const cellPad = "px-3"
+  const sortable = columns.filter((c) => c.sortable)
+  const name = typeof title === "string" ? title : label
 
   return (
-    <section className={cn("flex w-full flex-col overflow-clip scope-xl bg-layer-1 [--vita-inset-r:max(0px,calc(var(--vita-scope-r)-var(--spacing)*2.5))]", className)} aria-label={typeof title === "string" ? title : label}>
+    <section className={cn("flex w-full flex-col overflow-clip scope-xl bg-layer-1 [--vita-inset-r:max(0px,calc(var(--vita-scope-r)-var(--spacing)*2.5))]", className)} aria-label={name}>
       {(title || description) && (
         <header className={cn("flex flex-col gap-1 px-3 pt-3", toolbar || batchActions ? "pb-0" : "pb-3")}>
           {title && <h3 className="text-title-3">{title}</h3>}
@@ -125,14 +137,18 @@ export function DataTable<T extends { id: string }>({
         <div ref={stripRef} className="sticky top-[var(--vita-shell-top,0px)] z-20 p-2.5">
           <div
             className={cn(
-              "grid min-h-control-lg items-center rounded-outer-1 p-1 motion-expressive [grid-template-areas:'bar']",
+              // One cell that both bars share. Its column is capped at the strip's width (minmax(0, 1fr)): a bar's
+              // own min-content would otherwise widen the strip past the table on a phone.
+              "grid min-h-control-lg grid-cols-[minmax(0,1fr)] items-center rounded-outer-1 p-1 motion-expressive [grid-template-areas:'bar']",
               selecting ? "border border-transparent bg-primary text-primary-foreground shadow-raised" : stuck ? "glass glass-4" : "border border-transparent bg-layer-2",
             )}
           >
             {toolbar && (
+              // The search gives way first (down to 10rem) so a filter still fits beside it; what doesn't fit
+              // wraps to the next line, the search always first on its own line's left.
               <div
                 inert={selecting || undefined}
-                className={cn("flex items-center justify-end gap-2 motion-expressive [grid-area:bar] [&>[role=search]]:min-w-0 [&>[role=search]]:flex-1 max-sm:flex-wrap max-sm:[&>[role=search]]:basis-full", selecting ? "pointer-events-none scale-98 opacity-0 blur-xs" : "opacity-100")}
+                className={cn("flex flex-wrap items-center justify-end gap-2 motion-expressive [grid-area:bar] [&>[role=search]]:min-w-40 [&>[role=search]]:flex-1 [&>[role=search]]:basis-40", selecting ? "pointer-events-none scale-98 opacity-0 blur-xs" : "opacity-100")}
               >
                 {toolbar}
               </div>
@@ -140,13 +156,13 @@ export function DataTable<T extends { id: string }>({
             {batchActions && (
               <div
                 inert={!selecting || undefined}
-                className={cn("flex items-center gap-2 motion-expressive [grid-area:bar]", selecting ? "opacity-100" : "pointer-events-none scale-98 opacity-0 blur-xs")}
+                className={cn("flex flex-wrap items-center gap-2 motion-expressive [grid-area:bar]", selecting ? "opacity-100" : "pointer-events-none scale-98 opacity-0 blur-xs")}
               >
                 <span className="inline-flex items-baseline gap-1 pl-2 text-body" aria-live="polite">
                   <AnimatedNumber value={selected.length} /> <AnimatedText>{selected.length === 1 ? "item selected" : "items selected"}</AnimatedText>
                 </span>
                 <div className="ml-auto flex items-center gap-1 [&_button]:bg-transparent [&_button]:text-primary-foreground [&_button:hover]:bg-primary-hover">
-                  {batchActions(selected)}
+                  <OnPrimary>{batchActions(selected)}</OnPrimary>
                   <IconButton icon={Close} label="Clear selection" shortcut="escape" variant="primary" onClick={() => setSelected([])} />
                 </div>
               </div>
@@ -155,9 +171,102 @@ export function DataTable<T extends { id: string }>({
         </div>
         </>
       )}
-      {/* Inset like the toolbar strip above; the header row is a rounded band (separate borders allow cell radius). */}
+      {phone ? (
+        /* PHONE: cards. The same records, one under the other, nothing to scroll sideways. */
+        <div className="flex flex-col px-2.5">
+          {(sortable.length > 0 || selectable) && rows.length > 0 && (
+            <div className="flex min-h-control-md items-center gap-1 px-0.5 pb-1 text-footnote text-muted-foreground">
+              {selectable && (
+                <label className="flex items-center gap-2 pl-2.5">
+                  <Checkbox aria-label="Select all rows" checked={allSel ? true : someSel ? "indeterminate" : false} onCheckedChange={() => setSelected(allSel ? [] : rows.map((r) => r.id))} />
+                  <span>All</span>
+                </label>
+              )}
+              {sortable.length > 0 && (
+                <span className="ml-auto inline-flex items-center gap-0.5">
+                  <span>Sort by</span>
+                  <Dropdown
+                    type="inline"
+                    hideLabel
+                    label="Sort by"
+                    placeholder="None"
+                    value={sort?.key ?? "none"}
+                    onValueChange={(k) => morph(() => setSort(k && k !== "none" ? { key: k, dir: sort?.dir ?? "asc" } : null))}
+                    items={[{ value: "none", label: "None" }, ...sortable.map((c) => ({ value: c.key, label: c.header }))]}
+                  />
+                  <IconButton
+                    icon={sort ? (sort.dir === "asc" ? ArrowUp : ArrowDown) : ArrowsVertical}
+                    label={sort?.dir === "asc" ? "Ascending, switch to descending" : "Descending, switch to ascending"}
+                    size="sm"
+                    disabled={!sort}
+                    onClick={() => sort && morph(() => setSort({ key: sort.key, dir: sort.dir === "asc" ? "desc" : "asc" }))}
+                  />
+                </span>
+              )}
+            </div>
+          )}
+          <ul role="list" aria-label={name} className="flex flex-col">
+            {loading &&
+              Array.from({ length: 4 }).map((_, i) => (
+                <li key={i} className="flex flex-col gap-2 px-3 py-3 divider-b">
+                  <Skeleton shape="text" className="w-1/2" />
+                  <Skeleton shape="text" className="w-3/4" />
+                  <Skeleton shape="text" className="w-2/3" />
+                </li>
+              ))}
+            {!loading && rows.length === 0 && <li className="p-0">{emptyState}</li>}
+            {!loading &&
+              sorted.map((row, idx) => {
+                const isSel = selected.includes(row.id)
+                const isOpen = open.has(row.id)
+                const [first, ...rest] = columns
+                return (
+                  <li
+                    key={row.id}
+                    style={{ viewTransitionName: `${mid}-${row.id.replace(/[^a-zA-Z0-9_-]/g, "")}` }}
+                    data-selected={isSel || undefined}
+                    className={cn(
+                      "flex animate-enter-fade flex-col gap-2 rounded-(--vita-inset-r) px-3 py-3 divider-b duration-fast-02",
+                      zebra && idx % 2 === 1 && "bg-layer-2",
+                      isSel && "bg-selected",
+                    )}
+                  >
+                    <div className="flex items-start gap-3">
+                      {selectable && <Checkbox aria-label={`Select row ${idx + 1}`} checked={isSel} onCheckedChange={() => toggleRow(row.id, isSel)} className="mt-1" />}
+                      <div className="flex min-w-0 flex-1 flex-col gap-1">
+                        <p className="text-body font-medium text-foreground">{first && cellOf(first, row)}</p>
+                        {rest.map((c) => (
+                          <div key={c.key} className="flex items-baseline justify-between gap-3 text-body">
+                            <span className="shrink-0 text-muted-foreground">{c.header}</span>
+                            <span className={cn("min-w-0 truncate text-right text-foreground", c.align === "end" && "tabular-nums")}>{cellOf(c, row)}</span>
+                          </div>
+                        ))}
+                      </div>
+                      {(rowActions || renderExpanded) && (
+                        <div className="-my-1 -mr-1 flex shrink-0 items-center gap-0.5">
+                          {rowActions?.(row)}
+                          {renderExpanded && (
+                            <button type="button" aria-expanded={isOpen} aria-label={isOpen ? "Collapse row" : "Expand row"} onClick={() => toggleOpen(row.id)} className="flex size-control-md items-center justify-center rounded-sm hover:bg-hover focus-ring">
+                              <Icon as={ChevronDown} className={cn("duration-moderate-01 ease-productive", isOpen && "rotate-180")} />
+                            </button>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                    {renderExpanded && (
+                      <div className={cn("reveal motion-productive", isOpen && "reveal-open")} inert={!isOpen || undefined}>
+                        <div><div className="rounded-(--vita-inset-r) bg-layer-2 px-3 py-3 text-body">{renderExpanded(row)}</div></div>
+                      </div>
+                    )}
+                  </li>
+                )
+              })}
+          </ul>
+        </div>
+      ) : (
+      /* Inset like the toolbar strip above; the header row is a rounded band (separate borders allow cell radius). */
       <div className={cn("w-full overflow-x-auto px-2.5", stickyHeader && "max-h-120 overflow-y-auto")}>
-        <table className="w-full border-separate border-spacing-0 text-body" aria-label={typeof title === "string" ? title : label}>
+        <table className="w-full border-separate border-spacing-0 text-body" aria-label={name}>
           <thead className={cn(stickyHeader && "sticky top-0 z-10")}>
             <tr className={cn(rowH[size === "xl" ? "lg" : size], "[&>th]:bg-layer-3 [&>th:first-child]:rounded-l-(--vita-inset-r) [&>th:last-child]:rounded-r-(--vita-inset-r)")}>
               {renderExpanded && <th className="w-control-md"><span className="sr-only">Expand</span></th>}
@@ -216,19 +325,19 @@ export function DataTable<T extends { id: string }>({
                     >
                       {renderExpanded && (
                         <td className="pl-2">
-                          <button type="button" aria-expanded={isOpen} aria-label={isOpen ? "Collapse row" : "Expand row"} onClick={() => setOpen((s) => { const n = new Set(s); if (n.has(row.id)) n.delete(row.id); else n.add(row.id); return n })} className="flex size-control-sm items-center justify-center rounded-sm hover:bg-hover focus-ring">
+                          <button type="button" aria-expanded={isOpen} aria-label={isOpen ? "Collapse row" : "Expand row"} onClick={() => toggleOpen(row.id)} className="flex size-control-sm items-center justify-center rounded-sm hover:bg-hover focus-ring">
                             <Icon as={ChevronDown} className={cn(" duration-moderate-01 ease-productive", isOpen && "rotate-180")} />
                           </button>
                         </td>
                       )}
                       {selectable && (
                         <td className="pl-3">
-                          <Checkbox aria-label={`Select row ${idx + 1}`} checked={isSel} onCheckedChange={() => setSelected(isSel ? selected.filter((s) => s !== row.id) : [...selected, row.id])} />
+                          <Checkbox aria-label={`Select row ${idx + 1}`} checked={isSel} onCheckedChange={() => toggleRow(row.id, isSel)} />
                         </td>
                       )}
                       {columns.map((c) => (
                         <td key={c.key} className={cn(cellPad, "whitespace-nowrap text-muted-foreground first-of-type:text-foreground", c.align === "end" && "text-right tabular-nums")}>
-                          {c.cell ? c.cell(row) : String((row as Record<string, unknown>)[c.key] ?? "")}
+                          {cellOf(c, row)}
                         </td>
                       ))}
                       {rowActions && <td className="pr-2 text-right">{rowActions(row)}</td>}
@@ -244,6 +353,7 @@ export function DataTable<T extends { id: string }>({
           </tbody>
         </table>
       </div>
+      )}
       {/* Footer (pagination) sits in the same 10px inset as the toolbar strip and the table. */}
       {footer && <div className="p-2.5">{footer}</div>}
     </section>

@@ -3,6 +3,7 @@ import { Select as SelectPrimitive } from "radix-ui"
 import { ChevronDown } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { useControllable } from "@/registry/hooks/use-controllable"
+import { useHoldToPick } from "@/registry/hooks/use-hold-to-pick"
 import { FieldShell, fieldClasses, fieldSize, type FieldBaseProps, type FieldSize } from "@/registry/ui/form"
 import { Icon } from "@/registry/ui/icon"
 import { listClasses, itemClasses } from "@/registry/ui/option"
@@ -40,11 +41,14 @@ export function Select({ value, defaultValue, onValueChange, size = "md", disabl
   void _placeholder
   const [current, setCurrent] = useControllable<string | undefined>(value, defaultValue, onValueChange as ((v: string | undefined) => void) | undefined)
   const label = current ? labels(children).get(current) : undefined
+  // Under a thumb: hold the field, slide over the options, lift on the one you want.
+  const [open, setOpen] = React.useState(false)
+  const hold = useHoldToPick({ open: () => setOpen(true) })
   return (
     <FieldShell {...field} filled={!!current} floatOnFocus={false} className={className}>
       {(a11y) => (
-        <SelectPrimitive.Root value={current} onValueChange={setCurrent} disabled={disabled} name={name}>
-          <SelectPrimitive.Trigger {...a11y} className={cn(fieldClasses, fieldSize[size], "group relative flex items-center gap-2 pr-10 text-left")}>
+        <SelectPrimitive.Root value={current} onValueChange={setCurrent} disabled={disabled} name={name} open={open} onOpenChange={setOpen}>
+          <SelectPrimitive.Trigger {...a11y} {...hold} className={cn(fieldClasses, fieldSize[size], "group relative flex items-center gap-2 pr-10 text-left")}>
             <span className="truncate">
               <SelectPrimitive.Value placeholder="">{label ? <AnimatedText>{label}</AnimatedText> : undefined}</SelectPrimitive.Value>
             </span>

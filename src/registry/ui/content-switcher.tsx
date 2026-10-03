@@ -12,6 +12,7 @@ import { useDragSelect } from "@/registry/hooks/use-drag-select"
  * A segmented control. 2–5 segments, equal importance, one always selected.
  * Different content per option → Tabs.
  * Hold and nudge to browse: while pressed, each small sideways nudge snaps to the next/previous segment, no aiming.
+ * Under a thumb: hold, then slide, and the segment under the thumb is the one selected.
  */
 export interface ContentSwitcherItem {
   value: string
@@ -68,7 +69,8 @@ export function ContentSwitcher({
       }}
       onPointerDown={drag.onPointerDown}
       className={cn(
-        "relative inline-flex w-fit touch-none items-center gap-0.5 scope-md bg-layer-2 p-0.5 select-none",
+        // Sideways touches stay with the control (hold-and-slide); up and down stays the page's.
+        "relative inline-flex w-fit touch-pan-y items-center gap-0.5 scope-md bg-layer-2 p-0.5 select-none *:touch-pan-y",
         size === "sm" ? "h-control-sm" : size === "lg" ? "h-control-lg" : "h-control-md",
         className,
       )}

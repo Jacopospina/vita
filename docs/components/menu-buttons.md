@@ -26,6 +26,7 @@ related: [menu, button, common-actions]
 
 1. **MenuButton label = category verb** ("Export", "Add", "Share") + chevron. The chevron rotates on open.
 2. **ComboButton main label = the default action.** The menu never repeats it.
+   - **One shape.** The action and its chevron are one squircle block with a hairline seam between them, on every platform (the group owns the corners, so a phone never shows two separate pills).
 3. **OverflowMenu:**
    - Vertical `⋮` on table rows and list items; horizontal `⋯` on cards and toolbars.
    - Up to ~7 items; destructive last.

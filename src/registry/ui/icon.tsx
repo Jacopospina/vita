@@ -52,6 +52,10 @@ export function SwapIcon({ as, className, ...props }: IconProps) {
  * DrawnMark, the check / dash used by selection controls. It is a stroke, so it DRAWS in when
  * selected and un-draws when cleared (checkbox, menu and list checkmarks).
  */
+/** The un-drawn offset: a hair PAST the path's end. At exactly 1 the dash's edge sits on the path's end point and its
+    round cap still paints there, a dot on an unchecked box. Past the end, no edge lies on the path, so nothing shows. */
+export const DRAWN_OFF = 1.02
+
 export function DrawnMark({ kind = "check", on, className }: { kind?: "check" | "dash"; on: boolean; className?: string }) {
   return (
     <svg viewBox="0 0 16 16" width={16} height={16} aria-hidden fill="none" className={cn("shrink-0", className)}>
@@ -62,9 +66,12 @@ export function DrawnMark({ kind = "check", on, className }: { kind?: "check" | 
         strokeWidth={2}
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeDasharray={1}
-        strokeDashoffset={on ? 0 : 1}
-        className={cn("motion-expressive", on ? "duration-expressive" : "duration-moderate-01")}
+        // One dash the path's length, then a gap longer than the path, so no second dash edge can land on it.
+        strokeDasharray="1 2"
+        strokeDashoffset={on ? 0 : DRAWN_OFF}
+        // Only the drawing transitions. The stroke colour follows its owner at once (a mark turning white with its
+        // box must not glide from black while it draws).
+        className={cn("transition-[stroke-dashoffset] motion-expressive", on ? "duration-expressive" : "duration-moderate-01")}
       />
     </svg>
   )

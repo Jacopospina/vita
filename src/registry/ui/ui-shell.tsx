@@ -11,6 +11,8 @@ import { useIndicator } from "@/registry/hooks/use-morph"
  * UI Shell, the persistent frame of a product. Three parts:
  *   Header      → product name, global nav, global actions (search, notifications, help, user). A floating, frosted-glass
  *                 bar inset 8px from the window, like the LeftPanel; items inside are concentric pills. Always visible.
+ *                 On a phone it sits at the BOTTOM, within the thumb's reach, compact: a centred pill as wide as its
+ *                 contents (menu, the mark, the global actions).
  *   LeftPanel   → side navigation between the product's main areas: a floating, frosted-glass sidebar inset from the
  *                 window edges (concentric radius), with Finder-style sections (small header, collapses on hover chevron).
  *                 Rail (icons) or expanded.
@@ -59,12 +61,13 @@ export function ShellBody({ children, className }: { children: React.ReactNode; 
 export function ShellMain({ children, className, ...props }: React.HTMLAttributes<HTMLElement>) {
   const { nav } = React.useContext(ShellCtx)
   // Full-window scroller. Top padding clears the floating header (8 + 48 + 8); on large screens the left padding
-  // clears the floating side nav (8 + 240 + 8, or 8 + 48 + 8 for the rail). Also the containing block for anything
-  // absolutely positioned inside it, so nothing stretches the document.
+  // clears the floating side nav (8 + 240 + 8, or 8 + 48 + 8 for the rail). On a phone the header is at the bottom,
+  // so the room moves there. Also the containing block for anything absolutely positioned inside it, so nothing
+  // stretches the document. Only vertical scrolling: a stray wide element never pans the page sideways.
   return (
     <main
       id="main-content"
-      className={cn("absolute inset-0 overflow-y-auto pt-16 [--vita-shell-top:4rem]", nav === "full" && "lg:pl-64", nav === "rail" && "lg:pl-16", className)}
+      className={cn("absolute inset-0 overflow-x-hidden overflow-y-auto pt-16 [--vita-shell-top:4rem] max-sm:pt-0 max-sm:pb-16 max-sm:[--vita-shell-top:0px]", nav === "full" && "lg:pl-64", nav === "rail" && "lg:pl-16", className)}
       {...props}
     >
       {children}
@@ -95,17 +98,25 @@ export function Header({ productName, prefix, logo, badge, href = "/", children,
   const { navOpen, setNavOpen } = React.useContext(ShellCtx)
   return (
     // Floating bar: same material as the LeftPanel (glass, 8px inset, concentric radius); rows inside are rounded-inner-2.
-    <header className={cn("absolute inset-x-2 top-2 z-40 flex h-12 items-center gap-1 glass glass-2 scope-xl p-2", className)}>
+    // Phone: a compact pill at the bottom, centred, as wide as what it holds (the name folds into the mark).
+    <header
+      className={cn(
+        "absolute inset-x-2 top-2 z-40 flex h-12 items-center gap-1 glass glass-2 scope-xl p-2",
+        "max-sm:top-auto max-sm:bottom-2 max-sm:mx-auto max-sm:w-fit max-sm:max-w-full",
+        className,
+      )}
+    >
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded-sm focus:bg-primary focus:px-3 focus:py-2 focus:text-primary-foreground">
         Skip to main content
       </a>
       <IconButton icon={navOpen ? Close : MenuIcon} label={navOpen ? "Close menu" : "Open menu"} onClick={() => setNavOpen(!navOpen)} className={cn(pill, "w-8 lg:hidden")} />
-      <a href={href} className="flex h-8 items-center gap-1 rounded-inner-2 px-3 text-body whitespace-nowrap duration-fast-02 hover:bg-hover focus-ring-inset">
-        {logo && <span aria-hidden className="mr-1 flex shrink-0">{logo}</span>}
-        {prefix && <span className="font-normal text-muted-foreground">{prefix}</span>}
-        <span className="font-semibold">{productName}</span>
+      <a href={href} aria-label={`${prefix ? `${prefix} ` : ""}${productName}, home`} className={cn("flex h-8 items-center gap-1 rounded-inner-2 px-3 text-body whitespace-nowrap duration-fast-02 hover:bg-hover focus-ring-inset", logo && "max-sm:w-8 max-sm:justify-center max-sm:px-0")}>
+        {logo && <span aria-hidden className="mr-1 flex shrink-0 max-sm:mr-0">{logo}</span>}
+        {/* With a mark, the words step aside on a phone: the mark is the name. */}
+        {prefix && <span className={cn("font-normal text-muted-foreground", logo && "max-sm:hidden")}>{prefix}</span>}
+        <span className={cn("font-semibold", logo && "max-sm:hidden")}>{productName}</span>
       </a>
-      {badge && <span className="-ml-2 mr-1 flex shrink-0 items-center">{badge}</span>}
+      {badge && <span className="-ml-2 mr-1 flex shrink-0 items-center max-sm:hidden">{badge}</span>}
       {children && <HeaderNav label={productName}>{children}</HeaderNav>}
       <div className="ml-auto flex items-center gap-1">{actions}</div>
     </header>
@@ -181,7 +192,7 @@ export function LeftPanel({ children, rail, mobileOnly, className, label = "Side
   }, [rail, mobileOnly, setNav])
   return (
     <>
-      {navOpen && <div className="absolute inset-0 top-16 z-30 animate-enter-fade bg-overlay lg:hidden" onClick={() => setNavOpen(false)} />}
+      {navOpen && <div className="absolute inset-0 top-16 z-30 animate-enter-fade bg-overlay max-sm:top-0 max-sm:bottom-16 lg:hidden" onClick={() => setNavOpen(false)} />}
       <nav
         aria-label={label}
         data-rail={rail || undefined}
@@ -189,7 +200,8 @@ export function LeftPanel({ children, rail, mobileOnly, className, label = "Side
           // Floating sidebar: frosted glass, inset from the window, rounded; rows inside are concentric (rounded-inner-2).
           "group/nav z-30 flex shrink-0 flex-col overflow-y-auto glass glass-1 scope-xl p-2",
           // Floats over the scrolling page, below the header (top-16 = 8 + 48 + 8), inset 8px like the header.
-          "absolute top-16 bottom-2 left-2 w-60 -translate-x-[calc(100%+1rem)] duration-moderate-02 ease-productive",
+          // On a phone the header is at the bottom, so the sheet keeps clear of it there instead.
+          "absolute top-16 bottom-2 left-2 w-60 -translate-x-[calc(100%+1rem)] duration-moderate-02 ease-productive max-sm:top-2 max-sm:bottom-16",
           mobileOnly ? "lg:hidden" : "lg:translate-x-0",
           // Open over the page on a small screen it's a sheet, not a sidebar: solid, so nothing behind competes with it.
           navOpen && "translate-x-0 max-lg:bg-raised!",
@@ -341,7 +353,7 @@ export function RightPanel({ open, onOpenChange, title, children, footer, size =
         // Floating, like the left panel: the same 8px inset from the window, the same radius (scope-xl) and
         // 8px padding, so everything inside is concentric (rounded-inner-2 = 16 − 8). It sits on the TOP shell
         // layer (above the side nav and header), so it gets the matching, stronger glass tier.
-        "absolute top-16 right-2 bottom-2 left-2 z-50 flex flex-col glass glass-3 scope-xl p-2 outline-none sm:left-auto",
+        "absolute top-16 right-2 bottom-2 left-2 z-50 flex flex-col glass glass-3 scope-xl p-2 outline-none max-sm:top-2 max-sm:bottom-16 sm:left-auto",
         size === "sm" ? "sm:w-80" : size === "lg" ? "sm:w-140" : "sm:w-100",
         open ? "animate-enter-panel-right" : "pointer-events-none animate-exit-panel-right",
         className,

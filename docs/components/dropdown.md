@@ -51,6 +51,11 @@ related: [select, radio-button, checkbox, menu, filtering]
 - **Opening doesn't float the label.** Clicking a dropdown opens its list, not a text cursor, so the label stays full-size inside the field.
 - **Choosing does.** Once a value is selected, the label floats up and shrinks, like every other field. This is the one exception to "float on focus", and it applies to Dropdown, Select and MultiSelect.
 
+## Touch
+
+- **Hold, slide, lift.** Hold the field and the list opens under the thumb; keep it down and slide, each option highlighting as the thumb passes; lift on one and it is chosen, the list closes. Near the list's top or bottom edge it scrolls.
+- **A tap opens the list** as before, and a tap on an option chooses it. Dropdown and Select share this; Combobox is typed, Multiselect is tapped per row.
+
 ## Keyboard
 
 - **Arrows** move the highlight; **Home** and **End** jump; **Enter** or **Space** chooses; **Escape** closes.

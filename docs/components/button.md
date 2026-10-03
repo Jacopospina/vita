@@ -47,8 +47,15 @@ related: [menu-buttons, link, modal, common-actions]
    - Re-submission is blocked while it works.
    - Controlled alternative: `status` plus `feedback`.
 6. **Disabled buttons need a reason.** If the reason isn't obvious, keep the button enabled and validate on click, or wrap it in a Tooltip (see *Disabled states*).
-7. **Full-width only** on mobile, in narrow panels and on login forms.
+7. **Full width only inside a panel, dialog or popover** (their `ActionBar`), surfaces above the page. In page content, a login form included, a button is as wide as its label: `lg` or `xl`, never `fullWidth`.
 8. **Icon-only = `IconButton`** with a required `label`, which becomes the tooltip and the accessible name. Use icon-only only for universally understood glyphs or dense toolbars.
+
+## On touch
+
+- **A button with an icon shows only its icon.** Under a finger, the label steps aside (screen readers still get it), so a row of actions fits a phone. Give an icon to every button a phone has to fit.
+- **The primary keeps its words.** It is the one action the person must read; so do buttons that fill a bar (`ActionBar`, a stacked `ButtonSet`), they have the room.
+- **The consequence still plays.** Loading, success and failure show in the slot (orb, check, error mark), label or not.
+- **Colour arrives at once.** A button turning red, green or primary takes its label and icon with it in the same frame; nothing lags a shade behind.
 
 ## Accessibility
 

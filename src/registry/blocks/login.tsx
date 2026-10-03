@@ -70,7 +70,8 @@ export function LoginBlock({ productName, onSubmit, onSso, forgotHref = "#", sig
             <PasswordInput label="Password" autoComplete="current-password" autoFocus value={password} onChange={(e) => setPassword(e.target.value)} labelAddon={<Link size="sm" href={forgotHref} className="ml-auto">Forgot password?</Link>} />
           </>
         )}
-        <Button type="submit" size="lg" fullWidth icon={ArrowRight} loading={loading}>
+        {/* Page content: a large button at its own width, never full bleed (that's for action bars in panels and dialogs). */}
+        <Button type="submit" size="lg" icon={ArrowRight} loading={loading} className="self-start">
           {step === "id" ? "Continue" : "Log in"}
         </Button>
         {step === "id" && <Checkbox label="Remember my email" checked={remember} onCheckedChange={(c) => setRemember(c === true)} />}
@@ -78,7 +79,7 @@ export function LoginBlock({ productName, onSubmit, onSso, forgotHref = "#", sig
       {onSso && step === "id" && (
         <>
           <div className="flex items-center gap-3 text-caption text-helper"><Separator className="flex-1" />or<Separator className="flex-1" /></div>
-          <Button variant="tertiary" size="lg" fullWidth onClick={() => onSso(email)}>Continue with SSO</Button>
+          <Button variant="tertiary" size="lg" onClick={() => onSso(email)} className="self-start">Continue with SSO</Button>
         </>
       )}
     </div>

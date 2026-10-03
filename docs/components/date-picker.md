@@ -33,3 +33,4 @@ related: [text-input, form]
 - **Easy targets.** Days are 36px squares with roomy month navigation.
 - **One band per range.** A range is a continuous band rounded only on its outer corners: the left of the first day, the right of the last. Days in between are square. When a range wraps, each week row's band is rounded where the row's highlight begins and ends.
 - **Months slide.** Moving forward, the new month slides in from the right and the old one slides out to the left; moving back, the reverse. The month name crossfades with it.
+- **Drag to turn the month.** Pull the grid sideways with a thumb or the mouse and the next (or previous) month comes along with it, already visible. Let go past a third of the width, or with a flick, and it snaps into place; a shorter pull springs back. The arrows still work; a press that doesn't move still picks a day.

@@ -30,3 +30,4 @@ related: [dropdown, radio-button, combobox]
 1. **Preselect a sensible default** when there is one; otherwise the floating label reads the question.
 2. **Order options** by frequency, alphabetically or by natural order, never randomly.
 3. **Never for navigation** ("Jump to page…").
+4. **On touch, hold, slide, lift.** Hold the field to open the list, slide over the options, lift on the one you want (the same as Dropdown).

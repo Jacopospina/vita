@@ -25,8 +25,8 @@ const itemClasses = cn(
   "data-[highlighted]:bg-primary data-[highlighted]:text-primary-foreground data-[disabled]:pointer-events-none data-[disabled]:text-disabled-foreground",
 )
 
-// The mark is always drawn in the DOM; the item's data-state un-draws it (dashoffset 1) when unchecked.
-const indicatorClasses = "absolute left-2.5 flex [&[data-state=unchecked]_path]:[stroke-dashoffset:1]"
+// The mark is always drawn in the DOM; the item's data-state un-draws it (past the path's end, DRAWN_OFF) when unchecked.
+const indicatorClasses = "absolute left-2.5 flex [&[data-state=unchecked]_path]:[stroke-dashoffset:1.02]"
 
 export function MenuContent({ className, sideOffset = 4, align = "start", ...props }: React.ComponentProps<typeof MenuPrimitive.Content>) {
   return (

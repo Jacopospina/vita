@@ -97,8 +97,8 @@ function HomePage() {
           <Text variant="body-lg" tone="muted" className="max-w-2xl">
             Made for AI products, and for the agents that build them. Documented and enforced so your agents design like designers, and you make what only you can make.
           </Text>
-          {/* Side by side on larger screens; stacked, full width on a phone (never off the edge). */}
-          <Inline gap="md" justify="center" className="max-sm:w-full max-sm:flex-col max-sm:items-stretch">
+          {/* Side by side where they fit, one under the other on a phone, each at its own width: page buttons are never full bleed. */}
+          <Inline gap="md" justify="center" wrap>
             <Button size="xl" onClick={() => (window.location.href = `${DOCS}guidelines`)}>Start making</Button>
             <Button size="xl" variant="secondary" onClick={() => (window.location.href = MAKE_URL)}>See what you can make</Button>
           </Inline>

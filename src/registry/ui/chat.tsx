@@ -6,6 +6,7 @@ import { IconButton } from "@/registry/ui/button"
 import { IconPlaceholder } from "@/registry/ui/icon-placeholder"
 import { Thinking } from "@/registry/ui/thinking"
 import { Composer } from "@/registry/ui/composer"
+import { OnPrimary } from "@/registry/ui/ai-label"
 import { StatusIndicator } from "@/registry/ui/status-indicator"
 import { useFlip } from "@/registry/hooks/use-flip"
 import { AnimatedText } from "@/registry/ui/animated"
@@ -83,7 +84,8 @@ export function ChatBubble({ role, children, author, time, position = "single", 
           )}
           onAnimationEnd={(e) => { if (e.target === e.currentTarget) setFresh(false) }}
         >
-          {children}
+          {/* The person's bubble is primary blue: an AI label inside it turns white by itself. */}
+          {agent || status === "failed" ? children : <OnPrimary>{children}</OnPrimary>}
         </div>
         {showMeta && (time || status === "failed" || status === "sending") && (
           <div className="flex items-center gap-1.5 px-1 text-caption text-muted-foreground">

@@ -18,6 +18,9 @@ related: [toggle, radio-button, form]
 
 Unchecked · checked · indeterminate (a parent of a partially selected group) · invalid · disabled.
 
+- **The mark draws in white.** The check (or the dash) traces its path onto the filled box, white from the first pixel; it never fades from dark to white as it draws.
+- **An empty box is empty.** Nothing shows until it's checked: the un-drawn mark rests past the end of its path, so not even a dot of its round cap remains.
+
 ## Rules
 
 1. **Labels are positive statements:** "Email me updates", not "Don't email me".

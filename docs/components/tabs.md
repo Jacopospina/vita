@@ -36,4 +36,6 @@ related: [content-switcher, progress-indicator, page-header]
 ## Hold and nudge
 
 - **Swing to browse.** Press and give a gentle swing left or right: each swing moves exactly one step in that direction and shows its content. To keep going, pause briefly and swing again, or swing the other way. It's a gesture, not a distance, so there's no aiming and no effort.
+- **Hold and slide on touch.** Hold a tab for a moment, then slide: the tab under the thumb is the one shown, the pill leaning toward the thumb as it goes. Lift to keep it. A tap still selects; a swipe that moves at once scrolls.
 - **Click and keyboard unchanged.** A click selects a tab, and arrow keys move between tabs.
+- **More tabs than room scroll sideways,** without a scrollbar (the cut edge says there is more); a thumb pans the list.

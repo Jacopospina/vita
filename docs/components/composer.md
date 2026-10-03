@@ -35,6 +35,7 @@ related: [intent-first, ai-label, text-input, search]
 ## Behaviour
 
 - **Grows, then scrolls.** The composer grows with your text up to two and a half lines; the half line hints there's more, and the rest scrolls.
+- **The example fits too.** An empty composer is as tall as its placeholder, so a long example on a narrow screen is never cut off.
 - **Styled like a text input.** Same border, fill, radius, hover and focus; no shadow.
 - **Send only when there's something to send.** The send button slides in from the composer's edge as you type or attach, and slides away when it's empty. It's never shown disabled.
 - **Attachments arrive with motion.** The chip row opens, each chip springs in, and the others glide aside.

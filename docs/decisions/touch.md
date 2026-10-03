@@ -48,3 +48,20 @@ related: [accessibility, spacing, theming, material, thinking, glass-by-elevatio
 - **Header actions move into the menu on phones** (theme, repository), so the header never overflows.
 - **Nothing overflows a 390px screen.** Toolbars wrap, KPI groups go two per row, tables scroll sideways inside their own box, and the conversation bar drops its waveform before its controls.
 - **Squircles everywhere.** Where `corner-shape` isn't supported (Safari, iOS), the same superellipse is applied as a mask, so buttons and tiles keep their shape on iPhone.
+
+## Revision, 2026-10-03: built for the thumb
+
+- **Hold and slide, everywhere a finger can.** A switch drags (the knob follows, lands on the nearer side); tabs and segments slide under a held thumb; a dropdown or select opens on a hold, highlights under the thumb and picks on lift; a calendar swipes between months with the next month already in view and snaps. Tap and keyboard still do everything.
+- **Buttons with icons show only the icon on touch**, except the primary (its words are the point) and buttons that fill a bar. A row of actions fits a phone; the label stays for screen readers.
+- **Full width belongs to action bars** in panels, dialogs and popovers. In page content a button is as wide as its label, at `lg` or `xl`; the login form follows.
+- **The header moves to the bottom on a phone**, compact and centred, within reach; the menu sheet and panels keep clear of it.
+- **Tables become cards on a phone.** The first column titles the card, the rest are lines; sorting moves above the list. The page never scrolls sideways (the main area clips it).
+- **Holding never selects text.** Controls are not text-selectable; fields still are.
+- **Floating surfaces lay out across the full width.** A capsule anchored at the middle of the window could only grow into the right half and was squeezed on a phone; it now spans the width and centres, the same on every screen.
+- **Hidden scrollbars on segmented controls.** An overflowing tab list scrolls (a thumb pans it) without a bar.
+
+## Rejected, avoid (revision)
+
+- **Vertical scroll as the hold-and-slide axis.** Up and down stays the page's on every control (`touch-pan-y`), so a gesture never fights the scroll.
+- **Hiding the primary's label on touch.** The one action the person must read keeps its words.
+- **A horizontally scrolling page.** Content that doesn't fit scrolls inside its own box or folds; the main area clips sideways overflow.

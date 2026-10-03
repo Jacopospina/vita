@@ -5,6 +5,7 @@ import { ChevronDown, Close, type IconType } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { EmptyState } from "@/registry/ui/empty-state"
 import { useControllable } from "@/registry/hooks/use-controllable"
+import { useHoldToPick } from "@/registry/hooks/use-hold-to-pick"
 import { FieldShell, fieldClasses, fieldSize, type FieldBaseProps, type FieldSize } from "@/registry/ui/form"
 import { Icon } from "@/registry/ui/icon"
 import { AnimatedText, AnimatedNumber } from "@/registry/ui/animated"
@@ -28,6 +29,7 @@ export { listClasses, itemClasses, tickClasses } from "@/registry/ui/option"
 /**
  * Dropdown, pick ONE option from a custom-rendered list (icons, descriptions, consistent styling across OSs).
  * 2–6 options visible at once → RadioGroup. >20 options → Combobox (filterable). Mobile-heavy/long lists → native Select.
+ * Under a thumb: hold the field, slide over the options, lift on the one you want (useHoldToPick).
  */
 export interface DropdownProps extends FieldBaseProps {
   items: DropdownItem[]
@@ -45,12 +47,15 @@ export interface DropdownProps extends FieldBaseProps {
 export function Dropdown({ items, value, defaultValue, onValueChange, placeholder = "Choose an option", size = "md", disabled, className, type = "default", ...field }: DropdownProps) {
   const [current, setCurrent] = useControllable<string | undefined>(value, defaultValue, onValueChange as ((v: string | undefined) => void) | undefined)
   const selected = items.find((i) => i.value === current)
+  const [open, setOpen] = React.useState(false)
+  const hold = useHoldToPick({ open: () => setOpen(true) })
   return (
     <FieldShell {...field} filled={!!selected || type === "inline"} bare={type === "inline"} floatOnFocus={false} className={className}>
       {(a11y) => (
-        <SelectPrimitive.Root value={current} onValueChange={setCurrent} disabled={disabled}>
+        <SelectPrimitive.Root value={current} onValueChange={setCurrent} disabled={disabled} open={open} onOpenChange={setOpen}>
           <SelectPrimitive.Trigger
             {...a11y}
+            {...hold}
             className={cn(
               type === "default" ? [fieldClasses, fieldSize[size]] : "h-control-sm rounded-md px-2 text-body hover:bg-hover focus-ring",
               "group flex items-center justify-between gap-2 text-left",

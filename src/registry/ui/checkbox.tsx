@@ -26,8 +26,8 @@ export function Checkbox({ label, helperText, invalid, className, id: idProp, ..
       className={cn(
         "peer relative tap mt-0.5 flex size-4 shrink-0 items-center justify-center squircle border border-border-strong bg-field [--vita-squircle-r:calc(var(--vita-radius)*0.44)]", // proportional like IconPlaceholder, and it follows the theme radius; `tap`: a 44px finger target
         " duration-fast-01 ease-productive focus-ring",
-        "data-[state=checked]:border-primary data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground",
-        "data-[state=indeterminate]:border-primary data-[state=indeterminate]:bg-primary data-[state=indeterminate]:text-primary-foreground",
+        "data-[state=checked]:border-primary data-[state=checked]:bg-primary",
+        "data-[state=indeterminate]:border-primary data-[state=indeterminate]:bg-primary",
         "disabled:cursor-not-allowed disabled:border-disabled-foreground disabled:data-[state=checked]:bg-disabled-foreground",
         "aria-invalid:border-error aria-invalid:[--vita-ring:var(--vita-error)]",
         !label && className,
@@ -38,9 +38,9 @@ export function Checkbox({ label, helperText, invalid, className, id: idProp, ..
         props.onCheckedChange?.(c)
       }}
     >
-      {/* Always mounted: the mark scales in AND out (checked ↔ indeterminate cross-fade). */}
-      {/* Always mounted: the check DRAWS its path in, and un-draws on clear; indeterminate draws a dash. */}
-      <CheckboxPrimitive.Indicator forceMount className="relative flex size-full items-center justify-center">
+      {/* Always mounted: the check DRAWS its path in, and un-draws on clear; indeterminate draws a dash.
+          The mark is always white: it only ever shows on the filled box, so its colour never has to change. */}
+      <CheckboxPrimitive.Indicator forceMount className="relative flex size-full items-center justify-center text-primary-foreground">
         <DrawnMark kind="check" on={props.checked === true || (props.checked === undefined && checkedState === true)} className="absolute size-3.5" />
         <DrawnMark kind="dash" on={props.checked === "indeterminate"} className="absolute size-3.5" />
       </CheckboxPrimitive.Indicator>

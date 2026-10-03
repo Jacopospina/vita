@@ -25,3 +25,4 @@ related: [checkbox, content-switcher, forms]
 - **Shape.** A slim rectangular squircle knob (12 × 20) inside a squircle track. The radii are concentric: the knob's radius is the track's radius minus the padding.
 - **Press.** The knob stretches toward the side it will travel to.
 - **Release.** It springs across and back to its resting width, and the track colour follows.
+- **Hold and drag.** Keep the finger (or mouse) down and move: the knob follows across the track, and on release it lands on the side it was left nearest to, like a phone's switch. A short move springs it back. Tap and keyboard flip it as before.
