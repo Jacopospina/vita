@@ -24,7 +24,7 @@ Every string passes through the **taxonomy** (`vita/taxonomy.json`) and the **pe
 | Page title | Object (plural for lists) or object name | "Agents" / "Support triage" |
 | Field label | Noun, sentence case | "Go-live date" |
 | Helper text | Constraint or format, before the user errs | "Weekdays only. Deployments start at 09:00." |
-| Error | What happened + how to fix | "Enter a go-live date on a weekday." |
+| Error | What happened + how to fix, in the person's words (never codes or jargon, see below) | "Enter a go-live date on a weekday." |
 | Empty, first-use | Title: create your first X · Body: value + effort · Action | "Create your first agent" / "…about five minutes." |
 | Empty, no results | "No {objects} match…" + how to broaden + clear action | |
 | Toast | Past-tense result, ≤ 5 words | "Agent deployed" |
@@ -33,6 +33,24 @@ Every string passes through the **taxonomy** (`vita/taxonomy.json`) and the **pe
 | Confirmation button | Repeat the verb + object | "Delete agents" |
 | Status | Taxonomy status word | "Awaiting approval" |
 | AI message | What was done + confidence, no "I" | "Suggested from 3 similar tickets · high confidence" |
+
+## Errors are for people who don't code
+
+The person reading an error doesn't write software and can't read it. Every error, including ones that start as a technical failure, is rewritten in their words before it reaches the screen.
+
+1. **Say what happened, in the person's world.** "We couldn't save your changes" ✓. "500 Internal Server Error", "Request failed", "Unexpected token" ✗.
+2. **Say what to do next.** "Check your connection and try again", "Ask an admin for access". Every error has a way forward; if none exists, say who can help.
+3. **Never show the machine.** No status codes, exception names, stack traces, field keys (`go_live_at`), IDs, JSON, file paths or "null/undefined". If support needs a reference, add it last and label it: "Reference: AGT-1042".
+4. **Name their thing, not the system's.** "Support triage couldn't connect to Slack", not "Integration sync failed (provider: slack)".
+5. **No blame, no alarm.** Not "invalid", "illegal", "fatal", "you failed to". Not "Oops" either.
+6. **Two sentences at most.** What happened, then what to do.
+
+| Machine says | People read |
+|---|---|
+| `ECONNRESET` | "We lost the connection. Check your internet and try again." |
+| `403 Forbidden` | "You don't have access to this agent. Ask a workspace admin to add you." |
+| `ValidationError: go_live_at must be a weekday` | "Choose a weekday for the go-live date." |
+| `TypeError: cannot read properties of undefined` | "Something went wrong on our side. Try again in a moment; if it keeps happening, contact support." |
 
 ## Don't say it twice
 
