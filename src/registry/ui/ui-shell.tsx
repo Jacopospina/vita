@@ -62,12 +62,14 @@ export function ShellMain({ children, className, ...props }: React.HTMLAttribute
   const { nav } = React.useContext(ShellCtx)
   // Full-window scroller. Top padding clears the floating header (8 + 48 + 8); on large screens the left padding
   // clears the floating side nav (8 + 240 + 8, or 8 + 48 + 8 for the rail). On a phone the header is at the bottom,
-  // so the room moves there. Also the containing block for anything absolutely positioned inside it, so nothing
+  // so the room moves there. The same room is kept on the right, so page
+  // content sits centred on the SCREEN, under the centred header, never pushed right by the side nav.
+  // Also the containing block for anything absolutely positioned inside it, so nothing
   // stretches the document. Only vertical scrolling: a stray wide element never pans the page sideways.
   return (
     <main
       id="main-content"
-      className={cn("absolute inset-0 overflow-x-hidden overflow-y-auto pt-17 [--vita-shell-top:calc(var(--spacing)*17)] max-sm:pt-0 max-sm:pb-16 max-sm:[--vita-shell-top:0px]", nav === "full" && "lg:pl-64", nav === "rail" && "lg:pl-16", className)}
+      className={cn("absolute inset-0 overflow-x-hidden overflow-y-auto pt-17 [--vita-shell-top:calc(var(--spacing)*17)] max-sm:pt-0 max-sm:pb-16 max-sm:[--vita-shell-top:0px]", nav === "full" && "lg:px-64", nav === "rail" && "lg:px-16", className)}
       {...props}
     >
       {children}

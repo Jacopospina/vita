@@ -78,7 +78,7 @@ const adoption = [
 
 export function GuidelinesPage() {
   return (
-    <Container className="py-10">
+    <Container className="max-w-5xl py-10">
       <Stack gap="3xl" className="stagger">
         <Stack gap="xs">
           <Text variant="large-title" as="h1">About Vita</Text>

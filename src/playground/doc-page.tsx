@@ -49,8 +49,9 @@ export function DocPage({ section, slug }: { section: Section; slug: string }) {
     return null
   }).filter(Boolean) as { href: string; title: string }[]
 
+  // Docs read at the header's width: never wider than 1024px, centred on the screen.
   return (
-    <Container className="py-5 md:py-8">
+    <Container className="max-w-5xl py-5 md:py-8">
       <Stack gap="xl" className="stagger">
         {/* Header */}
         <Stack gap="sm">
