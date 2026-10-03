@@ -6,7 +6,6 @@ import { StepSlider } from "@/registry/ui/slider"
 import { Icon } from "@/registry/ui/icon"
 import { Pictogram } from "@/registry/ui/pictogram"
 import { Loading } from "@/registry/ui/loading"
-import { AnimatedNumber } from "@/registry/ui/animated"
 import { EmptyState } from "@/registry/ui/empty-state"
 import { Button } from "@/registry/ui/button"
 import { toast } from "@/registry/ui/notification"
@@ -86,9 +85,8 @@ export function GlyphGallery({ kind }: { kind: "icons" | "pictograms" }) {
               : [{ value: "md", label: "Small" }, { value: "lg", label: "Medium" }, { value: "xl", label: "Large" }]}
           />
         </div>
-        <Text tone="muted" aria-live="polite" className="inline-flex items-baseline gap-1">
-          <AnimatedNumber value={filtered.length} /> {filtered.length === 1 ? "result" : "results"}
-        </Text>
+        {/* The count is for screen readers: the grid already shows the results, and none shows an empty state. */}
+        <span className="sr-only" aria-live="polite">{filtered.length} {filtered.length === 1 ? "result" : "results"}</span>
       </Inline>
 
       {!glyphs && <Inline gap="xs"><Loading size="sm" label={`Loading ${kind}`} /><Text tone="muted">Loading {kind}…</Text></Inline>}
