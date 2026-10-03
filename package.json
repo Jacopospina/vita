@@ -22,7 +22,8 @@
     "llms": "node scripts/build-llms.mjs",
     "test": "vitest run",
     "check": "pnpm typecheck && pnpm lint && pnpm audit:ds && pnpm test",
-    "palette": "node scripts/build-palette.mjs"
+    "palette": "node scripts/build-palette.mjs",
+    "pictograms": "node scripts/build-pictograms.mjs"
   },
   "dependencies": {
     "@carbon/icons-react": "^11.89.0",

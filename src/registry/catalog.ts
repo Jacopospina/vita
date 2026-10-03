@@ -21,4 +21,8 @@ function glyphs(mod: Record<string, unknown>): [string, Glyph][] {
 }
 
 export const allIcons = async () => glyphs(await import("@carbon/icons-react/lib/index.js"))
-export const allPictograms = async () => glyphs(await import("@carbon/pictograms-react/lib/index.js"))
+/** Every pictogram as lines (generated), from its own JSON file so only galleries download the whole set. */
+export const allPictograms = async () => {
+  const set = (await import("./pictograms.catalog.json")).default as Record<string, unknown>
+  return Object.entries(set).sort(([a], [b]) => a.localeCompare(b)) as unknown as [string, Glyph][]
+}

@@ -28,4 +28,5 @@ avoid_when:
 4. **Test it with the text covered.** Hide the title and subtitle and ask what the pictogram says. If the answer isn't the message, choose another one.
 5. **Decorative by default.** Pass `label` only if the pictogram conveys information not present in the text.
 6. **Don't mix illustration styles.** Only pictograms exported from `@/components/vita/pictograms` are allowed.
-7. **Same hand as the controls.** Every corner is rounded to the theme's radius and never sharp, even in a square theme; lines take the theme's weight (`--vita-line`).
+7. **Built from lines.** Every pictogram is its centre lines, drawn with round caps and round joins: no corner can be sharp. They're generated from the source set by `pnpm pictograms`; render them only through `<Pictogram>`.
+8. **Same hand as the controls.** Every corner is rounded to the theme's radius and never sharp, even in a square theme; lines take the theme's weight (`--vita-line`).

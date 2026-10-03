@@ -1,5 +1,6 @@
 /** Maps every docs page to the Vita source files it documents, and extracts the tokens those files use. */
-const registry = import.meta.glob("/src/registry/**/*.{ts,tsx}", { query: "?raw", import: "default", eager: true }) as Record<string, string>
+// Generated data (every pictogram's lines) isn't source to read, and would put megabytes into the docs bundle.
+const registry = import.meta.glob(["/src/registry/**/*.{ts,tsx}", "!/src/registry/pictograms.data.ts"], { query: "?raw", import: "default", eager: true }) as Record<string, string>
 const styles = import.meta.glob("/src/styles/*.css", { query: "?raw", import: "default", eager: true }) as Record<string, string>
 
 const map: Record<string, string[]> = {

@@ -6,7 +6,7 @@
  * inside a smaller one, so a line keeps its thickness around a bend. Never sharp, even in a square theme.
 
  */
-import { union } from "polygon-clipping"
+import polygonClipping from "polygon-clipping"
 
 type Pt = [number, number]
 type Contour = Pt[]
@@ -79,7 +79,7 @@ function flattenArc(out: Pt[], p0: Pt, rx: number, ry: number, phiDeg: number, l
   }
 }
 
-function parsePath(d: string): Seg[] {
+export function parsePath(d: string): Seg[] {
   const toks = d.match(/[a-zA-Z]|-?(?:\d+\.?\d*|\.\d+)(?:e[-+]?\d+)?/g) ?? []
   const segs: Seg[] = []
   let cur: Pt[] = [], pos: Pt = [0, 0], start: Pt = [0, 0], cmd = "", prevCtrl: Pt | null = null, prevCmd = ""
@@ -115,7 +115,7 @@ function parsePath(d: string): Seg[] {
   return segs
 }
 
-function ellipse(cx: number, cy: number, rx: number, ry: number): Pt[] {
+export function ellipse(cx: number, cy: number, rx: number, ry: number): Pt[] {
   const n = Math.max(12, Math.min(64, Math.ceil(Math.max(rx, ry) * 4)))
   return Array.from({ length: n }, (_, k) => [cx + rx * Math.cos((k / n) * 2 * Math.PI), cy + ry * Math.sin((k / n) * 2 * Math.PI)] as Pt)
 }
@@ -190,7 +190,7 @@ function unite(parts: Contour[][]): { parts: Contour[][]; holes: boolean[][] } |
       }
     }
     if (!polys.length) return null
-    const out = union(polys[0], ...polys.slice(1))
+    const out = polygonClipping.union(polys[0], ...polys.slice(1))
     const newParts: Contour[][] = [], holes: boolean[][] = []
     for (const poly of out) {
       const rings = poly.map((ring) => ring.slice(0, -1) as Contour).filter((r) => r.length > 2 && Math.abs(signedArea(r)) > 0.01)
