@@ -21,6 +21,7 @@ import { AISurface, AILabel } from "@/registry/ui/ai-label"
 import { ContentSwitcher } from "@/registry/ui/content-switcher"
 import { ScrambleText } from "@/registry/ui/scramble-text"
 import { Toggletip } from "@/registry/ui/popover"
+import { LiveWaveform } from "@/registry/ui/live-waveform"
 import { InlineNotification } from "@/registry/ui/notification"
 import { IconPlaceholder } from "@/registry/ui/icon-placeholder"
 import { ListGroup, ListItem } from "@/registry/ui/list-item"
@@ -139,7 +140,7 @@ const columns: { offset: string; cards: (React.ReactNode | Pair)[] }[] = [
     offset: "pt-20",
     cards: [
       <ListGroup key="lg"><ListItem icon={Notification} tone="brand" title="Hand-offs" trailing={<Toggle size="sm" hideLabel label="Hand-offs" defaultChecked />} /><ListItem icon={Bot} tone="brand" title="Deployments" trailing={<Toggle size="sm" hideLabel label="Deployments" />} /></ListGroup>,
-      <Inline key="ring" gap="md"><ProgressRing value={100} size={44} label="Voice agent connection" /><Stack gap="none"><Text weight="semibold">Voice agent</Text><Text variant="footnote" tone="muted">Connected</Text></Stack></Inline>,
+      { pair: [<Inline key="ring" gap="md"><ProgressRing value={100} size={44} label="Voice agent connection" /><Stack gap="none"><Text weight="semibold">Voice agent</Text><Text variant="footnote" tone="muted">Connected</Text></Stack></Inline>, <div key="wave" className="w-full px-2"><LiveWaveform active size="sm" label="Voice agent speaking" /></div>] },
       <Search key="se" placeholder="Search agents" />,
     ],
   },
