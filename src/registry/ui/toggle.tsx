@@ -33,7 +33,7 @@ export function Toggle({ label, hideLabel, helperText, stateText, size = "md", l
     setOn(v)
     props.onCheckedChange?.(v)
   }
-  // Hold and drag: the knob tracks the pointer (an inline transform, no transition); on release it springs to the
+  // Hold and drag: the knob tracks the pointer (an inline translate, no transition); on release it springs to the
   // nearer side, and the tap's own click is swallowed so the switch doesn't flip back.
   const knob = React.useRef<HTMLSpanElement>(null)
   const dragged = React.useRef(false)
@@ -62,7 +62,9 @@ export function Toggle({ label, hideLabel, helperText, stateText, size = "md", l
       const k = knob.current
       if (k) {
         k.style.transition = "none"
-        k.style.transform = `translateX(${x}px)`
+        // `translate`, not `transform`: the resting classes (translate-x-*) set `translate`, so a `transform` would add
+        // on top of them and push an "on" knob out of the track. The inline value replaces them while dragging.
+        k.style.translate = `${x}px 0`
       }
     }
     const up = (ev: PointerEvent) => {
@@ -75,7 +77,7 @@ export function Toggle({ label, hideLabel, helperText, stateText, size = "md", l
       const k = knob.current
       if (k) {
         k.style.transition = ""
-        k.style.transform = ""
+        k.style.translate = ""
       }
       dragged.current = true
       const next = x > travel() / 2
