@@ -8,7 +8,8 @@ use_when:
   - Filtering by a numeric range (price, weight) with two thumbs
 avoid_when:
   - Exact values matter → NumberInput
-  - Few discrete options → RadioGroup / ContentSwitcher
+  - A few ordered steps of one property (a size, a density) → StepSlider (below)
+  - A few unordered options → RadioGroup / ContentSwitcher
   - The range is huge (0–1,000,000) → NumberInput(s)
 related: [number-input, filtering]
 ---
@@ -20,6 +21,12 @@ related: [number-input, filtering]
 3. **Live preview:** whatever the slider controls updates while dragging.
 4. **Step** matches meaning: €50 steps for prices, 1% for opacity.
 5. **Keyboard:** arrows step, PageUp/PageDown step ×10, Home/End jump to the bounds.
+
+## Stepped: StepSlider
+
+- **For ordered steps of one thing.** A size (48 · 64 · 80), a density, a level: the content stays the same, only its scale moves. Tabs and content switchers mean different content in each option, so they're wrong here.
+- **Never free-form.** The knob only lands on the steps; the current step rides in the knob, and every step is named under the track (click a name to jump).
+- **Keyboard.** Arrows move one step; Home and End jump to the first and last.
 
 ## Value
 

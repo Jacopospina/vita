@@ -94,7 +94,7 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/iden
   - avoid: Multi-attribute records to sort/compare → DataTable; Plain bullet points → List; Hierarchies → TreeView
 - [Content switcher](docs/components/content-switcher.md): A segmented control. Switch between alternate presentations of the same content. One segment is always selected.
   - use: Changing how the same data is shown (List | Grid, Chart | Table); Changing the granularity of one dataset (Day | Week | Month); A mode with 2–5 mutually exclusive, equally weighted options that applies instantly
-  - avoid: The panels contain different content → Tabs; It's a form value submitted later → RadioGroup; More than 5 options → Dropdown; Binary on/off → Toggle
+  - avoid: The panels contain different content → Tabs; Picking a size or scale of the same content (48 · 64 · 80) → StepSlider; It's a form value submitted later → RadioGroup; More than 5 options → Dropdown; Binary on/off → Toggle
 - [Data table](docs/components/data-table.md): View, compare, sort, select and act on many uniform records. The workhorse of product UI.
   - use: Many records with the same attributes (> ~5 rows or any sorting/selecting need); Users compare values across rows or act on several rows at once
   - avoid: Few rows of key/value details → StructuredList; Heterogeneous items with one action each → ContainedList; Visual browsing → Tile grid; One column → it's a list
@@ -175,7 +175,7 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/iden
   - avoid: Options come from data → Dropdown (items prop); 2–6 options → RadioGroup (show them); Users need to type to find → Combobox; Several values → MultiSelect / CheckboxGroup
 - [Slider](docs/components/slider.md): Choose a value or range where relative position matters more than precision. The value is always visible.
   - use: Adjusting a continuous value with immediate feedback (volume, opacity, zoom); Filtering by a numeric range (price, weight) with two thumbs
-  - avoid: Exact values matter → NumberInput; Few discrete options → RadioGroup / ContentSwitcher; The range is huge (0–1,000,000) → NumberInput(s)
+  - avoid: Exact values matter → NumberInput; A few ordered steps of one property (a size, a density) → StepSlider (below); A few unordered options → RadioGroup / ContentSwitcher; The range is huge (0–1,000,000) → NumberInput(s)
 - [Structured list](docs/components/structured-list.md): A small, read-mostly set of rows and columns, details, specs and comparisons. Selectable when choosing one row.
   - use: Key/value details of one object (condensed + flush); Comparing a few options across attributes (plans, models); Choosing one of a few rows with multiple attributes (selectable)
   - avoid: Many rows, sorting, pagination, bulk actions → DataTable; Items with individual actions → ContainedList
@@ -184,7 +184,7 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/iden
   - avoid: A precise or continuous colour (any hue, a hex value) → Slider or TextInput; More than about 14 colours → Dropdown with a colour icon per option; Choosing anything that isn't a colour → RadioGroup / ContentSwitcher
 - [Tabs](docs/components/tabs.md): Switch between peer views of the same context, Overview · Activity · Settings.
   - use: pill (default), page-level views of one object; a raised pill slides between tabs; line, dense toolbars or where a track would be too heavy; contained, tabs attached to a panel/tile (secondary level)
-  - avoid: Same data in different presentations → ContentSwitcher; Steps the user must complete in order → ProgressIndicator; Navigation between different objects/areas → Side nav; Content users need to compare side by side → show both; A single tab → no tabs
+  - avoid: Same data in different presentations → ContentSwitcher; The same content at a different size or scale → StepSlider (tabs mean different content in each); Steps the user must complete in order → ProgressIndicator; Navigation between different objects/areas → Side nav; Content users need to compare side by side → show both; A single tab → no tabs
 - [Tag](docs/components/tag.md): Short labels that categorise, show status in dense rows, or represent applied filters.
   - use: Read-only, categories/metadata on items (region, type); Status in dense table rows (with icon); Dismissible, applied filters / chosen values the user can remove; Selectable, quick filter chips (toggle on/off); Operational, "+3" that reveals more in a popover
   - avoid: Actions → Button; Status on detail pages or with more nuance → StatusIndicator; Long text (> 3 words) → it's not a tag

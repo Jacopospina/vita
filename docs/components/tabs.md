@@ -9,6 +9,7 @@ use_when:
   - contained, tabs attached to a panel/tile (secondary level)
 avoid_when:
   - Same data in different presentations → ContentSwitcher
+  - The same content at a different size or scale → StepSlider (tabs mean different content in each)
   - Steps the user must complete in order → ProgressIndicator
   - Navigation between different objects/areas → Side nav
   - Content users need to compare side by side → show both

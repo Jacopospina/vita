@@ -30,6 +30,7 @@ How many options?
 ├─ 2–6, pick ONE ......................... RadioGroup (all visible = faster)
 │   └─ options are rich (plans, templates) .. SelectableTile (single)
 ├─ 2–5, switching the VIEW of the same data .. ContentSwitcher
+├─ a few ordered steps of ONE property (size) . StepSlider
 ├─ 7–20, pick ONE
 │   ├─ need icons/descriptions/custom UI .... Dropdown
 │   └─ options written inline, grouped ..... Select
@@ -82,6 +83,7 @@ Are items uniform records with the same attributes?
 |---|---|---|
 | Peer views of one object (Overview · Activity · Settings) | `Tabs` | ContentSwitcher |
 | Same data, different presentation (List · Grid) | `ContentSwitcher` | Tabs |
+| The same content at a different scale (size 48 · 64 · 80, density, zoom) | `StepSlider` | Tabs, ContentSwitcher |
 | Many sections the user scans by title (FAQ, filters) | `Accordion` | Tabs (> 6) |
 | One optional section ("Advanced options") | `Disclosure` / `ExpandableTile` | A one-item accordion |
 | Where am I in a deep hierarchy | `Breadcrumb` | A back button only |

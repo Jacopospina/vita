@@ -2,7 +2,7 @@ import * as React from "react"
 import { Stack, Inline } from "@/registry/ui/layout"
 import { Text } from "@/registry/ui/text"
 import { Search } from "@/registry/ui/search"
-import { ContentSwitcher } from "@/registry/ui/content-switcher"
+import { StepSlider } from "@/registry/ui/slider"
 import { Icon } from "@/registry/ui/icon"
 import { Pictogram } from "@/registry/ui/pictogram"
 import { Loading } from "@/registry/ui/loading"
@@ -73,15 +73,17 @@ export function GlyphGallery({ kind }: { kind: "icons" | "pictograms" }) {
         <div className="w-full max-w-md">
           <Search size="md" label={`Search ${kind}`} placeholder={`Search ${glyphs?.length.toLocaleString("en-GB") ?? ""} ${kind}`} value={q} onValueChange={setQ} />
         </div>
-        <ContentSwitcher
-          label="Size"
-          size="md"
-          value={size}
-          onValueChange={setSize}
-          items={kind === "icons"
-            ? [{ value: "sm", label: "16" }, { value: "md", label: "20" }, { value: "lg", label: "24" }, { value: "xl", label: "32" }]
-            : [{ value: "md", label: "48" }, { value: "lg", label: "64" }, { value: "xl", label: "80" }]}
-        />
+        {/* One property at a few ordered steps (the content stays the same): a stepped slider, not tabs. */}
+        <div className="w-56">
+          <StepSlider
+            label="Size"
+            value={size}
+            onValueChange={setSize}
+            steps={kind === "icons"
+              ? [{ value: "sm", label: "16" }, { value: "md", label: "20" }, { value: "lg", label: "24" }, { value: "xl", label: "32" }]
+              : [{ value: "md", label: "48" }, { value: "lg", label: "64" }, { value: "xl", label: "80" }]}
+          />
+        </div>
         <Text tone="muted" aria-live="polite" className="inline-flex items-baseline gap-1">
           <AnimatedNumber value={filtered.length} /> {filtered.length === 1 ? "result" : "results"}
         </Text>

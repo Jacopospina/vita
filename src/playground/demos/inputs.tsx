@@ -17,7 +17,7 @@ import { Bot, Plug, UserAvatar, Flash, Image } from "@/registry/icons"
 import { DatePicker, DateRangePicker, Calendar, CalendarDay, datePresets, rangePresets } from "@/registry/ui/date-picker"
 import { Tile } from "@/registry/ui/tile"
 import type { DateRange } from "react-day-picker"
-import { Slider } from "@/registry/ui/slider"
+import { Slider, StepSlider } from "@/registry/ui/slider"
 import { Toggle } from "@/registry/ui/toggle"
 import { FileUploader, type UploadFile } from "@/registry/ui/file-uploader"
 import { Form, FormGroup, FormRow, FormActions, FluidForm } from "@/registry/ui/form"
@@ -413,6 +413,16 @@ export const inputDemos: DemoMap = {
           <Slider label="Confidence threshold" defaultValue={[80]} formatValue={(v) => `${v}%`} helperText="Below this, the agent hands off to a person" />
           <Slider label="Volume" showBounds={false} defaultValue={[60]} helperText="Without bounds, when the ends need no number" />
           <Slider label="Disabled" disabled defaultValue={[30]} />
+        </Stack>
+      ),
+    },
+    {
+      title: "Stepped, for ordered steps of one property",
+      description: "A size, a density, a level: the knob lands only on the steps, each named under the track.",
+      render: () => (
+        <Stack gap="xl" className="max-w-md">
+          <StepSlider label="Pictogram size" defaultValue="lg" steps={[{ value: "md", label: "48" }, { value: "lg", label: "64" }, { value: "xl", label: "80" }]} />
+          <StepSlider label="Density" defaultValue="default" steps={[{ value: "compact", label: "Compact" }, { value: "default", label: "Default" }, { value: "roomy", label: "Roomy" }]} />
         </Stack>
       ),
     },

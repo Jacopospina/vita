@@ -118,3 +118,72 @@ export function Slider({ label, hideLabel, helperText, formatValue = String, sho
     </div>
   )
 }
+
+/**
+ * StepSlider, choose one of a few ORDERED steps of the same thing: a size, a density, a level. Not free-form: the
+ * knob only lands on the steps, the current step's name rides in the knob, and every step is named (and clickable)
+ * under the track. Same content at a different scale → StepSlider; different content → Tabs or ContentSwitcher.
+ *
+ *   <StepSlider label="Size" steps={[{ value: "md", label: "48" }, { value: "lg", label: "64" }]} value={size} onValueChange={setSize} />
+ */
+export interface StepSliderProps {
+  label: React.ReactNode
+  steps: { value: string; label: string }[]
+  value?: string
+  defaultValue?: string
+  onValueChange?: (value: string) => void
+  hideLabel?: boolean
+  helperText?: React.ReactNode
+  disabled?: boolean
+  className?: string
+}
+
+export function StepSlider({ label, steps, value, defaultValue, onValueChange, hideLabel, helperText, disabled, className }: StepSliderProps) {
+  const [own, setOwn] = React.useState(defaultValue ?? steps[0]?.value)
+  const current = value ?? own
+  const index = Math.max(0, steps.findIndex((s) => s.value === current))
+  const last = Math.max(1, steps.length - 1)
+  const choose = (i: number) => {
+    const v = steps[i]?.value
+    if (v === undefined || v === current) return
+    if (value === undefined) setOwn(v)
+    onValueChange?.(v)
+  }
+  return (
+    <div className={cn("flex w-full flex-col gap-1", className)}>
+      <Slider
+        label={label}
+        hideLabel={hideLabel}
+        min={0}
+        max={last}
+        step={1}
+        value={[index]}
+        onValueChange={([i]) => choose(i)}
+        formatValue={(i) => steps[i]?.label ?? ""}
+        showBounds={false}
+        disabled={disabled}
+      />
+      {/* Every step, named where it sits on the track; a click lands the knob there. */}
+      <div aria-hidden className="relative h-5 text-caption text-helper">
+        {steps.map((s, i) => (
+          <button
+            key={s.value}
+            type="button"
+            tabIndex={-1}
+            disabled={disabled}
+            onClick={() => choose(i)}
+            className={cn(
+              "absolute top-0 rounded-sm px-1 whitespace-nowrap duration-fast-02 hover:text-foreground",
+              i === index && "font-medium text-foreground",
+              i === 0 ? "left-0" : i === last ? "right-0" : "-translate-x-1/2",
+            )}
+            style={i === 0 || i === last ? undefined : { left: `${(i / last) * 100}%` }}
+          >
+            {s.label}
+          </button>
+        ))}
+      </div>
+      {helperText && <p className="text-caption text-helper">{helperText}</p>}
+    </div>
+  )
+}
