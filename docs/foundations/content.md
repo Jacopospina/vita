@@ -40,7 +40,7 @@ avoid_when:
 - **Don't explain the obvious.** If a signifier already says it (a pointer cursor, a hover state, a chevron, a button's shape), the words don't repeat it: no "Click to…", "Tap here to…", "Change status" in labels or tooltips.
 - **Name the thing.** Confirmations, toasts and errors say which object they mean, so nobody has to remember what they just did.
 - **Buttons say what happens.** The confirm button repeats the title's verb.
-- **Errors fix things.** What happened, why, how to fix it. No blame, no "oops".
+- **Errors fix things, in human words.** What happened and how to fix it, written for someone who doesn't code: no status codes, exception names, field keys or IDs. No blame, no "oops".
 - **No filler.** Drop "please", "simply", "just", "successfully".
 - **No em dashes.** Use a comma, colon, full stop or parentheses. The build fails on one.
 - **AI copy is honest.** Say what the AI did and how sure it is; never "I think".
