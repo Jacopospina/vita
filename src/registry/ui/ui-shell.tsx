@@ -106,6 +106,9 @@ export function Header({ productName, prefix, logo, badge, href = "/", children,
         // Never wider than 1024px: on a wide screen the bar stays a compact, centred object, not a strip edge to edge.
         // 12px (sm) from the top of the window; everything below it starts at top-17 (12 + 48 + 8).
         "absolute inset-x-2 top-3 z-40 mx-auto flex h-12 max-w-5xl items-center gap-1 glass glass-2 scope-xl p-2",
+        // Arrives first, before the page: drops in from above (rises from below on a phone, where it sits at the
+        // bottom). Movement only, no blur: a filter on the glass bar would cut it off from its backdrop.
+        "animate-drop-in max-sm:animate-enter-list",
         "max-sm:top-auto max-sm:bottom-2 max-sm:mx-auto max-sm:w-fit max-sm:max-w-full",
         className,
       )}
