@@ -22,7 +22,7 @@ avoid_when:
 
 | Family | Tokens | Rule |
 |---|---|---|
-| Surfaces | `background` · `layer-1..3` · `raised` · `field` · `inverse` · `overlay` | Each nesting steps one layer. Floating things use `raised`. |
+| Surfaces | `background` · `layer-1..3` · `raised` · `field` · `inverse` · `overlay` | Each nesting steps one layer. Floating things use `raised`. Fields are white at low opacity (55% light, 6% dark), so the surface beneath shows through. |
 | Text | `foreground` · `muted-foreground` · `helper` · `placeholder` · `disabled-foreground` | Two text levels per region at most. |
 | Interactive | `primary` (+ `-hover` `-active` `-foreground` `-subtle`) · `secondary` (a faint primary wash with primary text) · `link` · `focus` | Brand color means "you can act here". |
 | State | `hover` · `active` · `selected` · `selected-foreground` | Translucent washes that work on any layer. |
