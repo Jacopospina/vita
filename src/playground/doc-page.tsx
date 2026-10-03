@@ -37,7 +37,7 @@ export function DocPage({ section, slug }: { section: Section; slug: string }) {
   const sources = sourcesFor(section, slug)
   const tokens = React.useMemo(() => tokensIn(sources.map((s) => s.code).join("\n")), [sources])
   const title = doc?.meta.title ?? entry?.title ?? slug
-  const statusTone = ({ stable: "success", experimental: "warning", draft: "neutral" } as const)[doc?.meta.status as "stable"] ?? "neutral"
+  const statusTone = ({ stable: "success", experimental: "warning", inception: "neutral" } as const)[doc?.meta.status as "stable"] ?? "neutral"
   const [hero, ...rest] = pageDemos
   const hasUsage = !!(doc?.meta.use_when?.length || doc?.meta.avoid_when?.length)
   const isArticle = sources.length === 0 && !hasUsage
@@ -49,8 +49,9 @@ export function DocPage({ section, slug }: { section: Section; slug: string }) {
     return null
   }).filter(Boolean) as { href: string; title: string }[]
 
+  // Docs read at the header's width: never wider than 1024px, centred on the screen.
   return (
-    <Container className="py-5 md:py-8">
+    <Container className="max-w-5xl py-5 md:py-8">
       <Stack gap="xl" className="stagger">
         {/* Header */}
         <Stack gap="sm">

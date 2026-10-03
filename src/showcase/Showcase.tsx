@@ -1,4 +1,5 @@
 import * as React from "react"
+import { StageBadge } from "@/playground/stage-badge"
 import { Moon, Sun, LogoGithub } from "@/registry/icons"
 import { Shell, ShellMain, Header, HeaderNavItem, HeaderGlobalAction, HeaderSeparator, LeftPanel, SideNavItem } from "@/registry/ui/ui-shell"
 import { globalNav, navHref, searchPages, HOME_URL, DOCS_URL, MAKE_URL } from "@/playground/nav"
@@ -13,7 +14,6 @@ import { Toaster } from "@/registry/ui/notification"
 import { Container, Stack, Inline } from "@/registry/ui/layout"
 import { Text } from "@/registry/ui/text"
 import { Button } from "@/registry/ui/button"
-import { Tag } from "@/registry/ui/tag"
 import { Link } from "@/registry/ui/link"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/registry/ui/tabs"
 import { Tile } from "@/registry/ui/tile"
@@ -52,7 +52,6 @@ export function Showcase({ page = "home" }: { page?: "home" | "make" }) {
         <Header
           productName="Vita"
           logo={<VitaMark size={24} className="-m-0.5" />}
-          badge={<Tag size="sm" tone="neutral">Draft</Tag>}
           href={HOME_URL}
           actions={
             <>
@@ -92,7 +91,7 @@ function HomePage() {
         <Stack gap="md" align="center" className="stagger text-center">
           {/* The epicenter: Sofia, making. Everything on the page radiates from here. */}
           <Thinking mode="generating" size="3xl" label="Sofia is making" className="mb-2" />
-          <Tag tone="neutral">Draft</Tag>
+          <StageBadge />
           <Text variant="display" as="h1" className="max-w-3xl">The first agentic design system</Text>
           <Text variant="body-lg" tone="muted" className="max-w-2xl">
             Made for AI products, and for the agents that build them. Documented and enforced so your agents design like designers, and you make what only you can make.
@@ -108,7 +107,7 @@ function HomePage() {
       {/* The component canvas, full bleed, past both edges of the window */}
       <ComponentCanvas />
 
-      <div className="pb-16" />
+      <div className="pb-8" />
     </>
   )
 }

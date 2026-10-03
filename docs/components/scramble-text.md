@@ -1,7 +1,7 @@
 ---
 title: Scramble text
 summary: Text on its way, set in its real typeface. Glyphs change one by one where the words will be, each blurring out as the next blurs in, then the real text lands in random order.
-status: draft
+status: inception
 import: "import { ScrambleText } from \"@/components/vita/scramble-text\""
 use_when:
   - A title, name, value or sentence is loading and its style is known

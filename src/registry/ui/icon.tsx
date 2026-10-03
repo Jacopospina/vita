@@ -1,6 +1,7 @@
 import * as React from "react"
 import type { IconType } from "@/registry/icons"
-import { cn } from "@/registry/lib/utils"
+import { cn, motionMs } from "@/registry/lib/utils"
+import { contoursOf, pairContours, frame } from "@/registry/lib/morph"
 
 /**
  * Icon, the only way to render an icon. Renders glyphs from @/registry/icons at Vita sizes.
@@ -25,25 +26,71 @@ const glyphId = (icon: object) => {
 }
 
 /**
- * SwapIcon, use whenever the glyph depends on state (status, sort direction, step, menu/close).
- * The first glyph renders still. On every change the old glyph un-draws while the new one draws in.
+ * SwapIcon, use whenever the glyph depends on state (copy → copied, status, sort direction, step, menu/close).
+ * The first glyph renders still. On every change the old glyph MORPHS into the new one: its outline flows, point by
+ * point, into the next shape (pieces grow out of or fold into each other), like a design tool's smart animate.
+ * Where geometry can't be measured (tests, very old browsers) the old glyph un-draws while the new one draws in.
+ * Reduced motion: the new glyph simply appears.
  */
-export function SwapIcon({ as, className, ...props }: IconProps) {
+export function SwapIcon({ as, className, size = "sm", ...props }: IconProps) {
   const [current, setCurrent] = React.useState(() => as)
   const [previous, setPrevious] = React.useState<IconType | null>(null)
+  // "morph" while the outline flows; "draw" when it can't be measured (the fallback); null when still.
+  const [mode, setMode] = React.useState<"morph" | "draw" | null>(null)
   if (as !== current) {
     setPrevious(() => current)
     setCurrent(() => as)
+    setMode("morph")
   }
+  const from = React.useRef<HTMLSpanElement>(null)
+  const to = React.useRef<HTMLSpanElement>(null)
+  const shape = React.useRef<SVGPathElement>(null)
+  React.useLayoutEffect(() => {
+    if (!previous || mode !== "morph") return
+    const a = from.current?.querySelector("svg"), b = to.current?.querySelector("svg")
+    const ca = a && contoursOf(a), cb = b && contoursOf(b)
+    const duration = motionMs(320)
+    // Can't measure → the draw fallback; no motion → the new glyph simply appears. Decided next frame, not mid-effect.
+    if (!ca || !cb || !duration) {
+      const r = requestAnimationFrame(() => { if (!ca || !cb) setMode("draw"); else { setPrevious(null); setMode(null) } })
+      return () => cancelAnimationFrame(r)
+    }
+    const [pa, pb, roles] = pairContours(ca, cb)
+    const start = performance.now()
+    let raf = 0
+    const tick = (now: number) => {
+      const x = Math.min(1, (now - start) / duration)
+      // Productive ease (in-out): the outline sets off gently and lands softly.
+      const t = x < 0.5 ? 4 * x * x * x : 1 - (-2 * x + 2) ** 3 / 2
+      shape.current?.setAttribute("d", frame(pa, pb, t, roles))
+      if (x < 1) raf = requestAnimationFrame(tick)
+      else { setPrevious(null); setMode(null) }
+    }
+    shape.current?.setAttribute("d", frame(pa, pb, 0, roles))
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
+  }, [previous, mode])
   React.useEffect(() => {
-    if (!previous) return
-    const t = window.setTimeout(() => setPrevious(null), 260)
+    if (!previous || mode !== "draw") return
+    const t = window.setTimeout(() => { setPrevious(null); setMode(null) }, 260)
     return () => window.clearTimeout(t)
-  }, [previous])
+  }, [previous, mode])
+  const px = sizes[size]
   return (
     <span className={cn("relative inline-flex shrink-0", className)}>
-      {previous && <Icon key={`p${glyphId(previous)}`} as={previous} {...props} draw="out" className="absolute inset-0" />}
-      <Icon key={glyphId(current)} as={current} {...props} draw={previous ? "in" : undefined} />
+      {previous && mode === "draw" && <Icon key={`p${glyphId(previous)}`} as={previous} size={size} {...props} draw="out" className="absolute inset-0" />}
+      {previous && mode === "morph" && (
+        <>
+          {/* The two glyphs are measured, never seen; the morph draws in their place, in the text colour. */}
+          <span ref={from} aria-hidden className="pointer-events-none invisible absolute inset-0"><Icon as={previous} size={size} {...props} /></span>
+          <svg aria-hidden viewBox="0 0 1 1" width={px} height={px} className="pointer-events-none absolute inset-0 shrink-0 fill-current">
+            <path ref={shape} fillRule="evenodd" />
+          </svg>
+        </>
+      )}
+      <span ref={to} className={cn("inline-flex transition-none", previous && mode === "morph" && "opacity-0")}>
+        <Icon key={glyphId(current)} as={current} size={size} {...props} draw={previous && mode === "draw" ? "in" : undefined} />
+      </span>
     </span>
   )
 }

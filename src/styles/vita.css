@@ -259,6 +259,16 @@
 }
 
 /*
+ * `rise-in`: the stagger's entrance on ONE element, at its place in a sequence you choose (`--vita-i`, set inline).
+ * For orders the DOM can't express: a field of cards that appear scattered, left, then right, then the middle.
+ */
+@utility rise-in {
+  animation: vita-rise-in var(--vita-duration-expressive) var(--vita-ease-expressive-enter) backwards;
+  animation-delay: calc(var(--vita-i, 0) * 45ms * var(--vita-motion-scale));
+  @media (prefers-reduced-motion: reduce) { animation: vita-fade-in var(--vita-duration-fast-02) linear both; animation-delay: 0ms; }
+}
+
+/*
  * CONCENTRIC RADIUS, inner radius = outer radius − padding (never below 0).
  *   Container:  scope-lg p-2            (sets its radius and exposes it to children)
  *   Child:      rounded-inner-2         (= radius-lg − spacing 2)

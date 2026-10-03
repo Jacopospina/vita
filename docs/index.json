@@ -1125,7 +1125,7 @@
       "path": "docs/components/scramble-text.md",
       "title": "Scramble text",
       "summary": "Text on its way, set in its real typeface. Glyphs change one by one where the words will be, each blurring out as the next blurs in, then the real text lands in random order.",
-      "status": "draft",
+      "status": "inception",
       "import": "import { ScrambleText } from \"@/components/vita/scramble-text\"",
       "use_when": [
         "A title, name, value or sentence is loading and its style is known",
@@ -2196,7 +2196,7 @@
       "slug": "release-stages",
       "path": "docs/decisions/release-stages.md",
       "title": "Release stages",
-      "summary": "Everything in Vita, and Vita itself, sits on one of three stages. Draft comes first, then Experimental, then Stable.",
+      "summary": "Everything in Vita, and Vita itself, sits on one of three stages. Inception comes first, then Experimental, then Stable.",
       "status": "accepted",
       "date": "2026-10-02",
       "decided_by": "Jacopo",
