@@ -22,8 +22,9 @@ export interface NumberInputProps extends Omit<React.InputHTMLAttributes<HTMLInp
   unit?: string
 }
 
-/** A press starting this soon after the previous release belongs to a click series and never auto-repeats. */
-const SERIES_MS = 400
+/** Held this long, a press starts repeating: longer than any tap (so rapid taps step once each), short enough to
+    feel immediate. */
+const HOLD_MS = 380
 
 export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
   ({ label, hideLabel, helperText, invalid, invalidText, warn, warnText, optional, labelAddon, className, id, value, defaultValue = null, onValueChange, min, max, step = 1, size = "md", unit, disabled, readOnly, ...props }, ref) => {
@@ -43,42 +44,40 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
       latest.current = next
       setVal(next)
     }
-    // Press-and-hold: one step at once; held > 100ms it keeps stepping, accelerating, until release or a bound.
+    // Press-and-hold: one step at once; held past HOLD_MS it keeps stepping, accelerating, until release or a bound.
     const hold = React.useRef<number[]>([])
-    const lastRelease = React.useRef(-Infinity)
     const stop = () => {
       hold.current.forEach((t) => window.clearTimeout(t))
       hold.current = []
     }
-    const release = () => {
-      if (hold.current.length) lastRelease.current = performance.now()
-      stop()
-    }
+    const release = stop
     React.useEffect(() => stop, [])
     const press = (dir: 1 | -1) => (e: React.PointerEvent<HTMLButtonElement>) => {
       if (e.button !== 0) return
       e.preventDefault() // keep focus where it is
+      // The press stays with this button even if the finger drifts a little: the hold keeps going until it lifts.
+      try { e.currentTarget.setPointerCapture(e.pointerId) } catch { /* the pointer may already be gone */ }
       stop()
       bump(dir)
-      // Rapid sequential clicks are a click SERIES, not a hold: each one steps exactly once.
-      const inSeries = performance.now() - lastRelease.current < SERIES_MS
-      hold.current.push(-1) // marks "pressed" so release() can timestamp it
-      if (inSeries) return
-      let delay = 90
+      // A hold, like a phone's stepper: one step now, a pause long enough that a tap never double-steps (HOLD_MS),
+      // then steady steps that speed up the longer you hold.
+      let delay = 150
       const repeat = () => {
         const at = latest.current ?? 0
         if ((dir > 0 && max !== undefined && at >= max) || (dir < 0 && min !== undefined && at <= min)) return stop()
         bump(dir)
-        delay = Math.max(30, delay * 0.85)
+        delay = Math.max(40, delay * 0.88)
         hold.current.push(window.setTimeout(repeat, delay))
       }
-      hold.current.push(window.setTimeout(repeat, 100))
+      hold.current.push(window.setTimeout(repeat, HOLD_MS))
     }
     const holdProps = (dir: 1 | -1) => ({
       onPointerDown: press(dir),
       onPointerUp: release,
-      onPointerLeave: release,
       onPointerCancel: release,
+      onLostPointerCapture: release,
+      // A long press is a hold, never the browser's: no context menu, no callout, no text selection.
+      onContextMenu: (e: React.MouseEvent) => e.preventDefault(),
       // Keyboard / assistive tech activation (no pointer): a single step.
       onClick: (e: React.MouseEvent) => {
         if (e.detail === 0) bump(dir)
@@ -87,7 +86,9 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
     const rolling = !typing && val !== null
     const outOfRange = val !== null && ((min !== undefined && val < min) || (max !== undefined && val > max))
     // Square steppers: width follows the field height at every size.
-    const stepBtn = "flex aspect-square h-full items-center justify-center text-muted-foreground hover:bg-hover hover:text-foreground focus-ring-inset disabled:text-disabled-foreground disabled:hover:bg-transparent"
+    // touch-none: the hold is the button's (no scroll, no pointercancel); select-none + no callout: a long press never
+    // selects the field's number or opens the browser's menu.
+    const stepBtn = "flex aspect-square h-full touch-none items-center justify-center text-muted-foreground select-none [-webkit-touch-callout:none] hover:bg-hover hover:text-foreground focus-ring-inset disabled:text-disabled-foreground disabled:hover:bg-transparent"
     return (
       <FieldShell {...{ id, label, hideLabel, helperText, invalid: invalid || outOfRange, invalidText: invalidText ?? (outOfRange ? `Enter a value from ${min ?? "−∞"} to ${max ?? "∞"}` : undefined), warn, warnText, optional, labelAddon, className }}>
         {(a11y) => (
@@ -125,7 +126,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
             )}
             {unit && <span className="pointer-events-none absolute top-1/2 right-20 -translate-y-1/2 pr-2 text-body text-muted-foreground">{unit}</span>}
             {!readOnly && (
-              <div className="absolute inset-y-px right-px flex overflow-hidden rounded-r-md">
+              <div className="absolute inset-y-px right-px flex overflow-hidden rounded-r-md select-none [-webkit-touch-callout:none]">
                 <button type="button" tabIndex={-1} aria-label="Decrement" disabled={disabled || (min !== undefined && (val ?? 0) <= min)} {...holdProps(-1)} className={stepBtn}>
                   <Icon as={Subtract} />
                 </button>

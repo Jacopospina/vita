@@ -27,5 +27,5 @@ related: [slider, text-input]
 ## Choreography
 
 - **Values roll.** Changes from the steppers or arrow keys swap digit by digit with a quick blur, never clipped. While you type, the plain input shows, so typing is never delayed.
-- **Press and hold.** A press steps once. Hold for more than 100ms and it keeps stepping, faster the longer you hold, until you release or reach a bound.
+- **Press and hold.** A tap steps once. Hold about 0.4s and it keeps stepping, faster the longer you hold, until you release or reach a bound; a long press never selects text or opens the browser menu.
 - **Square steppers.** Each stepper is as wide as the field is tall, at every size.

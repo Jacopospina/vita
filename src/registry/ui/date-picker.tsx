@@ -178,6 +178,9 @@ export function Calendar({ className, month: monthProp, onMonthChange, defaultMo
       const w = fr.clientWidth
       const dir = Math.abs(dx) > w * SWIPE_SHARE || Math.abs(v) > SWIPE_SPEED ? (dx < 0 ? 1 : -1) : 0
       const ms = motionMs(240)
+      // The frame's height glides WITH the month (5 and 6 week months differ by a row), not after it lands.
+      const next = dir ? el.querySelector<HTMLElement>(`[data-ghost="${dir}"]`) : null
+      if (next) setH(next.offsetHeight)
       const land = () => {
         el.removeEventListener("transitionend", land)
         if (dir) {
@@ -205,7 +208,7 @@ export function Calendar({ className, month: monthProp, onMonthChange, defaultMo
     window.addEventListener("pointercancel", up)
   }
   const ghost = (dir: -1 | 1) => (
-    <div aria-hidden inert className={cn("absolute top-0 w-full", dir < 0 ? "right-full" : "left-full")}>
+    <div aria-hidden inert data-ghost={dir} className={cn("absolute top-0 w-full", dir < 0 ? "right-full" : "left-full")}>
       <DayPicker showOutsideDays {...props} autoFocus={false} month={addMonths(month, dir)} formatters={formatters} className="p-1 text-body" classNames={calendarClassNames} components={ghostParts} hideNavigation />
     </div>
   )
@@ -250,11 +253,13 @@ export function Calendar({ className, month: monthProp, onMonthChange, defaultMo
     month name would replay its entrance each time. It plays only when a new month arrives. */
 const calendarParts: DayPickerProps["components"] = {
   Chevron: ({ orientation }) => <Icon as={orientation === "left" ? ChevronLeft : ChevronRight} />,
-  // The month name morphs in letter by letter (the default stagger) every time a new month arrives.
+  // The month name morphs in letter by letter (the default stagger) every time a new month arrives. Under a finger
+  // it simply changes: the month you swiped to is already in view, a second animation on its name is noise.
   CaptionLabel: ({ children, ...rest }) => (
-    <span {...rest}>{typeof children === "string" ? <AnimatedText enter="mount">{children}</AnimatedText> : children}</span>
+    <span {...rest}>{typeof children === "string" && !coarse() ? <AnimatedText enter="mount">{children}</AnimatedText> : children}</span>
   ),
 }
+const coarse = () => typeof window !== "undefined" && !!window.matchMedia?.("(pointer: coarse)").matches
 /** The ghost months beside a swipe: the same parts, with a still caption (they are only passing by). */
 const ghostParts: DayPickerProps["components"] = { Chevron: calendarParts.Chevron }
 
