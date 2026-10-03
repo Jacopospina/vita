@@ -306,7 +306,7 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/iden
 - [Glass by elevation](docs/decisions/glass-by-elevation.md): Every floating surface is frosted glass, more frosted the higher it floats; the page scrolls beneath the shell so the material is visible.
 - [How Vita decides](docs/decisions/how-we-decide.md): Every system choice is a written record. Agents and people read the record before changing anything it covers; changing it means superseding it.
 - [Motion](docs/decisions/motion.md): Nothing snaps, except page load, global appearance swaps and floating-surface sizing, which never animate per element.
-- [Release stages](docs/decisions/release-stages.md): Everything in Vita, and Vita itself, sits on one of three stages. Draft comes first, then Experimental, then Stable.
+- [Release stages](docs/decisions/release-stages.md): Everything in Vita, and Vita itself, sits on one of three stages. Inception comes first, then Experimental, then Stable.
 - [Status semantics](docs/decisions/status-semantics.md): One map from meaning to colour and glyph, used by every status surface; status colours never decorate.
 - [The name is Vita](docs/decisions/the-name.md): Vita means life. It is the third of a triad with Animus (the logic) and Anima (the AI): the design system where both come alive.
 - [The slogan](docs/decisions/the-slogan.md): "The first agentic design system." Vita says what it is for in one line, made for AI products and the agents that build them. It replaces "Give your ideas life."

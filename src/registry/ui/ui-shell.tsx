@@ -82,7 +82,7 @@ const pill = "h-8 rounded-inner-2 [corner-shape:round]"
 
 export function Header({ productName, prefix, logo, badge, href = "/", children, actions, className }: {
   productName: string
-  /** A small label right after the name, e.g. a release stage (<Tag size="sm" tone="neutral">Draft</Tag>). */
+  /** A small label right after the name, e.g. a release stage. */
   badge?: React.ReactNode
   /** The product's mark, shown before its name (about 20px). */
   logo?: React.ReactNode
@@ -101,7 +101,8 @@ export function Header({ productName, prefix, logo, badge, href = "/", children,
     // Phone: a compact pill at the bottom, centred, as wide as what it holds (the name folds into the mark).
     <header
       className={cn(
-        "absolute inset-x-2 top-2 z-40 flex h-12 items-center gap-1 glass glass-2 scope-xl p-2",
+        // Never wider than 1024px: on a wide screen the bar stays a compact, centred object, not a strip edge to edge.
+        "absolute inset-x-2 top-2 z-40 mx-auto flex h-12 max-w-5xl items-center gap-1 glass glass-2 scope-xl p-2",
         "max-sm:top-auto max-sm:bottom-2 max-sm:mx-auto max-sm:w-fit max-sm:max-w-full",
         className,
       )}

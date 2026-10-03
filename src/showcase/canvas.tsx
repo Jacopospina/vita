@@ -124,9 +124,10 @@ export function ComponentCanvas() {
   }, [])
   return (
     // Clipped on both axes (never scrolls); the canvas is wider than the window and centred, so cards run off both sides.
+    // Its height hugs the tallest column (the drift is sideways only); pb-12 leaves the bottom fade room to dissolve.
     // The edge fade (a mask) sits on this STATIC frame; the drifting field below is its own GPU layer, so each frame
     // is a cheap translate instead of re-masking the whole field.
-    <section ref={ref} aria-label="Vita components" className="relative flex h-160 justify-center overflow-clip canvas-fade">
+    <section ref={ref} aria-label="Vita components" className="relative flex justify-center overflow-clip pb-12 canvas-fade">
       <div
         aria-hidden
         inert
