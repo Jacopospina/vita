@@ -104,7 +104,7 @@ export function App() {
             </>
           }
         >
-          {/* The five doors into the docs, the same list as the showcase header. */}
+          {/* The doors into the docs, the same list as the showcase header. */}
           {globalNav.map((n) => (
             <HeaderNavItem key={n.path} href={navHref(n, "#/")} active={(n.sections as readonly string[]).includes(section)}>{n.label}</HeaderNavItem>
           ))}

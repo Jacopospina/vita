@@ -49,10 +49,11 @@ export const MAKE_URL = import.meta.env.PROD ? "/make" : "./make.html"
 
 /** The global nav, ONE list, used by the docs header and the showcase header so they never drift apart. */
 export const globalNav = [
-  { label: "Start", path: "guidelines", sections: ["guidelines", "identity", "getting-started"] },
+  // Start is where you begin making: installation. Identity is who Vita is: About Vita opens it.
+  // Components and patterns are reached from the side navigation and search, not the global bar.
+  { label: "Start", path: "getting-started/installation", sections: ["getting-started"] },
+  { label: "Identity", path: "guidelines", sections: ["guidelines", "identity"] },
   { label: "Foundations", path: "foundations/accessibility", sections: ["foundations"] },
-  { label: "Components", path: "components/choosing-components", sections: ["components"] },
-  { label: "Patterns", path: "patterns/agent-conversation", sections: ["patterns"] },
   // Not a docs page: the live examples have a page of their own.
   { label: "See what you can make", path: "make", sections: ["make"], href: MAKE_URL },
 ] as const
