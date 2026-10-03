@@ -21,6 +21,9 @@ import { AISurface, AILabel } from "@/registry/ui/ai-label"
 import { ContentSwitcher } from "@/registry/ui/content-switcher"
 import { ScrambleText } from "@/registry/ui/scramble-text"
 import { Toggletip } from "@/registry/ui/popover"
+import { DefinitionTooltip } from "@/registry/ui/tooltip"
+import { MenuItem } from "@/registry/ui/menu"
+import { OverflowMenu } from "@/registry/ui/menu-button"
 import { LiveWaveform } from "@/registry/ui/live-waveform"
 import { InlineNotification } from "@/registry/ui/notification"
 import { IconPlaceholder } from "@/registry/ui/icon-placeholder"
@@ -43,7 +46,7 @@ function Card({ children, order, className }: { children: React.ReactNode; order
 }
 
 /** Two cards on one row of a column: a card that fills the row, and a perfect square beside it (as tall as the row). */
-type Pair = { pair: [React.ReactNode, React.ReactNode] }
+type Pair = { pair: [React.ReactNode, React.ReactNode]; hug?: boolean }
 const isPair = (c: React.ReactNode | Pair): c is Pair => typeof c === "object" && c !== null && "pair" in c
 
 function LiveMetric() {
@@ -116,14 +119,15 @@ const columns: { offset: string; cards: (React.ReactNode | Pair)[] }[] = [
     offset: "pt-4",
     cards: [
       <Stack key="t" gap="sm" align="center"><Thinking mode="generating" size="xl" label="Sofia" /><Text variant="footnote" tone="muted">Sofia is drafting your agent</Text></Stack>,
-      <TextInput key="ti" label="Agent name" defaultValue="Support triage" />,
-      <Inline key="tg" gap="xs" wrap><Tag tone="success">Live</Tag><Tag>Zendesk</Tag><Tag tone="warning">Rate limited</Tag><Tag>Theo Large</Tag></Inline>,
+      <TextInput key="ti" label="Agent name" defaultValue="Support triage" helperText={<>Customers see it as the <DefinitionTooltip term="sender" definition="The name on every reply the agent sends, in email and chat." /></>} />,
+      // One row: three labelled tags, and an icon-only tag on the right (named for assistive tech).
+      <Inline key="tg" gap="xs" justify="between"><Inline gap="xs"><Tag tone="success">Live</Tag><Tag>Zendesk</Tag><Tag tone="warning">Rate limited</Tag></Inline><Tag icon={Bot} tone="brand" role="img" aria-label="Agent" className="px-1" /></Inline>,
     ],
   },
   {
     offset: "pt-24",
     cards: [
-      <LiveMetric key="m" />,
+      { pair: [<LiveMetric key="m" />, <OverflowMenu key="om" label="Run options"><MenuItem>Export runs</MenuItem><MenuItem>Share report</MenuItem></OverflowMenu>] },
       { pair: [<ContentSwitcher key="cs" label="Range" items={[{ value: "d", label: "Day" }, { value: "w", label: "Week" }, { value: "m", label: "Month" }]} />, <Avatar key="av" name="Indie Novak" />] },
       <Stack key="c" gap="sm"><Checkbox label="Notify the owner" defaultChecked /><Checkbox label="Log every run" defaultChecked /><Checkbox label="Allow hand-offs" /></Stack>,
     ],
@@ -148,15 +152,15 @@ const columns: { offset: string; cards: (React.ReactNode | Pair)[] }[] = [
     offset: "pt-6",
     cards: [
       <InlineNotification key="n" kind="success" title="Agent deployed" subtitle="Support triage is live." />,
-      <NumberInput key="ni" label="Max runs per hour" defaultValue={120} min={0} step={10} />,
+      <NumberInput key="ni" label="Max runs per hour" defaultValue={120} min={0} step={10} helperText="Per agent, across every channel" />,
       <RadioGroup key="r" legend="Model" defaultValue="l"><RadioButton value="l" label="Theo Large" /><RadioButton value="f" label="Theo Fast" /></RadioGroup>,
     ],
   },
   {
     offset: "pt-12",
     cards: [
-      { pair: [<Inline key="ip" gap="sm"><IconPlaceholder icon={Bot} tone="brand" size="lg" /><IconPlaceholder icon={Plug} tone="brand" size="lg" /><IconPlaceholder icon={Notification} tone="brand" size="lg" /></Inline>, <Pictogram key="pg" as={RocketPict} size="md" />] },
-      <Dropdown key="d" label="Team" defaultValue="s" items={[{ value: "s", label: "Support" }, { value: "f", label: "Finance" }, { value: "p", label: "People" }]} />,
+      { hug: true, pair: [<Inline key="ip" gap="sm"><IconPlaceholder icon={Bot} tone="brand" size="lg" /><IconPlaceholder icon={Plug} tone="brand" size="lg" /><IconPlaceholder icon={Notification} tone="brand" size="lg" /></Inline>, <Pictogram key="pg" as={RocketPict} size="md" />] },
+      <Dropdown key="d" label="Team" defaultValue="s" helperText="Receives this agent's hand-offs" items={[{ value: "s", label: "Support" }, { value: "f", label: "Finance" }, { value: "p", label: "People" }]} />,
       <Inline key="k" gap="sm"><IconButton icon={Add} label="Create agent" /><Text variant="footnote" tone="muted">Create anywhere</Text><Kbd keys="mod+k" /></Inline>,
     ],
   },
@@ -223,8 +227,8 @@ export function ComponentCanvas() {
                 if (!isPair(c)) return <Card key={j} order={order.get(`${i}:${cell++}`) ?? 0}>{c}</Card>
                 const [a, b] = [order.get(`${i}:${cell++}`) ?? 0, order.get(`${i}:${cell++}`) ?? 0]
                 return (
-                  <div key={j} className="flex w-72 gap-4">
-                    <Card order={a} className="w-auto min-w-0 flex-1 justify-center">{c.pair[0]}</Card>
+                  <div key={j} className={cn("flex gap-4", c.hug ? "w-fit" : "w-72")}>
+                    <Card order={a} className={cn("w-auto min-w-0 justify-center", !c.hug && "flex-1")}>{c.pair[0]}</Card>
                     <Card order={b} className="aspect-square w-auto items-center justify-center p-0">{c.pair[1]}</Card>
                   </div>
                 )
