@@ -24,6 +24,8 @@ const log = git("log", `--format=%H${SEP}%ad${SEP}%s${SEP}%b${END}`, "--date=sho
   })
   // The system's name is Vita: commits from before the name speak as Vita too, and the naming commit itself isn't news.
   .filter((c) => !/^Vita is now Vita/.test(c.subject))
+  // Repository moves are housekeeping, not news, and they name accounts that aren't Vita's.
+  .filter((c) => !/^Move to github\.com\//i.test(c.subject))
 
 // Map commits to the release tag that first contains them.
 const tags = git("tag", "--list", "v*", "--sort=-creatordate").split("\n").filter(Boolean)

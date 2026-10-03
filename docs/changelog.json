@@ -2,6 +2,238 @@
   "latest": "v0.2.0",
   "entries": [
     {
+      "id": "d3e3a40",
+      "date": "2026-10-03",
+      "title": "AI label in a surface: Sofia at md (24), the size that reads beside text (#9)",
+      "text": "Inside an AI surface (Suggested reply and every drafted block) the label's Sofia draws at md instead of sm; -my-1 keeps the title row the height of its text.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "e47a17b",
+      "date": "2026-10-03",
+      "title": "Inception stage, nav and layout, a live homepage, morphing icons (#10)",
+      "text": "* Inception: Vita's stage explains itself; the header caps at 1024px; the canvas hugs its cards",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "272089c",
+      "date": "2026-10-03",
+      "title": "Phone polish: full-width menu over a full dim, steppers that hold, calendar height glides (#8)",
+      "text": "Menu sheet: full width on a phone (inset like the header); the dim covers the whole window, under the bottom header, which stays live above it.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "02a1aac",
+      "date": "2026-10-03",
+      "title": "Toggle: a dragged knob stays in its track (#7)",
+      "text": "The drag moved the knob with an inline transform while the resting classes (translate-x-*) set the CSS translate property, so both applied: an \"on\" knob started 24px in and slid out of the track. The drag now sets translate inline, which replaces the class value while dragging.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "b8e36c8",
+      "date": "2026-10-03",
+      "title": "Built for the thumb: hold gestures, icon-only buttons, cards for tables, the header at the bottom (#6)",
+      "text": "Every control a finger can hold now answers the hold, and phone layouts fold instead of overflowing.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "8a6dcb5",
+      "date": "2026-10-02",
+      "title": "The slogan: The first agentic design system (#5)",
+      "text": "Made for AI products, and for the agents that build them. On the showcase hero and page title, the README, the package description, AGENTS.md, About and the copywriting rules. Decision: a new record, The slogan, supersedes the slogan line of The name is Vita (dated revision); the name, the triad and Theo stand.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "b43c4cd",
+      "date": "2026-10-02",
+      "title": "Sofia generating: shapes hold longer, pour into the next, slimmer line (#4)",
+      "text": "Each shape holds about 1.3s of liquid time (was 1s) before changing.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "4dd78fd",
+      "date": "2026-10-02",
+      "title": "Capsule or notification: one decision, taught to agents and people (#3)",
+      "text": "Decide by what the message asks of the person: needs fixing → InlineNotification by the cause; read or undo, caused by the person → toast; a system state to glance at → capsule. Written into the Architect skill, the Notifications pattern (with a capsule row and worked examples), and the Capsule and Notification pages. A capsule never carries an error; it hands over to an InlineNotification.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "eb2b0e7",
+      "date": "2026-10-02",
+      "title": "Scramble text, Draft stage, renamed skills and a polish pass (#2)",
+      "text": "* Scramble text, Draft stage, renamed skills and a polish pass",
+      "breaking": true,
+      "release": "Unreleased"
+    },
+    {
+      "id": "c57d0f0",
+      "date": "2026-10-02",
+      "title": "Sofia stays slim and glossy on the GPU renderer",
+      "text": "Big orbs hand over to the GPU renderer when the filter runs late (and phones use it from the start); it drew lines about twice as thick and flat. Drops now blend as a soft union (sparse drops still bridge, dense outlines don't pile up), at their true size (the ×1.3 only compensates the filter's melt), with a broad sheen on the body as well as the rim highlight.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "c3c5d71",
+      "date": "2026-10-02",
+      "title": "Components and patterns: composites move to Patterns; Sofia's seven states in one place",
+      "text": "Decision: a component is one building block with one job; a pattern is made of several components. Recorded in docs/decisions/components-and-patterns.md and AGENTS.md.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "c7a2e92",
+      "date": "2026-10-02",
+      "title": "Small idle Sofia is the Vita mark",
+      "text": "At 16 to 24px, idle draws a thin liquid ring with a drop at its heart (the mark), with a tighter melt, instead of a blob that read as a dot. The email provenance header shows Sofia at 24px; Thinking documents 24px as the smallest Sofia beside text.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "80e57cd",
+      "date": "2026-10-02",
+      "title": "Avatar matches the design in Vita colours; Sofia stays recognisable at 16px",
+      "text": "Avatar: a muted blue gradient mixed only from palette tokens (20% blue-600 in gray-100 to 45% indigo-700 in gray-200), white initials.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "28e422b",
+      "date": "2026-10-02",
+      "title": "Tooltips name, never instruct",
+      "text": "The card status tooltip says 'In progress', not 'Change status': the pointer and hover state already say it's clickable. New rule in Tooltip, Content (don't explain the obvious) and the recognition principle (signifiers teach; words don't repeat them).",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "187647f",
+      "date": "2026-10-02",
+      "title": "Avatar, Email message, the Cards pattern; full-height empty states",
+      "text": "Avatar (new): photo or initials, white on a soft grey gradient; sm 24, md 32, lg 40.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "de47ad1",
+      "date": "2026-10-02",
+      "title": "Every search answers 'nothing' with an empty state",
+      "text": "The docs sidebar filter, global search and Combobox show an EmptyState (search pictogram, the query, a hint, Clear where it helps) instead of blank space. Search, Empty states and Choosing a component make it a rule for every search.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "6b03c73",
+      "date": "2026-10-02",
+      "title": "Progress bar: the liquid stays inside its track, with Sofia's viscosity",
+      "text": "The liquid canvas is exactly the track (it was three times taller and spilled out), clipped to its rounded ends. The melt uses Sofia's ratio of blur to drop size, so the tip and its trailing drop stretch through thick, rounded necks.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "8fe1789",
+      "date": "2026-10-02",
+      "title": "Phones keep a 16px body so fields never zoom",
+      "text": "At 15px iOS zoomed the page on field focus. Body type floors at 16px on touch again (fields included); headings stay in proportion through the tighter narrow-screen scale. Touch decision revision updated.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "ae668a1",
+      "date": "2026-10-02",
+      "title": "Right panel: a solid, full-height, scrolling body",
+      "text": "Between header and footer the content sits on its own page-coloured surface (no blur), concentric with the panel, scrolling on its own; only the frame is glass. The theme panel tightens its spacing.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "9cfefb8",
+      "date": "2026-10-02",
+      "title": "Phones end to end; colours with names; squircles on iPhone",
+      "text": "Type in proportion on phones: body floors at 15px (fields stay 16px so iOS never zooms), the scale tightens to at most 1.15 under 640px, big headings lighten a step. Recorded as a revision of the Touch decision.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "a3d4068",
+      "date": "2026-10-02",
+      "title": "Theme panel: choose by seeing (SwatchPicker, PreviewPicker); no sliders",
+      "text": "SwatchPicker (new): one colour from a row of equal circles, the chosen name beside the label; a radio group with a ring that eases onto the choice.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "f9a5854",
+      "date": "2026-10-01",
+      "title": "Write for the scan; Brand & voice folds into Content",
+      "text": "Content: 'Write for the scan' (the point first, headings that start with the information, grouped sections, descriptive links, lists) and 'Concise, scannable, objective' (about half the words, two-sentence paragraphs, readable lines). Principle 2 carries the same rule.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "9a72e42",
+      "date": "2026-10-01",
+      "title": "Identity section, new About Vita, four design principles; Interaction folds into Principles",
+      "text": "Sidebar: a new Identity section (About Vita; Animus, anima, vita; Brand & voice; Design principles) after Getting started. Pages move to docs/identity; old links redirect.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "fc383b8",
+      "date": "2026-10-01",
+      "title": "Vita is labelled Experimental",
+      "text": "The header badge and the hero tag use the same status word as experimental pages (warning tone). The brand page counts the audit's 17 rules.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "6e40335",
+      "date": "2026-10-01",
+      "title": "Radius follows the theme everywhere; Alpha label in the header and hero",
+      "text": "rounded-pill: tags, chips, capsules and the AI label stay pills at any radius and square off when the theme is square.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "3207610",
+      "date": "2026-10-01",
+      "title": "Progress bars pour Sofia's liquid; Spotlight is a pill until it has results",
+      "text": "ProgressBar draws with the thinking orb's shader: a body of melted drops, lit rim and glow. Determinate springs to the value and stretches a drop ahead when it moves fast; indeterminate pumps a slug slowly along (about 3.6 s a crossing, was far quicker) with a trailing droplet. The CPU liquid remains the fallback. Physics runs in fixed steps, so slow frames never slow it down.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "ab3b8c6",
+      "date": "2026-10-01",
+      "title": "Tag: a leading icon is inset as much as it is from the top and bottom",
+      "text": "Left padding with an icon: 2px (sm), 4px (md, was 8px), 8px (lg).",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "9c7d240",
+      "date": "2026-10-01",
+      "title": "Header: See what you can make; Thinking explains why a spinner can't do the job",
+      "text": "The global nav links to the live examples page from everywhere (active on it).",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
+      "id": "10dad3f",
+      "date": "2026-10-01",
+      "title": "Only Vita: the naming record, changelog and repo speak as Vita",
+      "text": "The naming decision explains Vita and the triad, with no former name.",
+      "breaking": false,
+      "release": "Unreleased"
+    },
+    {
       "id": "e25718f",
       "date": "2026-10-01",
       "title": "Never ask for the visitor's location",
@@ -248,238 +480,6 @@
       "text": "Text renders numeric-only content ('12,840', '94%', '€1,240') in regular weight even inside a semibold role, unless a weight is passed explicitly (tabular-nums already enforced it for animated numbers, tables and KPIs). The Typography Mono demo uses 12,840 as its sample.",
       "breaking": false,
       "release": "Unreleased"
-    },
-    {
-      "id": "8272017",
-      "date": "2026-10-01",
-      "title": "Typography: mono weights demo; display and large title one step lighter",
-      "text": "Typography page: a Mono demo , every role in Google Sans Code at regular, medium and semibold, laid out like the Weights demo.",
-      "breaking": false,
-      "release": "Unreleased"
-    },
-    {
-      "id": "8ae9f4e",
-      "date": "2026-10-01",
-      "title": "Getting started section; Foundations trimmed; Changelog as a timeline; Timeline component",
-      "text": "New Getting started section (first): About Vita (the overview, formerly 'Overview'), Installation, CLI, Skills, Registry, then Mind, soul, body · Brand & voice · Design principles · Interaction moved from Foundations, and Changelog (formerly What's new).",
-      "breaking": false,
-      "release": "Unreleased"
-    },
-    {
-      "id": "2bd2007",
-      "date": "2026-10-01",
-      "title": "Accessibility: field labels, multiselect structure, listbox names; smaller KPI arrow",
-      "text": "Floating field labels use muted-foreground (≥ 4.5:1) instead of placeholder grey (3.6:1): a label is the field's name.",
-      "breaking": false,
-      "release": "Unreleased"
-    },
-    {
-      "id": "74605bb",
-      "date": "2026-10-01",
-      "title": "KPI component; PageHeader with KPIs on the right",
-      "text": "Kpi: label → value (AnimatedNumber, regular weight, any Intl format) → trend (arrow + change + period, coloured by whether it's good for the metric via better=up|down, muted when flat) → helper; sizes sm/md/lg; loading skeleton. KpiGroup: related KPIs on one surface with dividers (bare inside headers).",
-      "breaking": false,
-      "release": "Unreleased"
-    },
-    {
-      "id": "502086f",
-      "date": "2026-10-01",
-      "title": "pnpm visual: real-browser layout, accessibility and screenshot checks; first a11y fixes",
-      "text": "scripts/visual.mjs: every docs page plus home and showcase in your installed Chrome (playwright-core, nothing downloaded), reduced motion. Fails on phantom scroll, elements gliding after load, and axe WCAG A/AA serious/critical issues; screenshots diffed against a local baseline (--update accepts, tests/visual/ is git-ignored). AGENTS.md step 8.",
-      "breaking": false,
-      "release": "Unreleased"
-    },
-    {
-      "id": "647fc6b",
-      "date": "2026-10-01",
-      "title": "Agent conversation: floating glass header and composer, time only, day separators, smooth arrivals; Sofia AI label",
-      "text": "MiniChat: the header floats like the global nav (8px inset, concentric radius) on glass-1 , the lower tier, since the panel is already glass , and the composer floats with no border or backing; the thread scrolls beneath both (padded by their measured heights).",
-      "breaking": false,
-      "release": "Unreleased"
-    },
-    {
-      "id": "eabcc52",
-      "date": "2026-10-01",
-      "title": "Nothing moves into place: no transitions before styles exist; layout glide is opt-in",
-      "text": "Root cause of elements flying in from the top left: the global 'everything transitions' rule applied while styles were being (re)applied , Vite injects CSS from JS and re-injects it on every hot update, so each element animated from its unstyled browser default (top-left, default sizes) to its styled place. Fixes:",
-      "breaking": false,
-      "release": "Unreleased"
-    },
-    {
-      "id": "144b1df",
-      "date": "2026-10-01",
-      "title": "Changelog for v0.2.0",
-      "text": "",
-      "breaking": false,
-      "release": "Unreleased"
-    },
-    {
-      "id": "347ef03",
-      "date": "2026-10-01",
-      "title": "Release v0.2.0",
-      "text": "",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "825d228",
-      "date": "2026-10-01",
-      "title": "Changelog, What's new and releases",
-      "text": "pnpm changelog: CHANGELOG.md (grouped by release tag, Unreleased since the last; breaking changes first, detected from 'Breaking' in the message) and docs/foundations/whats-new.md (the latest 30 changes as cards) from git history.",
-      "breaking": true,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "32b9e0d",
-      "date": "2026-10-01",
-      "title": "Progress bar: soft liquid edges",
-      "text": "The liquid's coverage gets a small sideways blur (two box passes, ~0.35 tube height), so the tip's meniscus and drops fade softly instead of looking cut out. The solid body is composited on top, so it and the tube's top and bottom stay crisp; the bar still ends exactly on its value.",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "51af409",
-      "date": "2026-10-01",
-      "title": "Dropdown page merges Option and Multiselect; trailing meta/symbol; single choice has no tick",
-      "text": "One Dropdown page covers Dropdown, Combobox, Multiselect and the Option row (anatomy, states, rules, keyboard, every demo). The separate Option and Multiselect pages are gone.",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "bb85e58",
-      "date": "2026-10-01",
-      "title": "Nothing flies in from the top left; Multiselect page and chosen-first order; deprecation warnings",
-      "text": "useFlip (Stack/Inline) never records positions while its container is hidden (inactive tab, closed panel): children measured 0,0 there glided in from the top-left corner when it appeared.",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "3c24e1f",
-      "date": "2026-10-01",
-      "title": "Tooltip: squircle corners, no arrow",
-      "text": "Breaking look: the pointer arrow is gone and the tooltip uses squircle corners (radius-md); proximity and the 6px offset tie it to its trigger.",
-      "breaking": true,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "4b04a3d",
-      "date": "2026-10-01",
-      "title": "Decision records, exception review, AI card hugs content",
-      "text": "docs/decisions: a new Decisions section (playground nav, llms.txt, index.json). How Vita decides (records, supersede-don't-edit, three-team rule, exceptions, semver and deprecation) plus records for glass by elevation, status semantics, weather tint, buttons, motion, fields and options , each with the decision, why, rejected alternatives and when to revisit.",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "2994d97",
-      "date": "2026-10-01",
-      "title": "IconPlaceholder: tint and solid surfaces; showcase conversations use ChatThread",
-      "text": "IconPlaceholder surface: 'tint' (default, a faint dark wash for white surfaces like notifications) or 'solid' (a white tile). ListItem , and so ContainedListItem , use solid inside grey list groups. New token icon-surface-solid (white; a faint lift in dark), mapped and documented.",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "c405a4d",
-      "date": "2026-10-01",
-      "title": "Vita mark adapts to dark mode",
-      "text": "In dark mode the mark's grey half uses deep greys (gray-700 → 500) instead of glaring light ones, and the navy points turn pale blue (blue-200) so they stay visible. The favicon follows the OS colour scheme the same way.",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "5d27620",
-      "date": "2026-10-01",
-      "title": "Option component; whole-row selection with a left tick",
-      "text": "New Option (+ OptionList): the one list-item anatomy for every dropdown list , reserved left tick slot, optional icon, label and description; default/highlighted/selected/disabled states. Owns listClasses/itemClasses/tickClasses (dropdown re-exports them).",
-      "breaking": true,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "02eb4a1",
-      "date": "2026-10-01",
-      "title": "Dropdown lists slide in from below; floating surfaces never grow from 0",
-      "text": "Dropdown/Select/Combobox lists enter with vita-list-rise (opacity + 8px rise, productive, no scale) and leave with vita-list-sink; reduced motion fades.",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "8482639",
-      "date": "2026-10-01",
-      "title": "Inputs: softer resting border",
-      "text": "border-field now matches border (light 0.827; dark 0.42) instead of the high-contrast 0.648. Hover still strengthens to border-strong and focus adds the ring; increased contrast keeps the ≥3:1 field border (0.45).",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "666e1cd",
-      "date": "2026-10-01",
-      "title": "Combobox: no blink on open",
-      "text": "Pressing the field no longer counts as an outside interaction (the field is the popover's anchor, not its trigger), which closed the list and instantly reopened it.",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "c442c2a",
-      "date": "2026-10-01",
-      "title": "Inline notifications on white; icon tiles are a faint dark wash",
-      "text": "Inline notifications and callouts sit on raised (white) instead of layer-1. icon-surface in light mode is 5% black (was solid white), so IconPlaceholder tiles read super-light grey on any surface, including the white notice.",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "9337511",
-      "date": "2026-10-01",
-      "title": "Shell layering: the page scrolls under the floating glass",
-      "text": "ShellMain fills the window and scrolls; Header, LeftPanel and RightPanel float above it (absolute, 8px inset) on their glass tiers, and ShellMain is padded to start below the header (64px) and beside the side nav on large screens (256px, or 64px for the rail , LeftPanel tells the shell which). Scrolled content now passes beneath the frosted header, so the material is actually visible. ShellMain publishes --vita-shell-top; the data table's sticky strip stops just below the header.",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "0d0b4d5",
-      "date": "2026-10-01",
-      "title": "Colour semantics, enforced",
-      "text": "registry/lib/status: one map from status meaning to colour, glyph, text and tint. StatusIndicator and notifications read from it; in-progress is info (never brand); warning glyphs use the base warning colour like every other status icon.",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "985bc6a",
-      "date": "2026-10-01",
-      "title": "Warning is orange",
-      "text": "-vita-hue-warning 62.6 → 50 and the palette's orange row moves with it (CSS + JSON), so warning reads orange rather than amber. warning-foreground keeps the same hue (darker) instead of drifting 27° toward red, which made warning text look like an error.",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "e1db444",
-      "date": "2026-10-01",
-      "title": "Material foundation page",
-      "text": "New foundations/material: the glass tiers (layer, blur, fill, use), the rules (utility not recipe, tier by layer, see-through frost, elevated surface, lift, no filtered ancestors, reduced transparency) and the nevers; live demo of the five tiers over a busy backdrop. Color links to it instead of carrying the glass section.",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "4d45d13",
-      "date": "2026-10-01",
-      "title": "Notifications stack, newest on top; Header documents logo",
-      "text": "Banners stack: the newest in front on the highest layer, each older one a layer lower, peeking out 10px beneath and 5% smaller (three show). Pointing at or tabbing into the stack fans it out into a list (FLIP glides between the two). Header doc covers the logo prop.",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "2063af0",
-      "date": "2026-10-01",
-      "title": "Glass: lower opacity, no bleaching",
-      "text": "Fills 24 · 20 · 16 · 12 · 8% (side nav → notifications) and the light-mode backdrop lift down from 1.12 to 1.03 , the strong lift was bleaching the near-white page behind the glass to flat white, so the frost and what's behind it were invisible.",
-      "breaking": false,
-      "release": "v0.2.0"
-    },
-    {
-      "id": "12c43f8",
-      "date": "2026-10-01",
-      "title": "Vita brand mark and favicon; Header logo slot",
-      "text": "src/brand/vita-mark.tsx: the Vita mark , a thick ring, half a violet→blue arc (purple-400 → blue-500) and half soft grey, with three navy points (blue-900); turned 180°. Palette tokens only.",
-      "breaking": false,
-      "release": "v0.2.0"
     }
   ]
 }
