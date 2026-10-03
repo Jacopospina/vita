@@ -13,6 +13,7 @@ Vita transitions every property change by default and morphs variants. Your job 
 
 - **Productive** (default): task-focused changes, states, dropdowns, reveals, tables.
 - **Expressive**: significant moments, page changes, the primary action, alerts and notifications appearing, movement that carries meaning.
+- **Glyphs**: an icon that changes with state is a `SwapIcon`: the old glyph morphs into the new one (copy → check). Never swap the `as` of a plain `Icon`.
 - **Values**: numbers use `AnimatedNumber` (slot-machine roll, staggered, blur→sharp); changing text uses `AnimatedText` (letter-by-letter stagger, slide up, blur→sharp).
 - **Reorders and layout jumps**: wrap the state change in `morph()` and give moving items a `view-transition-name`.
 - **The space a thing leaves closes over time.** When an item leaves a row, check its NEIGHBOURS, not just the item: a field that fills the row (`flex-1`), the next chip, the button after it. Close the space with it: `Tag onDismiss` does it for you; for your own items use `collapseOut(el)` with `useExit`, or wrap optional controls in `reveal-x` and pull back their gap (`-ml-2` while closed). An exit that fades the item and then lets the row jump is still a snap.

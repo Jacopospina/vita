@@ -47,7 +47,10 @@ function Card({ children, order, className }: { children: React.ReactNode; order
 
 /** Two cards on one row of a column: a card that fills the row, and a perfect square beside it (as tall as the row). */
 type Pair = { pair: [React.ReactNode, React.ReactNode]; hug?: boolean }
-const isPair = (c: React.ReactNode | Pair): c is Pair => typeof c === "object" && c !== null && "pair" in c
+const isPair = (c: React.ReactNode | Pair | Hug): c is Pair => typeof c === "object" && c !== null && "pair" in c
+/** A card as wide as its content (a button set), not the column's width. */
+type Hug = { hug: React.ReactNode }
+const isHug = (c: React.ReactNode | Pair | Hug): c is Hug => typeof c === "object" && c !== null && "hug" in c && !("pair" in c)
 
 function LiveMetric() {
   const [n, setN] = React.useState(12840)
@@ -106,11 +109,11 @@ function LiveId() {
   )
 }
 
-const columns: { offset: string; cards: (React.ReactNode | Pair)[] }[] = [
+const columns: { offset: string; cards: (React.ReactNode | Pair | Hug)[] }[] = [
   {
     offset: "pt-16",
     cards: [
-      <ButtonSet key="b"><Button variant="secondary">Draft</Button><Button icon={Rocket}>Deploy</Button></ButtonSet>,
+      { hug: <ButtonSet key="b"><Button variant="secondary">Draft</Button><Button icon={Rocket}>Deploy</Button></ButtonSet> },
       <Stack key="s" gap="sm"><StatusIndicator kind="success">Live</StatusIndicator><StatusIndicator kind="in-progress">Deploying</StatusIndicator><StatusIndicator kind="pending">Awaiting approval</StatusIndicator></Stack>,
       <Slider key="sl" label="Confidence threshold" defaultValue={[72]} formatValue={(v) => `${v}%`} showBounds={false} />,
     ],
@@ -127,7 +130,7 @@ const columns: { offset: string; cards: (React.ReactNode | Pair)[] }[] = [
   {
     offset: "pt-24",
     cards: [
-      { pair: [<LiveMetric key="m" />, <OverflowMenu key="om" label="Run options"><MenuItem>Export runs</MenuItem><MenuItem>Share report</MenuItem></OverflowMenu>] },
+      { pair: [<LiveMetric key="m" />, <OverflowMenu key="om" label="Run options" size="lg"><MenuItem>Export runs</MenuItem><MenuItem>Share report</MenuItem></OverflowMenu>] },
       { pair: [<ContentSwitcher key="cs" label="Range" items={[{ value: "d", label: "Day" }, { value: "w", label: "Week" }, { value: "m", label: "Month" }]} />, <Avatar key="av" name="Indie Novak" />] },
       <Stack key="c" gap="sm"><Checkbox label="Notify the owner" defaultChecked /><Checkbox label="Log every run" defaultChecked /><Checkbox label="Allow hand-offs" /></Stack>,
     ],
@@ -224,6 +227,7 @@ export function ComponentCanvas() {
               // Cells count pairs as two, so each card (and each square) has its own place in the scattered order.
               let cell = 0
               return col.cards.map((c, j) => {
+                if (isHug(c)) return <Card key={j} order={order.get(`${i}:${cell++}`) ?? 0} className="w-fit self-end">{c.hug}</Card>
                 if (!isPair(c)) return <Card key={j} order={order.get(`${i}:${cell++}`) ?? 0}>{c}</Card>
                 const [a, b] = [order.get(`${i}:${cell++}`) ?? 0, order.get(`${i}:${cell++}`) ?? 0]
                 return (

@@ -49,7 +49,7 @@ avoid_when:
 ## State changes never snap
 
 1. **Indicators stay mounted.** Checkmarks, radio dots, selected marks and menu checks scale and fade in *and* out; they never unmount on state change.
-2. **Icons draw their path.** `SwapIcon` un-draws the old glyph while the new one traces its outline and fills in; `<Icon draw="in">` for icons that appear. Checkmarks (`DrawnMark`) draw on select and un-draw on clear.
+2. **Icons morph.** `SwapIcon` turns the old glyph into the new one, outline into outline (copy → check, menu → close): pieces fold away or grow in, nothing cross-fades. `<Icon draw="in">` for icons that appear on their own. Checkmarks (`DrawnMark`) draw on select and un-draw on clear.
 3. **Static layout never moves.** Nothing glides into place on load or reflow. Lists that gain, lose or reorder items glide them instead (`Stack flip`, chat threads, toast stacks, chips, filtered options).
 4. **Controls that come and go keep their slot.** Clear buttons, shortcut hints, counts and batch bars fade and scale, then give their space back smoothly.
 5. **The space closes with the item.** A dismissed tag shrinks out of its row (`collapseOut`), gap included, so a search field that fills the row widens with it instead of snapping.
