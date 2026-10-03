@@ -80,8 +80,8 @@ export function GlyphGallery({ kind }: { kind: "icons" | "pictograms" }) {
             value={size}
             onValueChange={setSize}
             steps={kind === "icons"
-              ? [{ value: "sm", label: "16" }, { value: "md", label: "20" }, { value: "lg", label: "24" }, { value: "xl", label: "32" }]
-              : [{ value: "md", label: "48" }, { value: "lg", label: "64" }, { value: "xl", label: "80" }]}
+              ? [{ value: "sm", label: "Small" }, { value: "md", label: "Medium" }, { value: "lg", label: "Large" }, { value: "xl", label: "Extra large" }]
+              : [{ value: "md", label: "Small" }, { value: "lg", label: "Medium" }, { value: "xl", label: "Large" }]}
           />
         </div>
         <Text tone="muted" aria-live="polite" className="inline-flex items-baseline gap-1">

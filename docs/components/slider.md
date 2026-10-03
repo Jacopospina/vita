@@ -25,7 +25,8 @@ related: [number-input, filtering]
 ## Stepped: StepSlider
 
 - **For ordered steps of one thing.** A size (48 · 64 · 80), a density, a level: the content stays the same, only its scale moves. Tabs and content switchers mean different content in each option, so they're wrong here.
-- **Never free-form.** The knob only lands on the steps; the current step rides in the knob, and every step is named under the track (click a name to jump).
+- **Never free-form.** The knob only lands on the steps, and the current step rides in the knob; nothing else repeats it.
+- **Name the intent, not the number.** People choose "Small" or "Large", not 48 or 64: label steps by what they mean.
 - **Keyboard.** Arrows move one step; Home and End jump to the first and last.
 
 ## Value
