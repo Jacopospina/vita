@@ -2,11 +2,10 @@ import * as React from "react"
 import { Stack, Inline } from "@/registry/ui/layout"
 import { Text } from "@/registry/ui/text"
 import { Search } from "@/registry/ui/search"
-import { ContentSwitcher } from "@/registry/ui/content-switcher"
+import { StepSlider } from "@/registry/ui/slider"
 import { Icon } from "@/registry/ui/icon"
 import { Pictogram } from "@/registry/ui/pictogram"
 import { Loading } from "@/registry/ui/loading"
-import { AnimatedNumber } from "@/registry/ui/animated"
 import { EmptyState } from "@/registry/ui/empty-state"
 import { Button } from "@/registry/ui/button"
 import { toast } from "@/registry/ui/notification"
@@ -73,18 +72,21 @@ export function GlyphGallery({ kind }: { kind: "icons" | "pictograms" }) {
         <div className="w-full max-w-md">
           <Search size="md" label={`Search ${kind}`} placeholder={`Search ${glyphs?.length.toLocaleString("en-GB") ?? ""} ${kind}`} value={q} onValueChange={setQ} />
         </div>
-        <ContentSwitcher
-          label="Size"
-          size="md"
-          value={size}
-          onValueChange={setSize}
-          items={kind === "icons"
-            ? [{ value: "sm", label: "16" }, { value: "md", label: "20" }, { value: "lg", label: "24" }, { value: "xl", label: "32" }]
-            : [{ value: "md", label: "48" }, { value: "lg", label: "64" }, { value: "xl", label: "80" }]}
-        />
-        <Text tone="muted" aria-live="polite" className="inline-flex items-baseline gap-1">
-          <AnimatedNumber value={filtered.length} /> {filtered.length === 1 ? "result" : "results"}
-        </Text>
+        {/* One property at a few ordered steps (the content stays the same): a stepped slider, not tabs. */}
+        <div className="w-56">
+          {/* Small · Medium · Large already say what it does: the label is for screen readers only. */}
+          <StepSlider
+            label="Size"
+            hideLabel
+            value={size}
+            onValueChange={setSize}
+            steps={kind === "icons"
+              ? [{ value: "sm", label: "Small" }, { value: "md", label: "Medium" }, { value: "lg", label: "Large" }, { value: "xl", label: "Extra large" }]
+              : [{ value: "md", label: "Small" }, { value: "lg", label: "Medium" }, { value: "xl", label: "Large" }]}
+          />
+        </div>
+        {/* The count is for screen readers: the grid already shows the results, and none shows an empty state. */}
+        <span className="sr-only" aria-live="polite">{filtered.length} {filtered.length === 1 ? "result" : "results"}</span>
       </Inline>
 
       {!glyphs && <Inline gap="xs"><Loading size="sm" label={`Loading ${kind}`} /><Text tone="muted">Loading {kind}…</Text></Inline>}

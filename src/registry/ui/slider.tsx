@@ -118,3 +118,53 @@ export function Slider({ label, hideLabel, helperText, formatValue = String, sho
     </div>
   )
 }
+
+/**
+ * StepSlider, choose one of a few ORDERED steps of the same thing: a size, a density, a level. Not free-form: the
+ * knob only lands on the steps, and the current step's name rides in the knob. Name steps by what people choose
+ * ("Small", "Large"), not by the number behind them. Same content at a different scale → StepSlider; different
+ * content → Tabs or ContentSwitcher.
+ *
+ *   <StepSlider label="Size" steps={[{ value: "md", label: "Small" }, { value: "lg", label: "Medium" }]} value={size} onValueChange={setSize} />
+ */
+export interface StepSliderProps {
+  label: React.ReactNode
+  steps: { value: string; label: string }[]
+  value?: string
+  defaultValue?: string
+  onValueChange?: (value: string) => void
+  hideLabel?: boolean
+  helperText?: React.ReactNode
+  disabled?: boolean
+  className?: string
+}
+
+export function StepSlider({ label, steps, value, defaultValue, onValueChange, hideLabel, helperText, disabled, className }: StepSliderProps) {
+  const [own, setOwn] = React.useState(defaultValue ?? steps[0]?.value)
+  const current = value ?? own
+  const index = Math.max(0, steps.findIndex((s) => s.value === current))
+  const last = Math.max(1, steps.length - 1)
+  const choose = (i: number) => {
+    const v = steps[i]?.value
+    if (v === undefined || v === current) return
+    if (value === undefined) setOwn(v)
+    onValueChange?.(v)
+  }
+  return (
+    <div className={cn("flex w-full flex-col gap-1", className)}>
+      <Slider
+        label={label}
+        hideLabel={hideLabel}
+        min={0}
+        max={last}
+        step={1}
+        value={[index]}
+        onValueChange={([i]) => choose(i)}
+        formatValue={(i) => steps[i]?.label ?? ""}
+        showBounds={false}
+        disabled={disabled}
+      />
+      {helperText && <p className="text-caption text-helper">{helperText}</p>}
+    </div>
+  )
+}

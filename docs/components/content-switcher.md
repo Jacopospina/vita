@@ -9,6 +9,7 @@ use_when:
   - A mode with 2–5 mutually exclusive, equally weighted options that applies instantly
 avoid_when:
   - The panels contain different content → Tabs
+  - Picking a size or scale of the same content (48 · 64 · 80) → StepSlider
   - It's a form value submitted later → RadioGroup
   - More than 5 options → Dropdown
   - Binary on/off → Toggle

@@ -560,6 +560,7 @@
       ],
       "avoid_when": [
         "The panels contain different content → Tabs",
+        "Picking a size or scale of the same content (48 · 64 · 80) → StepSlider",
         "It's a form value submitted later → RadioGroup",
         "More than 5 options → Dropdown",
         "Binary on/off → Toggle"
@@ -1204,7 +1205,8 @@
       ],
       "avoid_when": [
         "Exact values matter → NumberInput",
-        "Few discrete options → RadioGroup / ContentSwitcher",
+        "A few ordered steps of one property (a size, a density) → StepSlider (below)",
+        "A few unordered options → RadioGroup / ContentSwitcher",
         "The range is huge (0–1,000,000) → NumberInput(s)"
       ],
       "related": [
@@ -1274,6 +1276,7 @@
       ],
       "avoid_when": [
         "Same data in different presentations → ContentSwitcher",
+        "The same content at a different size or scale → StepSlider (tabs mean different content in each)",
         "Steps the user must complete in order → ProgressIndicator",
         "Navigation between different objects/areas → Side nav",
         "Content users need to compare side by side → show both",

@@ -34,6 +34,11 @@ Every string passes through the **taxonomy** (`vita/taxonomy.json`) and the **pe
 | Status | Taxonomy status word | "Awaiting approval" |
 | AI message | What was done + confidence, no "I" | "Suggested from 3 similar tickets · high confidence" |
 
+## Don't say it twice
+
+- **A label earns its place.** If the options, the values or the icon already say what a control does (a stepped slider reading Small · Medium · Large), drop the visible label and keep it for screen readers only.
+- **Name the intent, not the measure.** "Small", "Large", not "48px", "64px"; numbers only where the number itself is the choice (a price, a limit).
+
 ## Voice
 
 - Plain and direct, like a knowledgeable colleague.
