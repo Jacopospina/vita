@@ -436,11 +436,14 @@
 
 /* AI outline: the rainbow spectrum, slowly rotating (still under reduced motion). */
 @property --vita-ai-angle { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+/* The fill inside the rainbow edge is a registered colour, so a state change (hover, pressed, open) fades it. */
+@property --vita-ai-fill { syntax: "<color>"; inherits: false; initial-value: transparent; }
 @utility ai-gradient-border {
   border: 1.5px solid transparent;
+  --vita-ai-fill: var(--vita-raised);
   background:
     /* a clean card surface (white in light) inside the rainbow edge */
-    linear-gradient(var(--vita-raised), var(--vita-raised)) padding-box,
+    linear-gradient(var(--vita-ai-fill), var(--vita-ai-fill)) padding-box,
     conic-gradient(from var(--vita-ai-angle), var(--vita-ai-spectrum)) border-box;
   animation: vita-ai-spin 6s linear infinite;
   /* Each step of the angle repaints the gradient. On a phone, 15 steps a second (4° each) look the same and cost a quarter. */

@@ -52,7 +52,14 @@ export function AILabel({ size = "md", children, title = "AI explained", classNa
   if (inSurface && tone === "auto") {
     return (
       <Popover>
-        <PopoverTrigger aria-label="AI – Show information" className={cn("inline-flex shrink-0 rounded-full focus-ring", className)}>
+        <PopoverTrigger
+          aria-label="AI – Show information"
+          className={cn(
+            // Sofia answers like a button: grows a little on hover and while open, gives on press.
+            "inline-flex shrink-0 rounded-full focus-ring duration-fast-02 ease-productive hover:scale-110 data-[state=open]:scale-110 active:scale-95 active:duration-fast-01 motion-reduce:scale-100!",
+            className,
+          )}
+        >
           {/* md (24): the smallest Sofia that reads as Sofia beside text. -my-1 keeps the row the height of its text. */}
           <Thinking mode="generating" size="md" label="AI" className="-my-1" />
         </PopoverTrigger>
@@ -67,13 +74,16 @@ export function AILabel({ size = "md", children, title = "AI explained", classNa
           aria-label="AI – Show information"
           className={cn(
             "inline-flex items-center rounded-pill font-semibold tracking-wide text-primary focus-ring",
+            // Every state eases: the fill and colours fade, the press gives a little and springs back.
+            "transition-[--vita-ai-fill,background-color,border-color,color,box-shadow,transform] duration-fast-02 ease-productive active:scale-95 active:duration-fast-01 motion-reduce:active:scale-100",
             // The rainbow lives on the border; the letters are primary, the colour that says "you can click this".
-            !onPrimary && tone !== "muted" && "ai-gradient-border",
+            // Hover, press and open tint the inside in the primary's subtle wash.
+            !onPrimary && tone !== "muted" && "ai-gradient-border hover:[--vita-ai-fill:var(--vita-primary-subtle)] data-[state=open]:[--vita-ai-fill:var(--vita-primary-subtle)]",
             !onPrimary && tone === "auto" &&
-              "in-data-[ai-context]:border in-data-[ai-context]:border-border-strong! in-data-[ai-context]:bg-none! in-data-[ai-context]:bg-transparent! in-data-[ai-context]:animate-none! in-data-[ai-context]:[&>span]:bg-none! in-data-[ai-context]:[&>span]:text-muted-foreground!",
-            tone === "muted" && "border border-border-strong bg-none bg-transparent [&>span]:bg-none! [&>span]:text-muted-foreground!",
+              "in-data-[ai-context]:border in-data-[ai-context]:border-border-strong! in-data-[ai-context]:bg-none! in-data-[ai-context]:bg-transparent! in-data-[ai-context]:animate-none! in-data-[ai-context]:[&>span]:bg-none! in-data-[ai-context]:[&>span]:text-muted-foreground! in-data-[ai-context]:hover:bg-hover! in-data-[ai-context]:data-[state=open]:bg-active!",
+            tone === "muted" && "border border-border-strong bg-none bg-transparent [&>span]:bg-none! [&>span]:text-muted-foreground! hover:bg-hover! data-[state=open]:bg-active!",
             // White: the primary's own foreground for the hairline and the letters, with the ring to match.
-            onPrimary && "border border-primary-foreground/70 bg-transparent text-primary-foreground [--vita-ring:var(--vita-primary-foreground)]",
+            onPrimary && "border border-primary-foreground/70 bg-transparent text-primary-foreground [--vita-ring:var(--vita-primary-foreground)] hover:bg-primary-foreground/15 data-[state=open]:bg-primary-foreground/25",
             s,
             className,
           )}

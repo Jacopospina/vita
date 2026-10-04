@@ -24,6 +24,14 @@ related: [tooltip, popover, notification]
 - **In context → muted.** Inside a field, notification, tile or AI surface it turns white at low opacity with a quiet outline, so it doesn't compete. Automatic; force with `tone="spectrum" | "muted"`.
 - **On primary → white.** On a primary-coloured container (a person's chat bubble, a selection bar) the hairline and the letters take the primary's foreground: grey sinks into the blue. Automatic inside `ChatBubble` and the table's selection bar; wrap your own primary container in `OnPrimary`, or force `tone="on-primary"`.
 
+## States
+
+- **Hover.** The inside takes the primary's subtle wash (grey in context, a white wash on primary).
+- **Pressed.** It gives a little (95%) and springs back.
+- **Open.** It keeps the hover wash while its explanation is showing; in an AI surface Sofia stays slightly larger.
+- **Focus.** The focus ring, from the keyboard only.
+- Every change eases (110ms; 70ms for the press), and reduced motion keeps the colours without the scale.
+
 ## Sizes
 
 - `xs`: next to field labels and in table cells.
