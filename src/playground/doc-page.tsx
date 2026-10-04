@@ -72,7 +72,7 @@ export function DocPage({ section, slug }: { section: Section; slug: string }) {
           <InlineNotification
             kind="info"
             title={(doc.meta.setup_title as string | undefined) ?? "Teach Vita"}
-            subtitle={`${doc.meta.setup} Ask your agent to use the ${doc.meta.setup_skill ?? "vita-copywriting"} skill.`}
+            subtitle={`${doc.meta.setup} Ask your agent: use ${doc.meta.setup_skill ?? "vita-copywriting"}.`}
           />
         )}
 

@@ -10,7 +10,7 @@ avoid_when:
   - Branding or marketing flair → the AI spectrum is reserved for AI provenance
   - Plain logic that isn't AI (a sort, a calculation) → ordinary components, no AI marks
 setup_title: Teach Vita your AI's voice
-setup: Tell Vita how your AI should speak (its tone, how brief or detailed, what it never says) and it tunes that voice to each of your personae. Until you do, your AI uses Vita's default voice (Guidelines tab).
+setup: Tell Vita how your AI should speak, and it tunes that voice to your users. Until then, it's short, plain and warm (Guidelines tab).
 setup_skill: vita-copywriting
 setup_files: [vita/ai-voice.md]
 related: [ai-label, thinking, intent-first, agent-conversation, voice-conversation, skills]

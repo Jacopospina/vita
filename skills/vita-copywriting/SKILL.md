@@ -56,6 +56,7 @@ Every AI message (replies, summaries, AI labels, explanations) follows this file
 | Confirmation body | Consequence | "They stop running and their history is removed. This can't be undone." |
 | Confirmation button | Repeat the verb + object | "Delete agents" |
 | Status | Taxonomy status word | "Awaiting approval" |
+| Notification, tag, tooltip | Written for the persona: the point first, 1 or 2 short sentences (under about 20 words each), everyday words | "Tell Vita about your users. It tailors every word to them." |
 | AI message | What was done + confidence, no "I" | "Suggested from 3 similar tickets · high confidence" |
 
 ## Errors are for people who don't code

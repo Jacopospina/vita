@@ -128,7 +128,7 @@
         "Writing copy before knowing the persona"
       ],
       "setup_title": "Teach Vita your users",
-      "setup": "Tell Vita everything you know about your users (who they are, the words they use, what worries them, plus interviews, tickets and product analytics) and it learns their profiles, then tailors every word to them. Until you do, Vita writes for its default persona and word rules (Guidelines tab).",
+      "setup": "Tell Vita about your users, analytics included, and it tailors every word to them. Until then, it writes for the average internet user (Guidelines tab).",
       "setup_skill": "vita-copywriting",
       "setup_files": [
         "vita/personae"
@@ -284,7 +284,7 @@
         "Plain logic that isn't AI (a sort, a calculation) → ordinary components, no AI marks"
       ],
       "setup_title": "Teach Vita your AI's voice",
-      "setup": "Tell Vita how your AI should speak (its tone, how brief or detailed, what it never says) and it tunes that voice to each of your personae. Until you do, your AI uses Vita's default voice (Guidelines tab).",
+      "setup": "Tell Vita how your AI should speak, and it tunes that voice to your users. Until then, it's short, plain and warm (Guidelines tab).",
       "setup_skill": "vita-copywriting",
       "setup_files": [
         "vita/ai-voice.md"

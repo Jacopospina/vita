@@ -93,7 +93,7 @@ export function GuidelinesPage() {
           kind="info"
           className="max-w-3xl"
           title="Teach Vita your users"
-          subtitle={<>Tell Vita about your users and it learns their profiles, then tailors every word so your product speaks to them. Until you do, it writes for its default persona, the average internet user: see <Link inline href="#/foundations/content">Content, personae & taxonomy</Link>.</>}
+          subtitle={<>Tell Vita about your users and it tailors every word to them. Until then, it writes for the average internet user: see <Link inline href="#/foundations/content">Content, personae & taxonomy</Link>.</>}
         />
 
         <Stack gap="lg">
