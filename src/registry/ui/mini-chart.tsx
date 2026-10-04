@@ -96,20 +96,36 @@ function Knob({ r, angle, color = "var(--vita-foreground)", radius = 4.5 }: { r:
 }
 
 /** The round tile and its stack of content. `face` paints the disc; open charts draw only their arcs. */
-function Frame({ label, size = "md", face, glow, className, art, children }: {
+/** What a chart needs to be a control: its role, focus, keys and pointer handlers, and a ref to measure it. */
+type Control = React.HTMLAttributes<HTMLDivElement> & Record<`aria-${string}`, unknown>
+
+function Frame({ label, size = "md", face, glow, className, art, control, rootRef, children }: {
   label: string
   size?: Size
   face?: boolean
   glow?: MiniTone
   className?: string
   art?: React.ReactNode
+  /** Makes the tile a control (a slider, a button); it then answers hover, press and focus. */
+  control?: Control
+  /** The tile, for a control that measures where the pointer is. */
+  rootRef?: React.Ref<HTMLDivElement>
   children?: React.ReactNode
 }) {
   return (
     <div
+      ref={rootRef}
       role="img"
+      {...control}
       aria-label={label}
-      className={cn("@container relative shrink-0 rounded-full text-foreground", sizeClass[size], face && "bg-layer-2", className)}
+      className={cn(
+        "@container relative shrink-0 rounded-full text-foreground select-none",
+        sizeClass[size],
+        face && "bg-layer-2",
+        control && "focus-ring duration-fast-02 ease-productive active:scale-97 active:duration-fast-01 motion-reduce:active:scale-100",
+        control && face && "hover:bg-layer-3",
+        className,
+      )}
       style={glow ? { backgroundImage: `radial-gradient(circle at 50% 75%, color-mix(in oklch, ${toneVar[glow]} 45%, transparent), transparent 70%)` } : undefined}
     >
       {art && <svg viewBox="0 0 100 100" aria-hidden="true" className="absolute inset-0 size-full overflow-visible">{art}</svg>}
@@ -343,7 +359,7 @@ export function MiniMedia({ label, size, cover, progress, badge, badgeTone = "su
 }
 
 /** Levels: a step on a short scale of ticks (an energy tariff, a fan speed), with an icon and a reading. */
-export function MiniLevels({ label, size, levels = 9, active, tone = "info", icon, display }: {
+export function MiniLevels({ label, size, levels = 9, active, tone = "info", icon, display, onChange }: {
   label: string
   size?: Size
   levels?: number
@@ -352,11 +368,47 @@ export function MiniLevels({ label, size, levels = 9, active, tone = "info", ico
   tone?: MiniTone
   icon?: IconType
   display: string
+  /** Makes it a stepper: drag or click across the tile, or use the arrow keys. */
+  onChange?: (step: number) => void
 }) {
   // A step past either end shows the nearest end: the scale always shows where the value is.
   const step = Math.min(Math.max(Math.round(active), 0), levels - 1)
+  const ref = React.useRef<HTMLDivElement>(null)
+  const [drag, setDrag] = React.useState(false)
+  const set = (s: number) => {
+    const next = Math.min(Math.max(s, 0), levels - 1)
+    if (next !== step) onChange?.(next)
+  }
+  // Across the middle 60% of the tile, left to right, like the ticks it shows.
+  const at = (clientX: number) => {
+    const box = ref.current!.getBoundingClientRect()
+    set(Math.round((((clientX - box.left) / box.width - 0.2) / 0.6) * (levels - 1)))
+  }
+  const control: Control | undefined = onChange && {
+    role: "slider",
+    tabIndex: 0,
+    "aria-valuemin": 0,
+    "aria-valuemax": levels - 1,
+    "aria-valuenow": step,
+    "aria-valuetext": display,
+    onKeyDown: (e) => {
+      const next = e.key === "ArrowRight" || e.key === "ArrowUp" ? step + 1 : e.key === "ArrowLeft" || e.key === "ArrowDown" ? step - 1 : e.key === "Home" ? 0 : e.key === "End" ? levels - 1 : null
+      if (next === null) return
+      e.preventDefault()
+      set(next)
+    },
+    onPointerDown: (e) => {
+      e.currentTarget.setPointerCapture(e.pointerId)
+      setDrag(true)
+      at(e.clientX)
+    },
+    onPointerMove: (e) => { if (drag) at(e.clientX) },
+    onPointerUp: () => setDrag(false),
+    onPointerCancel: () => setDrag(false),
+  }
   return (
-    <Frame label={label} size={size} face>
+    // A thumb can still scroll the page; sideways drags and taps pick a step (decision: touch).
+    <Frame label={label} size={size} face control={control} rootRef={ref} className={onChange ? cn("touch-pan-y", drag && "cursor-grabbing") : undefined}>
       {icon && <SwapIcon as={icon} className={cn(FILL, "mb-[5cqw] size-[18cqw]", toneText[tone])} />}
       <span className="mb-[5cqw] flex h-[14cqw] items-center gap-[3.5cqw]">
         {Array.from({ length: levels }, (_, i) => (
@@ -367,7 +419,8 @@ export function MiniLevels({ label, size, levels = 9, active, tone = "info", ico
           />
         ))}
       </span>
-      <span className="text-[17cqw] font-medium [font-variant-numeric:tabular-nums]"><AnimatedText face="inherit">{display}</AnimatedText></span>
+      {/* Words (a named option) set a little smaller than numbers, so "Dramatic" still fits the face. */}
+      <span className={cn("font-medium [font-variant-numeric:tabular-nums]", display.length > 5 ? "text-[13cqw]" : "text-[17cqw]")}><AnimatedText face="inherit">{display}</AnimatedText></span>
     </Frame>
   )
 }
@@ -551,16 +604,30 @@ export function MiniColor({ label, size, hue, brightness, icon, center, outer = 
 }
 
 /** Glow: a mode with its reading, the disc lit from below in the mode's colour (Cool, Eco, Boost). */
-export function MiniGlow({ label, size, icon, tone = "success", display, caption }: {
+export function MiniGlow({ label, size, icon, tone = "success", display, caption, onPress, pressed }: {
   label: string
   size?: Size
   icon?: IconType
   tone?: MiniTone
   display: string
   caption?: string
+  /** Makes it a toggle (a mode on or off). */
+  onPress?: () => void
+  pressed?: boolean
 }) {
+  const control: Control | undefined = onPress && {
+    role: "button",
+    tabIndex: 0,
+    "aria-pressed": pressed,
+    onClick: onPress,
+    onKeyDown: (e) => {
+      if (e.key !== "Enter" && e.key !== " ") return
+      e.preventDefault()
+      onPress()
+    },
+  }
   return (
-    <Frame label={label} size={size} face glow={tone}>
+    <Frame label={label} size={size} face glow={tone} control={control}>
       {icon && <SwapIcon as={icon} className={cn(FILL, "mb-[3cqw] size-[16cqw]", toneText[tone])} />}
       <span className="text-[21cqw] font-medium [font-variant-numeric:tabular-nums]"><AnimatedText face="inherit">{display}</AnimatedText></span>
       {caption && <Small className="mt-[3cqw]">{caption}</Small>}

@@ -1,10 +1,11 @@
 import * as React from "react"
 import { StageBadge } from "@/playground/stage-badge"
-import { Moon, Sun, LogoGithub } from "@/registry/icons"
+import { Moon, Sun, LogoGithub, ColorPalette } from "@/registry/icons"
 import { Shell, ShellMain, Header, HeaderNavItem, HeaderGlobalAction, HeaderSeparator, LeftPanel, SideNavItem } from "@/registry/ui/ui-shell"
 import { globalNav, navHref, searchPages, HOME_URL, DOCS_URL, MAKE_URL } from "@/playground/nav"
 import { GlobalSearch } from "@/registry/blocks/global-search"
 import { GithubAction } from "@/playground/github"
+import { ThemePanel } from "@/playground/theme-panel"
 import { TooltipProvider } from "@/registry/ui/tooltip"
 import { useSunTheme } from "@/registry/hooks/use-sun-theme"
 import { useWeatherTint } from "@/registry/hooks/use-weather-tint"
@@ -41,7 +42,9 @@ const examples = [
 export function Showcase({ page = "home" }: { page?: "home" | "make" }) {
   // Follows the sun where the visitor is; the header toggle overrides until the next sunrise/sunset.
   const [dark, setDark] = useSunTheme()
-  useWeatherTint()
+  const weather = useWeatherTint()
+  // The same theme panel as the docs: shape Vita right where you first meet it.
+  const [themeOpen, setThemeOpen] = React.useState(false)
   React.useEffect(() => {
     swapAppearance(() => document.documentElement.classList.toggle("dark", dark))
   }, [dark])
@@ -58,7 +61,10 @@ export function Showcase({ page = "home" }: { page?: "home" | "make" }) {
               <GlobalSearch items={searchPages((path) => window.location.assign(`${DOCS}${path}`))} placeholder="Search Vita" className="size-8 rounded-inner-2" />
               <span className="flex items-center gap-1 max-sm:hidden"><HeaderSeparator /></span>
               <HeaderGlobalAction icon={dark ? Sun : Moon} label={dark ? "Light theme" : "Dark theme"} onClick={() => setDark((d) => !d)} />
-              <span className="flex items-center gap-1 max-sm:hidden"><GithubAction /></span>
+              <span className="flex items-center gap-1 max-sm:hidden">
+                <HeaderGlobalAction icon={ColorPalette} label="Theme" active={themeOpen} onClick={() => setThemeOpen((o) => !o)} />
+                <GithubAction />
+              </span>
             </>
           }
         >
@@ -69,6 +75,7 @@ export function Showcase({ page = "home" }: { page?: "home" | "make" }) {
         <LeftPanel mobileOnly label="Menu">
           {globalNav.map((n) => <SideNavItem key={n.path} href={navHref(n, DOCS)} active={page === "make" && n.path === "make"}>{n.label}</SideNavItem>)}
           <div className="mt-auto flex flex-col gap-px border-t border-divider pt-2">
+            <SideNavItem icon={ColorPalette} onClick={() => setThemeOpen(true)}>Theme</SideNavItem>
             <SideNavItem href="https://github.com/Jacopospina/vita" icon={LogoGithub}>GitHub</SideNavItem>
           </div>
         </LeftPanel>
@@ -78,6 +85,7 @@ export function Showcase({ page = "home" }: { page?: "home" | "make" }) {
             Made with Vita. Mind, soul, life. Source on <Link inline href="https://github.com/Jacopospina/vita" external>GitHub</Link>.
           </Text>
         </ShellMain>
+        <ThemePanel open={themeOpen} onOpenChange={setThemeOpen} weather={weather} dark={dark} onDarkChange={(d) => setDark(d)} />
       </Shell>
       <Toaster />
     </TooltipProvider>
