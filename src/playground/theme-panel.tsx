@@ -1,8 +1,8 @@
 import * as React from "react"
 import { Stack } from "@/registry/ui/layout"
+import { SwatchPicker } from "@/registry/ui/swatch-picker"
 import { Text } from "@/registry/ui/text"
 import { Dropdown } from "@/registry/ui/dropdown"
-import { CodeSnippet } from "@/registry/ui/code-snippet"
 import { Button } from "@/registry/ui/button"
 import { Separator } from "@/registry/ui/separator"
 import { swapAppearance, withoutTransitions } from "@/registry/lib/appearance"
@@ -46,6 +46,15 @@ const brandColors = [
   { value: "gray", label: "Charcoal", hue: 286.2, chroma: 0.02 },
 ]
 
+/** Grey tints by name: the outer ring reaches Mist and Sand (cool, warm); the swatches reach every tint. */
+const greyTints = [
+  { value: "neutral", label: "Stone", hue: 286, chroma: 0 },
+  { value: "cool", label: "Mist", hue: 250, chroma: 0.012 },
+  { value: "warm", label: "Sand", hue: 70, chroma: 0.012 },
+  { value: "sage", label: "Moss", hue: 150, chroma: 0.01 },
+  { value: "lilac", label: "Haze", hue: 300, chroma: 0.012 },
+]
+
 /** The dial's outer ring is the greys' temperature: cool (Mist's hue) through neutral to warm (Sand's), tinting up to 0.02. */
 const COOL = 250
 const WARM = 70
@@ -75,10 +84,10 @@ const presets = [
   { value: "mono", label: "Mono", gist: "Almost no colour and tighter rows: quiet and dense." },
 ]
 const sliders = [
-  { key: "--vita-radius", name: "Corners", list: radii },
-  { key: "--vita-density", name: "Density", list: densities },
-  { key: "--vita-type-ratio", name: "Type scale", list: ratios },
-  { key: "--vita-motion-scale", name: "Motion", list: speeds },
+  { key: "--vita-radius", name: "How round are corners?", list: radii },
+  { key: "--vita-density", name: "How much room?", list: densities },
+  { key: "--vita-type-ratio", name: "How big are headings?", list: ratios },
+  { key: "--vita-motion-scale", name: "How fast does it move?", list: speeds },
 ]
 
 const fonts = [
@@ -127,11 +136,24 @@ export function ThemePanel({ open, onOpenChange, weather, dark, onDarkChange }: 
 
   const css = `:root {\n${knobs.map((k) => `  ${k.key}: ${values[k.key]}${k.unit};`).join("\n")}\n  --vita-font-sans: ${fonts.find((f) => f.value === font)!.css};\n}`
 
+  const [copied, setCopied] = React.useState(false)
+  const copy = () => {
+    void navigator.clipboard?.writeText(css)
+    setCopied(true)
+    window.setTimeout(() => setCopied(false), 1600)
+  }
+
   const temperature = temperatureOf(values["--vita-neutral-hue"], values["--vita-neutral-chroma"])
 
   return (
     // The reset lives in the panel's footer, so it stays in reach however far the knobs scroll.
-    <RightPanel open={open} onOpenChange={onOpenChange} title="Theme" size="md" footer={<Button variant="secondary" onClick={() => applyPreset("default")}>Reset to defaults</Button>}>
+    <RightPanel open={open} onOpenChange={onOpenChange} title="Theme" size="md" footer={
+      <>
+        {/* The export is one click away, so the panel needs no code block: Copy code says "Copied" for a moment. */}
+        <Button variant="secondary" onClick={copy}>{copied ? "Copied" : "Copy code"}</Button>
+        <Button onClick={() => applyPreset("default")}>Reset to defaults</Button>
+      </>
+    }>
     <Stack gap="md">
       {/* The theme at a glance, and in one hand: the middle switches light and dark, the wheel sets the brand hue,
           the outer ring how warm or cool the greys are. */}
@@ -170,8 +192,24 @@ export function ThemePanel({ open, onOpenChange, weather, dark, onDarkChange }: 
           pressed={weather.mode === "dynamic"}
           onPress={() => weather.setMode(weather.mode === "dynamic" ? "none" : "dynamic")}
         />
-        <Text variant="caption" tone="muted">Weather</Text>
+        {/* What the toggle does, not its name: the tile already shows the weather. */}
+        <Text variant="caption" tone="muted" className="max-w-64 text-center">
+          {weather.mode === "dynamic" ? "Greys warm or cool with the weather outside." : "Off: greys stay as you set them. On, they follow the weather outside."}
+        </Text>
       </Stack>
+      <SwatchPicker
+        label="Which grey?"
+        size="sm"
+        // vita-allow raw-color: the theme editor previews a grey tint the tokens don't have yet, approved by @jacopo
+        items={greyTints.map((c) => ({ value: c.value, label: c.label, color: `oklch(0.62 ${c.chroma * 4} ${c.hue})` }))}
+        value={greyTints.find((c) => Math.abs(c.hue - values["--vita-neutral-hue"]) < 0.5 && Math.abs(c.chroma - values["--vita-neutral-chroma"]) < 0.002)?.value ?? (values["--vita-neutral-chroma"] === 0 ? "neutral" : "")}
+        onValueChange={(v) => {
+          // Picking a tint by hand replaces the weather's.
+          if (weather.mode !== "none") weather.setMode("none")
+          const c = greyTints.find((x) => x.value === v)!
+          setValues((s) => ({ ...s, "--vita-neutral-hue": c.hue, "--vita-neutral-chroma": c.chroma }))
+        }}
+      />
       <Separator />
       {/* Choices by name. */}
       <Dropdown label="Style" value={preset} onValueChange={applyPreset} items={presets.map(({ value, label }) => ({ value, label }))} helperText={presets.find((p) => p.value === preset)?.gist} />
@@ -188,18 +226,14 @@ export function ThemePanel({ open, onOpenChange, weather, dark, onDarkChange }: 
         />
       ))}
       <Stack gap="xs">
-        <Label id="body-size">Body size</Label>
+        <Label id="body-size">How big is the text?</Label>
         <ContentSwitcher
-          label="Body size"
+          label="How big is the text?"
           items={bodySizes.map((b) => ({ value: String(b.v), label: b.label }))}
           value={String(bodySizes[nearest(bodySizes, values["--vita-type-base"])].v)}
           onValueChange={(v) => setValues((s) => ({ ...s, "--vita-type-base": Number(v) }))}
         />
       </Stack>
-      <Separator />
-      <Text variant="headline">theme.css</Text>
-      <Text tone="muted">Every token in Vita derives from these knobs: paste this into <code className="font-mono">src/styles/theme.css</code>.</Text>
-      <CodeSnippet type="multi">{css}</CodeSnippet>
     </Stack>
     </RightPanel>
   )

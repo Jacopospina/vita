@@ -468,11 +468,16 @@ function DialKnob({ r, angle, radius, dragging, slider }: {
         aria-valuetext={slider?.text}
         onKeyDown={slider?.onKey}
         className={cn(
-          "absolute -translate-x-1/2 -translate-y-1/2 rounded-full border-[2.5cqw] border-foreground bg-background",
+          "absolute -translate-x-1/2 -translate-y-1/2 rounded-full",
           slider && "pointer-events-auto focus-ring duration-fast-02 ease-productive hover:scale-125 active:scale-110",
         )}
         style={{ left: "50%", top: `${50 - r}%`, width: `${radius * 2}%`, height: `${radius * 2}%` }}
-      />
+      >
+        {/* Drawn, not bordered: a border on a box a few pixels wide rounds unevenly once it turns, and reads as an oval. */}
+        <svg viewBox="0 0 10 10" aria-hidden="true" className="block size-full overflow-visible">
+          <circle cx={5} cy={5} r={3.75} fill="var(--vita-background)" stroke="var(--vita-foreground)" strokeWidth={2.5} />
+        </svg>
+      </span>
     </span>
   )
 }

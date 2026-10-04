@@ -30,7 +30,7 @@ related: [modal, ui-shell-header, popover, filtering]
 1. **Non-modal:** the page stays interactive. Escape and × close the panel; focus moves into it on open and returns to the trigger on close.
 2. **One right panel at a time.** Opening another replaces it.
 3. **Header row** is 32px: title left, × right (its tooltip shows Esc).
-4. **Footer = ActionBar,** inset and rounded, with the primary action only, and only when the panel edits something. × and Esc close it; never a Cancel.
+4. **Footer = ActionBar,** inset and rounded, only when the panel edits something: the primary action on the right, at most one secondary on its left (Copy code · Reset to defaults). It stays put while the content scrolls. × and Esc close it; never a Cancel.
 5. **Motion:** productive. It slides in from fully off-screen at `moderate-02` and exits faster at `moderate-01`, with no bounce. Reduced motion fades.
 6. **Deep-linkable:** a detail panel reflects its state in the URL (`?panel=run-8812`).
 
