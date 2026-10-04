@@ -1,5 +1,4 @@
 import * as React from "react"
-import { PreviewPicker } from "@/registry/ui/preview-picker"
 import { Stack } from "@/registry/ui/layout"
 import { Text } from "@/registry/ui/text"
 import { Dropdown } from "@/registry/ui/dropdown"
@@ -9,9 +8,9 @@ import { Separator } from "@/registry/ui/separator"
 import { swapAppearance, withoutTransitions } from "@/registry/lib/appearance"
 import type { useWeatherTint } from "@/registry/hooks/use-weather-tint"
 import { RightPanel } from "@/registry/ui/ui-shell"
-import { MiniColor, temperatureStops } from "@/registry/ui/mini-chart"
+import { MiniColor, MiniLevels, MiniGlow, temperatureStops } from "@/registry/ui/mini-chart"
 import { SwapIcon } from "@/registry/ui/icon"
-import { Moon, Sun } from "@/registry/icons"
+import { Moon, Sun, Corner, FitToHeight, TextFont, TextScale, Movement, PartlyCloudy } from "@/registry/icons"
 
 /** Live editor for the theme.css knobs. Writes CSS custom properties on <html>. */
 const knobs = [
@@ -54,11 +53,6 @@ const tintOf = (t: number) => ({ hue: t < 0.5 ? COOL : WARM, chroma: Math.round(
 /** The brand colour a hue is closest to, by name ("Tide"), for screen readers. */
 const hueName = (deg: number) => brandColors.filter((c) => c.value !== "gray" && c.value !== "brown").reduce((a, b) => (Math.abs(((b.hue - deg + 540) % 360) - 180) < Math.abs(((a.hue - deg + 540) % 360) - 180) ? b : a)).label
 
-/** A preview drawn at a knob's value (the one place the theme editor styles inline: it shows values tokens don't hold yet). */
-function Fx({ look, className, children }: { look: React.CSSProperties; className?: string; children?: React.ReactNode }) {
-  return <span aria-hidden className={className} style={look}>{children}</span> // vita-allow inline-style: the theme editor previews raw knob values before they become tokens, approved by @jacopo
-}
-
 /* Form follows function: every option shows what it does. */
 const radii = [
   { v: 0, label: "Square" }, { v: 0.25, label: "Subtle" }, { v: 0.5, label: "Default" }, { v: 0.75, label: "Soft" }, { v: 1.25, label: "Round" },
@@ -67,13 +61,26 @@ const densities = [{ v: 0.9, label: "Compact" }, { v: 1.08, label: "Default" }, 
 const bodySizes = [{ v: 0.75, label: "12" }, { v: 0.8125, label: "13" }, { v: 0.875, label: "14" }, { v: 1, label: "16" }]
 const ratios = [{ v: 1.125, label: "Subtle" }, { v: 1.2, label: "Default" }, { v: 1.25, label: "Bold" }, { v: 1.333, label: "Dramatic" }]
 const speeds = [{ v: 0, label: "Off" }, { v: 0.5, label: "Quick" }, { v: 1, label: "Default" }, { v: 1.5, label: "Calm" }, { v: 2, label: "Slow" }]
-const pick = (list: { v: number }[], x: number) => String(list.reduce((a, b) => (Math.abs(b.v - x) < Math.abs(a.v - x) ? b : a)).v)
-const knobPreviews: Record<string, { label: string; items: { value: string; label: string; preview: React.ReactNode }[] }> = {
-  "--vita-radius": { label: "Corner radius", items: radii.map((r) => ({ value: String(r.v), label: r.label, preview: <Fx className="size-6 border-2 border-current" look={{ borderRadius: `${r.v * 0.75}rem` }} /> })) },
-  "--vita-density": { label: "Density", items: densities.map((d) => ({ value: String(d.v), label: d.label, preview: <Fx className="flex w-8 flex-col" look={{ gap: `${(d.v - 0.75) * 12}px` }}>{[0, 1, 2].map((i) => <span key={i} className="h-0.5 rounded-full bg-current" />)}</Fx> })) },
-  "--vita-type-base": { label: "Body size", items: bodySizes.map((b) => ({ value: String(b.v), label: b.label, preview: <Fx look={{ fontSize: `${b.v}rem` }}>Aa</Fx> })) },
-  "--vita-type-ratio": { label: "Type scale", items: ratios.map((r) => ({ value: String(r.v), label: r.label, preview: <span className="flex items-baseline gap-0.5"><Fx className="font-semibold leading-none" look={{ fontSize: `${0.6 * r.v ** 4}rem` }}>A</Fx><Fx className="leading-none" look={{ fontSize: "0.6rem" }}>a</Fx></span> })) },
-  "--vita-motion-scale": { label: "Motion speed", items: speeds.map((m) => ({ value: String(m.v), label: m.label, preview: <span className="relative h-2 w-8"><Fx className="preview-glide absolute top-0 left-0 size-2 rounded-full bg-current" look={{ animationDuration: m.v ? `${0.9 * m.v}s` : "0s" }} /></span> })) },
+/** The option nearest a knob's value. */
+const nearest = (list: { v: number }[], x: number) => list.reduce((best, o, i) => (Math.abs(o.v - x) < Math.abs(list[best].v - x) ? i : best), 0)
+
+const presets = [{ value: "default", label: "Default" }, { value: "square", label: "Square" }, { value: "soft", label: "Soft" }, { value: "mono", label: "Mono" }]
+const steppers = [
+  { key: "--vita-radius", name: "Corners", icon: Corner, list: radii },
+  { key: "--vita-density", name: "Density", icon: FitToHeight, list: densities },
+  { key: "--vita-type-base", name: "Body size", icon: TextFont, list: bodySizes },
+  { key: "--vita-type-ratio", name: "Type scale", icon: TextScale, list: ratios },
+  { key: "--vita-motion-scale", name: "Motion", icon: Movement, list: speeds },
+]
+
+/** A mini chart with its name under it. */
+function Knob({ name, children }: { name: string; children: React.ReactNode }) {
+  return (
+    <Stack gap="2xs" align="center">
+      {children}
+      <Text variant="caption" tone="muted">{name}</Text>
+    </Stack>
+  )
 }
 
 const fonts = [
@@ -128,6 +135,10 @@ export function ThemePanel({ open, onOpenChange, weather, dark, onDarkChange }: 
     // The reset lives in the panel's footer, so it stays in reach however far the knobs scroll.
     <RightPanel open={open} onOpenChange={onOpenChange} title="Theme" size="md" footer={<Button variant="secondary" onClick={() => applyPreset("default")}>Reset to defaults</Button>}>
     <Stack gap="md">
+      {/* Choices by name come first; then the knobs, each one a mini chart. */}
+      <Dropdown label="Style" value={preset} onValueChange={applyPreset} items={presets} />
+      <Dropdown label="Typeface" items={fonts.map(({ value, label }) => ({ value, label }))} value={font} onValueChange={setFont} />
+      <Separator />
       {/* The theme at a glance, and in one hand: the middle switches light and dark, the wheel sets the brand hue,
           the outer ring how warm or cool the greys are. */}
       <Stack gap="xs" align="center">
@@ -155,34 +166,31 @@ export function ThemePanel({ open, onOpenChange, weather, dark, onDarkChange }: 
         <Text variant="caption" tone="muted" className="text-center">Middle: light or dark. Colour ring: brand. Outer ring: cool or warm greys.</Text>
       </Stack>
       <Separator />
-      <Text tone="muted">Every token in Vita derives from these knobs. Tune them here, then paste the result into <code className="font-mono">src/styles/theme.css</code>.</Text>
-      <Dropdown label="Theme" value={preset} onValueChange={applyPreset} items={[{ value: "default", label: "Default" }, { value: "square", label: "Square" }, { value: "soft", label: "Soft" }, { value: "mono", label: "Mono" }]} />
-      <Stack gap="xs">
-        <Dropdown
-          label="Greys"
-          value={weather.mode}
-          onValueChange={(v) => weather.setMode(v as typeof weather.mode)}
-          items={[{ value: "dynamic", label: "Dynamic", description: "Follows the weather outside" }, { value: "none", label: "Neutral" }, { value: "cold", label: "Cold" }, { value: "warm", label: "Warm" }]}
-        />
-        <Text variant="caption" tone="muted">
-          {weather.mode === "dynamic"
-            ? weather.celsius === null ? "Reading the temperature outside…" : `${Math.round(weather.celsius)} °C outside · ${weather.tint === "none" ? "neutral greys" : `${weather.tint} greys`}`
-            : weather.mode === "none" ? "Neutral only: greys never tint." : `${weather.mode === "cold" ? "Cold" : "Warm"} only, whatever the weather. It replaces the dial's outer ring.`}
-        </Text>
-      </Stack>
-      <Separator />
-      {Object.entries(knobPreviews).map(([key, p]) => (
-        <PreviewPicker
-          key={key}
-          label={p.label}
-          items={p.items}
-          value={pick(p.items.map((i) => ({ v: Number(i.value) })), values[key])}
-          onValueChange={(v) => setValues((s) => ({ ...s, [key]: Number(v) }))}
-        />
-      ))}
-      <Dropdown label="Typeface" items={fonts.map(({ value, label }) => ({ value, label }))} value={font} onValueChange={setFont} />
+      {/* Every other knob is a mini chart too: drag, click or arrow through its steps; the weather is a toggle. */}
+      <div className="grid grid-cols-3 justify-items-center gap-x-2 gap-y-4">
+        {steppers.map((s) => {
+          const i = nearest(s.list, values[s.key])
+          return (
+            <Knob key={s.key} name={s.name}>
+              <MiniLevels label={s.name} icon={s.icon} tone="primary" levels={s.list.length} active={i} display={s.list[i].label} onChange={(n) => setValues((v) => ({ ...v, [s.key]: s.list[n].v }))} />
+            </Knob>
+          )
+        })}
+        <Knob name="Weather">
+          <MiniGlow
+            label={weather.mode === "dynamic" ? `Greys follow the weather${weather.celsius === null ? "" : `, ${Math.round(weather.celsius)} degrees outside`}` : "Greys don't follow the weather"}
+            icon={PartlyCloudy}
+            tone={weather.mode !== "dynamic" ? "neutral" : weather.tint === "cold" ? "info" : weather.tint === "warm" ? "warning" : "success"}
+            display={weather.mode === "dynamic" && weather.celsius !== null ? `${Math.round(weather.celsius)}°` : "–"}
+            caption={weather.mode === "dynamic" ? "Live" : "Off"}
+            pressed={weather.mode === "dynamic"}
+            onPress={() => weather.setMode(weather.mode === "dynamic" ? "none" : "dynamic")}
+          />
+        </Knob>
+      </div>
       <Separator />
       <Text variant="headline">theme.css</Text>
+      <Text tone="muted">Every token in Vita derives from these knobs: paste this into <code className="font-mono">src/styles/theme.css</code>.</Text>
       <CodeSnippet type="multi">{css}</CodeSnippet>
     </Stack>
     </RightPanel>
