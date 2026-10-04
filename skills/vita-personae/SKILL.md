@@ -67,4 +67,4 @@ From now on, every UI task uses the `vita-copywriting` skill with these files.
 
 ## Keep it alive
 
-When a new feature introduces a concept, add it to the taxonomy **before** writing UI. When users are observed using a different word, update the taxonomy and let the audit find the old strings.
+When a new feature introduces a concept, add it to the taxonomy **before** writing UI. When users are observed using a different word, update the taxonomy and let the audit find the old strings. When the user describes their audience, `vita-copywriting` leads: it refines these files with what they shared and re-tunes the copy.

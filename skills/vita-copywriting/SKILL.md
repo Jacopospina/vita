@@ -1,11 +1,23 @@
 ---
 name: vita-copywriting
-description: Write or review every user-visible word in a Vita product, labels, buttons, headings, helper text, errors, empty states, toasts, confirmations, emails, AI messages, through the product taxonomy and persona voice. Use whenever UI text is created or changed, or when copy "feels off".
+description: Write or review every user-visible word in a Vita product, labels, buttons, headings, helper text, errors, empty states, toasts, confirmations, emails, AI messages, through the product taxonomy and persona voice. Use whenever UI text is created or changed, when copy "feels off", or whenever the user describes the product's target users or audience (then refine the personas and taxonomy and re-tune the copy).
 ---
 
 # Vita Copywriting
 
 Every string passes through the **taxonomy** (`vita/taxonomy.json`) and the **persona** (`vita/personas/*.md`). If either file is missing, run `vita-personae` first, or ask the user which persona the screen serves.
+
+## When someone describes their audience
+
+Whenever the user tells you about the people the product is for, at setup or at any later point, they are tuning the copy. Turn what they say into personas and taxonomy, then rewrite the words to fit.
+
+1. **Take everything they know.** Ask for it all: who the users are, what they do, the words they use, what worries them, plus any interviews, support tickets, sales notes, reviews or existing copy. Ask up to 3 follow-ups on what's missing (expertise, context of use, anxieties).
+2. **Refine the personas.** Update `vita/personas/*.md` (role, expertise, vocabulary, anxieties, tone) following `vita-personae`; create them if they don't exist.
+3. **Refine the taxonomy.** In `vita/taxonomy.json`, switch preferred terms to the users' own words, add persona overrides, add `avoid` entries for words that confuse them, and set the voice per persona.
+4. **Re-tune the copy.** Run the procedure below over the existing UI strings and propose every change the new taxonomy or voice calls for.
+5. **Report.** What you learned about the audience, the taxonomy changes (old → new), then the copy table.
+
+The taxonomy is never finished: every new thing the user shares about their audience refines it.
 
 ## Procedure for each string
 
