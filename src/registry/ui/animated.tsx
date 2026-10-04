@@ -71,11 +71,11 @@ export function AnimatedNumber({ value, format, locale, className }: AnimatedNum
  * RollingText, ANY value string animates per digit: every digit swaps on its own, everything else
  * ($, %, commas, units, "–") stays put. Reels are keyed from the right, so 99 → 100 adds a reel on the left.
  */
-export function RollingText({ text, className }: { text: string; className?: string }) {
+export function RollingText({ text, className, face = "numeric" }: { text: string; className?: string; face?: "numeric" | "inherit" }) {
   const chars = Array.from(text)
   let digitsFromRight = chars.filter((c) => /\d/.test(c)).length
   return (
-    <span className={cn("inline-flex items-baseline font-normal tabular-nums", className)}>
+    <span className={cn("inline-flex items-baseline", face === "numeric" ? "font-normal tabular-nums" : "[font-variant-numeric:tabular-nums]", className)}>
       <span className="sr-only">{text}</span>
       <span aria-hidden className="inline-flex items-baseline whitespace-pre">
         {chars.map((c, i) => {
@@ -101,9 +101,14 @@ const isNumericValue = (t: string) => /\d/.test(t) && !/[a-z]{2,}/i.test(t)
 const LETTER_STAGGER = 18 // ms between letters
 const MAX_STAGGER = 600 // long labels still finish quickly
 
-export function AnimatedText({ children, className, enter = "change", direction = "up", leaving = false }: {
+export function AnimatedText({ children, className, enter = "change", direction = "up", leaving = false, face }: {
   children: string
   className?: string
+  /**
+   * Digits roll in the numeric face (default), or keep the surrounding face and weight with even-width digits
+   * ("inherit": readings set like a watch face, e.g. mini charts).
+   */
+  face?: "numeric" | "inherit"
   /** "change" (default): animate when the text changes. "mount": also animate its first appearance. */
   enter?: "change" | "mount"
   /** Letters come from below (up) or drop in from above (down). */
@@ -117,7 +122,7 @@ export function AnimatedText({ children, className, enter = "change", direction 
   // Numbers are never letter-revealed: numeric values, or text whose only change is its digits, swap digit by digit.
   // (Sentences that merely CONTAIN numbers, "order 4821 arrives in 3–5 days", stay normal, wrapping text.)
   if (!leaving && enter === "change" && (isNumericValue(children) || (changed && /\d/.test(children) && template(children) === template(first)))) {
-    return <RollingText text={children} className={className} />
+    return <RollingText text={children} className={className} face={face} />
   }
   const motion = !reduced()
   const animate = motion && (changed || enter === "mount")

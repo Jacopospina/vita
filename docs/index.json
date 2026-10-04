@@ -948,6 +948,29 @@
     },
     {
       "section": "components",
+      "slug": "mini-chart",
+      "path": "docs/components/mini-chart.md",
+      "title": "Mini chart",
+      "summary": "One value at a glance in a round tile the size of a thumb, a gauge, a range, a level, a colour or a progress, for dashboards and device controls where many values sit side by side.",
+      "status": "experimental",
+      "import": "import { MiniGauge, MiniRange, MiniSegments, MiniStat, MiniArc, MiniMedia, MiniLevels, MiniColor, MiniGlow, MiniDial, MiniBadge, miniGradients } from \"@/components/vita/mini-chart\"",
+      "use_when": [
+        "Dashboards and device screens with many single values side by side (a home, a car, a machine)",
+        "A value people read in a glance, where its place on a scale matters more than the exact number"
+      ],
+      "avoid_when": [
+        "A trend over time or a comparison → a full chart",
+        "A key number with its change → KPI",
+        "Progress through a task → ProgressBar"
+      ],
+      "related": [
+        "kpi",
+        "progress-bar",
+        "status-indicator"
+      ]
+    },
+    {
+      "section": "components",
       "slug": "modal",
       "path": "docs/components/modal.md",
       "title": "Modal",

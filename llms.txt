@@ -140,6 +140,9 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/iden
 - [Menu](docs/components/menu.md): A temporary list of actions, opened from a trigger or right-click. Menus hold verbs, not values and not destinations.
   - use: Offering 3–10 actions without taking permanent space; View options that toggle (show grid, compact rows) via MenuCheckboxItem; Power-user shortcuts via right-click (ContextMenu), always duplicated elsewhere
   - avoid: Choosing a form value → Dropdown / Select; Navigation → Side nav, Tabs, Links; 1–2 actions → show them as buttons; More than ~10 items or deep nesting → rethink the IA
+- [Mini chart](docs/components/mini-chart.md): One value at a glance in a round tile the size of a thumb, a gauge, a range, a level, a colour or a progress, for dashboards and device controls where many values sit side by side.
+  - use: Dashboards and device screens with many single values side by side (a home, a car, a machine); A value people read in a glance, where its place on a scale matters more than the exact number
+  - avoid: A trend over time or a comparison → a full chart; A key number with its change → KPI; Progress through a task → ProgressBar
 - [Modal](docs/components/modal.md): Interrupts to focus on one task or decision. Modality is a last resort.
   - use: Confirming a destructive or irreversible action (ConfirmModal danger); A short, self-contained task (≤ 5 fields) that shouldn't leave the page; Critical information that must be acknowledged
   - avoid: The user needs to see the page while working → RightPanel; A couple of options next to a control → Popover; Long forms or multi-step flows → a page; Success messages → toast; Opening a modal from a modal → never
