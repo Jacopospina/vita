@@ -116,9 +116,8 @@ describe("MiniStat", () => {
       it(`${tone}, ${size}, every combination of value and caption`, () => {
         for (const [value, caption] of [["800", "rpm"], ["800", undefined], [undefined, "QW"], [undefined, undefined]] as const) {
           const { container } = sound(<MiniStat label="Spin" size={size} icon={FlashFilled} tone={tone} value={value} caption={caption} />, "Spin", size)
-          const icon = container.querySelector("svg.shrink-0")!
           // Alone, the icon is the reading and grows.
-          expect(icon.getAttribute("class")).toContain(value ? "size-[18cqw]" : "size-[30cqw]")
+          expect(container.querySelector(value ? "[class*='size-[18cqw]']" : "[class*='size-[30cqw]']")).toBeTruthy()
           if (value) expect(container.textContent).toContain(value)
           if (caption) expect(container.textContent).toContain(caption)
           cleanup()
@@ -171,8 +170,46 @@ describe("MiniColor", () => {
         const { container } = sound(<MiniColor label="Light" icon={Idea} hue={hue} brightness={brightness} />, "Light")
         const [bright, h] = rotations(container)
         expect(bright).toBeCloseTo(-160 + clamp(brightness) * 320, 5)
-        expect(h).toBeCloseTo(clamp(hue) * 360, 5)
+        // The wheel wraps: past red comes red again.
+        expect(h).toBeCloseTo((((hue % 1) + 1) % 1) * 360, 5)
       })
+  it("becomes a control with handlers: a group, a slider per ring, a button in the middle", () => {
+    const calls: string[] = []
+    const { container, getByRole, getAllByRole } = render(
+      <MiniColor
+        label="Theme"
+        hue={0.5}
+        brightness={0.5}
+        icon={Idea}
+        onHueChange={(v) => calls.push(`hue ${v.toFixed(3)}`)}
+        onBrightnessChange={(v) => calls.push(`outer ${v.toFixed(3)}`)}
+        onPress={() => calls.push("press")}
+        pressLabel="Dark theme"
+        pressed={false}
+        hueLabel="Brand colour"
+        brightnessLabel="Temperature"
+      />,
+    )
+    expect(getByRole("group").getAttribute("aria-label")).toBe("Theme")
+    const [outer, hue] = getAllByRole("slider")
+    expect(outer.getAttribute("aria-label")).toBe("Temperature")
+    expect(hue.getAttribute("aria-label")).toBe("Brand colour")
+    expect(hue.getAttribute("aria-valuenow")).toBe("50")
+    const key = (el: Element, k: string, shift = false) => el.dispatchEvent(new KeyboardEvent("keydown", { key: k, shiftKey: shift, bubbles: true }))
+    key(hue, "ArrowRight")
+    key(hue, "ArrowLeft", true)
+    key(outer, "End")
+    key(outer, "Home")
+    getByRole("button", { name: "Dark theme" }).click()
+    expect(calls).toEqual(["hue 0.514", "hue 0.400", "outer 1.000", "outer 0.000", "press"])
+    expect(container.innerHTML).not.toMatch(/NaN|Infinity/)
+  })
+  it("wraps the hue past either end from the keyboard", () => {
+    const got: number[] = []
+    const { getAllByRole } = render(<MiniColor label="Light" hue={0} brightness={0} onHueChange={(v) => got.push(v)} />)
+    getAllByRole("slider")[0].dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowLeft", bubbles: true }))
+    expect(got[0]).toBeCloseTo(1 - 1 / 72, 5)
+  })
 })
 
 describe("MiniGlow", () => {
@@ -186,13 +223,14 @@ describe("MiniGlow", () => {
 })
 
 describe("MiniDial", () => {
-  for (const offset of [-2, -1, -0.5, 0, 0.5, 1, 2])
+  for (const offset of [-100, -2, -1, -0.5, 0, 0.5, 1, 2, 100])
     for (const tone of tones)
       it(`offset ${offset}, ${tone}`, () => {
         const { container } = sound(<MiniDial label="Charging" icon={FlashFilled} tone={tone} display="15:07" offset={offset} />, "Charging")
-        expect(container.querySelectorAll(ART + " line")).toHaveLength(13)
-        // The ruler turns at most a third of its sweep either way.
-        expect(rotations(container)[0]).toBeCloseTo(Math.min(Math.max(offset, -1), 1) * 30, 5)
+        // The ruler goes all the way round and slides forever, a tick per unit, seen through a fading window.
+        expect(container.querySelectorAll(ART + " line")).toHaveLength(45)
+        expect(container.querySelector(ART + " mask")).toBeTruthy()
+        expect(rotations(container)[0]).toBeCloseTo(offset * 8, 5)
       })
 })
 
@@ -200,6 +238,6 @@ describe("MiniBadge", () => {
   for (const tone of tones)
     it(tone, () => {
       const { container } = render(<MiniBadge icon={Automatic} tone={tone} />)
-      expect(container.querySelector("svg")?.getAttribute("class")).toContain(tone === "neutral" ? "text-muted-foreground" : `text-${tone}`)
+      expect(container.querySelector(`.${tone === "neutral" ? "text-muted-foreground" : `text-${tone}`} svg, svg.${tone === "neutral" ? "text-muted-foreground" : `text-${tone}`}`)).toBeTruthy()
     })
 })

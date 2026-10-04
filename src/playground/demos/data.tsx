@@ -4,10 +4,10 @@ import { Report } from "@/registry/pictograms"
 import type { DemoMap } from "./types"
 import { Kpi, KpiGroup } from "@/registry/ui/kpi"
 import { MiniSegments, MiniStat, MiniGauge, MiniBadge, MiniRange, MiniArc, MiniMedia, MiniLevels, MiniColor, MiniGlow, MiniDial, miniGradients } from "@/registry/ui/mini-chart"
-import { Humidity, FlashFilled, Temperature, Hurricane, TemperatureHot, Music, Snowflake, Idea, Sprout, Automatic } from "@/registry/icons"
+import { Humidity, FlashFilled, Temperature, Hurricane, TemperatureHot, Music, Snowflake, Idea, Sprout, Automatic, Light, LightFilled } from "@/registry/icons"
 import { Stack, Inline, Grid, Column } from "@/registry/ui/layout"
 import { Text } from "@/registry/ui/text"
-import { Icon } from "@/registry/ui/icon"
+import { Icon, SwapIcon } from "@/registry/ui/icon"
 import { Button, IconButton } from "@/registry/ui/button"
 import { DataTable, type DataTableColumn } from "@/registry/ui/data-table"
 import { Pagination } from "@/registry/ui/pagination"
@@ -157,13 +157,13 @@ export const dataDemos: DemoMap = {
   "components/mini-chart": [
     {
       title: "The twelve mini charts",
-      description: "Segments, stat, gauge, arc, media, range, levels, colour, glow and dial: one value each, at a glance.",
-      render: () => <MiniChartGallery />,
+      description: "One value each, at a glance. Change the values: knobs travel along their arc, fills grow and numbers roll.",
+      render: () => <MiniChartLive />,
     },
     {
-      title: "Values glide",
-      description: "Knobs travel along their arc, fills grow and numbers roll. Change the values to watch.",
-      render: () => <MiniChartLive />,
+      title: "A colour you can turn",
+      description: "MiniColor with handlers: press the middle to switch the light, drag or click the rings, or use the arrow keys on their knobs.",
+      render: () => <MiniColorControl />,
     },
   ],
   "components/kpi": [
@@ -348,8 +348,8 @@ export const dataDemos: DemoMap = {
 function MiniChartGallery({ hot = false }: { hot?: boolean }) {
   return (
     <div className="grid w-fit grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-4">
-      <MiniSegments label="Water tank two thirds full, refills at 15:07" icon={Humidity} filled={2} value="15:07" />
-      <MiniStat label="Quick wash" icon={FlashFilled} tone="success" caption="QW" />
+      <MiniSegments label={hot ? "Water tank full, refills at 16:42" : "Water tank two thirds full, refills at 15:07"} icon={Humidity} filled={hot ? 3 : 2} value={hot ? "16:42" : "15:07"} />
+      <MiniStat label={hot ? "Eco wash" : "Quick wash"} icon={hot ? Sprout : FlashFilled} tone="success" caption={hot ? "ECO" : "QW"} />
       <MiniGauge label={`Water temperature ${hot ? 60 : 40} degrees`} icon={Temperature} value={hot ? 0.78 : 0.62} fill={miniGradients.heat} display={hot ? "60°" : "40°"} />
       <MiniStat label={`Spin speed ${hot ? 1200 : 800} rpm`} icon={Hurricane} tone="info" value={hot ? "1200" : "800"} caption="rpm" />
       <MiniGauge label={`Fan at ${hot ? 40 : 15} percent, automatic`} value={hot ? 0.4 : 0.6} fill="success" display={hot ? "40%" : "15%"} footer={<MiniBadge icon={Automatic} />} />
@@ -359,7 +359,7 @@ function MiniChartGallery({ hot = false }: { hot?: boolean }) {
       <MiniLevels label={`Energy tariff step ${hot ? 3 : 7} of 9, 8 kilowatt hours`} icon={FlashFilled} active={hot ? 2 : 6} display={hot ? "5kwh" : "8kwh"} />
       <MiniColor label="Light colour and brightness" icon={Idea} hue={hot ? 0.1 : 0.7} brightness={hot ? 0.4 : 0.85} />
       <MiniGlow label={`Eco mode, ${hot ? 19 : 17} degrees, cool`} icon={Sprout} display={hot ? "19°" : "17°"} caption="Cool" />
-      <MiniDial label="Charging finishes at 15:07" icon={FlashFilled} display={hot ? "16:30" : "15:07"} offset={hot ? 0.4 : 0} />
+      <MiniDial label="Charging finishes at 15:07" icon={FlashFilled} display={hot ? "16:30" : "15:07"} offset={hot ? 5 : 0} />
     </div>
   )
 }
@@ -371,5 +371,27 @@ function MiniChartLive() {
       <MiniChartGallery hot={hot} />
       <Button variant="secondary" size="sm" onClick={() => setHot((h) => !h)}>Change values</Button>
     </Stack>
+  )
+}
+
+function MiniColorControl() {
+  const [on, setOn] = React.useState(true)
+  const [hue, setHue] = React.useState(0.15)
+  const [level, setLevel] = React.useState(0.8)
+  return (
+    <MiniColor
+      size="lg"
+      label="Desk lamp"
+      hue={hue}
+      brightness={on ? level : 0}
+      center={<SwapIcon as={on ? LightFilled : Light} />}
+      onPress={() => setOn((o) => !o)}
+      pressLabel="Desk lamp"
+      pressed={on}
+      hueLabel="Colour"
+      brightnessLabel="Brightness"
+      onHueChange={setHue}
+      onBrightnessChange={(v) => { setOn(v > 0); setLevel(v) }}
+    />
   )
 }

@@ -9,6 +9,10 @@ import { Button } from "@/registry/ui/button"
 import { Separator } from "@/registry/ui/separator"
 import { swapAppearance, withoutTransitions } from "@/registry/lib/appearance"
 import type { useWeatherTint } from "@/registry/hooks/use-weather-tint"
+import { RightPanel } from "@/registry/ui/ui-shell"
+import { MiniColor, temperatureStops } from "@/registry/ui/mini-chart"
+import { SwapIcon } from "@/registry/ui/icon"
+import { Moon, Sun } from "@/registry/icons"
 
 /** Live editor for the theme.css knobs. Writes CSS custom properties on <html>. */
 const knobs = [
@@ -49,6 +53,16 @@ const greyTints = [
 ]
 const near = (a: number, b: number) => Math.abs(a - b) < 0.5
 
+/** The dial's outer ring is the greys' temperature: cool (Mist's hue) through neutral to warm (Sand's), tinting up to 0.02. */
+const COOL = 250
+const WARM = 70
+const MAX_TINT = 0.02
+const temperatureOf = (hue: number, chroma: number) =>
+  chroma === 0 ? 0.5 : Math.abs(hue - COOL) < 40 ? 0.5 - Math.min(chroma, MAX_TINT) / (2 * MAX_TINT) : Math.abs(hue - WARM) < 40 ? 0.5 + Math.min(chroma, MAX_TINT) / (2 * MAX_TINT) : 0.5
+const tintOf = (t: number) => ({ hue: t < 0.5 ? COOL : WARM, chroma: Math.round(Math.abs(t - 0.5) * 2 * MAX_TINT * 1000) / 1000 })
+/** The brand colour a hue is closest to, by name ("Tide"), for screen readers. */
+const hueName = (deg: number) => brandColors.filter((c) => c.value !== "gray" && c.value !== "brown").reduce((a, b) => (Math.abs(((b.hue - deg + 540) % 360) - 180) < Math.abs(((a.hue - deg + 540) % 360) - 180) ? b : a)).label
+
 /** A preview drawn at a knob's value (the one place the theme editor styles inline: it shows values tokens don't hold yet). */
 function Fx({ look, className, children }: { look: React.CSSProperties; className?: string; children?: React.ReactNode }) {
   return <span aria-hidden className={className} style={look}>{children}</span> // vita-allow inline-style: the theme editor previews raw knob values before they become tokens, approved by @jacopo
@@ -78,7 +92,13 @@ const fonts = [
   { value: "serif", label: "Serif (editorial)", css: `"New York", "Iowan Old Style", Georgia, serif` },
 ]
 
-export function ThemePanel({ weather }: { weather: ReturnType<typeof useWeatherTint> }) {
+export function ThemePanel({ open, onOpenChange, weather, dark, onDarkChange }: {
+  open: boolean
+  onOpenChange: (open: boolean) => void
+  weather: ReturnType<typeof useWeatherTint>
+  dark: boolean
+  onDarkChange: (dark: boolean) => void
+}) {
   const [values, setValues] = React.useState<Record<string, number>>(() => Object.fromEntries(knobs.map((k) => [k.key, k.def])))
   const [font, setFont] = React.useState("flex")
   const [preset, setPreset] = React.useState("default")
@@ -111,8 +131,39 @@ export function ThemePanel({ weather }: { weather: ReturnType<typeof useWeatherT
 
   const css = `:root {\n${knobs.map((k) => `  ${k.key}: ${values[k.key]}${k.unit};`).join("\n")}\n  --vita-font-sans: ${fonts.find((f) => f.value === font)!.css};\n}`
 
+  const temperature = temperatureOf(values["--vita-neutral-hue"], values["--vita-neutral-chroma"])
+
   return (
+    // The reset lives in the panel's footer, so it stays in reach however far the knobs scroll.
+    <RightPanel open={open} onOpenChange={onOpenChange} title="Theme" size="md" footer={<Button variant="secondary" onClick={() => applyPreset("default")}>Reset to defaults</Button>}>
     <Stack gap="md">
+      {/* The theme at a glance, and in one hand: the middle switches light and dark, the wheel sets the brand hue,
+          the outer ring how warm or cool the greys are. */}
+      <Stack gap="xs" align="center">
+        <MiniColor
+          size="lg"
+          label="Theme"
+          hue={values["--vita-brand-hue"] / 360}
+          brightness={temperature}
+          outer={temperatureStops}
+          center={<SwapIcon as={dark ? Moon : Sun} />}
+          onPress={() => onDarkChange(!dark)}
+          pressLabel="Dark theme"
+          pressed={dark}
+          hueLabel="Brand colour"
+          brightnessLabel="Grey temperature"
+          describe={{ hue: (h) => hueName(h * 360), brightness: (v) => (v < 0.45 ? "Cool" : v > 0.55 ? "Warm" : "Neutral") }}
+          onHueChange={(h) => setValues((s) => ({ ...s, "--vita-brand-hue": Math.round(h * 3600) / 10, "--vita-brand-chroma": s["--vita-brand-chroma"] < 0.05 ? 0.2 : s["--vita-brand-chroma"] }))}
+          onBrightnessChange={(v) => {
+            // Turning the greys by hand replaces the weather's tint.
+            if (weather.mode !== "none") weather.setMode("none")
+            const c = tintOf(v)
+            setValues((s) => ({ ...s, "--vita-neutral-hue": c.hue, "--vita-neutral-chroma": c.chroma }))
+          }}
+        />
+        <Text variant="caption" tone="muted" className="text-center">Middle: light or dark. Colour ring: brand. Outer ring: cool or warm greys.</Text>
+      </Stack>
+      <Separator />
       <Text tone="muted">Every token in Vita derives from these knobs. Tune them here, then paste the result into <code className="font-mono">src/styles/theme.css</code>.</Text>
       <Dropdown label="Theme" value={preset} onValueChange={applyPreset} items={[{ value: "default", label: "Default" }, { value: "square", label: "Square" }, { value: "soft", label: "Soft" }, { value: "mono", label: "Mono" }]} />
       <Stack gap="xs">
@@ -163,7 +214,7 @@ export function ThemePanel({ weather }: { weather: ReturnType<typeof useWeatherT
       <Separator />
       <Text variant="headline">theme.css</Text>
       <CodeSnippet type="multi">{css}</CodeSnippet>
-      <Button variant="secondary" onClick={() => applyPreset("default")}>Reset to defaults</Button>
     </Stack>
+    </RightPanel>
   )
 }

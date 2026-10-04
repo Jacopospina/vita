@@ -27,7 +27,7 @@ related: [kpi, progress-bar, status-indicator]
 | `MiniMedia` | What's playing and how far through | A track a third in |
 | `MiniRange` | A setpoint between a low and a high | Thermostat 23, 16 to 30 |
 | `MiniLevels` | A step on a short scale of ticks | Tariff step 7, 8 kWh |
-| `MiniColor` | A light's hue and brightness | A bulb's colour |
+| `MiniColor` | A hue and a level, display or control | A bulb's colour, the theme |
 | `MiniGlow` | A mode with its reading | Eco, 17°, Cool |
 | `MiniDial` | A time on a ruler with a pointer | Charging until 15:07 |
 | `MiniBadge` | A mode icon under a gauge | Automatic |
@@ -41,6 +41,16 @@ related: [kpi, progress-bar, status-indicator]
 5. **Same size in a group.** Mini charts side by side share one `size` (sm 64, md 96, lg 128) and one row height.
 6. **Only Vita symbols.** Every glyph in a mini chart, the badge and the dial's pointer included, comes from the Vita icon set; nothing is hand-drawn.
 7. **Open or on a disc.** Gauges and ranges are open arcs; readings, levels, glows and dials sit on a filled disc.
+
+## MiniColor as a control
+
+Give `MiniColor` handlers and it becomes the control it draws. The theme panel uses it: the middle switches light and dark, the wheel sets the brand hue, the outer ring how warm or cool the greys are.
+
+- **Press the middle.** `onPress`, with `pressLabel` and `pressed`; `center` takes a `SwapIcon` that changes with the state.
+- **Turn a ring.** Drag or click the wheel (`onHueChange`) or the outer arc (`onBrightnessChange`); a knob follows the pointer at once.
+- **From the keyboard.** Each knob is a slider: arrows move a step, Shift or Page keys ten, Home and End jump to the ends; the hue wraps.
+- **Words for values.** `describe` names a value for screen readers ("Tide", "Warm").
+- **A thumb can still scroll.** Vertical drags scroll the page; sideways drags and taps turn the rings.
 
 ## States
 

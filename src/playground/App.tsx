@@ -1,6 +1,6 @@
 import * as React from "react"
 import { Application, ColorPalette, LogoGithub, Moon, Sun } from "@/registry/icons"
-import { Shell, ShellBody, ShellMain, Header, HeaderNavItem, HeaderGlobalAction, HeaderSeparator, LeftPanel, SideNavItem, SideNavSection, RightPanel } from "@/registry/ui/ui-shell"
+import { Shell, ShellBody, ShellMain, Header, HeaderNavItem, HeaderGlobalAction, HeaderSeparator, LeftPanel, SideNavItem, SideNavSection } from "@/registry/ui/ui-shell"
 import { TooltipProvider } from "@/registry/ui/tooltip"
 import { useSunTheme } from "@/registry/hooks/use-sun-theme"
 import { useWeatherTint } from "@/registry/hooks/use-weather-tint"
@@ -147,9 +147,7 @@ export function App() {
           <ShellMain data-leaving={leaving || undefined}>
             {section === "guidelines" ? <GuidelinesPage /> : <DocPage key={`${section}/${slug}`} section={section} slug={slug} />}
           </ShellMain>
-          <RightPanel open={themeOpen} onOpenChange={setThemeOpen} title="Theme" size="md">
-            <ThemePanel weather={weather} />
-          </RightPanel>
+          <ThemePanel open={themeOpen} onOpenChange={setThemeOpen} weather={weather} dark={dark} onDarkChange={(d) => setDark(d)} />
         </ShellBody>
       </Shell>
       <Toaster />
