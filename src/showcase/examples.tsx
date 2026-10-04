@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Add, Filter, Download, TrashCan, Edit, UserAvatar, Bot, Plug, Notification, Security, Information, Chat, Send, Activity, UserMultiple, Time } from "@/registry/icons"
+import { Add, Filter, Download, TrashCan, Edit, UserAvatar, Bot, Plug, Notification, Security, Information, Chat, Send, Activity, UserMultiple, Queued, SettingsAdjust, Time } from "@/registry/icons"
 import { Stack, Inline, Grid, Column } from "@/registry/ui/layout"
 import { Text } from "@/registry/ui/text"
 import { Tile } from "@/registry/ui/tile"
@@ -26,7 +26,7 @@ import { LoginBlock } from "@/registry/blocks/login"
 import { toast, capsule } from "@/registry/ui/notification"
 import { Icon } from "@/registry/ui/icon"
 import { Kpi, KpiGroup } from "@/registry/ui/kpi"
-import { MiniGauge, MiniLevels, MiniStat, MiniDial } from "@/registry/ui/mini-chart"
+import { MiniGauge, MiniLevels, MiniStat, MiniSegments, MiniRange, MiniDial } from "@/registry/ui/mini-chart"
 import { agents, agentColumns } from "@/playground/demos/data"
 
 /*
@@ -60,6 +60,9 @@ export function CardsExample() {
   const confidence = 86 + (runs % 9)
   const load = runs % 7
   const handoffs = 12 + Math.floor((runs - 12840) / 40)
+  const waiting = 6 + (runs % 5)
+  const queue = Math.min(3, 1 + Math.floor(waiting / 4))
+  const threshold = 70
   return (
     <Grid>
       <Column md={8} lg={10}>
@@ -82,7 +85,8 @@ export function CardsExample() {
           Side by side on large screens, one under the other below. */}
       <Column lg={16}>
         <div className="flex flex-col gap-5 lg:flex-row">
-        <Stack gap="md" className="min-w-0 flex-1">
+        {/* The same gutter as the grid (gap xl, 20px): cards stacked in a column sit as far apart as cards side by side. */}
+        <Stack gap="xl" className="min-w-0 flex-1">
         <Tile>
           <Stack gap="sm">
             <Text variant="title-3">Agents</Text>
@@ -92,31 +96,36 @@ export function CardsExample() {
           </Stack>
         </Tile>
         <Tile className="flex-1">
-          <Stack gap="sm">
+          <Stack gap="sm" className="h-full">
             <Text variant="title-3">Team</Text>
+            {/* A preview: the list takes the card's height without growing it, and fades out where it goes on. */}
+            <div className="min-h-0 flex-1 basis-0 overflow-hidden continue-fade">
             <ListGroup>
               <ListItem icon={UserAvatar} tone="brand" title="Ada Lovelace" subtitle="ada@theo.ai" trailing={<Tag size="sm">Owner</Tag>} />
               <ListItem icon={UserAvatar} tone="brand" title="Grace Hopper" subtitle="grace@theo.ai" trailing={<Tag size="sm">Editor</Tag>} />
+              <ListItem icon={UserAvatar} tone="brand" title="Alan Turing" subtitle="alan@theo.ai" trailing={<Tag size="sm">Viewer</Tag>} />
+              <ListItem icon={UserAvatar} tone="brand" title="Katherine Johnson" subtitle="katherine@theo.ai" trailing={<Tag size="sm">Viewer</Tag>} />
+              <ListItem icon={UserAvatar} tone="brand" title="Margaret Hamilton" subtitle="margaret@theo.ai" trailing={<Tag size="sm">Editor</Tag>} />
             </ListGroup>
+            </div>
           </Stack>
         </Tile>
         </Stack>
         <Tile className="min-w-0 flex-1">
           <Stack gap="md" className="h-full">
-            <Stack gap="2xs">
-              <Text variant="title-3">Support triage, live</Text>
-              <Text tone="muted">One value each, at a glance.</Text>
-            </Stack>
-            {/* The four fill the tile's height, the space around them shared out evenly in both directions. */}
-            <div className="flex flex-1 flex-col justify-evenly">
-              <div className="flex justify-evenly">
-                <MiniGauge label={`Answer confidence ${confidence} percent`} value={confidence / 100} fill="success" display={`${confidence}%`} />
-                <MiniLevels label={`Load step ${load + 1} of 7`} icon={Activity} levels={7} active={load} display={["Idle", "Light", "Light", "Busy", "Busy", "Heavy", "Peak"][load]} />
-              </div>
-              <div className="flex justify-evenly">
-                <MiniStat label={`${handoffs} hand-offs today`} icon={UserMultiple} tone="info" value={String(handoffs)} caption="hand-offs" />
-                <MiniDial label="Next run at 15:07" icon={Time} display="15:07" offset={load} />
-              </div>
+            <Text variant="title-3">Support triage, live</Text>
+            {/* Two rows of three fill the card to its neighbours' height: edge to edge across, top to bottom down. */}
+            <div className="flex flex-1 flex-col justify-between gap-3">
+            <div className="flex justify-between">
+              <MiniGauge label={`Answer confidence ${confidence} percent`} value={confidence / 100} fill="success" display={`${confidence}%`} />
+              <MiniLevels label={`Load step ${load + 1} of 7`} icon={Activity} levels={7} active={load} display={["Idle", "Light", "Light", "Busy", "Busy", "Heavy", "Peak"][load]} />
+              <MiniStat label={`${handoffs} hand-offs today`} icon={UserMultiple} tone="info" value={String(handoffs)} caption="hand-offs" />
+            </div>
+            <div className="flex justify-between">
+              <MiniSegments label={`Queue ${queue} of 3 full, ${waiting} tickets waiting`} icon={Queued} filled={queue} value={String(waiting)} />
+              <MiniRange label={`Hands off below ${threshold} percent confidence, between 50 and 95`} icon={SettingsAdjust} value={(threshold - 50) / 45} min="50" max="95" display={String(threshold)} />
+              <MiniDial label="Next run at 15:07" icon={Time} display="15:07" offset={load} />
+            </div>
             </div>
           </Stack>
         </Tile>
