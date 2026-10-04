@@ -31,6 +31,7 @@ The docs renderer turns markdown into Vita components. Write for it:
 
 - **Every rule is a card.** Use a list whose items start with `**Title.** one sentence.` Numbered lists become numbered cards.
 - **Alerts instead of paragraphs.** Use `> [!NOTE]`, `> [!TIP]`, `> [!IMPORTANT]`, `> [!WARNING]` or `> [!CAUTION]` for the one thing to remember. At most 2 per page.
+- **Every block earns its place.** Write only what the reader can't already see: an insight, a rule, a trade-off. Never describe the site's navigation or tabs, a page's own structure, how a page was generated, or past renames; if removing it costs the reader nothing, remove it.
 - **No paragraph longer than 2 sentences.** If it's longer, it's a list of cards. `pnpm check` fails on a longer one.
 - **Write for the scan** (`docs/foundations/content.md`): the point first, headings that start with the information, about half the words you first wrote.
 - **Comparisons are tables.** Tables become structured lists.
