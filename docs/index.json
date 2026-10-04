@@ -29,6 +29,31 @@
     },
     {
       "section": "getting-started",
+      "slug": "desktop",
+      "path": "docs/getting-started/desktop.md",
+      "title": "Designing for desktop",
+      "summary": "A big screen, a precise pointer and a keyboard: on desktop Vita shows more at once, nests less, puts every command in reach and lets people shape their workspace.",
+      "status": "stable",
+      "use_when": [
+        "Designing any screen people use at a desk, with a mouse, trackpad and keyboard",
+        "Deciding how much to show at once, and where commands live"
+      ],
+      "avoid_when": [
+        "Phones and tablets → Touch adapts by itself (decision)"
+      ],
+      "related": [
+        "touch",
+        "grid",
+        "spacing",
+        "cursors",
+        "theming",
+        "global-search",
+        "right-panel",
+        "selection-toolbar"
+      ]
+    },
+    {
+      "section": "getting-started",
       "slug": "installation",
       "path": "docs/getting-started/installation.md",
       "title": "Installation",
@@ -132,31 +157,6 @@
       "setup_skill": "vita-copywriting",
       "setup_files": [
         "vita/personae"
-      ]
-    },
-    {
-      "section": "foundations",
-      "slug": "desktop",
-      "path": "docs/foundations/desktop.md",
-      "title": "Designing for desktop",
-      "summary": "A big screen, a precise pointer and a keyboard: on desktop Vita shows more at once, nests less, puts every command in reach and lets people shape their workspace.",
-      "status": "stable",
-      "use_when": [
-        "Designing any screen people use at a desk, with a mouse, trackpad and keyboard",
-        "Deciding how much to show at once, and where commands live"
-      ],
-      "avoid_when": [
-        "Phones and tablets → Touch adapts by itself (decision)"
-      ],
-      "related": [
-        "touch",
-        "grid",
-        "spacing",
-        "cursors",
-        "theming",
-        "global-search",
-        "right-panel",
-        "selection-toolbar"
       ]
     },
     {

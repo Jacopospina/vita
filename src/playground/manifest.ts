@@ -10,6 +10,7 @@ export const manifest: Record<Section, NavEntry[]> = {
     { slug: "installation", title: "Installation" },
     { slug: "cli", title: "CLI" },
     { slug: "skills", title: "Skills" },
+    { slug: "desktop", title: "Designing for desktop" },
     { slug: "registry", title: "Registry" },
     { slug: "changelog", title: "Changelog" },
   ],
@@ -21,7 +22,6 @@ export const manifest: Record<Section, NavEntry[]> = {
   foundations: [
     { slug: "accessibility", title: "Accessibility" },
     { slug: "color", title: "Color" },
-    { slug: "desktop", title: "Designing for desktop" },
     { slug: "content", title: "Content, personae & taxonomy" },
     { slug: "vita-for-ai", title: "Vita for AI" },
     { slug: "grid", title: "Grid & layout" },

@@ -8,6 +8,9 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/iden
 
 - [Changelog](docs/getting-started/changelog.md): Every change to Vita, newest first, on one timeline. Breaking changes are marked and say how to migrate.
 - [CLI](docs/getting-started/cli.md): One command line to install Vita, add components, stay up to date and audit any repo.
+- [Designing for desktop](docs/getting-started/desktop.md): A big screen, a precise pointer and a keyboard: on desktop Vita shows more at once, nests less, puts every command in reach and lets people shape their workspace.
+  - use: Designing any screen people use at a desk, with a mouse, trackpad and keyboard; Deciding how much to show at once, and where commands live
+  - avoid: Phones and tablets → Touch adapts by itself (decision)
 - [Installation](docs/getting-started/installation.md): Add Vita to a React + Tailwind v4 product in one command, components, styles, docs, agent skills, the audit and its hooks.
 - [Registry](docs/getting-started/registry.md): Vita ships as source, a registry of components, hooks, blocks, icons and styles you install into your repo and own.
 - [Skills](docs/getting-started/skills.md): Six skills teach AI agents to design and build with Vita like a designer would, installed with Vita into every product.
@@ -28,9 +31,6 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/iden
 - [Content, personae & taxonomy](docs/foundations/content.md): Words are part of the design system. Personae decide who we speak to, the taxonomy fixes the words, and skills enforce them.
   - use: Writing any user-visible string, labels, buttons, errors, empty states, emails, AI responses; Starting a new product or flow (create personae first)
   - avoid: Inventing a term that isn't in the taxonomy → add it to the taxonomy first; Writing copy before knowing the persona
-- [Designing for desktop](docs/foundations/desktop.md): A big screen, a precise pointer and a keyboard: on desktop Vita shows more at once, nests less, puts every command in reach and lets people shape their workspace.
-  - use: Designing any screen people use at a desk, with a mouse, trackpad and keyboard; Deciding how much to show at once, and where commands live
-  - avoid: Phones and tablets → Touch adapts by itself (decision)
 - [Grid & layout](docs/foundations/grid.md): A 16-column grid for page structure, stacks for everything inside it.
   - use: Laying out a page or region (Grid + Column); Arranging elements vertically (Stack) or horizontally (Inline)
   - avoid: Hand-written flex/grid divs with custom gaps → use Stack, Inline and Grid; Absolute positioning for layout → only for overlays, badges and icons in controls
