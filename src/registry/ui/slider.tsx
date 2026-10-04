@@ -17,9 +17,17 @@ export interface SliderProps extends Omit<React.ComponentProps<typeof SliderPrim
   onValueChange?: (value: number[]) => void
   /** Show min/max labels under the track. */
   showBounds?: boolean
+  /**
+   * A track cut into one segment per step, 8px apart, the knob landing in the middle of each (StepSlider). Segments
+   * up to the knob fill with the primary colour.
+   */
+  segments?: number
 }
 
-export function Slider({ label, hideLabel, helperText, formatValue = String, showBounds = true, min = 0, max = 100, className, defaultValue, value, onValueChange, onValueCommit, onPointerDown, ...props }: SliderProps) {
+/** Space between a segmented track's segments. */
+const SEGMENT_GAP = 8
+
+export function Slider({ label, hideLabel, helperText, formatValue = String, showBounds = true, segments, min = 0, max = 100, className, defaultValue, value, onValueChange, onValueCommit, onPointerDown, ...props }: SliderProps) {
   const id = React.useId()
   const [inner, setInner] = React.useState<number[]>(defaultValue ?? [min])
   const current = value ?? inner
@@ -48,8 +56,22 @@ export function Slider({ label, hideLabel, helperText, formatValue = String, sho
           </output>
         )}
       </div>
+      <div className="relative">
+      {segments && segments > 1 && (
+        // The segments sit behind the slider; the slider itself is inset by half a segment on each side, so its
+        // first and last stops (and every one between) fall on a segment's middle.
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-1/2 flex h-1 -translate-y-1/2" style={{ gap: SEGMENT_GAP }}>
+          {Array.from({ length: segments }, (_, i) => (
+            <span key={i} className={cn("flex-1 rounded-full duration-moderate-01 ease-productive", i <= (current[0] - min) ? "bg-primary" : "bg-border")} />
+          ))}
+        </div>
+      )}
       <SliderPrimitive.Root
         aria-labelledby={id}
+        // Inset by half a segment each side (and no wider than what's left), so every stop sits on a segment's middle.
+        // The knob is placed exactly on its stop: the library would nudge a wide knob inward to keep it in the track,
+        // which the inset already does.
+        style={segments && segments > 1 ? ({ marginInline: `calc((100% - ${SEGMENT_GAP * (segments - 1)}px) / ${segments} / 2)`, width: "auto", "--vita-step-pos": `${((current[0] - min) / Math.max(1, max - min)) * 100}%` } as React.CSSProperties) : undefined}
         min={min}
         max={max}
         value={current}
@@ -65,11 +87,11 @@ export function Slider({ label, hideLabel, helperText, formatValue = String, sho
           if (single) setDragging(true)
           onPointerDown?.(e)
         }}
-        className={cn("relative flex w-full touch-none items-center select-none data-[disabled]:opacity-50", single ? "h-7" : "h-5")}
+        className={cn("relative flex w-full touch-none items-center select-none data-[disabled]:opacity-50", single ? "h-7" : "h-5", segments && segments > 1 && "[&>span:has(>[role=slider])]:left-(--vita-step-pos)!")}
         {...props}
       >
-        <SliderPrimitive.Track className="relative h-1 grow overflow-hidden rounded-full bg-border">
-          <SliderPrimitive.Range className="absolute h-full bg-primary" />
+        <SliderPrimitive.Track className={cn("relative h-1 grow overflow-hidden rounded-full", segments && segments > 1 ? "bg-transparent" : "bg-border")}>
+          <SliderPrimitive.Range className={cn("absolute h-full", segments && segments > 1 ? "bg-transparent" : "bg-primary")} />
         </SliderPrimitive.Track>
         {current.map((v, i) => (
           <SliderPrimitive.Thumb
@@ -108,6 +130,7 @@ export function Slider({ label, hideLabel, helperText, formatValue = String, sho
           </SliderPrimitive.Thumb>
         ))}
       </SliderPrimitive.Root>
+      </div>
       {showBounds && (
         <div className="flex justify-between text-caption text-helper tabular-nums" aria-hidden>
           <span>{formatValue(min)}</span>
@@ -162,6 +185,7 @@ export function StepSlider({ label, steps, value, defaultValue, onValueChange, h
         onValueChange={([i]) => choose(i)}
         formatValue={(i) => steps[i]?.label ?? ""}
         showBounds={false}
+        segments={steps.length}
         disabled={disabled}
       />
       {helperText && <p className="text-caption text-helper">{helperText}</p>}

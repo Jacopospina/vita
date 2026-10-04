@@ -8,9 +8,12 @@ import { Separator } from "@/registry/ui/separator"
 import { swapAppearance, withoutTransitions } from "@/registry/lib/appearance"
 import type { useWeatherTint } from "@/registry/hooks/use-weather-tint"
 import { RightPanel } from "@/registry/ui/ui-shell"
-import { MiniColor, MiniLevels, MiniGlow, temperatureStops } from "@/registry/ui/mini-chart"
+import { MiniColor, MiniGlow, temperatureStops } from "@/registry/ui/mini-chart"
+import { StepSlider } from "@/registry/ui/slider"
+import { ContentSwitcher } from "@/registry/ui/content-switcher"
+import { Label } from "@/registry/ui/form"
 import { SwapIcon } from "@/registry/ui/icon"
-import { Moon, Sun, Corner, FitToHeight, TextFont, TextScale, Movement, PartlyCloudy } from "@/registry/icons"
+import { Moon, Sun, PartlyCloudy } from "@/registry/icons"
 
 /** Live editor for the theme.css knobs. Writes CSS custom properties on <html>. */
 const knobs = [
@@ -71,23 +74,12 @@ const presets = [
   { value: "soft", label: "Soft", gist: "Round corners, more room and the system face: calm and friendly." },
   { value: "mono", label: "Mono", gist: "Almost no colour and tighter rows: quiet and dense." },
 ]
-const steppers = [
-  { key: "--vita-radius", name: "Corners", icon: Corner, list: radii },
-  { key: "--vita-density", name: "Density", icon: FitToHeight, list: densities },
-  { key: "--vita-type-base", name: "Body size", icon: TextFont, list: bodySizes },
-  { key: "--vita-type-ratio", name: "Type scale", icon: TextScale, list: ratios },
-  { key: "--vita-motion-scale", name: "Motion", icon: Movement, list: speeds },
+const sliders = [
+  { key: "--vita-radius", name: "Corners", list: radii },
+  { key: "--vita-density", name: "Density", list: densities },
+  { key: "--vita-type-ratio", name: "Type scale", list: ratios },
+  { key: "--vita-motion-scale", name: "Motion", list: speeds },
 ]
-
-/** A mini chart with its name under it. */
-function Knob({ name, children }: { name: string; children: React.ReactNode }) {
-  return (
-    <Stack gap="2xs" align="center">
-      {children}
-      <Text variant="caption" tone="muted">{name}</Text>
-    </Stack>
-  )
-}
 
 const fonts = [
   { value: "flex", label: "Google Sans Flex (default)", css: `"Google Sans Flex Variable", "Google Sans Flex", system-ui, sans-serif`, gist: "Vita's own face: modern, warm, made for screens." },
@@ -173,27 +165,37 @@ export function ThemePanel({ open, onOpenChange, weather, dark, onDarkChange }: 
       </Stack>
       <Separator />
       {/* Every other knob is a mini chart too: drag, click or arrow through its steps; the weather is a toggle. */}
-      <div className="grid grid-cols-3 justify-items-center gap-x-2 gap-y-4">
-        {steppers.map((s) => {
-          const i = nearest(s.list, values[s.key])
-          return (
-            <Knob key={s.key} name={s.name}>
-              <MiniLevels label={s.name} icon={s.icon} tone="primary" levels={s.list.length} active={i} display={s.list[i].label} onChange={(n) => setValues((v) => ({ ...v, [s.key]: s.list[n].v }))} />
-            </Knob>
-          )
-        })}
-        <Knob name="Weather">
-          <MiniGlow
-            label={weather.mode === "dynamic" ? `Greys follow the weather${weather.celsius === null ? "" : `, ${Math.round(weather.celsius)} degrees outside`}` : "Greys don't follow the weather"}
-            icon={PartlyCloudy}
-            tone={weather.mode !== "dynamic" ? "neutral" : weather.tint === "cold" ? "info" : weather.tint === "warm" ? "warning" : "success"}
-            display={weather.mode === "dynamic" && weather.celsius !== null ? `${Math.round(weather.celsius)}°` : "–"}
-            caption={weather.mode === "dynamic" ? "Live" : "Off"}
-            pressed={weather.mode === "dynamic"}
-            onPress={() => weather.setMode(weather.mode === "dynamic" ? "none" : "dynamic")}
-          />
-        </Knob>
-      </div>
+      {/* Ordered steps of one property are stepped sliders; the body size, a few exact sizes, a button group. */}
+      {sliders.map((s) => (
+        <StepSlider
+          key={s.key}
+          label={s.name}
+          steps={s.list.map((o, n) => ({ value: String(n), label: o.label }))}
+          value={String(nearest(s.list, values[s.key]))}
+          onValueChange={(n) => setValues((v) => ({ ...v, [s.key]: s.list[Number(n)].v }))}
+        />
+      ))}
+      <Stack gap="xs">
+        <Label id="body-size">Body size</Label>
+        <ContentSwitcher
+          label="Body size"
+          items={bodySizes.map((b) => ({ value: String(b.v), label: b.label }))}
+          value={String(bodySizes[nearest(bodySizes, values["--vita-type-base"])].v)}
+          onValueChange={(v) => setValues((s) => ({ ...s, "--vita-type-base": Number(v) }))}
+        />
+      </Stack>
+      <Stack gap="2xs" align="start">
+        <MiniGlow
+          label={weather.mode === "dynamic" ? `Greys follow the weather${weather.celsius === null ? "" : `, ${Math.round(weather.celsius)} degrees outside`}` : "Greys don't follow the weather"}
+          icon={PartlyCloudy}
+          tone={weather.mode !== "dynamic" ? "neutral" : weather.tint === "cold" ? "info" : weather.tint === "warm" ? "warning" : "success"}
+          display={weather.mode === "dynamic" && weather.celsius !== null ? `${Math.round(weather.celsius)}°` : "–"}
+          caption={weather.mode === "dynamic" ? "Live" : "Off"}
+          pressed={weather.mode === "dynamic"}
+          onPress={() => weather.setMode(weather.mode === "dynamic" ? "none" : "dynamic")}
+        />
+        <Text variant="caption" tone="muted">Weather</Text>
+      </Stack>
       <Separator />
       <Text variant="headline">theme.css</Text>
       <Text tone="muted">Every token in Vita derives from these knobs: paste this into <code className="font-mono">src/styles/theme.css</code>.</Text>
