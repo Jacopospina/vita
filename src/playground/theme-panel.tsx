@@ -64,7 +64,13 @@ const speeds = [{ v: 0, label: "Off" }, { v: 0.5, label: "Quick" }, { v: 1, labe
 /** The option nearest a knob's value. */
 const nearest = (list: { v: number }[], x: number) => list.reduce((best, o, i) => (Math.abs(o.v - x) < Math.abs(list[best].v - x) ? i : best), 0)
 
-const presets = [{ value: "default", label: "Default" }, { value: "square", label: "Square" }, { value: "soft", label: "Soft" }, { value: "mono", label: "Mono" }]
+/** Each choice with its one-line gist, shown under the field once picked. */
+const presets = [
+  { value: "default", label: "Default", gist: "Vita as it ships: blue, gently rounded, Google Sans Flex." },
+  { value: "square", label: "Square", gist: "Sharp corners and a grotesk face: precise and editorial." },
+  { value: "soft", label: "Soft", gist: "Round corners, more room and the system face: calm and friendly." },
+  { value: "mono", label: "Mono", gist: "Almost no colour and tighter rows: quiet and dense." },
+]
 const steppers = [
   { key: "--vita-radius", name: "Corners", icon: Corner, list: radii },
   { key: "--vita-density", name: "Density", icon: FitToHeight, list: densities },
@@ -84,10 +90,10 @@ function Knob({ name, children }: { name: string; children: React.ReactNode }) {
 }
 
 const fonts = [
-  { value: "flex", label: "Google Sans Flex (default)", css: `"Google Sans Flex Variable", "Google Sans Flex", system-ui, sans-serif` },
-  { value: "system", label: "System UI", css: `system-ui, sans-serif` },
-  { value: "grotesk", label: "Grotesk", css: `"Helvetica Neue", Arial, sans-serif` },
-  { value: "serif", label: "Serif (editorial)", css: `"New York", "Iowan Old Style", Georgia, serif` },
+  { value: "flex", label: "Google Sans Flex (default)", css: `"Google Sans Flex Variable", "Google Sans Flex", system-ui, sans-serif`, gist: "Vita's own face: modern, warm, made for screens." },
+  { value: "system", label: "System UI", css: `system-ui, sans-serif`, gist: "The device's own face: native everywhere, nothing to load." },
+  { value: "grotesk", label: "Grotesk", css: `"Helvetica Neue", Arial, sans-serif`, gist: "A classic grotesk: neutral, precise, timeless." },
+  { value: "serif", label: "Serif (editorial)", css: `"New York", "Iowan Old Style", Georgia, serif`, gist: "A reading serif: editorial and long-form." },
 ]
 
 export function ThemePanel({ open, onOpenChange, weather, dark, onDarkChange }: {
@@ -136,8 +142,8 @@ export function ThemePanel({ open, onOpenChange, weather, dark, onDarkChange }: 
     <RightPanel open={open} onOpenChange={onOpenChange} title="Theme" size="md" footer={<Button variant="secondary" onClick={() => applyPreset("default")}>Reset to defaults</Button>}>
     <Stack gap="md">
       {/* Choices by name come first; then the knobs, each one a mini chart. */}
-      <Dropdown label="Style" value={preset} onValueChange={applyPreset} items={presets} />
-      <Dropdown label="Typeface" items={fonts.map(({ value, label }) => ({ value, label }))} value={font} onValueChange={setFont} />
+      <Dropdown label="Style" value={preset} onValueChange={applyPreset} items={presets.map(({ value, label }) => ({ value, label }))} helperText={presets.find((p) => p.value === preset)?.gist} />
+      <Dropdown label="Typeface" items={fonts.map(({ value, label }) => ({ value, label }))} value={font} onValueChange={setFont} helperText={fonts.find((f) => f.value === font)?.gist} />
       <Separator />
       {/* The theme at a glance, and in one hand: the middle switches light and dark, the wheel sets the brand hue,
           the outer ring how warm or cool the greys are. */}
