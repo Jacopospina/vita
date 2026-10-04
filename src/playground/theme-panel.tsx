@@ -133,10 +133,6 @@ export function ThemePanel({ open, onOpenChange, weather, dark, onDarkChange }: 
     // The reset lives in the panel's footer, so it stays in reach however far the knobs scroll.
     <RightPanel open={open} onOpenChange={onOpenChange} title="Theme" size="md" footer={<Button variant="secondary" onClick={() => applyPreset("default")}>Reset to defaults</Button>}>
     <Stack gap="md">
-      {/* Choices by name come first; then the knobs, each one a mini chart. */}
-      <Dropdown label="Style" value={preset} onValueChange={applyPreset} items={presets.map(({ value, label }) => ({ value, label }))} helperText={presets.find((p) => p.value === preset)?.gist} />
-      <Dropdown label="Typeface" items={fonts.map(({ value, label }) => ({ value, label }))} value={font} onValueChange={setFont} helperText={fonts.find((f) => f.value === font)?.gist} />
-      <Separator />
       {/* The theme at a glance, and in one hand: the middle switches light and dark, the wheel sets the brand hue,
           the outer ring how warm or cool the greys are. */}
       <Stack gap="xs" align="center">
@@ -163,8 +159,24 @@ export function ThemePanel({ open, onOpenChange, weather, dark, onDarkChange }: 
         />
         <Text variant="caption" tone="muted" className="text-center">Middle: light or dark. Colour ring: brand. Outer ring: cool or warm greys.</Text>
       </Stack>
+      {/* Whether the greys follow the weather: a toggle, centred under the dial. */}
+      <Stack gap="2xs" align="center">
+        <MiniGlow
+          label={weather.mode === "dynamic" ? `Greys follow the weather${weather.celsius === null ? "" : `, ${Math.round(weather.celsius)} degrees outside`}` : "Greys don't follow the weather"}
+          icon={PartlyCloudy}
+          tone={weather.mode !== "dynamic" ? "neutral" : weather.tint === "cold" ? "info" : weather.tint === "warm" ? "warning" : "success"}
+          display={weather.mode === "dynamic" && weather.celsius !== null ? `${Math.round(weather.celsius)}°` : "–"}
+          caption={weather.mode === "dynamic" ? "Live" : "Off"}
+          pressed={weather.mode === "dynamic"}
+          onPress={() => weather.setMode(weather.mode === "dynamic" ? "none" : "dynamic")}
+        />
+        <Text variant="caption" tone="muted">Weather</Text>
+      </Stack>
       <Separator />
-      {/* Every other knob is a mini chart too: drag, click or arrow through its steps; the weather is a toggle. */}
+      {/* Choices by name. */}
+      <Dropdown label="Style" value={preset} onValueChange={applyPreset} items={presets.map(({ value, label }) => ({ value, label }))} helperText={presets.find((p) => p.value === preset)?.gist} />
+      <Dropdown label="Typeface" items={fonts.map(({ value, label }) => ({ value, label }))} value={font} onValueChange={setFont} helperText={fonts.find((f) => f.value === font)?.gist} />
+      <Separator />
       {/* Ordered steps of one property are stepped sliders; the body size, a few exact sizes, a button group. */}
       {sliders.map((s) => (
         <StepSlider
@@ -183,18 +195,6 @@ export function ThemePanel({ open, onOpenChange, weather, dark, onDarkChange }: 
           value={String(bodySizes[nearest(bodySizes, values["--vita-type-base"])].v)}
           onValueChange={(v) => setValues((s) => ({ ...s, "--vita-type-base": Number(v) }))}
         />
-      </Stack>
-      <Stack gap="2xs" align="start">
-        <MiniGlow
-          label={weather.mode === "dynamic" ? `Greys follow the weather${weather.celsius === null ? "" : `, ${Math.round(weather.celsius)} degrees outside`}` : "Greys don't follow the weather"}
-          icon={PartlyCloudy}
-          tone={weather.mode !== "dynamic" ? "neutral" : weather.tint === "cold" ? "info" : weather.tint === "warm" ? "warning" : "success"}
-          display={weather.mode === "dynamic" && weather.celsius !== null ? `${Math.round(weather.celsius)}°` : "–"}
-          caption={weather.mode === "dynamic" ? "Live" : "Off"}
-          pressed={weather.mode === "dynamic"}
-          onPress={() => weather.setMode(weather.mode === "dynamic" ? "none" : "dynamic")}
-        />
-        <Text variant="caption" tone="muted">Weather</Text>
       </Stack>
       <Separator />
       <Text variant="headline">theme.css</Text>
