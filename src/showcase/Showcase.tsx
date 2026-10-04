@@ -94,7 +94,7 @@ function HomePage() {
           <StageBadge />
           <Text variant="display" as="h1" className="max-w-3xl">The first agentic design system</Text>
           <Text variant="body-lg" tone="muted" className="max-w-2xl">
-            Made for AI products, and for the agents that build them. Documented and enforced so your agents design like designers, and you make what only you can make.
+            Tell Vita who your users are and what you want to make. It tailors itself to them, and your agents build it with the right patterns and components.
           </Text>
           {/* Side by side where they fit, one under the other on a phone, each at its own width: page buttons are never full bleed. */}
           <Inline gap="md" justify="center" wrap>
