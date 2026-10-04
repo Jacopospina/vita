@@ -302,6 +302,7 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/iden
 
 - [Buttons](docs/decisions/buttons.md): One primary per page, dialog or side panel; the secondary is a faint primary wash with primary text; xl is rounder.
 - [Components and patterns](docs/decisions/components-and-patterns.md): A component is one building block with one job. A pattern is made of several components, arranged to do a task. Patterns never become components.
+- [Cursors say the interaction](docs/decisions/cursors.md): The pointer changes with what is under it, so people know before they click whether a thing opens, selects, types, drags or is unavailable.
 - [Fields and options](docs/decisions/fields-and-options.md): Soft field borders at rest; dropdown options are whole-row targets with a reserved left tick slot.
 - [Glass by elevation](docs/decisions/glass-by-elevation.md): Every floating surface is frosted glass, more frosted the higher it floats; the page scrolls beneath the shell so the material is visible.
 - [How Vita decides](docs/decisions/how-we-decide.md): Every system choice is a written record. Agents and people read the record before changing anything it covers; changing it means superseding it.

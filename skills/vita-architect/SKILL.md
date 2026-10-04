@@ -19,9 +19,23 @@ Vita is the body of the product: the only source of UI. This skill turns intent 
 8. **Intent over input.** If a task can be described, start from the `Composer` + AI-prepared review (patterns/intent-first) instead of a form.
 9. **Concentric radius.** Nested rounded elements use `scope-*` on the container and `rounded-inner-{padding}` on the child (inner = outer − padding).
 10. **Nothing snaps.** Never turn transitions off; changing values use `AnimatedNumber` / `AnimatedText`; reorders use `morph()`.
-11. **Exceptions exist only if a designer approved them in this conversation or in the codebase.** Then add `// vita-allow <rule>: <reason>, approved by @name` on the line, and propose the gap upstream.
+11. **Every interactive thing has every state.** Rest, hover, pressed, focus (keyboard), open or selected, disabled and loading where they apply, each one eased with motion tokens (`vita-motion-design`). A state that changes in one frame is a bug.
+12. **The cursor says the interaction.** Hand for clickable, text cursor for typing, grab for draggable, not-allowed for disabled (`.vita/docs/decisions/cursors.md`). Vita's base styles do it; never set an arrow on something clickable, or a hand on something that does nothing.
+13. **Exceptions exist only if a designer approved them in this conversation or in the codebase.** Then add `// vita-allow <rule>: <reason>, approved by @name` on the line, and propose the gap upstream.
 
 If Vita lacks what you need: **stop and say so**. Propose the smallest composition of existing components. If that's impossible, describe the missing component as a design-system request. Never quietly work around it.
+
+## Human-computer interaction
+
+Design how it feels to use, not only how it looks.
+
+- **Signifiers before the click.** Shape, colour (primary means clickable), cursor and hover tell people what they can do before they try.
+- **Feedback within 100ms.** Every press shows something at once (pressed state, a pending label, the opened surface on its first frame); anything over a second shows progress.
+- **Big, close targets (Fitts).** The more frequent the action, the larger and nearer it is; small standalone controls get `tap` for a 44px hit area.
+- **Few choices at a time (Hick).** One primary action per view; secondary actions in `ButtonSet` or an overflow menu.
+- **Forgiveness.** Undo beats confirmation; destructive actions confirm with the object's name.
+- **Recognition over recall.** Show options, recent values and the current state rather than asking people to remember them.
+- **Same thing, same place.** A control that moves between screens is a control people have to find again.
 
 ## Workflow
 
