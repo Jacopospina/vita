@@ -1,5 +1,6 @@
 import * as React from "react"
 import type { IconType } from "@/registry/icons"
+import { TriangleSolid } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { Icon } from "@/registry/ui/icon"
 import { AnimatedText } from "@/registry/ui/animated"
@@ -210,8 +211,8 @@ export function MiniGauge({ label, size, value, fill = "success", icon, display,
           ) : (
             <>
               <path d={arc(GAUGE.r, GAUGE.a0, GAUGE.a1)} fill="none" stroke={TRACK} strokeWidth={GAUGE.width} strokeLinecap="round" />
-              {/* The fill grows along the arc (a dash over a path of length 1). */}
-              <path d={arc(GAUGE.r, GAUGE.a0, GAUGE.a1)} pathLength={1} fill="none" stroke={color} strokeWidth={GAUGE.width} strokeLinecap="round" strokeDasharray={`${v} 1`} className="duration-moderate-02 ease-productive" />
+              {/* The fill grows along the arc: one dash the length of the path, slid by its offset (which transitions). */}
+              <path d={arc(GAUGE.r, GAUGE.a0, GAUGE.a1)} pathLength={1} fill="none" stroke={color} strokeWidth={GAUGE.width} strokeLinecap="round" strokeDasharray="1 1" style={{ strokeDashoffset: 1 - v }} className="duration-moderate-02 ease-productive" />
             </>
           )}
           <Knob r={GAUGE.r} angle={angle} color={color} />
@@ -225,9 +226,9 @@ export function MiniGauge({ label, size, value, fill = "success", icon, display,
   )
 }
 
-/** A small mode badge for a gauge's footer: one letter in a rounded square (A for automatic). */
-export function MiniBadge({ children, tone = "success" }: { children: string; tone?: MiniTone }) {
-  return <span className={cn("flex size-[16cqw] items-center justify-center rounded-[3cqw] border-[1.5cqw] border-current text-[11cqw] font-semibold", toneText[tone])}>{children}</span>
+/** A small mode badge for a gauge's footer, a Vita icon in the gauge's tone (Automatic for automatic). */
+export function MiniBadge({ icon, label, tone = "success" }: { icon: IconType; label: string; tone?: MiniTone }) {
+  return <Icon as={icon} label={label} className={cn("size-[17cqw]", toneText[tone])} />
 }
 
 /** Range: a setpoint between a low and a high (a thermostat), on a gradient arc. */
@@ -322,7 +323,7 @@ export function MiniMedia({ label, size, cover, progress, badge, badgeTone = "su
       art={
         <>
           <circle cx={50} cy={50} r={45} fill="none" stroke={TRACK} strokeWidth={4} />
-          <path d={arc(45, 0, 359.9)} pathLength={1} fill="none" stroke={toneVar[badgeTone]} strokeWidth={4} strokeLinecap="round" strokeDasharray={`${clamp01(progress)} 1`} className="duration-moderate-02 ease-productive" />
+          <path d={arc(45, 0, 359.9)} pathLength={1} fill="none" stroke={toneVar[badgeTone]} strokeWidth={4} strokeLinecap="round" strokeDasharray="1 1" style={{ strokeDashoffset: 1 - clamp01(progress) }} className="duration-moderate-02 ease-productive" />
         </>
       }
     >
@@ -347,6 +348,8 @@ export function MiniLevels({ label, size, levels = 9, active, tone = "info", ico
   icon?: IconType
   display: string
 }) {
+  // A step past either end shows the nearest end: the scale always shows where the value is.
+  const step = Math.min(Math.max(Math.round(active), 0), levels - 1)
   return (
     <Frame label={label} size={size} face>
       {icon && <Icon as={icon} className={cn("mb-[5cqw] size-[18cqw]", toneText[tone])} />}
@@ -355,7 +358,7 @@ export function MiniLevels({ label, size, levels = 9, active, tone = "info", ico
           <span
             key={i}
             className="w-[1.8cqw] rounded-full duration-moderate-02 ease-productive"
-            style={{ height: i === active ? "14cqw" : "9cqw", backgroundColor: i === active ? toneVar[tone] : "var(--vita-disabled-foreground)" }}
+            style={{ height: i === step ? "14cqw" : "9cqw", backgroundColor: i === step ? toneVar[tone] : "var(--vita-disabled-foreground)" }}
           />
         ))}
       </span>
@@ -430,7 +433,7 @@ export function MiniDial({ label, size, icon, tone = "success", display, offset 
       face
       art={
         <>
-          <g className="duration-moderate-02 ease-productive" style={{ transform: `rotate(${offset * 30}deg)`, transformOrigin: "50px 50px" }}>
+          <g className="duration-moderate-02 ease-productive" style={{ transform: `rotate(${Math.min(Math.max(offset, -1), 1) * 30}deg)`, transformOrigin: "50px 50px" }}>
             {ticks.map((t) => {
               const a = 180 + t * 9
               const long = t % 3 === 0
@@ -439,10 +442,11 @@ export function MiniDial({ label, size, icon, tone = "success", display, offset 
               return <line key={t} x1={f(x0)} y1={f(y0)} x2={f(x1)} y2={f(y1)} stroke="var(--vita-muted-foreground)" strokeWidth={1.4} strokeLinecap="round" />
             })}
           </g>
-          <path d="M 50 83 L 46 89 L 54 89 Z" style={{ fill: toneVar[tone] }} />
         </>
       }
     >
+      {/* The pointer marks now: a Vita glyph, set under the middle of the ruler. */}
+      <Icon as={TriangleSolid} className={cn("absolute bottom-[10cqw] size-[9cqw]", toneText[tone])} />
       {icon && <Icon as={icon} className={cn("mb-[3cqw] size-[18cqw]", toneText[tone])} />}
       <span className="mb-[14cqw] text-[19cqw] font-medium [font-variant-numeric:tabular-nums]"><AnimatedText face="inherit">{display}</AnimatedText></span>
     </Frame>

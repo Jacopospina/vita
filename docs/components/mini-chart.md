@@ -30,7 +30,7 @@ related: [kpi, progress-bar, status-indicator]
 | `MiniColor` | A light's hue and brightness | A bulb's colour |
 | `MiniGlow` | A mode with its reading | Eco, 17°, Cool |
 | `MiniDial` | A time on a ruler with a pointer | Charging until 15:07 |
-| `MiniBadge` | A mode letter under a gauge | A for automatic |
+| `MiniBadge` | A mode icon under a gauge | Automatic |
 
 ## Rules
 
@@ -39,7 +39,8 @@ related: [kpi, progress-bar, status-indicator]
 3. **The reading is always written.** The shape is for the glance, the number for certainty; never a shape alone.
 4. **A label for everyone.** Every chart takes a `label` that a screen reader announces in full ("Thermostat set to 23, between 16 and 30").
 5. **Same size in a group.** Mini charts side by side share one `size` (sm 64, md 96, lg 128) and one row height.
-6. **Open or on a disc.** Gauges and ranges are open arcs; readings, levels, glows and dials sit on a filled disc.
+6. **Only Vita symbols.** Every glyph in a mini chart, the badge and the dial's pointer included, comes from the Vita icon set; nothing is hand-drawn.
+7. **Open or on a disc.** Gauges and ranges are open arcs; readings, levels, glows and dials sit on a filled disc.
 
 ## States
 

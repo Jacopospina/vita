@@ -4,7 +4,7 @@ import { Report } from "@/registry/pictograms"
 import type { DemoMap } from "./types"
 import { Kpi, KpiGroup } from "@/registry/ui/kpi"
 import { MiniSegments, MiniStat, MiniGauge, MiniBadge, MiniRange, MiniArc, MiniMedia, MiniLevels, MiniColor, MiniGlow, MiniDial, miniGradients } from "@/registry/ui/mini-chart"
-import { Humidity, FlashFilled, Temperature, Hurricane, TemperatureHot, Music, Snowflake, Idea, Sprout } from "@/registry/icons"
+import { Humidity, FlashFilled, Temperature, Hurricane, TemperatureHot, Music, Snowflake, Idea, Sprout, Automatic } from "@/registry/icons"
 import { Stack, Inline, Grid, Column } from "@/registry/ui/layout"
 import { Text } from "@/registry/ui/text"
 import { Icon } from "@/registry/ui/icon"
@@ -352,7 +352,7 @@ function MiniChartGallery({ hot = false }: { hot?: boolean }) {
       <MiniStat label="Quick wash" icon={FlashFilled} tone="success" caption="QW" />
       <MiniGauge label={`Water temperature ${hot ? 60 : 40} degrees`} icon={Temperature} value={hot ? 0.78 : 0.62} fill={miniGradients.heat} display={hot ? "60°" : "40°"} />
       <MiniStat label={`Spin speed ${hot ? 1200 : 800} rpm`} icon={Hurricane} tone="info" value={hot ? "1200" : "800"} caption="rpm" />
-      <MiniGauge label={`Fan at ${hot ? 40 : 15} percent, automatic`} value={hot ? 0.4 : 0.6} fill="success" display={hot ? "40%" : "15%"} footer={<MiniBadge>A</MiniBadge>} />
+      <MiniGauge label={`Fan at ${hot ? 40 : 15} percent, automatic`} value={hot ? 0.4 : 0.6} fill="success" display={hot ? "40%" : "15%"} footer={<MiniBadge icon={Automatic} label="Automatic" />} />
       <MiniArc label={`Seat heating ${hot ? 52 : 47} degrees`} value={hot ? 0.8 : 0.62} icon={TemperatureHot} display={hot ? "52°" : "47°"} />
       <MiniMedia label="Now playing, a third of the way through" cover={<span className="flex items-center justify-center bg-primary-subtle text-primary"><Icon as={Music} className="size-6" /></span>} progress={hot ? 0.7 : 0.3} badge={Music} />
       <MiniRange label={`Thermostat set to ${hot ? 26 : 23}, between 16 and 30`} icon={Snowflake} value={hot ? 0.71 : 0.5} min="16" max="30" display={hot ? "26" : "23"} />
