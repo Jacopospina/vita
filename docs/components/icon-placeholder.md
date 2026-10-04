@@ -32,6 +32,3 @@ related: [list-item, notification, icons]
 1. **Never hand-roll an icon on a square.** Every icon-on-a-tile in Vita is an `IconPlaceholder`, so tone, radius and size stay in sync.
 2. **One look, three sizes.** A neutral tile with a colored glyph, everywhere. Only the size changes. The glyph's `tone` (neutral, brand, info, success, warning, error) carries the category or the kind.
 3. **Decorative.** The tile is `aria-hidden`; the text beside it carries the meaning.
-
-> [!NOTE]
-> Renamed from `IconTile`. Import `IconPlaceholder` from `icon-placeholder`.
