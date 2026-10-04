@@ -87,7 +87,7 @@ const sliders = [
   { key: "--vita-radius", name: "How round are corners?", list: radii },
   { key: "--vita-density", name: "How much room?", list: densities },
   { key: "--vita-type-ratio", name: "How big are headings?", list: ratios },
-  { key: "--vita-motion-scale", name: "How fast does it move?", list: speeds },
+  { key: "--vita-motion-scale", name: "How quick are transitions?", list: speeds },
 ]
 
 const fonts = [
