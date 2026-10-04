@@ -28,10 +28,3 @@ status: stable
 
 - **The AI's presence.** Sofia is the thinking orb. Whenever the anima works (retrieving, generating, searching, listening, talking), Sofia shows it.
 - **Never a spinner.** A spinner says "wait". Sofia says what the AI is doing, so people always know the soul of the product is at work.
-
-## What that means in practice
-
-- **One life per product.** Every screen is built from Vita. A local component grows outside the system, and needs a designer's approval.
-- **The soul shapes the life.** Personas, purpose and voice decide the words and flows, through the taxonomy and the content skills.
-- **The mind stays out of sight.** However complex the logic, people meet one calm, consistent surface.
-- **The system keeps growing.** Every gap becomes a proposal to Vita, then flows back to every product with `vita update`.
