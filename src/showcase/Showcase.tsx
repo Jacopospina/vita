@@ -80,7 +80,7 @@ export function Showcase({ page = "home" }: { page?: "home" | "make" }) {
           </div>
         </LeftPanel>
         <ShellMain>
-          {page === "make" ? <MakePage /> : <HomePage />}
+          {page === "make" ? <MakePage onPersonalise={() => setThemeOpen(true)} /> : <HomePage />}
           <Text variant="footnote" tone="muted" className="pb-16 text-center">
             Made with Vita. Mind, soul, life. Source on <Link inline href="https://github.com/Jacopospina/vita" external>GitHub</Link>.
           </Text>
@@ -121,13 +121,18 @@ function HomePage() {
 }
 
 /** See what you can make, the live Theo examples, on a page of their own. */
-function MakePage() {
+function MakePage({ onPersonalise }: { onPersonalise: () => void }) {
   return (
     <Container className="pt-12 pb-16">
       <Stack gap="2xl" className="stagger">
         <Stack gap="xs" align="center" className="text-center">
           <Text variant="large-title" as="h1">See what you can make</Text>
           <Text variant="body-lg" tone="muted" className="max-w-2xl">Whole screens of Theo, built only from Vita. Everything here is live: click, type, switch.</Text>
+          {/* Make it yours right here: the theme panel restyles every example live. Secondary always on the left. */}
+          <Inline gap="md" justify="center" wrap className="pt-2">
+            <Button size="xl" variant="secondary" onClick={() => (window.location.href = `${DOCS}guidelines`)}>Start making</Button>
+            <Button size="xl" onClick={onPersonalise}>Personalise theme</Button>
+          </Inline>
         </Stack>
         <section id="examples" aria-label="Examples">
           <Tabs defaultValue="cards">
@@ -146,9 +151,6 @@ function MakePage() {
             </Stack>
           </Tabs>
         </section>
-        <Inline gap="md" justify="center">
-          <Button size="xl" onClick={() => (window.location.href = `${DOCS}guidelines`)}>Start making</Button>
-        </Inline>
       </Stack>
     </Container>
   )
