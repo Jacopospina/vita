@@ -20,7 +20,7 @@ related: [tooltip, popover, notification]
 
 ## Tone
 
-- **Alone → rainbow.** A standalone label wears the full spectrum outline.
+- **Alone → rainbow, primary letters.** A standalone label wears the full spectrum outline, and its letters are primary so people see it can be clicked.
 - **In context → muted.** Inside a field, notification, tile or AI surface it turns white at low opacity with a quiet outline, so it doesn't compete. Automatic; force with `tone="spectrum" | "muted"`.
 - **On primary → white.** On a primary-coloured container (a person's chat bubble, a selection bar) the hairline and the letters take the primary's foreground: grey sinks into the blue. Automatic inside `ChatBubble` and the table's selection bar; wrap your own primary container in `OnPrimary`, or force `tone="on-primary"`.
 

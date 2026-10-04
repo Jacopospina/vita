@@ -19,7 +19,7 @@ export function OnPrimary({ children }: { children: React.ReactNode }) {
 /**
  * AILabel, marks content or controls GENERATED or AUTOFILLED by AI, and explains how.
  * Mandatory wherever AI produced a value the user may rely on. Clicking opens an explainability popover.
- * A pill: rainbow edge with plain text when standing alone; muted (hairline, low-opacity text) inside another
+ * A pill: rainbow edge with primary letters (it opens the explanation) when standing alone; muted (hairline, low-opacity text) inside another
  * component; white (hairline and text in the primary's foreground) on a primary-coloured container, where grey
  * would sink into the blue. Inside an AISurface it is Sofia, the small thinking orb, and sits BEFORE the title.
  */
@@ -66,8 +66,8 @@ export function AILabel({ size = "md", children, title = "AI explained", classNa
         <PopoverTrigger
           aria-label="AI – Show information"
           className={cn(
-            "inline-flex items-center rounded-pill font-semibold tracking-wide text-foreground focus-ring",
-            // The rainbow lives on the border; the text stays plain and readable.
+            "inline-flex items-center rounded-pill font-semibold tracking-wide text-primary focus-ring",
+            // The rainbow lives on the border; the letters are primary, the colour that says "you can click this".
             !onPrimary && tone !== "muted" && "ai-gradient-border",
             !onPrimary && tone === "auto" &&
               "in-data-[ai-context]:border in-data-[ai-context]:border-border-strong! in-data-[ai-context]:bg-none! in-data-[ai-context]:bg-transparent! in-data-[ai-context]:animate-none! in-data-[ai-context]:[&>span]:bg-none! in-data-[ai-context]:[&>span]:text-muted-foreground!",
