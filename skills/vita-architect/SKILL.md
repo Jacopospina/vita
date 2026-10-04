@@ -17,11 +17,12 @@ Vita is the body of the product: the only source of UI. This skill turns intent 
 6. **Belonging has no gaps.** Related actions go in `ButtonSet`/`Group` (zero gap, joined). The same holds for surfaces: things that share one meaning share one container, divided by hairlines. Related numbers are one `KpiGroup`, related cards one `TileSet`, related rows one `ListGroup`; never a row of separate cards with gaps for one meaning.
 7. **Left-hand shortcuts only.** Use `shortcut="mod+s"`-style props; never Enter, arrows or right-side letters. Every task must also work by mouse alone.
 8. **Intent over input.** If a task can be described, start from the `Composer` + AI-prepared review (patterns/intent-first) instead of a form.
-9. **Concentric radius.** Nested rounded elements use `scope-*` on the container and `rounded-inner-{padding}` on the child (inner = outer − padding).
-10. **Nothing snaps.** Never turn transitions off; changing values use `AnimatedNumber` / `AnimatedText`; reorders use `morph()`.
-11. **Every interactive thing has every state.** Rest, hover, pressed, focus (keyboard), open or selected, disabled and loading where they apply, each one eased with motion tokens (`vita-motion-design`). A state that changes in one frame is a bug.
-12. **The cursor says the interaction.** Hand for clickable, text cursor for typing, grab for draggable, not-allowed for disabled (`.vita/docs/decisions/cursors.md`). Vita's base styles do it; never set an arrow on something clickable, or a hand on something that does nothing.
-13. **Exceptions exist only if a designer approved them in this conversation or in the codebase.** Then add `// vita-allow <rule>: <reason>, approved by @name` on the line, and propose the gap upstream.
+9. **A component stays in its box.** Nothing it draws reaches outside its own bounds (no label, knob or shadow spilling into the parent), and nothing inside it overlaps another part of it (labels never sit on an arc, a value never on an icon). If it doesn't fit, scale it or pick another component.
+10. **Concentric radius.** Nested rounded elements use `scope-*` on the container and `rounded-inner-{padding}` on the child (inner = outer − padding).
+11. **Nothing snaps.** Never turn transitions off; changing values use `AnimatedNumber` / `AnimatedText`; reorders use `morph()`.
+12. **Every interactive thing has every state.** Rest, hover, pressed, focus (keyboard), open or selected, disabled and loading where they apply, each one eased with motion tokens (`vita-motion-design`). A state that changes in one frame is a bug.
+13. **The cursor says the interaction.** Hand for clickable, text cursor for typing, grab for draggable, not-allowed for disabled (`.vita/docs/decisions/cursors.md`). Vita's base styles do it; never set an arrow on something clickable, or a hand on something that does nothing.
+14. **Exceptions exist only if a designer approved them in this conversation or in the codebase.** Then add `// vita-allow <rule>: <reason>, approved by @name` on the line, and propose the gap upstream.
 
 If Vita lacks what you need: **stop and say so**. Propose the smallest composition of existing components. If that's impossible, describe the missing component as a design-system request. Never quietly work around it.
 

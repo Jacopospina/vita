@@ -1,6 +1,6 @@
 import * as React from "react"
 import { cn } from "@/registry/lib/utils"
-import { Add, Bot, Plug, Notification, Rocket } from "@/registry/icons"
+import { Add, Bot, Plug, Notification, Rocket, SettingsAdjust } from "@/registry/icons"
 import { Stack, Inline } from "@/registry/ui/layout"
 import { Text } from "@/registry/ui/text"
 import { Tile } from "@/registry/ui/tile"
@@ -22,12 +22,11 @@ import { ContentSwitcher } from "@/registry/ui/content-switcher"
 import { ScrambleText } from "@/registry/ui/scramble-text"
 import { Toggletip } from "@/registry/ui/popover"
 import { DefinitionTooltip } from "@/registry/ui/tooltip"
-import { MenuItem } from "@/registry/ui/menu"
-import { OverflowMenu } from "@/registry/ui/menu-button"
 import { LiveWaveform } from "@/registry/ui/live-waveform"
 import { InlineNotification } from "@/registry/ui/notification"
 import { IconPlaceholder } from "@/registry/ui/icon-placeholder"
 import { ListGroup, ListItem } from "@/registry/ui/list-item"
+import { MiniRange } from "@/registry/ui/mini-chart"
 import { AnimatedNumber } from "@/registry/ui/animated"
 import { Kbd } from "@/registry/ui/kbd"
 import { Avatar } from "@/registry/ui/avatar"
@@ -130,7 +129,7 @@ const columns: { offset: string; cards: (React.ReactNode | Pair | Hug)[] }[] = [
   {
     offset: "pt-24",
     cards: [
-      { pair: [<LiveMetric key="m" />, <OverflowMenu key="om" label="Run options" size="lg"><MenuItem>Export runs</MenuItem><MenuItem>Share report</MenuItem></OverflowMenu>] },
+      { pair: [<LiveMetric key="m" />, <MiniRange key="mr" label="Hands off to a person below 70 percent confidence, between 50 and 95" icon={SettingsAdjust} value={(70 - 50) / 45} min="50" max="95" display="70" />] },
       { pair: [<ContentSwitcher key="cs" label="Range" items={[{ value: "d", label: "Day" }, { value: "w", label: "Week" }, { value: "m", label: "Month" }]} />, <Avatar key="av" name="Indie Novak" />] },
       <Stack key="c" gap="sm"><Checkbox label="Notify the owner" defaultChecked /><Checkbox label="Log every run" defaultChecked /><Checkbox label="Allow hand-offs" /></Stack>,
     ],

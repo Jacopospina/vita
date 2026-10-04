@@ -99,8 +99,14 @@ function Knob({ r, angle, color = "var(--vita-foreground)", radius = 4.5 }: { r:
 /** What a chart needs to be a control: its role, focus, keys and pointer handlers, and a ref to measure it. */
 type Control = React.HTMLAttributes<HTMLDivElement> & Record<`aria-${string}`, unknown>
 
-function Frame({ label, size = "md", face, glow, className, art, control, rootRef, children }: {
+function Frame({ label, size = "md", face, glow, open, className, art, control, rootRef, children }: {
   label: string
+  /**
+   * An open arc (gauge, range, segments): its ends stop short of the bottom, so its weight sits high. The drawing
+   * moves down by the gap its ends leave (about 6.5% of the tile) to look centred; the tile itself never moves, and
+   * everything still fits inside it (the knob's top lands at 8%, the arc's ends at 92%).
+   */
+  open?: boolean
   size?: Size
   face?: boolean
   glow?: MiniTone
@@ -128,8 +134,9 @@ function Frame({ label, size = "md", face, glow, className, art, control, rootRe
       )}
       style={glow ? { backgroundImage: `radial-gradient(circle at 50% 75%, color-mix(in oklch, ${toneVar[glow]} 45%, transparent), transparent 70%)` } : undefined}
     >
-      {art && <svg viewBox="0 0 100 100" aria-hidden="true" className="absolute inset-0 size-full overflow-visible">{art}</svg>}
-      <div aria-hidden="true" className="absolute inset-0 flex flex-col items-center justify-center leading-none">{children}</div>
+      {/* The optical shift moves the drawing inside the tile, never the tile: a chart stays within its own box. */}
+      {art && <svg viewBox="0 0 100 100" aria-hidden="true" className={cn("absolute inset-0 size-full overflow-visible", open && "translate-y-[6.5%]")}>{art}</svg>}
+      <div aria-hidden="true" className={cn("absolute inset-0 flex flex-col items-center justify-center leading-none", open && "translate-y-[6.5%]")}>{children}</div>
     </div>
   )
 }
@@ -168,7 +175,7 @@ export function MiniSegments({ label, size, segments = 3, filled, tone = "info",
   const gap = 14
   const span = (GAUGE.a1 - GAUGE.a0 - gap * (segments - 1)) / segments
   return (
-    <Frame
+    <Frame open
       label={label}
       size={size}
       art={Array.from({ length: segments }, (_, i) => {
@@ -219,7 +226,7 @@ export function MiniGauge({ label, size, value, fill = "success", icon, display,
   const gradient = Array.isArray(fill)
   const color = gradient ? "var(--vita-foreground)" : toneVar[fill]
   return (
-    <Frame
+    <Frame open
       label={label}
       size={size}
       art={
@@ -266,10 +273,11 @@ export function MiniRange({ label, size, value, min, max, icon, display, gradien
 }) {
   const angle = GAUGE.a0 + clamp01(value) * (GAUGE.a1 - GAUGE.a0)
   return (
-    <Frame label={label} size={size} art={<><GradientArc r={GAUGE.r} a0={GAUGE.a0} a1={GAUGE.a1} stops={gradient} width={GAUGE.width} /><Knob r={GAUGE.r} angle={angle} /></>}>
+    <Frame open label={label} size={size} art={<><GradientArc r={GAUGE.r} a0={GAUGE.a0} a1={GAUGE.a1} stops={gradient} width={GAUGE.width} /><Knob r={GAUGE.r} angle={angle} /></>}>
       {icon && <Glyph icon={icon} className="mb-[2cqw] size-[16cqw]" />}
-      <span className="text-[30cqw] font-medium [font-variant-numeric:tabular-nums]"><AnimatedText face="inherit">{display}</AnimatedText></span>
-      <span className="absolute -bottom-[5cqw] flex w-[70cqw] justify-between text-[15cqw] font-medium [font-variant-numeric:tabular-nums]">
+      <span className="text-[26cqw] font-medium [font-variant-numeric:tabular-nums]"><AnimatedText face="inherit">{display}</AnimatedText></span>
+      {/* Low and high sit in the arc's opening, between its two ends: never on the arc, never outside the tile. */}
+      <span className="absolute inset-x-[28cqw] bottom-[10cqw] flex justify-between text-[13cqw] font-medium [font-variant-numeric:tabular-nums]">
         <span className="text-info"><AnimatedText face="inherit">{min}</AnimatedText></span>
         <span className="text-error"><AnimatedText face="inherit">{max}</AnimatedText></span>
       </span>
