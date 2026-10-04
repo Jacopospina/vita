@@ -14,7 +14,7 @@ Vita is the body of the product: the only source of UI. This skill turns intent 
 3. **Only Vita patterns.** Flows follow `.vita/docs/patterns/*`. Don't invent a new way to filter, confirm, load or show empty.
 4. **Every string goes through the taxonomy** (`vita/taxonomy.json`), via the `vita-copywriting` skill.
 5. **No Cancel/Close/Dismiss buttons** on modals or panels (× , Escape and click-outside close them). Footers are `ActionBar`s.
-6. **Belonging has no gaps.** Related actions go in `ButtonSet`/`Group` (zero gap, joined).
+6. **Belonging has no gaps.** Related actions go in `ButtonSet`/`Group` (zero gap, joined). The same holds for surfaces: things that share one meaning share one container, divided by hairlines. Related numbers are one `KpiGroup`, related cards one `TileSet`, related rows one `ListGroup`; never a row of separate cards with gaps for one meaning.
 7. **Left-hand shortcuts only.** Use `shortcut="mod+s"`-style props; never Enter, arrows or right-side letters. Every task must also work by mouse alone.
 8. **Intent over input.** If a task can be described, start from the `Composer` + AI-prepared review (patterns/intent-first) instead of a form.
 9. **Concentric radius.** Nested rounded elements use `scope-*` on the container and `rounded-inner-{padding}` on the child (inner = outer − padding).

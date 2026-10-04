@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Add, Filter, Download, TrashCan, Edit, UserAvatar, Bot, Plug, Notification, Security, Information, Chat, Send } from "@/registry/icons"
+import { Add, Filter, Download, TrashCan, Edit, UserAvatar, Bot, Plug, Notification, Security, Information, Chat, Send, Activity, UserMultiple, Time } from "@/registry/icons"
 import { Stack, Inline, Grid, Column } from "@/registry/ui/layout"
 import { Text } from "@/registry/ui/text"
 import { Tile } from "@/registry/ui/tile"
@@ -25,6 +25,8 @@ import { ContainedList, ContainedListItem } from "@/registry/ui/contained-list"
 import { LoginBlock } from "@/registry/blocks/login"
 import { toast, capsule } from "@/registry/ui/notification"
 import { Icon } from "@/registry/ui/icon"
+import { Kpi, KpiGroup } from "@/registry/ui/kpi"
+import { MiniGauge, MiniLevels, MiniStat, MiniDial } from "@/registry/ui/mini-chart"
 import { agents, agentColumns } from "@/playground/demos/data"
 
 /*
@@ -54,6 +56,10 @@ export function CardsExample() {
     return () => window.clearInterval(t)
   }, [])
   const [day, setDay] = React.useState<Date | undefined>(new Date())
+  // The live tile breathes with the runs: confidence, load and hand-offs drift as work comes in.
+  const confidence = 86 + (runs % 9)
+  const load = runs % 7
+  const handoffs = 12 + Math.floor((runs - 12840) / 40)
   return (
     <Grid>
       <Column md={8} lg={10}>
@@ -72,27 +78,42 @@ export function CardsExample() {
           <ProgressBar label="Daily quota" hideLabel value={64} size="sm" />
         </Metric>
       </Column>
+      {/* Agents and Team share one column, one under the other, so the next column can show something else. */}
       <Column md={4} lg={5}>
-        <Tile className="h-full">
+        <Stack gap="md" className="h-full">
+        <Tile>
           <Stack gap="sm">
             <Text variant="title-3">Agents</Text>
             <StatusIndicator kind="success">Support triage · Live</StatusIndicator>
             <StatusIndicator kind="in-progress">Invoice extractor · Deploying</StatusIndicator>
-            <StatusIndicator kind="pending">Contract reviewer · Awaiting approval</StatusIndicator>
             <StatusIndicator kind="warning">Ticket router · Degraded</StatusIndicator>
-            <StatusIndicator kind="paused">Churn watcher · Paused</StatusIndicator>
           </Stack>
         </Tile>
-      </Column>
-      <Column md={4} lg={5}>
-        <Tile className="h-full">
+        <Tile className="flex-1">
           <Stack gap="sm">
             <Text variant="title-3">Team</Text>
             <ListGroup>
               <ListItem icon={UserAvatar} tone="brand" title="Ada Lovelace" subtitle="ada@theo.ai" trailing={<Tag size="sm">Owner</Tag>} />
               <ListItem icon={UserAvatar} tone="brand" title="Grace Hopper" subtitle="grace@theo.ai" trailing={<Tag size="sm">Editor</Tag>} />
-              <ListItem icon={UserAvatar} tone="brand" title="Alan Turing" subtitle="alan@theo.ai" trailing={<Tag size="sm">Viewer</Tag>} />
             </ListGroup>
+          </Stack>
+        </Tile>
+        </Stack>
+      </Column>
+      <Column md={4} lg={5}>
+        <Tile className="h-full">
+          <Stack gap="md" className="h-full">
+            <Stack gap="2xs">
+              <Text variant="title-3">Support triage, live</Text>
+              <Text tone="muted">One value each, at a glance.</Text>
+            </Stack>
+            {/* The four fill the tile's height, the space around them shared out evenly in both directions. */}
+            <div className="grid flex-1 grid-cols-[auto_auto] place-content-evenly place-items-center">
+              <MiniGauge label={`Answer confidence ${confidence} percent`} value={confidence / 100} fill="success" display={`${confidence}%`} />
+              <MiniLevels label={`Load step ${load + 1} of 7`} icon={Activity} levels={7} active={load} display={["Idle", "Light", "Light", "Busy", "Busy", "Heavy", "Peak"][load]} />
+              <MiniStat label={`${handoffs} hand-offs today`} icon={UserMultiple} tone="info" value={String(handoffs)} caption="hand-offs" />
+              <MiniDial label="Next run at 15:07" icon={Time} display="15:07" offset={load} />
+            </div>
           </Stack>
         </Tile>
       </Column>
@@ -142,12 +163,13 @@ export function AgentsExample() {
   return (
     <Stack gap="lg">
       <PageHeader title="Agents" description="Every agent deployed in the Theo workspace." actions={<Button icon={Add} onClick={() => toast({ icon: Bot, source: "Theo", title: "Agent created", subtitle: "Untitled agent is ready to configure." })}>Create agent</Button>} />
-      <Grid>
-        <Column md={4} lg={4}><Metric label="Live agents" value={agents.filter((a) => a.status === "Live").length} delta="2 deployed this week" /></Column>
-        <Column md={4} lg={4}><Metric label="Runs (24h)" value={agents.reduce((n, a) => n + a.runs, 0)} delta="+8% from last week" /></Column>
-        <Column md={4} lg={4}><Metric label="Resolution rate" value={94} delta="% handled without a person" /></Column>
-        <Column md={4} lg={4}><Metric label="Hand-offs" value={37} delta="12 waiting for a reply" /></Column>
-      </Grid>
+      {/* One meaning, one surface: the workspace's numbers sit together, divided by hairlines, never as separate cards. */}
+      <KpiGroup>
+        <Kpi label="Live agents" value={agents.filter((a) => a.status === "Live").length} helperText="2 deployed this week" />
+        <Kpi label="Runs (24h)" value={agents.reduce((n, a) => n + a.runs, 0)} delta={0.08} period="vs last week" />
+        <Kpi label="Resolution rate" value={0.94} format={{ style: "percent" }} helperText="Handled without a person" />
+        <Kpi label="Hand-offs" value={37} helperText="12 waiting for a reply" />
+      </KpiGroup>
       <DataTable
         title="All agents"
         columns={agentColumns}
