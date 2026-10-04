@@ -39,8 +39,9 @@ related: [kpi, progress-bar, status-indicator]
 3. **The reading is always written.** The shape is for the glance, the number for certainty; never a shape alone.
 4. **A label for everyone.** Every chart takes a `label` that a screen reader announces in full ("Thermostat set to 23, between 16 and 30").
 5. **Same size in a group.** Mini charts side by side share one `size` (sm 64, md 96, lg 128) and one row height.
-6. **Only Vita symbols.** Every glyph in a mini chart, the badge and the dial's pointer included, comes from the Vita icon set; nothing is hand-drawn.
-7. **Open or on a disc.** Gauges and ranges are open arcs; readings, levels, glows and dials sit on a filled disc.
+6. **Inside its tile, nothing overlapping.** Every mark stays within the chart's own box, and no reading or label sits on an arc or an icon; open arcs centre optically by moving the drawing, never the tile.
+7. **Only Vita symbols.** Every glyph in a mini chart, the badge and the dial's pointer included, comes from the Vita icon set; nothing is hand-drawn.
+8. **Open or on a disc.** Gauges and ranges are open arcs; readings, levels, glows and dials sit on a filled disc.
 
 ## MiniColor as a control
 
