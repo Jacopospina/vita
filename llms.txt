@@ -52,9 +52,9 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/iden
 - [Typography](docs/foundations/typography.md): Ten roles generated from one base size and one ratio. Google Sans Flex for words, Google Sans Code for code and numbers.
   - use: Any text, pick the ROLE (title-2, body, caption), not a size
   - avoid: Tailwind sizes (text-sm, text-2xl) → they don't exist in Vita; Changing size to create emphasis inside a paragraph → use font-medium or font-semibold
-- [Vita for AI](docs/foundations/vita-for-ai.md): Vita is built for agents as much as for people, machine-readable docs, skills, rules, decisions and an audit that answers on every edit.
-  - use: Setting up an agent to design or build with Vita; Understanding how Vita keeps agent-built screens consistent
-  - avoid: Looking for the AI label or AI surfaces in the product → AI label
+- [Vita for AI](docs/foundations/vita-for-ai.md): How Vita shows AI to the people using a product (honest, explainable, in their control), and how it lets AI agents build that product like a designer would.
+  - use: Designing any screen where AI generates, suggests, fills in, searches or speaks; Choosing how AI work looks, waits, explains itself and hands control back; Setting up an agent to design or build with Vita
+  - avoid: Branding or marketing flair → the AI spectrum is reserved for AI provenance; Plain logic that isn't AI (a sort, a calculation) → ordinary components, no AI marks
 
 ## Components
 
