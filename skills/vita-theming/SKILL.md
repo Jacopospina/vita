@@ -24,7 +24,7 @@ Everything visual derives from about 10 knobs in `src/styles/vita/theme.css`. **
 
 1. **Contrast check after any color change:** primary with white text ≥ 4.5:1 in both themes. Yellow and lime hues (85–120) with chroma above 0.15 usually fail: lower the chroma or warn the user.
 2. **Support hues keep their meaning:** you can shift success/warning/error/info hues by ±15°, but never swap them.
-3. **Density follows the primary persona**, not taste (see `vita/personas`).
+3. **Density follows the primary persona**, not taste (see `vita/personae`).
 4. **One sans and one mono.** A display face is allowed only for marketing surfaces.
 5. **Don't change semantic tokens** (`tokens.css`) per product. If a new semantic role is needed, that's a design-system change.
 6. **Corners always come from the radius knob.** Whatever radius the product picks (Default or its own), every corner follows it: no `rounded-none`, no local radius. After a radius change, check a picker, a tree row, a tile and a panel; a corner that didn't move is a bug to fix in the component, not in the theme.

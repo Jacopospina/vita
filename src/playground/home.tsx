@@ -9,6 +9,7 @@ import { IconPlaceholder } from "@/registry/ui/icon-placeholder"
 import { Link } from "@/registry/ui/link"
 import { StructuredList } from "@/registry/ui/structured-list"
 import { manifest } from "./manifest"
+import { InlineNotification } from "@/registry/ui/notification"
 
 /*
  * The documentation home (#/) and the Guidelines index (#/guidelines).
@@ -66,7 +67,7 @@ const audiences: { name: string; text: string; icon: IconType }[] = [
   { name: "Designers", text: "Start from decided foundations and patterns, and spend the craft on what only your product needs.", icon: ColorPalette },
   { name: "Engineers", text: "Install components with the CLI, use tokens instead of values, and let the audit catch drift before review.", icon: Code },
   { name: "AI agents", text: "Read the same rules as the team, pick components with the decision guide, and pass the audit before handing work back.", icon: Bot },
-  { name: "Product and content", text: "Personas, taxonomy and voice rules turn product decisions into consistent words and flows.", icon: Edit },
+  { name: "Product and content", text: "Personae, taxonomy and voice rules turn product decisions into consistent words and flows.", icon: Edit },
 ]
 
 const adoption = [
@@ -87,6 +88,13 @@ export function GuidelinesPage() {
           </Text>
           <Inline gap="sm" className="pt-1"><Link href="#/identity/about">Animus, anima, vita</Link><Link href="#/getting-started/installation">Install Vita</Link></Inline>
         </Stack>
+
+        <InlineNotification
+          kind="info"
+          className="max-w-3xl"
+          title="Teach Vita your users"
+          subtitle={<>Tell Vita about your users and it tailors every word to them. Until then, it writes for the average internet user: see <Link inline href="#/foundations/content">Content, personae & taxonomy</Link>.</>}
+        />
 
         <Stack gap="lg">
           <SectionHead name="Our guiding principles">What Vita commits to, as a system. The principles every screen follows are in <Link inline href="#/identity/principles">Design principles</Link>.</SectionHead>

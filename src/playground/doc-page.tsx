@@ -12,6 +12,8 @@ import { InlineNotification } from "@/registry/ui/notification"
 import { UnorderedList, ListItem } from "@/registry/ui/list"
 import { Link } from "@/registry/ui/link"
 import { getDoc } from "./docs"
+import { needsSetup, isPublished } from "./setup"
+import { SetupTag } from "./setup-tag"
 import { Markdown } from "./markdown"
 import { manifest, sectionTitles, type Section } from "./manifest"
 import { demos } from "./demos"
@@ -38,6 +40,7 @@ export function DocPage({ section, slug }: { section: Section; slug: string }) {
   const tokens = React.useMemo(() => tokensIn(sources.map((s) => s.code).join("\n")), [sources])
   const title = doc?.meta.title ?? entry?.title ?? slug
   const statusTone = ({ stable: "success", experimental: "warning", inception: "neutral" } as const)[doc?.meta.status as "stable"] ?? "neutral"
+  const setup = needsSetup(section, slug)
   const [hero, ...rest] = pageDemos
   const hasUsage = !!(doc?.meta.use_when?.length || doc?.meta.avoid_when?.length)
   const isArticle = sources.length === 0 && !hasUsage
@@ -59,9 +62,19 @@ export function DocPage({ section, slug }: { section: Section; slug: string }) {
           <Inline gap="sm" align="center" wrap>
             <Text variant="large-title">{title}</Text>
             {doc?.meta.status && <Tag tone={statusTone}>{doc.meta.status}</Tag>}
+            <SetupTag section={section} slug={slug} />
           </Inline>
           {doc?.meta.summary && <Text variant="body-lg" tone="muted" className="max-w-prose">{doc.meta.summary}</Text>}
         </Stack>
+
+        {/* Pages that need the maker's input explain what setup means and what Vita does until then: online always, locally until vita/ has it. */}
+        {(setup || isPublished) && typeof doc?.meta.setup === "string" && (
+          <InlineNotification
+            kind="info"
+            title={(doc.meta.setup_title as string | undefined) ?? "Teach Vita"}
+            subtitle={`${doc.meta.setup} Ask your agent: use ${doc.meta.setup_skill ?? "vita-copywriting"}.`}
+          />
+        )}
 
         {!doc && <InlineNotification kind="warning" title="No documentation yet" subtitle={`Add docs/${section}/${slug}.md`} />}
 

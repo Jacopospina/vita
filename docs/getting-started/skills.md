@@ -12,8 +12,8 @@ related: [vita-for-ai, installation, content]
 - **Architect.** Build or change any interface: pick the right component or pattern, use only Vita tokens, never create local components (`vita-architect`).
 - **Consistency.** Make every screen look designed by one person: hierarchy, spacing rhythm, alignment and surfaces (`vita-consistency`).
 - **Motion Design.** Decide whether and how anything animates: durations, easings, choreography, reduced motion (`vita-motion-design`).
-- **Copywriting.** Write and review every word users see: labels, buttons, errors, empty states, in the product's voice. Describe your audience and it refines the personas and taxonomy, then re-tunes the copy to fit (`vita-copywriting`).
-- **Personae.** Create the product's personas, their journeys and the taxonomy of words derived from them (`vita-personae`).
+- **Copywriting.** Write and review every word users see: labels, buttons, errors, empty states, in the product's voice. Describe your audience and it refines the personae and taxonomy, then re-tunes the copy to fit (`vita-copywriting`). <!-- setup: vita/personae, vita/ai-voice.md | Tell Vita about your users and your AI's voice. It tailors every word to them. -->
+- **Personae.** Create the product's personae, their journeys and the taxonomy of words derived from them (`vita-personae`). <!-- setup: vita/personae | Tell Vita about your users. It writes their personae and taxonomy. -->
 - **Theming.** Personalise Vita for a brand by changing only the theme knobs (`vita-theming`).
 
 ## Rules

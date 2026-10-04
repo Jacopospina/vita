@@ -9,7 +9,7 @@ Every product has three parts. **Animus**, the mind, is the backend logic: rules
 - **Which component** to use and when not to (decision guides for every component).
 - **How things move** (motion tokens and choreography rules).
 - **How things look consistent** (one token set, one checklist).
-- **Which words** to use (personas → taxonomy → content rules).
+- **Which words** to use (personae → taxonomy → content rules).
 - **What's forbidden** (an audit that fails the build on local components or raw values).
 
 ---
@@ -18,7 +18,7 @@ Every product has three parts. **Animus**, the mind, is the backend logic: rules
 
 | | |
 |---|---|
-| **Foundations** (12) | Vita · principles · theming · grid · spacing · color · typography · motion · icons · pictograms · accessibility · content, personas & taxonomy |
+| **Foundations** (12) | Vita · principles · theming · grid · spacing · color · typography · motion · icons · pictograms · accessibility · content, personae & taxonomy |
 | **Components** (41 + guide) | Accordion, AI label, Breadcrumb, Button, Checkbox, Code snippet, Contained list, Content switcher, Data table, Date picker, Dropdown (+ Combobox, MultiSelect), File uploader, Form (+ FluidForm), Inline loading, Link, List, Loading (+ Skeleton), Menu, Menu buttons, Modal, Notification (+ Toast, Callout), Number input, Pagination, Popover (+ Toggletip), Progress bar, Progress indicator, Radio button, Search, Select, Slider, Structured list, Tabs, Tag, Text input, Tile, Toggle, Tooltip, Tree view, UI shell header / left panel / right panel, plus Empty state, Status indicator, Page header, Truncate, Toolbar, Layout, Text, Icon, Pictogram |
 | **Patterns** (17) | Common actions, Dialogs, Disabled states, Disclosures, Empty states, Filtering, Fluid styles, Forms, Global header, Loading, Login, Notifications, Overflow content, Read-only states, Search, Status indicators, Text toolbar |
 | **Skills** (6) | `vita-architect`, `vita-copywriting`, `vita-personae`, `vita-motion-design`, `vita-consistency`, `vita-theming` |
@@ -56,7 +56,7 @@ pnpm dlx github:Jacopospina/vita init
 - Installs the skills to `.claude/skills/`.
 - Writes the Vita rules block into `AGENTS.md`, and points `CLAUDE.md` at it.
 - Adds a Claude Code hook that audits every file an agent edits.
-- Creates `vita/` (product.md, personas, taxonomy.json), adds the `vita:audit` / `vita:update` scripts, and installs the runtime dependencies.
+- Creates `vita/` (product.md, personae, taxonomy.json), adds the `vita:audit` / `vita:update` scripts, and installs the runtime dependencies.
 
 Then:
 

@@ -25,7 +25,7 @@ If Vita lacks what you need: **stop and say so**. Propose the smallest compositi
 
 ## Workflow
 
-1. **Understand the job.** Which persona (`vita/personas/*.md`)? What task, what frequency, what context? If personas don't exist yet, run the `vita-personae` skill first.
+1. **Understand the job.** Which persona (`vita/personae/*.md`)? What task, what frequency, what context? If personae don't exist yet, run the `vita-personae` skill first.
 2. **Find the pattern.** Read `.vita/docs/index.json` and the matching `.vita/docs/patterns/*.md` (forms, filtering, empty states, dialogs, loading, common actions…).
 3. **Choose components** with `.vita/docs/components/choosing-components.md`. It's a decision tree: follow it, don't pattern-match from memory. Then read each chosen component's doc (`use_when`, `avoid_when`, opinions).
 4. **Lay out** with `Stack`, `Inline`, `Grid`/`Column`, `Container`, `PageHeader` (see `foundations/grid.md`, `foundations/spacing.md`).

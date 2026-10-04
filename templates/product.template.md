@@ -1,6 +1,6 @@
 # Product
 
-> Fill this in first. The `vita-personae` skill reads it to create personas, journeys and the taxonomy.
+> Fill this in first. The `vita-personae` skill reads it to create personae, journeys and the taxonomy.
 
 ## In one sentence
 <!-- What the product does, for whom. e.g. "Theo lets teams build and deploy custom AI agents that work inside their own tools." -->

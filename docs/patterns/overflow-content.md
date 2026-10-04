@@ -18,6 +18,7 @@ related: [tooltip, tag, breadcrumb, data-table, disclosures]
 |---|---|
 | Single-line names (tables, nav, cards) | `Truncate` end + tooltip with the full text |
 | File names, IDs, emails where the ending matters | `Truncate mode="middle"` |
+| Labels in nav and list rows | `Truncate mode="ticker"`: glides to its end at reading speed while the row is hovered |
 | Descriptions, comments | `Truncate mode="lines"` (2–3 lines) + "Show more" |
 | Many tags | Show 3 + `OperationalTag` "+N" → popover |
 | Many actions | 1–2 visible + `OverflowMenu` |

@@ -9,6 +9,10 @@ use_when:
 avoid_when:
   - Branding or marketing flair → the AI spectrum is reserved for AI provenance
   - Plain logic that isn't AI (a sort, a calculation) → ordinary components, no AI marks
+setup_title: Teach Vita your AI's voice
+setup: Tell Vita how your AI should speak, and it tunes that voice to your users. Until then, it's short, plain and warm (Guidelines tab).
+setup_skill: vita-copywriting
+setup_files: [vita/ai-voice.md]
 related: [ai-label, thinking, intent-first, agent-conversation, voice-conversation, skills]
 ---
 
@@ -21,6 +25,36 @@ related: [ai-label, thinking, intent-first, agent-conversation, voice-conversati
 3. **In the person's control.** AI output is editable, rejectable and revertible; it is never submitted on someone's behalf.
 4. **Honest about the work.** While AI works, the screen shows which kind of work it is (recalling, searching, making), never a spinner.
 5. **Restrained.** AI styling marks provenance; it never decorates. A screen full of rainbows says nothing.
+
+## Your AI's voice
+
+Describe how your AI should speak and Vita keeps every AI message to it. The voice lives in `vita/ai-voice.md`, set up with the `vita-copywriting` skill.
+
+- **Tone.** Up to 3 words that describe it: calm, precise, warm.
+- **Length.** Succinct (the answer first, in one line), balanced, or detailed (it shows its reasoning).
+- **What it never says.** "I", apologies, guessed numbers, exclamation marks: whatever your product rules out.
+- **Tuned per persona.** The personae refine the voice: shorter with domain terms for experts, plainer and more guiding for newcomers.
+
+## Vita's default voice
+
+Until you set your AI's voice, it speaks like a capable, friendly person replying on a phone. It writes for Vita's default persona (Content, personae & taxonomy).
+
+- **Answer first.** The first line is the answer or the next action, with no preamble.
+- **Short.** 1 to 3 sentences, under about 50 words; longer only when asked, and offered rather than assumed.
+- **Plain.** Everyday words, sentences under about 20 words, lists only for 3 or more parallel items.
+- **Warm, not excited.** Polite and calm, never "Absolutely! I'd be delighted…"; empathy in one short phrase, then the fix.
+- **Honest.** Says plainly when it isn't sure and what to do instead; open about being AI, with a person on offer for complaints.
+- **Mirrors the person.** Their language, script and formality; one question at a time, with choices.
+
+| Situation | Avoid | Use |
+|---|---|---|
+| Booking | "Thank you for reaching out! Could you please let me know your preferred date and time?" | "Tomorrow 3pm or Friday 11am?" |
+| A factual question | "Great question! There are many factors to consider when…" | "Yes, it's open until 10pm today." |
+| Not sure | "As an AI, I am unable to guarantee…" | "Not sure. Best to check with the pharmacy: 020 1234 5678." |
+| A complaint | "We regret any inconvenience this may have caused." | "Sorry, that's frustrating. Someone from the team will call you today." |
+| Explaining | Five paragraphs with headings | "Short version: X. Want the details?" |
+
+> [!TIP] Before it sends: is the answer in the first line, and could a tired person on a bus get it in 5 seconds?
 
 ## Visual language
 

@@ -34,6 +34,7 @@ The docs renderer turns markdown into Vita components. Write for it:
 - **Every block earns its place.** Write only what the reader can't already see: an insight, a rule, a trade-off. Never describe the site's navigation or tabs, a page's own structure, how a page was generated, or past renames; if removing it costs the reader nothing, remove it.
 - **No paragraph longer than 2 sentences.** If it's longer, it's a list of cards. `pnpm check` fails on a longer one.
 - **Write for the scan** (`docs/foundations/content.md`): the point first, headings that start with the information, about half the words you first wrote.
+- **Setup is marked, not explained.** A page that needs the maker's input gets `setup`, `setup_title`, `setup_skill` and `setup_files` in its frontmatter; a single card gets `<!-- setup: vita/<file> | hint -->`. Locally they show a "Setup" pill until those files exist in `vita/`.
 - **Comparisons are tables.** Tables become structured lists.
 - **Negative lists** under a heading containing "Don't", "Never" or "Avoid" render as red ✕ cards.
 
