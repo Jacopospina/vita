@@ -18,10 +18,13 @@ const isFilled = (want: string) => filled.some((p) => p === want || p.startsWith
 /** The published site, as opposed to a local copy of Vita running on the maker's machine. */
 export const isPublished = !import.meta.env.DEV
 
+/** True when any of these vita/ paths isn't filled in yet (local copies only). */
+export function missing(want: string[]): boolean {
+  return !isPublished && want.length > 0 && !want.every(isFilled)
+}
+
 /** True when the page asks for setup and its files aren't there yet (local copies only). */
 export function needsSetup(section: string, slug: string): boolean {
-  if (isPublished) return false
   const want = getDoc(section, slug)?.meta.setup_files
-  if (!Array.isArray(want) || want.length === 0) return false
-  return !want.every(isFilled)
+  return Array.isArray(want) && missing(want)
 }

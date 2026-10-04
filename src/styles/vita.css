@@ -350,7 +350,8 @@
 /* Clipping is only for the move: once open, the content may reach past its box (a tilting button, a focus ring, a
    shadow) instead of being cut. Overflow flips back to visible after the reveal ends, and to hidden at once on close.
    The direct child is a plain wrapper: it owns this overflow transition, so give your transitions to what's inside it. */
-@utility reveal { display: grid; grid-template-rows: 0fr; & > * { overflow: hidden; min-height: 0; transition: overflow 0s allow-discrete; } }
+/* min-width 0: the open column never grows to fit unbreakable content (a nowrap nav label truncates instead). */
+@utility reveal { display: grid; grid-template-rows: 0fr; & > * { overflow: hidden; min-height: 0; min-width: 0; transition: overflow 0s allow-discrete; } }
 @utility reveal-open { grid-template-rows: 1fr; & > * { overflow: visible; transition-delay: var(--vita-duration-expressive); } }
 /* Horizontal reveal: width grows from 0 to its content (capsule expanding sideways).
    The direct child must NOT have a fixed width (wrap sized content in a plain div), or the column can't collapse. */

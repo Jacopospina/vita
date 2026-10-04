@@ -9,6 +9,7 @@ import { Icon } from "@/registry/ui/icon"
 import { Callout } from "@/registry/ui/notification"
 import { CodeSnippet } from "@/registry/ui/code-snippet"
 import { StructuredList } from "@/registry/ui/structured-list"
+import { SetupPill } from "./setup-tag"
 
 marked.setOptions({ gfm: true })
 
@@ -112,14 +113,19 @@ function Alert({ token }: { token: Tokens.Blockquote }) {
 /* ---------------- lists → cards ---------------- */
 
 const LEAD = /^\*\*(.+?)\*\*\s*[:.\u2014-]?\s*/
+/** `<!-- setup: vita/a, vita/b | hint -->` in a card: a "Setup" pill beside its title until those files exist. */
+const SETUP = /\s*<!--\s*setup:\s*([^|]+?)\s*(?:\|\s*(.+?))?\s*-->/
 
 function itemParts(item: Tokens.ListItem) {
   const first = item.tokens.find((x) => x.type === "text" || x.type === "paragraph") as Tokens.Text | undefined
   const nested = item.tokens.filter((x) => x.type === "list") as Tokens.List[]
-  const text = first?.text ?? item.text
+  const raw = first?.text ?? item.text
+  const s = SETUP.exec(raw)
+  const text = s ? raw.replace(s[0], "") : raw
+  const setup = s ? { files: s[1].split(",").map((f) => f.trim()), hint: s[2] } : undefined
   const m = LEAD.exec(text)
   const body = m ? text.slice(m[0].length).replace(/^[a-z]/, (c) => c.toUpperCase()) : text
-  return { title: m ? m[1].replace(/[.:]$/, "") : undefined, body, nested }
+  return { title: m ? m[1].replace(/[.:]$/, "") : undefined, body, nested, setup }
 }
 
 function List({ list, context }: { list: Tokens.List; context: string }) {
@@ -141,6 +147,7 @@ function List({ list, context }: { list: Tokens.List; context: string }) {
               )}
               {negative && <Icon as={Misuse} size="md" className="text-error" />}
               <Text variant="headline" className="pt-px">{inline(it.title ?? it.body)}</Text>
+              {it.setup && <SetupPill files={it.setup.files} hint={it.setup.hint} size="sm" />}
             </Inline>
             {it.title && it.body && <Text tone="muted">{inline(it.body)}</Text>}
             {it.nested.map((n, j) => <NestedList key={j} list={n} />)}
