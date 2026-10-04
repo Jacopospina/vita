@@ -70,25 +70,58 @@ export function AnimatedNumber({ value, format, locale, className }: AnimatedNum
 /**
  * RollingText, ANY value string animates per digit: every digit swaps on its own, everything else
  * ($, %, commas, units, "–") stays put. Reels are keyed from the right, so 99 → 100 adds a reel on the left.
+ * A reel that arrives grows from nothing and one that leaves shrinks away, so the others slide to make room
+ * (999 → 1,000) instead of jumping.
  */
-export function RollingText({ text, className }: { text: string; className?: string }) {
-  const chars = Array.from(text)
-  let digitsFromRight = chars.filter((c) => /\d/.test(c)).length
+export function RollingText({ text, className, face = "numeric" }: { text: string; className?: string; face?: "numeric" | "inherit" }) {
+  const [state, setState] = React.useState({ text, prev: null as string | null, n: 0 })
+  if (text !== state.text) setState({ text, prev: reduced() ? null : state.text, n: state.n + 1 })
+  const now = glyphs(text)
+  const before = state.prev === null ? null : glyphs(state.prev)
+  const had = new Set(before?.map((g) => g.key))
+  const has = new Set(now.map((g) => g.key))
+  // What left is drawn once more, shrinking out where it stood; ties put the leaving glyph first.
+  const leaving = (before ?? []).filter((g) => !has.has(g.key))
+  const all = [...now.map((g) => ({ ...g, out: false })), ...leaving.map((g) => ({ ...g, out: true }))].sort((a, b) => b.fromRight - a.fromRight || Number(b.out) - Number(a.out))
   return (
-    <span className={cn("inline-flex items-baseline font-normal tabular-nums", className)}>
+    <span className={cn("inline-flex items-baseline", face === "numeric" ? "font-normal tabular-nums" : "[font-variant-numeric:tabular-nums]", className)}>
       <span className="sr-only">{text}</span>
       <span aria-hidden className="inline-flex items-baseline whitespace-pre">
-        {chars.map((c, i) => {
-          const fromRight = chars.length - i
-          if (/\d/.test(c)) {
-            digitsFromRight--
-            return <Digit key={`d${fromRight}`} value={Number(c)} index={digitsFromRight} />
-          }
-          return <span key={`s${fromRight}`}>{c}</span>
+        {all.map((g) => {
+          if (g.out)
+            return (
+              <span
+                key={`${g.key}-out${state.n}`}
+                className="inline-block"
+                style={{ animation: `vita-reel-out ${DIGIT_SWAP} both` }}
+                onAnimationEnd={() => setState((s) => (s.n === state.n ? { ...s, prev: null } : s))}
+              >
+                {g.char}
+              </span>
+            )
+          const arriving = before !== null && !had.has(g.key)
+          const inner = g.digit ? <Digit value={Number(g.char)} index={g.index} /> : g.char
+          return (
+            <span key={g.key} className="inline-block" style={arriving ? { animation: `vita-reel-in ${DIGIT_SWAP} backwards` } : undefined}>
+              {inner}
+            </span>
+          )
         })}
       </span>
     </span>
   )
+}
+
+/** A value's glyphs, keyed from the right: digits get a reel (and their stagger index), the rest a plain slot. */
+function glyphs(text: string) {
+  const chars = Array.from(text)
+  let digitsFromRight = chars.filter((c) => /\d/.test(c)).length
+  return chars.map((c, i) => {
+    const fromRight = chars.length - i
+    const digit = /\d/.test(c)
+    if (digit) digitsFromRight--
+    return { key: `${digit ? "d" : "s"}${fromRight}`, char: c, digit, fromRight, index: digitsFromRight }
+  })
 }
 
 /** Digits masked out: "3 agents" and "12 agents" share the template "# agents". */
@@ -101,9 +134,14 @@ const isNumericValue = (t: string) => /\d/.test(t) && !/[a-z]{2,}/i.test(t)
 const LETTER_STAGGER = 18 // ms between letters
 const MAX_STAGGER = 600 // long labels still finish quickly
 
-export function AnimatedText({ children, className, enter = "change", direction = "up", leaving = false }: {
+export function AnimatedText({ children, className, enter = "change", direction = "up", leaving = false, face }: {
   children: string
   className?: string
+  /**
+   * Digits roll in the numeric face (default), or keep the surrounding face and weight with even-width digits
+   * ("inherit": readings set like a watch face, e.g. mini charts).
+   */
+  face?: "numeric" | "inherit"
   /** "change" (default): animate when the text changes. "mount": also animate its first appearance. */
   enter?: "change" | "mount"
   /** Letters come from below (up) or drop in from above (down). */
@@ -117,7 +155,7 @@ export function AnimatedText({ children, className, enter = "change", direction 
   // Numbers are never letter-revealed: numeric values, or text whose only change is its digits, swap digit by digit.
   // (Sentences that merely CONTAIN numbers, "order 4821 arrives in 3–5 days", stay normal, wrapping text.)
   if (!leaving && enter === "change" && (isNumericValue(children) || (changed && /\d/.test(children) && template(children) === template(first)))) {
-    return <RollingText text={children} className={className} />
+    return <RollingText text={children} className={className} face={face} />
   }
   const motion = !reduced()
   const animate = motion && (changed || enter === "mount")

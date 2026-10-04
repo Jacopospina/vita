@@ -34,6 +34,10 @@
 /* Dropdown lists: slide in from below (productive, no scale, no width growth) and sink back out. */
 /* Floating surfaces you asked for (dropdown lists, menus, popovers) are visible on their first frame and only settle
    into place: a fade from transparent reads as a delay after the click. */
+/* A digit or separator joining a rolling value grows from nothing (its neighbours slide over to make room);
+   one leaving shrinks away. Never clipped: only its width and opacity change. */
+@keyframes vita-reel-in { from { max-width: 0; opacity: 0 } to { max-width: 1em; opacity: 1 } }
+@keyframes vita-reel-out { from { max-width: 1em; opacity: 1 } to { max-width: 0; opacity: 0 } }
 @keyframes vita-list-rise { from { transform: translateY(0.25rem) } }
 @keyframes vita-surface-in { from { opacity: 0.6; transform: scale(0.98) } }
 @keyframes vita-soft-in { from { opacity: 0.6 } }
