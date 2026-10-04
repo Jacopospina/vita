@@ -67,7 +67,7 @@ const audiences: { name: string; text: string; icon: IconType }[] = [
   { name: "Designers", text: "Start from decided foundations and patterns, and spend the craft on what only your product needs.", icon: ColorPalette },
   { name: "Engineers", text: "Install components with the CLI, use tokens instead of values, and let the audit catch drift before review.", icon: Code },
   { name: "AI agents", text: "Read the same rules as the team, pick components with the decision guide, and pass the audit before handing work back.", icon: Bot },
-  { name: "Product and content", text: "Personas, taxonomy and voice rules turn product decisions into consistent words and flows.", icon: Edit },
+  { name: "Product and content", text: "Personae, taxonomy and voice rules turn product decisions into consistent words and flows.", icon: Edit },
 ]
 
 const adoption = [
@@ -92,8 +92,8 @@ export function GuidelinesPage() {
         <InlineNotification
           kind="info"
           className="max-w-3xl"
-          title="Vita learns your users"
-          subtitle={<>Teach Vita about your users and it learns their profiles, then tailors every word of the copywriting so your product speaks to them. See <Link inline href="#/foundations/content">Content, personas & taxonomy</Link>.</>}
+          title="Teach Vita your users"
+          subtitle={<>Tell Vita about your users and it learns their profiles, then tailors every word so your product speaks to them. Until you do, it writes for its default persona, the average internet user: see <Link inline href="#/foundations/content">Content, personae & taxonomy</Link>.</>}
         />
 
         <Stack gap="lg">

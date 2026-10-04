@@ -460,7 +460,7 @@ export const foundationDemos: DemoMap = {
   "foundations/content": [
     {
       title: "Taxonomy in action",
-      description: "Same screen, two personas. The taxonomy file decides the words; components never hard-code them.",
+      description: "Same screen, two personae. The taxonomy file decides the words; components never hard-code them.",
       render: () => (
         <StructuredList
           label="Taxonomy example"

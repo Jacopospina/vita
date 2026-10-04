@@ -25,8 +25,8 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/iden
 - [Color](docs/foundations/color.md): Semantic tokens only. Color communicates interactivity, status and hierarchy; it never decorates.
   - use: Coloring anything, via semantic utilities (bg-layer-1, text-muted-foreground, border-border-subtle)
   - avoid: Palette colors in product code (bg-blue-500) → they don't exist as utilities; Hex/rgb/oklch literals → forbidden; Color as the only carrier of meaning → pair it with an icon and text
-- [Content, personas & taxonomy](docs/foundations/content.md): Words are part of the design system. Personas decide who we speak to, the taxonomy fixes the words, and skills enforce them.
-  - use: Writing any user-visible string, labels, buttons, errors, empty states, emails, AI responses; Starting a new product or flow (create personas first)
+- [Content, personae & taxonomy](docs/foundations/content.md): Words are part of the design system. Personae decide who we speak to, the taxonomy fixes the words, and skills enforce them.
+  - use: Writing any user-visible string, labels, buttons, errors, empty states, emails, AI responses; Starting a new product or flow (create personae first)
   - avoid: Inventing a term that isn't in the taxonomy → add it to the taxonomy first; Writing copy before knowing the persona
 - [Grid & layout](docs/foundations/grid.md): A 16-column grid for page structure, stacks for everything inside it.
   - use: Laying out a page or region (Grid + Column); Arranging elements vertically (Stack) or horizontally (Inline)

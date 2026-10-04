@@ -116,22 +116,22 @@
       "section": "foundations",
       "slug": "content",
       "path": "docs/foundations/content.md",
-      "title": "Content, personas & taxonomy",
-      "summary": "Words are part of the design system. Personas decide who we speak to, the taxonomy fixes the words, and skills enforce them.",
+      "title": "Content, personae & taxonomy",
+      "summary": "Words are part of the design system. Personae decide who we speak to, the taxonomy fixes the words, and skills enforce them.",
       "status": "stable",
       "use_when": [
         "Writing any user-visible string, labels, buttons, errors, empty states, emails, AI responses",
-        "Starting a new product or flow (create personas first)"
+        "Starting a new product or flow (create personae first)"
       ],
       "avoid_when": [
         "Inventing a term that isn't in the taxonomy → add it to the taxonomy first",
         "Writing copy before knowing the persona"
       ],
-      "setup_title": "Vita learns your users",
-      "setup": "Teach Vita about your users, everything you know: who they are, the words they use, what worries them, plus interviews, tickets and product analytics. Vita learns their profiles and tailors every word of the copywriting, so your product speaks to them.",
+      "setup_title": "Teach Vita your users",
+      "setup": "Tell Vita everything you know about your users (who they are, the words they use, what worries them, plus interviews, tickets and product analytics) and it learns their profiles, then tailors every word to them. Until you do, Vita writes for its default persona and word rules (Guidelines tab).",
       "setup_skill": "vita-copywriting",
       "setup_files": [
-        "vita/personas"
+        "vita/personae"
       ]
     },
     {
@@ -283,8 +283,8 @@
         "Branding or marketing flair → the AI spectrum is reserved for AI provenance",
         "Plain logic that isn't AI (a sort, a calculation) → ordinary components, no AI marks"
       ],
-      "setup_title": "Vita learns your AI's voice",
-      "setup": "Tell Vita how your AI should speak: its tone, how brief or detailed it is, and what it never says. Vita then tunes that voice to each persona it talks to.",
+      "setup_title": "Teach Vita your AI's voice",
+      "setup": "Tell Vita how your AI should speak (its tone, how brief or detailed, what it never says) and it tunes that voice to each of your personae. Until you do, your AI uses Vita's default voice (Guidelines tab).",
       "setup_skill": "vita-copywriting",
       "setup_files": [
         "vita/ai-voice.md"

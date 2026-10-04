@@ -1,19 +1,19 @@
 ---
 name: vita-copywriting
-description: Write or review every user-visible word in a Vita product, labels, buttons, headings, helper text, errors, empty states, toasts, confirmations, emails, AI messages, through the product taxonomy and persona voice. Use whenever UI text is created or changed, when copy "feels off", or whenever the user describes the product's target users or audience (then refine the personas and taxonomy and re-tune the copy).
+description: Write or review every user-visible word in a Vita product, labels, buttons, headings, helper text, errors, empty states, toasts, confirmations, emails, AI messages, through the product taxonomy and persona voice. Use whenever UI text is created or changed, when copy "feels off", or whenever the user describes the product's target users or audience (then refine the personae and taxonomy and re-tune the copy).
 ---
 
 # Vita Copywriting
 
-Every string passes through the **taxonomy** (`vita/taxonomy.json`) and the **persona** (`vita/personas/*.md`). If either file is missing, run `vita-personae` first, or ask the user which persona the screen serves.
+Every string passes through the **taxonomy** (`vita/taxonomy.json`) and the **persona** (`vita/personae/*.md`). Until the user has taught Vita their users, write for **Vita's defaults**: the default persona (Alex, the average internet user) and the default word rules in `.vita/docs/foundations/content.md` ("Vita's defaults"). Say once that you're using the defaults, and offer to learn their users instead (below).
 
 ## When someone describes their audience
 
-Whenever the user tells you about the people the product is for, at setup or at any later point, they are tuning the copy. Turn what they say into personas and taxonomy, then rewrite the words to fit.
+Whenever the user tells you about the people the product is for, at setup or at any later point, they are tuning the copy. Turn what they say into personae and taxonomy, then rewrite the words to fit.
 
 1. **Take everything they know.** Ask for it all: who the users are, what they do, the words they use, what worries them, plus any interviews, support tickets, sales notes, reviews or existing copy. Ask up to 3 follow-ups on what's missing (expertise, context of use, anxieties).
 2. **Read their analytics, if they share it.** From product analytics (PostHog or any other), read time on task, drop-offs, repeated attempts, feature use, frequency and devices. Infer traits from it (expertise, patience, how often they come, where they get stuck) and state each one with its evidence, so the user can correct it.
-3. **Refine the personas.** Update `vita/personas/*.md` (role, expertise, vocabulary, anxieties, tone) following `vita-personae`; create them if they don't exist.
+3. **Refine the personae.** Update `vita/personae/*.md` (role, expertise, vocabulary, anxieties, tone) following `vita-personae`; create them if they don't exist.
 4. **Refine the taxonomy.** In `vita/taxonomy.json`, switch preferred terms to the users' own words, add persona overrides, add `avoid` entries for words that confuse them, and set the voice per persona.
 5. **Re-tune the copy.** Run the procedure below over the existing UI strings and propose every change the new taxonomy or voice calls for.
 6. **Report.** What you learned about the audience, the taxonomy changes (old → new), then the copy table.
@@ -27,9 +27,9 @@ When the user describes how their product's AI should speak, write `vita/ai-voic
 1. **Tone.** Up to 3 words, in their words.
 2. **Length.** Succinct (the answer first, in one line), balanced or detailed (shows its reasoning). Ask if they don't say.
 3. **It never.** What the AI must never say or do in words.
-4. **Per persona.** For each persona in `vita/personas`, how the voice shifts: shorter with domain terms for experts, plainer and more guiding for newcomers.
+4. **Per persona.** For each persona in `vita/personae`, how the voice shifts: shorter with domain terms for experts, plainer and more guiding for newcomers.
 
-Every AI message (replies, summaries, AI labels, explanations) follows this file. If it's missing when you write AI copy, ask for the voice first.
+Every AI message (replies, summaries, AI labels, explanations) follows this file. Until it's set (missing, or still holding `vita:unset`), AI copy uses Vita's default voice in `.vita/docs/foundations/vita-for-ai.md` ("Vita's default voice"): answer first, short, plain, warm and honest.
 
 ## Procedure for each string
 

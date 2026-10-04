@@ -157,13 +157,24 @@ function installAgentLayer({ skills, hook }) {
   }
 }
 
+/** The folder is named for the plural, personae. A product made before the rename keeps every file; only the folder moves. */
+function migratePersonae() {
+  const old = path.join(CWD, "vita/personas")
+  const next = path.join(CWD, "vita/personae")
+  if (fs.existsSync(old) && !fs.existsSync(next)) {
+    fs.renameSync(old, next)
+    ok("vita/personas → vita/personae (renamed, contents kept)")
+  }
+}
+
 function installProductTemplates() {
+  migratePersonae()
   let n = 0
   n += writeFile(path.join(CWD, "vita/product.md"), fs.readFileSync(path.join(PKG, "templates/product.template.md"), "utf8"), { overwrite: false }) ? 1 : 0
-  n += writeFile(path.join(CWD, "vita/personas/_template.md"), fs.readFileSync(path.join(PKG, "templates/persona.template.md"), "utf8"), { overwrite: false }) ? 1 : 0
+  n += writeFile(path.join(CWD, "vita/personae/_template.md"), fs.readFileSync(path.join(PKG, "templates/persona.template.md"), "utf8"), { overwrite: false }) ? 1 : 0
   n += writeFile(path.join(CWD, "vita/taxonomy.json"), fs.readFileSync(path.join(PKG, "templates/taxonomy.template.json"), "utf8"), { overwrite: false }) ? 1 : 0
   n += writeFile(path.join(CWD, "vita/ai-voice.md"), fs.readFileSync(path.join(PKG, "templates/ai-voice.template.md"), "utf8"), { overwrite: false }) ? 1 : 0
-  ok(n ? `product templates → vita/ (product.md, personas/, taxonomy.json, ai-voice.md)` : "vita/ product files already exist (kept)")
+  ok(n ? `product templates → vita/ (product.md, personae/, taxonomy.json, ai-voice.md)` : "vita/ product files already exist (kept)")
 }
 
 function patchPackageJson() {
@@ -200,7 +211,7 @@ Next:
        @import "./${path.relative(path.join(CWD, "src"), path.join(CWD, cfg.stylesDir, "vita.css")).replaceAll("\\", "/")}";
   2. Make sure "${cfg.componentsAlias}" resolves to ${cfg.componentsDir} (tsconfig paths / vite alias).
   3. Mount <TooltipProvider> and <Toaster /> once at the app root.
-  4. Tell your agent about your users (everything you know, analytics included): Vita writes the personas and
+  4. Tell your agent about your users (everything you know, analytics included): Vita writes the personae and
      taxonomy and tunes the copy. Then describe how your AI should speak to set vita/ai-voice.md.
   5. Tune the brand in ${cfg.stylesDir}/theme.css (≈10 knobs).
   6. Run \`npm run vita:audit\` in CI.
@@ -215,7 +226,8 @@ Next:
     ok(`${all.length} modules → ${cfg.componentsDir}: ${all.join(", ")}`)
   },
   update() {
-    log(`\nUpdating Vita system files (your theme.css and vita/ are untouched)\n`)
+    log(`\nUpdating Vita system files (your theme.css and what you wrote in vita/ are untouched)\n`)
+    migratePersonae()
     const present = allComponentIds().filter((id) => fs.existsSync(destFor(id)))
     const ids = installComponents(present.length ? present : allComponentIds())
     ok(`${ids.length} modules refreshed`)

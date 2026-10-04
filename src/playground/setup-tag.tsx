@@ -7,7 +7,7 @@ import { missing } from "./setup"
 export function SetupPill({ files, hint, size }: { files: string[]; hint?: string; size?: "sm" | "md" }) {
   if (!missing(files)) return null
   return (
-    <Tooltip content={`Not set up yet. ${hint ?? ""}`.trim()}>
+    <Tooltip content={hint ?? "Teach Vita this, and it tailors the system to your product."}>
       <span className="flex shrink-0">
         <Tag size={size} tone="brand">Setup</Tag>
       </span>

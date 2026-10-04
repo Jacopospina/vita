@@ -1,20 +1,24 @@
 ---
 name: vita-personae
-description: Create and maintain the product's user personas, their end-to-end journeys, and the product taxonomy (vocabulary) derived from them. Use at the start of any product or major feature, when vita/personas is empty, when someone asks "who is this for", when designing an end-to-end flow, or when words/terminology are inconsistent.
+description: Create and maintain the product's user personae, their end-to-end journeys, and the product taxonomy (vocabulary) derived from them. Use at the start of any product or major feature, when vita/personae is empty, when someone asks "who is this for", when designing an end-to-end flow, or when words/terminology are inconsistent.
 ---
 
-# Vita Personae: personas → journeys → taxonomy
+# Vita Personae: personae → journeys → taxonomy
 
-This is the soul (Anima) shaping the body (Vita). Personas decide who we design for; journeys decide which patterns we need; the taxonomy decides every word.
+This is the soul (Anima) shaping the body (Vita). Personae decide who we design for; journeys decide which patterns we need; the taxonomy decides every word.
 
 ## Inputs to gather first
 
 1. `vita/product.md`: what the product does, for whom, and the core job. If it's empty, interview the user with up to 6 questions: product, users, their job, context of use, frequency, what they fear going wrong.
 2. **Real vocabulary sources**, if available: support tickets, sales-call notes, user interviews, existing UI copy, domain documents. Words must come from users, not from the team.
 
-## Step 1: personas (2–4, never more)
+## Until then: the defaults
 
-Create `vita/personas/<slug>.md` from `vita/personas/_template.md`. Each persona is defined by behavior, not demographics:
+With no personae yet, Vita writes for its default persona, Alex, the average internet user (`.vita/docs/foundations/content.md`, "Vita's defaults"). Your first personae replace it.
+
+## Step 1: personae (2–4, never more)
+
+Create `vita/personae/<slug>.md` from `vita/personae/_template.md`. Each persona is defined by behavior, not demographics:
 
 - **Role and job-to-be-done:** what they're hired to achieve, and how success is measured.
 - **Context:** device, environment, interruptions, time pressure, and frequency (daily power user vs monthly visitor).
@@ -27,7 +31,7 @@ Create `vita/personas/<slug>.md` from `vita/personas/_template.md`. Each persona
   - **Tone:** formal vs casual.
   - **What to never do** to this person.
 
-Mark one persona **primary**. When personas conflict, the primary wins.
+Mark one persona **primary**. When personae conflict, the primary wins.
 
 ## Step 2: journeys (end to end)
 
@@ -57,7 +61,7 @@ Rules:
 
 Summarise, in five lines max, for the team:
 
-- The personas.
+- The personae.
 - The primary persona.
 - The top journeys and their patterns.
 - The taxonomy decisions that changed existing copy.

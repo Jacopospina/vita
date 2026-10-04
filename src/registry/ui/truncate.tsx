@@ -8,7 +8,7 @@ import { AnimatedText } from "@/registry/ui/animated"
  *   end (default) → "Very long project na…" + full text in a tooltip
  *   middle        → "invoice-2026-…-final.pdf" (file names, IDs, the ending matters)
  *   lines         → clamp paragraphs to N lines with a "Show more" toggle
- *   ticker        → "Content, personas & tax…" that glides to its end while its row is hovered or focused
+ *   ticker        → "Content, personae & tax…" that glides to its end while its row is hovered or focused
  *                   (nav rows and list rows, where a tooltip would sit on top of the next row)
  * Never truncate: primary actions, error messages, form labels.
  */

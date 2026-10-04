@@ -6,7 +6,7 @@ This product's UI is built **only** with the Vita design system. Vita is the pro
 
 1. Load the `vita-architect` skill (`.claude/skills/vita-architect/SKILL.md`).
 2. Read `.vita/docs/index.json` to find the right pattern and components. Choose components with `.vita/docs/components/choosing-components.md`.
-3. Write every string with the `vita-copywriting` skill, using `vita/taxonomy.json` and `vita/personas/`.
+3. Write every string with the `vita-copywriting` skill, using `vita/taxonomy.json` and `vita/personae/`.
 4. Add motion only as the `vita-motion-design` skill allows.
 
 ## Hard rules
@@ -28,7 +28,7 @@ This product's UI is built **only** with the Vita design system. Vita is the pro
 |---|---|
 | `vita-architect` | Building or reviewing any UI |
 | `vita-copywriting` | Any user-visible text |
-| `vita-personae` | Personas, end-to-end journeys, taxonomy |
+| `vita-personae` | Personae, end-to-end journeys, taxonomy |
 | `vita-motion-design` | Transitions and animation |
 | `vita-consistency` | Polishing and visual review |
 | `vita-theming` | Brand, density, radius, type changes (theme.css only) |

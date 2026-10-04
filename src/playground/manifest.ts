@@ -21,7 +21,7 @@ export const manifest: Record<Section, NavEntry[]> = {
   foundations: [
     { slug: "accessibility", title: "Accessibility" },
     { slug: "color", title: "Color" },
-    { slug: "content", title: "Content, personas & taxonomy" },
+    { slug: "content", title: "Content, personae & taxonomy" },
     { slug: "vita-for-ai", title: "Vita for AI" },
     { slug: "grid", title: "Grid & layout" },
     { slug: "icons", title: "Icons" },

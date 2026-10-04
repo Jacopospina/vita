@@ -14,4 +14,4 @@
 <!-- e.g. says "I", apologises, guesses a number, uses exclamation marks. -->
 
 ## Per persona
-<!-- How the voice shifts for each persona in vita/personas: shorter and technical for experts, plainer and more guiding for newcomers. -->
+<!-- How the voice shifts for each persona in vita/personae: shorter and technical for experts, plainer and more guiding for newcomers. -->

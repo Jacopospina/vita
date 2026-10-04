@@ -1,7 +1,7 @@
 {
   "$comment": "Vita taxonomy, the ONE vocabulary of the product. Example values use the demo product 'Theo', a platform that deploys custom AI agents. Maintained with the vita-personae skill; enforced by vita-copywriting + vita-audit (avoid list).",
   "product": "Theo",
-  "personas": ["agent-builder", "business-owner"],
+  "personae": ["agent-builder", "business-owner"],
   "objects": {
     "agent": {
       "singular": "agent",
@@ -80,7 +80,7 @@
   },
   "voice": {
     "rules": ["Sentence case", "Front-load the key word", "Numerals for numbers", "No blame", "No 'please', 'simply', 'just'", "Never anthropomorphise agents ('thinks', 'wants')"],
-    "personas": {
+    "personae": {
       "agent-builder": "Technical, terse; terms like model, prompt, tool call and evaluation are welcome.",
       "business-owner": "Plain language, outcome-first (tickets resolved, hours saved), no jargon."
     }

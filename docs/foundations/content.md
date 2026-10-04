@@ -1,25 +1,47 @@
 ---
-title: Content, personas & taxonomy
-summary: Words are part of the design system. Personas decide who we speak to, the taxonomy fixes the words, and skills enforce them.
+title: Content, personae & taxonomy
+summary: Words are part of the design system. Personae decide who we speak to, the taxonomy fixes the words, and skills enforce them.
 status: stable
 use_when:
   - Writing any user-visible string, labels, buttons, errors, empty states, emails, AI responses
-  - Starting a new product or flow (create personas first)
+  - Starting a new product or flow (create personae first)
 avoid_when:
   - Inventing a term that isn't in the taxonomy → add it to the taxonomy first
   - Writing copy before knowing the persona
-setup_title: Vita learns your users
-setup: Teach Vita about your users, everything you know: who they are, the words they use, what worries them, plus interviews, tickets and product analytics. Vita learns their profiles and tailors every word of the copywriting, so your product speaks to them.
+setup_title: Teach Vita your users
+setup: Tell Vita everything you know about your users (who they are, the words they use, what worries them, plus interviews, tickets and product analytics) and it learns their profiles, then tailors every word to them. Until you do, Vita writes for its default persona and word rules (Guidelines tab).
 setup_skill: vita-copywriting
-setup_files: [vita/personas]
+setup_files: [vita/personae]
 ---
 
 ## The chain
 
 1. **`vita/product.md`.** What the product is, for whom, and the job it does.
-2. **`vita/personas/*.md`.** 2–4 personas, created with the `vita-personae` skill.
+2. **`vita/personae/*.md`.** 2–4 personae, created with the `vita-personae` skill.
 3. **`vita/taxonomy.json`.** The one vocabulary: objects, actions, statuses, banned words, tone.
 4. **Every string.** Written with the `vita-copywriting` skill; banned words fail the audit.
+
+## Vita's defaults
+
+Until you teach Vita your users, it writes for the average internet user, drawn from global research on internet use, reading and attitudes to AI. Your own personae and taxonomy replace these defaults.
+
+### Default persona: Alex, 31
+
+- **Phone first.** A mid-range Android phone, often the only way online, used in short sessions between other tasks.
+- **Online about 6½ hours a day.** To find information, keep in touch with family and friends, and watch video.
+- **Their own language first.** Most likely lives in a city in Asia; English is often a second language.
+- **Skims.** Reads about a fifth of a screen, so the first line and the first words do the work.
+- **Everyday reading skills.** Even in the richest countries, 1 adult in 4 struggles with dense text.
+- **Already uses AI.** Wants it fast and right, and worries most that it's wrong.
+- **Data costs money.** Light pages, few images, nothing wasted.
+
+### Default word rules
+
+- **Everyday words.** Words a 9 to 12 year old reader knows; any jargon is explained in passing.
+- **Short sentences.** Under about 20 words, active voice, contractions ("you're", "we'll").
+- **No idioms or slang.** They break in translation, and many readers use English as a second language.
+- **Numbers as digits.** Dates and prices in the reader's local format.
+- **The answer in the first line.** A phone shows 50 to 80 words; what isn't visible without scrolling, most people never find.
 
 ## A persona is
 

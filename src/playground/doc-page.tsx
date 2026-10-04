@@ -67,11 +67,11 @@ export function DocPage({ section, slug }: { section: Section; slug: string }) {
           {doc?.meta.summary && <Text variant="body-lg" tone="muted" className="max-w-prose">{doc.meta.summary}</Text>}
         </Stack>
 
-        {/* Pages that need the maker's input say what to tell Vita: online always, locally until vita/ has it. */}
+        {/* Pages that need the maker's input explain what setup means and what Vita does until then: online always, locally until vita/ has it. */}
         {(setup || isPublished) && typeof doc?.meta.setup === "string" && (
           <InlineNotification
             kind="info"
-            title={setup ? "Not set up yet" : (doc.meta.setup_title as string | undefined) ?? "Vita learns from you"}
+            title={(doc.meta.setup_title as string | undefined) ?? "Teach Vita"}
             subtitle={`${doc.meta.setup} Ask your agent to use the ${doc.meta.setup_skill ?? "vita-copywriting"} skill.`}
           />
         )}
