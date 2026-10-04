@@ -17,6 +17,8 @@ Consistency comes from rules, not taste. Run this checklist on every screen, top
 ## 2. Rhythm & spacing
 
 - [ ] Things that belong together touch (0 gap): button sets, action bars, swatches, segments. Use `Group`/`ButtonSet`/`ActionBar`.
+- [ ] One gutter: cards on a page are 20px apart (the grid gutter, `Stack gap="xl"`) in every direction. A column of stacked cards uses the same gap as the cards beside it; measure, don't eyeball.
+- [ ] One meaning, one surface: a row of related numbers is one `KpiGroup`, related cards one `TileSet`, related rows one `ListGroup`. Separate cards with gaps between them say "these are different things".
 - [ ] Different components side by side have a real gap (≥ 8px, `Inline` default 12px) and are vertically centred on each other.
 - [ ] Gaps inside groups are smaller than gaps between groups: related `xs`, siblings `md`/`lg`, sections `xl`/`2xl`.
 - [ ] Form fields are 24px apart (`Form` handles this). Sections are 32–48px apart.

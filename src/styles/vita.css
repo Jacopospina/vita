@@ -546,6 +546,11 @@
   mask-composite: intersect;
 }
 
+/* A clipped list that goes on: its last rows fade out at the bottom edge, so it reads as continuing (previews). */
+@utility continue-fade {
+  mask-image: linear-gradient(to bottom, black 55%, transparent);
+}
+
 /* PHONES: fields never drop below 16px under a finger (iOS zooms into anything smaller), even in small-text slots. */
 @media (pointer: coarse) {
   input[class], textarea[class], select[class] { font-size: max(1rem, var(--vita-text-body)); }

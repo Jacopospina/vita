@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Add, Filter, Download, TrashCan, Edit, UserAvatar, Bot, Plug, Notification, Security, Information, Chat, Send } from "@/registry/icons"
+import { Add, Filter, Download, TrashCan, Edit, UserAvatar, Bot, Plug, Notification, Security, Information, Chat, Send, Activity, UserMultiple, Queued, SettingsAdjust, Time } from "@/registry/icons"
 import { Stack, Inline, Grid, Column } from "@/registry/ui/layout"
 import { Text } from "@/registry/ui/text"
 import { Tile } from "@/registry/ui/tile"
@@ -25,6 +25,8 @@ import { ContainedList, ContainedListItem } from "@/registry/ui/contained-list"
 import { LoginBlock } from "@/registry/blocks/login"
 import { toast, capsule } from "@/registry/ui/notification"
 import { Icon } from "@/registry/ui/icon"
+import { Kpi, KpiGroup } from "@/registry/ui/kpi"
+import { MiniGauge, MiniLevels, MiniStat, MiniSegments, MiniRange, MiniDial } from "@/registry/ui/mini-chart"
 import { agents, agentColumns } from "@/playground/demos/data"
 
 /*
@@ -54,6 +56,13 @@ export function CardsExample() {
     return () => window.clearInterval(t)
   }, [])
   const [day, setDay] = React.useState<Date | undefined>(new Date())
+  // The live tile breathes with the runs: confidence, load and hand-offs drift as work comes in.
+  const confidence = 86 + (runs % 9)
+  const load = runs % 7
+  const handoffs = 12 + Math.floor((runs - 12840) / 40)
+  const waiting = 6 + (runs % 5)
+  const queue = Math.min(3, 1 + Math.floor(waiting / 4))
+  const threshold = 70
   return (
     <Grid>
       <Column md={8} lg={10}>
@@ -72,37 +81,61 @@ export function CardsExample() {
           <ProgressBar label="Daily quota" hideLabel value={64} size="sm" />
         </Metric>
       </Column>
-      <Column md={4} lg={5}>
-        <Tile className="h-full">
+      {/* One row, three cards: Agents and Team stacked, the live tile, and the calendar, whose card hugs the calendar.
+          Side by side on large screens, one under the other below. */}
+      <Column lg={16}>
+        <div className="flex flex-col gap-5 lg:flex-row">
+        {/* The same gutter as the grid (gap xl, 20px): cards stacked in a column sit as far apart as cards side by side. */}
+        <Stack gap="xl" className="min-w-0 flex-1">
+        <Tile>
           <Stack gap="sm">
             <Text variant="title-3">Agents</Text>
             <StatusIndicator kind="success">Support triage · Live</StatusIndicator>
             <StatusIndicator kind="in-progress">Invoice extractor · Deploying</StatusIndicator>
-            <StatusIndicator kind="pending">Contract reviewer · Awaiting approval</StatusIndicator>
             <StatusIndicator kind="warning">Ticket router · Degraded</StatusIndicator>
-            <StatusIndicator kind="paused">Churn watcher · Paused</StatusIndicator>
           </Stack>
         </Tile>
-      </Column>
-      <Column md={4} lg={5}>
-        <Tile className="h-full">
-          <Stack gap="sm">
+        <Tile className="flex-1">
+          <Stack gap="sm" className="h-full">
             <Text variant="title-3">Team</Text>
+            {/* A preview: the list takes the card's height without growing it, and fades out where it goes on. */}
+            <div className="min-h-0 flex-1 basis-0 overflow-hidden continue-fade">
             <ListGroup>
               <ListItem icon={UserAvatar} tone="brand" title="Ada Lovelace" subtitle="ada@theo.ai" trailing={<Tag size="sm">Owner</Tag>} />
               <ListItem icon={UserAvatar} tone="brand" title="Grace Hopper" subtitle="grace@theo.ai" trailing={<Tag size="sm">Editor</Tag>} />
               <ListItem icon={UserAvatar} tone="brand" title="Alan Turing" subtitle="alan@theo.ai" trailing={<Tag size="sm">Viewer</Tag>} />
+              <ListItem icon={UserAvatar} tone="brand" title="Katherine Johnson" subtitle="katherine@theo.ai" trailing={<Tag size="sm">Viewer</Tag>} />
+              <ListItem icon={UserAvatar} tone="brand" title="Margaret Hamilton" subtitle="margaret@theo.ai" trailing={<Tag size="sm">Editor</Tag>} />
             </ListGroup>
+            </div>
           </Stack>
         </Tile>
-      </Column>
-      <Column md={8} lg={6}>
-        <Tile className="h-full">
+        </Stack>
+        <Tile className="min-w-0 flex-1">
+          <Stack gap="md" className="h-full">
+            <Text variant="title-3">Support triage, live</Text>
+            {/* Two rows of three fill the card to its neighbours' height: edge to edge across, top to bottom down. */}
+            <div className="flex flex-1 flex-col justify-between gap-3 py-3">
+            <div className="flex justify-between">
+              <MiniGauge label={`Answer confidence ${confidence} percent`} value={confidence / 100} fill="success" display={`${confidence}%`} />
+              <MiniLevels label={`Load step ${load + 1} of 7`} icon={Activity} levels={7} active={load} display={["Idle", "Light", "Light", "Busy", "Busy", "Heavy", "Peak"][load]} />
+              <MiniStat label={`${handoffs} hand-offs today`} icon={UserMultiple} tone="info" value={String(handoffs)} caption="hand-offs" />
+            </div>
+            <div className="flex justify-between">
+              <MiniSegments label={`Queue ${queue} of 3 full, ${waiting} tickets waiting`} icon={Queued} filled={queue} value={String(waiting)} />
+              <MiniRange label={`Hands off below ${threshold} percent confidence, between 50 and 95`} icon={SettingsAdjust} value={(threshold - 50) / 45} min="50" max="95" display={String(threshold)} />
+              <MiniDial label="Next run at 15:07" icon={Time} display="15:07" offset={load} />
+            </div>
+            </div>
+          </Stack>
+        </Tile>
+        <Tile className="shrink-0">
           <Stack gap="sm">
             <Text variant="title-3">Schedule a review</Text>
             <Calendar mode="single" selected={day} onSelect={setDay} />
           </Stack>
         </Tile>
+        </div>
       </Column>
       <Column md={4} lg={8}>
         <AISurface>
@@ -142,12 +175,13 @@ export function AgentsExample() {
   return (
     <Stack gap="lg">
       <PageHeader title="Agents" description="Every agent deployed in the Theo workspace." actions={<Button icon={Add} onClick={() => toast({ icon: Bot, source: "Theo", title: "Agent created", subtitle: "Untitled agent is ready to configure." })}>Create agent</Button>} />
-      <Grid>
-        <Column md={4} lg={4}><Metric label="Live agents" value={agents.filter((a) => a.status === "Live").length} delta="2 deployed this week" /></Column>
-        <Column md={4} lg={4}><Metric label="Runs (24h)" value={agents.reduce((n, a) => n + a.runs, 0)} delta="+8% from last week" /></Column>
-        <Column md={4} lg={4}><Metric label="Resolution rate" value={94} delta="% handled without a person" /></Column>
-        <Column md={4} lg={4}><Metric label="Hand-offs" value={37} delta="12 waiting for a reply" /></Column>
-      </Grid>
+      {/* One meaning, one surface: the workspace's numbers sit together, divided by hairlines, never as separate cards. */}
+      <KpiGroup>
+        <Kpi label="Live agents" value={agents.filter((a) => a.status === "Live").length} helperText="2 deployed this week" />
+        <Kpi label="Runs (24h)" value={agents.reduce((n, a) => n + a.runs, 0)} delta={0.08} period="vs last week" />
+        <Kpi label="Resolution rate" value={0.94} format={{ style: "percent" }} helperText="Handled without a person" />
+        <Kpi label="Hand-offs" value={37} helperText="12 waiting for a reply" />
+      </KpiGroup>
       <DataTable
         title="All agents"
         columns={agentColumns}

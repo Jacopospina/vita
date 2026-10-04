@@ -14,6 +14,7 @@ avoid_when:
 ## Touch or space?
 
 - **Belong together → touch.** Button sets, action bars, joined fields, swatches: 0px, one shape (`Group`, `ButtonSet`, `FormRow`).
+- **One gutter between cards.** Cards on a page sit 20px apart (the grid gutter, `gap xl`) whether they sit side by side or stacked in a column; a different gap says the cards relate differently.
 - **Different components → space and align.** A button next to a status, a field next to a hint: at least 8px apart (12px by default with `Inline`), vertically centred on each other.
 
 ## The scale
