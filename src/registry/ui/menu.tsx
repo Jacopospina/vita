@@ -21,7 +21,7 @@ const contentClasses = cn(
   "data-[state=open]:animate-enter-surface data-[state=closed]:animate-exit-scale origin-(--radix-dropdown-menu-content-transform-origin)",
 )
 const itemClasses = cn(
-  "group/mi relative flex h-control-md cursor-default items-center gap-2 rounded-inner-1.5 px-2.5 text-body outline-none select-none",
+  "group/mi relative flex h-control-md cursor-pointer items-center gap-2 rounded-inner-1.5 px-2.5 text-body outline-none select-none",
   "data-[highlighted]:bg-primary data-[highlighted]:text-primary-foreground data-[disabled]:pointer-events-none data-[disabled]:text-disabled-foreground",
 )
 

@@ -26,7 +26,7 @@ export const tickClasses = "absolute left-2.5 text-primary group-data-[highlight
  * fill + medium weight). MULTIPLE choice (Multiselect): a tick in a reserved left slot (pl-8), so labels never move.
  */
 export const itemClasses = cn(
-  "group/item relative flex min-h-control-md w-full cursor-default items-center gap-2 rounded-inner-1.5 py-1 pr-2.5 pl-2.5 text-body outline-none select-none",
+  "group/item relative flex min-h-control-md w-full cursor-pointer items-center gap-2 rounded-inner-1.5 py-1 pr-2.5 pl-2.5 text-body outline-none select-none",
   // The selected fill yields to the highlight: a highlighted row is always full primary with white text.
   "aria-selected:font-medium data-[state=checked]:font-medium aria-selected:not-data-[highlighted]:bg-selected data-[state=checked]:not-data-[highlighted]:bg-selected",
   "data-[highlighted]:bg-primary data-[highlighted]:text-primary-foreground data-[highlighted]:[&_.text-muted-foreground]:text-primary-foreground/80 data-[highlighted]:[&_.text-helper]:text-primary-foreground/80 data-[disabled]:pointer-events-none data-[disabled]:text-disabled-foreground",

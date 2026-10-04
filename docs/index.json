@@ -2156,6 +2156,22 @@
     },
     {
       "section": "decisions",
+      "slug": "cursors",
+      "path": "docs/decisions/cursors.md",
+      "title": "Cursors say the interaction",
+      "summary": "The pointer changes with what is under it, so people know before they click whether a thing opens, selects, types, drags or is unavailable.",
+      "status": "accepted",
+      "date": "2026-10-04",
+      "decided_by": "Jacopo",
+      "related": [
+        "accessibility",
+        "motion",
+        "touch",
+        "ai-label"
+      ]
+    },
+    {
+      "section": "decisions",
       "slug": "fields-and-options",
       "path": "docs/decisions/fields-and-options.md",
       "title": "Fields and options",

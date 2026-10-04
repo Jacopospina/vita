@@ -118,6 +118,7 @@ export const manifest: Record<Section, NavEntry[]> = {
   ],
   decisions: [
     { slug: "how-we-decide", title: "How Vita decides" },
+    { slug: "cursors", title: "Cursors say the interaction" },
     { slug: "glass-by-elevation", title: "Glass by elevation" },
     { slug: "status-semantics", title: "Status semantics" },
     { slug: "weather-tint", title: "Weather tint" },
