@@ -78,9 +78,11 @@ export function CardsExample() {
           <ProgressBar label="Daily quota" hideLabel value={64} size="sm" />
         </Metric>
       </Column>
-      {/* Agents and Team share one column, one under the other, so the next column can show something else. */}
-      <Column md={4} lg={5}>
-        <Stack gap="md" className="h-full">
+      {/* One row, three cards: Agents and Team stacked, the live tile, and the calendar, whose card hugs the calendar.
+          Side by side on large screens, one under the other below. */}
+      <Column lg={16}>
+        <div className="flex flex-col gap-5 lg:flex-row">
+        <Stack gap="md" className="min-w-0 flex-1">
         <Tile>
           <Stack gap="sm">
             <Text variant="title-3">Agents</Text>
@@ -99,31 +101,32 @@ export function CardsExample() {
           </Stack>
         </Tile>
         </Stack>
-      </Column>
-      <Column md={4} lg={5}>
-        <Tile className="h-full">
+        <Tile className="min-w-0 flex-1">
           <Stack gap="md" className="h-full">
             <Stack gap="2xs">
               <Text variant="title-3">Support triage, live</Text>
               <Text tone="muted">One value each, at a glance.</Text>
             </Stack>
             {/* The four fill the tile's height, the space around them shared out evenly in both directions. */}
-            <div className="grid flex-1 grid-cols-[auto_auto] place-content-evenly place-items-center">
-              <MiniGauge label={`Answer confidence ${confidence} percent`} value={confidence / 100} fill="success" display={`${confidence}%`} />
-              <MiniLevels label={`Load step ${load + 1} of 7`} icon={Activity} levels={7} active={load} display={["Idle", "Light", "Light", "Busy", "Busy", "Heavy", "Peak"][load]} />
-              <MiniStat label={`${handoffs} hand-offs today`} icon={UserMultiple} tone="info" value={String(handoffs)} caption="hand-offs" />
-              <MiniDial label="Next run at 15:07" icon={Time} display="15:07" offset={load} />
+            <div className="flex flex-1 flex-col justify-evenly">
+              <div className="flex justify-evenly">
+                <MiniGauge label={`Answer confidence ${confidence} percent`} value={confidence / 100} fill="success" display={`${confidence}%`} />
+                <MiniLevels label={`Load step ${load + 1} of 7`} icon={Activity} levels={7} active={load} display={["Idle", "Light", "Light", "Busy", "Busy", "Heavy", "Peak"][load]} />
+              </div>
+              <div className="flex justify-evenly">
+                <MiniStat label={`${handoffs} hand-offs today`} icon={UserMultiple} tone="info" value={String(handoffs)} caption="hand-offs" />
+                <MiniDial label="Next run at 15:07" icon={Time} display="15:07" offset={load} />
+              </div>
             </div>
           </Stack>
         </Tile>
-      </Column>
-      <Column md={8} lg={6}>
-        <Tile className="h-full">
+        <Tile className="shrink-0">
           <Stack gap="sm">
             <Text variant="title-3">Schedule a review</Text>
             <Calendar mode="single" selected={day} onSelect={setDay} />
           </Stack>
         </Tile>
+        </div>
       </Column>
       <Column md={4} lg={8}>
         <AISurface>
