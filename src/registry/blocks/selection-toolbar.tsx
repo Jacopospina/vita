@@ -132,7 +132,21 @@ export function SelectionToolbar({ actions = editActions, onAsk, askSuggestions,
     asking.current = !!ask
   })
   const [page, setPage] = React.useState(0)
-  const [pos, setPos] = React.useState<{ top: number; left: number } | null>(null)
+  const [pos, setPos] = React.useState<{ left: number; top?: number; bottom?: number } | null>(null)
+  // Where the surface was anchored when it appeared: its left edge relative to the selection, and the side it took.
+  // Width and height changes (paging, the ask panel) grow it from that anchor, so it never shifts sideways.
+  const anchored = React.useRef<{ for: Selected; dx: number; above: boolean } | null>(null)
+  // The content's own size: the surface glides to it, so paging, opening the ask panel and an answer arriving
+  // grow or shrink it instead of jumping.
+  const inner = React.useRef<HTMLDivElement>(null)
+  const [size, setSize] = React.useState<{ w: number; h: number } | null>(null)
+  const open = React.useRef(false)
+  // Nothing travels on arrival: the surface appears where it belongs, and only once it has been painted there do
+  // size changes (paging, the ask panel) glide. Its position never animates.
+  const [settled, setSettled] = React.useState(false)
+  React.useLayoutEffect(() => {
+    open.current = !!sel
+  })
   const [leaving, exit] = useExit(110)
   const touch = useCoarsePointer()
 
@@ -141,7 +155,38 @@ export function SelectionToolbar({ actions = editActions, onAsk, askSuggestions,
     return onAsk ? [{ id: "ask-ai", label: "Ask AI", onSelect: () => {} } as SelectionAction, ...own] : own
   }, [actions, sel?.editable, onAsk])
   const pages = Math.max(1, Math.ceil(available.length / perPage))
-  const shown = available.slice(page * perPage, page * perPage + perPage)
+  const pageList = React.useMemo(() => Array.from({ length: pages }, (_, p) => available.slice(p * perPage, p * perPage + perPage)), [available, pages, perPage])
+  // Every page sits on one track that slides sideways inside the capsule; each page's width and place are measured.
+  const pageRefs = React.useRef<(HTMLDivElement | null)[]>([])
+  const [geom, setGeom] = React.useState<{ w: number[]; x: number[]; chevron: number; pad: number; h: number } | null>(null)
+
+  React.useEffect(() => {
+    if (!pos || settled) return
+    const id = window.requestAnimationFrame(() => window.requestAnimationFrame(() => setSettled(true)))
+    return () => window.cancelAnimationFrame(id)
+  }, [pos, settled])
+
+  const selRef = React.useRef<Selected | null>(null)
+  React.useLayoutEffect(() => {
+    selRef.current = sel
+  })
+  // A new selection made while the old one is leaving keeps its capsule: the exit only clears what it was closing.
+  const close = React.useCallback(() => {
+    const closing = selRef.current
+    exit(() => {
+      if (selRef.current !== closing) return
+      setSel(null)
+      setAsk(null)
+      setPos(null)
+      setSize(null)
+      setGeom(null)
+      setSettled(false)
+    })
+  }, [exit])
+  const closeRef = React.useRef(close)
+  React.useLayoutEffect(() => {
+    closeRef.current = close
+  })
 
   // Shows the moment the selection is made (pointer or keyboard released), never while it's still being dragged.
   React.useEffect(() => {
@@ -153,12 +198,16 @@ export function SelectionToolbar({ actions = editActions, onAsk, askSuggestions,
       if (bar.current?.contains(e.target as Node)) return
       window.setTimeout(() => {
         if (asking.current) return
-        setSel(readSelection(el, bar.current))
-        setPage(0)
+        const next = readSelection(el, bar.current)
+        if (next) {
+          setSel(next)
+          setPage(0)
+        } else if (open.current) closeRef.current()
       }, 0)
     }
     const onKey = (e: KeyboardEvent) => { if (e.shiftKey || e.key === "Shift" || (e.key === "a" && (e.metaKey || e.ctrlKey))) settle(e) }
-    const onChange = () => { if (!asking.current && !readSelection(el, bar.current)) setSel((s) => (s ? null : s)) }
+    // A selection that goes away takes the capsule with it, through its exit.
+    const onChange = () => { if (open.current && !asking.current && !readSelection(el, bar.current)) closeRef.current() }
     el.addEventListener("pointerup", settle)
     el.addEventListener("keyup", onKey)
     document.addEventListener("selectionchange", onChange)
@@ -172,15 +221,52 @@ export function SelectionToolbar({ actions = editActions, onAsk, askSuggestions,
   // Above the selection, centred; below it when there's no room, and always below under a finger (the phone's own
   // menu sits above). Follows the text as the page scrolls.
   React.useLayoutEffect(() => {
-    if (!sel || !root.current) return setPos(null)
+    if (!sel || ask) return
+    const els = pageRefs.current.slice(0, pageList.length)
+    if (els.some((e) => !e)) return
+    const row = inner.current
+    if (!row) return
+    const cs = getComputedStyle(row)
+    setGeom({
+      w: els.map((e) => e!.offsetWidth),
+      x: els.map((e) => e!.offsetLeft),
+      chevron: row.querySelector<HTMLElement>("[aria-label='More actions']")?.offsetWidth ?? 0,
+      pad: parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight),
+      h: row.offsetHeight,
+    })
+  }, [sel, ask, pageList])
+
+  React.useLayoutEffect(() => {
+    const el = inner.current
+    // Only the ask panel is measured as it changes; the capsule's size is known ahead (below).
+    if (!el || !ask) return setSize(null)
+    const measure = () => setSize({ w: el.offsetWidth, h: el.offsetHeight })
+    measure()
+    const ro = new ResizeObserver(measure)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [sel, ask])
+
+  // The capsule's size for the page it is going to, known before it moves: the surface, the page window, the
+  // track and the chevrons all travel together, in the same 150ms, with nothing trailing behind.
+  const box = ask
+    ? size
+    : geom && { w: geom.pad + geom.w[page] + (page > 0 ? geom.chevron : 0) + (page < pages - 1 ? geom.chevron : 0), h: geom.h }
+
+  React.useLayoutEffect(() => {
+    if (!sel || !root.current || !box) return
     const place = () => {
       const r = anchorRect(sel.anchor)
-      const w = bar.current?.offsetWidth ?? 0
-      const h = bar.current?.offsetHeight ?? 0
-      const above = r.top - GAP - h
-      const top = !touch && above >= EDGE ? above : r.bottom + GAP
-      const left = Math.min(Math.max(EDGE, r.left + r.width / 2 - w / 2), window.innerWidth - w - EDGE)
-      setPos({ top, left })
+      const { w, h } = box
+      if (anchored.current?.for !== sel) {
+        const left = Math.min(Math.max(EDGE, r.left + r.width / 2 - w / 2), window.innerWidth - w - EDGE)
+        anchored.current = { for: sel, dx: left - r.left, above: !touch && r.top - GAP - h >= EDGE }
+      }
+      const a = anchored.current
+      // Only a window edge may push it back in; otherwise its left edge stays where it appeared.
+      const left = Math.min(Math.max(EDGE, r.left + a.dx), window.innerWidth - w - EDGE)
+      // Above, it hangs from its bottom edge (it grows upward, away from the words); below, from its top.
+      setPos(a.above ? { left, bottom: window.innerHeight - (r.top - GAP) } : { left, top: r.bottom + GAP })
     }
     place()
     window.addEventListener("scroll", place, true)
@@ -189,9 +275,7 @@ export function SelectionToolbar({ actions = editActions, onAsk, askSuggestions,
       window.removeEventListener("scroll", place, true)
       window.removeEventListener("resize", place)
     }
-  }, [sel, touch, page, ask])
-
-  const close = React.useCallback(() => exit(() => { setSel(null); setAsk(null) }), [exit])
+  }, [sel, touch, box?.w, box?.h]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Escape closes; while asking, so does a press anywhere outside the panel.
   React.useEffect(() => {
@@ -252,88 +336,104 @@ export function SelectionToolbar({ actions = editActions, onAsk, askSuggestions,
   return (
     <div ref={root} className={className}>
       {children}
-      {sel && ask && (
+      {sel && (ask || available.length > 0) && (
+        // One surface for the capsule and the ask panel: its size and corners glide between them. It arrives where it
+        // belongs on its first frame (its enter animation, not a glide), and its position never animates.
         <div
           ref={bar}
-          role="dialog"
-          aria-label="Ask AI about the selection"
-          style={{ top: pos?.top ?? -9999, left: pos?.left ?? -9999 }}
+          role={ask ? "dialog" : "toolbar"}
+          aria-label={ask ? "Ask AI about the selection" : label}
+          onKeyDown={ask ? undefined : onBarKey}
+          // Pressing an action must not clear the selection it acts on (the ask panel needs its own focus).
+          onPointerDown={ask ? undefined : (e) => e.preventDefault()}
+          data-settled={settled ? "" : undefined}
+          style={pos ? { left: pos.left, top: pos.top, bottom: pos.bottom, width: box?.w, height: box?.h } : { top: -9999, left: -9999, width: box?.w, height: box?.h }}
           className={cn(
-            "fixed z-50 flex w-96 max-w-[calc(100vw-1rem)] flex-col gap-2 scope-xl glass glass-3 p-2 text-body",
+            "fixed z-50 overflow-hidden glass glass-3 text-body",
+            ask ? "rounded-xl" : "rounded-pill",
+            "transition-none data-[settled]:transition-[width,height,border-radius] data-[settled]:duration-moderate-01 data-[settled]:ease-productive",
             leaving ? "animate-exit-scale" : "animate-enter-surface",
           )}
         >
-          {/* What the question is about, quoted, so the answer has its context in view. */}
-          <p className="line-clamp-2 border-l-2 border-border-strong pl-2 text-footnote text-muted-foreground">{sel.text}</p>
-          {ask.question && <p className="px-1 font-medium">{ask.question}</p>}
-          {ask.pending && (
-            <div className="flex items-center gap-2 px-1 text-muted-foreground">
-              <Thinking mode="generating" size="sm" label="Reading the selection" />
-              <span>Reading the selection</span>
+          {ask ? (
+            <div ref={inner} key="ask" className="flex w-96 max-w-[calc(100vw-1rem)] flex-col gap-2 p-2 animate-enter-fade">
+              {/* What the question is about, quoted, so the answer has its context in view. */}
+              <p className="line-clamp-2 border-l-2 border-border-strong pl-2 text-footnote text-muted-foreground">{sel.text}</p>
+              {ask.question && <p key={ask.question} className="px-1 font-medium animate-enter-fade">{ask.question}</p>}
+              {/* The work, then the answer, in the same place: a swap that fades in where the other was. */}
+              {ask.pending && (
+                <div key="pending" className="flex items-center gap-2 px-1 text-muted-foreground animate-enter-fade">
+                  <Thinking mode="generating" size="sm" label="Reading the selection" />
+                  <span>Reading the selection</span>
+                </div>
+              )}
+              {ask.answer && (
+                <AISurface key="answer" className="flex flex-col gap-2 animate-enter-fade">
+                  <div className="flex items-start gap-2">
+                    <AILabel title="Answered from your selection">Answered from the words you selected, nothing else.</AILabel>
+                    <p className="min-w-0 flex-1">{ask.answer}</p>
+                  </div>
+                  <ButtonSet>
+                    {sel.editable && <Button size="sm" onClick={replace}>Replace</Button>}
+                    <Button size="sm" variant="secondary" onClick={() => { void navigator.clipboard?.writeText(ask.answer!); close() }}>Copy</Button>
+                  </ButtonSet>
+                </AISurface>
+              )}
+              <Composer
+                label="Ask about the selection"
+                placeholder={ask.answer ? "Ask a follow-up" : "Ask about the selection"}
+                voice={false}
+                attachments={false}
+                suggestions={ask.question ? [] : suggestions}
+                loading={ask.pending}
+                onSubmit={(q) => void send(q)}
+              />
             </div>
-          )}
-          {ask.answer && (
-            <AISurface className="flex flex-col gap-2 animate-enter-fade">
-              <div className="flex items-start gap-2">
-                <AILabel title="Answered from your selection">Answered from the words you selected, nothing else.</AILabel>
-                <p className="min-w-0 flex-1">{ask.answer}</p>
+          ) : (
+            <div ref={inner} key="actions" className="flex h-control-lg w-max items-center p-1">
+              {/* The chevrons open and close sideways (reveal-x), so the row makes room instead of jumping. */}
+              <div className={cn("reveal-x h-full", page > 0 && "reveal-x-open")} inert={page === 0 || undefined}>
+                <div className="flex h-full">
+                  <PageButton icon={ChevronLeft} label="Previous actions" onClick={() => setPage((p) => p - 1)} />
+                </div>
               </div>
-              <ButtonSet>
-                {sel.editable && <Button size="sm" onClick={replace}>Replace</Button>}
-                <Button size="sm" variant="secondary" onClick={() => { void navigator.clipboard?.writeText(ask.answer!); close() }}>Copy</Button>
-              </ButtonSet>
-            </AISurface>
-          )}
-          <Composer
-            label="Ask about the selection"
-            placeholder={ask.answer ? "Ask a follow-up" : "Ask about the selection"}
-            voice={false}
-            attachments={false}
-            suggestions={ask.question ? [] : suggestions}
-            loading={ask.pending}
-            onSubmit={(q) => void send(q)}
-          />
-        </div>
-      )}
-      {sel && !ask && available.length > 0 && (
-        <div
-          ref={bar}
-          role="toolbar"
-          aria-label={label}
-          onKeyDown={onBarKey}
-          // Pressing an action must not clear the selection it acts on.
-          onPointerDown={(e) => e.preventDefault()}
-          style={{ top: pos?.top ?? -9999, left: pos?.left ?? -9999 }}
-          className={cn(
-            "fixed z-50 flex h-control-lg items-center rounded-pill glass glass-3 p-1 text-body",
-            leaving ? "animate-exit-scale" : "animate-enter-surface",
-          )}
-        >
-          {page > 0 && (
-            <PageButton icon={ChevronLeft} label="Previous actions" onClick={() => setPage((p) => p - 1)} />
-          )}
-          {/* A page swap cross-fades in place; the capsule's width follows. */}
-          <div key={page} className="flex h-full items-center animate-enter-fade">
-            {shown.map((a, i) => (
-              <React.Fragment key={a.id}>
-                {i > 0 && <span aria-hidden="true" className="h-4 w-px shrink-0 bg-divider" />}
-                <button
-                  type="button"
-                  tabIndex={i === 0 && page === 0 ? 0 : -1}
-                  onClick={() => void choose(a)}
-                  className={cn(
-                    "flex h-full items-center rounded-pill px-3 whitespace-nowrap focus-ring",
-                    "duration-fast-02 ease-productive hover:bg-hover active:scale-97 active:bg-active active:duration-fast-01 motion-reduce:active:scale-100",
-                    a.tone === "danger" ? "text-error-foreground" : a.id === "ask-ai" ? "font-medium text-primary" : "text-foreground",
-                  )}
+              {/* The pages ride one track: paging slides it sideways under the capsule's edge, and the window
+                  glides to the new page's width. Pages out of view are inert. */}
+              <div className={cn("h-full overflow-hidden", settled ? "transition-[width] duration-moderate-01 ease-productive" : "transition-none")} style={{ width: geom?.w[page] }}>
+                <div
+                  className={cn("flex h-full w-max", settled ? "transition-transform duration-moderate-01 ease-productive" : "transition-none")}
+                  style={{ transform: `translateX(${-(geom?.x[page] ?? 0)}px)` }}
                 >
-                  {a.label}
-                </button>
-              </React.Fragment>
-            ))}
-          </div>
-          {page < pages - 1 && (
-            <PageButton icon={ChevronRight} label="More actions" onClick={() => setPage((p) => p + 1)} />
+                  {pageList.map((group, p) => (
+                    <div key={p} ref={(n) => { pageRefs.current[p] = n }} inert={p !== page || undefined} className="flex h-full shrink-0 items-center">
+                      {group.map((a, i) => (
+                        <React.Fragment key={a.id}>
+                          {i > 0 && <span aria-hidden="true" className="h-4 w-px shrink-0 bg-divider" />}
+                          <button
+                            type="button"
+                            tabIndex={i === 0 && p === page ? 0 : -1}
+                            onClick={() => void choose(a)}
+                            className={cn(
+                              "flex h-full items-center rounded-pill px-3 whitespace-nowrap focus-ring",
+                              "duration-fast-02 ease-productive hover:bg-hover active:scale-97 active:bg-active active:duration-fast-01 motion-reduce:active:scale-100",
+                              // Ask AI speaks in the AI spectrum, the one look that means AI.
+                              a.tone === "danger" ? "text-error-foreground" : a.id === "ask-ai" ? "font-semibold" : "text-foreground",
+                            )}
+                          >
+                            {a.id === "ask-ai" ? <span className="text-ai">{a.label}</span> : a.label}
+                          </button>
+                        </React.Fragment>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className={cn("reveal-x h-full", page < pages - 1 && "reveal-x-open")} inert={page >= pages - 1 || undefined}>
+                <div className="flex h-full">
+                  <PageButton icon={ChevronRight} label="More actions" onClick={() => setPage((p) => p + 1)} />
+                </div>
+              </div>
+            </div>
           )}
         </div>
       )}

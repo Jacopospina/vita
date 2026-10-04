@@ -17,6 +17,8 @@ Vita transitions every property change by default and morphs variants. Your job 
 - **Values**: numbers use `AnimatedNumber` (slot-machine roll, staggered, blur→sharp); changing text uses `AnimatedText` (letter-by-letter stagger, slide up, blur→sharp).
 - **Reorders and layout jumps**: wrap the state change in `morph()` and give moving items a `view-transition-name`.
 - **The space a thing leaves closes over time.** When an item leaves a row, check its NEIGHBOURS, not just the item: a field that fills the row (`flex-1`), the next chip, the button after it. Close the space with it: `Tag onDismiss` does it for you; for your own items use `collapseOut(el)` with `useExit`, or wrap optional controls in `reveal-x` and pull back their gap (`-ml-2` while closed). An exit that fades the item and then lets the row jump is still a snap.
+- **Nothing travels on arrival.** Never transition `top`/`left` (or a translate that places something); a floating surface appears in place, and its size glides only after its first paint.
+- **Content that pages slides.** Paged content rides a track that slides under the container's edge, and the container's size moves in the same duration, computed ahead, never measured after.
 - **Every state of an interactive thing eases.** Hover, pressed, focus, open or selected and disabled each get a transition (colours `duration-fast-02`, press `duration-fast-01`). Changing one state (a colour, a fill) means checking all of them.
 - **Test the neighbour.** Add and remove every optional item (applied filters, clear buttons, counts) and watch the widest sibling. If it changes size in one frame, it snaps.
 

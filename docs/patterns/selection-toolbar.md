@@ -18,7 +18,7 @@ related: [text-toolbar, menu, ai-label, common-actions]
 ## Anatomy
 
 - **Capsule.** Floating glass, centred above the selection; below it when there's no room.
-- **Actions.** Words, not icons, divided by hairlines: Ask AI first (in primary), then the clipboard set, then the product's own.
+- **Actions.** Words, not icons, divided by hairlines: Ask AI first (in the AI spectrum), then the clipboard set, then the product's own.
 - **Danger in red.** Delete is the only red word, and it comes last in its page.
 - **Chevron.** More actions than fit (4 by default) page sideways; a back chevron returns.
 
@@ -47,8 +47,10 @@ Pass `onAsk` and the capsule opens into a small panel about exactly those words.
 
 - **Hover and pressed.** Each action takes the hover wash and gives a little on press (110ms, 70ms for the press).
 - **Focus.** The focus ring, from the keyboard only.
-- **Arrive and leave.** It arrives visible on its first frame and settles into place; it scales out as it leaves.
-- **Paging.** The next page cross-fades in place and the capsule's width follows.
+- **Arrive and leave.** It appears where it belongs, visible on its first frame, and never travels there; it scales out as it leaves, also when the selection is cleared.
+- **Paging.** The actions slide sideways under the capsule's edge, and the capsule's width moves with them in the same 150ms, from a left edge that stays put; the chevrons open and close sideways.
+- **Into the ask panel.** The same surface grows from capsule to panel, its corners easing from pill to rounded; above the words it grows upward, so it never covers them.
+- **The answer arrives.** The panel's height glides as the work and then the answer fade in where they belong.
 
 ## Don't
 
