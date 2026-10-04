@@ -1,5 +1,4 @@
 import * as React from "react"
-import { SwatchPicker } from "@/registry/ui/swatch-picker"
 import { PreviewPicker } from "@/registry/ui/preview-picker"
 import { Stack } from "@/registry/ui/layout"
 import { Text } from "@/registry/ui/text"
@@ -44,14 +43,6 @@ const brandColors = [
   { value: "brown", label: "Clay", hue: 72.8, chroma: 0.064 },
   { value: "gray", label: "Charcoal", hue: 286.2, chroma: 0.02 },
 ]
-const greyTints = [
-  { value: "neutral", label: "Stone", hue: 286, chroma: 0 },
-  { value: "cool", label: "Mist", hue: 250, chroma: 0.012 },
-  { value: "warm", label: "Sand", hue: 70, chroma: 0.012 },
-  { value: "sage", label: "Moss", hue: 150, chroma: 0.01 },
-  { value: "lilac", label: "Haze", hue: 300, chroma: 0.012 },
-]
-const near = (a: number, b: number) => Math.abs(a - b) < 0.5
 
 /** The dial's outer ring is the greys' temperature: cool (Mist's hue) through neutral to warm (Sand's), tinting up to 0.02. */
 const COOL = 250
@@ -176,31 +167,10 @@ export function ThemePanel({ open, onOpenChange, weather, dark, onDarkChange }: 
         <Text variant="caption" tone="muted">
           {weather.mode === "dynamic"
             ? weather.celsius === null ? "Reading the temperature outside…" : `${Math.round(weather.celsius)} °C outside · ${weather.tint === "none" ? "neutral greys" : `${weather.tint} greys`}`
-            : weather.mode === "none" ? "Neutral only: greys never tint." : `${weather.mode === "cold" ? "Cold" : "Warm"} only, whatever the weather. It replaces the neutral hue and tint below.`}
+            : weather.mode === "none" ? "Neutral only: greys never tint." : `${weather.mode === "cold" ? "Cold" : "Warm"} only, whatever the weather. It replaces the dial's outer ring.`}
         </Text>
       </Stack>
       <Separator />
-      <SwatchPicker
-        label="Brand colour"
-        size="sm"
-        items={brandColors.map((c) => ({ value: c.value, label: c.label, color: `var(--vita-palette-${c.value}-500)` }))}
-        value={brandColors.find((c) => near(c.hue, values["--vita-brand-hue"]))?.value ?? ""}
-        onValueChange={(v) => {
-          const c = brandColors.find((x) => x.value === v)!
-          setValues((s) => ({ ...s, "--vita-brand-hue": c.hue, "--vita-brand-chroma": c.chroma }))
-        }}
-      />
-      <SwatchPicker
-        label="Grey tint"
-        size="sm"
-        // vita-allow raw-color: the theme editor previews a grey tint the tokens don't have yet, approved by @jacopo
-        items={greyTints.map((c) => ({ value: c.value, label: c.label, color: `oklch(0.62 ${c.chroma * 4} ${c.hue})` }))}
-        value={greyTints.find((c) => near(c.hue, values["--vita-neutral-hue"]) && Math.abs(c.chroma - values["--vita-neutral-chroma"]) < 0.002)?.value ?? (values["--vita-neutral-chroma"] === 0 ? "neutral" : "")}
-        onValueChange={(v) => {
-          const c = greyTints.find((x) => x.value === v)!
-          setValues((s) => ({ ...s, "--vita-neutral-hue": c.hue, "--vita-neutral-chroma": c.chroma }))
-        }}
-      />
       {Object.entries(knobPreviews).map(([key, p]) => (
         <PreviewPicker
           key={key}
