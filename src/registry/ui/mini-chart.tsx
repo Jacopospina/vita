@@ -226,9 +226,12 @@ export function MiniGauge({ label, size, value, fill = "success", icon, display,
   )
 }
 
-/** A small mode badge for a gauge's footer, a Vita icon in the gauge's tone (Automatic for automatic). */
-export function MiniBadge({ icon, label, tone = "success" }: { icon: IconType; label: string; tone?: MiniTone }) {
-  return <Icon as={icon} label={label} className={cn("size-[17cqw]", toneText[tone])} />
+/**
+ * A small mode badge for a gauge's footer, a Vita icon in the gauge's tone (Automatic for automatic). Decorative:
+ * say the mode in the chart's `label`.
+ */
+export function MiniBadge({ icon, tone = "success" }: { icon: IconType; tone?: MiniTone }) {
+  return <Icon as={icon} className={cn("size-[17cqw]", toneText[tone])} />
 }
 
 /** Range: a setpoint between a low and a high (a thermostat), on a gradient arc. */

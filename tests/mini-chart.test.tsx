@@ -55,11 +55,12 @@ describe("MiniGauge", () => {
     for (const tone of tones)
       for (const v of values)
         it(`tone ${tone}, ${size}, value ${v}`, () => {
-          const { container } = sound(<MiniGauge label="Fan" size={size} value={v} fill={tone} display="15%" footer={<MiniBadge icon={Automatic} label="Automatic" />} />, "Fan", size)
+          const { container } = sound(<MiniGauge label="Fan" size={size} value={v} fill={tone} display="15%" footer={<MiniBadge icon={Automatic} />} />, "Fan", size)
           expect(dashes(container)).toEqual([clamp(v)])
           const [knob] = rotations(container)
           expect(knob).toBeCloseTo(-135 + clamp(v) * 270, 5)
-          expect(container.querySelector("[aria-label=Automatic]")).toBeTruthy()
+          // The badge: the reading's footer holds one Vita icon.
+          expect(container.querySelectorAll("[role=img] > div > span.mt-\\[4cqw\\] svg")).toHaveLength(1)
         })
   for (const [name, stops] of gradients)
     for (const v of values)
@@ -198,7 +199,7 @@ describe("MiniDial", () => {
 describe("MiniBadge", () => {
   for (const tone of tones)
     it(tone, () => {
-      const { container } = render(<MiniBadge icon={Automatic} label="Automatic" tone={tone} />)
+      const { container } = render(<MiniBadge icon={Automatic} tone={tone} />)
       expect(container.querySelector("svg")?.getAttribute("class")).toContain(tone === "neutral" ? "text-muted-foreground" : `text-${tone}`)
     })
 })
