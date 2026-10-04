@@ -132,9 +132,12 @@ export function SelectionToolbar({ actions = editActions, onAsk, askSuggestions,
     asking.current = !!ask
   })
   const [page, setPage] = React.useState(0)
+  // Once someone pages, both chevrons stay where they are (dimmed at the ends), so the pointer never lands on an
+  // action that slid under it.
+  const [paged, setPaged] = React.useState(false)
   const [pos, setPos] = React.useState<{ left: number; top?: number; bottom?: number } | null>(null)
-  // Where the surface was anchored when it appeared: its left edge relative to the selection, and the side it took.
-  // Width and height changes (paging, the ask panel) grow it from that anchor, so it never shifts sideways.
+  // Where the surface was anchored when it appeared: its centre relative to the selection, and the side it took.
+  // Width and height changes (paging, the ask panel) grow it evenly around that centre, so it never shifts.
   const anchored = React.useRef<{ for: Selected; dx: number; above: boolean } | null>(null)
   // The content's own size: the surface glides to it, so paging, opening the ask panel and an answer arriving
   // grow or shrink it instead of jumping.
@@ -171,6 +174,11 @@ export function SelectionToolbar({ actions = editActions, onAsk, askSuggestions,
     selRef.current = sel
   })
   // A new selection made while the old one is leaving keeps its capsule: the exit only clears what it was closing.
+  const go = (to: number) => {
+    setPaged(true)
+    setPage(to)
+  }
+
   const close = React.useCallback(() => {
     const closing = selRef.current
     exit(() => {
@@ -202,6 +210,7 @@ export function SelectionToolbar({ actions = editActions, onAsk, askSuggestions,
         if (next) {
           setSel(next)
           setPage(0)
+          setPaged(false)
         } else if (open.current) closeRef.current()
       }, 0)
     }
@@ -247,11 +256,14 @@ export function SelectionToolbar({ actions = editActions, onAsk, askSuggestions,
     return () => ro.disconnect()
   }, [sel, ask])
 
+  const showPrev = page > 0 || paged
+  const showNext = page < pages - 1 || paged
+
   // The capsule's size for the page it is going to, known before it moves: the surface, the page window, the
   // track and the chevrons all travel together, in the same 150ms, with nothing trailing behind.
   const box = ask
     ? size
-    : geom && { w: geom.pad + geom.w[page] + (page > 0 ? geom.chevron : 0) + (page < pages - 1 ? geom.chevron : 0), h: geom.h }
+    : geom && { w: geom.pad + geom.w[page] + (showPrev ? geom.chevron : 0) + (showNext ? geom.chevron : 0), h: geom.h }
 
   React.useLayoutEffect(() => {
     if (!sel || !root.current || !box) return
@@ -259,12 +271,13 @@ export function SelectionToolbar({ actions = editActions, onAsk, askSuggestions,
       const r = anchorRect(sel.anchor)
       const { w, h } = box
       if (anchored.current?.for !== sel) {
-        const left = Math.min(Math.max(EDGE, r.left + r.width / 2 - w / 2), window.innerWidth - w - EDGE)
-        anchored.current = { for: sel, dx: left - r.left, above: !touch && r.top - GAP - h >= EDGE }
+        const centre = Math.min(Math.max(EDGE + w / 2, r.left + r.width / 2), window.innerWidth - w / 2 - EDGE)
+        anchored.current = { for: sel, dx: centre - r.left, above: !touch && r.top - GAP - h >= EDGE }
       }
       const a = anchored.current
-      // Only a window edge may push it back in; otherwise its left edge stays where it appeared.
-      const left = Math.min(Math.max(EDGE, r.left + a.dx), window.innerWidth - w - EDGE)
+      // `left` is the centre (the surface is translated back by half its width), so a width change grows it evenly
+      // on both sides, frame by frame. Only a window edge may push it back in.
+      const left = Math.min(Math.max(EDGE + w / 2, r.left + a.dx), window.innerWidth - w / 2 - EDGE)
       // Above, it hangs from its bottom edge (it grows upward, away from the words); below, from its top.
       setPos(a.above ? { left, bottom: window.innerHeight - (r.top - GAP) } : { left, top: r.bottom + GAP })
     }
@@ -349,7 +362,8 @@ export function SelectionToolbar({ actions = editActions, onAsk, askSuggestions,
           data-settled={settled ? "" : undefined}
           style={pos ? { left: pos.left, top: pos.top, bottom: pos.bottom, width: box?.w, height: box?.h } : { top: -9999, left: -9999, width: box?.w, height: box?.h }}
           className={cn(
-            "fixed z-50 overflow-hidden glass glass-3 text-body",
+            // Centred on its anchor with `translate` (not transform), so the enter and exit scales don't fight it.
+            "fixed z-50 -translate-x-1/2 overflow-hidden glass glass-3 text-body",
             ask ? "rounded-xl" : "rounded-pill",
             "transition-none data-[settled]:transition-[width,height,border-radius] data-[settled]:duration-moderate-01 data-[settled]:ease-productive",
             leaving ? "animate-exit-scale" : "animate-enter-surface",
@@ -392,9 +406,9 @@ export function SelectionToolbar({ actions = editActions, onAsk, askSuggestions,
           ) : (
             <div ref={inner} key="actions" className="flex h-control-lg w-max items-center p-1">
               {/* The chevrons open and close sideways (reveal-x), so the row makes room instead of jumping. */}
-              <div className={cn("reveal-x h-full", page > 0 && "reveal-x-open")} inert={page === 0 || undefined}>
+              <div className={cn("reveal-x h-full", showPrev && "reveal-x-open")} inert={!showPrev || undefined}>
                 <div className="flex h-full">
-                  <PageButton icon={ChevronLeft} label="Previous actions" onClick={() => setPage((p) => p - 1)} />
+                  <PageButton icon={ChevronLeft} label="Previous actions" disabled={page === 0} onClick={() => go(page - 1)} />
                 </div>
               </div>
               {/* The pages ride one track: paging slides it sideways under the capsule's edge, and the window
@@ -428,9 +442,9 @@ export function SelectionToolbar({ actions = editActions, onAsk, askSuggestions,
                   ))}
                 </div>
               </div>
-              <div className={cn("reveal-x h-full", page < pages - 1 && "reveal-x-open")} inert={page >= pages - 1 || undefined}>
+              <div className={cn("reveal-x h-full", showNext && "reveal-x-open")} inert={!showNext || undefined}>
                 <div className="flex h-full">
-                  <PageButton icon={ChevronRight} label="More actions" onClick={() => setPage((p) => p + 1)} />
+                  <PageButton icon={ChevronRight} label="More actions" disabled={page >= pages - 1} onClick={() => go(page + 1)} />
                 </div>
               </div>
             </div>
@@ -442,14 +456,15 @@ export function SelectionToolbar({ actions = editActions, onAsk, askSuggestions,
 }
 
 /** Sideways chevrons page the actions (they open to the side, decision: disclosure chevrons). */
-function PageButton({ icon, label, onClick }: { icon: IconType; label: string; onClick: () => void }) {
+function PageButton({ icon, label, disabled, onClick }: { icon: IconType; label: string; disabled?: boolean; onClick: () => void }) {
   return (
     <button
       type="button"
+      disabled={disabled}
       tabIndex={-1}
       aria-label={label}
       onClick={onClick}
-      className="flex aspect-square h-full shrink-0 items-center justify-center rounded-full bg-layer-2 text-foreground focus-ring duration-fast-02 ease-productive hover:bg-hover active:scale-95 active:bg-active active:duration-fast-01 motion-reduce:active:scale-100"
+      className="flex aspect-square h-full shrink-0 items-center justify-center rounded-full bg-layer-2 text-foreground focus-ring duration-fast-02 ease-productive hover:bg-hover active:scale-95 active:bg-active active:duration-fast-01 motion-reduce:active:scale-100 disabled:bg-transparent disabled:text-disabled-foreground disabled:active:scale-100"
     >
       <Icon as={icon} />
     </button>

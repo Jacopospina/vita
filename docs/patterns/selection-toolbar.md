@@ -48,8 +48,8 @@ Pass `onAsk` and the capsule opens into a small panel about exactly those words.
 - **Hover and pressed.** Each action takes the hover wash and gives a little on press (110ms, 70ms for the press).
 - **Focus.** The focus ring, from the keyboard only.
 - **Arrive and leave.** It appears where it belongs, visible on its first frame, and never travels there; it scales out as it leaves, also when the selection is cleared.
-- **Paging.** The actions slide sideways under the capsule's edge, and the capsule's width moves with them in the same 150ms, from a left edge that stays put; the chevrons open and close sideways.
-- **Into the ask panel.** The same surface grows from capsule to panel, its corners easing from pill to rounded; above the words it grows upward, so it never covers them.
+- **Paging.** The actions slide sideways under the capsule's edge, and the capsule's width moves with them in the same 150ms, growing or shrinking evenly around the centre it opened at. Once someone pages, both chevrons stay, dimmed at the ends, so an action never slides under the pointer.
+- **Into the ask panel.** The same surface grows from capsule to panel around the same centre, its corners easing from pill to rounded; above the words it grows upward, so it never covers them.
 - **The answer arrives.** The panel's height glides as the work and then the answer fade in where they belong.
 
 ## Don't
