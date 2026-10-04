@@ -55,13 +55,26 @@ const greyTints = [
   { value: "lilac", label: "Haze", hue: 300, chroma: 0.012 },
 ]
 
-/** The dial's outer ring is the greys' temperature: cool (Mist's hue) through neutral to warm (Sand's), tinting up to 0.02. */
+/**
+ * The dial's outer ring is the temperature of the grey you picked: it leans that grey cool (Mist's hue) or warm
+ * (Sand's), up to 0.02 of tint, by adding the two tints as colours (on the OKLCH chroma plane). Stone, untinted,
+ * just takes the lean.
+ */
 const COOL = 250
 const WARM = 70
 const MAX_TINT = 0.02
-const temperatureOf = (hue: number, chroma: number) =>
-  chroma === 0 ? 0.5 : Math.abs(hue - COOL) < 40 ? 0.5 - Math.min(chroma, MAX_TINT) / (2 * MAX_TINT) : Math.abs(hue - WARM) < 40 ? 0.5 + Math.min(chroma, MAX_TINT) / (2 * MAX_TINT) : 0.5
-const tintOf = (t: number) => ({ hue: t < 0.5 ? COOL : WARM, chroma: Math.round(Math.abs(t - 0.5) * 2 * MAX_TINT * 1000) / 1000 })
+const rad = (d: number) => (d * Math.PI) / 180
+function leanGrey(base: { hue: number; chroma: number }, temperature: number) {
+  const lean = Math.abs(temperature - 0.5) * 2 * MAX_TINT
+  const toward = temperature < 0.5 ? COOL : WARM
+  const a = base.chroma * Math.cos(rad(base.hue)) + lean * Math.cos(rad(toward))
+  const b = base.chroma * Math.sin(rad(base.hue)) + lean * Math.sin(rad(toward))
+  const chroma = Math.hypot(a, b)
+  return {
+    hue: chroma < 0.0005 ? base.hue : Math.round((((Math.atan2(b, a) * 180) / Math.PI + 360) % 360) * 10) / 10,
+    chroma: Math.round(chroma * 1000) / 1000,
+  }
+}
 /** The brand colour a hue is closest to, by name ("Tide"), for screen readers. */
 const hueName = (deg: number) => brandColors.filter((c) => c.value !== "gray" && c.value !== "brown").reduce((a, b) => (Math.abs(((b.hue - deg + 540) % 360) - 180) < Math.abs(((a.hue - deg + 540) % 360) - 180) ? b : a)).label
 
@@ -120,6 +133,8 @@ export function ThemePanel({ open, onOpenChange, weather, dark, onDarkChange }: 
 
   const applyPreset = (p: string) => {
     setPreset(p)
+    setGrey("neutral")
+    setTemperature(0.5)
     const root = document.documentElement
     swapAppearance(() => {
       knobs.forEach((k) => root.style.removeProperty(k.key))
@@ -144,7 +159,15 @@ export function ThemePanel({ open, onOpenChange, weather, dark, onDarkChange }: 
     window.setTimeout(() => setCopied(false), 1600)
   }
 
-  const temperature = temperatureOf(values["--vita-neutral-hue"], values["--vita-neutral-chroma"])
+  // The greys: which one (a swatch), then how cool or warm it leans (the dial's outer ring). Stone is the default.
+  const [grey, setGrey] = React.useState("neutral")
+  const [temperature, setTemperature] = React.useState(0.5)
+  const tintGreys = (g: string, t: number) => {
+    // Turning the greys by hand replaces the weather's tint.
+    if (weather.mode !== "none") weather.setMode("none")
+    const c = leanGrey(greyTints.find((x) => x.value === g) ?? greyTints[0], t)
+    setValues((s) => ({ ...s, "--vita-neutral-hue": c.hue, "--vita-neutral-chroma": c.chroma }))
+  }
 
   return (
     // The reset lives in the panel's footer, so it stays in reach however far the knobs scroll.
@@ -174,13 +197,11 @@ export function ThemePanel({ open, onOpenChange, weather, dark, onDarkChange }: 
           describe={{ hue: (h) => hueName(h * 360), brightness: (v) => (v < 0.45 ? "Cool" : v > 0.55 ? "Warm" : "Neutral") }}
           onHueChange={(h) => setValues((s) => ({ ...s, "--vita-brand-hue": Math.round(h * 3600) / 10, "--vita-brand-chroma": s["--vita-brand-chroma"] < 0.05 ? 0.2 : s["--vita-brand-chroma"] }))}
           onBrightnessChange={(v) => {
-            // Turning the greys by hand replaces the weather's tint.
-            if (weather.mode !== "none") weather.setMode("none")
-            const c = tintOf(v)
-            setValues((s) => ({ ...s, "--vita-neutral-hue": c.hue, "--vita-neutral-chroma": c.chroma }))
+            setTemperature(v)
+            tintGreys(grey, v)
           }}
         />
-        <Text variant="caption" tone="muted" className="text-center">Middle: light or dark. Colour ring: brand. Outer ring: cool or warm greys.</Text>
+        <Text variant="caption" tone="muted" className="text-center">Middle: light or dark. Colour ring: brand. Outer ring: how cool or warm your grey leans.</Text>
       </Stack>
       {/* Whether the greys follow the weather: a toggle, centred under the dial. */}
       <Stack gap="2xs" align="center">
@@ -195,7 +216,7 @@ export function ThemePanel({ open, onOpenChange, weather, dark, onDarkChange }: 
         />
         {/* What the toggle does, not its name: the tile already shows the weather. */}
         <Text variant="caption" tone="muted" className="max-w-64 text-center">
-          {weather.mode === "dynamic" ? "Greys warm or cool with the weather outside." : "Off: greys stay as you set them. On, they follow the weather outside."}
+          The weather outside sets how warm or cool the interface looks.
         </Text>
       </Stack>
       <SwatchPicker
@@ -203,12 +224,10 @@ export function ThemePanel({ open, onOpenChange, weather, dark, onDarkChange }: 
         size="sm"
         // vita-allow raw-color: the theme editor previews a grey tint the tokens don't have yet, approved by @jacopo
         items={greyTints.map((c) => ({ value: c.value, label: c.label, color: `oklch(0.62 ${c.chroma * 4} ${c.hue})` }))}
-        value={greyTints.find((c) => Math.abs(c.hue - values["--vita-neutral-hue"]) < 0.5 && Math.abs(c.chroma - values["--vita-neutral-chroma"]) < 0.002)?.value ?? (values["--vita-neutral-chroma"] === 0 ? "neutral" : "")}
+        value={grey}
         onValueChange={(v) => {
-          // Picking a tint by hand replaces the weather's.
-          if (weather.mode !== "none") weather.setMode("none")
-          const c = greyTints.find((x) => x.value === v)!
-          setValues((s) => ({ ...s, "--vita-neutral-hue": c.hue, "--vita-neutral-chroma": c.chroma }))
+          setGrey(v)
+          tintGreys(v, temperature)
         }}
       />
       <Separator />
