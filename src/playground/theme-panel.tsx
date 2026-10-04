@@ -216,7 +216,8 @@ export function ThemePanel({ open, onOpenChange, weather, dark, onDarkChange }: 
         />
         {/* What the toggle does, not its name: the tile already shows the weather. */}
         <Text variant="caption" tone="muted" className="max-w-64 text-center">
-          The weather outside sets how warm or cool the interface looks.
+          {/* What the current state means: who decides how warm or cool the interface looks. */}
+          {weather.mode === "dynamic" ? "The weather outside sets how warm or cool the interface looks." : "Your grey and the outer ring set how warm or cool the interface looks."}
         </Text>
       </Stack>
       <SwatchPicker
