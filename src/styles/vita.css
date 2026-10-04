@@ -180,7 +180,8 @@
   --animate-modal-fall: vita-modal-fall var(--vita-duration-moderate-02) var(--vita-ease-productive-exit) both;
   --animate-modal-send: vita-modal-send var(--vita-duration-moderate-02) var(--vita-ease-productive-exit) both;
   --animate-exit-scale: vita-scale-out var(--vita-duration-fast-02) var(--vita-ease-productive-exit) both;
-  --animate-enter-list: vita-list-rise var(--vita-duration-moderate-01) var(--vita-ease-productive-enter);
+  --animate-enter-list: vita-list-rise var(--vita-duration-fast-02) var(--vita-ease-productive-enter);
+  --animate-enter-surface: vita-surface-in var(--vita-duration-fast-02) var(--vita-ease-productive-enter);
   --animate-exit-list: vita-list-sink var(--vita-duration-fast-02) var(--vita-ease-productive-exit) both;
   --animate-enter-fade: vita-fade-in var(--vita-duration-fast-02) var(--vita-ease-productive-enter);
   --animate-exit-fade: vita-fade-out var(--vita-duration-fast-02) var(--vita-ease-productive-exit) both;

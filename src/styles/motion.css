@@ -32,7 +32,11 @@
 @keyframes vita-slide-up-in { from { opacity: 0; transform: translateY(1rem) scale(0.98); filter: blur(8px) } }
 @keyframes vita-slide-down-out { to { opacity: 0; transform: translateY(0.5rem) } }
 /* Dropdown lists: slide in from below (productive, no scale, no width growth) and sink back out. */
-@keyframes vita-list-rise { from { opacity: 0; transform: translateY(0.5rem) } }
+/* Floating surfaces you asked for (dropdown lists, menus, popovers) are visible on their first frame and only settle
+   into place: a fade from transparent reads as a delay after the click. */
+@keyframes vita-list-rise { from { transform: translateY(0.25rem) } }
+@keyframes vita-surface-in { from { opacity: 0.6; transform: scale(0.98) } }
+@keyframes vita-soft-in { from { opacity: 0.6 } }
 @keyframes vita-list-sink { to { opacity: 0; transform: translateY(0.25rem) } }
 @keyframes vita-slide-left-in { from { transform: translateX(100%) } }
 @keyframes vita-slide-right-out { to { transform: translateX(100%) } }
@@ -161,7 +165,8 @@
     --animate-enter-slide-up: vita-fade-in var(--vita-duration-fast-02) linear;
     --animate-exit-slide-down: vita-fade-out var(--vita-duration-fast-02) linear both;
     --animate-enter-panel-right: vita-fade-in var(--vita-duration-fast-02) linear;
-    --animate-enter-list: vita-fade-in var(--vita-duration-fast-02) linear;
+    --animate-enter-list: vita-soft-in var(--vita-duration-fast-02) linear;
+    --animate-enter-surface: vita-soft-in var(--vita-duration-fast-02) linear;
     --animate-exit-list: vita-fade-out var(--vita-duration-fast-02) linear both;
     --animate-exit-panel-right: vita-fade-out var(--vita-duration-fast-02) linear both;
     --animate-enter-panel-left: vita-fade-in var(--vita-duration-fast-02) linear;

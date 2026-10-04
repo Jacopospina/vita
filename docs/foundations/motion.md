@@ -63,7 +63,7 @@ avoid_when:
 | Use | For |
 |---|---|
 | `stagger` | A container whose children should enter in sequence (and leave in sequence under `data-leaving`) |
-| `animate-enter-*` / `animate-exit-*` | Single elements: scale (popovers, menus), slide-up (notifications, toasts), panel (side panels), fade |
+| `animate-enter-*` / `animate-exit-*` | Single elements: surface (popovers, menus), list (dropdowns), slide-up (notifications, toasts), panel (side panels), fade |
 | `useExit()` | Play the exit before removing something from the DOM |
 
 ## Gravity
@@ -83,6 +83,7 @@ The lowest point is at 60% of the enter. Exits never bounce; they are productive
 | Field message | `animate-drop-in` |
 
 - **Gravity layer.** `vita-gravity` animates the independent `translate` property, so it stacks on any enter that moves with `transform`. Don't use it on elements positioned with `translate` utilities; build the fall into their keyframes instead.
+- **What you open shows at once.** Dropdown lists, menus and popovers are visible on the first frame and only settle into place; they never fade in from transparent.
 - **Productive UI never bounces.** Dialogs, menus, tooltips, popovers, reflow and page transitions stay straight.
 
 ## Durations
