@@ -291,8 +291,8 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/iden
 - [Search](docs/patterns/search.md): Global and scoped search, where it lives, how results appear, and how to handle nothing found.
   - use: Users know what they're looking for by name/ID
   - avoid: Browsing by attributes → Filtering
-- [Selection toolbar](docs/patterns/selection-toolbar.md): The capsule of actions that appears over text the moment someone selects it, Cut, Copy, Paste and Delete, plus what your product can do with the words.
-  - use: Text people select to act on it (notes, messages, documents, generated replies); Offering product actions on a selection (Ask AI, Comment, Translate) next to the clipboard
+- [Selection toolbar](docs/patterns/selection-toolbar.md): The capsule of actions that appears over text the moment someone selects it: Ask AI about the words, Cut, Copy, Paste and Delete, plus what your product can do with them.
+  - use: Text people select to act on it (notes, messages, documents, generated replies); Asking the AI about exactly the words someone selected (explain, summarise, rewrite); Offering product actions on a selection (Comment, Translate) next to the clipboard
   - avoid: Formatting an editor's text (bold, lists, links) → Text toolbar; Actions on a whole item (a row, a card, a file) → Menu
 - [Status indicators](docs/patterns/status-indicators.md): One vocabulary of states across the product, shape, color and word together, mapped in the taxonomy.
   - use: Showing the state of an object (agent, run, deployment, integration)

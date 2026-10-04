@@ -83,6 +83,7 @@ The lowest point is at 60% of the enter. Exits never bounce; they are productive
 | Field message | `animate-drop-in` |
 
 - **Gravity layer.** `vita-gravity` animates the independent `translate` property, so it stacks on any enter that moves with `transform`. Don't use it on elements positioned with `translate` utilities; build the fall into their keyframes instead.
+- **Nothing travels on arrival.** A surface appears where it belongs, on its first frame; it never glides in from a corner or from where it was measured. Floating positions never animate, and size changes glide only once it's on screen.
 - **What you open shows at once.** Dropdown lists, menus and popovers are visible on the first frame and only settle into place; they never fade in from transparent.
 - **Productive UI never bounces.** Dialogs, menus, tooltips, popovers, reflow and page transitions stay straight.
 

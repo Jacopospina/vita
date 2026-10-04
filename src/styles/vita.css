@@ -435,6 +435,9 @@
 }
 
 /* AI outline: the rainbow spectrum, slowly rotating (still under reduced motion). */
+/* Words chosen for the Selection toolbar's ask panel stay marked while focus is in the panel. */
+::highlight(vita-selection) { background-color: var(--vita-primary-subtle); }
+
 /* CURSORS say what kind of interaction is under the pointer (decision: Cursors). Zero specificity, so a component's
    own cursor-* class still wins; disabled comes last and wins over everything clickable. */
 @layer base {

@@ -438,6 +438,11 @@ export const patternDemos: DemoMap = {
       description: "A generated reply: Copy and the product's actions, no Cut, Paste or Delete.",
       render: () => <SelectionToolbarDemo />,
     },
+    {
+      title: "Ask AI about the selection",
+      description: "Ask AI comes first: ask about the words, read the answer in place, and Replace them in editable text.",
+      render: () => <SelectionToolbarDemo editable ai />,
+    },
   ],
 }
 
@@ -510,9 +515,21 @@ const theoSelectionActions: SelectionAction[] = [
   { id: "translate", label: "Translate", onSelect: () => { toast({ title: "Translated" }) } },
 ]
 
-function SelectionToolbarDemo({ editable }: { editable?: boolean }) {
+/** Stands in for the model: answers in Vita's default voice, short and answer first. */
+const askTheo = ({ question, text }: { question: string; text: string }) =>
+  new Promise<string>((done) =>
+    window.setTimeout(() => {
+      const q = question.toLowerCase()
+      if (q.includes("short")) done(text.split(/[,.]/)[0].trim() + ".")
+      else if (q.includes("grammar")) done(text.trim())
+      else if (q.includes("summar")) done("Theo answers tickets it's sure about and hands the rest to a person.")
+      else done("It means Theo replies on its own only when it's confident; otherwise a person takes over.")
+    }, 1200),
+  )
+
+function SelectionToolbarDemo({ editable, ai }: { editable?: boolean; ai?: boolean }) {
   return (
-    <SelectionToolbar actions={[...editActions, ...theoSelectionActions]}>
+    <SelectionToolbar actions={ai ? editActions : [...editActions, ...theoSelectionActions]} onAsk={ai ? askTheo : undefined}>
       <Text
         as="div"
         className="max-w-prose rounded-lg border border-border-subtle bg-background p-4"
