@@ -132,9 +132,6 @@ export function SelectionToolbar({ actions = editActions, onAsk, askSuggestions,
     asking.current = !!ask
   })
   const [page, setPage] = React.useState(0)
-  // Once someone pages, both chevrons stay where they are (dimmed at the ends), so the pointer never lands on an
-  // action that slid under it.
-  const [paged, setPaged] = React.useState(false)
   const [pos, setPos] = React.useState<{ left: number; top?: number; bottom?: number } | null>(null)
   // Where the surface was anchored when it appeared: its centre relative to the selection, and the side it took.
   // Width and height changes (paging, the ask panel) grow it evenly around that centre, so it never shifts.
@@ -174,10 +171,7 @@ export function SelectionToolbar({ actions = editActions, onAsk, askSuggestions,
     selRef.current = sel
   })
   // A new selection made while the old one is leaving keeps its capsule: the exit only clears what it was closing.
-  const go = (to: number) => {
-    setPaged(true)
-    setPage(to)
-  }
+  const go = (to: number) => setPage(to)
 
   const close = React.useCallback(() => {
     const closing = selRef.current
@@ -210,7 +204,6 @@ export function SelectionToolbar({ actions = editActions, onAsk, askSuggestions,
         if (next) {
           setSel(next)
           setPage(0)
-          setPaged(false)
         } else if (open.current) closeRef.current()
       }, 0)
     }
@@ -256,8 +249,9 @@ export function SelectionToolbar({ actions = editActions, onAsk, askSuggestions,
     return () => ro.disconnect()
   }, [sel, ask])
 
-  const showPrev = page > 0 || paged
-  const showNext = page < pages - 1 || paged
+  // A chevron shows only when there is somewhere to go.
+  const showPrev = page > 0
+  const showNext = page < pages - 1
 
   // The capsule's size for the page it is going to, known before it moves: the surface, the page window, the
   // track and the chevrons all travel together, in the same 150ms, with nothing trailing behind.
@@ -408,7 +402,7 @@ export function SelectionToolbar({ actions = editActions, onAsk, askSuggestions,
               {/* The chevrons open and close sideways (reveal-x), so the row makes room instead of jumping. */}
               <div className={cn("reveal-x h-full", showPrev && "reveal-x-open")} inert={!showPrev || undefined}>
                 <div className="flex h-full">
-                  <PageButton icon={ChevronLeft} label="Previous actions" disabled={page === 0} onClick={() => go(page - 1)} />
+                  <PageButton icon={ChevronLeft} label="Previous actions" onClick={() => go(page - 1)} />
                 </div>
               </div>
               {/* The pages ride one track: paging slides it sideways under the capsule's edge, and the window
@@ -444,7 +438,7 @@ export function SelectionToolbar({ actions = editActions, onAsk, askSuggestions,
               </div>
               <div className={cn("reveal-x h-full", showNext && "reveal-x-open")} inert={!showNext || undefined}>
                 <div className="flex h-full">
-                  <PageButton icon={ChevronRight} label="More actions" disabled={page >= pages - 1} onClick={() => go(page + 1)} />
+                  <PageButton icon={ChevronRight} label="More actions" onClick={() => go(page + 1)} />
                 </div>
               </div>
             </div>
@@ -456,15 +450,14 @@ export function SelectionToolbar({ actions = editActions, onAsk, askSuggestions,
 }
 
 /** Sideways chevrons page the actions (they open to the side, decision: disclosure chevrons). */
-function PageButton({ icon, label, disabled, onClick }: { icon: IconType; label: string; disabled?: boolean; onClick: () => void }) {
+function PageButton({ icon, label, onClick }: { icon: IconType; label: string; onClick: () => void }) {
   return (
     <button
       type="button"
-      disabled={disabled}
       tabIndex={-1}
       aria-label={label}
       onClick={onClick}
-      className="flex aspect-square h-full shrink-0 items-center justify-center rounded-full bg-layer-2 text-foreground focus-ring duration-fast-02 ease-productive hover:bg-hover active:scale-95 active:bg-active active:duration-fast-01 motion-reduce:active:scale-100 disabled:bg-transparent disabled:text-disabled-foreground disabled:active:scale-100"
+      className="flex aspect-square h-full shrink-0 items-center justify-center rounded-full bg-layer-2 text-foreground focus-ring duration-fast-02 ease-productive hover:bg-hover active:scale-95 active:bg-active active:duration-fast-01 motion-reduce:active:scale-100"
     >
       <Icon as={icon} />
     </button>
