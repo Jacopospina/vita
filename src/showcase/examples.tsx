@@ -115,7 +115,7 @@ export function CardsExample() {
           <Stack gap="md" className="h-full">
             <Text variant="title-3">Support triage, live</Text>
             {/* Two rows of three fill the card to its neighbours' height: edge to edge across, top to bottom down. */}
-            <div className="flex flex-1 flex-col justify-between gap-3">
+            <div className="flex flex-1 flex-col justify-between gap-3 py-3">
             <div className="flex justify-between">
               <MiniGauge label={`Answer confidence ${confidence} percent`} value={confidence / 100} fill="success" display={`${confidence}%`} />
               <MiniLevels label={`Load step ${load + 1} of 7`} icon={Activity} levels={7} active={load} display={["Idle", "Light", "Light", "Busy", "Busy", "Heavy", "Peak"][load]} />
