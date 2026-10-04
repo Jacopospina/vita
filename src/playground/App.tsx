@@ -9,6 +9,7 @@ import { VitaMark } from "@/brand/vita-mark"
 import { Toaster } from "@/registry/ui/notification"
 import { Search } from "@/registry/ui/search"
 import { manifest, sectionTitles, type Section } from "./manifest"
+import { SetupTag } from "./setup-tag"
 import { globalNav, navHref, searchPages, HOME_URL, MAKE_URL } from "./nav"
 import { GlobalSearch } from "@/registry/blocks/global-search"
 import { EmptyState } from "@/registry/ui/empty-state"
@@ -128,7 +129,7 @@ export function App() {
                 <SideNavSection key={s} title={sectionTitles[s]} collapsible open={!!filter || openSection === s} onOpenChange={(o) => setOpenSection(o ? s : null)}>
                   {about && <SideNavItem href="#/guidelines" active={section === "guidelines"}>About Vita</SideNavItem>}
                   {entries.map((e) => (
-                    <SideNavItem key={e.slug} href={`#/${s}/${e.slug}`} active={s === section && e.slug === slug}>
+                    <SideNavItem key={e.slug} href={`#/${s}/${e.slug}`} active={s === section && e.slug === slug} badge={<SetupTag section={s} slug={e.slug} size="sm" />}>
                       {e.title}
                     </SideNavItem>
                   ))}

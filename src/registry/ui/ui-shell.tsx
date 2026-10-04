@@ -4,6 +4,7 @@ import { Close, Menu as MenuIcon, ChevronDown } from "@/registry/icons"
 import { Collapsible } from "radix-ui"
 import { cn } from "@/registry/lib/utils"
 import { Icon } from "@/registry/ui/icon"
+import { Truncate } from "@/registry/ui/truncate"
 import { IconButton, ActionBar } from "@/registry/ui/button"
 import { useIndicator } from "@/registry/hooks/use-morph"
 
@@ -206,7 +207,7 @@ export function LeftPanel({ children, rail, mobileOnly, className, label = "Side
         data-rail={rail || undefined}
         className={cn(
           // Floating sidebar: frosted glass, inset from the window, rounded; rows inside are concentric (rounded-inner-2).
-          "group/nav z-30 flex shrink-0 flex-col overflow-y-auto glass glass-1 scope-xl p-2",
+          "group/nav z-30 flex shrink-0 flex-col overflow-x-hidden overflow-y-auto glass glass-1 scope-xl p-2",
           // Floats over the scrolling page, below the header (top-17 = 12 above it + 48 tall + 8 below), inset 8px at the sides.
           // On a phone the header is at the bottom, so the sheet keeps clear of it there instead.
           "absolute top-17 bottom-2 left-2 w-60 -translate-x-[calc(100%+1rem)] duration-moderate-02 ease-productive max-sm:top-2 max-sm:bottom-16",
@@ -233,7 +234,11 @@ export function LeftPanel({ children, rail, mobileOnly, className, label = "Side
 const railRow = "group-data-[rail]/nav:lg:px-[calc((var(--spacing)*12-1rem)/2-var(--spacing)*2-1px)]"
 const railHidden = "group-data-[rail]/nav:lg:opacity-0 group-data-[rail]/nav:lg:group-hover/nav:opacity-100"
 
-export function SideNavItem({ href, icon, active, children, onClick }: { href?: string; icon?: IconType; active?: boolean; children: React.ReactNode; onClick?: () => void }) {
+/**
+ * A long label never widens the nav: it truncates and glides to its end on hover (Truncate ticker). `badge` sits
+ * at the row's end, outside the label, so it always stays visible (a "Setup" tag, a count).
+ */
+export function SideNavItem({ href, icon, active, badge, children, onClick }: { href?: string; icon?: IconType; active?: boolean; badge?: React.ReactNode; children: React.ReactNode; onClick?: () => void }) {
   const { setNavOpen } = React.useContext(ShellCtx)
   return (
     <a
@@ -249,7 +254,10 @@ export function SideNavItem({ href, icon, active, children, onClick }: { href?: 
       )}
     >
       {icon && <Icon as={icon} className="text-primary" />}
-      <span className={cn("truncate", railHidden)}>{children}</span>
+      {typeof children === "string"
+        ? <Truncate mode="ticker" className={cn("flex-1", railHidden)}>{children}</Truncate>
+        : <span className={cn("min-w-0 flex-1 truncate", railHidden)}>{children}</span>}
+      {badge && <span className={cn("flex shrink-0", railHidden)}>{badge}</span>}
     </a>
   )
 }

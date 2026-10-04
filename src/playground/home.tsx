@@ -9,6 +9,7 @@ import { IconPlaceholder } from "@/registry/ui/icon-placeholder"
 import { Link } from "@/registry/ui/link"
 import { StructuredList } from "@/registry/ui/structured-list"
 import { manifest } from "./manifest"
+import { InlineNotification } from "@/registry/ui/notification"
 
 /*
  * The documentation home (#/) and the Guidelines index (#/guidelines).
@@ -87,6 +88,13 @@ export function GuidelinesPage() {
           </Text>
           <Inline gap="sm" className="pt-1"><Link href="#/identity/about">Animus, anima, vita</Link><Link href="#/getting-started/installation">Install Vita</Link></Inline>
         </Stack>
+
+        <InlineNotification
+          kind="info"
+          className="max-w-3xl"
+          title="Vita learns your users"
+          subtitle={<>Teach Vita about your users and it learns their profiles, then tailors every word of the copywriting so your product speaks to them. See <Link inline href="#/foundations/content">Content, personas & taxonomy</Link>.</>}
+        />
 
         <Stack gap="lg">
           <SectionHead name="Our guiding principles">What Vita commits to, as a system. The principles every screen follows are in <Link inline href="#/identity/principles">Design principles</Link>.</SectionHead>

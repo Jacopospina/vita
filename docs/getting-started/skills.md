@@ -2,6 +2,10 @@
 title: Skills
 summary: Six skills teach AI agents to design and build with Vita like a designer would, installed with Vita into every product.
 status: stable
+setup_title: The skills learn from you
+setup: Copywriting learns your users and your AI's voice from what you tell it, and from your product analytics if you share them, then tailors every word to them.
+setup_skill: vita-copywriting
+setup_files: [vita/personas, vita/ai-voice.md]
 related: [vita-for-ai, installation, content]
 ---
 

@@ -9,6 +9,10 @@ use_when:
 avoid_when:
   - Branding or marketing flair → the AI spectrum is reserved for AI provenance
   - Plain logic that isn't AI (a sort, a calculation) → ordinary components, no AI marks
+setup_title: Vita learns your AI's voice
+setup: Tell Vita how your AI should speak: its tone, how brief or detailed it is, and what it never says. Vita then tunes that voice to each persona it talks to.
+setup_skill: vita-copywriting
+setup_files: [vita/ai-voice.md]
 related: [ai-label, thinking, intent-first, agent-conversation, voice-conversation, skills]
 ---
 
@@ -21,6 +25,15 @@ related: [ai-label, thinking, intent-first, agent-conversation, voice-conversati
 3. **In the person's control.** AI output is editable, rejectable and revertible; it is never submitted on someone's behalf.
 4. **Honest about the work.** While AI works, the screen shows which kind of work it is (recalling, searching, making), never a spinner.
 5. **Restrained.** AI styling marks provenance; it never decorates. A screen full of rainbows says nothing.
+
+## Your AI's voice
+
+Describe how your AI should speak and Vita keeps every AI message to it. The voice lives in `vita/ai-voice.md`, set up with the `vita-copywriting` skill.
+
+- **Tone.** Up to 3 words that describe it: calm, precise, warm.
+- **Length.** Succinct (the answer first, in one line), balanced, or detailed (it shows its reasoning).
+- **What it never says.** "I", apologies, guessed numbers, exclamation marks: whatever your product rules out.
+- **Tuned per persona.** The personas refine the voice: shorter with domain terms for experts, plainer and more guiding for newcomers.
 
 ## Visual language
 

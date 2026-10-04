@@ -8,6 +8,10 @@ use_when:
 avoid_when:
   - Inventing a term that isn't in the taxonomy → add it to the taxonomy first
   - Writing copy before knowing the persona
+setup_title: Vita learns your users
+setup: Teach Vita about your users, everything you know: who they are, the words they use, what worries them, plus interviews, tickets and product analytics. Vita learns their profiles and tailors every word of the copywriting, so your product speaks to them.
+setup_skill: vita-copywriting
+setup_files: [vita/personas]
 ---
 
 ## The chain

@@ -162,7 +162,8 @@ function installProductTemplates() {
   n += writeFile(path.join(CWD, "vita/product.md"), fs.readFileSync(path.join(PKG, "templates/product.template.md"), "utf8"), { overwrite: false }) ? 1 : 0
   n += writeFile(path.join(CWD, "vita/personas/_template.md"), fs.readFileSync(path.join(PKG, "templates/persona.template.md"), "utf8"), { overwrite: false }) ? 1 : 0
   n += writeFile(path.join(CWD, "vita/taxonomy.json"), fs.readFileSync(path.join(PKG, "templates/taxonomy.template.json"), "utf8"), { overwrite: false }) ? 1 : 0
-  ok(n ? `product templates → vita/ (product.md, personas/, taxonomy.json)` : "vita/ product files already exist (kept)")
+  n += writeFile(path.join(CWD, "vita/ai-voice.md"), fs.readFileSync(path.join(PKG, "templates/ai-voice.template.md"), "utf8"), { overwrite: false }) ? 1 : 0
+  ok(n ? `product templates → vita/ (product.md, personas/, taxonomy.json, ai-voice.md)` : "vita/ product files already exist (kept)")
 }
 
 function patchPackageJson() {
@@ -199,7 +200,8 @@ Next:
        @import "./${path.relative(path.join(CWD, "src"), path.join(CWD, cfg.stylesDir, "vita.css")).replaceAll("\\", "/")}";
   2. Make sure "${cfg.componentsAlias}" resolves to ${cfg.componentsDir} (tsconfig paths / vite alias).
   3. Mount <TooltipProvider> and <Toaster /> once at the app root.
-  4. Fill vita/product.md, then ask your agent: "use the vita-personae skill to create our personas and taxonomy".
+  4. Tell your agent about your users (everything you know, analytics included): Vita writes the personas and
+     taxonomy and tunes the copy. Then describe how your AI should speak to set vita/ai-voice.md.
   5. Tune the brand in ${cfg.stylesDir}/theme.css (≈10 knobs).
   6. Run \`npm run vita:audit\` in CI.
 `)

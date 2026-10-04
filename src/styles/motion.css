@@ -199,6 +199,28 @@
   }
 }
 
+/* Ticker (Truncate mode="ticker"): a truncated line that, while its row is hovered or focused, waits a beat and
+   then glides at reading speed until its end is in view; it eases back when the pointer leaves. Only the
+   glide is a transition: the line's width swap (ellipsis to full text) happens inside the clipping box. */
+.vita-ticker { display: block; min-width: 0; overflow: hidden; }
+.vita-ticker > span {
+  display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  transition-property: transform;
+  transition-duration: var(--vita-duration-moderate-02);
+  transition-timing-function: var(--vita-ease-productive);
+}
+.vita-ticker[data-overflow]:hover > span,
+:is(a, button, [role="option"], [role="treeitem"]):is(:hover, :focus-visible) .vita-ticker[data-overflow] > span {
+  width: max-content; overflow: visible; text-overflow: clip;
+  transform: translateX(calc(-1 * var(--vita-ticker-shift)));
+  transition-duration: calc(var(--vita-ticker-time) * var(--vita-motion-scale));
+  transition-timing-function: linear;
+  transition-delay: var(--vita-duration-slow-01);
+}
+@media (prefers-reduced-motion: reduce) {
+  .vita-ticker[data-overflow] > span { transform: none !important; width: auto !important; text-overflow: ellipsis !important; }
+}
+
 /* ------------------------------------------------------------------
  * NOTHING SNAPS. Every visual property change transitions by default
  * (productive), and sizes can animate to/from auto, so a component
