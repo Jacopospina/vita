@@ -70,7 +70,8 @@ const radii = [
   { v: 0, label: "Square" }, { v: 0.25, label: "Subtle" }, { v: 0.5, label: "Default" }, { v: 0.75, label: "Soft" }, { v: 1.25, label: "Round" },
 ]
 const densities = [{ v: 0.9, label: "Compact" }, { v: 1.08, label: "Default" }, { v: 1.2, label: "Roomy" }]
-const bodySizes = [{ v: 0.75, label: "12" }, { v: 0.8125, label: "13" }, { v: 0.875, label: "14" }, { v: 1, label: "16" }]
+/** Named by what people choose, not the pixels behind them (12, 13, 14, 16). */
+const bodySizes = [{ v: 0.75, label: "Small" }, { v: 0.8125, label: "Medium" }, { v: 0.875, label: "Large" }, { v: 1, label: "Huge" }]
 const ratios = [{ v: 1.125, label: "Subtle" }, { v: 1.2, label: "Default" }, { v: 1.25, label: "Bold" }, { v: 1.333, label: "Dramatic" }]
 const speeds = [{ v: 0, label: "Off" }, { v: 0.5, label: "Quick" }, { v: 1, label: "Default" }, { v: 1.5, label: "Calm" }, { v: 2, label: "Slow" }]
 /** The option nearest a knob's value. */
