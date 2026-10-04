@@ -20,8 +20,6 @@ related: [vita-for-ai, installation, content]
 - **Personae.** Create the product's personas, their journeys and the taxonomy of words derived from them (`vita-personae`).
 - **Theming.** Personalise Vita for a brand by changing only the theme knobs (`vita-theming`).
 
-> [!IMPORTANT] Renamed (2026-10-02): `vita-design-system`, `vita-visual-consistency`, `vita-motion`, `vita-content`, `vita-personas` and `vita-theme` are now the six above. Running `vita update` swaps the folders and removes the old ones.
-
 ## Rules
 
 - **Skills decide; the audit enforces.** A skill guides the agent's choices; the audit and the edit hook catch what slips through.
