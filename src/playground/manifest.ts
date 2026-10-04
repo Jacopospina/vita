@@ -112,6 +112,7 @@ export const manifest: Record<Section, NavEntry[]> = {
     { slug: "read-only-states", title: "Read-only states" },
     { slug: "right-panel", title: "Right panel" },
     { slug: "search", title: "Search" },
+    { slug: "selection-toolbar", title: "Selection toolbar" },
     { slug: "status-indicators", title: "Status indicators" },
     { slug: "text-toolbar", title: "Text toolbar" },
     { slug: "voice-conversation", title: "Voice conversation" },

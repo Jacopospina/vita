@@ -42,6 +42,7 @@ const map: Record<string, string[]> = {
   "patterns/login": ["registry/blocks/login.tsx"],
   "patterns/email-message": ["registry/blocks/email-message.tsx", "registry/ui/avatar.tsx"],
   "patterns/global-search": ["registry/blocks/global-search.tsx"],
+  "patterns/selection-toolbar": ["registry/blocks/selection-toolbar.tsx"],
   "patterns/notifications": ["registry/ui/notification.tsx"],
   "patterns/overflow-content": ["registry/ui/truncate.tsx"],
   "patterns/read-only-states": ["registry/ui/structured-list.tsx"],
