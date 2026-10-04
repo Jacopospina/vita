@@ -12,6 +12,7 @@ import { ListItem, ListGroup, ListSection } from "@/registry/ui/list-item"
 import { IconPlaceholder } from "@/registry/ui/icon-placeholder"
 import { PageHeader } from "@/registry/ui/page-header"
 import { GlobalSearch } from "@/registry/blocks/global-search"
+import { SelectionToolbar, editActions, type SelectionAction } from "@/registry/blocks/selection-toolbar"
 import { Kpi, KpiGroup } from "@/registry/ui/kpi"
 import { Truncate } from "@/registry/ui/truncate"
 import { LoginBlock } from "@/registry/blocks/login"
@@ -426,6 +427,18 @@ export const patternDemos: DemoMap = {
     },
   ],
   "patterns/text-toolbar": [{ title: "Formatting toolbar", render: () => <TextToolbarDemo /> }],
+  "patterns/selection-toolbar": [
+    {
+      title: "Select text to act on it",
+      description: "Editable text gets the clipboard set; Theo's own actions page in behind the chevron.",
+      render: () => <SelectionToolbarDemo editable />,
+    },
+    {
+      title: "Text you can only read",
+      description: "A generated reply: Copy and the product's actions, no Cut, Paste or Delete.",
+      render: () => <SelectionToolbarDemo />,
+    },
+  ],
 }
 
 function ControlRows() {
@@ -489,3 +502,24 @@ patternDemos["components/list-item"] = patternDemos["patterns/list-items"]
 export { IconButton }
 
 // The Global search component page shows the same live demo as the pattern.
+
+/** Theo's own actions on a selection, after the clipboard set. */
+const theoSelectionActions: SelectionAction[] = [
+  { id: "ask", label: "Ask Theo", onSelect: () => { toast({ title: "Sent to Theo" }) } },
+  { id: "comment", label: "Comment", onSelect: () => { toast({ title: "Comment added" }) } },
+  { id: "translate", label: "Translate", onSelect: () => { toast({ title: "Translated" }) } },
+]
+
+function SelectionToolbarDemo({ editable }: { editable?: boolean }) {
+  return (
+    <SelectionToolbar actions={[...editActions, ...theoSelectionActions]}>
+      <Text
+        as="div"
+        className="max-w-prose rounded-lg border border-border-subtle bg-background p-4"
+        {...(editable ? { contentEditable: true, suppressContentEditableWarning: true, role: "textbox", "aria-label": "Note" } : {})}
+      >
+        Support triage reads each new ticket, checks the help center and past resolutions, and answers when it is confident. When the customer asks for a person, it hands the conversation to the Support queue with a summary.
+      </Text>
+    </SelectionToolbar>
+  )
+}

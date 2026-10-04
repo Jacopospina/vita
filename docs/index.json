@@ -2063,6 +2063,29 @@
     },
     {
       "section": "patterns",
+      "slug": "selection-toolbar",
+      "path": "docs/patterns/selection-toolbar.md",
+      "title": "Selection toolbar",
+      "summary": "The capsule of actions that appears over text the moment someone selects it, Cut, Copy, Paste and Delete, plus what your product can do with the words.",
+      "status": "experimental",
+      "import": "import { SelectionToolbar, editActions } from \"@/components/vita/selection-toolbar\"",
+      "use_when": [
+        "Text people select to act on it (notes, messages, documents, generated replies)",
+        "Offering product actions on a selection (Ask AI, Comment, Translate) next to the clipboard"
+      ],
+      "avoid_when": [
+        "Formatting an editor's text (bold, lists, links) → Text toolbar",
+        "Actions on a whole item (a row, a card, a file) → Menu"
+      ],
+      "related": [
+        "text-toolbar",
+        "menu",
+        "ai-label",
+        "common-actions"
+      ]
+    },
+    {
+      "section": "patterns",
       "slug": "status-indicators",
       "path": "docs/patterns/status-indicators.md",
       "title": "Status indicators",
