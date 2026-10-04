@@ -10,6 +10,7 @@ export const manifest: Record<Section, NavEntry[]> = {
     { slug: "installation", title: "Installation" },
     { slug: "cli", title: "CLI" },
     { slug: "skills", title: "Skills" },
+    { slug: "desktop", title: "Designing for desktop" },
     { slug: "registry", title: "Registry" },
     { slug: "changelog", title: "Changelog" },
   ],

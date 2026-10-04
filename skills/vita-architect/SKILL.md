@@ -37,6 +37,13 @@ Design how it feels to use, not only how it looks.
 - **Recognition over recall.** Show options, recent values and the current state rather than asking people to remember them.
 - **Same thing, same place.** A control that moves between screens is a control people have to find again.
 
+### On desktop (`.vita/docs/getting-started/desktop.md`)
+
+- **More in fewer levels.** Use the width (list beside detail, right panel beside the page) instead of nesting or modals.
+- **Every command in reach.** Global search (⌘K) and menus; right-click only accelerates.
+- **Precision and keys.** Shift and ⌘-click selection, drag to select, left-hand shortcuts shown in tooltips, every task by keyboard alone.
+- **People shape their space.** Panels open, close and fold; the layout works at every window width and remembers their choices.
+
 ## Workflow
 
 1. **Understand the job.** Which persona (`vita/personae/*.md`)? What task, what frequency, what context? If personae don't exist yet, run the `vita-personae` skill first.
