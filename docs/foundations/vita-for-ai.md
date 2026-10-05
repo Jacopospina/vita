@@ -128,3 +128,5 @@ Agents don't need more parts; they need judgment. Vita writes every design decis
 - **Visible exceptions.** A deviation needs a written reason and an approver; `pnpm exceptions` lists them all.
 - **One source of UI.** Agents compose Vita components and pick by intent; they never invent local ones.
 - **Read before changing.** A decided thing changes only by superseding its record, in the same commit.
+- **Three kinds of context.** Global rules every task follows, local docs for one task, ambient files about your product: each rule has one home (Skills, "Three kinds of context").
+- **Context stays healthy.** `pnpm check` fails when the global context outgrows one sitting, a rule is copied in two places or a reference points at a file that no longer exists.
