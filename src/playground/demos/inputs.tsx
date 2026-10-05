@@ -152,6 +152,17 @@ export const inputDemos: DemoMap = {
       ),
     },
   ],
+  "components/selection-highlight": [
+    {
+      title: "Select across lines",
+      description: "Drag across the lines: each row has soft corners and melts into the next where they meet, with no transition.",
+      render: () => (
+        <Text className="max-w-prose">
+          Support triage reads each new ticket, checks the help center and past resolutions, and answers when it is confident. When the customer asks for a person, it hands the conversation to the Support queue with a summary.
+        </Text>
+      ),
+    },
+  ],
   "components/search": [
     {
       title: "Field, toolbar, expandable, sizes",

@@ -1258,6 +1258,25 @@
     },
     {
       "section": "components",
+      "slug": "selection-highlight",
+      "path": "docs/components/selection-highlight.md",
+      "title": "Selection highlight",
+      "summary": "How selected text looks in Vita, rounded rows in the primary's tint that melt into each other where lines meet, drawn from the first frame of the drag.",
+      "status": "experimental",
+      "import": "import { SelectionHighlight } from \"@/components/vita/selection-highlight\"",
+      "use_when": [
+        "Once, at the app root, so every selection in the product looks the same"
+      ],
+      "avoid_when": [
+        "Marking text that isn't selected (search matches, mentions) → a Tag or a styled span"
+      ],
+      "related": [
+        "selection-toolbar",
+        "text"
+      ]
+    },
+    {
+      "section": "components",
       "slug": "slider",
       "path": "docs/components/slider.md",
       "title": "Slider",

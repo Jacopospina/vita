@@ -436,9 +436,9 @@
 
 /* AI outline: the rainbow spectrum, slowly rotating (still under reduced motion). */
 
-/* The Selection toolbar draws its own selection (rounded rows that blend); the browser's square one stays hidden,
-   except in fields, whose selected text has no boxes to draw. */
-.vita-selection-mark :not(input, textarea)::selection { background-color: transparent; }
+/* With SelectionHighlight mounted, Vita draws every selection (rounded rows that blend); the browser's square one
+   stays hidden, except in fields, whose selected text has no boxes to draw. */
+:root.vita-drawn-selection :not(input, textarea)::selection { background-color: transparent; }
 
 /* CURSORS say what kind of interaction is under the pointer (decision: Cursors). Zero specificity, so a component's
    own cursor-* class still wins; disabled comes last and wins over everything clickable. */

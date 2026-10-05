@@ -1,4 +1,5 @@
 import * as React from "react"
+import { SelectionHighlight } from "@/registry/ui/selection-highlight"
 import { StageBadge } from "@/playground/stage-badge"
 import { Moon, Sun, LogoGithub, ColorPalette } from "@/registry/icons"
 import { Shell, ShellMain, Header, HeaderNavItem, HeaderGlobalAction, HeaderSeparator, LeftPanel, SideNavItem } from "@/registry/ui/ui-shell"
@@ -88,6 +89,8 @@ export function Showcase({ page = "home" }: { page?: "home" | "make" }) {
         <ThemePanel open={themeOpen} onOpenChange={setThemeOpen} weather={weather} dark={dark} onDarkChange={(d) => setDark(d)} />
       </Shell>
       <Toaster />
+      {/* Every selection on the page is drawn the Vita way: soft-cornered rows that blend. */}
+      <SelectionHighlight />
     </TooltipProvider>
   )
 }

@@ -73,6 +73,7 @@ export const manifest: Record<Section, NavEntry[]> = {
     { slug: "radio-button", title: "Radio button" },
     { slug: "scramble-text", title: "Scramble text" },
     { slug: "search", title: "Search" },
+    { slug: "selection-highlight", title: "Selection highlight" },
     { slug: "select", title: "Select" },
     { slug: "slider", title: "Slider" },
     { slug: "structured-list", title: "Structured list" },
