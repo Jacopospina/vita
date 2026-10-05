@@ -234,7 +234,7 @@ export interface IconButtonProps extends Omit<ButtonProps, "icon" | "iconPositio
 
 /** IconButton, icon-only action. Defaults to ghost. Always has a tooltip. */
 export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
-  ({ icon, label, variant = "ghost", size = "md", tooltipSide = "bottom", pressed, className, shortcut, ...props }, ref) => (
+  ({ icon, label, variant = "ghost", size = "md", tooltipSide = "top", pressed, className, shortcut, ...props }, ref) => (
     <Tooltip content={shortcut ? <span className="inline-flex items-center gap-2">{label}<Kbd keys={shortcut} className="border-transparent bg-transparent text-inverse-foreground" /></span> : label} side={tooltipSide}>
       <Button
         ref={ref}

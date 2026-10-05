@@ -4,6 +4,8 @@ import { cn } from "@/registry/lib/utils"
 
 /**
  * Tooltip, a short, plain-text NAME or HINT for something on hover/focus.
+ * Placement: above the thing it names, by default and almost always. When there's no room above, it flips to
+ * wherever it fits inside the viewport (8px clear of the edges), never over the words it describes.
  * Never put interactive content, critical info or long text in a tooltip → use Popover (toggletip).
  */
 /** Tooltips appear the moment the pointer arrives (no wait), drawn on their first frame with a quick fade. */
@@ -47,7 +49,7 @@ export function Tooltip({ content, children, side = "top", align = "center", dis
 /** DefinitionTooltip, dotted-underline term with a definition. For glossary terms in body copy. */
 export function DefinitionTooltip({ term, definition }: { term: React.ReactNode; definition: React.ReactNode }) {
   return (
-    <Tooltip content={definition} side="bottom" align="start">
+    <Tooltip content={definition} align="start">
       <button type="button" className="cursor-help rounded-sm border-b border-dotted border-border-strong focus-ring">
         {term}
       </button>

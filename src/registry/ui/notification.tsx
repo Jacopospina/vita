@@ -1,6 +1,7 @@
 import * as React from "react"
 import { Close } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
+import { GotchaHost } from "@/registry/ui/gotcha"
 import { status } from "@/registry/lib/status"
 import { Icon } from "@/registry/ui/icon"
 import { Button } from "@/registry/ui/button"
@@ -345,6 +346,8 @@ export function Toaster() {
   const fanned = open || stack.length <= 1
   return (
     <>
+      {/* Gotchas (the tiny "Copied" beside the pointer) come with notifications, so one mount gives both. */}
+      <GotchaHost />
       <div
         ref={banners}
         aria-live="polite"

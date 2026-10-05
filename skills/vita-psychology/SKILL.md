@@ -49,7 +49,8 @@ A checklist tells an agent what to do; this skill tells it why, so it can decide
 - **Anchors.** The first number or option seen frames the rest. Order options by what the person wants (frequency, then alphabet), never by what the product wants chosen.
 - **Framing and loss aversion.** The same fact reads differently as gain or loss. State consequences plainly and symmetrically ("Deleting removes 12 files"), never as a threat ("You will lose everything"), and never dress a cancel as a loss.
 - **Choice overload.** Beyond about six comparable options people choose worse or not at all. Offer a recommended option, group the rest, and let search do the choosing past twenty.
-- **Peak and end.** A flow is remembered by its hardest moment and its last one. Make the end a clear "done" (a `toast` or a success `EmptyState` with the next step), and spend the care on the step people dread (payment, deletion, the long form).
+- **Peak and end.** A flow is remembered by its hardest moment and its last one. Make the end of a flow a clear "done" (a success `EmptyState` with the next step, or a `toast` when the result lands elsewhere), and spend the care on the step people dread (payment, deletion, the long form).
+- **Confirm where the eyes are.** A small, local action (copy, save, toggle) confirms where the person is looking: a labelled control changes its own state ("Copy" becomes "Copied"); only with no label and no room on screen, a `gotcha` beside the pointer. Never a notification across the screen.
 - **Trust is cumulative.** Every honest signal (a true progress bar, a visible AI mark, a real Undo) earns a little; one dishonest one spends it all. AI output is marked (`AILabel`), explainable and reversible (`.vita/docs/foundations/vita-for-ai.md`).
 - **Reciprocity and social proof, with care.** Give before asking (a useful empty state before a sign-up), and show what others did only when it is true and relevant, never as invented counts or urgency.
 
