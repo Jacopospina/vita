@@ -99,6 +99,7 @@ Are items uniform records with the same attributes?
 | Something needs fixing, tied to a section | `InlineNotification` near the cause |
 | Must decide before continuing | `ConfirmModal` / `Modal` |
 | Static guidance in content | `Callout` |
+| A one-line hint or requirement under a field or a block | `HelperText` |
 | State of an object | `StatusIndicator` (or `Tag` in dense rows) |
 | Name or explain an icon/term on hover | `Tooltip` / `DefinitionTooltip` |
 | Explanation with a link or rich content | `Toggletip` / `Popover` |

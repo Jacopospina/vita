@@ -52,6 +52,7 @@ export const manifest: Record<Section, NavEntry[]> = {
     { slug: "dropdown", title: "Dropdown" },
     { slug: "file-uploader", title: "File uploader" },
     { slug: "form", title: "Form" },
+    { slug: "helper-text", title: "Helper text" },
     { slug: "icon-placeholder", title: "Icon placeholder" },
     { slug: "inline-loading", title: "Inline loading" },
     { slug: "kpi", title: "KPI" },

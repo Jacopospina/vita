@@ -4,6 +4,8 @@ import { CheckmarkFilled, Misuse } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { Stack, Inline } from "@/registry/ui/layout"
 import { Text } from "@/registry/ui/text"
+import { Button } from "@/registry/ui/button"
+import { HelperText } from "@/registry/ui/helper-text"
 import { Tile, TileSet, TileSetItem } from "@/registry/ui/tile"
 import { Icon } from "@/registry/ui/icon"
 import { Callout } from "@/registry/ui/notification"
@@ -21,7 +23,7 @@ marked.setOptions({ gfm: true })
  *   plain list                 → compact card
  *   > [!TIP] / [!NOTE] / [!IMPORTANT] / [!WARNING] / [!CAUTION] / plain quote → Callout
  *   table                      → StructuredList
- *   code                       → CodeSnippet
+ *   code                       → CodeSnippet (a paragraph right under it is its helper text)
  */
 export function Markdown({ source }: { source: string; className?: string }) {
   const tokens = React.useMemo(() => marked.lexer(source), [source])
@@ -54,9 +56,27 @@ function splitSections(tokens: Token[]) {
 function Blocks({ tokens, context }: { tokens: Token[]; context: string }) {
   // Each block's context is the nearest heading above it (drives do/don't styling).
   const contexts = tokens.reduce<string[]>((acc, t, i) => [...acc, t.type === "heading" ? (t as Tokens.Heading).text : (acc[i - 1] ?? context)], [])
+  // A paragraph right under a code block is that block's helper text, set like a field's: small, muted, close.
+  const solid = tokens.map((t, i) => [t, i] as const).filter(([t]) => t.type !== "space")
+  const helperOf = new Map<number, Tokens.Paragraph>()
+  solid.forEach(([t, i], n) => {
+    const next = solid[n + 1]?.[0]
+    if (t.type === "code" && next?.type === "paragraph") helperOf.set(i, next as Tokens.Paragraph)
+  })
+  const helpers = new Set(helperOf.values())
   return (
     <>
-      {tokens.map((t, i) => <Block key={i} token={t} context={contexts[i]} />)}
+      {tokens.map((t, i) => {
+        if (helpers.has(t as Tokens.Paragraph)) return null
+        const help = helperOf.get(i)
+        if (!help) return <Block key={i} token={t} context={contexts[i]} />
+        return (
+          <div key={i}>
+            <Block token={t} context={contexts[i]} />
+            <HelperText>{inline(help.text)}</HelperText>
+          </div>
+        )
+      })}
     </>
   )
 }
@@ -91,21 +111,35 @@ function Block({ token: t, context }: { token: Token; context: string }) {
 
 /* ---------------- alerts ---------------- */
 
+/* The kind shows in the colour and the icon; the alert never names its own type ("Tip", "Note"): the words lead. */
 const alertKinds = {
-  NOTE: { kind: "info", title: "Note" },
-  TIP: { kind: "success", title: "Tip" },
-  IMPORTANT: { kind: "info", title: "Important" },
-  WARNING: { kind: "warning", title: "Warning" },
-  CAUTION: { kind: "error", title: "Never" },
+  NOTE: { kind: "info" },
+  TIP: { kind: "success" },
+  IMPORTANT: { kind: "info" },
+  WARNING: { kind: "warning" },
+  CAUTION: { kind: "error" },
 } as const
 
+/**
+ * An alert with a fenced block inside (```prompt) carries it as one Copy button instead of showing code: for people
+ * who don't read code, the alert says what to do and the button does the copying.
+ */
 function Alert({ token }: { token: Tokens.Blockquote }) {
-  const m = /^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*/.exec(token.text)
-  const spec = m ? alertKinds[m[1] as keyof typeof alertKinds] : { kind: "info" as const, title: undefined }
-  const body = m ? token.text.slice(m[0].length) : token.text
+  const code = token.tokens.find((x) => x.type === "code") as Tokens.Code | undefined
+  const text = code ? token.tokens.filter((x) => x.type === "paragraph").map((x) => (x as Tokens.Paragraph).text).join(" ") : token.text
+  const m = /^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*/.exec(text)
+  const spec = m ? alertKinds[m[1] as keyof typeof alertKinds] : { kind: "info" as const }
+  const body = m ? text.slice(m[0].length) : text
   return (
-    <Callout kind={spec.kind} title={spec.title} className="max-w-3xl">
-      <span className="text-foreground">{inline(body.replace(/\n/g, " "))}</span>
+    <Callout kind={spec.kind} className="max-w-3xl">
+      <Stack gap="sm" align="start">
+        <span className="text-foreground">{inline(body.replace(/\n/g, " "))}</span>
+        {code && (
+          <Button size="sm" feedback={{ success: "Copied" }} onAction={() => navigator.clipboard.writeText(code.text)}>
+            {code.lang === "prompt" ? "Copy prompt" : "Copy"}
+          </Button>
+        )}
+      </Stack>
     </Callout>
   )
 }

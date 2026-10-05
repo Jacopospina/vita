@@ -8,6 +8,7 @@ import { Button } from "@/registry/ui/button"
 import { Checkbox, CheckboxGroup } from "@/registry/ui/checkbox"
 import { RadioGroup, RadioButton } from "@/registry/ui/radio-button"
 import { TextInput, PasswordInput, TextArea } from "@/registry/ui/text-input"
+import { HelperText } from "@/registry/ui/helper-text"
 import { NumberInput } from "@/registry/ui/number-input"
 import { Search } from "@/registry/ui/search"
 import { Select, SelectOption, SelectGroup } from "@/registry/ui/select"
@@ -441,6 +442,14 @@ export const inputDemos: DemoMap = {
   "components/file-uploader": [
     { title: "Drop zone", render: () => <UploaderDemo variant="dropzone" /> },
     { title: "Button", render: () => <UploaderDemo variant="button" /> },
+  ],
+  "components/helper-text": [
+    { title: "Helper text", description: "One small, muted line that says how to use what it sits under.", render: () => <HelperText>Visible to everyone in the workspace</HelperText> },
+    {
+      title: "Under a field",
+      description: "A field's helperText is the same line, set for you.",
+      render: () => <TextInput label="Workspace name" helperText="Visible to everyone in the workspace" className="max-w-sm" />,
+    },
   ],
   "components/form": [
     { title: "Default form", description: "Submit empty to see validation.", render: () => <FormDemo /> },
