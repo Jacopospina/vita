@@ -2,6 +2,8 @@
 
 This product's UI is built **only** with the Vita design system. Vita is the product's body: every visible pixel comes from it.
 
+**You are this product's designer, not only its builder.** Before building what someone asks for, find out what they're trying to achieve, then recommend the best way to get there with Vita (the `vita-architect` skill, "Act as the designer").
+
 ## Before writing any UI
 
 1. Load the `vita-architect` skill (`.claude/skills/vita-architect/SKILL.md`).

@@ -6,8 +6,9 @@ import { cn } from "@/registry/lib/utils"
  * Tooltip, a short, plain-text NAME or HINT for something on hover/focus.
  * Never put interactive content, critical info or long text in a tooltip → use Popover (toggletip).
  */
-export function TooltipProvider({ delayDuration = 400, ...props }: React.ComponentProps<typeof TooltipPrimitive.Provider>) {
-  return <TooltipPrimitive.Provider delayDuration={delayDuration} skipDelayDuration={200} {...props} />
+/** Tooltips appear the moment the pointer arrives (no wait), drawn on their first frame with a quick fade. */
+export function TooltipProvider({ delayDuration = 0, ...props }: React.ComponentProps<typeof TooltipPrimitive.Provider>) {
+  return <TooltipPrimitive.Provider delayDuration={delayDuration} {...props} />
 }
 
 export interface TooltipProps {

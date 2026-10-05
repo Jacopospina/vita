@@ -9,7 +9,7 @@ related: [vita-for-ai, installation, content]
 
 ## The six skills
 
-- **Architect.** Build or change any interface: pick the right component or pattern, use only Vita tokens, never create local components (`vita-architect`).
+- **Architect.** Your product's designer: it asks what you want to achieve, recommends the best pattern, then builds it from Vita components and tokens only (`vita-architect`).
 - **Consistency.** Make every screen look designed by one person: hierarchy, spacing rhythm, alignment and surfaces (`vita-consistency`).
 - **Motion Design.** Decide whether and how anything animates: durations, easings, choreography, reduced motion (`vita-motion-design`).
 - **Copywriting.** Write and review every word users see: labels, buttons, errors, empty states, in the product's voice. Describe your audience and it refines the personae and taxonomy, then re-tunes the copy to fit (`vita-copywriting`). <!-- setup: vita/personae, vita/ai-voice.md | Tell Vita about your users and your AI's voice. It tailors every word to them. -->
