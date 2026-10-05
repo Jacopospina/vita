@@ -63,7 +63,15 @@ export interface AskRequest extends SelectionContext {
   question: string
 }
 
-const anchorRect = (a: Anchor) => ("range" in a ? a.range.getBoundingClientRect() : a.field.getBoundingClientRect())
+/** Where the selection is on screen: the visible text's boxes only (never a screen reader's hidden copy). */
+function anchorRect(a: Anchor): { top: number; bottom: number; left: number; width: number } {
+  if (!("range" in a)) return a.field.getBoundingClientRect()
+  const rs = visibleRects(a.range)
+  if (!rs.length) return a.range.getBoundingClientRect()
+  const left = Math.min(...rs.map((r) => r.left))
+  const right = Math.max(...rs.map((r) => r.right))
+  return { top: Math.min(...rs.map((r) => r.top)), bottom: Math.max(...rs.map((r) => r.bottom)), left, width: right - left }
+}
 
 /** Where the selection is: a text range, or a field with a selection inside it. */
 function readSelection(root: HTMLElement, ignore?: HTMLElement | null): Selected | null {
@@ -99,13 +107,57 @@ function restore(a: Anchor) {
 
 interface Line { top: number; bottom: number; left: number; right: number }
 
+/** Text nobody sees: a screen reader's copy (sr-only) or anything clipped away. Its boxes are not the selection. */
+function hiddenText(node: Node) {
+  const el = node.parentElement
+  if (!el) return true
+  if (el.closest(".sr-only")) return true
+  const cs = getComputedStyle(el)
+  return cs.visibility === "hidden" || cs.clip === "rect(0px, 0px, 0px, 0px)" || cs.clipPath === "inset(50%)"
+}
+
+/**
+ * The boxes of the visible text in a range, text node by text node (so a hidden copy, e.g. the one kept for screen
+ * readers, never adds a row), each cut to the box it belongs to, so a highlight can never reach outside it.
+ */
+function visibleRects(range: Range, within?: DOMRect): DOMRect[] {
+  const root = range.commonAncestorContainer
+  const out: DOMRect[] = []
+  const take = (node: Text, start: number, end: number) => {
+    if (end <= start || hiddenText(node)) return
+    const part = document.createRange()
+    part.setStart(node, start)
+    part.setEnd(node, end)
+    for (const r of Array.from(part.getClientRects())) {
+      const left = within ? Math.max(r.left, within.left) : r.left
+      const right = within ? Math.min(r.right, within.right) : r.right
+      const top = within ? Math.max(r.top, within.top) : r.top
+      const bottom = within ? Math.min(r.bottom, within.bottom) : r.bottom
+      if (right - left >= 1 && bottom - top >= 1) out.push(new DOMRect(left, top, right - left, bottom - top))
+    }
+  }
+  if (root.nodeType === Node.TEXT_NODE) {
+    take(root as Text, range.startOffset, range.endOffset)
+    return out
+  }
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT)
+  while (walker.nextNode()) {
+    const node = walker.currentNode as Text
+    if (!range.intersectsNode(node)) continue
+    const start = node === range.startContainer ? range.startOffset : 0
+    const end = node === range.endContainer ? range.endOffset : node.length
+    take(node, start, end)
+  }
+  return out
+}
+
 /**
  * The selected text, one box per line: a range reports a box per piece of text it crosses, so pieces on the same
  * line (overlapping vertically) are joined into one.
  */
-function lineRects(range: Range): Line[] {
+function lineRects(range: Range, within?: DOMRect): Line[] {
   const lines: Line[] = []
-  for (const r of Array.from(range.getClientRects())) {
+  for (const r of visibleRects(range, within)) {
     if (r.width < 1 || r.height < 1) continue
     const same = lines.find((l) => Math.min(l.bottom, r.bottom) - Math.max(l.top, r.top) > Math.min(l.bottom - l.top, r.height) / 2)
     if (same) {
@@ -324,11 +376,9 @@ export function SelectionToolbar({ actions = editActions, onAsk, askSuggestions,
   // browser's own highlight can't round its corners, and never shows here). While the ask panel has focus the words
   // stay marked from the stored selection. A field's selection keeps the browser's highlight: its text has no boxes.
   const [lines, setLines] = React.useState<Line[]>([])
-  const [shown, setShown] = React.useState(false)
   React.useEffect(() => {
     const el = root.current
     if (!el) return
-    let clear = 0
     const draw = () => {
       const s = window.getSelection()
       const range = asking.current && selRef.current && "range" in selRef.current.anchor
@@ -336,22 +386,13 @@ export function SelectionToolbar({ actions = editActions, onAsk, askSuggestions,
         : s && !s.isCollapsed && s.rangeCount > 0 && el.contains(s.getRangeAt(0).commonAncestorContainer) && !bar.current?.contains(s.getRangeAt(0).commonAncestorContainer)
           ? s.getRangeAt(0)
           : null
-      const next = range ? lineRects(range) : []
-      window.clearTimeout(clear)
-      if (next.length) {
-        setLines(next)
-        setShown(true)
-      } else {
-        // It fades as a selection is cleared, then lets go of its rows.
-        setShown(false)
-        clear = window.setTimeout(() => setLines([]), 110)
-      }
+      // Exactly the selection, as the selection: it appears, moves and goes with it, with no transition.
+      setLines(range ? lineRects(range, el.getBoundingClientRect()) : [])
     }
     document.addEventListener("selectionchange", draw)
     window.addEventListener("scroll", draw, true)
     window.addEventListener("resize", draw)
     return () => {
-      window.clearTimeout(clear)
       document.removeEventListener("selectionchange", draw)
       window.removeEventListener("scroll", draw, true)
       window.removeEventListener("resize", draw)
@@ -398,7 +439,7 @@ export function SelectionToolbar({ actions = editActions, onAsk, askSuggestions,
   return (
     <div ref={root} className={cn("vita-selection-mark", className)}>
       {children}
-      {lines.length > 0 && <SelectionMark lines={lines} leaving={!shown} />}
+      {lines.length > 0 && <SelectionMark lines={lines} />}
       {sel && (ask || available.length > 0) && (
         // One surface for the capsule and the ask panel: its size and corners glide between them. It arrives where it
         // belongs on its first frame (its enter animation, not a glide), and its position never animates.
@@ -523,9 +564,9 @@ function PageButton({ icon, label, onClick }: { icon: IconType; label: string; o
 /**
  * The selection, drawn: one tint over the words, its rows melting into each other where they meet (a soft inner
  * curve instead of a step) and every outer corner rounded. The rows are blurred together and their edge sharpened
- * back (a "goo" filter), then tinted, so the text stays crisp through it. It fades as the capsule leaves.
+ * back (a "goo" filter), then tinted, so the text stays crisp through it.
  */
-function SelectionMark({ lines, leaving }: { lines: Line[]; leaving: boolean }) {
+function SelectionMark({ lines }: { lines: Line[] }) {
   const id = React.useId()
   const PAD = 10
   const x0 = Math.min(...lines.map((l) => l.left)) - PAD
@@ -535,8 +576,8 @@ function SelectionMark({ lines, leaving }: { lines: Line[]; leaving: boolean }) 
   return (
     <svg
       aria-hidden="true"
-      // It follows the selection exactly, frame by frame: only its fade is eased, never its size or rows.
-      className={cn("pointer-events-none fixed z-40 overflow-visible transition-opacity duration-fast-02 [&_rect]:transition-none", leaving && "opacity-0")}
+      // It is the selection, so it behaves like one: no transition on anything, it follows the drag frame by frame.
+      className="pointer-events-none fixed z-40 overflow-visible transition-none [&_rect]:transition-none"
       style={{ left: x0, top: y0, width: x1 - x0, height: y1 - y0 }}
     >
       <defs>

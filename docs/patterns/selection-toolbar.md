@@ -45,7 +45,7 @@ Pass `onAsk` and the capsule opens into a small panel about exactly those words.
 
 ## States
 
-- **The selection itself.** Vita draws it while you drag: rounded rows in the primary's tint that melt into each other where lines meet, never the browser's square highlight. It follows the drag exactly and fades as it clears. Text selected in a field keeps the browser's highlight.
+- **The selection itself.** Vita draws it while you drag: rounded rows in the primary's tint that melt into each other where lines meet, never the browser's square highlight. Like the browser's own selection it has no transition: it appears, follows the drag and clears exactly with it. Text selected in a field keeps the browser's highlight.
 
 - **Hover and pressed.** Each action takes the hover wash and gives a little on press (110ms, 70ms for the press).
 - **Focus.** The focus ring, from the keyboard only.
