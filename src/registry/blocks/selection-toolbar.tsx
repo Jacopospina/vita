@@ -1,4 +1,5 @@
 import * as React from "react"
+import { createPortal } from "react-dom"
 import { ChevronLeft, ChevronRight, Copy, Cut, Paste, TrashCan } from "@/registry/icons"
 import type { IconType } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
@@ -573,11 +574,13 @@ function SelectionMark({ lines }: { lines: Line[] }) {
   const y0 = Math.min(...lines.map((l) => l.top)) - PAD
   const x1 = Math.max(...lines.map((l) => l.right)) + PAD
   const y1 = Math.max(...lines.map((l) => l.bottom)) + PAD
-  return (
+  // Rendered at the document's root, so no parent's entrance animation or transform can ever move it.
+  return createPortal(
     <svg
       aria-hidden="true"
-      // It is the selection, so it behaves like one: no transition on anything, it follows the drag frame by frame.
-      className="pointer-events-none fixed z-40 overflow-visible transition-none [&_rect]:transition-none"
+      // It is the selection, so it behaves like one: no transition and no animation on anything, ever. It follows
+      // the drag frame by frame.
+      className="pointer-events-none fixed z-40 overflow-visible transition-none! animate-none! [&_*]:transition-none! [&_*]:animate-none!"
       style={{ left: x0, top: y0, width: x1 - x0, height: y1 - y0 }}
     >
       <defs>
@@ -588,9 +591,10 @@ function SelectionMark({ lines }: { lines: Line[] }) {
       </defs>
       <g filter={`url(#${id})`} opacity={0.22}>
         {lines.map((l, i) => (
-          <rect key={i} x={l.left - x0 - 3} y={l.top - y0} width={l.right - l.left + 6} height={l.bottom - l.top} fill="var(--vita-primary)" />
+          <rect key={i} x={l.left - x0} y={l.top - y0} width={l.right - l.left} height={l.bottom - l.top} fill="var(--vita-primary)" />
         ))}
       </g>
-    </svg>
+    </svg>,
+    document.body,
   )
 }
