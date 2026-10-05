@@ -122,7 +122,7 @@ For whole flows, see the patterns: [Intent first](#/patterns/intent-first), [Age
 
 Agents don't need more parts; they need judgment. Vita writes every design decision down and enforces it, so an agent makes the choices a designer would.
 
-- **What an agent reads.** `llms.txt` (the map of every page), `docs/index.json` (the same, machine-readable), card-first docs, decision records and six skills.
+- **What an agent reads.** `llms.txt` (the map of every page), `docs/index.json` (the same, machine-readable), card-first docs, decision records and seven skills.
 - **The audit.** Raw colours, off-scale spacing, local components and decorative status colours fail the build.
 - **The edit hook.** Every file an agent edits is audited on the spot, and the agent sees the result.
 - **Visible exceptions.** A deviation needs a written reason and an approver; `pnpm exceptions` lists them all.

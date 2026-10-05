@@ -83,7 +83,7 @@
       "slug": "skills",
       "path": "docs/getting-started/skills.md",
       "title": "Skills",
-      "summary": "Six skills teach AI agents to design and build with Vita like a designer would, installed with Vita into every product.",
+      "summary": "Seven skills teach AI agents to design and build with Vita like a designer would, installed with Vita into every product.",
       "status": "stable",
       "related": [
         "vita-for-ai",
@@ -2340,6 +2340,24 @@
       "related": [
         "motion",
         "principles"
+      ]
+    },
+    {
+      "section": "decisions",
+      "slug": "psychology",
+      "path": "docs/decisions/psychology.md",
+      "title": "Psychology on the person's side",
+      "summary": "Vita grounds its layout, choice, feedback and wording rules in how people perceive, decide and remember, carried by the vita-psychology skill. Every principle is used to help the person, never to steer them.",
+      "status": "accepted",
+      "date": "2026-10-05",
+      "decided_by": "Jacopo",
+      "related": [
+        "buttons",
+        "fields-and-options",
+        "touch",
+        "cursors",
+        "motion",
+        "status-semantics"
       ]
     },
     {
