@@ -21,7 +21,8 @@
     "visual": "node scripts/visual.mjs",
     "llms": "node scripts/build-llms.mjs",
     "test": "vitest run",
-    "check": "pnpm typecheck && pnpm lint && pnpm audit:ds && pnpm test",
+    "context": "node scripts/vita-context.mjs",
+    "check": "pnpm typecheck && pnpm lint && pnpm audit:ds && pnpm context && pnpm test",
     "palette": "node scripts/build-palette.mjs"
   },
   "dependencies": {
