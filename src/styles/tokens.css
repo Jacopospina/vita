@@ -22,6 +22,9 @@
   /* Elevated (floating-layer) neutrals: the weather tint when on, else the neutral knobs. */
   --_eh: calc(var(--vita-neutral-hue) + (var(--vita-weather-hue) - var(--vita-neutral-hue)) * var(--vita-weather));
   --_ec: calc(var(--vita-neutral-chroma) + (var(--vita-weather-chroma) - var(--vita-neutral-chroma)) * var(--vita-weather));
+  /* Shadows are cast by the floating layers, so they take those layers' grey: the tint you picked, leaned warm or cold
+     by the dial and the weather. Dark enough to read as shade, tinted enough that a warm theme never casts a cold one. */
+  --_shadow: 0.2 calc(var(--_ec) * 3) var(--_eh);
   --_bh: var(--vita-brand-hue);
   --_bc: var(--vita-brand-chroma);
   --_hs: var(--vita-hue-success);
@@ -113,10 +116,10 @@
   --vita-ai-subtle: color-mix(in oklab, var(--vita-palette-purple-500) 5%, var(--vita-background));
 
   /* elevation: soft, layered, never harsh */
-  --vita-shadow-raised: 0 1px 2px oklch(0 0 0 / 0.05), 0 1px 3px oklch(0 0 0 / 0.07);
+  --vita-shadow-raised: 0 1px 2px oklch(var(--_shadow) / 0.05), 0 1px 3px oklch(var(--_shadow) / 0.07);
   /* Large shadows are LAYERED (blur doubles, opacity tapers) so the falloff melts away, no visible edge where it ends. */
-  --vita-shadow-floating: 0 1px 2px oklch(0 0 0 / 0.040), 0 2px 4px oklch(0 0 0 / 0.040), 0 4px 8px oklch(0 0 0 / 0.040), 0 8px 16px oklch(0 0 0 / 0.040), 0 16px 32px oklch(0 0 0 / 0.035), 0 24px 64px oklch(0 0 0 / 0.030), 0 32px 96px oklch(0 0 0 / 0.020);
-  --vita-shadow-overlay: 0 1px 2px oklch(0 0 0 / 0.030), 0 2px 4px oklch(0 0 0 / 0.030), 0 4px 8px oklch(0 0 0 / 0.035), 0 8px 16px oklch(0 0 0 / 0.040), 0 16px 32px oklch(0 0 0 / 0.045), 0 32px 64px oklch(0 0 0 / 0.050), 0 48px 120px oklch(0 0 0 / 0.050);
+  --vita-shadow-floating: 0 1px 2px oklch(var(--_shadow) / 0.040), 0 2px 4px oklch(var(--_shadow) / 0.040), 0 4px 8px oklch(var(--_shadow) / 0.040), 0 8px 16px oklch(var(--_shadow) / 0.040), 0 16px 32px oklch(var(--_shadow) / 0.035), 0 24px 64px oklch(var(--_shadow) / 0.030), 0 32px 96px oklch(var(--_shadow) / 0.020);
+  --vita-shadow-overlay: 0 1px 2px oklch(var(--_shadow) / 0.030), 0 2px 4px oklch(var(--_shadow) / 0.030), 0 4px 8px oklch(var(--_shadow) / 0.035), 0 8px 16px oklch(var(--_shadow) / 0.040), 0 16px 32px oklch(var(--_shadow) / 0.045), 0 32px 64px oklch(var(--_shadow) / 0.050), 0 48px 120px oklch(var(--_shadow) / 0.050);
 }
 
 :root.dark,
@@ -179,9 +182,10 @@
   --vita-info-subtle: color-mix(in oklab, var(--vita-info) 18%, var(--vita-background));
   --vita-info-foreground: oklch(0.685 0.17 calc(var(--_hi) - 4));
 
-  --vita-shadow-raised: 0 1px 2px oklch(0 0 0 / 0.5);
-  --vita-shadow-floating: 0 1px 2px oklch(0 0 0 / 0.160), 0 2px 4px oklch(0 0 0 / 0.160), 0 4px 8px oklch(0 0 0 / 0.160), 0 8px 16px oklch(0 0 0 / 0.160), 0 16px 32px oklch(0 0 0 / 0.140), 0 24px 64px oklch(0 0 0 / 0.120), 0 32px 96px oklch(0 0 0 / 0.080), 0 0 0 1px oklch(1 0 0 / 0.08);
-  --vita-shadow-overlay: 0 1px 2px oklch(0 0 0 / 0.108), 0 2px 4px oklch(0 0 0 / 0.108), 0 4px 8px oklch(0 0 0 / 0.126), 0 8px 16px oklch(0 0 0 / 0.144), 0 16px 32px oklch(0 0 0 / 0.162), 0 32px 64px oklch(0 0 0 / 0.180), 0 48px 120px oklch(0 0 0 / 0.180), 0 0 0 1px oklch(1 0 0 / 0.1);
+  --_shadow: 0.1 calc(var(--_ec) * 3) var(--_eh); /* deeper than the dark page, still tinted */
+  --vita-shadow-raised: 0 1px 2px oklch(var(--_shadow) / 0.5);
+  --vita-shadow-floating: 0 1px 2px oklch(var(--_shadow) / 0.160), 0 2px 4px oklch(var(--_shadow) / 0.160), 0 4px 8px oklch(var(--_shadow) / 0.160), 0 8px 16px oklch(var(--_shadow) / 0.160), 0 16px 32px oklch(var(--_shadow) / 0.140), 0 24px 64px oklch(var(--_shadow) / 0.120), 0 32px 96px oklch(var(--_shadow) / 0.080), 0 0 0 1px oklch(1 0 0 / 0.08);
+  --vita-shadow-overlay: 0 1px 2px oklch(var(--_shadow) / 0.108), 0 2px 4px oklch(var(--_shadow) / 0.108), 0 4px 8px oklch(var(--_shadow) / 0.126), 0 8px 16px oklch(var(--_shadow) / 0.144), 0 16px 32px oklch(var(--_shadow) / 0.162), 0 32px 64px oklch(var(--_shadow) / 0.180), 0 48px 120px oklch(var(--_shadow) / 0.180), 0 0 0 1px oklch(1 0 0 / 0.1);
 }
 
 /* Increased contrast, follows the OS setting, or force it with data-vita-contrast="high". */
