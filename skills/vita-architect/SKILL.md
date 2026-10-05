@@ -37,15 +37,9 @@ The person asking may not be a designer. Give them the outcome a great one would
 
 ## Human-computer interaction
 
-Design how it feels to use, not only how it looks.
+Design how it feels to use, not only how it looks. The `vita-psychology` skill holds the principles (how people see, choose, act and judge) and the component each one maps to; run it before laying out a screen, choosing a default or ordering actions, and whenever something feels off and no checklist item says why.
 
 - **Signifiers before the click.** Shape, colour (primary means clickable), cursor and hover tell people what they can do before they try.
-- **Feedback within 100ms.** Every press shows something at once (pressed state, a pending label, the opened surface on its first frame); anything over a second shows progress.
-- **Big, close targets (Fitts).** The more frequent the action, the larger and nearer it is; small standalone controls get `tap` for a 44px hit area.
-- **Few choices at a time (Hick).** One primary action per view; secondary actions in `ButtonSet` or an overflow menu.
-- **Forgiveness.** Undo beats confirmation; destructive actions confirm with the object's name.
-- **Recognition over recall.** Show options, recent values and the current state rather than asking people to remember them.
-- **Same thing, same place.** A control that moves between screens is a control people have to find again.
 
 ### On desktop (`.vita/docs/getting-started/desktop.md`)
 
@@ -62,7 +56,7 @@ Design how it feels to use, not only how it looks.
 4. **Lay out** with `Stack`, `Inline`, `Grid`/`Column`, `Container`, `PageHeader` (see `foundations/grid.md`, `foundations/spacing.md`).
 5. **Write content** with the `vita-copywriting` skill.
 6. **Add motion** only as the `vita-motion-design` skill allows. Most components already animate correctly.
-7. **Check visual consistency** with the `vita-consistency` checklist.
+7. **Check visual consistency** with the `vita-consistency` checklist, and how it feels with `vita-psychology` (review mode).
 8. **Verify:** run `npm run vita:audit` (or `node .vita/scripts/vita-audit.mjs <file>`) until it reports 0 violations. Typecheck. Check light and dark, keyboard, and 200% zoom.
 
 ## Quick selection table

@@ -29,6 +29,7 @@ This product's UI is built **only** with the Vita design system. Vita is the pro
 | Skill | Use for |
 |---|---|
 | `vita-architect` | Building or reviewing any UI |
+| `vita-psychology` | Grouping, order, defaults, feedback, wording: how people see, choose and judge |
 | `vita-copywriting` | Any user-visible text |
 | `vita-personae` | Personae, end-to-end journeys, taxonomy |
 | `vita-motion-design` | Transitions and animation |

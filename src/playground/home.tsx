@@ -60,7 +60,7 @@ const commitments: { name: string; text: string; icon: IconType }[] = [
 const layers: { name: string; text: string; parts: string; href: string; icon: IconType }[] = [
   { name: "Vita Core", text: "The foundation every screen is built on: tokens, foundations, components and patterns.", parts: `${manifest.foundations.length} foundations · ${manifest.components.length} components · ${manifest.patterns.length} patterns`, href: "#/components/choosing-components", icon: GridIcon },
   { name: "Vita for AI", text: "What AI products need: Sofia (thinking, listening, talking), AI labels and surfaces, the composer, chat and voice conversation.", parts: "Thinking · AI label · Composer · Chat · Conversation bar", href: "#/components/thinking", icon: Chat },
-  { name: "Vita for agents", text: "How coding agents learn and keep the system: docs as llms.txt and a JSON index, agent skills, project rules, the audit and the CLI.", parts: "6 skills · 17 audit rules · CLI", href: "#/foundations/vita-for-ai", icon: Bot },
+  { name: "Vita for agents", text: "How coding agents learn and keep the system: docs as llms.txt and a JSON index, agent skills, project rules, the audit and the CLI.", parts: "7 skills · 17 audit rules · CLI", href: "#/foundations/vita-for-ai", icon: Bot },
 ]
 
 const audiences: { name: string; text: string; icon: IconType }[] = [

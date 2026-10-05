@@ -5,7 +5,7 @@ description: Make any Vita screen look like it was designed by the same person a
 
 # Vita Consistency
 
-Consistency comes from rules, not taste. Run this checklist on every screen, top to bottom. Every "no" gets fixed with a Vita token or component, never a one-off.
+Consistency comes from rules, not taste. Run this checklist on every screen, top to bottom. Every "no" gets fixed with a Vita token or component, never a one-off. Each section rests on a perception principle (proximity, common region, similarity, continuity, figure and ground, hierarchy): when an item fails and you need the why, or the fix isn't on this list, the `vita-psychology` skill has it.
 
 ## 1. Hierarchy (squint test)
 
