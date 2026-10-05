@@ -116,7 +116,7 @@ export function App() {
           <LeftPanel label="Documentation">
             {/* The filter stays put while the pages scroll under it, 8px from the panel's top as at rest. The input itself
                 is frosted glass, so the rows blur as they pass beneath it. */}
-            <div className="sticky top-2 z-10">
+            <div className="sticky top-0 z-10">
               <Search size="md" variant="toolbar" label="Filter pages" placeholder="Filter" shortcut="mod+f" value={filter} onValueChange={setFilter} className="glass glass-2 rounded-md shadow-none" />
             </div>
             {/* Every search answers "nothing" with an empty state, never blank space. */}
