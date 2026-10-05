@@ -102,7 +102,9 @@ export function Slider({ label, hideLabel, helperText, formatValue = String, sho
             aria-valuetext={formatValue(v)}
             className={cn(
               "relative tap block rounded-full border-2 border-primary bg-background shadow-raised duration-moderate-01 ease-productive focus-ring",
-              single ? "flex h-6 items-center justify-center text-caption text-foreground" : "size-4 hover:scale-110 active:scale-110",
+              // w-max: the knob hugs its label wherever it sits. At the track's end it has almost no room, and a
+              // shrink-to-fit knob would collapse its label to nothing, leaving the word spilling over the border.
+              single ? "flex h-6 w-max items-center justify-center text-caption text-foreground" : "size-4 hover:scale-110 active:scale-110",
               single && (dragging ? "min-w-6 px-0" : "min-w-8 px-1.5"), // dragging: a perfect 24px circle
             )}
           >
