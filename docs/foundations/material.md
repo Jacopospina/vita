@@ -29,7 +29,7 @@ avoid_when:
 - **Glass inside glass takes the lower tier.** A bar floating inside a glass panel (a chat header, a panel's toolbar) uses `glass-1`, so frost never stacks up.
 - **The page scrolls under the shell.** `ShellMain` fills the window and the header, side nav and right panel float above it, so scrolled content passes beneath the glass. Sticky content stops at `--vita-shell-top`, just below the header.
 - **See through, frosted.** Content moving beneath stays faintly visible through the blur, so people keep their place.
-- **`elevated` surface.** Glass fills from `elevated`: `raised` plus the weather tint (see Theming). So only floating layers carry the tint.
+- **`elevated` surface.** Glass fills from `elevated`, the floating layers' own grey. Warmth is not theirs: it's the white point over the whole screen (see Theming).
 - **A whisper of lift.** In light mode the glass brightens its backdrop slightly (`glass-lift`, 1.03); more would bleach the page to flat white.
 - **Nothing filters a glass surface's ancestors.** A filter or opacity on a parent cuts the glass off from what's behind it, so entrance animations never hold a filter after they finish.
 - **Reduced transparency.** People who ask for it get the solid `elevated` surface, with no blur.

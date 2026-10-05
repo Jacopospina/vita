@@ -13,7 +13,7 @@ related: [material, color, ui-shell-header]
 - **Tier by layer.** glass-1…5: blur 10 · 14 · 18 · 24 · 30px, fill 24 · 20 · 16 · 80 · 8% (dialogs revised, below).
 - **The page scrolls under the shell.** Header, side nav and right panel float over a full-window scroller.
 - **A whisper of lift.** Light mode brightens the backdrop 3%.
-- **Only floating layers carry the weather tint** (via `elevated`).
+- **Only floating layers carried the weather tint** (via `elevated`), until 2026-10-05: warmth is now the screen's white point (see White point).
 
 ## Why
 

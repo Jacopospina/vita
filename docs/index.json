@@ -2402,12 +2402,29 @@
       "path": "docs/decisions/weather-tint.md",
       "title": "Weather tint",
       "summary": "Floating layers lean cold or warm with the weather outside, Dynamic by default, or fixed Neutral, Cold or Warm.",
-      "status": "accepted",
+      "status": "superseded",
+      "superseded_by": "white-point",
       "date": "2026-10-01",
       "decided_by": "Jacopo",
       "related": [
         "theming",
         "material"
+      ]
+    },
+    {
+      "section": "decisions",
+      "slug": "white-point",
+      "path": "docs/decisions/white-point.md",
+      "title": "White point",
+      "summary": "Warmth is the screen's white point, one tint multiplied over everything, so colours keep their hue. The dial and the weather both set it.",
+      "status": "accepted",
+      "date": "2026-10-05",
+      "decided_by": "Jacopo",
+      "supersedes": "weather-tint",
+      "related": [
+        "theming",
+        "material",
+        "weather-tint"
       ]
     }
   ]

@@ -325,3 +325,4 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/iden
 - [The slogan](docs/decisions/the-slogan.md): "The first agentic design system." Vita says what it is for in one line, made for AI products and the agents that build them. It replaces "Give your ideas life."
 - [Touch adapts by itself](docs/decisions/touch.md): When a finger is the pointer, Vita grows its targets and hit areas, keeps its type proportionate, lightens its glass and switches the thinking orb to a filter-free renderer, without a knob and without a product doing anything.
 - [Weather tint](docs/decisions/weather-tint.md): Floating layers lean cold or warm with the weather outside, Dynamic by default, or fixed Neutral, Cold or Warm.
+- [White point](docs/decisions/white-point.md): Warmth is the screen's white point, one tint multiplied over everything, so colours keep their hue. The dial and the weather both set it.

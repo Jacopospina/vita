@@ -3,9 +3,10 @@ import type { IconType } from "@/registry/icons"
 import { Close, Menu as MenuIcon, ChevronDown } from "@/registry/icons"
 import { Collapsible } from "radix-ui"
 import { cn } from "@/registry/lib/utils"
-import { Icon } from "@/registry/ui/icon"
 import { Truncate } from "@/registry/ui/truncate"
-import { IconButton, ActionBar } from "@/registry/ui/button"
+import { Button, IconButton, ActionBar } from "@/registry/ui/button"
+import { Tooltip } from "@/registry/ui/tooltip"
+import { Icon } from "@/registry/ui/icon"
 import { useIndicator } from "@/registry/hooks/use-morph"
 
 /**
@@ -171,10 +172,20 @@ export function HeaderSeparator() {
   return <span aria-hidden className="mx-1.5 size-1 shrink-0 rounded-full bg-border-strong" />
 }
 
-export const HeaderGlobalAction = React.forwardRef<HTMLButtonElement, { icon: IconType; label: string; active?: boolean; badge?: boolean; onClick?: () => void } & React.ButtonHTMLAttributes<HTMLButtonElement>>(
-  ({ icon, label, active, badge, className, ...props }, ref) => (
+/** `value` (a count, say) sits beside the icon in the same pill: still one header action, named by its tooltip. */
+export const HeaderGlobalAction = React.forwardRef<HTMLButtonElement, { icon: IconType; label: string; active?: boolean; badge?: boolean; value?: React.ReactNode; onClick?: () => void } & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "value">>(
+  ({ icon, label, active, badge, value, className, ...props }, ref) => (
     <span className="relative flex">
-      <IconButton ref={ref} icon={icon} label={label} pressed={active} className={cn(pill, "w-8", className)} {...props} />
+      {value === undefined ? (
+        <IconButton ref={ref} icon={icon} label={label} pressed={active} className={cn(pill, "w-8", className)} {...props} />
+      ) : (
+        <Tooltip content={label} side="bottom">
+          {/* The Button as it is (its squircle and icon slot, far right), only as tall as the other header actions (32px). */}
+          <Button ref={ref} variant="ghost" size="sm" icon={icon} aria-label={label} aria-pressed={active} className={cn("h-8", active && "bg-selected text-selected-foreground", className)} {...props}>
+            <span className="font-normal tabular-nums">{value}</span>
+          </Button>
+        </Tooltip>
+      )}
       {badge && <span aria-hidden className="pointer-events-none absolute top-1 right-1 size-2 rounded-full bg-error ring-2 ring-raised" />}
     </span>
   ),

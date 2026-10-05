@@ -47,6 +47,15 @@ export const miniGradients = {
 
 
 const sizeClass: Record<Size, string> = { sm: "size-16", md: "size-24", lg: "size-32" }
+/**
+ * Readings follow the theme's body size (How big is the text?), scaled with the tile: the em sizes below are set
+ * against this, so a bigger body size makes bigger readings, and a bigger tile bigger still.
+ */
+const typeClass: Record<Size, string> = {
+  sm: "text-[calc(var(--_t)*0.6667)]",
+  md: "text-[length:var(--_t)]",
+  lg: "text-[calc(var(--_t)*1.3333)]",
+}
 const TRACK = "var(--vita-layer-3)"
 
 /* ---------------- geometry: angles in degrees, clockwise from 12 o'clock, on a 100 × 100 face ---------------- */
@@ -127,6 +136,7 @@ function Frame({ label, size = "md", face, glow, open, className, art, control, 
       className={cn(
         "@container relative shrink-0 rounded-full text-foreground select-none",
         sizeClass[size],
+        typeClass[size],
         face && "bg-layer-2",
         control && "focus-ring duration-fast-02 ease-productive active:scale-97 active:duration-fast-01 motion-reduce:active:scale-100",
         control && face && "hover:bg-layer-3",
@@ -146,10 +156,10 @@ function Frame({ label, size = "md", face, glow, open, className, art, control, 
  * face (a mini chart is read like a watch face, not a table) with even-width digits, so a changing value doesn't jitter.
  */
 const Big = ({ children, className }: { children: string; className?: string }) => (
-  <span className={cn("text-[23cqw] font-medium [font-variant-numeric:tabular-nums]", className)}><AnimatedText face="inherit">{children}</AnimatedText></span>
+  <span className={cn("text-[1.7em] font-medium [font-variant-numeric:tabular-nums]", className)}><AnimatedText face="inherit">{children}</AnimatedText></span>
 )
 const Small = ({ children, className }: { children: string; className?: string }) => (
-  <span className={cn("text-[15cqw] font-medium text-muted-foreground", className)}><AnimatedText face="inherit">{children}</AnimatedText></span>
+  <span className={cn("text-[1.11em] font-medium text-muted-foreground", className)}><AnimatedText face="inherit">{children}</AnimatedText></span>
 )
 const Glyph = ({ icon, className }: { icon: IconType; className?: string }) => <SwapIcon as={icon} className={cn(FILL, "size-[22cqw]", className)} />
 
@@ -186,7 +196,7 @@ export function MiniSegments({ label, size, segments = 3, filled, tone = "info",
       })}
     >
       {icon && <Glyph icon={icon} className="mb-[4cqw]" />}
-      {value && <span className="text-[17cqw] font-medium [font-variant-numeric:tabular-nums]"><AnimatedText face="inherit">{value}</AnimatedText></span>}
+      {value && <span className="text-[1.26em] font-medium [font-variant-numeric:tabular-nums]"><AnimatedText face="inherit">{value}</AnimatedText></span>}
     </Frame>
   )
 }
@@ -275,9 +285,9 @@ export function MiniRange({ label, size, value, min, max, icon, display, gradien
   return (
     <Frame open label={label} size={size} art={<><GradientArc r={GAUGE.r} a0={GAUGE.a0} a1={GAUGE.a1} stops={gradient} width={GAUGE.width} /><Knob r={GAUGE.r} angle={angle} /></>}>
       {icon && <Glyph icon={icon} className="mb-[2cqw] size-[16cqw]" />}
-      <span className="text-[26cqw] font-medium [font-variant-numeric:tabular-nums]"><AnimatedText face="inherit">{display}</AnimatedText></span>
+      <span className="text-[2.22em] font-medium [font-variant-numeric:tabular-nums]"><AnimatedText face="inherit">{display}</AnimatedText></span>
       {/* Low and high sit in the arc's opening, between its two ends: never on the arc, never outside the tile. */}
-      <span className="absolute inset-x-[28cqw] bottom-[10cqw] flex justify-between text-[13cqw] font-medium [font-variant-numeric:tabular-nums]">
+      <span className="absolute inset-x-[28cqw] bottom-[10cqw] flex justify-between text-[1.11em] font-medium [font-variant-numeric:tabular-nums]">
         <span className="text-info"><AnimatedText face="inherit">{min}</AnimatedText></span>
         <span className="text-error"><AnimatedText face="inherit">{max}</AnimatedText></span>
       </span>
@@ -428,7 +438,7 @@ export function MiniLevels({ label, size, levels = 9, active, tone = "info", ico
         ))}
       </span>
       {/* Words (a named option) set a little smaller than numbers, so "Dramatic" still fits the face. */}
-      <span className={cn("font-medium [font-variant-numeric:tabular-nums]", display.length > 5 ? "text-[13cqw]" : "text-[17cqw]")}><AnimatedText face="inherit">{display}</AnimatedText></span>
+      <span className={cn("font-medium [font-variant-numeric:tabular-nums]", display.length > 5 ? "text-[0.96em]" : "text-[1.26em]")}><AnimatedText face="inherit">{display}</AnimatedText></span>
     </Frame>
   )
 }
@@ -468,11 +478,16 @@ function DialKnob({ r, angle, radius, dragging, slider }: {
         aria-valuetext={slider?.text}
         onKeyDown={slider?.onKey}
         className={cn(
-          "absolute -translate-x-1/2 -translate-y-1/2 rounded-full border-[2.5cqw] border-foreground bg-background",
+          "absolute -translate-x-1/2 -translate-y-1/2 rounded-full",
           slider && "pointer-events-auto focus-ring duration-fast-02 ease-productive hover:scale-125 active:scale-110",
         )}
         style={{ left: "50%", top: `${50 - r}%`, width: `${radius * 2}%`, height: `${radius * 2}%` }}
-      />
+      >
+        {/* Drawn, not bordered: a border on a box a few pixels wide rounds unevenly once it turns, and reads as an oval. */}
+        <svg viewBox="0 0 10 10" aria-hidden="true" className="block size-full overflow-visible">
+          <circle cx={5} cy={5} r={3.75} fill="var(--vita-background)" stroke="var(--vita-foreground)" strokeWidth={2.5} />
+        </svg>
+      </span>
     </span>
   )
 }
@@ -637,7 +652,7 @@ export function MiniGlow({ label, size, icon, tone = "success", display, caption
   return (
     <Frame label={label} size={size} face glow={tone} control={control}>
       {icon && <SwapIcon as={icon} className={cn(FILL, "mb-[3cqw] size-[16cqw]", toneText[tone])} />}
-      <span className="text-[21cqw] font-medium [font-variant-numeric:tabular-nums]"><AnimatedText face="inherit">{display}</AnimatedText></span>
+      <span className="text-[1.55em] font-medium [font-variant-numeric:tabular-nums]"><AnimatedText face="inherit">{display}</AnimatedText></span>
       {caption && <Small className="mt-[3cqw]">{caption}</Small>}
     </Frame>
   )
@@ -694,7 +709,7 @@ export function MiniDial({ label, size, icon, tone = "success", display, offset 
       {/* The pointer marks now: a Vita glyph, set under the middle of the ruler. */}
       <Icon as={TriangleSolid} className={cn("absolute bottom-[10cqw] size-[9cqw]", toneText[tone])} />
       {icon && <SwapIcon as={icon} className={cn(FILL, "mb-[3cqw] size-[18cqw]", toneText[tone])} />}
-      <span className="mb-[14cqw] text-[19cqw] font-medium [font-variant-numeric:tabular-nums]"><AnimatedText face="inherit">{display}</AnimatedText></span>
+      <span className="mb-[14cqw] text-[1.4em] font-medium [font-variant-numeric:tabular-nums]"><AnimatedText face="inherit">{display}</AnimatedText></span>
     </Frame>
   )
 }

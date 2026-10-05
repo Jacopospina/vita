@@ -1,16 +1,17 @@
 import * as React from "react"
-import { Stack } from "@/registry/ui/layout"
+import { Group, Stack } from "@/registry/ui/layout"
+import { SwatchPicker } from "@/registry/ui/swatch-picker"
 import { Text } from "@/registry/ui/text"
 import { Dropdown } from "@/registry/ui/dropdown"
-import { CodeSnippet } from "@/registry/ui/code-snippet"
 import { Button } from "@/registry/ui/button"
 import { Separator } from "@/registry/ui/separator"
-import { swapAppearance, withoutTransitions } from "@/registry/lib/appearance"
+import { swapAppearance, syncWarmth, withoutTransitions } from "@/registry/lib/appearance"
 import type { useWeatherTint } from "@/registry/hooks/use-weather-tint"
 import { RightPanel } from "@/registry/ui/ui-shell"
-import { MiniColor, MiniLevels, MiniGlow, temperatureStops } from "@/registry/ui/mini-chart"
+import { MiniColor, MiniGlow, temperatureStops } from "@/registry/ui/mini-chart"
+import { Label } from "@/registry/ui/form"
 import { SwapIcon } from "@/registry/ui/icon"
-import { Moon, Sun, Corner, FitToHeight, TextFont, TextScale, Movement, PartlyCloudy } from "@/registry/icons"
+import { Moon, Sun, PartlyCloudy } from "@/registry/icons"
 
 /** Live editor for the theme.css knobs. Writes CSS custom properties on <html>. */
 const knobs = [
@@ -18,6 +19,7 @@ const knobs = [
   { key: "--vita-brand-chroma", label: "Brand chroma", min: 0, max: 0.3, step: 0.001, def: 0.218, unit: "" },
   { key: "--vita-neutral-hue", label: "Neutral hue", min: 0, max: 360, step: 1, def: 286, unit: "" },
   { key: "--vita-neutral-chroma", label: "Neutral tint", min: 0, max: 0.03, step: 0.001, def: 0, unit: "" },
+  { key: "--vita-warmth", label: "Warmth", min: -1, max: 1, step: 0.01, def: 0, unit: "" },
   { key: "--vita-radius", label: "Corner radius", min: 0, max: 1.25, step: 0.125, def: 0.5, unit: "rem" },
   { key: "--vita-density", label: "Density", min: 0.8, max: 1.25, step: 0.01, def: 1.08, unit: "" },
   { key: "--vita-type-base", label: "Body size", min: 0.75, max: 1.125, step: 0.0625, def: 0.8125, unit: "rem" },
@@ -43,13 +45,15 @@ const brandColors = [
   { value: "gray", label: "Charcoal", hue: 286.2, chroma: 0.02 },
 ]
 
-/** The dial's outer ring is the greys' temperature: cool (Mist's hue) through neutral to warm (Sand's), tinting up to 0.02. */
-const COOL = 250
-const WARM = 70
-const MAX_TINT = 0.02
-const temperatureOf = (hue: number, chroma: number) =>
-  chroma === 0 ? 0.5 : Math.abs(hue - COOL) < 40 ? 0.5 - Math.min(chroma, MAX_TINT) / (2 * MAX_TINT) : Math.abs(hue - WARM) < 40 ? 0.5 + Math.min(chroma, MAX_TINT) / (2 * MAX_TINT) : 0.5
-const tintOf = (t: number) => ({ hue: t < 0.5 ? COOL : WARM, chroma: Math.round(Math.abs(t - 0.5) * 2 * MAX_TINT * 1000) / 1000 })
+/** Grey tints by name: which grey the interface is made of. How warm the screen is, is the dial's outer ring. */
+const greyTints = [
+  { value: "neutral", label: "Stone", hue: 286, chroma: 0 },
+  { value: "cool", label: "Mist", hue: 250, chroma: 0.012 },
+  { value: "warm", label: "Sand", hue: 70, chroma: 0.012 },
+  { value: "sage", label: "Moss", hue: 150, chroma: 0.01 },
+  { value: "lilac", label: "Haze", hue: 300, chroma: 0.012 },
+]
+
 /** The brand colour a hue is closest to, by name ("Tide"), for screen readers. */
 const hueName = (deg: number) => brandColors.filter((c) => c.value !== "gray" && c.value !== "brown").reduce((a, b) => (Math.abs(((b.hue - deg + 540) % 360) - 180) < Math.abs(((a.hue - deg + 540) % 360) - 180) ? b : a)).label
 
@@ -58,7 +62,8 @@ const radii = [
   { v: 0, label: "Square" }, { v: 0.25, label: "Subtle" }, { v: 0.5, label: "Default" }, { v: 0.75, label: "Soft" }, { v: 1.25, label: "Round" },
 ]
 const densities = [{ v: 0.9, label: "Compact" }, { v: 1.08, label: "Default" }, { v: 1.2, label: "Roomy" }]
-const bodySizes = [{ v: 0.75, label: "12" }, { v: 0.8125, label: "13" }, { v: 0.875, label: "14" }, { v: 1, label: "16" }]
+/** Named by what people choose, not the pixels behind them (12, 13, 14, 16). */
+const bodySizes = [{ v: 0.75, label: "Small" }, { v: 0.8125, label: "Medium" }, { v: 0.875, label: "Large" }, { v: 1, label: "Huge" }]
 const ratios = [{ v: 1.125, label: "Subtle" }, { v: 1.2, label: "Default" }, { v: 1.25, label: "Bold" }, { v: 1.333, label: "Dramatic" }]
 const speeds = [{ v: 0, label: "Off" }, { v: 0.5, label: "Quick" }, { v: 1, label: "Default" }, { v: 1.5, label: "Calm" }, { v: 2, label: "Slow" }]
 /** The option nearest a knob's value. */
@@ -71,23 +76,12 @@ const presets = [
   { value: "soft", label: "Soft", gist: "Round corners, more room and the system face: calm and friendly." },
   { value: "mono", label: "Mono", gist: "Almost no colour and tighter rows: quiet and dense." },
 ]
-const steppers = [
-  { key: "--vita-radius", name: "Corners", icon: Corner, list: radii },
-  { key: "--vita-density", name: "Density", icon: FitToHeight, list: densities },
-  { key: "--vita-type-base", name: "Body size", icon: TextFont, list: bodySizes },
-  { key: "--vita-type-ratio", name: "Type scale", icon: TextScale, list: ratios },
-  { key: "--vita-motion-scale", name: "Motion", icon: Movement, list: speeds },
+const sliders = [
+  { key: "--vita-radius", name: "How round are corners?", list: radii },
+  { key: "--vita-density", name: "How much room?", list: densities },
+  { key: "--vita-type-ratio", name: "How big are headings?", list: ratios },
+  { key: "--vita-motion-scale", name: "How quick are transitions?", list: speeds },
 ]
-
-/** A mini chart with its name under it. */
-function Knob({ name, children }: { name: string; children: React.ReactNode }) {
-  return (
-    <Stack gap="2xs" align="center">
-      {children}
-      <Text variant="caption" tone="muted">{name}</Text>
-    </Stack>
-  )
-}
 
 const fonts = [
   { value: "flex", label: "Google Sans Flex (default)", css: `"Google Sans Flex Variable", "Google Sans Flex", system-ui, sans-serif`, gist: "Vita's own face: modern, warm, made for screens." },
@@ -113,11 +107,13 @@ export function ThemePanel({ open, onOpenChange, weather, dark, onDarkChange }: 
     withoutTransitions(() => {
       knobs.forEach((k) => root.style.setProperty(k.key, `${values[k.key]}${k.unit}`))
       root.style.setProperty("--vita-font-sans", fonts.find((f) => f.value === font)!.css)
+      syncWarmth()
     })
   }, [values, font])
 
   const applyPreset = (p: string) => {
     setPreset(p)
+    setGrey("neutral")
     const root = document.documentElement
     swapAppearance(() => {
       knobs.forEach((k) => root.style.removeProperty(k.key))
@@ -135,16 +131,32 @@ export function ThemePanel({ open, onOpenChange, weather, dark, onDarkChange }: 
 
   const css = `:root {\n${knobs.map((k) => `  ${k.key}: ${values[k.key]}${k.unit};`).join("\n")}\n  --vita-font-sans: ${fonts.find((f) => f.value === font)!.css};\n}`
 
-  const temperature = temperatureOf(values["--vita-neutral-hue"], values["--vita-neutral-chroma"])
+  const [copied, setCopied] = React.useState(false)
+  const copy = () => {
+    void navigator.clipboard?.writeText(css)
+    setCopied(true)
+    window.setTimeout(() => setCopied(false), 1600)
+  }
+
+  // Which grey (a swatch); how warm the screen is (the dial's outer ring, 0 cool to 1 warm). Stone, neutral, by default.
+  const [grey, setGrey] = React.useState("neutral")
+  const temperature = (values["--vita-warmth"] + 1) / 2
+  const pickGrey = (g: string) => {
+    setGrey(g)
+    const c = greyTints.find((x) => x.value === g) ?? greyTints[0]
+    setValues((s) => ({ ...s, "--vita-neutral-hue": c.hue, "--vita-neutral-chroma": c.chroma }))
+  }
 
   return (
     // The reset lives in the panel's footer, so it stays in reach however far the knobs scroll.
-    <RightPanel open={open} onOpenChange={onOpenChange} title="Theme" size="md" footer={<Button variant="secondary" onClick={() => applyPreset("default")}>Reset to defaults</Button>}>
+    <RightPanel open={open} onOpenChange={onOpenChange} title="Theme" size="md" footer={
+      <>
+        {/* The export is one click away, so the panel needs no code block: Copy code says "Copied" for a moment. */}
+        <Button variant="secondary" onClick={copy}>{copied ? "Copied" : "Copy code"}</Button>
+        <Button onClick={() => applyPreset("default")}>Reset to defaults</Button>
+      </>
+    }>
     <Stack gap="md">
-      {/* Choices by name come first; then the knobs, each one a mini chart. */}
-      <Dropdown label="Style" value={preset} onValueChange={applyPreset} items={presets.map(({ value, label }) => ({ value, label }))} helperText={presets.find((p) => p.value === preset)?.gist} />
-      <Dropdown label="Typeface" items={fonts.map(({ value, label }) => ({ value, label }))} value={font} onValueChange={setFont} helperText={fonts.find((f) => f.value === font)?.gist} />
-      <Separator />
       {/* The theme at a glance, and in one hand: the middle switches light and dark, the wheel sets the brand hue,
           the outer ring how warm or cool the greys are. */}
       <Stack gap="xs" align="center">
@@ -159,45 +171,59 @@ export function ThemePanel({ open, onOpenChange, weather, dark, onDarkChange }: 
           pressLabel="Dark theme"
           pressed={dark}
           hueLabel="Brand colour"
-          brightnessLabel="Grey temperature"
+          brightnessLabel="Warmth"
           describe={{ hue: (h) => hueName(h * 360), brightness: (v) => (v < 0.45 ? "Cool" : v > 0.55 ? "Warm" : "Neutral") }}
           onHueChange={(h) => setValues((s) => ({ ...s, "--vita-brand-hue": Math.round(h * 3600) / 10, "--vita-brand-chroma": s["--vita-brand-chroma"] < 0.05 ? 0.2 : s["--vita-brand-chroma"] }))}
-          onBrightnessChange={(v) => {
-            // Turning the greys by hand replaces the weather's tint.
-            if (weather.mode !== "none") weather.setMode("none")
-            const c = tintOf(v)
-            setValues((s) => ({ ...s, "--vita-neutral-hue": c.hue, "--vita-neutral-chroma": c.chroma }))
-          }}
+          onBrightnessChange={(v) => setValues((s) => ({ ...s, "--vita-warmth": Math.round((v * 2 - 1) * 100) / 100 }))}
         />
-        <Text variant="caption" tone="muted" className="text-center">Middle: light or dark. Colour ring: brand. Outer ring: cool or warm greys.</Text>
+        <Text variant="caption" tone="muted" className="text-center">Middle: light or dark. Colour ring: brand. Outer ring: the screen's colour temperature, cooler to warmer.</Text>
       </Stack>
+      {/* Whether the greys follow the weather: a toggle, centred under the dial. */}
+      <Stack gap="2xs" align="center">
+        <MiniGlow
+          label={weather.mode === "dynamic" ? `Warmth follows the weather${weather.celsius === null ? "" : `, ${Math.round(weather.celsius)} degrees outside`}` : "Warmth doesn't follow the weather"}
+          icon={PartlyCloudy}
+          tone={weather.mode !== "dynamic" ? "neutral" : weather.tint === "cold" ? "info" : weather.tint === "warm" ? "warning" : "success"}
+          display={weather.mode === "dynamic" && weather.celsius !== null ? `${Math.round(weather.celsius)}°` : "–"}
+          caption={weather.mode === "dynamic" ? "Live" : "Off"}
+          pressed={weather.mode === "dynamic"}
+          onPress={() => weather.setMode(weather.mode === "dynamic" ? "none" : "dynamic")}
+        />
+        {/* What the toggle does, not its name: the tile already shows the weather. */}
+        <Text variant="caption" tone="muted" className="max-w-64 text-center">
+          {/* What the current state means for the screen, in the weather's terms. */}
+          {weather.mode === "dynamic" ? "The weather outside warms or cools the whole screen, on top of the ring: cooler when it's cold, warmer when it's warm." : "The weather outside, cold or warm, doesn't change how warm the screen is."}
+        </Text>
+      </Stack>
+      <SwatchPicker
+        label="Which grey?"
+        size="sm"
+        // vita-allow raw-color: the theme editor previews a grey tint the tokens don't have yet, approved by @jacopo
+        items={greyTints.map((c) => ({ value: c.value, label: c.label, color: `oklch(0.62 ${c.chroma * 4} ${c.hue})` }))}
+        value={grey}
+        onValueChange={pickGrey}
+      />
       <Separator />
-      {/* Every other knob is a mini chart too: drag, click or arrow through its steps; the weather is a toggle. */}
-      <div className="grid grid-cols-3 justify-items-center gap-x-2 gap-y-4">
-        {steppers.map((s) => {
-          const i = nearest(s.list, values[s.key])
-          return (
-            <Knob key={s.key} name={s.name}>
-              <MiniLevels label={s.name} icon={s.icon} tone="primary" levels={s.list.length} active={i} display={s.list[i].label} onChange={(n) => setValues((v) => ({ ...v, [s.key]: s.list[n].v }))} />
-            </Knob>
-          )
-        })}
-        <Knob name="Weather">
-          <MiniGlow
-            label={weather.mode === "dynamic" ? `Greys follow the weather${weather.celsius === null ? "" : `, ${Math.round(weather.celsius)} degrees outside`}` : "Greys don't follow the weather"}
-            icon={PartlyCloudy}
-            tone={weather.mode !== "dynamic" ? "neutral" : weather.tint === "cold" ? "info" : weather.tint === "warm" ? "warning" : "success"}
-            display={weather.mode === "dynamic" && weather.celsius !== null ? `${Math.round(weather.celsius)}°` : "–"}
-            caption={weather.mode === "dynamic" ? "Live" : "Off"}
-            pressed={weather.mode === "dynamic"}
-            onPress={() => weather.setMode(weather.mode === "dynamic" ? "none" : "dynamic")}
-          />
-        </Knob>
-      </div>
+      {/* Choices by name. */}
+      <Dropdown label="Style" value={preset} onValueChange={applyPreset} items={presets.map(({ value, label }) => ({ value, label }))} helperText={presets.find((p) => p.value === preset)?.gist} />
+      <Dropdown label="Typeface" items={fonts.map(({ value, label }) => ({ value, label }))} value={font} onValueChange={setFont} helperText={fonts.find((f) => f.value === font)?.gist} />
       <Separator />
-      <Text variant="headline">theme.css</Text>
-      <Text tone="muted">Every token in Vita derives from these knobs: paste this into <code className="font-mono">src/styles/theme.css</code>.</Text>
-      <CodeSnippet type="multi">{css}</CodeSnippet>
+      {/* Every knob is a few named choices, so every knob is a button group: the chosen one is primary. */}
+      {[...sliders.slice(0, 2), { key: "--vita-type-base", name: "How big is the text?", list: bodySizes }, ...sliders.slice(2)].map((s) => (
+        <Stack key={s.key} gap="xs">
+          <Label>{s.name}</Label>
+          <Group aria-label={s.name} fill>
+            {s.list.map((o, n) => {
+              const on = n === nearest(s.list, values[s.key])
+              return (
+                <Button key={o.label} size="sm" variant={on ? "primary" : "secondary"} aria-pressed={on} onClick={() => setValues((v) => ({ ...v, [s.key]: o.v }))}>
+                  {o.label}
+                </Button>
+              )
+            })}
+          </Group>
+        </Stack>
+      ))}
     </Stack>
     </RightPanel>
   )

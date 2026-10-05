@@ -19,7 +19,7 @@ related: [ui-shell-right-panel, ui-shell-left-panel, global-header, dialogs, fil
 1. **Panel.** Floats 8px in from the window, with the same top and radius (16px) as the left navigation. It sits on the top shell layer, so its glass is stronger (tier 3).
 2. **Header row.** 32px tall: the title on the left, × on the right. The × is a 32px button rounded concentrically (16 − 8 = 8px).
 3. **Content.** Scrolls on its own; starts 10px in, aligned with the title.
-4. **Footer (optional).** One primary action in an inset, rounded action bar, like a dialog's. It stays put while the content scrolls, so the action is always in reach: a panel's actions go in `footer`, never at the end of its content.
+4. **Footer (optional).** The primary action on the right of an inset, rounded action bar, at most one secondary on its left, like a dialog's. It stays put while the content scrolls, so the action is always in reach: a panel's actions go in `footer`, never at the end of its content.
 
 ## Rules
 
