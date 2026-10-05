@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Notification, Help, Bot, Headphones, CloudUpload, Rocket, Time, Search as SearchIcon, UserAvatar, Dashboard, Activity, Document, Settings, Chat, Renew } from "@/registry/icons"
+import { Notification, Help, Bot, Headphones, CloudUpload, Rocket, Time, Search as SearchIcon, UserAvatar, Dashboard, Activity, Document, Settings, Chat, Renew, Copy } from "@/registry/icons"
 import type { DemoMap } from "./types"
 import { Stack, Inline } from "@/registry/ui/layout"
 import { Text } from "@/registry/ui/text"
@@ -11,6 +11,7 @@ import { Icon } from "@/registry/ui/icon"
 import { InlineNotification, Callout, toast, capsule } from "@/registry/ui/notification"
 import { ProgressBar } from "@/registry/ui/progress-bar"
 import { ProgressIndicator } from "@/registry/ui/progress-indicator"
+import { gotcha } from "@/registry/ui/gotcha"
 import { Modal, ModalTrigger, ModalContent, ModalHeader, ModalBody, ModalFooter, ModalAction, ConfirmModal } from "@/registry/ui/modal"
 import { Popover, PopoverTrigger, PopoverContent, PopoverFooter, Toggletip } from "@/registry/ui/popover"
 import { Tooltip, DefinitionTooltip } from "@/registry/ui/tooltip"
@@ -191,6 +192,17 @@ export function ShellDemo({ rail, right, edit }: { rail?: boolean; right?: boole
   )
 }
 
+/** Copying is instant: no working state, the label turns into "Copied" with a check, then back. */
+function CopyLinkDemo() {
+  const [copied, setCopied] = React.useState(false)
+  const copy = () => {
+    void navigator.clipboard?.writeText(window.location.href).catch(() => {})
+    setCopied(true)
+    window.setTimeout(() => setCopied(false), 1500)
+  }
+  return <Button icon={Copy} variant="secondary" status={copied ? "success" : "idle"} feedback={{ success: "Copied" }} onClick={copy}>Copy link</Button>
+}
+
 export const feedbackDemos: DemoMap = {
   "components/thinking": [
     {
@@ -232,6 +244,28 @@ export const feedbackDemos: DemoMap = {
   ],
   "components/inline-loading": [{ title: "Save lifecycle", render: () => <InlineLoadingDemo /> }],
   "components/scramble-text": [{ title: "Loading, then locking into the text", description: "Press Reload: the lines shuffle in their real type, then each letter locks in.", render: () => <ScrambleDemo /> }],
+  "components/gotcha": [
+    {
+      title: "Copied, beside the pointer",
+      description: "An icon has no words to change: the gotcha appears right of the pointer, follows it for a moment and fades.",
+      render: () => <IconButton icon={Copy} label="Copy link" variant="secondary" onClick={() => gotcha("Link copied")} />,
+    },
+    {
+      title: "A labelled button says it itself",
+      description: "Copy link turns into Copied for a moment: the label is already where the eyes are, so no gotcha.",
+      render: () => <CopyLinkDemo />,
+    },
+    {
+      title: "Any small done",
+      description: "One word for a small, local action that worked.",
+      render: () => (
+        <Inline gap="sm">
+          <Button variant="secondary" onClick={() => gotcha("Saved")}>Save draft</Button>
+          <Button variant="secondary" onClick={() => gotcha("Added")}>Add to list</Button>
+        </Inline>
+      ),
+    },
+  ],
   "components/notification": [
     {
       title: "Inline, four kinds",

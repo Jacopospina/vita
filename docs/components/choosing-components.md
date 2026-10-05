@@ -94,6 +94,7 @@ Are items uniform records with the same attributes?
 
 | Situation | Use |
 |---|---|
+| A tiny, local "done" (copied, saved) right where they clicked | `gotcha` beside the pointer |
 | "Done": the user's action succeeded | `toast` (success, auto-dismiss) |
 | Glanceable "it connected / it's syncing" with a live value | `capsule` (icon · title · story) |
 | Something needs fixing, tied to a section | `InlineNotification` near the cause |

@@ -15,11 +15,11 @@ related: [text-input]
 ## Variants
 
 - **inline**: a copyable token within a sentence. The whole token is the copy button.
-- **single**: one line, horizontally scrollable, with a copy button.
+- **single**: one line, as wide as its text, with Copy right beside it (never across an empty bar). Scrolls sideways only when it outgrows its column.
 - **multi**: a block. It collapses after `maxCollapsedLines` (default 12) with a "Show more" toggle.
 
 ## Rules
 
-1. **Copy feedback** is the icon morphing to a checkmark plus a "Copied" tooltip for 1.5s. No toast.
+1. **Copy feedback** is the icon morphing to a checkmark and a "Copied" gotcha beside the pointer. No toast, and the tooltip never changes.
 2. **Show exactly what should be pasted.** No `$` prompts, no trailing comments the user would have to delete.
 3. **Surface:** `layer-1` background, mono `footnote` size. No syntax-theme colors outside docs.

@@ -1,6 +1,6 @@
 import * as React from "react"
 import { marked, type Token, type Tokens } from "marked"
-import { CheckmarkFilled, Misuse } from "@/registry/icons"
+import { CheckmarkFilled, Copy, Misuse } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { Stack, Inline } from "@/registry/ui/layout"
 import { Text } from "@/registry/ui/text"
@@ -8,7 +8,7 @@ import { Button } from "@/registry/ui/button"
 import { HelperText } from "@/registry/ui/helper-text"
 import { Tile, TileSet, TileSetItem } from "@/registry/ui/tile"
 import { Icon } from "@/registry/ui/icon"
-import { Callout, toast } from "@/registry/ui/notification"
+import { Callout } from "@/registry/ui/notification"
 import { CodeSnippet } from "@/registry/ui/code-snippet"
 import { StructuredList } from "@/registry/ui/structured-list"
 import { SetupPill } from "./setup-tag"
@@ -102,7 +102,8 @@ function Block({ token: t, context }: { token: Token; context: string }) {
       const code = (t as Tokens.Code).text
       // Decision trees and diagrams are read, not copied.
       if (/[├└→]/.test(code)) return <Tile className="max-w-3xl overflow-x-auto" tabIndex={0} role="region" aria-label="Decision tree"><pre className="font-mono text-footnote leading-relaxed text-foreground">{code}</pre></Tile>
-      return <CodeSnippet type="multi">{code}</CodeSnippet>
+      // One line is a command: it hugs its text with Copy beside it; longer code is a block.
+      return <CodeSnippet type={code.includes("\n") ? "multi" : "single"}>{code}</CodeSnippet>
     }
     default:
       return "text" in t ? <Text>{inline(String((t as { text: string }).text))}</Text> : null
@@ -135,21 +136,25 @@ function Alert({ token }: { token: Tokens.Blockquote }) {
       <Stack gap="sm" align="start">
         <span className="text-foreground">{inline(body.replace(/\n/g, " "))}</span>
         {code && (
-          // Peak-end: the copy ends on a clear "done" that names the next step.
-          <Button
-            size="sm"
-            feedback={{ success: "Copied" }}
-            onAction={async () => {
-              await navigator.clipboard.writeText(code.text)
-              if (code.lang === "prompt") toast({ kind: "success", title: "Prompt copied", subtitle: "Paste it into your coding agent, in your project." })
-            }}
-          >
-            {code.lang === "prompt" ? "Copy prompt" : "Copy"}
-          </Button>
+          <CopyButton text={code.text} label={code.lang === "prompt" ? "Copy prompt" : "Copy"} />
         )}
       </Stack>
     </Callout>
   )
+}
+
+/** A labelled button says it itself: "Copied" with a check, then back (copying is instant, so no working state). */
+function CopyButton({ text, label }: { text: string; label: string }) {
+  const [copied, setCopied] = React.useState(false)
+  const timer = React.useRef(0)
+  React.useEffect(() => () => window.clearTimeout(timer.current), [])
+  const copy = async () => {
+    try { await navigator.clipboard.writeText(text) } catch { /* clipboard blocked: still acknowledge */ }
+    setCopied(true)
+    window.clearTimeout(timer.current)
+    timer.current = window.setTimeout(() => setCopied(false), 1500)
+  }
+  return <Button size="sm" icon={Copy} status={copied ? "success" : "idle"} feedback={{ success: "Copied" }} onClick={copy}>{label}</Button>
 }
 
 /* ---------------- lists → cards ---------------- */

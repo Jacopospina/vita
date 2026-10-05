@@ -160,11 +160,12 @@ export function ThemePanel({ open, onOpenChange, weather, dark, onDarkChange }: 
 
   const css = `:root {\n${knobs.map((k) => `  ${k.key}: ${values[k.key]}${k.unit};`).join("\n")}\n  --vita-font-sans: ${fonts.find((f) => f.value === font)!.css};\n}`
 
+  // A labelled button says it itself: Copy code turns into "Copied" with a check, then back.
   const [copied, setCopied] = React.useState(false)
   const copy = () => {
     void navigator.clipboard?.writeText(css)
     setCopied(true)
-    window.setTimeout(() => setCopied(false), 1600)
+    window.setTimeout(() => setCopied(false), 1500)
   }
 
   // Which grey (a swatch); how warm the screen is (the dial's outer ring, 0 cool to 1 warm). Stone, neutral, by default.
@@ -183,7 +184,7 @@ export function ThemePanel({ open, onOpenChange, weather, dark, onDarkChange }: 
         {/* Psychology: isolation and peak-end. Copying the theme is why people came, so it is the one primary, at the
             end of the bar; resetting throws their choices away, so it is secondary and forgiving (Undo, not a confirm). */}
         <Button variant="secondary" onClick={resetAll}>Reset to defaults</Button>
-        <Button onClick={copy}>{copied ? "Copied" : "Copy code"}</Button>
+        <Button status={copied ? "success" : "idle"} feedback={{ success: "Copied" }} onClick={copy}>Copy code</Button>
       </>
     }>
     <Stack gap="md">

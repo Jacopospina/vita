@@ -735,6 +735,30 @@
     },
     {
       "section": "components",
+      "slug": "gotcha",
+      "path": "docs/components/gotcha.md",
+      "title": "Gotcha",
+      "summary": "The tiniest feedback, a small badge beside the pointer (\"Copied\") that follows it for a moment and fades. It sits where the person is already looking.",
+      "status": "stable",
+      "import": "import { gotcha } from \"@/components/vita/gotcha\"\n\ngotcha(\"Copied\")",
+      "use_when": [
+        "A small, local action worked and needs one word of acknowledgement (copied, saved, added)",
+        "The control has no label of its own to change (an icon button)"
+      ],
+      "avoid_when": [
+        "A result the person may want later, or that landed somewhere else → toast",
+        "An error → the field's message or an InlineNotification",
+        "A state the control already shows (a toggle, a selected tab) → nothing"
+      ],
+      "related": [
+        "notification",
+        "code-snippet",
+        "button",
+        "tooltip"
+      ]
+    },
+    {
+      "section": "components",
       "slug": "helper-text",
       "path": "docs/components/helper-text.md",
       "title": "Helper text",

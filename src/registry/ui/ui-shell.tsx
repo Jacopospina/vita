@@ -178,7 +178,7 @@ export const HeaderGlobalAction = React.forwardRef<HTMLButtonElement, { icon: Ic
       {value === undefined ? (
         <IconButton ref={ref} icon={icon} label={label} pressed={active} className={cn("size-8", className)} {...props} />
       ) : (
-        <Tooltip content={label} side="bottom">
+        <Tooltip content={label}>
           {/* The Button as it is (its squircle and icon slot, far right), only as tall as the other header actions (32px). */}
           <Button ref={ref} variant="ghost" size="sm" icon={icon} aria-label={label} aria-pressed={active} className={cn("h-8", active && "bg-selected text-selected-foreground", className)} {...props}>
             <span className="font-normal tabular-nums">{value}</span>
@@ -393,7 +393,7 @@ export function RightPanel({ open, onOpenChange, title, children, footer, size =
       {/* Header row: 32px, like the global header's actions, the title's centre sits on the header bar's centre. */}
       <div className="flex h-8 shrink-0 items-center justify-between gap-2 pl-2.5">
         <h2 className="truncate text-headline">{title}</h2>
-        <IconButton icon={Close} label="Close panel" shortcut="escape" tooltipSide="left" onClick={() => onOpenChange(false)} className="size-8 px-0" />
+        <IconButton icon={Close} label="Close panel" shortcut="escape" onClick={() => onOpenChange(false)} className="size-8 px-0" />
       </div>
       {/* The body is its own surface: full height between header and footer, scrolling on its own, solid (no blur)
           so what you read never shimmers over the page. A subtle border defines its edge on the glass. Concentric with the panel (rounded-inner-2 = 16 − 8). */}
