@@ -4,12 +4,14 @@ import { SwatchPicker } from "@/registry/ui/swatch-picker"
 import { Text } from "@/registry/ui/text"
 import { Dropdown } from "@/registry/ui/dropdown"
 import { Button } from "@/registry/ui/button"
+import { toast } from "@/registry/ui/notification"
 import { Separator } from "@/registry/ui/separator"
 import { swapAppearance, syncWarmth, withoutTransitions } from "@/registry/lib/appearance"
 import type { useWeatherTint } from "@/registry/hooks/use-weather-tint"
 import { RightPanel } from "@/registry/ui/ui-shell"
 import { MiniColor, MiniGlow, temperatureStops } from "@/registry/ui/mini-chart"
 import { Label } from "@/registry/ui/form"
+import { HelperText } from "@/registry/ui/helper-text"
 import { SwapIcon } from "@/registry/ui/icon"
 import { Moon, Sun, PartlyCloudy } from "@/registry/icons"
 
@@ -111,6 +113,8 @@ export function ThemePanel({ open, onOpenChange, weather, dark, onDarkChange }: 
     })
   }, [values, font])
 
+  // The frame in which a preset reads back its values: Undo cancels it, so a late read never overwrites the restore.
+  const presetFrame = React.useRef(0)
   const applyPreset = (p: string) => {
     setPreset(p)
     setGrey("neutral")
@@ -121,11 +125,36 @@ export function ThemePanel({ open, onOpenChange, weather, dark, onDarkChange }: 
       if (p === "default") root.removeAttribute("data-vita-preset")
       else root.setAttribute("data-vita-preset", p)
     })
-    requestAnimationFrame(() => {
+    cancelAnimationFrame(presetFrame.current)
+    presetFrame.current = requestAnimationFrame(() => {
       const cs = getComputedStyle(root)
       setValues(Object.fromEntries(knobs.map((k) => [k.key, parseFloat(cs.getPropertyValue(k.key)) || k.def])))
       const f = cs.getPropertyValue("--vita-font-sans")
       setFont(f.includes("Helvetica") ? "grotesk" : f.trim().startsWith("system-ui") ? "system" : "flex")
+    })
+  }
+
+  // Forgiveness: a reset acts at once and offers the way back, instead of asking first.
+  const resetAll = () => {
+    const before = { values, font, preset, grey }
+    applyPreset("default")
+    toast({
+      title: "Theme reset",
+      subtitle: "Back to Vita's defaults.",
+      action: {
+        label: "Undo",
+        onClick: () => {
+          // Put every choice back as it was: the preset, then each knob, the typeface and the grey.
+          cancelAnimationFrame(presetFrame.current)
+          const root = document.documentElement
+          if (before.preset === "default") root.removeAttribute("data-vita-preset")
+          else root.setAttribute("data-vita-preset", before.preset)
+          setPreset(before.preset)
+          setValues(before.values)
+          setFont(before.font)
+          setGrey(before.grey)
+        },
+      },
     })
   }
 
@@ -151,9 +180,10 @@ export function ThemePanel({ open, onOpenChange, weather, dark, onDarkChange }: 
     // The reset lives in the panel's footer, so it stays in reach however far the knobs scroll.
     <RightPanel open={open} onOpenChange={onOpenChange} title="Theme" size="md" footer={
       <>
-        {/* The export is one click away, so the panel needs no code block: Copy code says "Copied" for a moment. */}
-        <Button variant="secondary" onClick={copy}>{copied ? "Copied" : "Copy code"}</Button>
-        <Button onClick={() => applyPreset("default")}>Reset to defaults</Button>
+        {/* Psychology: isolation and peak-end. Copying the theme is why people came, so it is the one primary, at the
+            end of the bar; resetting throws their choices away, so it is secondary and forgiving (Undo, not a confirm). */}
+        <Button variant="secondary" onClick={resetAll}>Reset to defaults</Button>
+        <Button onClick={copy}>{copied ? "Copied" : "Copy code"}</Button>
       </>
     }>
     <Stack gap="md">
@@ -205,7 +235,18 @@ export function ThemePanel({ open, onOpenChange, weather, dark, onDarkChange }: 
       />
       <Separator />
       {/* Choices by name. */}
-      <Dropdown label="Style" value={preset} onValueChange={applyPreset} items={presets.map(({ value, label }) => ({ value, label }))} helperText={presets.find((p) => p.value === preset)?.gist} />
+      {/* Psychology (few choices, all in view): four styles fit side by side, so they're a button group, not a list to open. */}
+      <Stack gap="xs">
+        <Label>Style</Label>
+        <Group aria-label="Style" fill>
+          {presets.map((p) => (
+            <Button key={p.value} size="sm" variant={p.value === preset ? "primary" : "secondary"} aria-pressed={p.value === preset} onClick={() => applyPreset(p.value)}>
+              {p.label}
+            </Button>
+          ))}
+        </Group>
+        <HelperText className="pt-0">{presets.find((p) => p.value === preset)?.gist}</HelperText>
+      </Stack>
       <Dropdown label="Typeface" items={fonts.map(({ value, label }) => ({ value, label }))} value={font} onValueChange={setFont} helperText={fonts.find((f) => f.value === font)?.gist} />
       <Separator />
       {/* Every knob is a few named choices, so every knob is a button group: the chosen one is primary. */}
