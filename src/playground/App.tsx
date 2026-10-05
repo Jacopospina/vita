@@ -1,4 +1,5 @@
 import * as React from "react"
+import { SelectionHighlight } from "@/registry/ui/selection-highlight"
 import { Application, ColorPalette, LogoGithub, Moon, Sun } from "@/registry/icons"
 import { Shell, ShellBody, ShellMain, Header, HeaderNavItem, HeaderGlobalAction, HeaderSeparator, LeftPanel, SideNavItem, SideNavSection } from "@/registry/ui/ui-shell"
 import { TooltipProvider } from "@/registry/ui/tooltip"
@@ -151,6 +152,8 @@ export function App() {
         </ShellBody>
       </Shell>
       <Toaster />
+      {/* Every selection on the page is drawn the Vita way: soft-cornered rows that blend. */}
+      <SelectionHighlight />
     </TooltipProvider>
   )
 }

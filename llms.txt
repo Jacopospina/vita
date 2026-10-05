@@ -179,6 +179,9 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/iden
 - [Select](docs/components/select.md): Pick one value, written with SelectOption/SelectGroup children. The same Vita listbox as Dropdown, never the operating system's menu.
   - use: One value from a list you write inline (a handful of known options, grouped options); Forms where the options live in the markup rather than in data
   - avoid: Options come from data → Dropdown (items prop); 2–6 options → RadioGroup (show them); Users need to type to find → Combobox; Several values → MultiSelect / CheckboxGroup
+- [Selection highlight](docs/components/selection-highlight.md): How selected text looks in Vita, rounded rows in the primary's tint that melt into each other where lines meet, drawn from the first frame of the drag.
+  - use: Once, at the app root, so every selection in the product looks the same
+  - avoid: Marking text that isn't selected (search matches, mentions) → a Tag or a styled span
 - [Slider](docs/components/slider.md): Choose a value or range where relative position matters more than precision. The value is always visible.
   - use: Adjusting a continuous value with immediate feedback (volume, opacity, zoom); Filtering by a numeric range (price, weight) with two thumbs
   - avoid: Exact values matter → NumberInput; A few ordered steps of one property (a size, a density) → StepSlider (below); A few unordered options → RadioGroup / ContentSwitcher; The range is huge (0–1,000,000) → NumberInput(s)

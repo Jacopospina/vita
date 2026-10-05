@@ -9,6 +9,7 @@ import { Composer } from "@/registry/ui/composer"
 import { Thinking } from "@/registry/ui/thinking"
 import { AILabel, AISurface } from "@/registry/ui/ai-label"
 import { Button, ButtonSet } from "@/registry/ui/button"
+import { SelectionMark, visibleRects, lineRects, type Line } from "@/registry/ui/selection-highlight"
 
 /**
  * SelectionToolbar, the capsule of actions that floats over text the person has just selected: Cut, Copy, Paste and
@@ -63,7 +64,15 @@ export interface AskRequest extends SelectionContext {
   question: string
 }
 
-const anchorRect = (a: Anchor) => ("range" in a ? a.range.getBoundingClientRect() : a.field.getBoundingClientRect())
+/** Where the selection is on screen: the visible text's boxes only (never a screen reader's hidden copy). */
+function anchorRect(a: Anchor): { top: number; bottom: number; left: number; width: number } {
+  if (!("range" in a)) return a.field.getBoundingClientRect()
+  const rs = visibleRects(a.range)
+  if (!rs.length) return a.range.getBoundingClientRect()
+  const left = Math.min(...rs.map((r) => r.left))
+  const right = Math.max(...rs.map((r) => r.right))
+  return { top: Math.min(...rs.map((r) => r.top)), bottom: Math.max(...rs.map((r) => r.bottom)), left, width: right - left }
+}
 
 /** Where the selection is: a text range, or a field with a selection inside it. */
 function readSelection(root: HTMLElement, ignore?: HTMLElement | null): Selected | null {
@@ -95,15 +104,6 @@ function restore(a: Anchor) {
   const s = window.getSelection()
   s?.removeAllRanges()
   s?.addRange(a.range)
-}
-
-/** While focus is in the ask panel the real selection is gone; a highlight keeps the words visibly chosen. */
-function markRange(range: Range | null) {
-  const css = CSS as unknown as { highlights?: Map<string, unknown> }
-  const H = (window as unknown as { Highlight?: new (...r: Range[]) => unknown }).Highlight
-  if (!css.highlights || !H) return
-  if (range) css.highlights.set("vita-selection", new H(range))
-  else css.highlights.delete("vita-selection")
 }
 
 const GAP = 8
@@ -297,11 +297,27 @@ export function SelectionToolbar({ actions = editActions, onAsk, askSuggestions,
     }
   }, [sel, close])
 
-  // The chosen words stay marked while the question is being written and answered.
+  // While the ask panel has focus the words asked about stay marked, drawn like every selection in Vita
+  // (SelectionHighlight draws the live ones).
+  const [lines, setLines] = React.useState<Line[]>([])
   React.useEffect(() => {
-    markRange(ask && sel && "range" in sel.anchor ? sel.anchor.range : null)
-    return () => markRange(null)
-  }, [ask, sel])
+    const el = root.current
+    if (!el) return
+    const draw = () => {
+      // Only while the ask panel has focus: the page's real selection has moved into the question, so the words
+      // asked about are drawn from the stored selection. Live selections are drawn by SelectionHighlight.
+      const range = asking.current && selRef.current && "range" in selRef.current.anchor ? selRef.current.anchor.range : null
+      setLines(range ? lineRects(range, el.getBoundingClientRect()) : [])
+    }
+    document.addEventListener("selectionchange", draw)
+    window.addEventListener("scroll", draw, true)
+    window.addEventListener("resize", draw)
+    return () => {
+      document.removeEventListener("selectionchange", draw)
+      window.removeEventListener("scroll", draw, true)
+      window.removeEventListener("resize", draw)
+    }
+  }, [])
 
   // Opening the panel puts the cursor in the question, ready to type.
   React.useEffect(() => {
@@ -343,6 +359,7 @@ export function SelectionToolbar({ actions = editActions, onAsk, askSuggestions,
   return (
     <div ref={root} className={className}>
       {children}
+      {ask && lines.length > 0 && <SelectionMark lines={lines} />}
       {sel && (ask || available.length > 0) && (
         // One surface for the capsule and the ask panel: its size and corners glide between them. It arrives where it
         // belongs on its first frame (its enter animation, not a glide), and its position never animates.
