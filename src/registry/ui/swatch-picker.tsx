@@ -62,18 +62,20 @@ export function SwatchPicker({ label, items, value, defaultValue, onValueChange,
               aria-label={item.label}
               className={cn(
                 "group tap relative shrink-0 rounded-full p-0.5 focus-ring",
-                // The ring: a hairline that grows to the selection ring, easing onto the chosen circle.
-                "shadow-[inset_0_0_0_1.5px_transparent] duration-moderate-02 ease-expressive",
-                "hover:shadow-[inset_0_0_0_1.5px_var(--vita-border-strong)]",
-                // aria-checked, not data-state: the Tooltip trigger writes its own data-state on the same element.
-                "aria-checked:shadow-[inset_0_0_0_2px_var(--vita-foreground)]",
-                "shrink-0",
                 size === "sm" ? "size-6" : "size-8",
               )}
             >
+              {/* The ring is the circle's own outline, so ring and colour always share one centre (a ring on the
+                  button and a scaled circle inside it snap to different pixels at fractional sizes). A hairline on
+                  hover; on the chosen circle it grows, with a gap, as the circle steps in. aria-checked, not
+                  data-state: the Tooltip trigger writes its own data-state on the same element. */}
               <span
                 aria-hidden
-                className="block size-full rounded-full shadow-[inset_0_0_0_1px_color-mix(in_oklab,var(--vita-foreground)_12%,transparent)] duration-moderate-02 ease-expressive group-aria-checked:scale-90"
+                className={cn(
+                  "block size-full rounded-full shadow-[inset_0_0_0_1px_color-mix(in_oklab,var(--vita-foreground)_12%,transparent)] duration-moderate-02 ease-expressive",
+                  "outline-[1.5px] outline-offset-[0.5px] outline-transparent group-hover:outline-(--vita-border-strong)",
+                  "group-aria-checked:scale-90 group-aria-checked:outline-[2.25px] group-aria-checked:outline-offset-[1.25px] group-aria-checked:outline-(--vita-foreground)",
+                )}
                 style={{ backgroundColor: item.color }}
               />
             </RadioPrimitive.Item>

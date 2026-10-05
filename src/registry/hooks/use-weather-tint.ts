@@ -8,8 +8,8 @@ import { swapAppearance, syncWarmth } from "@/registry/lib/appearance"
  *   none   (15–18 °C)      neutral
  *   warm   (18 °C and up)  the white point leans warm
  * It adds to the theme's own warmth (--vita-warmth): a white point over everything, never a change of hue.
- * Mode: "dynamic" (default, changes with the reading) or a fixed "none" (neutral only) / "cold" (cold only) /
- * "warm" (warm only). Remembered on this device.
+ * Mode: "none" (the default: neutral, off until someone turns it on), "dynamic" (changes with the reading), or a
+ * fixed "cold" / "warm". Remembered on this device.
  *
  * Temperature: the current reading for the user's area from Open-Meteo (no key; the position is rounded to
  * ~10 km before it leaves the device), cached for 30 minutes. Offline or blocked → a seasonal estimate.
@@ -74,7 +74,7 @@ async function currentTemperature({ lat, lon }: Coords, signal: AbortSignal): Pr
 export function useWeatherTint() {
   const [mode, setModeState] = React.useState<WeatherTintMode>(() => {
     const v = read<string>(PREF)
-    return v === "none" || v === "cold" || v === "warm" ? v : v === "off" ? "none" : "dynamic"
+    return v === "dynamic" || v === "cold" || v === "warm" ? v : "none"
   })
   const [celsius, setCelsius] = React.useState<number | null>(null)
 
