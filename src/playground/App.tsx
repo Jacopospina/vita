@@ -114,7 +114,9 @@ export function App() {
         <ShellBody>
           {(
           <LeftPanel label="Documentation">
-            <div className="pb-1">
+            {/* The filter stays put while the pages scroll under it, at the same 8px from the panel's top, on its own
+                frosted glass so the rows blur as they pass beneath (no border or shadow: it is part of the panel). */}
+            <div className="sticky top-0 z-10 -mx-2 -mt-2 px-2 pt-2 pb-1 glass glass-2 border-0! shadow-none">
               <Search size="md" variant="toolbar" label="Filter pages" placeholder="Filter" shortcut="mod+f" value={filter} onValueChange={setFilter} />
             </div>
             {/* Every search answers "nothing" with an empty state, never blank space. */}
