@@ -69,7 +69,7 @@ export function ModalContent({ size = "md", danger, className, children, ...prop
       >
         {children}
         <DialogPrimitive.Close asChild>
-          <Button ref={closeRef} onPointerDown={() => setExit("fall")} variant="ghost" size="md" aria-label="Close" aria-keyshortcuts="Escape" className="absolute top-3 right-3 size-control-md rounded-inner-3 px-0">
+          <Button ref={closeRef} onPointerDown={() => setExit("fall")} variant="ghost" size="md" aria-label="Close" aria-keyshortcuts="Escape" className="absolute top-3 right-3 size-control-md px-0">
             <Icon as={Close} size="md" />
           </Button>
         </DialogPrimitive.Close>

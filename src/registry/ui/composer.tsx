@@ -115,11 +115,11 @@ export function Composer({ placeholder = "Describe what you need", onSubmit, sug
           {attachments && (
             <>
               <input ref={fileRef} type="file" multiple aria-label="Attach files" className="sr-only" tabIndex={-1} onChange={(e) => { setFiles((x) => [...x, ...Array.from(e.target.files ?? [])]); e.target.value = "" }} />
-              <IconButton icon={Attachment} label="Attach files" size="sm" className="rounded-inner-1.5 [corner-shape:round]" onClick={() => fileRef.current?.click()} />
+              <IconButton icon={Attachment} label="Attach files" size="sm" onClick={() => fileRef.current?.click()} />
             </>
           )}
           {voice && Speech && (
-            <IconButton icon={listening ? MicrophoneFilled : Microphone} label={listening ? "Stop dictation" : "Dictate"} size="sm" pressed={listening} onClick={toggleVoice} className={cn("rounded-inner-1.5 [corner-shape:round]", listening && "animate-pulse text-primary")} />
+            <IconButton icon={listening ? MicrophoneFilled : Microphone} label={listening ? "Stop dictation" : "Dictate"} size="sm" pressed={listening} onClick={toggleVoice} className={cn(listening && "animate-pulse text-primary")} />
           )}
           <span className="flex-1" />
           {/* Send exists only when there's something to send, never a disabled button. It slides in from the
@@ -133,7 +133,7 @@ export function Composer({ placeholder = "Describe what you need", onSubmit, sug
                 canSend ? "translate-y-0 opacity-100 duration-moderate-02 ease-spring" : "translate-y-3 opacity-0 duration-moderate-01 ease-productive",
               )}
             >
-              <IconButton icon={ArrowUp} label="Send" variant="primary" size="sm" loading={loading} onClick={submit} className="rounded-full [corner-shape:round]" />
+              <IconButton icon={ArrowUp} label="Send" variant="primary" size="sm" loading={loading} onClick={submit} />
             </span>
           </span>
         </div>

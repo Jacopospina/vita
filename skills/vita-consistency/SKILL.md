@@ -39,6 +39,7 @@ Consistency comes from rules, not taste. Run this checklist on every screen, top
 - [ ] Only floating layers have shadows (`shadow-floating` / `shadow-overlay`). Tiles and cards never cast one, resting or hovered.
 - [ ] Radius is concentric: inner = outer − padding. Containers use `scope-*`, children `rounded-inner-{padding}`.
 - [ ] Every corner follows the theme. A surface, row, tile or picker option is rounded by a Vita radius (`rounded-sm|md|lg|xl`, `scope-*`), never `rounded-none`. `rounded-inner-*` only inside a `scope-*` parent: without one it computes radius-md minus the padding, which is often 0 (a sharp corner the theme can't reach).
+- [ ] Buttons keep their squircle. Never pass `rounded-*` or `corner-shape` to a Button or IconButton (it's dropped, and a test fails): to fit a bar, change its height (`h-8`, `size-8`), never its corners.
 - [ ] Check at two radii. Flip the theme radius (Square, Default, Round): every corner must change with it. One that stays sharp at Default is a bug.
 
 ## 5. Color restraint

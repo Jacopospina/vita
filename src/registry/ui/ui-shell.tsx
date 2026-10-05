@@ -81,8 +81,7 @@ export function ShellMain({ children, className, ...props }: React.HTMLAttribute
 
 /* ---------------- Header ---------------- */
 
-/** Header items: 32px concentric pills inside the floating bar (radius = bar radius − its 8px padding). */
-const pill = "h-8 rounded-inner-2 [corner-shape:round]"
+/** Header actions are Vita buttons at 32px, in their own squircle (a button's corners are never overridden). */
 
 export function Header({ productName, prefix, logo, badge, href = "/", children, actions, className }: {
   productName: string
@@ -118,7 +117,7 @@ export function Header({ productName, prefix, logo, badge, href = "/", children,
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded-sm focus:bg-primary focus:px-3 focus:py-2 focus:text-primary-foreground">
         Skip to main content
       </a>
-      <IconButton icon={navOpen ? Close : MenuIcon} label={navOpen ? "Close menu" : "Open menu"} onClick={() => setNavOpen(!navOpen)} className={cn(pill, "w-8 lg:hidden")} />
+      <IconButton icon={navOpen ? Close : MenuIcon} label={navOpen ? "Close menu" : "Open menu"} onClick={() => setNavOpen(!navOpen)} className="size-8 lg:hidden" />
       <a href={href} aria-label={`${prefix ? `${prefix} ` : ""}${productName}, home`} className={cn("flex h-8 items-center gap-1 rounded-inner-2 px-3 text-body whitespace-nowrap duration-fast-02 hover:bg-hover focus-ring-inset", logo && "max-sm:w-8 max-sm:justify-center max-sm:px-0")}>
         {logo && <span aria-hidden className="mr-1 flex shrink-0 max-sm:mr-0">{logo}</span>}
         {/* With a mark, the words step aside on a phone: the mark is the name. */}
@@ -172,12 +171,12 @@ export function HeaderSeparator() {
   return <span aria-hidden className="mx-1.5 size-1 shrink-0 rounded-full bg-border-strong" />
 }
 
-/** `value` (a count, say) sits beside the icon in the same pill: still one header action, named by its tooltip. */
+/** `value` (a count, say) sits beside the icon in the same button: still one header action, named by its tooltip. */
 export const HeaderGlobalAction = React.forwardRef<HTMLButtonElement, { icon: IconType; label: string; active?: boolean; badge?: boolean; value?: React.ReactNode; onClick?: () => void } & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "value">>(
   ({ icon, label, active, badge, value, className, ...props }, ref) => (
     <span className="relative flex">
       {value === undefined ? (
-        <IconButton ref={ref} icon={icon} label={label} pressed={active} className={cn(pill, "w-8", className)} {...props} />
+        <IconButton ref={ref} icon={icon} label={label} pressed={active} className={cn("size-8", className)} {...props} />
       ) : (
         <Tooltip content={label} side="bottom">
           {/* The Button as it is (its squircle and icon slot, far right), only as tall as the other header actions (32px). */}
@@ -391,10 +390,10 @@ export function RightPanel({ open, onOpenChange, title, children, footer, size =
         className,
       )}
     >
-      {/* Header row: 32px, like the global header's pills, the title's centre sits on the header bar's centre. */}
+      {/* Header row: 32px, like the global header's actions, the title's centre sits on the header bar's centre. */}
       <div className="flex h-8 shrink-0 items-center justify-between gap-2 pl-2.5">
         <h2 className="truncate text-headline">{title}</h2>
-        <IconButton icon={Close} label="Close panel" shortcut="escape" tooltipSide="left" onClick={() => onOpenChange(false)} className="size-8 rounded-inner-2 px-0" />
+        <IconButton icon={Close} label="Close panel" shortcut="escape" tooltipSide="left" onClick={() => onOpenChange(false)} className="size-8 px-0" />
       </div>
       {/* The body is its own surface: full height between header and footer, scrolling on its own, solid (no blur)
           so what you read never shimmers over the page. A subtle border defines its edge on the glass. Concentric with the panel (rounded-inner-2 = 16 − 8). */}

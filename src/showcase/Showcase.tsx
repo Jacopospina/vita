@@ -59,7 +59,7 @@ export function Showcase({ page = "home" }: { page?: "home" | "make" }) {
           href={HOME_URL}
           actions={
             <>
-              <GlobalSearch items={searchPages((path) => window.location.assign(`${DOCS}${path}`))} placeholder="Search Vita" className="size-8 rounded-inner-2" />
+              <GlobalSearch items={searchPages((path) => window.location.assign(`${DOCS}${path}`))} placeholder="Search Vita" className="size-8" />
               <span className="flex items-center gap-1 max-sm:hidden"><HeaderSeparator /></span>
               <HeaderGlobalAction icon={dark ? Sun : Moon} label={dark ? "Light theme" : "Dark theme"} onClick={() => setDark((d) => !d)} />
               <span className="flex items-center gap-1 max-sm:hidden">
