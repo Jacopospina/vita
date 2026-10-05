@@ -171,14 +171,29 @@ export function AgentsExample() {
   const [page, setPage] = React.useState(1)
   const [size, setSize] = React.useState(10)
   const [q, setQ] = React.useState("")
-  const filtered = agents.filter((s) => (s.name + s.team + s.model).toLowerCase().includes(q.toLowerCase()))
+  // Forgiveness: deleting acts at once and offers Undo, instead of asking "Are you sure?" first.
+  const [gone, setGone] = React.useState<string[]>([])
+  const [selected, setSelected] = React.useState<string[]>([])
+  const live = agents.filter((a) => !gone.includes(a.id))
+  const remove = (ids: string[]) => {
+    setGone((g) => [...g, ...ids])
+    setSelected([])
+    const one = ids.length === 1 ? agents.find((a) => a.id === ids[0])?.name : undefined
+    toast({
+      icon: TrashCan,
+      source: "Theo",
+      title: one ? `${one} deleted` : `${ids.length} agents deleted`,
+      action: { label: "Undo", onClick: () => setGone((g) => g.filter((id) => !ids.includes(id))) },
+    })
+  }
+  const filtered = live.filter((s) => (s.name + s.team + s.model).toLowerCase().includes(q.toLowerCase()))
   return (
     <Stack gap="lg">
       <PageHeader title="Agents" description="Every agent deployed in the Theo workspace." actions={<Button icon={Add} onClick={() => toast({ icon: Bot, source: "Theo", title: "Agent created", subtitle: "Untitled agent is ready to configure." })}>Create agent</Button>} />
       {/* One meaning, one surface: the workspace's numbers sit together, divided by hairlines, never as separate cards. */}
       <KpiGroup>
-        <Kpi label="Live agents" value={agents.filter((a) => a.status === "Live").length} helperText="2 deployed this week" />
-        <Kpi label="Runs (24h)" value={agents.reduce((n, a) => n + a.runs, 0)} delta={0.08} period="vs last week" />
+        <Kpi label="Live agents" value={live.filter((a) => a.status === "Live").length} helperText="2 deployed this week" />
+        <Kpi label="Runs (24h)" value={live.reduce((n, a) => n + a.runs, 0)} delta={0.08} period="vs last week" />
         <Kpi label="Resolution rate" value={0.94} format={{ style: "percent" }} helperText="Handled without a person" />
         <Kpi label="Hand-offs" value={37} helperText="12 waiting for a reply" />
       </KpiGroup>
@@ -187,14 +202,16 @@ export function AgentsExample() {
         columns={agentColumns}
         rows={filtered.slice((page - 1) * size, page * size)}
         selectable
-        batchActions={() => (<><Button icon={Download}>Export</Button><Button icon={TrashCan}>Delete</Button></>)}
+        selected={selected}
+        onSelectedChange={setSelected}
+        batchActions={(ids) => (<><Button icon={Download}>Export</Button><Button icon={TrashCan} onClick={() => remove(ids)}>Delete</Button></>)}
         toolbar={<><Search variant="toolbar" size="md" placeholder="Search agents" value={q} onValueChange={(v) => { setQ(v); setPage(1) }} /><IconButton icon={Filter} label="Filter" /></>}
-        rowActions={() => (
+        rowActions={(row) => (
           <OverflowMenu>
             <MenuItem icon={Edit}>Edit</MenuItem>
             <MenuItem icon={Download}>Export config</MenuItem>
             <MenuSeparator />
-            <MenuItem icon={TrashCan} danger>Delete agent</MenuItem>
+            <MenuItem icon={TrashCan} danger onSelect={() => remove([row.id])}>Delete agent</MenuItem>
           </OverflowMenu>
         )}
         emptyState={<EmptyState title="No agents match" description="Try a different agent name or team." action={<Button variant="tertiary" onClick={() => setQ("")}>Clear search</Button>} />}

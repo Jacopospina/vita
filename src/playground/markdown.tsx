@@ -8,7 +8,7 @@ import { Button } from "@/registry/ui/button"
 import { HelperText } from "@/registry/ui/helper-text"
 import { Tile, TileSet, TileSetItem } from "@/registry/ui/tile"
 import { Icon } from "@/registry/ui/icon"
-import { Callout } from "@/registry/ui/notification"
+import { Callout, toast } from "@/registry/ui/notification"
 import { CodeSnippet } from "@/registry/ui/code-snippet"
 import { StructuredList } from "@/registry/ui/structured-list"
 import { SetupPill } from "./setup-tag"
@@ -135,7 +135,15 @@ function Alert({ token }: { token: Tokens.Blockquote }) {
       <Stack gap="sm" align="start">
         <span className="text-foreground">{inline(body.replace(/\n/g, " "))}</span>
         {code && (
-          <Button size="sm" feedback={{ success: "Copied" }} onAction={() => navigator.clipboard.writeText(code.text)}>
+          // Peak-end: the copy ends on a clear "done" that names the next step.
+          <Button
+            size="sm"
+            feedback={{ success: "Copied" }}
+            onAction={async () => {
+              await navigator.clipboard.writeText(code.text)
+              if (code.lang === "prompt") toast({ kind: "success", title: "Prompt copied", subtitle: "Paste it into your coding agent, in your project." })
+            }}
+          >
             {code.lang === "prompt" ? "Copy prompt" : "Copy"}
           </Button>
         )}

@@ -163,7 +163,8 @@ export function DataTable<T extends { id: string }>({
                 </span>
                 <div className="ml-auto flex items-center gap-1 [&_button]:bg-transparent [&_button]:text-primary-foreground [&_button:hover]:bg-primary-hover">
                   <OnPrimary>{batchActions(selected)}</OnPrimary>
-                  <IconButton icon={Close} label="Clear selection" shortcut="escape" variant="primary" onClick={() => setSelected([])} />
+                  {/* Fitts: the actions (Delete among them) never sit where a hurried tap meant for × lands. */}
+                  <IconButton icon={Close} label="Clear selection" shortcut="escape" variant="primary" className="ml-3" onClick={() => setSelected([])} />
                 </div>
               </div>
             )}

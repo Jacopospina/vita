@@ -130,7 +130,7 @@ function MakePage({ onPersonalise }: { onPersonalise: () => void }) {
       <Stack gap="2xl" className="stagger">
         <Stack gap="xs" align="center" className="text-center">
           <Text variant="large-title" as="h1">See what you can make</Text>
-          <Text variant="body-lg" tone="muted" className="max-w-2xl">Whole screens of Theo, built only from Vita. Everything here is live: click, type, switch.</Text>
+          <Text variant="body-lg" tone="muted" className="max-w-2xl">Whole screens, built only from Vita. Everything here is live: click, type, switch.</Text>
           {/* Start making leads, as on the homepage; the theme panel restyles every example live. */}
           <Inline gap="md" justify="center" wrap className="pt-2">
             <Button size="xl" onClick={() => (window.location.href = `${DOCS}getting-started/installation`)}>Start making</Button>
