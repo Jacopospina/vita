@@ -49,17 +49,14 @@ export const MAKE_URL = import.meta.env.PROD ? "/make" : "./make.html"
 
 /** The global nav, ONE list, used by the docs header and the showcase header so they never drift apart. */
 export const globalNav = [
-  // Start is where you begin making: installation. Identity is who Vita is: About Vita opens it.
-  // Components and patterns are reached from the side navigation and search, not the global bar.
-  { label: "Start", path: "getting-started/installation", sections: ["getting-started"] },
-  { label: "Identity", path: "guidelines", sections: ["guidelines", "identity"] },
-  { label: "Foundations", path: "foundations/accessibility", sections: ["foundations"] },
-  // Not a docs page: the live examples have a page of their own.
-  { label: "See what you can make", path: "make", sections: ["make"], href: MAKE_URL },
+  // Two ways in: install it, or look at what it's made of (Components). Everything else is in the side navigation and search.
+  // Browse opens the first page of the components list, so it follows the list.
+  { label: "Install", path: "getting-started/installation", sections: ["getting-started"] },
+  { label: "Components", path: `components/${manifest.components[0].slug}`, sections: ["components", "patterns"] },
 ] as const
 
 /** Where a global nav item links: its own page, or a docs route (prefixed with the docs URL of the current page). */
-export const navHref = (n: (typeof globalNav)[number], docs: string) => ("href" in n ? n.href : `${docs}${n.path}`)
+export const navHref = (n: (typeof globalNav)[number], docs: string) => `${docs}${n.path}`
 
 /** Every page, for the header's global search (grouped by section). `base` prefixes links (the showcase lives elsewhere). */
 export function searchPages(go: (path: string) => void) {

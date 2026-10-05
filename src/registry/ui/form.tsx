@@ -2,6 +2,7 @@ import * as React from "react"
 import { Label as LabelPrimitive } from "radix-ui"
 import { WarningFilled, WarningAltFilled } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
+import { helperTextClass } from "@/registry/ui/helper-text"
 import { Icon } from "@/registry/ui/icon"
 import { animateChildren, AnimatedText } from "@/registry/ui/animated"
 import { Group } from "@/registry/ui/layout"
@@ -94,8 +95,9 @@ export function FieldMessage({ id, kind, children, className }: { id?: string; k
         <p
           id={id}
           className={cn(
-            "flex items-start gap-1 text-caption",
-            k === "error" ? "text-error-foreground" : k === "warn" ? "text-warning-foreground" : "text-helper",
+            "flex items-start gap-1",
+            k === "help" ? helperTextClass : "text-caption",
+            k === "error" ? "text-error-foreground" : k === "warn" && "text-warning-foreground",
             leaving ? "translate-y-1 opacity-0 motion-productive" : "animate-drop-in",
           )}
         >

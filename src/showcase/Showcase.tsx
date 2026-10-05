@@ -70,11 +70,11 @@ export function Showcase({ page = "home" }: { page?: "home" | "make" }) {
           }
         >
           {/* The same global nav as the docs. */}
-          {globalNav.map((n) => <HeaderNavItem key={n.path} href={navHref(n, DOCS)} active={page === "make" && n.path === "make"}>{n.label}</HeaderNavItem>)}
+          {globalNav.map((n) => <HeaderNavItem key={n.path} href={navHref(n, DOCS)}>{n.label}</HeaderNavItem>)}
         </Header>
         {/* The phone menu: the global nav (the header hides it on small screens). */}
         <LeftPanel mobileOnly label="Menu">
-          {globalNav.map((n) => <SideNavItem key={n.path} href={navHref(n, DOCS)} active={page === "make" && n.path === "make"}>{n.label}</SideNavItem>)}
+          {globalNav.map((n) => <SideNavItem key={n.path} href={navHref(n, DOCS)}>{n.label}</SideNavItem>)}
           <div className="mt-auto flex flex-col gap-px border-t border-divider pt-2">
             <SideNavItem icon={ColorPalette} onClick={() => setThemeOpen(true)}>Theme</SideNavItem>
             <SideNavItem href="https://github.com/Jacopospina/vita" icon={LogoGithub}>GitHub</SideNavItem>
@@ -109,7 +109,7 @@ function HomePage() {
           </Text>
           {/* Side by side where they fit, one under the other on a phone, each at its own width: page buttons are never full bleed. */}
           <Inline gap="md" justify="center" wrap>
-            <Button size="xl" onClick={() => (window.location.href = `${DOCS}guidelines`)}>Start making</Button>
+            <Button size="xl" onClick={() => (window.location.href = `${DOCS}getting-started/installation`)}>Start making</Button>
             <Button size="xl" variant="secondary" onClick={() => (window.location.href = MAKE_URL)}>See what you can make</Button>
           </Inline>
         </Stack>
@@ -131,10 +131,10 @@ function MakePage({ onPersonalise }: { onPersonalise: () => void }) {
         <Stack gap="xs" align="center" className="text-center">
           <Text variant="large-title" as="h1">See what you can make</Text>
           <Text variant="body-lg" tone="muted" className="max-w-2xl">Whole screens of Theo, built only from Vita. Everything here is live: click, type, switch.</Text>
-          {/* Make it yours right here: the theme panel restyles every example live. Secondary always on the left. */}
+          {/* Start making leads, as on the homepage; the theme panel restyles every example live. */}
           <Inline gap="md" justify="center" wrap className="pt-2">
-            <Button size="xl" variant="secondary" onClick={() => (window.location.href = `${DOCS}guidelines`)}>Start making</Button>
-            <Button size="xl" onClick={onPersonalise}>Personalise theme</Button>
+            <Button size="xl" onClick={() => (window.location.href = `${DOCS}getting-started/installation`)}>Start making</Button>
+            <Button size="xl" variant="secondary" onClick={onPersonalise}>Personalise theme</Button>
           </Inline>
         </Stack>
         <section id="examples" aria-label="Examples">
