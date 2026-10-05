@@ -23,7 +23,7 @@ related: [ui-shell-left-panel, ui-shell-right-panel, global-header]
 
 1. **Product name, left:** "Prefix **Name**" (platform in regular weight, product in semibold). It links home.
 2. **Header nav** only for 2–5 top-level areas when there's no side nav. With a side nav, leave the header nav empty.
-3. **Global actions, right, in this order:** search · notifications · help · app switcher · user. Max 5. Each is an icon with a label (tooltip).
+3. **Global actions, right, in this order:** search · notifications · help · app switcher · user. Max 5. Each is an icon with a label (tooltip). A count that belongs to the action (forks, unread) goes in its `value`, inside the same pill, never as a separate button.
 4. **Active global action** (its panel is open) shows the pressed state. Panels open as `RightPanel`.
 5. **Translucent material** (backdrop blur over `background`) keeps the header light. Don't make the header brand-colored.
 6. **Skip link** ("Skip to main content") is built in. Keep `ShellMain` as the main landmark.
