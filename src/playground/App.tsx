@@ -95,7 +95,7 @@ export function App() {
           href={HOME_URL} // the Vita homepage: the live showcase
           actions={
             <>
-              <GlobalSearch items={searchPages((path) => window.location.assign(`#/${path}`))} placeholder="Search Vita" className="size-8 rounded-inner-2" />
+              <GlobalSearch items={searchPages((path) => window.location.assign(`#/${path}`))} placeholder="Search Vita" className="size-8" />
               <span className="flex items-center gap-1 max-sm:hidden"><HeaderSeparator /></span>
               <HeaderGlobalAction icon={dark ? Sun : Moon} label={dark ? "Light theme" : "Dark theme"} onClick={() => setDark((d) => !d)} />
               {/* On a phone these two live in the menu, so the header fits. */}

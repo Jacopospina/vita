@@ -92,6 +92,26 @@ const statusTone = {
   error: "bg-error! text-primary-foreground! border-transparent!",
 } as const
 
+/**
+ * A button's corners are Vita's squircle, everywhere: a corner class passed in (rounded-*, corner-shape, the squircle
+ * radius) is dropped, with a warning in development. A container that must reshape its buttons (ButtonSet, ActionBar)
+ * does it from the outside with `*:` selectors, never through a button's className.
+ */
+const SHAPE = /^(?:[\w-]+:)*(?:rounded(?:-\S+)?|\[corner-shape:[^\]]+\]|\[--vita-squircle-r:[^\]]+\])!?$/
+const warned = new Set<string>()
+export function keepShape(className?: string) {
+  if (!className) return className
+  const tokens = className.split(/\s+/)
+  const dropped = tokens.filter((c) => SHAPE.test(c))
+  if (!dropped.length) return className
+  const key = dropped.join(" ")
+  if (import.meta.env?.DEV && !warned.has(key)) {
+    warned.add(key)
+    console.warn(`Vita Button: the squircle is the button's own shape, so "${key}" was ignored.`)
+  }
+  return tokens.filter((c) => !SHAPE.test(c)).join(" ")
+}
+
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, fullWidth, asChild, icon, iconPosition: _iconPosition, loading, status: statusProp, feedback, onAction, disabled, shortcut, children, onClick, ...props }, ref) => {
     void _iconPosition
@@ -173,7 +193,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           iconOnly && cn(iconButtonSize[size ?? "md"], "justify-center gap-0 px-0"),
           busy && "pointer-events-none",
           status !== "idle" && status !== "loading" && statusTone[status],
-          className,
+          keepShape(className),
         )}
         disabled={asChild ? undefined : disabled}
         aria-busy={busy || undefined}

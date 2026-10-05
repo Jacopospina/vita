@@ -9,7 +9,7 @@ Vita is the body of the product: the only source of UI. This skill turns intent 
 
 ## Non-negotiables (violating any is a failed task)
 
-1. **Only Vita components.** Import from `@/components/vita/*`. Never build a local component, re-style a primitive, or import another UI or icon library.
+1. **Only Vita components.** Import from `@/components/vita/*`. Never build a local component, re-style a primitive (a Button's squircle corners included), or import another UI or icon library.
 2. **Only Vita tokens.** No hex/rgb/oklch, no arbitrary values (`w-[317px]`), no palette colors (`bg-blue-500`), no Tailwind type sizes (`text-sm`), no off-scale spacing (`p-5`), no `dark:` overrides, no inline styles.
 3. **Only Vita patterns.** Flows follow `.vita/docs/patterns/*`. Don't invent a new way to filter, confirm, load or show empty.
 4. **Every string goes through the taxonomy** (`vita/taxonomy.json`), via the `vita-copywriting` skill.

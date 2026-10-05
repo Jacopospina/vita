@@ -25,7 +25,6 @@ export function Pagination({ page, pageSize, total, onPageChange, onPageSizeChan
   const h = size === "sm" ? "h-control-sm" : size === "lg" ? "h-control-lg" : "h-control-md"
   // A band like the table toolbar: rounded (concentric with the table card via --vita-inset-r, else the field
   // radius), small inset; pills inside follow the formula (band radius − 4px inset); dividers are inset too.
-  const pill = "rounded-[max(0px,calc(var(--vita-inset-r,var(--vita-radius-md))-var(--spacing)))] [corner-shape:round]"
   const divider = <span aria-hidden className="my-1.5 w-px self-stretch bg-divider" />
   return (
     <div className={cn("flex w-full items-center justify-between gap-2 rounded-(--vita-inset-r,var(--vita-radius-md)) bg-layer-2 p-1 text-body text-muted-foreground", className)}>
@@ -48,8 +47,8 @@ export function Pagination({ page, pageSize, total, onPageChange, onPageSizeChan
           <span className="hidden sm:inline">of <AnimatedNumber value={pages} /> pages</span>
         </div>
         {divider}
-        <IconButton icon={ChevronLeft} label="Previous page" size={size} disabled={page <= 1} onClick={() => onPageChange(page - 1)} className={pill} />
-        <IconButton icon={ChevronRight} label="Next page" size={size} disabled={page >= pages} onClick={() => onPageChange(page + 1)} className={pill} />
+        <IconButton icon={ChevronLeft} label="Previous page" size={size} disabled={page <= 1} onClick={() => onPageChange(page - 1)} />
+        <IconButton icon={ChevronRight} label="Next page" size={size} disabled={page >= pages} onClick={() => onPageChange(page + 1)} />
       </div>
     </div>
   )

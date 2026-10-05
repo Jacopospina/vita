@@ -1,4 +1,4 @@
-import { describe, it, expect, afterEach } from "vitest"
+import { describe, it, expect, afterEach, vi } from "vitest"
 import { render, cleanup } from "@testing-library/react"
 import { demos } from "@/playground/demos"
 import { manifest } from "@/playground/manifest"
@@ -17,6 +17,14 @@ describe("every Vita page is documented", () => {
       })
 })
 
+// A Button that was handed a corner class says so (keepShape): no demo may trigger it.
+const shapeWarnings: string[] = []
+const warn = console.warn
+vi.spyOn(console, "warn").mockImplementation((...args: unknown[]) => {
+  if (String(args[0]).startsWith("Vita Button:")) shapeWarnings.push(String(args[0]))
+  else warn(...args)
+})
+
 describe("every demo renders", () => {
   for (const [key, list] of Object.entries(demos))
     for (const d of list)
@@ -24,4 +32,10 @@ describe("every demo renders", () => {
         const { container } = render(<TooltipProvider>{d.render()}</TooltipProvider>)
         expect(container.innerHTML.length).toBeGreaterThan(0)
       })
+})
+
+describe("buttons keep their squircle", () => {
+  it("no demo passes a corner class to a Button", () => {
+    expect(shapeWarnings).toEqual([])
+  })
 })

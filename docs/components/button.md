@@ -28,6 +28,7 @@ related: [menu-buttons, link, modal, common-actions]
 ## Shape & padding
 
 - **Squircle corners.** Buttons (and button groups) use continuous-curvature squircle corners, not simple rounded corners. `xl` is rounder, in proportion to its height.
+- **The shape is the button's own.** A corner class passed to a Button or IconButton (`rounded-*`, `corner-shape`) is ignored, with a warning in development, and a test fails on one in the source. Size it with `size-*` or `h-*`; a group reshapes its buttons from outside (`ButtonSet`).
 - **Symmetric padding.** Left and right padding are always equal. With an icon, the icon sits on the far right.
 
 ## Rules

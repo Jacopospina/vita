@@ -61,6 +61,11 @@ export function createRules({ alias = "@/components/vita" } = {}) {
     msg: "Radius/shadow outside the scale. Use rounded-sm|md|lg|xl|full and shadow-raised|floating|overlay.",
   },
   {
+    id: "button-shape",
+    test: (line) => /<(?:Icon)?Button\b[^<>]*className=(?:"[^"]*|\{[^}]*)(?:\brounded\b|\brounded-|corner-shape|--vita-squircle-r)/.exec(line),
+    msg: "A Button's corners are its own squircle: never pass rounded-* or corner-shape. Change its size (h-*, size-*) instead.",
+  },
+  {
     id: "square-corner",
     test: (line) => /\brounded(?:-[trblse]{1,2})?-(?:none|0)\b/.exec(line),
     msg: "Square corner. Every corner comes from the theme radius (rounded-sm|md|lg|xl, scope-* + rounded-inner-*), so it follows whatever radius the product picks, square included.",
