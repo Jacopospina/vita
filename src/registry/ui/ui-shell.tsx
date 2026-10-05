@@ -207,10 +207,12 @@ export function LeftPanel({ children, rail, mobileOnly, className, label = "Side
         data-rail={rail || undefined}
         className={cn(
           // Floating sidebar: frosted glass, inset from the window, rounded; rows inside are concentric (rounded-inner-2).
-          "group/nav z-30 flex shrink-0 flex-col overflow-x-hidden overflow-y-auto glass glass-1 scope-xl p-2",
+          // The frost lives on a layer behind the rows, not on the nav itself: an element that blurs its backdrop hides
+          // its own content from any glass inside it, so a sticky glass control (a filter) could not frost the rows.
+          "group/nav z-30 flex shrink-0 flex-col overflow-hidden glass glass-1 backdrop-filter-none! scope-xl",
           // Floats over the scrolling page, below the header (top-17 = 12 above it + 48 tall + 8 below), inset 8px at the sides.
           // On a phone the header is at the bottom, so the sheet keeps clear of it there instead.
-          "absolute top-17 bottom-2 left-2 w-60 -translate-x-[calc(100%+1rem)] duration-moderate-02 ease-productive max-sm:top-2 max-sm:bottom-16",
+          "absolute top-0 bottom-2 left-2 w-60 -translate-x-[calc(100%+1rem)] duration-moderate-02 ease-productive max-sm:top-2 max-sm:bottom-16",
           // A phone gets the whole width (inset like the header), so every row is a full-width target.
           "max-sm:right-2 max-sm:w-auto",
           mobileOnly ? "lg:hidden" : "lg:translate-x-0",
@@ -220,7 +222,8 @@ export function LeftPanel({ children, rail, mobileOnly, className, label = "Side
           className,
         )}
       >
-        {children}
+        <span aria-hidden className="pointer-events-none absolute inset-0 -z-10 glass glass-1 border-0! bg-transparent! shadow-none" />
+        <div className="flex min-h-0 flex-1 flex-col overflow-x-hidden overflow-y-auto p-2">{children}</div>
       </nav>
     </>
   )
