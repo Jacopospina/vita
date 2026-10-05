@@ -12,7 +12,7 @@ related: [theming, material, weather-tint]
 
 - **Warmth is a colour temperature.** The screen's white point follows a real light source, from about 10000 K through daylight (6500 K, neutral) to about 4000 K, in even steps the eye reads evenly. Whites turn cream or icy, blacks stay black.
 - **Colours keep their hue.** The greys keep the neutral knobs; brand, support colours, images and shadows only change in light.
-- **One knob, two sources.** `--vita-warmth` (-1 cool to 1 warm) is the theme's own; the weather adds a lean of 0.25 either way (about 5600 K or 7100 K). Three states and four modes stay as before.
+- **One knob, two sources.** `--vita-warmth` (-1 cool to 1 warm) is the theme's own; the weather adds a lean of 0.25 either way (about 5600 K or 7100 K). Three states and four modes stay as before, but the weather is off by default (Neutral): a screen that changes colour on its own surprises people who didn't ask for it.
 - **Free when neutral.** The layer exists only while the screen leans, so a neutral screen pays nothing.
 
 ## Why
