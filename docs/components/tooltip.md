@@ -22,7 +22,7 @@ related: [popover, button, overflow-content]
 ## Rules
 
 1. **One short line** (≤ ~80 characters), with no period for fragments.
-2. **Delay 400ms on first hover** and instant for subsequent ones (`TooltipProvider`, mounted once at the root).
+2. **Instant.** A tooltip appears the moment the pointer or focus arrives, with a quick fade, never after a wait (`TooltipProvider`, mounted once at the root).
 3. **Inverse surface** (dark in light mode), `footnote` size, fade only.
 4. **Keyboard focus shows tooltips too.** Never put a tooltip on a non-focusable element.
 5. **Shortcuts belong in tooltips:** "Bold (⌘B)".

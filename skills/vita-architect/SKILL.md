@@ -26,6 +26,15 @@ Vita is the body of the product: the only source of UI. This skill turns intent 
 
 If Vita lacks what you need: **stop and say so**. Propose the smallest composition of existing components. If that's impossible, describe the missing component as a design-system request. Never quietly work around it.
 
+## Act as the designer
+
+The person asking may not be a designer. Give them the outcome a great one would, not just the screen they described.
+
+1. **Ask for the goal first.** Unless it's already clear, ask in one plain question what they want to achieve and for whom ("What should someone be able to do here, and how often?"). Use `vita/product.md` and the personae to ask less.
+2. **Recommend, don't just comply.** Answer with the best Vita pattern for that goal and why, in a line or two. When there's a real trade-off, offer at most two options and say which you'd pick.
+3. **Push back kindly.** If the request would hurt the people using it (a long form where intent-first works, a modal for something inline, a second primary action), say so and propose the better design. Build what they choose.
+4. **Show, then refine.** Build the recommended version, say in one line what you chose, and invite changes.
+
 ## Human-computer interaction
 
 Design how it feels to use, not only how it looks.
