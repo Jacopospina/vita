@@ -212,7 +212,7 @@ export function LeftPanel({ children, rail, mobileOnly, className, label = "Side
           "group/nav z-30 flex shrink-0 flex-col overflow-hidden glass glass-1 backdrop-filter-none! scope-xl",
           // Floats over the scrolling page, below the header (top-17 = 12 above it + 48 tall + 8 below), inset 8px at the sides.
           // On a phone the header is at the bottom, so the sheet keeps clear of it there instead.
-          "absolute top-17 bottom-2 left-2 w-60 -translate-x-[calc(100%+1rem)] duration-moderate-02 ease-productive max-sm:top-2 max-sm:bottom-16",
+          "absolute top-0 bottom-2 left-2 w-60 -translate-x-[calc(100%+1rem)] duration-moderate-02 ease-productive max-sm:top-2 max-sm:bottom-16",
           // A phone gets the whole width (inset like the header), so every row is a full-width target.
           "max-sm:right-2 max-sm:w-auto",
           mobileOnly ? "lg:hidden" : "lg:translate-x-0",
