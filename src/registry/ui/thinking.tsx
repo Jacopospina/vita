@@ -77,7 +77,20 @@ function voiceParticles(mode: ThinkingMode, t: number, lvl: number, k: number, s
   return out
 }
 const sizes = { sm: 16, md: 24, lg: 48, xl: 96, "2xl": 160, "3xl": 280 } as const
-type P = { x: number; y: number; r: number }
+/** A drop: where it is, how big, and (optional) how far along its figure it sits, 0 to 1, which picks its colour. */
+type P = { x: number; y: number; r: number; u?: number }
+
+/**
+ * The figure tumbles in 3D: turned about two axes in perspective, so a ring reads as an ellipse as it spins and the
+ * near side of the tube swells while the far side thins. `f` is the drop's scale at its depth.
+ */
+function tumble(x: number, y: number, t: number): [number, number, number] {
+  const ax = 0.75 * Math.sin(t * 0.46), ay = 0.95 * Math.sin(t * 0.33 + 1.1)
+  const y1 = y * Math.cos(ax), z1 = y * Math.sin(ax)
+  const x2 = x * Math.cos(ay) + z1 * Math.sin(ay), z2 = -x * Math.sin(ay) + z1 * Math.cos(ay)
+  const f = 1 / (1 - z2 * 0.42)
+  return [x2 * f, y1 * f, f]
+}
 
 const TAU = Math.PI * 2
 /** Generating's morph: smootherstep, starting and landing at rest. No overshoot, so one shape pours into the next. */
@@ -276,11 +289,12 @@ function particles(mode: ThinkingMode, n: number, t: number, seeds: number[], lv
     const [bx, by, bv = 1] = B(open.has(B) ? i / n : u, t)
     const dx = 0.025 * Math.sin(t * 3.1 + i * 1.7) + 0.015 * Math.sin(t * 5.3 + seeds[i] * 9)
     const dy = 0.025 * Math.cos(t * 2.3 + i * 1.3) + 0.015 * Math.cos(t * 4.7 + seeds[i] * 7)
-    const [x, y] = sway((ax + (bx - ax) * k) * breathe + dx, (ay + (by - ay) * k) * breathe + dy, t, kick)
-    // A slimmer line (0.058, was 0.07): the shape reads as a drawn stroke, not a tube.
-    out.push({ x, y, r: (0.058 + 0.016 * Math.sin(t * 4 + i)) * Math.max(0, av + (bv - av) * Math.min(1, k)) })
+    const [sx, sy] = sway((ax + (bx - ax) * k) * breathe + dx, (ay + (by - ay) * k) * breathe + dy, t, kick)
+    // A glossy tube, tumbling in space: thick enough to read as a body (0.085), its colour bands running along it.
+    const [x, y, f] = tumble(sx, sy, t)
+    out.push({ x, y, r: (0.085 + 0.01 * Math.sin(t * 4 + i)) * f * Math.max(0, av + (bv - av) * Math.min(1, k)), u: (i / n + t * 0.06) % 1 })
   }
-  // Outline only, the shape is drawn as a liquid LINE, so each one reads distinctly (a filled body all looks alike).
+  // Outline only, the shape is drawn as a liquid tube, so each one reads distinctly (a filled body all looks alike).
   return out
 }
 
@@ -424,7 +438,17 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
     // On a primary surface the spectrum goes pastel (200s): the 500s sink into the brand colour behind them.
     const onPrimary = resolvedTone === "on-primary"
     const rainbow = resolvedTone === "spectrum" || onPrimary
-    const spectrum = ["blue", "indigo", "purple", "pink", "orange", "mint", "cyan"].map((h) => root.getPropertyValue(`--vita-palette-${h}-${onPrimary ? 200 : 500}`).trim())
+    // The spectrum, as bands of colour on glossy tubes: electric blue, violet, magenta, blush, lemon, lime and silver.
+    const bands = onPrimary
+      ? ["blue-200", "purple-200", "pink-200", "pink-100", "yellow-100", "green-100", "gray-50"]
+      : ["blue-500", "purple-500", "pink-500", "pink-300", "yellow-400", "green-300", "gray-100"]
+    const spectrum = bands.map((b) => root.getPropertyValue(`--vita-palette-${b}`).trim())
+    /** The colour at a point along a figure: the bands blend into each other, and wrap. */
+    const bandAt = (u: number) => {
+      const x = (((u % 1) + 1) % 1) * spectrum.length
+      const i = Math.floor(x), k = Math.round((x - i) * 100)
+      return `color-mix(in oklab, ${spectrum[i]} ${100 - k}%, ${spectrum[(i + 1) % spectrum.length]})`
+    }
     let color = getComputedStyle(canvas).color
     // Light mode = dark text. There the white glints vanish on the page, so they take the spectrum's colours instead.
     const isLight = (c: string) => { const m = c.match(/[\d.]+/g); return !!m && (0.2126 * +m[0] + 0.7152 * +m[1] + 0.0722 * +m[2]) / 255 < 0.5 }
@@ -465,8 +489,11 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
       } else {
         ctx.fillStyle = color
       }
+      const conic = ctx.fillStyle
       for (const p of simple ? simpleParticles(mode, t, lvlNow) : particles(mode, n, t, seeds, lvlNow)) {
         if (p.r < 0.005) continue // a gap in a segmented shape
+        // A drop that knows where it sits along its figure takes that band; the goo blends neighbours into stripes.
+        ctx.fillStyle = rainbow && p.u !== undefined ? bandAt(p.u) : conic
         ctx.beginPath()
         ctx.arc(px / 2 + p.x * R, px / 2 + p.y * R, dropRadius(p), 0, TAU)
         ctx.fill()
@@ -514,6 +541,7 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
             drops[k * 4 + 1] = (px / 2 + p.y * R) * glDpr
             // The filter path plumps drops ×1.3 because its two-stage melt eats into them; the closed form doesn't.
             drops[k * 4 + 2] = (scaled ? dropRadius(p) : dropRadius(p) / 1.3) * glDpr
+            drops[k * 4 + 3] = p.u ?? -1 // a tube's band, or none (the conic sweep)
             k++
           }
           o.draw(drops, k, { t, rot: t * 1.8, spectrum: rainbow, own })
@@ -536,6 +564,8 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
         const img = octx.createImageData(g, g)
         const data = img.data
         const fld = new Float32Array(g * g)
+        // Tubes: each drop's band colour, summed with the same weights as the field, so stripes blend like the goo.
+        const cr = new Float32Array(g * g), cg = new Float32Array(g * g), cb = new Float32Array(g * g)
         const spec = spectrum.map((c) => rgbOf(c, probe))
         let own = rgbOf(color, probe)
         const scale = g / px // cells per CSS px
@@ -547,8 +577,18 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
         fieldDraw = (t: number) => {
           if (!rainbow) own = rgbOf(color, probe)
           fld.fill(0)
+          cr.fill(0); cg.fill(0); cb.fill(0)
+          let banded = false
           for (const p of simple ? simpleParticles(mode, t, lvlNow) : particles(mode, n, t, seeds, lvlNow)) {
             if (p.r < 0.005) continue
+            let pc: [number, number, number] | null = null
+            if (rainbow && p.u !== undefined) {
+              const bu = (((p.u % 1) + 1) % 1) * spec.length
+              const bi = Math.floor(bu), bf = bu - bi
+              const e0 = spec[bi], e1 = spec[(bi + 1) % spec.length]
+              pc = [e0[0] + (e1[0] - e0[0]) * bf, e0[1] + (e1[1] - e0[1]) * bf, e0[2] + (e1[2] - e0[2]) * bf]
+              banded = true
+            }
             // The filter path plumps drops ×1.3 because its blur eats into them; a field drop reads at its true size.
             const rr = (scaled ? dropRadius(p) : dropRadius(p) / 1.3) * scale
             const ri = rr * 2.1 // reach: drops feel each other well before they touch, so bridges form (goo)
@@ -562,7 +602,11 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
               for (let x = x0; x <= x1; x++) {
                 const dx = x + 0.5 - X
                 const q = 1 - (dx * dx + dy * dy) * inv
-                if (q > 0) fld[row + x] += q * q * q
+                if (q > 0) {
+                  const w = q * q * q
+                  fld[row + x] += w
+                  if (pc) { cr[row + x] += pc[0] * w; cg[row + x] += pc[1] * w; cb[row + x] += pc[2] * w }
+                }
               }
             }
           }
@@ -575,7 +619,10 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
               if (a > 1) a = 1
               a = a * a * (3 - 2 * a)
               let r: number, gr: number, b: number
-              if (rainbow) {
+              if (rainbow && banded && fld[k] > 0) {
+                // Tubes: the blend of the bands of the drops that make this point.
+                r = cr[k] / fld[k]; gr = cg[k] / fld[k]; b = cb[k] / fld[k]
+              } else if (rainbow) {
                 // The same conic sweep as the gradient on the filter path, turning with time.
                 let u = ((Math.atan2(y + 0.5 - centre, x + 0.5 - centre) - rot) / TAU) % 1
                 if (u < 0) u += 1
@@ -591,6 +638,11 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
                 // light catches a white highlight, the lit look of the filter path, at a fraction of the cost.
                 const gx = fld[k + 1] - fld[k - 1], gy = fld[k + g] - fld[k - g]
                 const m = Math.hypot(gx, gy)
+                // Tube light: the slope tilts the surface; facing the top-left light it stays bright, the far side darkens.
+                const nz = 1 / Math.hypot(gx * 1.6, gy * 1.6, 1)
+                const diff = Math.max(0, (-0.47 * -gx * 1.6 * nz) + (-0.47 * -gy * 1.6 * nz) + 0.75 * nz)
+                const shade = 0.5 + 0.6 * diff
+                r *= shade; gr *= shade; b *= shade
                 if (m > 0.03) {
                   let h = (0.45 * gx + 0.8 * gy) / m // cosine to the light; a steep slope (the rim) shines, the flat body doesn't
                   if (h > 0) {
@@ -691,11 +743,18 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
               {lit ? (
                 <>
                   <feGaussianBlur in="goo" stdDeviation={px * 0.035} result="soft" />
-                  <feSpecularLighting in="soft" surfaceScale={px * 0.06} specularConstant="1.1" specularExponent="26" lightingColor="#ffffff" result="spec">
+                  {/* Tube light: a broad light from the top left shades the body like an inflated tube, its far side
+                      darker, its near side lit, before the glossy highlight goes on top. */}
+                  <feDiffuseLighting in="soft" surfaceScale={px * 0.09} diffuseConstant="1" lightingColor="#ffffff" result="diff">
+                    <feDistantLight azimuth="225" elevation="48" />
+                  </feDiffuseLighting>
+                  <feComposite in="goo" in2="diff" operator="arithmetic" k1="0.6" k2="0.5" k3="0" k4="0" result="tube" />
+                  <feComposite in="tube" in2="goo" operator="in" result="tubeIn" />
+                  <feSpecularLighting in="soft" surfaceScale={px * 0.09} specularConstant="1.35" specularExponent="22" lightingColor="#ffffff" result="spec">
                     <fePointLight x={px * 0.28} y={px * 0.2} z={px * 0.9} />
                   </feSpecularLighting>
                   <feComposite in="spec" in2="goo" operator="in" result="specIn" />
-                  <feComposite in="goo" in2="specIn" operator="arithmetic" k1="0" k2="1" k3="0.65" k4="0" result="shaded" />
+                  <feComposite in="tubeIn" in2="specIn" operator="arithmetic" k1="0" k2="1" k3="0.7" k4="0" result="shaded" />
                   {/* Glow behind: emitted, reflected light, wide, washed ~60% toward white (super-light pastel), low alpha. */}
                   <feGaussianBlur in="goo" stdDeviation={px * 0.16} result="glowBlur" />
                   <feColorMatrix in="glowBlur" values="0.4 0 0 0 0.6  0 0.4 0 0 0.6  0 0 0.4 0 0.6  0 0 0 0.32 0" result="glow" />

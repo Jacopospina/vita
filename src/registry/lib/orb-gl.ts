@@ -24,11 +24,11 @@ void main() { gl_Position = vec4(a, 0.0, 1.0); }`
 const FRAG = `#version 300 es
 precision highp float;
 uniform vec2 uRes;           // canvas size, device px
-uniform vec4 uP[${MAX_DROPS}]; // drops: x, y, radius (device px), unused
+uniform vec4 uP[${MAX_DROPS}]; // drops: x, y, radius (device px), place along the figure (0 to 1, or -1)
 uniform int uN;
 uniform float uS1, uSs, uSg; // blur radii (σ, device px): goo · light · glow
 uniform vec3 uSpec[7];
-uniform int uSpectrum;       // 0 own colour · 1 conic round the centre (orbs) · 2 along x (bars)
+uniform int uSpectrum;       // 0 own colour · 1 conic round the centre (orbs) · 2 along x (bars) · 3 per drop (tubes)
 uniform vec3 uOwn;
 uniform float uRot;
 uniform int uLit;
@@ -56,13 +56,24 @@ void main() {
   vec2 p = vec2(gl_FragCoord.x, uRes.y - gl_FragCoord.y);
   float U = 0.0, Us = 0.0, Ug = 0.0;
   vec2 gS = vec2(0.0); // slope of the soft surface
+  vec3 band = vec3(0.0); float bandW = 0.0; // per-drop colours, weighted by how much each drop is here
   float reach = 3.2 * uSg;
   for (int i = 0; i < ${MAX_DROPS}; i++) {
     if (i >= uN) break;
     vec4 d = uP[i];
     float dist = distance(p, d.xy);
     if (dist - d.z > reach) continue;
-    U += cov(dist, d.z, uS1);
+    float cv = cov(dist, d.z, uS1);
+    U += cv;
+    if (uSpectrum == 3 && d.w >= 0.0) {
+      float bu = fract(d.w) * 7.0;
+      int b0 = int(floor(bu));
+      vec3 e0 = uSpec[0], e1 = uSpec[1];
+      for (int k = 0; k < 7; k++) { if (k == b0) { e0 = uSpec[k]; e1 = uSpec[(k + 1) % 7]; } }
+      float wgt = cv + 1e-4;
+      band += mix(e0, e1, bu - float(b0)) * wgt;
+      bandW += wgt;
+    }
     if (uLit == 1) {
       Us += cov(dist, d.z, uSs);
       gS += covSlope(dist, d.z, uSs) * (p - d.xy) / max(dist, 1e-3);
@@ -75,7 +86,9 @@ void main() {
 
   // Colour: the conic spectrum turning with time, or the text colour.
   vec3 c = uOwn;
-  if (uSpectrum > 0) {
+  if (uSpectrum == 3 && bandW > 0.0) {
+    c = band / bandW;
+  } else if (uSpectrum > 0) {
     vec2 v = p - uRes * 0.5;
     float u = (uSpectrum == 1 ? fract((atan(v.y, v.x) - uRot) / TAU) : fract(p.x / uRes.x * 0.7 - uRot / TAU)) * 7.0;
     int i0 = int(floor(u));
@@ -114,8 +127,12 @@ void main() {
     vec3 n2 = normalize(vec3(-gS * uSurface * 0.6, 1.0));
     vec3 hp = normalize(normalize(uLight - vec3(p, 0.0)) + vec3(0.0, 0.0, 1.0));
     float sheen = 0.38 * pow(max(dot(n2, hp), 0.0), 18.0);
-    float spec = (1.1 * pow(max(dot(n, hv), 0.0), 26.0) + sheen) * A;
-    rgb = min(vec3(1.0), rgb + 0.65 * spec);
+    float spec = (1.35 * pow(max(dot(n, hv), 0.0), 22.0) + sheen) * A;
+    // Tube light: a broad light from the top left shades the body like an inflated tube (far side darker).
+    vec3 nt = normalize(vec3(-gS * uSurface * 1.4, 1.0));
+    float diff = max(dot(nt, normalize(vec3(-0.47, -0.47, 0.75))), 0.0);
+    rgb = rgb * (0.5 + 0.6 * diff);
+    rgb = min(vec3(1.0), rgb + 0.7 * spec);
     alpha = min(1.0, A + 0.65 * spec * A);
     // Glow behind: wide, pastel, a third as strong.
     float ga = 0.32 * Ug;
@@ -179,10 +196,13 @@ export function createOrbGL(
   gl.clearColor(0, 0, 0, 0)
   return {
     draw(drops, count, { rot, spectrum, own }) {
+      // Tubes: drops that carry a place along their figure (w ≥ 0) colour themselves; the rest use the mode given.
+      let perDrop = false
+      for (let i = 0; i < count; i++) if (drops[i * 4 + 3] >= 0) { perDrop = true; break }
       gl.uniform4fv(uP, drops)
       gl.uniform1i(uN, count)
       gl.uniform1f(uRot, rot)
-      gl.uniform1i(uSpectrum, spectrum === "linear" ? 2 : spectrum ? 1 : 0)
+      gl.uniform1i(uSpectrum, spectrum === "linear" ? 2 : spectrum ? (perDrop ? 3 : 1) : 0)
       gl.uniform3f(uOwn, own[0] / 255, own[1] / 255, own[2] / 255)
       gl.clear(gl.COLOR_BUFFER_BIT)
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
