@@ -19,6 +19,7 @@ avoid_when:
 |---|---|---|
 | `--vita-brand-hue` / `-chroma` | `257.4` / `0.218` | Primary, links, focus, selection, AI gradient |
 | `--vita-neutral-hue` / `-chroma` | `286` / `0` | The tint of every grey, surface and border. Pure grey by default; raise the chroma to tint |
+| `--vita-warmth` | `0` | The screen's white point, from `-1` (cool) to `1` (warm): one tint over everything, every colour keeps its hue |
 | `--vita-hue-success/warning/error/info` | `147 / 50 / 29 / 257` | Support colors (keep their meaning) |
 | `--vita-radius` | `0.5rem` | Every corner, including pills (tags, chips, capsules square off at 0) and icon tiles (always proportional to their size) |
 | `--vita-density` | `1` | Control heights and insets fully; padding, margin and gap at half strength (never below 90%). Floored at 1.1 on touch |
@@ -48,12 +49,12 @@ avoid_when:
 - **Follows the sun.** Vita is light while the sun is up where the user is, and dark after sunset (`useSunTheme`). It estimates where the user is from their timezone (within about an hour of the real sunset) and never asks for their location: a theme is not worth a permission prompt.
 - **People can still choose.** The theme toggle overrides it until the next sunrise or sunset.
 
-## Greys follow the weather
+## Warmth follows the weather
 
-- **Three states.** With `useWeatherTint` (on by default) the greys are **cold** below 15 °C, **neutral** from 15 to 18 °C, and **warm** from 18 °C up.
-- **Floating layers only.** The tint colours only surfaces that float on a z-index, the glass of the side nav, header, right panel, menus, popovers, dialogs, notifications and pinned toolbars. The page, in-flow cards and tiles, fields, lines and text stay neutral.
-- **Shadows lean with them.** The shade a floating layer casts takes its grey, so a warm theme never casts a cold shadow.
-- **Noticeable, still grey.** A tint is chroma 0.014: you see the warmth or the cool, but greys stay greys.
+- **A colour temperature, not a new hue.** Warmth changes the light the screen is seen in, like a display's warm setting. Daylight (6500 K) is neutral; `1` is about 4000 K and `-1` about 10000 K. Whites turn cream or icy, blacks stay black, every colour keeps its hue.
+- **Your grey stays yours.** Stone, Mist, Sand, Moss or Haze is the grey the interface is made of; warmth only changes the light it's seen in.
+- **Three states.** With `useWeatherTint` (on by default) the screen leans **cool** below 15 °C, stays **neutral** from 15 to 18 °C, and leans **warm** from 18 °C up.
+- **On top of the knob.** The weather adds its lean to `--vita-warmth`, about 5600 K on a warm day and 7100 K on a cold one, so a warm theme on a cold day sits a little cooler, never orange.
 - **Where the reading comes from.** The current temperature for the user's area (estimated from their timezone, never from a location prompt), refreshed every 30 minutes. Offline, it falls back to a seasonal estimate.
 - **It fades.** A change of state cross-fades the page once.
-- **Four modes.** **Dynamic** (`"dynamic"`, the default) changes with the weather. **Neutral** (`"none"`) never tints, **Cold** (`"cold"`) is always cold and **Warm** (`"warm"`) is always warm. The choice is remembered on the device. While a tint is on, it replaces the neutral hue and tint knobs.
+- **Four modes.** **Dynamic** (`"dynamic"`, the default) changes with the weather. **Neutral** (`"none"`) never leans, **Cold** (`"cold"`) always leans cool and **Warm** (`"warm"`) always leans warm. The choice is remembered on the device.

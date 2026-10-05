@@ -1,7 +1,8 @@
 ---
 title: Weather tint
 summary: Floating layers lean cold or warm with the weather outside, Dynamic by default, or fixed Neutral, Cold or Warm.
-status: accepted
+status: superseded
+superseded_by: white-point
 date: 2026-10-01
 decided_by: Jacopo
 related: [theming, material]

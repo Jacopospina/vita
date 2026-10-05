@@ -527,6 +527,19 @@
 @utility glass-3 { --vita-glass-blur: calc(18px * var(--vita-glass-scale, 1)); --vita-glass-fill: 16%; --vita-glass-sat: 1.6; }
 @utility glass-4 { --vita-glass-blur: calc(24px * var(--vita-glass-scale, 1)); --vita-glass-fill: 80%; --vita-glass-sat: 1.7; }
 @utility glass-5 { --vita-glass-blur: calc(30px * var(--vita-glass-scale, 1)); --vita-glass-fill: 8%; --vita-glass-sat: 1.8; }
+/* Warmth: the screen's colour temperature (syncWarmth), one layer MULTIPLIED over everything, like a display's
+   warm setting. Every colour keeps its hue and only its light changes: whites turn cream or icy, blacks stay black. Only
+   present while the screen leans (data-vita-warmth, set by syncWarmth), so a neutral screen pays nothing for it. */
+:root[data-vita-warmth] body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  background-color: var(--vita-white-point, white);
+}
+
 /* A backdrop blur is re-rendered under every scrolled frame, and its cost grows with the radius squared. On touch
    devices the tiers keep their order at six tenths of the radius: frost still rises with the layer, the scroll stays smooth. */
 @media (pointer: coarse) { :root { --vita-glass-scale: 0.6; } }

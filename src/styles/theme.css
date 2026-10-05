@@ -16,6 +16,7 @@
   --vita-brand-chroma: 0.218;    /* 0 = monochrome brand, 0.25 = vivid */
   --vita-neutral-hue: 286;       /* tint of greys (use brand hue for harmony) */
   --vita-neutral-chroma: 0;     /* 0 = pure grey (default), 0.02 = clearly tinted */
+  --vita-warmth: 0;             /* the screen's white point: -1 cool · 0 neutral (default) · 1 warm */
   --vita-hue-success: 147.4;
   --vita-hue-warning: 50;   
   --vita-hue-error: 28.7;

@@ -1,12 +1,13 @@
 import * as React from "react"
 import { readCoords, type Coords } from "@/registry/hooks/use-sun-theme"
-import { swapAppearance } from "@/registry/lib/appearance"
+import { swapAppearance, syncWarmth } from "@/registry/lib/appearance"
 
 /**
- * useWeatherTint, Vita's greys take one of THREE states from the weather where the user is:
- *   cold   (below 15 °C)   a noticeable cool tint
- *   none   (15–18 °C)      pure grey
- *   warm   (18 °C and up)  a noticeable warm tint
+ * useWeatherTint, the screen's warmth takes one of THREE states from the weather where the user is:
+ *   cold   (below 15 °C)   the white point leans cool
+ *   none   (15–18 °C)      neutral
+ *   warm   (18 °C and up)  the white point leans warm
+ * It adds to the theme's own warmth (--vita-warmth): a white point over everything, never a change of hue.
  * Mode: "dynamic" (default, changes with the reading) or a fixed "none" (neutral only) / "cold" (cold only) /
  * "warm" (warm only). Remembered on this device.
  *
@@ -20,23 +21,17 @@ const CACHE = "vita-weather"
 const TTL = 30 * 60 * 1000
 const COLD_BELOW = 15
 const WARM_FROM = 18
-const CHROMA = 0.014 // noticeable, still a grey
-const WARM_HUE = 70
-const COOL_HUE = 250
+const LEAN = 0.25 // about 5600 K warm or 7100 K cool: noticeable, never peach
 
 export type WeatherTint = "none" | "cold" | "warm"
 export type WeatherTintMode = "dynamic" | WeatherTint
 
-/** Which of the three states a temperature puts the greys in. */
+/** Which of the three states a temperature puts the screen in. */
 export function weatherTint(celsius: number): WeatherTint {
   return celsius < COLD_BELOW ? "cold" : celsius >= WARM_FROM ? "warm" : "none"
 }
 
-const tintTokens: Record<WeatherTint, { hue: number; chroma: number }> = {
-  none: { hue: WARM_HUE, chroma: 0 },
-  cold: { hue: COOL_HUE, chroma: CHROMA },
-  warm: { hue: WARM_HUE, chroma: CHROMA },
-}
+const leanOf: Record<WeatherTint, number> = { none: 0, cold: -LEAN, warm: LEAN }
 
 /** Without a reading: the season where the user is (mid-latitude yearly cycle, warmest late July / late January). */
 export function seasonalEstimate(date: Date, lat: number) {
@@ -103,11 +98,8 @@ export function useWeatherTint() {
     const root = document.documentElement.style
     // One cross-fade for the whole page, not a transition on every element that uses a grey.
     swapAppearance(() => {
-      if (tint === null) return void root.setProperty("--vita-weather", "0")
-      const { hue, chroma } = tintTokens[tint]
-      root.setProperty("--vita-weather-hue", String(hue))
-      root.setProperty("--vita-weather-chroma", String(chroma))
-      root.setProperty("--vita-weather", "1")
+      root.setProperty("--vita-weather-warmth", String(tint === null ? 0 : leanOf[tint]))
+      syncWarmth()
     })
   }, [tint])
 

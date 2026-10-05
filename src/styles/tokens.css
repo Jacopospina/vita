@@ -9,21 +9,19 @@
  *   support      success · warning · error · info (+ -subtle, -foreground)
  *   lines        border-subtle · border · border-strong · border-field
  */
-/* Weather tint (useWeatherTint): when on (--vita-weather: 1) only the FLOATING layers, surfaces with a z-index,
-   i.e. the glass (side nav, header, right panel, menus, popovers, dialogs, notifications, pinned toolbars),
-   lean warm or cold. The page, in-flow containers, fields, lines and text keep the neutral knobs.
+/* Warmth: the screen's colour temperature, like a display's warm setting. `--vita-warmth` (theme knob, -1 cool to 1
+   warm) plus the weather's lean (useWeatherTint) set the light of ONE layer multiplied over everything (vita.css,
+   syncWarmth), so every colour keeps its hue: whites turn cream or icy, blacks stay black. The greys themselves keep the neutral knobs.
    Applied through swapAppearance, so it cross-fades once. */
-@property --vita-weather { syntax: "<number>"; inherits: true; initial-value: 0; }
-@property --vita-weather-hue { syntax: "<number>"; inherits: true; initial-value: 0; }
-@property --vita-weather-chroma { syntax: "<number>"; inherits: true; initial-value: 0; }
+@property --vita-warmth { syntax: "<number>"; inherits: true; initial-value: 0; }
+@property --vita-weather-warmth { syntax: "<number>"; inherits: true; initial-value: 0; }
 :root {
   --_nh: var(--vita-neutral-hue);
   --_nc: var(--vita-neutral-chroma);
-  /* Elevated (floating-layer) neutrals: the weather tint when on, else the neutral knobs. */
-  --_eh: calc(var(--vita-neutral-hue) + (var(--vita-weather-hue) - var(--vita-neutral-hue)) * var(--vita-weather));
-  --_ec: calc(var(--vita-neutral-chroma) + (var(--vita-weather-chroma) - var(--vita-neutral-chroma)) * var(--vita-weather));
-  /* Shadows are cast by the floating layers, so they take those layers' grey: the tint you picked, leaned warm or cold
-     by the dial and the weather. Dark enough to read as shade, tinted enough that a warm theme never casts a cold one. */
+  /* Floating-layer neutrals: the same greys (warmth is the white point's job, not theirs). */
+  --_eh: var(--vita-neutral-hue);
+  --_ec: var(--vita-neutral-chroma);
+  /* Shadows take the floating layers' grey, so a tinted grey never casts a plain black shadow. */
   --_shadow: 0.2 calc(var(--_ec) * 3) var(--_eh);
   --_bh: var(--vita-brand-hue);
   --_bc: var(--vita-brand-chroma);

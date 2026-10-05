@@ -1,16 +1,14 @@
 import * as React from "react"
-import { Stack } from "@/registry/ui/layout"
+import { Group, Stack } from "@/registry/ui/layout"
 import { SwatchPicker } from "@/registry/ui/swatch-picker"
 import { Text } from "@/registry/ui/text"
 import { Dropdown } from "@/registry/ui/dropdown"
 import { Button } from "@/registry/ui/button"
 import { Separator } from "@/registry/ui/separator"
-import { swapAppearance, withoutTransitions } from "@/registry/lib/appearance"
+import { swapAppearance, syncWarmth, withoutTransitions } from "@/registry/lib/appearance"
 import type { useWeatherTint } from "@/registry/hooks/use-weather-tint"
 import { RightPanel } from "@/registry/ui/ui-shell"
 import { MiniColor, MiniGlow, temperatureStops } from "@/registry/ui/mini-chart"
-import { StepSlider } from "@/registry/ui/slider"
-import { ContentSwitcher } from "@/registry/ui/content-switcher"
 import { Label } from "@/registry/ui/form"
 import { SwapIcon } from "@/registry/ui/icon"
 import { Moon, Sun, PartlyCloudy } from "@/registry/icons"
@@ -21,6 +19,7 @@ const knobs = [
   { key: "--vita-brand-chroma", label: "Brand chroma", min: 0, max: 0.3, step: 0.001, def: 0.218, unit: "" },
   { key: "--vita-neutral-hue", label: "Neutral hue", min: 0, max: 360, step: 1, def: 286, unit: "" },
   { key: "--vita-neutral-chroma", label: "Neutral tint", min: 0, max: 0.03, step: 0.001, def: 0, unit: "" },
+  { key: "--vita-warmth", label: "Warmth", min: -1, max: 1, step: 0.01, def: 0, unit: "" },
   { key: "--vita-radius", label: "Corner radius", min: 0, max: 1.25, step: 0.125, def: 0.5, unit: "rem" },
   { key: "--vita-density", label: "Density", min: 0.8, max: 1.25, step: 0.01, def: 1.08, unit: "" },
   { key: "--vita-type-base", label: "Body size", min: 0.75, max: 1.125, step: 0.0625, def: 0.8125, unit: "rem" },
@@ -46,7 +45,7 @@ const brandColors = [
   { value: "gray", label: "Charcoal", hue: 286.2, chroma: 0.02 },
 ]
 
-/** Grey tints by name: the outer ring reaches Mist and Sand (cool, warm); the swatches reach every tint. */
+/** Grey tints by name: which grey the interface is made of. How warm the screen is, is the dial's outer ring. */
 const greyTints = [
   { value: "neutral", label: "Stone", hue: 286, chroma: 0 },
   { value: "cool", label: "Mist", hue: 250, chroma: 0.012 },
@@ -55,26 +54,6 @@ const greyTints = [
   { value: "lilac", label: "Haze", hue: 300, chroma: 0.012 },
 ]
 
-/**
- * The dial's outer ring is the temperature of the grey you picked: it leans that grey cool (Mist's hue) or warm
- * (Sand's), up to 0.02 of tint, by adding the two tints as colours (on the OKLCH chroma plane). Stone, untinted,
- * just takes the lean.
- */
-const COOL = 250
-const WARM = 70
-const MAX_TINT = 0.02
-const rad = (d: number) => (d * Math.PI) / 180
-function leanGrey(base: { hue: number; chroma: number }, temperature: number) {
-  const lean = Math.abs(temperature - 0.5) * 2 * MAX_TINT
-  const toward = temperature < 0.5 ? COOL : WARM
-  const a = base.chroma * Math.cos(rad(base.hue)) + lean * Math.cos(rad(toward))
-  const b = base.chroma * Math.sin(rad(base.hue)) + lean * Math.sin(rad(toward))
-  const chroma = Math.hypot(a, b)
-  return {
-    hue: chroma < 0.0005 ? base.hue : Math.round((((Math.atan2(b, a) * 180) / Math.PI + 360) % 360) * 10) / 10,
-    chroma: Math.round(chroma * 1000) / 1000,
-  }
-}
 /** The brand colour a hue is closest to, by name ("Tide"), for screen readers. */
 const hueName = (deg: number) => brandColors.filter((c) => c.value !== "gray" && c.value !== "brown").reduce((a, b) => (Math.abs(((b.hue - deg + 540) % 360) - 180) < Math.abs(((a.hue - deg + 540) % 360) - 180) ? b : a)).label
 
@@ -128,13 +107,13 @@ export function ThemePanel({ open, onOpenChange, weather, dark, onDarkChange }: 
     withoutTransitions(() => {
       knobs.forEach((k) => root.style.setProperty(k.key, `${values[k.key]}${k.unit}`))
       root.style.setProperty("--vita-font-sans", fonts.find((f) => f.value === font)!.css)
+      syncWarmth()
     })
   }, [values, font])
 
   const applyPreset = (p: string) => {
     setPreset(p)
     setGrey("neutral")
-    setTemperature(0.5)
     const root = document.documentElement
     swapAppearance(() => {
       knobs.forEach((k) => root.style.removeProperty(k.key))
@@ -159,13 +138,12 @@ export function ThemePanel({ open, onOpenChange, weather, dark, onDarkChange }: 
     window.setTimeout(() => setCopied(false), 1600)
   }
 
-  // The greys: which one (a swatch), then how cool or warm it leans (the dial's outer ring). Stone is the default.
+  // Which grey (a swatch); how warm the screen is (the dial's outer ring, 0 cool to 1 warm). Stone, neutral, by default.
   const [grey, setGrey] = React.useState("neutral")
-  const [temperature, setTemperature] = React.useState(0.5)
-  const tintGreys = (g: string, t: number) => {
-    // Turning the greys by hand replaces the weather's tint.
-    if (weather.mode !== "none") weather.setMode("none")
-    const c = leanGrey(greyTints.find((x) => x.value === g) ?? greyTints[0], t)
+  const temperature = (values["--vita-warmth"] + 1) / 2
+  const pickGrey = (g: string) => {
+    setGrey(g)
+    const c = greyTints.find((x) => x.value === g) ?? greyTints[0]
     setValues((s) => ({ ...s, "--vita-neutral-hue": c.hue, "--vita-neutral-chroma": c.chroma }))
   }
 
@@ -193,20 +171,17 @@ export function ThemePanel({ open, onOpenChange, weather, dark, onDarkChange }: 
           pressLabel="Dark theme"
           pressed={dark}
           hueLabel="Brand colour"
-          brightnessLabel="Grey temperature"
+          brightnessLabel="Warmth"
           describe={{ hue: (h) => hueName(h * 360), brightness: (v) => (v < 0.45 ? "Cool" : v > 0.55 ? "Warm" : "Neutral") }}
           onHueChange={(h) => setValues((s) => ({ ...s, "--vita-brand-hue": Math.round(h * 3600) / 10, "--vita-brand-chroma": s["--vita-brand-chroma"] < 0.05 ? 0.2 : s["--vita-brand-chroma"] }))}
-          onBrightnessChange={(v) => {
-            setTemperature(v)
-            tintGreys(grey, v)
-          }}
+          onBrightnessChange={(v) => setValues((s) => ({ ...s, "--vita-warmth": Math.round((v * 2 - 1) * 100) / 100 }))}
         />
-        <Text variant="caption" tone="muted" className="text-center">Middle: light or dark. Colour ring: brand. Outer ring: how cool or warm your grey leans.</Text>
+        <Text variant="caption" tone="muted" className="text-center">Middle: light or dark. Colour ring: brand. Outer ring: the screen's colour temperature, cooler to warmer.</Text>
       </Stack>
       {/* Whether the greys follow the weather: a toggle, centred under the dial. */}
       <Stack gap="2xs" align="center">
         <MiniGlow
-          label={weather.mode === "dynamic" ? `Greys follow the weather${weather.celsius === null ? "" : `, ${Math.round(weather.celsius)} degrees outside`}` : "Greys don't follow the weather"}
+          label={weather.mode === "dynamic" ? `Warmth follows the weather${weather.celsius === null ? "" : `, ${Math.round(weather.celsius)} degrees outside`}` : "Warmth doesn't follow the weather"}
           icon={PartlyCloudy}
           tone={weather.mode !== "dynamic" ? "neutral" : weather.tint === "cold" ? "info" : weather.tint === "warm" ? "warning" : "success"}
           display={weather.mode === "dynamic" && weather.celsius !== null ? `${Math.round(weather.celsius)}°` : "–"}
@@ -216,8 +191,8 @@ export function ThemePanel({ open, onOpenChange, weather, dark, onDarkChange }: 
         />
         {/* What the toggle does, not its name: the tile already shows the weather. */}
         <Text variant="caption" tone="muted" className="max-w-64 text-center">
-          {/* What the current state means for the greys, in the weather's terms. */}
-          {weather.mode === "dynamic" ? "The weather outside tints the greys: cooler when it's cold, warmer when it's warm." : "The weather outside, cold or warm, doesn't change the greys."}
+          {/* What the current state means for the screen, in the weather's terms. */}
+          {weather.mode === "dynamic" ? "The weather outside warms or cools the whole screen, on top of the ring: cooler when it's cold, warmer when it's warm." : "The weather outside, cold or warm, doesn't change how warm the screen is."}
         </Text>
       </Stack>
       <SwatchPicker
@@ -226,35 +201,29 @@ export function ThemePanel({ open, onOpenChange, weather, dark, onDarkChange }: 
         // vita-allow raw-color: the theme editor previews a grey tint the tokens don't have yet, approved by @jacopo
         items={greyTints.map((c) => ({ value: c.value, label: c.label, color: `oklch(0.62 ${c.chroma * 4} ${c.hue})` }))}
         value={grey}
-        onValueChange={(v) => {
-          setGrey(v)
-          tintGreys(v, temperature)
-        }}
+        onValueChange={pickGrey}
       />
       <Separator />
       {/* Choices by name. */}
       <Dropdown label="Style" value={preset} onValueChange={applyPreset} items={presets.map(({ value, label }) => ({ value, label }))} helperText={presets.find((p) => p.value === preset)?.gist} />
       <Dropdown label="Typeface" items={fonts.map(({ value, label }) => ({ value, label }))} value={font} onValueChange={setFont} helperText={fonts.find((f) => f.value === font)?.gist} />
       <Separator />
-      {/* Ordered steps of one property are stepped sliders; the body size, a few exact sizes, a button group. */}
-      {sliders.map((s) => (
-        <StepSlider
-          key={s.key}
-          label={s.name}
-          steps={s.list.map((o, n) => ({ value: String(n), label: o.label }))}
-          value={String(nearest(s.list, values[s.key]))}
-          onValueChange={(n) => setValues((v) => ({ ...v, [s.key]: s.list[Number(n)].v }))}
-        />
+      {/* Every knob is a few named choices, so every knob is a button group: the chosen one is primary. */}
+      {[...sliders.slice(0, 2), { key: "--vita-type-base", name: "How big is the text?", list: bodySizes }, ...sliders.slice(2)].map((s) => (
+        <Stack key={s.key} gap="xs">
+          <Label>{s.name}</Label>
+          <Group aria-label={s.name} fill>
+            {s.list.map((o, n) => {
+              const on = n === nearest(s.list, values[s.key])
+              return (
+                <Button key={o.label} size="sm" variant={on ? "primary" : "secondary"} aria-pressed={on} onClick={() => setValues((v) => ({ ...v, [s.key]: o.v }))}>
+                  {o.label}
+                </Button>
+              )
+            })}
+          </Group>
+        </Stack>
       ))}
-      <Stack gap="xs">
-        <Label id="body-size">How big is the text?</Label>
-        <ContentSwitcher
-          label="How big is the text?"
-          items={bodySizes.map((b) => ({ value: String(b.v), label: b.label }))}
-          value={String(bodySizes[nearest(bodySizes, values["--vita-type-base"])].v)}
-          onValueChange={(v) => setValues((s) => ({ ...s, "--vita-type-base": Number(v) }))}
-        />
-      </Stack>
     </Stack>
     </RightPanel>
   )
