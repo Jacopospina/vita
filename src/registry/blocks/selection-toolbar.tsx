@@ -97,13 +97,36 @@ function restore(a: Anchor) {
   s?.addRange(a.range)
 }
 
-/** While focus is in the ask panel the real selection is gone; a highlight keeps the words visibly chosen. */
-function markRange(range: Range | null) {
-  const css = CSS as unknown as { highlights?: Map<string, unknown> }
-  const H = (window as unknown as { Highlight?: new (...r: Range[]) => unknown }).Highlight
-  if (!css.highlights || !H) return
-  if (range) css.highlights.set("vita-selection", new H(range))
-  else css.highlights.delete("vita-selection")
+interface Line { top: number; bottom: number; left: number; right: number }
+
+/**
+ * The selected text, one box per line: a range reports a box per piece of text it crosses, so pieces on the same
+ * line (overlapping vertically) are joined into one.
+ */
+function lineRects(range: Range): Line[] {
+  const lines: Line[] = []
+  for (const r of Array.from(range.getClientRects())) {
+    if (r.width < 1 || r.height < 1) continue
+    const same = lines.find((l) => Math.min(l.bottom, r.bottom) - Math.max(l.top, r.top) > Math.min(l.bottom - l.top, r.height) / 2)
+    if (same) {
+      same.left = Math.min(same.left, r.left)
+      same.right = Math.max(same.right, r.right)
+      same.top = Math.min(same.top, r.top)
+      same.bottom = Math.max(same.bottom, r.bottom)
+    } else lines.push({ top: r.top, bottom: r.bottom, left: r.left, right: r.right })
+  }
+  // Rows on consecutive lines meet halfway across the leading between them, so they touch and can blend.
+  lines.sort((a, b) => a.top - b.top)
+  for (let i = 0; i + 1 < lines.length; i++) {
+    const a = lines[i], b = lines[i + 1]
+    const gap = b.top - a.bottom
+    if (gap > 0 && gap < a.bottom - a.top) {
+      const mid = (a.bottom + b.top) / 2
+      a.bottom = mid
+      b.top = mid
+    }
+  }
+  return lines
 }
 
 const GAP = 8
@@ -297,11 +320,43 @@ export function SelectionToolbar({ actions = editActions, onAsk, askSuggestions,
     }
   }, [sel, close])
 
-  // The chosen words stay marked while the question is being written and answered.
+  // The selection is drawn by us from the first frame of the drag, as rounded rows that melt into each other (the
+  // browser's own highlight can't round its corners, and never shows here). While the ask panel has focus the words
+  // stay marked from the stored selection. A field's selection keeps the browser's highlight: its text has no boxes.
+  const [lines, setLines] = React.useState<Line[]>([])
+  const [shown, setShown] = React.useState(false)
   React.useEffect(() => {
-    markRange(ask && sel && "range" in sel.anchor ? sel.anchor.range : null)
-    return () => markRange(null)
-  }, [ask, sel])
+    const el = root.current
+    if (!el) return
+    let clear = 0
+    const draw = () => {
+      const s = window.getSelection()
+      const range = asking.current && selRef.current && "range" in selRef.current.anchor
+        ? selRef.current.anchor.range
+        : s && !s.isCollapsed && s.rangeCount > 0 && el.contains(s.getRangeAt(0).commonAncestorContainer) && !bar.current?.contains(s.getRangeAt(0).commonAncestorContainer)
+          ? s.getRangeAt(0)
+          : null
+      const next = range ? lineRects(range) : []
+      window.clearTimeout(clear)
+      if (next.length) {
+        setLines(next)
+        setShown(true)
+      } else {
+        // It fades as a selection is cleared, then lets go of its rows.
+        setShown(false)
+        clear = window.setTimeout(() => setLines([]), 110)
+      }
+    }
+    document.addEventListener("selectionchange", draw)
+    window.addEventListener("scroll", draw, true)
+    window.addEventListener("resize", draw)
+    return () => {
+      window.clearTimeout(clear)
+      document.removeEventListener("selectionchange", draw)
+      window.removeEventListener("scroll", draw, true)
+      window.removeEventListener("resize", draw)
+    }
+  }, [])
 
   // Opening the panel puts the cursor in the question, ready to type.
   React.useEffect(() => {
@@ -341,8 +396,9 @@ export function SelectionToolbar({ actions = editActions, onAsk, askSuggestions,
   }
 
   return (
-    <div ref={root} className={className}>
+    <div ref={root} className={cn("vita-selection-mark", className)}>
       {children}
+      {lines.length > 0 && <SelectionMark lines={lines} leaving={!shown} />}
       {sel && (ask || available.length > 0) && (
         // One surface for the capsule and the ask panel: its size and corners glide between them. It arrives where it
         // belongs on its first frame (its enter animation, not a glide), and its position never animates.
@@ -461,5 +517,39 @@ function PageButton({ icon, label, onClick }: { icon: IconType; label: string; o
     >
       <Icon as={icon} />
     </button>
+  )
+}
+
+/**
+ * The selection, drawn: one tint over the words, its rows melting into each other where they meet (a soft inner
+ * curve instead of a step) and every outer corner rounded. The rows are blurred together and their edge sharpened
+ * back (a "goo" filter), then tinted, so the text stays crisp through it. It fades as the capsule leaves.
+ */
+function SelectionMark({ lines, leaving }: { lines: Line[]; leaving: boolean }) {
+  const id = React.useId()
+  const PAD = 10
+  const x0 = Math.min(...lines.map((l) => l.left)) - PAD
+  const y0 = Math.min(...lines.map((l) => l.top)) - PAD
+  const x1 = Math.max(...lines.map((l) => l.right)) + PAD
+  const y1 = Math.max(...lines.map((l) => l.bottom)) + PAD
+  return (
+    <svg
+      aria-hidden="true"
+      // It follows the selection exactly, frame by frame: only its fade is eased, never its size or rows.
+      className={cn("pointer-events-none fixed z-40 overflow-visible transition-opacity duration-fast-02 [&_rect]:transition-none", leaving && "opacity-0")}
+      style={{ left: x0, top: y0, width: x1 - x0, height: y1 - y0 }}
+    >
+      <defs>
+        <filter id={id} x="-10%" y="-10%" width="120%" height="120%">
+          <feGaussianBlur stdDeviation="3" />
+          <feColorMatrix values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 24 -11" />
+        </filter>
+      </defs>
+      <g filter={`url(#${id})`} opacity={0.22}>
+        {lines.map((l, i) => (
+          <rect key={i} x={l.left - x0 - 3} y={l.top - y0} width={l.right - l.left + 6} height={l.bottom - l.top} fill="var(--vita-primary)" />
+        ))}
+      </g>
+    </svg>
   )
 }
