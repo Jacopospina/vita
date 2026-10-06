@@ -17,7 +17,7 @@ import { AnimatedText } from "@/registry/ui/animated"
 export type MiniTone = "primary" | "info" | "success" | "warning" | "error" | "neutral"
 type Size = "sm" | "md" | "lg"
 
-/** Semantic tones first; the gradients and the hue wheel borrow palette hues, the way the AI spectrum does. */
+/** Semantic tones first; the gradients and the hue wheel borrow palette hues, the way Sofia's water does. */
 const toneVar: Record<MiniTone, string> = {
   primary: "var(--vita-primary)",
   info: "var(--vita-info)",

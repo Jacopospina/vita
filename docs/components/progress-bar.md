@@ -28,4 +28,4 @@ related: [progress-indicator, thinking, file-uploader]
 - **Indeterminate:** a slug of liquid is pumped slowly along the track (about 3.6 seconds a crossing), stretching on each push, with a droplet trailing that parts and fuses again. There is no sliding bar.
 - **Fallback:** without WebGL2, a CPU liquid draws the same states.
 - **Reduced motion:** the liquid is shown at rest, with no flow.
-- **Tone:** `brand` by default. Use `spectrum` for agent work. Finished and error switch to success and error.
+- **Tone:** `brand` by default. Use `water` for agent work (Sofia's water; `spectrum` is its old name). Finished and error switch to success and error.

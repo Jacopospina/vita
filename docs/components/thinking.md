@@ -22,6 +22,7 @@ related: [inline-loading, progress-bar, loading-pattern]
 - **A spinner says one thing: wait.** It can't tell a slow server from an agent reading your files, writing an answer or searching your tools. Every kind of work looks the same, so people learn nothing and trust nothing.
 - **AI work has kinds, and people deserve to see them.** Retrieving, generating and searching take different time, carry different risk and end in different results. Showing which one is happening is how people stay in control of what the AI does.
 - **Sofia carries meaning a spinner can't.** Each mode is its own motion: drops flowing into a core, a body shape-shifting, a comet scanning, a ring gathering a voice. Recognisable at a glance, in any size, without a word.
+- **Sofia is water.** Clear, shallow water over white sand: turquoise where the body is thin, lagoon blue where it is deep, sun on its rim and caustic light moving inside (`docs/decisions/sofia-is-water.md`). Not a rainbow, not a hue: a material.
 - **The AI is always visible.** Wherever the anima works, Sofia shows it. Never hide AI work behind a neutral spinner, and never dress plain logic up as AI.
 
 ## Where Sofia appears, across the whole product
@@ -47,12 +48,12 @@ related: [inline-loading, progress-bar, loading-pattern]
 
 ## Rules
 
-1. **Agentic modes wear the AI spectrum** (they are AI provenance); basic uses `tone="brand"` or `current`.
+1. **Agentic modes are water** (`tone="water"`, the default: they are AI provenance); basic uses `tone="brand"` or `current`. `spectrum` is the old name of `water` and still works.
 2. **Skeletons first** when the layout is known, no orb over a blank card.
 3. **Delay 300ms** so fast responses never flash a loader.
 4. **Name the work.** `label="Searching the help center"` is announced to screen readers.
 5. **Sizes:** `md` 24 is the smallest Sofia that reads as Sofia beside text (provenance lines, headers); `sm` 16 only in dense rows; inside a button Sofia draws at `md` 24 within the 16px icon slot (negative margin), so she reads clearly and the button keeps its size · `md` 24 · `lg` 48 regions · `xl` 96 empty regions · `2xl` 160 hero moments · `3xl` 280 the epicenter of a landing page (one per page).
-6. **On a primary surface, `tone="on-primary"`.** The spectrum goes pastel with white glints, so Sofia stays visible on a primary button or brand banner and still reads as the AI.
+6. **On a primary surface, `tone="on-primary"`.** The water is washed half way to white, with white glints, so Sofia stays visible on a primary button or brand banner and still reads as the AI.
 7. **Reduced motion** shows a still frame with a gentle pulse.
 
 ## Performance

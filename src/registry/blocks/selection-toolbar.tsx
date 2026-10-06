@@ -441,7 +441,7 @@ export function SelectionToolbar({ actions = editActions, onAsk, askSuggestions,
                             className={cn(
                               "flex h-full items-center rounded-pill px-3 whitespace-nowrap focus-ring",
                               "duration-fast-02 ease-productive hover:bg-hover active:scale-97 active:bg-active active:duration-fast-01 motion-reduce:active:scale-100",
-                              // Ask AI speaks in the AI spectrum, the one look that means AI.
+                              // Ask AI speaks in the deep water (text-ai), the one look that means AI.
                               a.tone === "danger" ? "text-error-foreground" : a.id === "ask-ai" ? "font-semibold" : "text-foreground",
                             )}
                           >

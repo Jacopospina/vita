@@ -89,6 +89,11 @@
   --color-ai-from: var(--vita-ai-from);
   --color-ai-to: var(--vita-ai-to);
   --color-ai-subtle: var(--vita-ai-subtle);
+  --color-ai-foam: var(--vita-ai-foam);
+  --color-ai-shallow: var(--vita-ai-shallow);
+  --color-ai-water: var(--vita-ai-water);
+  --color-ai-deep: var(--vita-ai-deep);
+  --color-ai-foreground: var(--vita-ai-foreground);
 
   /* typography roles */
   --font-sans: var(--vita-font-sans);
@@ -345,9 +350,10 @@
 @utility focus-halo-inset { box-shadow: inset 0 0 0 4px color-mix(in oklab, var(--vita-ring) 22%, transparent); }
 
 /* Collapsible regions without measuring: grid rows 0fr ↔ 1fr, child overflow-hidden. */
-/* AI words: provenance lines such as "Drafted by Support triage", painted orange → pink → purple → teal, evenly. */
+/* AI words: provenance lines such as "Drafted by Support triage", in the deep water, lightening a touch toward the
+   end as the floor rises. Dark enough to read as text; the liquid itself stays Sofia's. */
 @utility text-ai {
-  background-image: linear-gradient(90deg, var(--vita-palette-orange-500), var(--vita-palette-pink-500), var(--vita-palette-purple-500), var(--vita-palette-teal-500));
+  background-image: linear-gradient(90deg, var(--vita-ai-foreground), color-mix(in oklab, var(--vita-ai-foreground) 72%, var(--vita-ai-water)));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -438,7 +444,7 @@
   }
 }
 
-/* AI outline: the rainbow spectrum, slowly rotating (still under reduced motion). */
+/* AI outline: Sofia's water, from the edge down to the deep and back, slowly turning (still under reduced motion). */
 
 /* With SelectionHighlight mounted, Vita draws every selection (rounded rows that blend); the browser's square one
    stays hidden, except in fields, whose selected text has no boxes to draw. */
@@ -464,13 +470,13 @@
 }
 
 @property --vita-ai-angle { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
-/* The fill inside the rainbow edge is a registered colour, so a state change (hover, pressed, open) fades it. */
+/* The fill inside the water edge is a registered colour, so a state change (hover, pressed, open) fades it. */
 @property --vita-ai-fill { syntax: "<color>"; inherits: false; initial-value: transparent; }
 @utility ai-gradient-border {
   border: 1.5px solid transparent;
   --vita-ai-fill: var(--vita-raised);
   background:
-    /* a clean card surface (white in light) inside the rainbow edge */
+    /* a clean card surface (white in light) inside the water edge */
     linear-gradient(var(--vita-ai-fill), var(--vita-ai-fill)) padding-box,
     conic-gradient(from var(--vita-ai-angle), var(--vita-ai-spectrum)) border-box;
   animation: vita-ai-spin 6s linear infinite;
@@ -479,7 +485,7 @@
   @media (prefers-reduced-motion: reduce) { animation: none; }
 }
 @utility ai-gradient-text {
-  background: linear-gradient(90deg, var(--vita-palette-blue-500), var(--vita-palette-purple-500), var(--vita-palette-pink-500), var(--vita-palette-orange-500));
+  background: linear-gradient(90deg, var(--vita-ai-deep), var(--vita-ai-water), var(--vita-ai-deep));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;

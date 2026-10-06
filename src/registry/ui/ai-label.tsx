@@ -19,7 +19,7 @@ export function OnPrimary({ children }: { children: React.ReactNode }) {
 /**
  * AILabel, marks content or controls GENERATED or AUTOFILLED by AI, and explains how.
  * Mandatory wherever AI produced a value the user may rely on. Clicking opens an explainability popover.
- * A pill: rainbow edge with primary letters (it opens the explanation) when standing alone; muted (hairline, low-opacity text) inside another
+ * A pill: water edge (Sofia's water, turning) with primary letters (it opens the explanation) when standing alone; muted (hairline, low-opacity text) inside another
  * component; white (hairline and text in the primary's foreground) on a primary-coloured container, where grey
  * would sink into the blue. Inside an AISurface it is Sofia, the small thinking orb, and sits BEFORE the title.
  */
@@ -32,11 +32,11 @@ export function AILabel({ size = "md", children, title = "AI explained", classNa
   /** When the AI changed a user value, offer a way back. */
   onRevert?: () => void
   /**
-   * auto (default): rainbow when standing alone; muted inside another component (field, notification, tile, AI
-   * surface, anything marked data-ai-context); white on a primary container (inside OnPrimary). Force with
-   * spectrum | muted | on-primary.
+   * auto (default): the water edge when standing alone; muted inside another component (field, notification, tile,
+   * AI surface, anything marked data-ai-context); white on a primary container (inside OnPrimary). Force with
+   * water | muted | on-primary. `spectrum` is the old name of `water`.
    */
-  tone?: "auto" | "spectrum" | "muted" | "on-primary"
+  tone?: "auto" | "water" | "spectrum" | "muted" | "on-primary"
 }) {
   const s = { xs: "h-4 px-1 text-[0.625rem]", sm: "h-5 px-1.5 text-caption", md: "h-6 px-2 text-caption" }[size]
   const inSurface = React.useContext(InSurface)
@@ -76,7 +76,7 @@ export function AILabel({ size = "md", children, title = "AI explained", classNa
             "inline-flex items-center rounded-pill font-semibold tracking-wide text-primary focus-ring",
             // Every state eases: the fill and colours fade, the press gives a little and springs back.
             "transition-[--vita-ai-fill,background-color,border-color,color,box-shadow,transform] duration-fast-02 ease-productive active:scale-95 active:duration-fast-01 motion-reduce:active:scale-100",
-            // The rainbow lives on the border; the letters are primary, the colour that says "you can click this".
+            // The water lives on the border; the letters are primary, the colour that says "you can click this".
             // Hover, press and open tint the inside in the primary's subtle wash.
             !onPrimary && tone !== "muted" && "ai-gradient-border hover:[--vita-ai-fill:var(--vita-primary-subtle)] data-[state=open]:[--vita-ai-fill:var(--vita-primary-subtle)]",
             !onPrimary && tone === "auto" &&

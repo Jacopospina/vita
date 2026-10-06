@@ -14,7 +14,7 @@ related: [avatar, ai-label, chat-bubble, composer]
 
 ## Anatomy
 
-- **Provenance header** (when `draftedBy` is set). Sofia, "Drafted by {agent}" in the AI spectrum, and the actions (Edit, Send).
+- **Provenance header** (when `draftedBy` is set). Sofia, "Drafted by {agent}" in the deep water (`text-ai`), and the actions (Edit, Send).
 - **Subject and time.** The subject leads; the time sits top right.
 - **Sender.** Avatar, name and address.
 - **Recipients.** To always; Cc and Bcc only when they have recipients.

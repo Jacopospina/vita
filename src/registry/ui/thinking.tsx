@@ -17,9 +17,10 @@ import { simulatedVoice } from "@/registry/hooks/use-microphone"
  *   listening   the person is talking: a ring of drops gathers inward with their voice, the core fills
  *   talking     the agent is speaking: its body swells and ripples with its voice, waves travel out
  *
- * Agentic modes wear the AI spectrum; basic follows the current text color. On a primary surface (a primary button,
- * a brand banner) pass tone="on-primary": the same spectrum washed to pastel, with white glints, so Sofia stays
- * visible and still reads as the AI.
+ * Agentic modes are water (docs/decisions/sofia-is-water.md): one lagoon read by depth, turquoise where the body is
+ * thin and lagoon blue at its heart, a patch of sun drifting over it, caustic nets of light inside, white glints on
+ * the rim. Basic follows the current text color. On a primary surface (a primary button, a brand banner) pass
+ * tone="on-primary": the same water washed toward white, so Sofia stays visible and still reads as the AI.
  */
 export type ThinkingMode = "basic" | "retrieving" | "generating" | "searching" | "idle" | "listening" | "talking"
 const VOICE = new Set<ThinkingMode>(["idle", "listening", "talking"])
@@ -368,9 +369,9 @@ function rgbOf(css: string, probe: CanvasRenderingContext2D): [number, number, n
 export interface ThinkingProps {
   mode?: ThinkingMode
   size?: keyof typeof sizes
-  /** spectrum = AI (default for agentic modes) · current = inherit text color (default for basic) · brand ·
-      on-primary = the spectrum in pastel, for a primary background */
-  tone?: "spectrum" | "current" | "brand" | "on-primary"
+  /** water = AI (default for agentic modes) · current = inherit text color (default for basic) · brand ·
+      on-primary = the water washed toward white, for a primary background. `spectrum` is the old name of `water`. */
+  tone?: "water" | "spectrum" | "current" | "brand" | "on-primary"
   /** Voice states: loudness now, 0 to 1 (e.g. useMicrophone().level, or the agent's audio). Simulated when omitted. */
   level?: () => number
   /** Announced to screen readers, e.g. "Searching the help center". */
@@ -388,7 +389,7 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
   const glintRef = React.useRef<HTMLCanvasElement>(null)
   const glRef = React.useRef<HTMLCanvasElement>(null)
   const fid = "vita-goo-" + React.useId().replace(/[^a-zA-Z0-9]/g, "")
-  const resolvedTone = tone ?? (mode === "basic" ? "current" : "spectrum")
+  const resolvedTone = tone === "spectrum" ? "water" : (tone ?? (mode === "basic" ? "current" : "water"))
   const field = React.useSyncExternalStore(subscribeLite, isLite, () => false)
   // The liquid keeps its time across a renderer switch, so a hand-over mid-session never restarts the shapes.
   const started = React.useRef(0)
@@ -421,12 +422,19 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
     // The filter chain draws at most ~60 times a second; the field is cheap enough for every display frame.
     const interval = field ? 0 : 1000 / 70
     const root = getComputedStyle(document.documentElement)
-    // On a primary surface the spectrum goes pastel (200s): the 500s sink into the brand colour behind them.
+    const probe = document.createElement("canvas").getContext("2d", { willReadFrequently: true })
     const onPrimary = resolvedTone === "on-primary"
-    const rainbow = resolvedTone === "spectrum" || onPrimary
-    const spectrum = ["blue", "indigo", "purple", "pink", "orange", "mint", "cyan"].map((h) => root.getPropertyValue(`--vita-palette-${h}-${onPrimary ? 200 : 500}`).trim())
+    const isWater = resolvedTone === "water" || onPrimary
+    // The water by depth: foam · shallow · water · deep (the tokens), as sRGB bytes and as canvas colours.
+    // On a primary surface it is washed half way to white: the deep would sink into the brand colour behind it.
+    const waterRGB = (["foam", "shallow", "water", "deep"] as const).map((k) => {
+      const [r, g, b] = probe ? rgbOf(root.getPropertyValue(`--vita-ai-${k}`).trim(), probe) : [0, 0, 0]
+      return (onPrimary ? [r + (255 - r) * 0.5, g + (255 - g) * 0.5, b + (255 - b) * 0.5] : [r, g, b]) as [number, number, number]
+    })
+    const water = waterRGB.map(([r, g, b]) => `rgb(${r} ${g} ${b})`)
+    const clear = (i: number) => `rgb(${waterRGB[i][0]} ${waterRGB[i][1]} ${waterRGB[i][2]} / 0)`
     let color = getComputedStyle(canvas).color
-    // Light mode = dark text. There the white glints vanish on the page, so they take the spectrum's colours instead.
+    // Light mode = dark text. There the white glints vanish on the page, so they take the deep water's colour instead.
     const isLight = (c: string) => { const m = c.match(/[\d.]+/g); return !!m && (0.2126 * +m[0] + 0.7152 * +m[1] + 0.0722 * +m[2]) / 255 < 0.5 }
     let light = !onPrimary && isLight(color)
     let last = 0
@@ -446,7 +454,7 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
         const rad = R * (0.92 + 0.12 * Math.sin(t * 1.3 + i))
         const tw = Math.max(0, Math.sin(t * 2.2 + i * 1.9))
         c.globalAlpha = tw * (light ? 1 : 0.9)
-        c.fillStyle = light ? spectrum[i % spectrum.length] || color : "white"
+        c.fillStyle = light ? water[i % 2 ? 3 : 2] || color : "white"
         c.beginPath()
         c.arc(px / 2 + Math.cos(a) * rad, px / 2 + Math.sin(a) * rad, Math.max(0.6, px * 0.009) * (0.6 + tw), 0, TAU)
         c.fill()
@@ -457,10 +465,12 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
     /* ---- filter path: crisp drops, the SVG chain melts them ---- */
     const drawFilter = (t: number) => {
       ctx.clearRect(0, 0, px, px)
-      if (rainbow && "createConicGradient" in ctx) {
-        const g = ctx.createConicGradient(t * 1.8, px / 2, px / 2)
-        spectrum.forEach((c, i) => g.addColorStop(i / spectrum.length, c))
-        g.addColorStop(1, spectrum[0])
+      if (isWater) {
+        // Depth by distance from the heart: the body is deepest at its centre and pales toward its edge, the way a
+        // lagoon reads from the shore. A small orb is a thin line, so its water starts deeper to stay visible.
+        const g = ctx.createRadialGradient(px / 2, px / 2, 0, px / 2, px / 2, R * 1.1)
+        if (simple) { g.addColorStop(0, water[3]); g.addColorStop(0.55, water[3]); g.addColorStop(1, water[2]) }
+        else { g.addColorStop(0, water[3]); g.addColorStop(0.55, water[2]); g.addColorStop(0.85, water[2]); g.addColorStop(1, water[1]) }
         ctx.fillStyle = g
       } else {
         ctx.fillStyle = color
@@ -470,6 +480,20 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
         ctx.beginPath()
         ctx.arc(px / 2 + p.x * R, px / 2 + p.y * R, dropRadius(p), 0, TAU)
         ctx.fill()
+      }
+      if (isWater && lit) {
+        // The sun: a patch of light drifting over the body, lifting the water toward the shallows where it passes.
+        // Painted only where there is water (source-atop), so the filter chain still melts the same silhouette.
+        const sx = px / 2 + Math.cos(t * 0.37) * R * 0.5, sy = px / 2 + Math.sin(t * 0.29) * R * 0.5
+        const s = ctx.createRadialGradient(sx, sy, 0, sx, sy, R * 0.9)
+        s.addColorStop(0, water[1])
+        s.addColorStop(1, clear(1))
+        ctx.globalCompositeOperation = "source-atop"
+        ctx.globalAlpha = 0.45
+        ctx.fillStyle = s
+        ctx.fillRect(0, 0, px, px)
+        ctx.globalAlpha = 1
+        ctx.globalCompositeOperation = "source-over"
       }
       // Glints: tiny twinkling sparkles around agentic orbs (drawn crisp, outside the liquid).
       if (gctx) {
@@ -486,7 +510,6 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
     /* ---- gpu path: the desktop chain, evaluated per pixel by one shader at full resolution (phones) ---- */
     let orb: OrbGL | null = null
     if (field && glRef.current) {
-      const probe = document.createElement("canvas").getContext("2d", { willReadFrequently: true })
       const precise = mode === "retrieving", defined = mode === "generating"
       // Small voice orbs (the 16 and 24px idle ring) are a thin line of tiny drops: at the full blur their field
       // never reaches the goo's threshold and the ring faded to nothing. A tighter blur keeps the line whole.
@@ -496,7 +519,12 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
         ? createOrbGL(glRef.current, {
             size: px, dpr: glDpr, lit,
             s1: blur, ss: Math.hypot(blur, px * 0.035), sg: Math.hypot(blur, px * 0.16),
-            spectrum: spectrum.map((c) => rgbOf(c, probe)),
+            water: waterRGB,
+            // A thin line never fills (a small orb, or the generating outline), so its water reads deep sooner; a small
+            // orb reads depth off the goo field itself (thin), from below the threshold, so even its finest line is
+            // turquoise, never the pale edge. Caustics need a
+            // floor to land on, so only lit orbs (48px and up) carry them, about three nets across.
+            depth: simple ? [0.2, 0.8] : defined ? [0.45, 0.68] : [0.45, 0.88], thin: simple, caustic: lit ? px * 0.36 : 0,
             surface: px * 0.06, light: [px * 0.28, px * 0.2, px * 0.9],
           })
         : null
@@ -506,7 +534,7 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
         let own = rgbOf(color, probe)
         const o = orb
         fieldDraw = (t: number) => {
-          if (!rainbow) own = rgbOf(color, probe)
+          if (!isWater) own = rgbOf(color, probe)
           let k = 0
           for (const p of simple ? simpleParticles(mode, t, lvlNow) : particles(mode, n, t, seeds, lvlNow)) {
             if (p.r < 0.005 || k >= MAX_DROPS) continue
@@ -516,7 +544,7 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
             drops[k * 4 + 2] = (scaled ? dropRadius(p) : dropRadius(p) / 1.3) * glDpr
             k++
           }
-          o.draw(drops, k, { t, rot: t * 1.8, spectrum: rainbow, own })
+          o.draw(drops, k, { t, rot: t * 1.8, water: isWater, own })
           // Glints stay crisp, on the 2D canvas above the liquid.
           ctx.clearRect(0, 0, px, px)
           if (glints) drawGlints(ctx, t)
@@ -527,7 +555,6 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
       const off = document.createElement("canvas")
       off.width = off.height = g
       const octx = off.getContext("2d")
-      const probe = document.createElement("canvas").getContext("2d", { willReadFrequently: true })
       // A tiny copy of the orb, drawn large again, is the glow: the upscale blurs it for free.
       const glow = lit ? document.createElement("canvas") : null
       if (glow) glow.width = glow.height = 12
@@ -536,7 +563,6 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
         const img = octx.createImageData(g, g)
         const data = img.data
         const fld = new Float32Array(g * g)
-        const spec = spectrum.map((c) => rgbOf(c, probe))
         let own = rgbOf(color, probe)
         const scale = g / px // cells per CSS px
         const centre = g / 2
@@ -545,7 +571,7 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
         const ISO = 0.46, EDGE = 0.45
         ctx.imageSmoothingQuality = "high"
         fieldDraw = (t: number) => {
-          if (!rainbow) own = rgbOf(color, probe)
+          if (!isWater) own = rgbOf(color, probe)
           fld.fill(0)
           for (const p of simple ? simpleParticles(mode, t, lvlNow) : particles(mode, n, t, seeds, lvlNow)) {
             if (p.r < 0.005) continue
@@ -566,7 +592,9 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
               }
             }
           }
-          const rot = t * 1.8
+          // The sun's patch, in cells: it drifts over the body as on the other renderers.
+          const sunX = centre + Math.cos(t * 0.37) * R * scale * 0.5, sunY = centre + Math.sin(t * 0.29) * R * scale * 0.5
+          const sunR2 = (R * scale * 0.9) ** 2
           for (let y = 0; y < g; y++) {
             for (let x = 0; x < g; x++) {
               const k = y * g + x, o = k * 4
@@ -575,14 +603,17 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
               if (a > 1) a = 1
               a = a * a * (3 - 2 * a)
               let r: number, gr: number, b: number
-              if (rainbow) {
-                // The same conic sweep as the gradient on the filter path, turning with time.
-                let u = ((Math.atan2(y + 0.5 - centre, x + 0.5 - centre) - rot) / TAU) % 1
-                if (u < 0) u += 1
-                u *= spec.length
-                const i = Math.floor(u), f = u - i
-                const c0 = spec[i], c1 = spec[(i + 1) % spec.length]
+              if (isWater) {
+                // Depth from the field's own density: shallow turquoise at the rim, lagoon blue where drops pile up.
+                let d = Math.min(1, Math.max(0, simple ? (fld[k] - ISO + 0.15) / 0.5 : (fld[k] - ISO) / 1.4))
+                d = 1 - (1 - d) ** 1.6
+                const f = d < 0.25 ? d * 4 : (d - 0.25) / 0.75
+                const c0 = waterRGB[d < 0.25 ? 1 : 2], c1 = waterRGB[d < 0.25 ? 2 : 3]
                 r = c0[0] + (c1[0] - c0[0]) * f; gr = c0[1] + (c1[1] - c0[1]) * f; b = c0[2] + (c1[2] - c0[2]) * f
+                if (lit) {
+                  const s = 0.4 * Math.exp(-((x + 0.5 - sunX) ** 2 + (y + 0.5 - sunY) ** 2) / sunR2)
+                  r += (waterRGB[1][0] - r) * s; gr += (waterRGB[1][1] - gr) * s; b += (waterRGB[1][2] - b) * s
+                }
               } else {
                 ;[r, gr, b] = own
               }
