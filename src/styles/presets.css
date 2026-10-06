@@ -3,29 +3,100 @@
  * They only override knobs from theme.css, proof that the whole system
  * re-skins from a handful of variables.
  */
+
+/* Tactical: olive neutrals, red primary (#FE5344), mono uppercase, Inter headings.
+   Sharp, dense, fast — a military-grade control surface. Metro full-bleed spacing. */
 [data-vita-preset="square"] {
-  --vita-brand-hue: 262;
-  --vita-brand-chroma: 0.22;
+  --vita-brand-hue: 29;
+  --vita-brand-chroma: 0.21;
+  --vita-neutral-hue: 107;
+  --vita-neutral-chroma: 0.012;
+  --vita-radius: 0rem;
+  --vita-density: 0.85;
+  --vita-motion-scale: 0.5;
+  --vita-type-base: 0.75rem;
+  --vita-type-ratio: 1.15;
+  --vita-font-sans: "Google Sans Code Variable", "Google Sans Code", ui-monospace, monospace;
+  --vita-font-display: "Inter Variable", "Inter", system-ui, sans-serif;
+  --vita-font-numeric: "Google Sans Code Variable", "Google Sans Code", ui-monospace, monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+[data-vita-preset="square"] :is(.text-display, .text-large-title, .text-title-1, .text-title-2, .text-title-3, .font-display) {
+  text-transform: none;
+  letter-spacing: -0.015em;
+}
+/* Tactical dark: warm olive-dark background (#282826), never pure black. */
+:root.dark[data-vita-preset="square"],
+[data-theme="dark"][data-vita-preset="square"] {
+  --vita-background: oklch(0.22 0.004 107);
+  --vita-layer-1: oklch(0.276 0.004 107);
+  --vita-layer-2: oklch(0.32 0.005 107);
+  --vita-layer-3: oklch(0.38 0.005 107);
+  --vita-raised: oklch(0.276 0.004 107);
+  --vita-elevated: oklch(0.276 0.004 107);
+}
+
+/* Signal: neutral greys, lime-green primary, IBM Plex Sans throughout.
+   Clean, precise, industrial — a signals-intelligence readout. */
+[data-vita-preset="soft"] {
+  --vita-brand-hue: 131;
+  --vita-brand-chroma: 0.24;
+  --vita-neutral-hue: 0;
   --vita-neutral-chroma: 0;
   --vita-radius: 0rem;
-  --vita-font-sans: "Helvetica Neue", Arial, sans-serif;
-  --vita-type-ratio: 1.2;
+  --vita-density: 0.85;
+  --vita-motion-scale: 0.5;
+  --vita-type-base: 0.75rem;
+  --vita-type-ratio: 1.15;
+  --vita-font-sans: "IBM Plex Sans", system-ui, sans-serif;
+  --vita-font-display: "IBM Plex Sans", system-ui, sans-serif;
+  --vita-font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --vita-font-numeric: "IBM Plex Mono", ui-monospace, monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+[data-vita-preset="soft"] :is(.text-display, .text-large-title, .text-title-1, .text-title-2, .text-title-3, .font-display) {
+  text-transform: none;
+  letter-spacing: -0.015em;
 }
 
-[data-vita-preset="soft"] {
-  --vita-brand-hue: 250;
-  --vita-brand-chroma: 0.19;
-  --vita-neutral-chroma: 0.004;
-  --vita-radius: 0.75rem;
-  --vita-density: 1.1;
-  --vita-font-sans: system-ui, "Google Sans Flex Variable", sans-serif;
-  --vita-type-base: 0.9375rem;
-}
-
+/* Rams: Braun orange (#FF611A), warm neutrals, Inter throughout.
+   Generous, clean, functional — Dieter Rams' ten principles made digital. */
 [data-vita-preset="mono"] {
-  --vita-brand-hue: 285;
-  --vita-brand-chroma: 0.02;
-  --vita-neutral-chroma: 0;
-  --vita-radius: 0.625rem;
-  --vita-density: 0.9;
+  --vita-brand-hue: 40;
+  --vita-brand-chroma: 0.21;
+  --vita-neutral-hue: 68;
+  --vita-neutral-chroma: 0.003;
+  --vita-radius: 0.25rem;
+  --vita-density: 1.08;
+  --vita-motion-scale: 0.75;
+  --vita-font-sans: "Inter Variable", "Inter", system-ui, sans-serif;
+  --vita-font-display: "Inter Variable", "Inter", system-ui, sans-serif;
+}
+[data-vita-preset="mono"] :is(.text-display, .text-large-title, .text-title-1, .text-title-2, .text-title-3, .font-display) {
+  letter-spacing: -0.02em;
+}
+/* Rams dark: warm dark surface, like a Braun product shell. */
+:root.dark[data-vita-preset="mono"],
+[data-theme="dark"][data-vita-preset="mono"] {
+  --vita-background: oklch(0.18 0.003 68);
+  --vita-layer-1: oklch(0.24 0.003 68);
+  --vita-layer-2: oklch(0.30 0.004 68);
+  --vita-layer-3: oklch(0.36 0.004 68);
+  --vita-raised: oklch(0.24 0.003 68);
+  --vita-elevated: oklch(0.24 0.003 68);
+}
+
+/* ── Density/spacing overrides ──
+   tokens.css sets --_d: var(--vita-density) on :root (specificity 0,1,0) and
+   --spacing via the max(0.9, …) formula. :root[data-vita-preset] wins (0,2,0)
+   so these bypass both without touching the token file. */
+:root[data-vita-preset="square"],
+:root[data-vita-preset="soft"] {
+  --_d: 0.82;
+}
+:root[data-vita-preset="square"] {
+  --_d: 0.75;
+  --spacing: 0.125rem;
 }

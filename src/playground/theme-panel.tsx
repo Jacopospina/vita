@@ -74,9 +74,9 @@ const nearest = (list: { v: number }[], x: number) => list.reduce((best, o, i) =
 /** Each choice with its one-line gist, shown under the field once picked. */
 const presets = [
   { value: "default", label: "Default", gist: "Vita as it ships: blue, gently rounded, Google Sans Flex." },
-  { value: "square", label: "Square", gist: "Sharp corners and a grotesk face: precise and editorial." },
-  { value: "soft", label: "Soft", gist: "Round corners, more room and the system face: calm and friendly." },
-  { value: "mono", label: "Mono", gist: "Almost no colour and tighter rows: quiet and dense." },
+  { value: "square", label: "Tactical", gist: "Olive neutrals, red primary, mono uppercase: military-grade density." },
+  { value: "soft", label: "Signal", gist: "Neutral greys, lime-green primary, IBM Plex Sans: clean and industrial." },
+  { value: "mono", label: "Rams", gist: "Braun orange, warm neutrals, Inter: clean, generous, functional." },
 ]
 const sliders = [
   { key: "--vita-radius", name: "How round are corners?", list: radii },
@@ -89,6 +89,8 @@ const fonts = [
   { value: "flex", label: "Google Sans Flex (default)", css: `"Google Sans Flex Variable", "Google Sans Flex", system-ui, sans-serif`, gist: "Vita's own face: modern, warm, made for screens." },
   { value: "system", label: "System UI", css: `system-ui, sans-serif`, gist: "The device's own face: native everywhere, nothing to load." },
   { value: "grotesk", label: "Grotesk", css: `"Helvetica Neue", Arial, sans-serif`, gist: "A classic grotesk: neutral, precise, timeless." },
+  { value: "inter", label: "Inter", css: `"Inter Variable", "Inter", system-ui, sans-serif`, gist: "A workhorse sans-serif: crisp, versatile, made for interfaces." },
+  { value: "plex", label: "IBM Plex Sans", css: `"IBM Plex Sans", system-ui, sans-serif`, gist: "IBM's open-source face: technical, clear, industrial." },
   { value: "serif", label: "Serif (editorial)", css: `"New York", "Iowan Old Style", Georgia, serif`, gist: "A reading serif: editorial and long-form." },
 ]
 
@@ -130,7 +132,7 @@ export function ThemePanel({ open, onOpenChange, weather, dark, onDarkChange }: 
       const cs = getComputedStyle(root)
       setValues(Object.fromEntries(knobs.map((k) => [k.key, parseFloat(cs.getPropertyValue(k.key)) || k.def])))
       const f = cs.getPropertyValue("--vita-font-sans")
-      setFont(f.includes("Helvetica") ? "grotesk" : f.trim().startsWith("system-ui") ? "system" : "flex")
+      setFont(f.includes("IBM Plex") ? "plex" : f.includes("Inter") ? "inter" : f.includes("Helvetica") ? "grotesk" : f.trim().startsWith("system-ui") ? "system" : f.includes("monospace") || f.includes("Code") ? "flex" : "flex")
     })
   }
 
