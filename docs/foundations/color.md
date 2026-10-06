@@ -30,7 +30,7 @@ avoid_when:
 | Icon surface | `icon-surface` · `icon-surface-solid` | The IconPlaceholder tile. `icon-surface` (tint) is a faint dark wash (5% black) for white surfaces; `icon-surface-solid` is a white tile for grey list groups. Both are faint lifts in dark mode. |
 | Support | `success` · `warning` · `error` · `info` (+ `-subtle`, `-foreground`) | Status only. Text on tints uses `-foreground`. |
 | Lines | `border-subtle` · `border` · `border-field` · `border-strong` | Fields use `border-field`: soft at rest, `border-strong` on hover, the focus ring on focus. Increased contrast restores a ≥ 3:1 field border. |
-| AI | `ai-spectrum` · `ai-subtle` · `text-ai` | The rainbow outline, and `text-ai` for the words that say AI made something ("Drafted by …"): orange, pink, purple and teal, evenly from left to right. Only for AI provenance. |
+| AI | `ai-foam` · `ai-shallow` · `ai-water` · `ai-deep` · `ai-foreground` · `ai-spectrum` · `ai-subtle` · `text-ai` | Sofia's water, one lagoon read by depth (`docs/decisions/sofia-is-water.md`): the edge over white sand, a hand's depth, the turquoise, the blue where the floor drops. `ai-spectrum` is the ring (edge to deep and back) for the AI outline; `text-ai` paints the words that say AI made something ("Drafted by …") in `ai-foreground`, the deep water dark enough to read. Only for AI provenance. |
 
 ## Status semantics
 

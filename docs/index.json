@@ -305,7 +305,7 @@
         "Setting up an agent to design or build with Vita"
       ],
       "avoid_when": [
-        "Branding or marketing flair → the AI spectrum is reserved for AI provenance",
+        "Branding or marketing flair → Sofia's water is reserved for AI provenance",
         "Plain logic that isn't AI (a sort, a calculation) → ordinary components, no AI marks"
       ],
       "setup_title": "Teach Vita your AI's voice",
@@ -2397,6 +2397,23 @@
         "how-we-decide",
         "status-semantics",
         "components-and-patterns"
+      ]
+    },
+    {
+      "section": "decisions",
+      "slug": "sofia-is-water",
+      "path": "docs/decisions/sofia-is-water.md",
+      "title": "Sofia is water",
+      "summary": "Sofia and every AI mark are pure water, one clear lagoon read by depth, instead of the blue to violet to pink to orange rainbow that every assistant wears. It replaces the AI spectrum.",
+      "status": "accepted",
+      "date": "2026-10-06",
+      "decided_by": "Jacopo",
+      "related": [
+        "vita-for-ai",
+        "thinking",
+        "ai-label",
+        "color",
+        "the-name"
       ]
     },
     {

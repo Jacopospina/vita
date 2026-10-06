@@ -406,7 +406,7 @@ export const foundationDemos: DemoMap = {
       description: "A standalone AI label, a generated reply in an AI surface (its label muted in context; click it for the explanation), and Sofia showing the kind of work.",
       render: () => (
         <Stack gap="lg" className="max-w-xl">
-          <Inline gap="sm" align="center"><AILabel title="Summarised by Support triage">Summarised from 12 tickets in the last week · high confidence.</AILabel><Text tone="muted">Standalone: the full spectrum</Text></Inline>
+          <Inline gap="sm" align="center"><AILabel title="Summarised by Support triage">Summarised from 12 tickets in the last week · high confidence.</AILabel><Text tone="muted">Standalone: the water edge</Text></Inline>
           <AISurface>
             <Stack gap="xs">
               <Inline gap="xs"><AILabel size="sm" title="Suggested reply">Drafted from the help center article "Refunds" · high confidence.</AILabel><Text weight="semibold">Suggested reply</Text></Inline>

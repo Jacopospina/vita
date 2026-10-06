@@ -15,7 +15,8 @@ import { createOrbGL, MAX_DROPS } from "@/registry/lib/orb-gl"
  *   determinate    the body is solid and springs to the value; a small volume of liquid rides its tip, when the
  *                  body slows, the liquid's own inertia surges, sloshes and settles back against it
  *   indeterminate  a slug of liquid is pushed round the tube by a pulsing pump, stretching, tearing and fusing
- *   tone           brand (default) · spectrum (agent work), finished/error switch to success/error
+ *   tone           brand (default) · water (agent work: Sofia's water), finished/error switch to success/error.
+ *                  `spectrum` is the old name of `water`.
  * Glow only in dark mode; light mode keeps a faint halo.
  */
 export function ProgressBar({
@@ -35,7 +36,7 @@ export function ProgressBar({
   helperText?: React.ReactNode
   status?: "active" | "finished" | "error"
   size?: "sm" | "md"
-  tone?: "brand" | "spectrum"
+  tone?: "brand" | "water" | "spectrum"
   hideLabel?: boolean
   className?: string
 }) {
@@ -43,11 +44,12 @@ export function ProgressBar({
   const indeterminate = value === undefined && status === "active"
   const pct = status === "finished" ? 100 : Math.min(100, Math.max(0, ((value ?? 0) / max) * 100))
   const color = status === "error" ? "text-error" : status === "finished" ? "text-success" : "text-primary"
+  const water = (tone === "water" || tone === "spectrum") && status === "active"
   const canvas = React.useRef<HTMLCanvasElement>(null)
   const sofia = React.useRef<HTMLCanvasElement>(null)
   // Sofia's liquid on the GPU; the particle fluid on the CPU only where WebGL2 isn't available.
-  const gpu = useSofiaBar(sofia, { flow: indeterminate, target: pct / 100, spectrum: tone === "spectrum" && status === "active", track: size === "sm" ? 4 : 8 })
-  useLiquid(canvas, { mode: indeterminate ? "flow" : "fill", target: pct / 100, spectrum: tone === "spectrum" && status === "active", color, off: gpu })
+  const gpu = useSofiaBar(sofia, { flow: indeterminate, target: pct / 100, water, track: size === "sm" ? 4 : 8 })
+  useLiquid(canvas, { mode: indeterminate ? "flow" : "fill", target: pct / 100, water, color, off: gpu })
   return (
     <div className={cn("flex w-full flex-col gap-2", className)}>
       <div className={cn("flex items-center justify-between gap-2", hideLabel && "sr-only")}>
@@ -83,7 +85,9 @@ export function ProgressBar({
   )
 }
 
-const HUES = ["blue", "indigo", "purple", "pink", "orange", "blue"]
+/** The water by depth (the --vita-ai-* tokens): foam · shallow · water · deep. */
+const WATER = ["foam", "shallow", "water", "deep"] as const
+const readWater = (cs: CSSStyleDeclaration, probe: CanvasRenderingContext2D) => WATER.map((k) => toRGB(cs.getPropertyValue(`--vita-ai-${k}`).trim(), probe))
 
 /** Resolve any CSS colour (oklch, var-resolved…) to sRGB bytes. */
 function toRGB(css: string, probe: CanvasRenderingContext2D): [number, number, number] {
@@ -104,13 +108,13 @@ function toRGB(css: string, probe: CanvasRenderingContext2D): [number, number, n
  *         and fuses again
  * Returns whether the GPU path is drawing (false → the CPU fluid draws instead).
  */
-function useSofiaBar(ref: React.RefObject<HTMLCanvasElement | null>, opts: { flow: boolean; target: number; spectrum: boolean; track: number }) {
+function useSofiaBar(ref: React.RefObject<HTMLCanvasElement | null>, opts: { flow: boolean; target: number; water: boolean; track: number }) {
   const [gpu, setGpu] = React.useState(false)
   const target = React.useRef(opts.target)
   React.useLayoutEffect(() => {
     target.current = opts.target
   })
-  const { flow, spectrum, track } = opts
+  const { flow, water, track } = opts
   React.useEffect(() => {
     const el = ref.current
     if (!el || typeof window === "undefined") return
@@ -122,13 +126,14 @@ function useSofiaBar(ref: React.RefObject<HTMLCanvasElement | null>, opts: { flo
     const H = track
     const r = track / 2
     const cy = H / 2
-    const root = getComputedStyle(document.documentElement)
-    const spec = ["blue", "indigo", "purple", "pink", "orange", "mint", "cyan"].map((c) => toRGB(root.getPropertyValue(`--vita-palette-${c}-500`).trim(), probe))
+    const tones = readWater(getComputedStyle(document.documentElement), probe)
     let W = Math.max(1, el.clientWidth)
     // Sofia's viscosity: the same melt relative to drop size as the orb (blur ≈ the drop radius), so the tip and its
     // trailing drop stretch through thick, rounded necks instead of parting cleanly.
+    // The water in a tube: its depth runs across the track (edge, deep, edge) and the caustic nets are about three
+    // tracks long, so they read as light moving along the bar rather than as grain.
     const make = () =>
-      createOrbGL(el, { size: H, width: W, height: H, dpr, lit: true, s1: r * 0.8, ss: Math.hypot(r * 0.8, r * 0.6), sg: Math.hypot(r * 0.8, r * 1.4), spectrum: spec, surface: r * 0.9, light: [0, 0, H] })
+      createOrbGL(el, { size: H, width: W, height: H, dpr, lit: true, s1: r * 0.8, ss: Math.hypot(r * 0.8, r * 0.6), sg: Math.hypot(r * 0.8, r * 1.4), water: tones, depth: [0.45, 0.9], caustic: track * 3, surface: r * 0.9, light: [0, 0, H] })
     let orb = make()
     if (!orb) return
     queueMicrotask(() => setGpu(true))
@@ -181,7 +186,7 @@ function useSofiaBar(ref: React.RefObject<HTMLCanvasElement | null>, opts: { flo
         k = push(k, head - len - gap - r * 0.6, r * 0.95)
       }
       if (k === 0) k = push(k, -10 * r, 0.001)
-      orb!.draw(drops, k, { t, rot: t * 1.2, spectrum: spectrum ? "linear" : false, own })
+      orb!.draw(drops, k, { t, rot: t * 1.2, water: water ? "bar" : false, own })
       if (!reduced) raf = requestAnimationFrame(frame)
     }
     const ro = new ResizeObserver(() => {
@@ -202,14 +207,14 @@ function useSofiaBar(ref: React.RefObject<HTMLCanvasElement | null>, opts: { flo
     mo.observe(document.documentElement, { attributes: true, attributeFilter: ["class", "style", "data-theme"] })
     const colour = window.setInterval(() => { own = toRGB(getComputedStyle(el).color, probe) }, 1500)
     return () => { cancelAnimationFrame(raf); ro.disconnect(); io.disconnect(); mo.disconnect(); window.clearInterval(colour); orb?.dispose() }
-  }, [ref, flow, spectrum, track])
+  }, [ref, flow, water, track])
   return gpu
 }
 
-function useLiquid(ref: React.RefObject<HTMLCanvasElement | null>, opts: { mode: LiquidMode; target: number; spectrum: boolean; color: string; off?: boolean }) {
+function useLiquid(ref: React.RefObject<HTMLCanvasElement | null>, opts: { mode: LiquidMode; target: number; water: boolean; color: string; off?: boolean }) {
   const sim = React.useRef<LiquidSim | null>(null)
   const kick = React.useRef<() => void>(() => {})
-  const { mode, target, spectrum, color, off } = opts
+  const { mode, target, water, color, off } = opts
 
   React.useEffect(() => {
     const el = ref.current
@@ -224,7 +229,9 @@ function useLiquid(ref: React.RefObject<HTMLCanvasElement | null>, opts: { mode:
     let palette: [number, number, number][] = []
     const readColors = () => {
       const cs = getComputedStyle(el)
-      palette = spectrum ? HUES.map((c) => toRGB(cs.getPropertyValue(`--vita-palette-${c}-500`).trim(), probe)) : [toRGB(cs.color, probe)]
+      // Water along the bar: from the shallows down to the deep and back, so the sweep reads as light on water.
+      const w = water ? readWater(cs, probe) : null
+      palette = w ? [w[1], w[2], w[3], w[2], w[1]] : [toRGB(cs.color, probe)]
     }
 
     const s = (sim.current = new LiquidSim(1, mode, 7))
@@ -247,9 +254,9 @@ function useLiquid(ref: React.RefObject<HTMLCanvasElement | null>, opts: { mode:
       if (!img) return
       field = liquidCoverage(s, w, h, field)
       const px = img.data
-      const shift = mode === "flow" || spectrum ? t / 4 : 0
+      const shift = mode === "flow" || water ? t / 4 : 0
       for (let x = 0; x < w; x++) {
-        // colour at this column (spectrum flows along the bar)
+        // colour at this column (the water flows along the bar)
         let c = palette[0]
         if (palette.length > 1) {
           const u = (((x / w - shift) % 1) + 1) % 1 * (palette.length - 1)
@@ -306,7 +313,7 @@ function useLiquid(ref: React.RefObject<HTMLCanvasElement | null>, opts: { mode:
     return () => { cancelAnimationFrame(raf); ro.disconnect(); io.disconnect(); mo.disconnect(); kick.current = () => {} }
     // The target is fed in below without rebuilding the fluid.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mode, spectrum, color, off])
+  }, [mode, water, color, off])
 
   React.useEffect(() => {
     if (!sim.current) return

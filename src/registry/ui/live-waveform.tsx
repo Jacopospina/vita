@@ -13,7 +13,7 @@ import { simulatedBands, simulatedVoice } from "@/registry/hooks/use-microphone"
  *   variant  bars       the spectrum, mirrored from the centre (a voice's shape)
  *            scrolling  the loudness over time, scrolling left (a voice's rhythm)
  *   tone     brand (default: the primary colour, for any voice, the person's or the agent's) · current (inherits text colour)
- *            A waveform is never the AI spectrum: Sofia beside it already says who is speaking.
+ *            A waveform is never Sofia's water: Sofia beside it already says who is speaking.
  *
  * Not for: a recording's static shape or playback position → a progress control; "the AI is working" → Thinking.
  * Every change between states eases (bars travel to their new height), and both edges fade out.

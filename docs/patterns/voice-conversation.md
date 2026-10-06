@@ -16,7 +16,7 @@ related: [live-waveform, mic-selector, thinking, agent-conversation, composer]
 2. **Ask.** Start requests the microphone; while the line opens, Sofia generates and the bar reads "Connecting".
 3. **Listen.** The person has the floor: Sofia gathers their voice, the waveform shows their microphone.
 4. **Think.** The agent works: Sofia generates and a making word names the work.
-5. **Talk.** The agent answers: Sofia follows its voice in the AI spectrum; the waveform stays primary.
+5. **Talk.** The agent answers: Sofia follows its voice in her water; the waveform stays primary.
 6. **End.** One tap ends the conversation and releases the microphone; offer the transcript if there is one.
 
 ## Rules

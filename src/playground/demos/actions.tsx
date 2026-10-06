@@ -57,7 +57,7 @@ function AIDemo() {
   return (
     <Stack gap="lg">
       <Inline gap="md"><AILabel size="xs" /><AILabel size="sm" /><AILabel size="md" /></Inline>
-      <Inline gap="md" align="center"><AILabel tone="spectrum" /><Text variant="caption" tone="muted">Spectrum, standing alone</Text><AILabel tone="muted" /><Text variant="caption" tone="muted">Muted, inside a surface that already says AI</Text></Inline>
+      <Inline gap="md" align="center"><AILabel tone="water" /><Text variant="caption" tone="muted">Water, standing alone</Text><AILabel tone="muted" /><Text variant="caption" tone="muted">Muted, inside a surface that already says AI</Text></Inline>
       <div className="max-w-sm">
         <TextInput
           label="Agent purpose"

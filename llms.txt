@@ -57,7 +57,7 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/iden
   - avoid: Tailwind sizes (text-sm, text-2xl) → they don't exist in Vita; Changing size to create emphasis inside a paragraph → use font-medium or font-semibold
 - [Vita for AI](docs/foundations/vita-for-ai.md): How Vita shows AI to the people using a product (honest, explainable, in their control), and how it lets AI agents build that product like a designer would.
   - use: Designing any screen where AI generates, suggests, fills in, searches or speaks; Choosing how AI work looks, waits, explains itself and hands control back; Setting up an agent to design or build with Vita
-  - avoid: Branding or marketing flair → the AI spectrum is reserved for AI provenance; Plain logic that isn't AI (a sort, a calculation) → ordinary components, no AI marks
+  - avoid: Branding or marketing flair → Sofia's water is reserved for AI provenance; Plain logic that isn't AI (a sort, a calculation) → ordinary components, no AI marks
 
 ## Components
 
@@ -327,6 +327,7 @@ Start with: docs/components/choosing-components.md (decision guide) · docs/iden
 - [Motion](docs/decisions/motion.md): Nothing snaps, except page load, global appearance swaps and floating-surface sizing, which never animate per element.
 - [Psychology on the person's side](docs/decisions/psychology.md): Vita grounds its layout, choice, feedback and wording rules in how people perceive, decide and remember, carried by the vita-psychology skill. Every principle is used to help the person, never to steer them.
 - [Release stages](docs/decisions/release-stages.md): Everything in Vita, and Vita itself, sits on one of three stages. Inception comes first, then Experimental, then Stable.
+- [Sofia is water](docs/decisions/sofia-is-water.md): Sofia and every AI mark are pure water, one clear lagoon read by depth, instead of the blue to violet to pink to orange rainbow that every assistant wears. It replaces the AI spectrum.
 - [Status semantics](docs/decisions/status-semantics.md): One map from meaning to colour and glyph, used by every status surface; status colours never decorate.
 - [The name is Vita](docs/decisions/the-name.md): Vita means life. It is the third of a triad with Animus (the logic) and Anima (the AI): the design system where both come alive.
 - [The slogan](docs/decisions/the-slogan.md): "The first agentic design system." Vita says what it is for in one line, made for AI products and the agents that build them. It replaces "Give your ideas life."

@@ -20,8 +20,8 @@ related: [tooltip, popover, notification]
 
 ## Tone
 
-- **Alone → rainbow, primary letters.** A standalone label wears the full spectrum outline, and its letters are primary so people see it can be clicked.
-- **In context → muted.** Inside a field, notification, tile or AI surface it turns white at low opacity with a quiet outline, so it doesn't compete. Automatic; force with `tone="spectrum" | "muted"`.
+- **Alone → the water edge, primary letters.** A standalone label wears Sofia's water as its outline, and its letters are primary so people see it can be clicked.
+- **In context → muted.** Inside a field, notification, tile or AI surface it turns white at low opacity with a quiet outline, so it doesn't compete. Automatic; force with `tone="water" | "muted"` (`spectrum` is the old name of `water`).
 - **On primary → white.** On a primary-coloured container (a person's chat bubble, a selection bar) the hairline and the letters take the primary's foreground: grey sinks into the blue. Automatic inside `ChatBubble` and the table's selection bar; wrap your own primary container in `OnPrimary`, or force `tone="on-primary"`.
 
 ## States
@@ -43,5 +43,5 @@ related: [tooltip, popover, notification]
 1. **Transparency is mandatory.** Every AI-produced value the user might rely on carries a label. No silent AI.
 2. **Explain in human terms:** what was done, from what source, and how sure the model is ("Extracted from the sender's signature · 92% confidence").
 3. **The user stays in control.** AI suggestions are editable, rejectable and revertible. Never auto-submit AI output.
-4. **The rainbow means AI, and only AI.** The slowly rotating full-spectrum outline (`ai-gradient-border`) is reserved for AI provenance. Never use `ai-*` tokens for anything else.
+4. **The water means AI, and only AI.** The slowly turning water outline (`ai-gradient-border`) is reserved for AI provenance. Never use `ai-*` tokens for anything else.
 5. **Copy:** don't anthropomorphise. Write "Suggested reply", not "I wrote this for you".

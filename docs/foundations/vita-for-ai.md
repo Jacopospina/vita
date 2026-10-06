@@ -7,7 +7,7 @@ use_when:
   - Choosing how AI work looks, waits, explains itself and hands control back
   - Setting up an agent to design or build with Vita
 avoid_when:
-  - Branding or marketing flair → the AI spectrum is reserved for AI provenance
+  - Branding or marketing flair → Sofia's water is reserved for AI provenance
   - Plain logic that isn't AI (a sort, a calculation) → ordinary components, no AI marks
 setup_title: Teach Vita your AI's voice
 setup: Tell Vita how your AI should speak, and it tunes that voice to your users. Until then, it's short, plain and warm (Guidelines tab).
@@ -24,7 +24,7 @@ related: [ai-label, thinking, intent-first, agent-conversation, voice-conversati
 2. **Explainable.** One click on the mark says what the AI did, from which sources, and how sure it is.
 3. **In the person's control.** AI output is editable, rejectable and revertible; it is never submitted on someone's behalf.
 4. **Honest about the work.** While AI works, the screen shows which kind of work it is (recalling, searching, making), never a spinner.
-5. **Restrained.** AI styling marks provenance; it never decorates. A screen full of rainbows says nothing.
+5. **Restrained.** AI styling marks provenance; it never decorates. A screen awash with water says nothing.
 
 ## Your AI's voice
 
@@ -58,12 +58,12 @@ Until you set your AI's voice, it speaks like a capable, friendly person replyin
 
 ## Visual language
 
-AI has one look in Vita, and nothing else may borrow it. It reads as light: a spectrum that glows, never a colour of its own.
+AI has one look in Vita, and nothing else may borrow it. It is water: one clear lagoon read by depth, never a hue of its own (`docs/decisions/sofia-is-water.md`).
 
-- **The spectrum.** A slowly turning outline in the AI colours (`ai-gradient-border`) marks an AI surface or a standalone AI label.
-- **AI words.** `text-ai` colours the words that say AI made something ("Drafted by Support triage"), orange to pink to purple to teal.
-- **The AI surface.** `AISurface` wraps a generated block (a suggested reply, a summary): the spectrum edge with a clean surface inside, so the content stays easy to read.
-- **Sofia.** The thinking liquid is the AI at work: it changes form with the kind of work, from recall to search to making, and listens and talks in voice.
+- **The water edge.** A slowly turning outline in the water's depths (`ai-gradient-border`, from the edge down to the deep and back) marks an AI surface or a standalone AI label.
+- **AI words.** `text-ai` colours the words that say AI made something ("Drafted by Support triage") in the deep water, dark enough to read as text.
+- **The AI surface.** `AISurface` wraps a generated block (a suggested reply, a summary): the water edge with a clean surface inside, so the content stays easy to read.
+- **Sofia.** The thinking liquid is the AI at work: real water, turquoise where it is thin and lagoon blue where it is deep, sun on its rim and caustic light inside. It changes form with the kind of work, from recall to search to making, and listens and talks in voice.
 - **Quiet in context.** Inside a field, a tile or an AI surface, the AI label turns muted, so a screen with many AI values stays calm.
 
 ## Explainability
@@ -109,14 +109,14 @@ For whole flows, see the patterns: [Intent first](#/patterns/intent-first), [Age
 | Idle | The agent is present and ready |
 
 - **Name the work.** Pair Sofia with words that say what's happening ("Searching the help center"); screen readers hear them too.
-- **Plain logic isn't AI.** A save or a sort uses the basic state, without the AI spectrum.
+- **Plain logic isn't AI.** A save or a sort uses the basic state, in the text or brand colour, never the water.
 
 ## Accessibility
 
 - **Marks are announced.** The AI label has an accessible name and its explanation is reachable by keyboard.
-- **Never colour alone.** The spectrum is never the only signal; the label and the words carry the meaning.
-- **Contrast holds.** AI surfaces keep body text at AA contrast in light and dark themes.
-- **Calm motion.** Under reduced motion, Sofia holds a still frame with a gentle pulse and the spectrum stops turning.
+- **Never colour alone.** The water is never the only signal; the label and the words carry the meaning.
+- **Contrast holds.** AI surfaces keep body text at AA contrast in light and dark themes, and `text-ai` passes 4.5:1 on the page.
+- **Calm motion.** Under reduced motion, Sofia holds a still frame with a gentle pulse and the water edge stops turning.
 
 ## Vita for agents
 

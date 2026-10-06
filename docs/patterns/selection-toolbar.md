@@ -18,7 +18,7 @@ related: [text-toolbar, menu, ai-label, common-actions]
 ## Anatomy
 
 - **Capsule.** Floating glass, centred above the selection; below it when there's no room.
-- **Actions.** Words, not icons, divided by hairlines: Ask AI first (in the AI spectrum), then the clipboard set, then the product's own.
+- **Actions.** Words, not icons, divided by hairlines: Ask AI first (in the deep water, `text-ai`), then the clipboard set, then the product's own.
 - **Danger in red.** Delete is the only red word, and it comes last in its page.
 - **Chevron.** More actions than fit (4 by default) page sideways; a back chevron returns.
 

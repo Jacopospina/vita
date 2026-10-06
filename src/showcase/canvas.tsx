@@ -139,7 +139,7 @@ const columns: { offset: string; cards: (React.ReactNode | Pair | Hug)[] }[] = [
     cards: [
       <AISurface key="ai"><Stack gap="xs"><Inline gap="xs"><AILabel size="xs">Drafted from the help center.</AILabel><Text weight="semibold">Suggested reply</Text></Inline><Text variant="footnote" tone="muted">Your refund was approved today and reaches your card in 3–5 days.</Text></Stack></AISurface>,
       { pair: [<LiveId key="id" />, <Toggletip key="tt" label="About agent IDs">Every agent keeps its ID for life, even when you rename it.</Toggletip>] },
-      <ProgressBar key="p" label="Indexing help center" value={64} helperText="64% · about a minute left" tone="spectrum" />,
+      <ProgressBar key="p" label="Indexing help center" value={64} helperText="64% · about a minute left" tone="water" />,
     ],
   },
   {

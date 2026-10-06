@@ -7,8 +7,8 @@ import { Button, IconButton } from "@/registry/ui/button"
 
 /**
  * EmailMessage: one email, read or reviewed in place. Subject and time, the sender (avatar, name, address), the
- * recipients, then the message. When an agent wrote it, a provenance header says so ("Drafted by …", in the AI
- * spectrum) and carries the actions that decide its fate (edit, send).
+ * recipients, then the message. When an agent wrote it, a provenance header says so ("Drafted by …", in the deep
+ * water, text-ai) and carries the actions that decide its fate (edit, send).
  *
  *   <EmailMessage subject="Your quote" from={{ name: "Indie Novak", email: "indie@theo.ai" }} to={["ops@client.com"]}
  *     time="Now" draftedBy="Support triage" actions={<Button size="sm">Send</Button>}>…</EmailMessage>

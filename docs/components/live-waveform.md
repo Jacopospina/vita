@@ -32,7 +32,7 @@ related: [voice-conversation, mic-selector, thinking]
 ## Rules
 
 1. **Only real sound.** A waveform says "audio is flowing"; never animate one for decoration.
-2. **Always primary, never the AI spectrum.** Sofia beside the waveform says who is speaking; the bars only say that sound flows.
+2. **Always primary, never Sofia's water.** Sofia beside the waveform says who is speaking; the bars only say that sound flows.
 3. **Nothing jumps.** Bars rise quickly and fall gently, and they travel between states.
 4. **Both edges fade out**, so the bars sit in any container without a hard border.
 5. **No background of its own.** The edge fade would fade a fill too, leaving a smudge behind the bars.

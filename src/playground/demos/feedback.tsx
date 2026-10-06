@@ -76,7 +76,7 @@ function ProgressDemo() {
       <ProgressBar label="Indexing help-center.csv" value={v} helperText={`${v}% · about 20 seconds left`} />
       <Inline><Button size="sm" variant="secondary" onClick={() => setV((x) => Math.min(100, x + 15))}>Advance</Button></Inline>
       <ProgressBar label="Deploying Support triage" helperText="This usually takes under a minute" />
-      <ProgressBar label="Agent reading the help center" tone="spectrum" value={v} helperText="Spectrum tone for agent work" />
+      <ProgressBar label="Agent reading the help center" tone="water" value={v} helperText="Water tone for agent work" />
       <ProgressBar label="Indexing complete" status="finished" helperText="1,240 articles indexed" />
       <ProgressBar label="Indexing failed" value={62} status="error" helperText="refund-policy.pdf is password-protected" />
       <ProgressBar label="Runs this month" value={7} max={10} size="sm" helperText="7,000 of 10,000 runs" />
@@ -207,7 +207,7 @@ export const feedbackDemos: DemoMap = {
   "components/thinking": [
     {
       title: "Sofia's states",
-      description: "One liquid, seven states. Pick the state by what is happening; agentic states wear the AI spectrum, and the voice states follow a live level when you pass one.",
+      description: "One liquid, seven states. Pick the state by what is happening; agentic states are water, and the voice states follow a live level when you pass one.",
       render: () => (
         <div className="grid grid-cols-2 gap-x-5 gap-y-10 md:grid-cols-4">
           {([

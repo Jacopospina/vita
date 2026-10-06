@@ -20,7 +20,7 @@ import { useMakingWord } from "@/registry/ui/chat"
  *   connecting    Sofia generates while the line opens
  *   listening     the person has the floor: Sofia gathers their voice, the bar shows their microphone
  *   thinking      the agent works: Sofia generates, a making word names it, the waveform waits
- *   talking       the agent speaks: Sofia and the waveform follow its voice in the AI spectrum
+ *   talking       the agent speaks: Sofia and the waveform follow its voice in Sofia's water
  *
  * The app owns the conversation (connection, turns, audio); the bar only shows it and reports what the person does.
  * Not for: text-only chat → MiniChat / Composer; a recording control → Button + LiveWaveform.

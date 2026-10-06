@@ -27,4 +27,5 @@ status: stable
 ## Sofia, the anima made visible
 
 - **The AI's presence.** Sofia is the thinking orb. Whenever the anima works (retrieving, generating, searching, listening, talking), Sofia shows it.
+- **She is water.** Clear, shallow water over white sand, lit by the sun: the one image of life that is also pure, calm and honest about its depth. Not the rainbow every assistant wears.
 - **Never a spinner.** A spinner says "wait". Sofia says what the AI is doing, so people always know the soul of the product is at work.
