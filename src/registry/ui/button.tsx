@@ -10,7 +10,6 @@ import { Group } from "@/registry/ui/layout"
 import { Kbd } from "@/registry/ui/kbd"
 import { useShortcut } from "@/registry/hooks/use-shortcut"
 import { useTilt } from "@/registry/hooks/use-tilt"
-import { useWater } from "@/registry/hooks/use-water"
 import { useCoarsePointer } from "@/registry/hooks/use-media"
 import { Thinking } from "@/registry/ui/thinking"
 import { animateChildren } from "@/registry/ui/animated"
@@ -30,8 +29,7 @@ const KeepLabel = React.createContext(false)
 const buttonVariants = cva(
   [
     // No will-change: the tilt's perspective already gives a hovered button its own layer, and on touch there is no tilt.
-    // Water: the surface sways as the pointer lands, a ring spreads from a press, and it wobbles back on release.
-    "tilt water relative inline-flex shrink-0 select-none items-center justify-center gap-2 whitespace-nowrap font-medium",
+    "tilt relative inline-flex shrink-0 select-none items-center justify-center gap-2 whitespace-nowrap font-medium",
     // 240ms on the expressive curve: the hover lift and tilt ease in and out (110ms read as a snap).
     "squircle duration-moderate-02 ease-expressive",
     "focus-ring active:scale-98 motion-reduce:active:scale-100",
@@ -141,7 +139,6 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     React.useImperativeHandle(ref, () => inner.current as HTMLButtonElement)
     useShortcut(shortcut, () => inner.current?.click(), { enabled: !!shortcut && !disabled && !busy })
     const tilt = useTilt<HTMLButtonElement>({ max: 12, lift: 1.05 }, { onPointerMove: props.onPointerMove, onPointerLeave: props.onPointerLeave })
-    const water = useWater<HTMLButtonElement>({ onPointerEnter: props.onPointerEnter, onPointerDown: props.onPointerDown, onAnimationEnd: props.onAnimationEnd, onClick: asChild ? onClick : run })
     const label = status !== "idle" && feedback?.[status] ? feedback[status] : children
     // Touch: the icon alone stands for the action (the label stays, read by screen readers), except on the primary
     // and on buttons that fill a bar. The consequence still plays in the slot: orb, check, error mark.
@@ -201,9 +198,9 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={asChild ? undefined : disabled}
         aria-busy={busy || undefined}
         data-status={status === "idle" ? undefined : status}
+        onClick={asChild ? onClick : run}
         {...props}
         {...tilt}
-        {...water}
       >
         {asChild ? (
           children
