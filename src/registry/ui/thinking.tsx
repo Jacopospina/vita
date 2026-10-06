@@ -395,7 +395,12 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
   const glRef = React.useRef<HTMLCanvasElement>(null)
   const fid = "vita-goo-" + React.useId().replace(/[^a-zA-Z0-9]/g, "")
   const resolvedTone = tone === "spectrum" ? "water" : (tone ?? (mode === "basic" ? "current" : "water"))
-  const field = React.useSyncExternalStore(subscribeLite, isLite, () => false)
+  const lite = React.useSyncExternalStore(subscribeLite, isLite, () => false)
+  // Small orbs (16 and 24px) always draw on the CPU field: at that size the filter chain cannot resolve a sub-pixel
+  // melt (the idle ring broke into dots) and a GPU context costs more than a grid of ~50 cells a side. The field's
+  // edge is a soft ramp at every resolution, and a frame of it costs microseconds.
+  const small = px <= 24
+  const field = lite || small
   // The liquid keeps its time across a renderer switch, so a hand-over mid-session never restarts the shapes.
   const started = React.useRef(0)
 
@@ -533,7 +538,7 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
     let fieldDraw: ((t: number) => void) | null = null
     /* ---- gpu path: the desktop chain, evaluated per pixel by one shader at full resolution (phones) ---- */
     let orb: OrbGL | null = null
-    if (field && glRef.current) {
+    if (field && !small && glRef.current) {
       const precise = mode === "retrieving", defined = mode === "generating"
       // Small voice orbs (the 16 and 24px idle ring) are a thin line of tiny drops: at the full blur their field
       // never reaches the goo's threshold and the ring faded to nothing. A tighter blur keeps the line whole.
@@ -726,7 +731,7 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
       setVisible(false)
       orb?.dispose()
     }
-  }, [mode, px, S, bleed, resolvedTone, field])
+  }, [mode, px, S, bleed, resolvedTone, field, small])
 
   // Liquid + light: goo → a second round of melt (rounds every neck and tip) → specular highlight → a pastel glow
   // behind. A WIDE blur with a gentle threshold is what makes it gooey: drops reach for each other through thick,
@@ -777,7 +782,7 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
         </svg>
       )}
       {/* The canvases bleed past the box (negative inset), so nothing of the liquid is cut square; the span stays `size`. */}
-      {field && <canvas ref={glRef} aria-hidden className="pointer-events-none absolute" style={{ width: S, height: S, inset: -bleed }} />}
+      {field && !small && <canvas ref={glRef} aria-hidden className="pointer-events-none absolute" style={{ width: S, height: S, inset: -bleed }} />}
       <canvas ref={ref} aria-hidden data-renderer={field ? "field" : "filter"} className="pointer-events-none absolute motion-reduce:animate-[vita-pulse_2s_ease-in-out_infinite]" style={{ width: S, height: S, inset: -bleed, filter: field ? undefined : `url(#${fid})` }} />
       {!field && mode !== "basic" && lit && <canvas ref={glintRef} aria-hidden className="pointer-events-none absolute" style={{ width: S, height: S, inset: -bleed }} />}
       <span className="sr-only">{label}</span>
