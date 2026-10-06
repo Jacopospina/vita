@@ -58,6 +58,16 @@ related: [menu-buttons, link, modal, common-actions]
 - **The consequence still plays.** Loading, success and failure show in the slot (orb, check, error mark), label or not.
 - **Colour arrives at once.** A button turning red, green or primary takes its label and icon with it in the same frame; nothing lags a shade behind.
 
+## States
+
+- **Hover.** The colour steps to `-hover`, the surface lifts and tilts toward the pointer with a glare, and it sways once as the pointer lands: a touch on water (240ms, expressive).
+- **Pressed.** The button gives (98%, 97% on the primary) and a ring of water spreads from the point of touch, in the surface's own colour.
+- **Released.** It wobbles back the way a drop settles (700ms, expressive), then rests. From the keyboard the ring spreads from the centre.
+- **Focus.** The focus ring, never the hover lift.
+- **Working.** Sofia thinks in the icon slot in the button's own colour; re-submit is blocked.
+- **Disabled.** Layer-2 fill with disabled text; nothing answers.
+- **Reduced motion.** No sway, ring or wobble; the colour change alone marks the state.
+
 ## Accessibility
 
 - A native `<button>` with a visible focus ring. `asChild` lets a router `Link` look like a button. Do that only when the action really is navigation styled as a CTA (for example, a landing page).

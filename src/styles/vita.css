@@ -410,6 +410,36 @@
 }
 
 /*
+ * WATER, a surface that answers like Sofia's water (docs/decisions/sofia-is-water.md). The pointer lands on it and
+ * the surface sways once. A press sends a ring of water out from the point of touch (::before, clipped to the
+ * squircle) while the control gives. On release it wobbles back, the way a drop settles. Every moment is one short
+ * animation on `scale` (so it composes with the tilt's transform and the press) or one painted ring; at rest it costs
+ * nothing. The element must be positioned. The attributes come from useWater, which removes each when its animation
+ * ends, so nothing is cancelled mid-way (a cancelled animation snaps). Still under reduced motion.
+ */
+@property --vita-splash { syntax: "<percentage>"; inherits: false; initial-value: 0%; }
+@keyframes vita-sway { 0% { scale: 1 } 30% { scale: 1.04 0.96 } 60% { scale: 0.98 1.016 } 100% { scale: 1 } }
+@keyframes vita-wobble { 0% { scale: 0.96 } 30% { scale: 1.065 0.94 } 55% { scale: 0.972 1.028 } 80% { scale: 1.012 0.99 } 100% { scale: 1 } }
+@keyframes vita-splash { from { --vita-splash: 4%; opacity: 1 } to { --vita-splash: 150%; opacity: 0 } }
+@utility water {
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    corner-shape: inherit;
+    opacity: 0;
+    /* The ring is the surface's own colour, light on a filled button, ink on a ghost, so it reads on every variant. */
+    background: radial-gradient(circle at var(--vita-splash-x, 50%) var(--vita-splash-y, 50%), transparent calc(var(--vita-splash) - 18%), color-mix(in oklab, currentColor 48%, transparent) var(--vita-splash), transparent calc(var(--vita-splash) + 12%));
+  }
+  &[data-sway] { animation: vita-sway var(--vita-duration-slow-01) var(--vita-ease-expressive) both; }
+  &[data-wobble] { animation: vita-wobble var(--vita-duration-slow-02) var(--vita-ease-expressive) both; }
+  &[data-splash]::before { animation: vita-splash var(--vita-duration-slow-01) var(--vita-ease-expressive-exit) both; }
+  @media (prefers-reduced-motion: reduce) { &, &::before { animation: none !important; } }
+}
+
+/*
  * TAP, a 44px hit area around a small STANDALONE control, only under a finger (pointer: coarse). The element must be
  * positioned (`relative` or `absolute`). The visual stays the same size; the invisible target grows to the finger.
  * Standalone means no interactive neighbour within ~12px on either axis: checkboxes, radios, switches, slider knobs,
