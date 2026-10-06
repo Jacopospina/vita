@@ -1,10 +1,11 @@
 import * as React from "react"
 import { marked, type Token, type Tokens } from "marked"
-import { CheckmarkFilled, Copy, Misuse } from "@/registry/icons"
+import { CheckmarkFilled, Misuse } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { Stack, Inline } from "@/registry/ui/layout"
 import { Text } from "@/registry/ui/text"
-import { Button } from "@/registry/ui/button"
+import { CopyButton, InstallOptions } from "./install-options"
+import { DefinitionTooltip } from "@/registry/ui/tooltip"
 import { HelperText } from "@/registry/ui/helper-text"
 import { Tile, TileSet, TileSetItem } from "@/registry/ui/tile"
 import { Icon } from "@/registry/ui/icon"
@@ -92,6 +93,11 @@ function Block({ token: t, context }: { token: Token; context: string }) {
     }
     case "paragraph":
       return <Text variant="body-lg" className="max-w-prose">{inline((t as Tokens.Paragraph).text)}</Text>
+    case "html": {
+      // A named block a page can embed: <!-- block: install-options -->
+      const name = /<!--\s*block:\s*([\w-]+)\s*-->/.exec((t as Tokens.HTML).text)?.[1]
+      return name && blocks[name] ? blocks[name]() : null
+    }
     case "blockquote":
       return <Alert token={t as Tokens.Blockquote} />
     case "list":
@@ -110,12 +116,15 @@ function Block({ token: t, context }: { token: Token; context: string }) {
   }
 }
 
+/** Live blocks a docs page can embed by name, for what markdown can't draw. */
+const blocks: Record<string, () => React.ReactNode> = { "install-options": () => <InstallOptions /> }
+
 /* ---------------- alerts ---------------- */
 
 /* The kind shows in the colour and the icon; the alert never names its own type ("Tip", "Note"): the words lead. */
 const alertKinds = {
   NOTE: { kind: "info" },
-  TIP: { kind: "success" },
+  TIP: { kind: "info" }, // a tip isn't a success: a green check means "done"
   IMPORTANT: { kind: "info" },
   WARNING: { kind: "warning" },
   CAUTION: { kind: "error" },
@@ -132,7 +141,9 @@ function Alert({ token }: { token: Tokens.Blockquote }) {
   const spec = m ? alertKinds[m[1] as keyof typeof alertKinds] : { kind: "info" as const }
   const body = m ? text.slice(m[0].length) : text
   return (
-    <Callout kind={spec.kind} className="max-w-3xl">
+    // An alert that hands work to an agent carries Sofia at rest: purely decorative, there to catch the eye with
+    // more contrast than a status glyph, without claiming a status it doesn't have.
+    <Callout kind={spec.kind} decorative={code?.lang === "prompt"} className="max-w-3xl">
       <Stack gap="sm" align="start">
         <span className="text-foreground">{inline(body.replace(/\n/g, " "))}</span>
         {code && (
@@ -141,20 +152,6 @@ function Alert({ token }: { token: Tokens.Blockquote }) {
       </Stack>
     </Callout>
   )
-}
-
-/** A labelled button says it itself: "Copied" with a check, then back (copying is instant, so no working state). */
-function CopyButton({ text, label }: { text: string; label: string }) {
-  const [copied, setCopied] = React.useState(false)
-  const timer = React.useRef(0)
-  React.useEffect(() => () => window.clearTimeout(timer.current), [])
-  const copy = async () => {
-    try { await navigator.clipboard.writeText(text) } catch { /* clipboard blocked: still acknowledge */ }
-    setCopied(true)
-    window.clearTimeout(timer.current)
-    timer.current = window.setTimeout(() => setCopied(false), 1500)
-  }
-  return <Button size="sm" icon={Copy} status={copied ? "success" : "idle"} feedback={{ success: "Copied" }} onClick={copy}>{label}</Button>
 }
 
 /* ---------------- lists → cards ---------------- */
@@ -252,6 +249,22 @@ function Table({ table }: { table: Tokens.Table }) {
 
 /* ---------------- inline ---------------- */
 
+/**
+ * Inline markdown. `[[plain words|technical detail]]` writes for people first: the plain words show, with a dotted
+ * underline, and the paths, commands and file names wait in a tooltip for the people who need them.
+ */
+const TECH = /\[\[([^|\]]+)\|([^\]]+)\]\]/g
 function inline(md: string) {
-  return <span className="vita-inline" dangerouslySetInnerHTML={{ __html: marked.parseInline(md, { async: false }) as string }} />
+  const html = (s: string) => <span className="vita-inline" dangerouslySetInnerHTML={{ __html: marked.parseInline(s, { async: false }) as string }} />
+  if (!TECH.test(md)) return html(md)
+  TECH.lastIndex = 0
+  const out: React.ReactNode[] = []
+  let at = 0
+  for (const m of md.matchAll(TECH)) {
+    if (m.index > at) out.push(<React.Fragment key={at}>{html(md.slice(at, m.index))}</React.Fragment>)
+    out.push(<DefinitionTooltip key={m.index} term={m[1]} definition={html(m[2])} />)
+    at = m.index + m[0].length
+  }
+  if (at < md.length) out.push(<React.Fragment key={at}>{html(md.slice(at))}</React.Fragment>)
+  return <>{out}</>
 }

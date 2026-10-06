@@ -19,6 +19,7 @@ related: [notification, code-snippet, button, tooltip]
 - **Only when there's no label and no room.** A button with a label shows it in its own state ("Copy link" becomes "Copied"). The gotcha is for when there's no label to change and no space on screen to say it, like an icon button.
 - **One word, maybe two.** "Copied", "Saved", "Link copied". A sentence is a toast.
 - **Never the only signal for something that matters.** It's an acknowledgement, gone in a moment: anything the person must act on is a toast or a message by the cause.
+- **Every tiny notification.** A title-only success or info of three words or fewer sent with `toast()` comes here automatically, so a word never takes over the corner of the screen.
 - **One at a time.** A new gotcha replaces the last one.
 - **Mounted with notifications.** `<Toaster />` renders it, so one mount gives both.
 

@@ -138,8 +138,8 @@ function ModalDemo() {
       </Modal>
       <Button variant="secondary" onClick={() => setConfirm(true)}>Confirm</Button>
       <Button variant="danger-tertiary" onClick={() => setDanger(true)}>Danger modal</Button>
-      <ConfirmModal open={confirm} onOpenChange={setConfirm} title="Publish new instructions?" description="Every live run will use the new instructions from now on." confirmLabel="Publish instructions" onConfirm={() => toast({ kind: "success", title: "Instructions published" })} />
-      <ConfirmModal danger open={danger} onOpenChange={setDanger} title="Delete 3 agents?" description="They stop running and their history is removed. This can't be undone." confirmLabel="Delete agents" onConfirm={async () => { await new Promise((r) => setTimeout(r, 500)); toast({ kind: "success", title: "3 agents deleted" }) }} />
+      <ConfirmModal open={confirm} onOpenChange={setConfirm} title="Publish new instructions?" description="Every live run will use the new instructions from now on." confirmLabel="Publish instructions" onConfirm={() => gotcha("Instructions published")} />
+      <ConfirmModal danger open={danger} onOpenChange={setDanger} title="Delete 3 agents?" description="They stop running and their history is removed. This can't be undone." confirmLabel="Delete agents" onConfirm={async () => { await new Promise((r) => setTimeout(r, 500)); gotcha("3 agents deleted") }} />
     </Inline>
   )
 }
@@ -286,11 +286,23 @@ export const feedbackDemos: DemoMap = {
           <Button variant="secondary" onClick={() => toast({ icon: Bot, source: "Theo", title: "Agent deployed", subtitle: "Support triage is live and answering tickets." })}>With icon</Button>
           <Button variant="secondary" onClick={() => toast({ icon: false, title: "Link copied", subtitle: "Anyone in the workspace can open it." })}>Without icon</Button>
           <Button variant="secondary" onClick={() => toast({ icon: Time, eyebrow: "Time sensitive", source: "Approvals", title: "Refund over $200 waiting", subtitle: "Refund assistant needs your approval within 10 minutes.", action: { label: "Review", onClick: () => {} }, duration: 8000 })}>Time sensitive</Button>
-          <Button variant="secondary" onClick={() => toast({ kind: "success", title: "Agent paused", subtitle: "It stops taking new conversations.", action: { label: "Undo", onClick: () => toast({ kind: "info", title: "Restored" }) }, duration: 8000 })}>With undo</Button>
+          <Button variant="secondary" onClick={() => toast({ kind: "success", title: "Agent paused", subtitle: "It stops taking new conversations.", action: { label: "Undo", onClick: () => gotcha("Restored") }, duration: 8000 })}>With undo</Button>
         </Inline>
       ),
     },
     { title: "Callout", render: () => <Callout kind="info" title="How agents use knowledge">Agents only answer from the sources you connect. Anything outside them is handed to a person.</Callout> },
+    {
+      title: "Decorative callout",
+      description: "An invitation, not a status: Sofia at rest, and faint light drifting on the left. One per page at most.",
+      render: () => (
+        <Callout decorative title="Let your agent set it up">
+          <Stack gap="sm" align="start">
+            <span>Copy one prompt into your coding agent and it walks you through the rest.</span>
+            <Button size="sm">Copy prompt</Button>
+          </Stack>
+        </Callout>
+      ),
+    },
   ],
   "components/capsule": [
     {

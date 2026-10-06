@@ -31,6 +31,7 @@ import { Toolbar, ToolbarButton, ToolbarSeparator, ToolbarToggle, ToolbarToggleG
 import { OverflowMenu } from "@/registry/ui/menu-button"
 import { MenuItem, MenuSeparator } from "@/registry/ui/menu"
 import { InlineNotification, toast } from "@/registry/ui/notification"
+import { gotcha } from "@/registry/ui/gotcha"
 import { ConfirmModal } from "@/registry/ui/modal"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/registry/ui/tabs"
 import { Skeleton, SkeletonText, InlineLoading } from "@/registry/ui/loading"
@@ -89,7 +90,7 @@ function ReadOnlyDemo() {
     <Stack gap="md" className="max-w-lg">
       <Inline justify="between"><Text variant="title-3">Workspace settings</Text>{editing ? <IconButton icon={Close} label="Discard changes" shortcut="escape" onClick={() => setEditing(false)} /> : <Button variant="ghost" icon={Edit} shortcut="mod+e" onClick={() => setEditing(true)}>Edit</Button>}</Inline>
       {editing ? (
-        <Form onSubmit={(e) => { e.preventDefault(); setEditing(false); toast({ kind: "success", title: "Settings saved" }) }}>
+        <Form onSubmit={(e) => { e.preventDefault(); setEditing(false); gotcha("Settings saved") }}>
           <TextInput label="Workspace name" defaultValue="Theo Support" />
           <TextInput label="Default model" defaultValue="Theo Large" />
           <TextInput label="Workspace ID" defaultValue="ws_8f2k1" readOnly helperText="Set by the system" />
@@ -510,9 +511,9 @@ export { IconButton }
 
 /** Theo's own actions on a selection, after the clipboard set. */
 const theoSelectionActions: SelectionAction[] = [
-  { id: "ask", label: "Ask Theo", onSelect: () => { toast({ title: "Sent to Theo" }) } },
-  { id: "comment", label: "Comment", onSelect: () => { toast({ title: "Comment added" }) } },
-  { id: "translate", label: "Translate", onSelect: () => { toast({ title: "Translated" }) } },
+  { id: "ask", label: "Ask Theo", onSelect: () => { gotcha("Sent to Theo") } },
+  { id: "comment", label: "Comment", onSelect: () => { gotcha("Comment added") } },
+  { id: "translate", label: "Translate", onSelect: () => { gotcha("Translated") } },
 ]
 
 /** Stands in for the model: answers in Vita's default voice, short and answer first. */
