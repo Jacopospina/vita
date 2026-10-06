@@ -293,3 +293,25 @@
   }
   ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation-duration: 1ms; }
 }
+
+/* ------------------------------------------------------------------
+ * GLOW: a decorative callout's ambient light. Big, ultra-light circles in Sofia's colours, on the LEFT only,
+ * drifting slowly. Pre-blurred radial gradients (never a filter) that only move: nothing is repainted per frame.
+ * Paused off-screen (data-paused, set by an IntersectionObserver) and still under reduced motion.
+ * ------------------------------------------------------------------ */
+@keyframes vita-drift-1 { 50% { transform: translate(1.25rem, 0.75rem) scale(1.08) } }
+@keyframes vita-drift-2 { 50% { transform: translate(-0.75rem, -1rem) scale(0.94) } }
+@keyframes vita-drift-3 { 50% { transform: translate(1rem, -0.5rem) scale(1.05) } }
+.vita-glow { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; border-radius: inherit; corner-shape: inherit; }
+.vita-glow > span {
+  position: absolute; width: 14rem; height: 14rem; border-radius: 9999px; opacity: 0.14;
+  background: radial-gradient(circle, var(--_glow) 0%, transparent 68%);
+  animation: var(--_drift) ease-in-out infinite;
+}
+/* Light hues of the spectrum (red, yellow, green, cyan), so the glow reads as light, never as colour. */
+.vita-glow > span:nth-child(1) { --_glow: var(--vita-palette-red-300); --_drift: vita-drift-1 14s; left: -6rem; top: -7rem; }
+.vita-glow > span:nth-child(2) { --_glow: var(--vita-palette-yellow-300); --_drift: vita-drift-2 17s; left: -1rem; top: -4rem; }
+.vita-glow > span:nth-child(3) { --_glow: var(--vita-palette-green-300); --_drift: vita-drift-3 20s; left: -4rem; bottom: -7rem; }
+.vita-glow > span:nth-child(4) { --_glow: var(--vita-palette-cyan-300); --_drift: vita-drift-1 23s reverse; left: -9rem; top: -2rem; }
+.vita-glow[data-paused] > span { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) { .vita-glow > span { animation: none; } }

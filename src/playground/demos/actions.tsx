@@ -12,7 +12,7 @@ import { CodeSnippet } from "@/registry/ui/code-snippet"
 import { AILabel, AISurface } from "@/registry/ui/ai-label"
 import { TextInput } from "@/registry/ui/text-input"
 import { Tile } from "@/registry/ui/tile"
-import { toast } from "@/registry/ui/notification"
+import { gotcha } from "@/registry/ui/gotcha"
 import { Breadcrumb } from "@/registry/ui/breadcrumb"
 
 function MenuDemo() {
@@ -179,7 +179,7 @@ export const actionDemos: DemoMap = {
             <MenuItem>Export as PDF</MenuItem>
             <MenuItem>Export as XLSX</MenuItem>
           </MenuButton>
-          <ComboButton label="Save" variant="primary" onClick={() => toast({ kind: "success", title: "Saved" })}>
+          <ComboButton label="Save" variant="primary" onClick={() => gotcha("Saved")}>
             <MenuItem icon={Save}>Save as…</MenuItem>
             <MenuItem>Save as template</MenuItem>
           </ComboButton>

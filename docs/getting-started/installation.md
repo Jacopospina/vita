@@ -5,40 +5,27 @@ status: stable
 related: [cli, skills, registry, theming]
 ---
 
-> [!TIP] **Not a coder? Let your agent do it.** Copy this prompt and paste it into your coding agent, in your project. It installs Vita, then walks you through the setup: your product, your users, your voice and your brand.
->
-> ```prompt
-> Set up the Vita design system in this project, then onboard me.
->
-> 1. Run `npx github:Jacopospina/vita init` and do everything it prints.
-> 2. Use the Vita skills to learn my product: my users (vita-personae), how it should sound (vita-copywriting) and my brand (vita-theming). Ask me one question at a time, in plain words.
-> 3. From then on, act as my product designer: ask what I'm trying to achieve, recommend the best way to do it with Vita, then build it with Vita only.
-> ```
+## Two ways in
 
-## Install
-
-```bash
-npx github:Jacopospina/vita init
-```
-Needs React 19 and Tailwind CSS v4. Everything it installs is plain source in your repo, you own it.
+<!-- block: install-options -->
 
 ## What it adds
 
-- **Components.** `src/components/vita`, every component as editable source, imported as `@/components/vita/<name>`.
-- **Styles.** `src/styles/vita`, tokens, motion and `theme.css`, the ten knobs that re-skin everything.
-- **Docs.** The whole design system, readable by people and agents.
-- **Agent layer.** Skills in `.claude/skills`, the Vita rules block in `AGENTS.md`, and a hook that audits every file an agent edits.
-- **The audit.** `npm run vita:audit`, the design system is the only source of UI.
-- **Product templates.** `vita/product.md`, personae and the product taxonomy.
+- **Every building block.** Buttons, forms, tables and the rest, as [[code you own and can change|`src/components/vita`, imported as `@/components/vita/<name>`]].
+- **The look.** Colours, type, spacing and motion, all steered by [[about ten settings|`theme.css` in `src/styles/vita`]] that restyle everything at once.
+- **The guide.** Everything you're reading here, written so both people and agents can follow it.
+- **Your agent's know-how.** The [[skills|`.claude/skills/vita-*`]] and [[rules|the Vita block in `AGENTS.md`]] your agent reads before it builds, plus a [[check on every file it changes|an edit hook that runs the audit]].
+- **A quality check.** One [[command|`npm run vita:audit`]] that flags anything not built from Vita.
+- **A place for your product.** [[Files|`vita/product.md`, `vita/personae/`, `vita/taxonomy.json`]] where you describe what you make and who it's for.
 
 ## Then
 
-1. **Import the styles.** In your global CSS, replace `@import "tailwindcss";` with the Vita stylesheet the installer prints.
-2. **Resolve the alias.** Make sure `@/components/vita` points at the components folder (tsconfig paths and your bundler alias).
-3. **Mount once.** `<TooltipProvider>` and `<Toaster />` at the app root.
-4. **Describe the product.** Fill `vita/product.md`, then ask your agent to use the vita-personae skill for personae and taxonomy.
-5. **Make it yours.** Tune `theme.css`, see [Theming](#/foundations/theming).
-6. **Guard it.** Run `npm run vita:audit` in CI.
+1. **Switch on the look.** Point your app's [[main stylesheet|global CSS: replace `@import "tailwindcss";` with the Vita stylesheet the installer prints]] at Vita's.
+2. **Let your code find Vita.** Make sure [[the components' address|`@/components/vita`, in your tsconfig paths and bundler alias]] points at the components folder.
+3. **Add two helpers once.** The [[tooltip and notification hosts|`<TooltipProvider>` and `<Toaster />` at the app root]], so every tooltip and message works.
+4. **Describe your product.** Tell your agent what you make and who it's for, and let it write [[your product file and personae|`vita/product.md`, then the vita-personae skill]].
+5. **Make it yours.** Pick colours, corners and type in the Theme panel, then copy the [[settings|`theme.css`]] (see [Theming](#/foundations/theming)).
+6. **Keep it right.** Run the [[quality check|`npm run vita:audit`, in CI]] every time code changes.
 
 ## Options
 

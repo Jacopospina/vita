@@ -57,3 +57,6 @@ Toast banners can carry a `source` (who is speaking) and an `eyebrow` ("Time sen
 6. **Mount `<Toaster />` once** at the app root, and call `toast()` anywhere.
 7. **Roles:** errors use `role="alert"`; everything else uses `status`.
 8. **Banners stack.** The newest sits in front on the highest layer; each older one sits a layer lower, peeking out beneath it a little smaller (three at most show). Pointing at or tabbing into the stack fans it out into a list.
+9. **A word or three is a gotcha, not a banner.** A title-only success or info of three words or fewer ("Saved", "Comment added") is shown beside the pointer as a [gotcha](#/components/gotcha); `toast()` does it for you.
+10. **The icon says the kind, so it must be true.** A green check means done: never use it to decorate. A callout that only needs to catch the eye (an invitation, a prompt for an agent) carries Sofia at rest instead, decorative and hidden from screen readers (`Callout icon`).
+11. **Decorative is an invitation, used once.** `Callout decorative` carries Sofia at rest and faint light drifting on its left, to be noticed without claiming a status. At most one per page, for the thing you most want people to do; the light pauses off-screen and stays still under reduced motion.

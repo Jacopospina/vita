@@ -24,7 +24,7 @@ import { FileUploader, type UploadFile } from "@/registry/ui/file-uploader"
 import { Form, FormGroup, FormRow, FormActions, FluidForm } from "@/registry/ui/form"
 import { Toggletip } from "@/registry/ui/popover"
 import { Link } from "@/registry/ui/link"
-import { toast } from "@/registry/ui/notification"
+import { gotcha } from "@/registry/ui/gotcha"
 
 const countries = ["Austria", "Belgium", "Denmark", "France", "Germany", "Ireland", "Italy", "Netherlands", "Norway", "Poland", "Portugal", "Spain", "Sweden", "Switzerland", "United Kingdom"].map((c) => ({ value: c.toLowerCase(), label: c }))
 
@@ -66,7 +66,7 @@ function FormDemo() {
   const [email, setEmail] = React.useState("")
   const invalid = submitted && !/^\S+@\S+\.\S+$/.test(email)
   return (
-    <Form onSubmit={(e) => { e.preventDefault(); setSubmitted(true); if (!invalid && email) toast({ kind: "success", title: "Workspace created" }) }}>
+    <Form onSubmit={(e) => { e.preventDefault(); setSubmitted(true); if (!invalid && email) gotcha("Workspace created") }}>
       <FormRow>
         <TextInput label="First name" autoComplete="given-name" />
         <TextInput label="Last name" autoComplete="family-name" />

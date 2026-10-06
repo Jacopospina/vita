@@ -50,7 +50,7 @@ export function Tooltip({ content, children, side = "top", align = "center", dis
 export function DefinitionTooltip({ term, definition }: { term: React.ReactNode; definition: React.ReactNode }) {
   return (
     <Tooltip content={definition} align="start">
-      <button type="button" className="cursor-help rounded-sm border-b border-dotted border-border-strong focus-ring">
+      <button type="button" className="cursor-help border-b border-dotted border-border-strong leading-tight focus-ring">
         {term}
       </button>
     </Tooltip>

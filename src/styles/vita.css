@@ -277,6 +277,10 @@
  * The same formula run OUTWARD, a container wrapping controls derives its radius from them:
  *   Wrapper:    rounded-outer-1 p-1     (= control radius-md + spacing 1)
  */
+/* A tall card in the golden ratio (1 : 1.618): side by side, choices read as equals with room for a full story. */
+@utility aspect-golden { aspect-ratio: 1 / 1.618; }
+@utility aspect-golden-wide { aspect-ratio: 1.618 / 1; }
+
 @utility scope-sm { border-radius: var(--vita-radius-sm); --vita-scope-r: var(--vita-radius-sm); }
 @utility scope-md { border-radius: var(--vita-radius-md); --vita-scope-r: var(--vita-radius-md); }
 @utility scope-lg { border-radius: var(--vita-radius-lg); --vita-scope-r: var(--vita-radius-lg); }

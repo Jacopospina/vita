@@ -1,7 +1,8 @@
 import * as React from "react"
 import { Close } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
-import { GotchaHost } from "@/registry/ui/gotcha"
+import { Thinking } from "@/registry/ui/thinking"
+import { GotchaHost, gotcha } from "@/registry/ui/gotcha"
 import { status } from "@/registry/lib/status"
 import { Icon } from "@/registry/ui/icon"
 import { Button } from "@/registry/ui/button"
@@ -32,7 +33,23 @@ const iconTone = { info: status.info.iconColor, success: status.success.iconColo
  * never a colored bar or tinted fill) · title over subtitle · optional action · × appears on hover/focus.
  *   surface solid → in page content (inline, callout) · glass → floating over content (toast banner)
  */
-function Notice({ icon, kind, eyebrow, source, title, subtitle, children, action, onClose, surface = "solid", motion, role, className }: {
+/**
+ * Glow, the decorative ambient light: ultra-light circles drifting on the left, paused while off-screen. Its parent
+ * needs `isolate overflow-hidden` (the glow sits at z -1, beneath the words). For invitations only, one per page.
+ */
+export function Glow() {
+  const ref = React.useRef<HTMLSpanElement>(null)
+  React.useEffect(() => {
+    const el = ref.current
+    if (!el || typeof IntersectionObserver === "undefined") return
+    const io = new IntersectionObserver(([e]) => el.toggleAttribute("data-paused", !e.isIntersecting))
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
+  return <span ref={ref} aria-hidden className="vita-glow"><span /><span /><span /><span /></span>
+}
+
+function Notice({ icon, kind, eyebrow, source, title, subtitle, children, action, onClose, surface = "solid", motion, role, glow, className }: {
   icon?: IconType | React.ReactNode
   kind?: Kind
   eyebrow?: React.ReactNode
@@ -45,6 +62,7 @@ function Notice({ icon, kind, eyebrow, source, title, subtitle, children, action
   surface?: "solid" | "glass"
   motion?: string
   role?: string
+  glow?: boolean
   className?: string
 }) {
   return (
@@ -54,11 +72,13 @@ function Notice({ icon, kind, eyebrow, source, title, subtitle, children, action
       className={cn(
         "group/notice pointer-events-auto relative flex w-full items-start gap-3 squircle p-3 text-body text-foreground [--vita-squircle-r:var(--vita-radius-lg)]",
         surface === "glass" ? "glass glass-5" : "border border-border-subtle bg-raised",
+        glow && "isolate overflow-hidden", // the glow sits at z -1: above the card, beneath its words
         motion,
         className,
       )}
     >
-      {icon && <IconPlaceholder icon={icon} tone={kind ?? "neutral"} size="lg" draw />}
+      {glow && <Glow />}
+      {icon && <IconPlaceholder icon={icon} tone={kind ?? "neutral"} size="lg" draw surface={glow ? "solid" : "tint"} />}
       <div className={cn("flex min-w-0 flex-1 flex-col", !subtitle && !children && !eyebrow && !source && "self-center")}>
         {eyebrow && <p className="text-caption font-medium tracking-wide text-muted-foreground uppercase">{eyebrow}</p>}
         {source && <p className="font-semibold">{source}</p>}
@@ -119,8 +139,15 @@ export function InlineNotification({ kind = "info", title, subtitle, action, onC
 }
 
 /** Callout, permanent, non-dismissible guidance inside page content. Same anatomy, no close. */
-export function Callout({ kind = "info", title, children, className }: { kind?: Kind; title?: React.ReactNode; children: React.ReactNode; className?: string }) {
-  return <Notice kind={kind} icon={icons[kind]} title={title} role="note" className={className}>{children}</Notice>
+/**
+ * `icon` replaces the kind's glyph only when the glyph would say the wrong thing: a green check means "done", so a
+ * callout that wants attention without a status (an invitation, a tip for agents) carries a decorative mark instead.
+ * `decorative`: an invitation, not a status. Sofia at rest is the icon, and ultra-light circles in her colours
+ * drift on the left behind the words. One per page at most: it's there to be noticed.
+ */
+export function Callout({ kind = "info", icon, decorative, title, children, className }: { kind?: Kind; icon?: IconType | React.ReactNode; decorative?: boolean; title?: React.ReactNode; children: React.ReactNode; className?: string }) {
+  const mark = decorative ? <Thinking mode="idle" size="md" label="" /> : icons[kind]
+  return <Notice kind={kind} icon={icon ?? mark} glow={decorative} title={title} role="note" className={className}>{children}</Notice>
 }
 
 /* ---------------- Banners (toast) & Capsules (quick feedback) ---------------- */
@@ -188,8 +215,19 @@ function schedule(id: number, ms: number) {
   if (ms > 0) store.timers.set(id, window.setTimeout(() => dismiss(id), ms))
 }
 
-/** toast({ source: "Theo", title: "Agent deployed", subtitle: "Support triage is live" }), a notification banner, top-right. Max 3. */
+/** A word or three with nothing else (no details, action, source or eyebrow) isn't worth a banner: it's a gotcha. */
+const isTiny = (o: ToastOptions) =>
+  (o.kind === undefined || o.kind === "success" || o.kind === "info") && !o.subtitle && !o.action && !o.source && !o.eyebrow && o.title.trim().split(/\s+/).length <= 3
+
+/**
+ * toast({ source: "Theo", title: "Agent deployed", subtitle: "Support triage is live" }), a notification banner, top-right. Max 3.
+ * A very short, title-only success or info ("Saved", "Comment added") is served as a gotcha beside the pointer instead.
+ */
 export function toast(opts: ToastOptions) {
+  if (isTiny(opts)) {
+    gotcha(opts.title)
+    return 0
+  }
   const id = ++store.seq
   const banners = store.items.filter((t) => t.type === "banner")
   if (banners.length >= 3) dismiss(banners[0].id)
