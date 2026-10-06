@@ -55,6 +55,7 @@ related: [inline-loading, progress-bar, loading-pattern]
 5. **Sizes:** `md` 24 is the smallest Sofia that reads as Sofia beside text (provenance lines, headers); `sm` 16 only in dense rows; inside a button Sofia draws at `md` 24 within the 16px icon slot (negative margin), so she reads clearly and the button keeps its size · `md` 24 · `lg` 48 regions · `xl` 96 empty regions · `2xl` 160 hero moments · `3xl` 280 the epicenter of a landing page (one per page).
 6. **On a primary surface, `tone="on-primary"`.** The water is washed half way to white, with white glints, so Sofia stays visible on a primary button or brand banner and still reads as the AI.
 7. **Reduced motion** shows a still frame with a gentle pulse.
+8. **Never clip Sofia.** Her canvases bleed 30% past her box on every side, so the glow, the sparkles and a drop flung to the rim are never cut square; her layout box stays exactly her size. Don't wrap her in a box with `overflow-hidden` tighter than that bleed.
 
 ## Performance
 

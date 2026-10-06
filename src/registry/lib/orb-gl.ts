@@ -26,7 +26,8 @@ void main() { gl_Position = vec4(a, 0.0, 1.0); }`
 
 const FRAG = `#version 300 es
 precision highp float;
-uniform vec2 uRes;           // canvas size, device px
+uniform vec2 uRes;           // canvas size, device px (the orb's box plus its bleed)
+uniform float uBody;         // the orb's own size, device px: the sun keeps to the body, not the bleed
 uniform vec4 uP[${MAX_DROPS}]; // drops: x, y, radius (device px), unused
 uniform int uN;
 uniform float uS1, uSs, uSg; // blur radii (σ, device px): goo · light · glow
@@ -89,8 +90,8 @@ void main() {
     // The shallows are a thin band at the very edge (a quarter of the depth); the body is turquoise turning blue.
     c = d < 0.25 ? mix(uWater[1], uWater[2], d * 4.0) : mix(uWater[2], uWater[3], (d - 0.25) / 0.75);
     // The sun: a patch of light drifting over the body, lifting the water toward the shallows where it passes.
-    vec2 sun = uTone == 1 ? uRes * 0.5 + vec2(cos(uRot * 0.37), sin(uRot * 0.29)) * uRes.x * 0.28 : vec2(fract(uRot * 0.05) * uRes.x, uRes.y * 0.35);
-    float sr = uTone == 1 ? uRes.x * 0.42 : uRes.y * 3.0;
+    vec2 sun = uTone == 1 ? uRes * 0.5 + vec2(cos(uRot * 0.37), sin(uRot * 0.29)) * uBody * 0.28 : vec2(fract(uRot * 0.05) * uRes.x, uRes.y * 0.35);
+    float sr = uTone == 1 ? uBody * 0.42 : uRes.y * 3.0;
     float s = exp(-dot(p - sun, p - sun) / (sr * sr));
     c = mix(c, uWater[1], 0.4 * s);
     // Caustics: light refracted through the moving surface gathers into bright, wandering nets on the floor.
@@ -103,6 +104,13 @@ void main() {
       float net = pow(1.0 - abs(n1), 6.0) + pow(1.0 - abs(n2), 6.0) + pow(1.0 - abs(n3), 6.0);
       // Nets read where there is a floor under water to light: not at the very edge, strongest in the middle depth.
       c = mix(c, uWater[0], 0.42 * clamp(net, 0.0, 1.0) * d * (1.0 - 0.35 * d));
+      // Refraction: the moving surface bends what lies under it, so a few slow pockets read deeper blue than their
+      // depth says. Just bits of it, drifting, only where there is water: the depth the eye believes.
+      vec2 rq = p * (TAU / (uCaustic * 1.9));
+      float rn = sin(rq.x * 0.7 + 1.3 * sin(rq.y * 0.5 + uRot * 0.21) + uRot * 0.13) * sin(rq.y * 0.6 - 1.1 * sin(rq.x * 0.4 - uRot * 0.17) + uRot * 0.1);
+      float pocket = smoothstep(0.3, 0.85, rn) * smoothstep(0.1, 0.5, d);
+      vec3 abyss = uWater[3] * vec3(0.55, 0.72, 0.95);
+      c = mix(c, abyss, 0.6 * pocket);
     }
   }
 
@@ -160,6 +168,8 @@ export function createOrbGL(
   canvas: HTMLCanvasElement,
   cfg: {
     size: number
+    /** The orb's own size when the canvas carries a bleed around it (defaults to `size`). */
+    body?: number
     /** A rectangle instead of a square (bars). */
     width?: number
     height?: number
@@ -210,6 +220,7 @@ export function createOrbGL(
   canvas.height = H
   gl.viewport(0, 0, W, H)
   gl.uniform2f(u("uRes"), W, H)
+  gl.uniform1f(u("uBody"), (cfg.body ?? cfg.size) * cfg.dpr)
   gl.uniform1f(u("uS1"), cfg.s1 * cfg.dpr)
   gl.uniform1f(u("uSs"), cfg.ss * cfg.dpr)
   gl.uniform1f(u("uSg"), cfg.sg * cfg.dpr)
