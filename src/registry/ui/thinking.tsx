@@ -737,6 +737,10 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
   const defined = mode === "generating" || mode === "idle"
   const blur = precise ? (px <= 24 ? px * 0.06 : px * 0.035) : defined ? (px <= 24 ? px * 0.06 : px * 0.045) : px <= 24 && mode !== "basic" ? px * 0.085 : px * 0.065
   const melt = precise ? px * 0.015 : defined ? px * 0.02 : px * 0.03
+  // Antialiasing: each threshold re-cuts the silhouette at device-pixel level, so the last one is followed by a blur
+  // of about a device pixel, which turns the step into a ramp. Smallest on small orbs (their lines are thin), never
+  // wide enough to soften the shape itself.
+  const aa = Math.min(0.9, Math.max(0.35, px * 0.012))
   const lit = px >= 48
   return (
     <span role="status" aria-live="polite" className={cn("relative inline-flex shrink-0", resolvedTone === "brand" && "text-primary", className)} style={{ width: px, height: px }}>
@@ -748,7 +752,9 @@ export function Thinking({ mode = "generating", size = "md", tone, level, label 
               <feColorMatrix in="blur" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -8" result="melt" />
               {/* Melt again: blur the shape a touch and re-threshold, so any leftover point or kink rounds off. */}
               <feGaussianBlur in="melt" stdDeviation={melt} result="meltBlur" />
-              <feColorMatrix in="meltBlur" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 9 -4" result="goo" />
+              <feColorMatrix in="meltBlur" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 9 -4" result="cut" />
+              {/* The antialiased edge: the output for small orbs, and the body every lit stage builds on. */}
+              <feGaussianBlur in="cut" stdDeviation={aa} result="goo" />
               {lit ? (
                 <>
                   <feGaussianBlur in="goo" stdDeviation={px * 0.035} result="soft" />
