@@ -417,7 +417,7 @@ export const inputDemos: DemoMap = {
   ],
   "components/slider": [
     {
-      title: "Single, range, formatted, without bounds",
+      title: "Single, range, formatted, stepped",
       render: () => (
         <Stack gap="xl" className="max-w-md">
           <Slider label="Creativity" defaultValue={[40]} />
@@ -425,14 +425,6 @@ export const inputDemos: DemoMap = {
           <Slider label="Confidence threshold" defaultValue={[80]} formatValue={(v) => `${v}%`} helperText="Below this, the agent hands off to a person" />
           <Slider label="Volume" showBounds={false} defaultValue={[60]} helperText="Without bounds, when the ends need no number" />
           <Slider label="Disabled" disabled defaultValue={[30]} />
-        </Stack>
-      ),
-    },
-    {
-      title: "Stepped, for ordered steps of one property",
-      description: "A size, a density, a level: the knob lands only on the steps, and shows the step by name.",
-      render: () => (
-        <Stack gap="xl" className="max-w-md">
           <StepSlider label="Pictogram size" hideLabel defaultValue="lg" steps={[{ value: "md", label: "Small" }, { value: "lg", label: "Medium" }, { value: "xl", label: "Large" }]} />
           <StepSlider label="Density" defaultValue="default" steps={[{ value: "compact", label: "Compact" }, { value: "default", label: "Default" }, { value: "roomy", label: "Roomy" }]} />
         </Stack>
