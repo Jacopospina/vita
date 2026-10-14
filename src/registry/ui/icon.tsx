@@ -118,7 +118,7 @@ export function DrawnMark({ kind = "check", on, className }: { kind?: "check" | 
         strokeDashoffset={on ? 0 : DRAWN_OFF}
         // Only the drawing transitions. The stroke colour follows its owner at once (a mark turning white with its
         // box must not glide from black while it draws).
-        className={cn("transition-[stroke-dashoffset] motion-expressive", on ? "duration-expressive" : "duration-moderate-01")}
+        className="transition-[stroke-dashoffset] motion-expressive"
       />
     </svg>
   )
