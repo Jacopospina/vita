@@ -11,7 +11,6 @@ import type { useWeatherTint } from "@/registry/hooks/use-weather-tint"
 import { RightPanel } from "@/registry/ui/ui-shell"
 import { MiniColor, MiniGlow, temperatureStops } from "@/registry/ui/mini-chart"
 import { Label } from "@/registry/ui/form"
-import { HelperText } from "@/registry/ui/helper-text"
 import { SwapIcon } from "@/registry/ui/icon"
 import { Moon, Sun, PartlyCloudy } from "@/registry/icons"
 
@@ -71,13 +70,13 @@ const speeds = [{ v: 0, label: "Off" }, { v: 0.5, label: "Quick" }, { v: 1, labe
 /** The option nearest a knob's value. */
 const nearest = (list: { v: number }[], x: number) => list.reduce((best, o, i) => (Math.abs(o.v - x) < Math.abs(list[best].v - x) ? i : best), 0)
 
-/** Each choice with its one-line gist, shown under the field once picked. */
+/** Style presets hidden: they all resolve to the same look for now. Restore when presets are distinct.
 const presets = [
   { value: "default", label: "Default", gist: "Vita as it ships: blue, gently rounded, Google Sans Flex." },
   { value: "square", label: "Tactical", gist: "Olive neutrals, red primary, mono uppercase: military-grade density." },
   { value: "soft", label: "Signal", gist: "Neutral greys, lime-green primary, IBM Plex Sans: clean and industrial." },
   { value: "mono", label: "Rams", gist: "Braun orange, warm neutrals, Inter: clean, generous, functional." },
-]
+] */
 const sliders = [
   { key: "--vita-radius", name: "How round are corners?", list: radii },
   { key: "--vita-density", name: "How much room?", list: densities },
