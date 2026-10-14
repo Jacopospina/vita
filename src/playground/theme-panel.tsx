@@ -238,18 +238,7 @@ export function ThemePanel({ open, onOpenChange, weather, dark, onDarkChange }: 
       />
       <Separator />
       {/* Choices by name. */}
-      {/* Psychology (few choices, all in view): four styles fit side by side, so they're a button group, not a list to open. */}
-      <Stack gap="xs">
-        <Label>Style</Label>
-        <Group aria-label="Style" fill>
-          {presets.map((p) => (
-            <Button key={p.value} size="sm" variant={p.value === preset ? "primary" : "secondary"} aria-pressed={p.value === preset} onClick={() => applyPreset(p.value)}>
-              {p.label}
-            </Button>
-          ))}
-        </Group>
-        <HelperText className="pt-0">{presets.find((p) => p.value === preset)?.gist}</HelperText>
-      </Stack>
+      {/* Style presets hidden: they all resolve to the same look for now. Restore when presets are distinct. */}
       <Dropdown label="Typeface" items={fonts.map(({ value, label }) => ({ value, label }))} value={font} onValueChange={setFont} helperText={fonts.find((f) => f.value === font)?.gist} />
       <Separator />
       {/* Every knob is a few named choices, so every knob is a button group: the chosen one is primary. */}
